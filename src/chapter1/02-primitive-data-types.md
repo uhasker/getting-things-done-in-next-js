@@ -6,7 +6,7 @@
 
 Whenever we write programs, we need to manipulate data. This data needs to be stored somewhere and we need to be able to access it somehow. We also need to deal with the fact that when we execute a program, the values we deal with are not predictable in advance. For example we don't know which tasks a user might create. Nevertheless, we must be able to access created tasks through a predictable name like `tasks` or `createdTasks`. Therefore we need a way to put an *unpredictable* value in storage and refer to it using a *predictable* name.
 
-A **variable** just that - a storage location containing a value which is referred to by a symbolic name. This *sounds* really fancy, but it really just means that there is a value somewhere in your storage and you can refer to that value using a predictable name (even if the value itself is not predictable).
+A **variable** is just that - a storage location containing a value which is referred to by a symbolic name. This *sounds* really fancy, but it just means that there is a value somewhere in your storage and you can refer to that value using a predictable name (even if the value itself is not predictable).
 
 For example you could have a variable `x` which has the value `5` (we say that `x` is equal to `5`):
 
@@ -32,9 +32,9 @@ We can print the value of the variable using the `console.log` method:
 console.log(x); // 10
 ```
 
-> If you follow along in a Node.js (or browser) console, you don't actually need to use the `console.log` method to print the value of a variable. Instead you can simply type the variable (or any expression for that matter) and the console will display its value.
+> If you follow along in the Node.js (or browser) console, you don't actually need to use the `console.log` method to print the value of a variable. Instead you can simply type the variable (or any expression for that matter) and the console will display its value.
 
-You can also have a declaration and an assignment in one line. In fact, this is usually the way to go:
+You can also have a declaration and an assignment on a single line. In fact, this is usually the way to go:
 
 ```javascript
 let y = 10;
@@ -44,13 +44,14 @@ The value of a variable may change over the course of a program:
 
 ```javascript
 let y = 10;
+console.log(y); // 10
 
-// Assign a new value to a variable
+// Assign a new value to the variable
 y = 20;
 console.log(y); // 20
 ```
 
-This will print `20`, not `10`.
+This will print `10` first and then `20`.
 
 If you want to declare a symbolic name for a value that never changes, you can declare a **constant**. This is done using the `const` keyword:
 
@@ -73,7 +74,7 @@ Uncaught TypeError: Assignment to constant variable.
 
 You will almost exclusively see us using `const` instead of `let` from now on. Reassignment is not nearly as necessary as you might think right now.
 
-> You can also declare variables using the `var` keyword. We will not cover it here and essentially you only need to know one thing about `var` - you should *basically never use it*. It's mostly a historical artifact of the language at this point.
+> You can also declare variables using the `var` keyword. We will not cover it here and you essentially only need to know one thing about `var` - you should *basically never use it*. It's mostly a historical artifact of the language at this point.
 
 Any variable has a **data type** which denotes the range of values it can take and which operations can be performed on the variable. You can use the `typeof` operator to obtain the data type of a variable.
 
@@ -98,7 +99,7 @@ console.log(typeof -1.7); // number
 console.log(typeof Infinity); // number
 ```
 
-You can do arithmetic on numbers using the usual arithmetic operators `+`, `-`, `*` and `/`. There is also the `%` (modulo) operator which returns the remainder of a division. Finally, there is the `**` operator which does exponentiation:
+You can perform arithmetic on numbers using the usual arithmetic operators `+`, `-`, `*` and `/`. There is also the `%` (modulo) operator which returns the remainder of a division. Finally, there is the `**` operator which does exponentiation:
 
 ```javascript
 const a = 3;
@@ -122,7 +123,7 @@ console.log(typeof thisBookIsAwesome); // boolean
 console.log(typeof thisBookSucks); // boolean
 ```
 
-You can do simple logic using the logical operators `&&` (which denotes **and**), `||` (which denotes **or**) or `!` (which denotes **not**).
+You can do simple logic using the logical operators `&&` (which denotes **and**), `||` (which denotes **or**) and `!` (which denotes **not**).
 
 The `&&` (*and*) operator takes two values and evaluates to `true` only if both values are `true` and to `false` otherwise:
 
@@ -159,7 +160,7 @@ console.log(b1 || b2); // true
 console.log(!b1); // false
 ```
 
-> Note that technically all the logical operators can take *any* values (not just boolean values). The result of the logical operator application is then dependent on whether the values are *truthy* or *falsy*. We will discuss this a bit later.
+> Note that technically all the logical operators can take *any* value (not just boolean values). The result of the logical operator application is then dependent on whether the values are *truthy* or *falsy*. We will discuss this a bit later.
 
 A boolean variable is usually the result of an expression. Often it is the result of an expression containing the **equality operator** (`===`) which allows us to compare the values of variables:
 
@@ -172,7 +173,7 @@ console.log(x1 === x2); // false
 console.log(x2 === x3); // true
 ```
 
-> There is also another equality operator (`==`). It can be best described as an Aprils fools' joke that somehow made it into the language. *Never use it*.
+> There is also another equality operator (`==`). It can be best described as an April Fools' joke that somehow made it into the language. *Never use it*.
 
 If you want to write *not equals* you can use `!==`:
 
@@ -208,7 +209,7 @@ const greeting = `Hello ${s}!`;
 console.log(greeting); // Hello world!
 ```
 
-Template strings are written using backticks (*not* single quotes). They may contain so called *placeholders* which are expressions embedded inside `${}`. These expressions can be any valid JavaScript expression:
+Template strings are written using backticks (*not* single quotes). They may contain so called *placeholders* which are expressions embedded inside `${...}`. These expressions can be any valid JavaScript expression that evaluates to a value convertible to a string:
 
 ```javascript
 console.log(`2 + 2 = ${2 + 2}`); // 2 + 2 = 4
@@ -223,7 +224,7 @@ console.log(s.length); // 9
 
 ### Undefined
 
-Finally there is one more primitive type that is of interest to us, namely `undefined`. There is only value of this type, which is also called `undefined`. If a variable has the value `undefined` this (quite logically) means that it hasn't been defined. For example, whenever you have a variable that has been initialized, but not assigned to, it will automatically have the value `undefined`.
+Finally there is one more primitive type that is of interest to us, namely `undefined`. There is only one value of this type, which is also called `undefined`. If a variable has the value `undefined` this (quite logically) means that it hasn't been defined. For example, whenever you have a variable that has been initialized, but not assigned to, it will automatically have the value and therefore the type `undefined`.
 
 ```javascript
 let someVariable;
@@ -231,7 +232,7 @@ console.log(someVariable); // undefined
 console.log(typeof someVariable); // undefined
 ```
 
-> Note that `string`, `number`, `boolean` and `undefined` are not the only primitive data types. Two other primitive data types are `symbol` and `bigint`. There is one more primitive data type that we will encounter soon.
+> Note that `string`, `number`, `boolean` and `undefined` are not the only primitive data types. Two other primitive data types are `symbol` and `bigint`. And there is one more primitive data type that we will encounter soon.
 
 ### Summary
 
