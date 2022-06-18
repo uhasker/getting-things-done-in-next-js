@@ -20,7 +20,7 @@ This is how the browser console will approximately look like on Firefox:
 
 ![](images/browser-console.png)
 
-> Note that if you see a bunch of scary error or warning messages upon opening the console, *don't panic* (this is also good life advice in general). Most of these will probably come from various extensions you might have installed or the web page you are currently viewing. Simply delete the messages by clicking the icon in the top left of the console (trash can in firefox - might vary in different browsers), as we don't care about them.
+> Note that if you see a bunch of scary error or warning messages upon opening the console, *don't panic* (this is also good life advice in general). Most of these will probably come from various extensions you might have installed or the web page you are currently viewing. Simply delete the messages by clicking the icon in the top left of the console (trash can in Firefox - might vary in different browsers), as we don't care about them.
 
 The browser as well as the Node.js console have **REPL** (read-eval-print-loop) capabilities. This just means that you can type some code into the console directly and execute it. REPLs are very nice, because they allow you to quickly test what you just learned.
 
@@ -182,7 +182,7 @@ console.log('Hello, world!');
 
 We will heavily utilize comments throughout this book inside the code blocks to highlight important ideas.
 
-> There is a lot of discussion on how much you should comment your programs. We will return to this when discussing functions. However one rule is that if your code is so terrible that it requires *extensive commentary* to explain its behavior or purpose, you should fix the code. Just like a work of art, your code stands on it's own merits. Imagine *commenting* a work of art (oh, wait)... However it is better to have terrible code and comments than have terrible code and no comments.
+> There is a lot of discussion on how much you should comment your programs. We will return to this when discussing functions. However one rule is that if your code is so terrible that it requires *extensive commentary* to explain its behavior or purpose, you should fix the code. Just like a work of art, your code should stand on it's own merits. Imagine *commenting* a work of art (oh, wait)... However it is better to have terrible code and comments than have terrible code and no comments.
 
 We will also adopt the convention that if a comment is next to a line with a `console.log` statement, that comment shows the output that would be logged to the console if the code was run. For example:
 
