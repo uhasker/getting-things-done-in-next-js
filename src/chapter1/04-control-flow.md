@@ -138,7 +138,7 @@ Note that the condition does not necessary have to be boolean as JavaScript will
 if (1) {
   console.log('1 is truthy.');
 } else {
-  console.log('1 is not truty.');
+  console.log('1 is falsy.');
 }
 ```
 
