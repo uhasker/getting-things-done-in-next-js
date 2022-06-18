@@ -6,7 +6,7 @@
 
 Contrary to popular belief, code sadly doesn't run on magic or unicorn tears. Instead, it runs on something called a **runtime** (also referred to as *runtime environment*). Put simply, a runtime is a program capable of executing code written in some programming language. It *provides the environment in which programs can run*. In order to execute all the *awesome* JavaScript code we are about to write, we therefore need a runtime first.
 
-There are two runtimes capable of executing JavaScript code which are relevant to this book - the browser and Node.js. Every runtime environment comes with a **console** which allows us to interactively and observe output of JavaScript code.
+There are two runtimes capable of executing JavaScript code which are relevant to this book - the browser and Node.js. Every runtime environment comes with a **console** which allows us to interact with and observe the output of JavaScript code.
 
 In this section we will setup the browser and Node.js runtimes. Then we will print "Hello, world!" both to the browser console and to the Node.js console to test that our setup works as expected.
 
@@ -20,7 +20,7 @@ This is how the browser console will approximately look like on Firefox:
 
 ![](images/browser-console.png)
 
-> Note that if you see a bunch of scary error or warning messages upon opening the console, *don't panic* (this is also good life advice in general). Most of these will probably come from from various extensions you might have installed. Simply delete the messages by clicking the trash can icon, as we don't care about them.
+> Note that if you see a bunch of scary error or warning messages upon opening the console, *don't panic* (this is also good life advice in general). Most of these will probably come from various extensions you might have installed or the web page you are currently viewing. Simply delete the messages by clicking the icon in the top left of the console (trash can in firefox - might vary in different browsers), as we don't care about them.
 
 The browser as well as the Node.js console have **REPL** (read-eval-print-loop) capabilities. This just means that you can type some code into the console directly and execute it. REPLs are very nice, because they allow you to quickly test what you just learned.
 
@@ -40,9 +40,9 @@ Hooray, we printed something to the browser console! This is the point at which 
 
 ### Executing JavaScript from an HTML file
 
-Instead of executing JavaScript in the browser console directly, we can (and often will) execute it from an HTML file. HTML is short for *HyperText Markup Language* and is the standard markup language for documents that should be displayed in a browser. We will cover HTML in chapter 2 - for now we just want to get a quick glimpse into it.
+Instead of executing JavaScript in the browser console directly, we can (and often will) execute it from an HTML file. HTML is short for *HyperText Markup Language* and is the standard markup language for documents that should be displayed in a browser. We will cover HTML in chapter 2 - for now we just want to get a quick glimpse at it.
 
-Create a new HTML file. We will call it *hello.html*, however you can name it anything you want. The filename should have an *html* extension though.
+Create a new HTML file. We will call it *hello.html*, however you can name it whatever you want. The filename should have an *html* extension though.
 
 > If you are on a Windows machine, you probably cannot create a file with an `html` extension directly. In that case simply create an empty `txt` file and change the extension to `html`.
 
@@ -68,7 +68,7 @@ Now open this file in your browser. If the `html` file extension is associated w
 
 ![](images/open-with.png)
 
-Alternatively just copy the path of the file and paste it into the address bar of your browser prefixed by `file:///`. For example if the file name is `C:/Users/Example/Desktop/hello.html`, you can open the file by typing `file:///C:/Users/Example/Desktop/hello.html` into the address bar and hitting `Return`:
+Alternatively just copy the path of the file and paste it into the address bar of your browser prefixed by `file:///`. For example if the file name is `C:/Users/Example/Desktop/hello.html`, you can open the file by typing `file:///C:/Users/Example/Desktop/hello.html` into the address bar and hitting <kbd>Return</kbd>:
 
 ![](images/address-bar.png)
 
@@ -84,7 +84,7 @@ Node.js will probably not be installed on your machine, so let's fix that. Grab 
 
 ![](images/node-js.png)
 
-> Note that of course by time you get to this book the Node.js version you see on `https://nodejs.org` might be different.
+> Note that by the time you are reading this book the Node.js version you see on `https://nodejs.org` might be different.
 
 You want to download the LTS (long term support) version. Click the big green button with the *LTS* version. This will download a Windows installer file. Execute the installer file just like you would execute any installer by double-clicking it. You will be presented with a bunch of options during the installation - just click "Next" everywhere and you will be fine.
 
@@ -130,7 +130,7 @@ You should see "Hello, world!" printed to the console:
 
 ### Executing a file
 
-Before moving on, let's execute a JavaScript file containing some code. Create a file named `hello.js`. Open the file in any editor and add the following content to the file:
+Before moving on, let's execute a JavaScript file containing some code. Create a file named `hello.js`. Open the file in any text editor (preferably Visual Studio Code) and add the following content to the file:
 
 ```javascript
 console.log("Hello, world!");
@@ -170,7 +170,7 @@ You could put it this way: Statements in general are executed to make something 
 
 ### Comments
 
-Everything that is between a double slash and the end of the line in JavaScript is a **comment**. Comments are ignored by the runtime and therefore have no effect for the execution of your program:
+Everything that is after a double slash on a line in JavaScript is a **comment**. Comments are ignored by the runtime and therefore have no effect for the execution of your program:
 
 ```javascript
 // This is just a comment
@@ -182,9 +182,9 @@ console.log('Hello, world!');
 
 We will heavily utilize comments throughout this book inside the code blocks to highlight important ideas.
 
-> There is a lot of discussion on how much you should comment your programs. We will return to this when discussing functions. However one rule is that if your code is so terrible that it requires *extensive commentary* to explain its purpose, you should fix the code. Just like a work of art, your code stand on it's own merits. Imagine *commenting* a work of art (oh, wait)... However it is better to have terrible code and comments than have terrible code and no comments.
+> There is a lot of discussion on how much you should comment your programs. We will return to this when discussing functions. However one rule is that if your code is so terrible that it requires *extensive commentary* to explain its behavior or purpose, you should fix the code. Just like a work of art, your code stands on it's own merits. Imagine *commenting* a work of art (oh, wait)... However it is better to have terrible code and comments than have terrible code and no comments.
 
-We will also adopt the convention that if a comment is next to a line with a `console.log` call that comment shows the output of that call. For example:
+We will also adopt the convention that if a comment is next to a line with a `console.log` statement, that comment shows the output that would be logged to the console if the code was run. For example:
 
 ```javascript
 console.log('Hello, world!'); // Hello, world!
@@ -204,7 +204,7 @@ Come on, we'll wait...
 
 ### Summary
 
-You learned about JavaScript runtimes and console. You also learned how to print "Hello, world!" to the console to check that your runtime works as expected.
+You learned about JavaScript runtimes and the console. You also learned how to print "Hello, world!" to the console to check that your runtime works as expected.
 
 ### Further reading
 
