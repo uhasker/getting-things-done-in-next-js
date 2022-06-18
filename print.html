@@ -449,12 +449,12 @@ console.log(typeof someVariable); // undefined
 <div style="break-before: page; page-break-before: always;"></div><h2 id="arrays-and-objects"><a class="header" href="#arrays-and-objects">Arrays and objects</a></h2>
 <div style="text-align: right"> <i> The object of the superior programmer is truthy. <br> — Confucius </i> </div>
 <h3 id="arrays"><a class="header" href="#arrays">Arrays</a></h3>
-<p>Let's say you are writing a task application (<em>just how did I come up with that example?</em>) and you need to store a bunch of tasks. You could of course declare a separate variable for every task like so:</p>
+<p>Let's say you are writing a task application (<em>just how did I come up with that example?</em>) and you need to store a bunch of tasks. You could of course declare a separate variable for every task like this:</p>
 <pre><code class="language-javascript">const task1 = 'First task';
 const task2 = 'Second task';
 const task3 = 'Third task';
 </code></pre>
-<p>However this would quickly become very <em>tedious</em>. In addition you may want to add or delete tasks. Adding and deleting variables will become even more <em>tedious</em>. It would become almost as <em>tedious</em> as repeating the word <em>tedious</em> over and over. Did we mention that this is really <em>tedious</em>? As you can see, we need a way to store multiple objects in a single variable.</p>
+<p>However this would quickly become very <em>tedious</em>. In addition you may want to add or delete tasks. Adding and deleting variables will become even more <em>tedious</em>. It would become almost as <em>tedious</em> as repeating the word <em>tedious</em> over and over. Did we mention that this is really <em>tedious</em>? As you can see, we need a way to store multiple values in a single variable.</p>
 <p>A JavaScript <strong>array</strong> is an ordered collection of multiple values. You can declare an array using square brackets:</p>
 <pre><code class="language-javascript">const tasks = ['First task', 'Second task', 'Third task'];
 </code></pre>
@@ -538,7 +538,7 @@ console.log(task['description']); // Read and understand the MERN book.
 </code></pre>
 <p>Properties don't have to be primitive values. They can also be other objects. Generally speaking, you can arbitrarily nest objects and arrays. For example, here is how you can nest an object inside an object:</p>
 <pre><code class="language-javascript">const person = {
-  name: 'Max Mustermann',
+  name: 'John Doe',
   task: {
     id: 1,
     summary: 'Read the MERN book',
@@ -554,7 +554,7 @@ console.log(task['description']); // Read and understand the MERN book.
 </code></pre>
 <p>Sometimes you want to explicitly indicate that a property may be absent. For example a person may not have a task assigned to them. You could do something like this:</p>
 <pre><code class="language-javascript">const person = {
-  name: 'Max Mustermann',
+  name: 'John Doe',
   task: undefined
 };
 </code></pre>
