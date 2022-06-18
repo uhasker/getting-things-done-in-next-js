@@ -4,7 +4,7 @@
 
 ### Arrays
 
-Let's say you are writing a task application (*just how did I come up with that example?*) and you need to store a bunch of tasks. You could of course declare a separate variable for every task like so:
+Let's say you are writing a task application (*just how did I come up with that example?*) and you need to store a bunch of tasks. You could of course declare a separate variable for every task like this:
 
 ```javascript
 const task1 = 'First task';
@@ -12,7 +12,7 @@ const task2 = 'Second task';
 const task3 = 'Third task';
 ```
 
-However this would quickly become very *tedious*. In addition you may want to add or delete tasks. Adding and deleting variables will become even more *tedious*. It would become almost as *tedious* as repeating the word *tedious* over and over. Did we mention that this is really *tedious*? As you can see, we need a way to store multiple objects in a single variable.
+However this would quickly become very *tedious*. In addition you may want to add or delete tasks. Adding and deleting variables will become even more *tedious*. It would become almost as *tedious* as repeating the word *tedious* over and over. Did we mention that this is really *tedious*? As you can see, we need a way to store multiple values in a single variable.
 
 A JavaScript **array** is an ordered collection of multiple values. You can declare an array using square brackets:
 
@@ -151,7 +151,7 @@ Properties don't have to be primitive values. They can also be other objects. Ge
 
 ```javascript
 const person = {
-  name: 'Max Mustermann',
+  name: 'John Doe',
   task: {
     id: 1,
     summary: 'Read the MERN book',
@@ -176,7 +176,7 @@ Sometimes you want to explicitly indicate that a property may be absent. For exa
 
 ```javascript
 const person = {
-  name: 'Max Mustermann',
+  name: 'John Doe',
   task: undefined
 };
 ```
