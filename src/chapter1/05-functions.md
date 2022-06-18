@@ -16,9 +16,9 @@ function printGreeting() {
 }
 ```
 
-Function definitions begin with the `function` keyword followed by the function name (in this case `printGreeting`). We will cover the meaning of the regular braces in a second, but the curly braces contain the *body* of the function. These are all the statements that will be executed when the function is called. In this case we have one statement, which will simply print `Hello world!` to the console.
+Function definitions begin with the `function` keyword followed by the function name (in this case `printGreeting`). We will cover the meaning of the parentheses in a second, but the curly braces contain the *body* of the function. These are all the statements that will be executed when the function is called. In this case we have one statement, which will simply print `Hello world!` to the console.
 
-You can call the `printGreeting` function by writing `printGreeting()`:
+You can call / invoke the `printGreeting` function by writing `printGreeting()`:
 
 ```javascript
 printGreeting(); // Hello world!
@@ -35,19 +35,19 @@ function printGreetings() {
 
 These functions are not particularly interesting since they do the exact same thing for every function call. In this case, we print the exact same greeting(s) every time. But what if we wanted to print a different greeting depending on the user (containing e.g. the user name)?
 
-We can solve this by defining **function parameters**. This allows us to pass values into the function, so that the function can adjust its behaviour. The function parameters go between the regular braces:
+We can solve this by defining **function parameters**. This allows us to pass values into the function, so that the function can adjust its behaviour. The function parameters go between the parentheses:
 
 ```javascript
 function printGreeting(user) {
   console.log(`Hello ${user}!`);
 }
 
-printGreeting('Max'); // Hello Max!
+printGreeting('Jane'); // Hello Jane!
 ```
 
-In this example we have a single parameter called `user`. The function prints the greeting with the appropriate user. Within the function call we then pass the user (in this case `Max`) as an **argument** to the function.
+In this example we have a single parameter called `user`. The function prints the greeting with the appropriate user. Within the function call we then pass the user (in this case `Jane`) as an **argument** to the function.
 
-We can also **return** values from functions using the `return` keyword. Here is a function which takes a number and returns the square of the number:
+We can also **return** values from functions using the `return` keyword. Here is a function that takes a number and returns the square of it:
 
 ```javascript
 function square(num) {
@@ -66,7 +66,7 @@ console.log(squaredNum); // 9
 
 Despite the fact that you get "function" when you use `typeof` with a function, functions are really just objects.
 
-This means that we can assign functions as variables, pass them to other functions as arguments and do all the other neat things we can do with primitives, arrays and objects. For example we could assign the `square` function to a variable:
+This means that we can assign functions as variables, pass them to other functions as arguments and do all the other neat things we can do with primitives and objects. For example we could assign the `square` function to a variable:
 
 ```javascript
 const square = function square(num) {
@@ -76,7 +76,7 @@ const square = function square(num) {
 
 We could then call this like a regular function by doing e.g. `square(3)`.
 
-This is called a **function expression**. Note that the function may be **anonymous** here (i.e. it doesn't need a name). We could write this:
+This is called a **function expression**. Note that the function may be **anonymous** here (i.e. it doesn't have a name). We could write this:
 
 ```javascript
 const square = function(num) {
@@ -96,7 +96,7 @@ const square = num => num * num;
 
 This is much shorter and less *tedious* (haha) indeed.
 
-For an arrow function you only have to specify the parameter(s), followed by an arrow, followed by the returned value. If you have multiple parameters, you need to put them inside regular braces:
+For an arrow function you only have to specify the parameter(s), followed by an arrow, followed by the returned value. If you have multiple parameters, you need to put them inside parentheses:
 
 ```javascript
 const add = (x, y) => x + y;
@@ -112,7 +112,9 @@ const printAndGreet = user => {
 };
 ```
 
-As you can see this is not that different from a regular function declaration or expression (unlike the `square` function, where the arrow notation was much shorter). It is therefore common practice to only use arrow functions for short functions like `square`. However this is again just convention.
+As you can see this is not too different from a regular function declaration or expression (unlike the `square` function, where the arrow notation was much shorter). It is therefore common practice to only use arrow functions for short functions like `square`. However this is again just convention.
+
+One thing you might have noticed, is that we only showed you **arrow function expressions**. This is not an oversight but stems from the fact that there is no way to write a **function declaration** with the **arrow function notation**. Another difference is that **arrow functions** are *always* anonymous.
 
 ### Methods
 
@@ -129,7 +131,7 @@ const greeter = {
 You can call a method like this:
 
 ```javascript
-greeter.greet();
+greeter.greet(); // Hello, world!
 ```
 
 Methdos can refer to the properties of an object using the `this` keyword which is simply a reference to the current object:
