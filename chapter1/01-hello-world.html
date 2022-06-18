@@ -1,0 +1,310 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Hello world</title>
+        <!-- Custom HTML head -->
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../title-page.html">Getting things done using the MERN stack</a></li><li class="chapter-item expanded affix "><a href="../introduction.html">Introduction</a></li><li class="chapter-item expanded "><a href="../chapter1/index.html"><strong aria-hidden="true">1.</strong> A brief introduction to JavaScript</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../chapter1/01-hello-world.html" class="active"><strong aria-hidden="true">1.1.</strong> Hello world</a></li><li class="chapter-item expanded "><a href="../chapter1/02-primitive-data-types.html"><strong aria-hidden="true">1.2.</strong> Primitive data types</a></li><li class="chapter-item expanded "><a href="../chapter1/03-arrays-and-objects.html"><strong aria-hidden="true">1.3.</strong> Arrays and objects</a></li><li class="chapter-item expanded "><a href="../chapter1/04-control-flow.html"><strong aria-hidden="true">1.4.</strong> Control flow</a></li><li class="chapter-item expanded "><a href="../chapter1/05-functions.html"><strong aria-hidden="true">1.5.</strong> Functions</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title"></h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h2 id="hello-world"><a class="header" href="#hello-world">Hello world</a></h2>
+<div style="text-align: right"> <i> A journey of a thousand miles begins with a single "Hello, world!" program. <br> — Anchient Chinese proverb </i> </div>
+<h3 id="runtime-environments"><a class="header" href="#runtime-environments">Runtime environments</a></h3>
+<p>Contrary to popular belief, code sadly doesn't run on magic or unicorn tears. Instead, it runs on something called a <strong>runtime</strong> (also referred to as <em>runtime environment</em>). Put simply, a runtime is a program capable of executing code written in some programming language. It <em>provides the environment in which programs can run</em>. In order to execute all the <em>awesome</em> JavaScript code we are about to write, we therefore need a runtime first.</p>
+<p>There are two runtimes capable of executing JavaScript code which are relevant to this book - the browser and Node.js. Every runtime environment comes with a <strong>console</strong> which allows us to interactively and observe output of JavaScript code.</p>
+<p>In this section we will setup the browser and Node.js runtimes. Then we will print &quot;Hello, world!&quot; both to the browser console and to the Node.js console to test that our setup works as expected.</p>
+<h3 id="the-browser-environment"><a class="header" href="#the-browser-environment">The browser environment</a></h3>
+<p>Open a browser and open the console in your browser. If you are using <em>Firefox</em> the shortcut for opening the console is <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>K</kbd> on Windows or Linux and <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>K</kbd> on a Mac. If you are using <em>Chrome</em> or <em>Microsoft Edge</em> the shortcut is <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>J</kbd> on Windows or Linux and <kbd>Cmd</kbd> + <kbd>Option</kbd> + <kbd>J</kbd> on a Mac.</p>
+<blockquote>
+<p>If you are using Internet Explorer, please navigate to <code>google.com</code> and search for &quot;Firefox&quot; to install a <em>real</em> browser. This line was originally intended to be a funny joke, but on June 15, 2022 Microsoft ended support for Internet Explorer, so it's not even a joke anymore. We recommend Firefox, but this is purely a personal preference. Chrome and Microsoft Edge are absolutely fine as well.</p>
+</blockquote>
+<p>This is how the browser console will approximately look like on Firefox:</p>
+<p><img src="images/browser-console.png" alt="" /></p>
+<blockquote>
+<p>Note that if you see a bunch of scary error or warning messages upon opening the console, <em>don't panic</em> (this is also good life advice in general). Most of these will probably come from from various extensions you might have installed. Simply delete the messages by clicking the trash can icon, as we don't care about them.</p>
+</blockquote>
+<p>The browser as well as the Node.js console have <strong>REPL</strong> (read-eval-print-loop) capabilities. This just means that you can type some code into the console directly and execute it. REPLs are very nice, because they allow you to quickly test what you just learned.</p>
+<p>Let's print something using the <code>console.log</code> method. Type the following into the browser console:</p>
+<pre><code class="language-javascript">console.log(&quot;Hello, world!&quot;);
+</code></pre>
+<p>Now hit <kbd>Return</kbd> (you may also know this as <kbd>Enter</kbd> or simply <kbd>⏎</kbd>). You will see the output &quot;Hello, world!&quot; in the console:</p>
+<p><img src="images/browser-console-log.png" alt="" /></p>
+<blockquote>
+<p>Ignore the &quot;undefined&quot; for now.</p>
+</blockquote>
+<p>Hooray, we printed something to the browser console! This is the point at which you go tell everyone that you are now a <em>programmer</em>™.</p>
+<h3 id="executing-javascript-from-an-html-file"><a class="header" href="#executing-javascript-from-an-html-file">Executing JavaScript from an HTML file</a></h3>
+<p>Instead of executing JavaScript in the browser console directly, we can (and often will) execute it from an HTML file. HTML is short for <em>HyperText Markup Language</em> and is the standard markup language for documents that should be displayed in a browser. We will cover HTML in chapter 2 - for now we just want to get a quick glimpse into it.</p>
+<p>Create a new HTML file. We will call it <em>hello.html</em>, however you can name it anything you want. The filename should have an <em>html</em> extension though.</p>
+<blockquote>
+<p>If you are on a Windows machine, you probably cannot create a file with an <code>html</code> extension directly. In that case simply create an empty <code>txt</code> file and change the extension to <code>html</code>.</p>
+</blockquote>
+<p>Open the HTML file in any text editor (we recommend you use <a href="https://code.visualstudio.com">Visual Studio Code</a>) and add the following text to the file:</p>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;&lt;/head&gt;
+&lt;body&gt;
+  &lt;script&gt;
+    console.log(&quot;Hello, world!&quot;);
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>Don't forget to save the file!</p>
+<blockquote>
+<p>Note the semicolon after the console.log. It terminates the <code>console.log</code> statement. The semicolon is not technically required here. Indeed there are many JavaScript programmers who don't write semicolons. However to avoid a bunch of pitfalls we will use semicolons throughout this book and therefore we want you to get used to them as soon as possible.</p>
+</blockquote>
+<p>Now open this file in your browser. If the <code>html</code> file extension is associated with your browser, you should be able to do so by simply double-clicking the file. If this is not the case, <em>right-click</em> the file. A menu containing the option &quot;Open with&quot; should pop up. Click on any browser name from the &quot;Open with&quot; submenu. This is how it would look like on Windows 11:</p>
+<p><img src="images/open-with.png" alt="" /></p>
+<p>Alternatively just copy the path of the file and paste it into the address bar of your browser prefixed by <code>file:///</code>. For example if the file name is <code>C:/Users/Example/Desktop/hello.html</code>, you can open the file by typing <code>file:///C:/Users/Example/Desktop/hello.html</code> into the address bar and hitting <code>Return</code>:</p>
+<p><img src="images/address-bar.png" alt="" /></p>
+<blockquote>
+<p>You can find out the path of a file by right-clicking the file and selecting <em>Properties</em>. The window that opens should show the file location.</p>
+</blockquote>
+<p>After opening this file in your browser, open the console again. You should see &quot;Hello, world!&quot; printed there.</p>
+<h3 id="nodejs"><a class="header" href="#nodejs">Node.js</a></h3>
+<p>For a long time, programmers used JavaScript mostly inside the browser runtime environment. However in 2009 Node.js came along and changed that by allowing programmers to easily run JavaScript outside the browser.</p>
+<p>Node.js will probably not be installed on your machine, so let's fix that. Grab Node.js from <code>https://nodejs.org</code>:</p>
+<p><img src="images/node-js.png" alt="" /></p>
+<blockquote>
+<p>Note that of course by time you get to this book the Node.js version you see on <code>https://nodejs.org</code> might be different.</p>
+</blockquote>
+<p>You want to download the LTS (long term support) version. Click the big green button with the <em>LTS</em> version. This will download a Windows installer file. Execute the installer file just like you would execute any installer by double-clicking it. You will be presented with a bunch of options during the installation - just click &quot;Next&quot; everywhere and you will be fine.</p>
+<p>Now we need to open a <strong>command-line interface</strong> (also called command line, command prompt or CLI) on our computer. A command line allows you to execute various tasks (called commands) on your computer.</p>
+<p>On Windows, you can open the CLI by opening the &quot;Run&quot; window using <kbd>Win</kbd> + <kbd>R</kbd>, typing <em>cmd</em> and pressing the &quot;Ok&quot; button:</p>
+<p><img src="images/run-window.png" alt="" /></p>
+<p>Alternatively you can type &quot;cmd&quot; into the search field. An app called &quot;command prompt&quot; should show up. Simply click the app and a CLI should open:</p>
+<p><img src="images/search-field.png" alt="" /></p>
+<p>No matter how you do it, you should now stare at a <em>beautiful</em> command line. Take a second and <em>bask in it's glory</em> for a while.</p>
+<p>After you're done basking, let's try and execute a command. For example we can use the <code>echo</code> command to output text. Try typing the following in your CLI:</p>
+<pre><code class="language-shell">echo &quot;Hello, world!&quot;
+</code></pre>
+<p>Now hit <kbd>Return</kbd> and you should see the following result:</p>
+<p><img src="images/cli.png" alt="" /></p>
+<p>Note that on a Mac you can open the command line by hitting <kbd>Cmd</kbd> + <kbd>Space</kbd> to open <em>search</em>, typing <em>terminal</em> and hitting <kbd>Return</kbd>.</p>
+<blockquote>
+<p>If you're on a Linux system you should <em>really</em> know how to open a command line.</p>
+</blockquote>
+<p>Now that the command line is open, execute the <code>node</code> command to open a Node.js console. You can do so by typing <code>node</code> and hitting <kbd>Return</kbd>. You should see something like the following (again the Node.js version might be different):</p>
+<p><img src="images/cli-node.png" alt="" /></p>
+<p>Now let's again print &quot;Hello, world!&quot; using the <code>console.log</code> method. Type the following into the Node.js console and hit <kbd>Return</kbd>:</p>
+<pre><code class="language-javascript">console.log(&quot;Hello, world!&quot;);
+</code></pre>
+<p>You should see &quot;Hello, world!&quot; printed to the console:</p>
+<p><img src="images/node-js-console-log.png" alt="" /></p>
+<h3 id="executing-a-file"><a class="header" href="#executing-a-file">Executing a file</a></h3>
+<p>Before moving on, let's execute a JavaScript file containing some code. Create a file named <code>hello.js</code>. Open the file in any editor and add the following content to the file:</p>
+<pre><code class="language-javascript">console.log(&quot;Hello, world!&quot;);
+</code></pre>
+<blockquote>
+<p>If you are on a Windows machine, you probably cannot create a file with a <code>js</code> extension directly. In that case simply create an empty <code>txt</code> file and change the extension to <code>js</code>.</p>
+</blockquote>
+<p>Again open a command line and <em>change the current directory location to the directory containing the JavaScript file</em>. You can do so using the <em>cd</em> command. For example if <code>hello.js</code> is located at <code>C:/Users/Example/Desktop</code> you would execute the following:</p>
+<pre><code class="language-shell">cd C:/Users/Example/Desktop
+</code></pre>
+<blockquote>
+<p>You can find out the directory containing the JavaScript file by right-clicking the file and selecting <em>Properties</em>. The resulting window should show the directory path.</p>
+</blockquote>
+<p>Now execute the JavaScript file by running:</p>
+<pre><code class="language-shell">node hello.js
+</code></pre>
+<p>This should again print &quot;Hello, world!&quot;:</p>
+<p><img src="images/node-js-hello-js.png" alt="" /></p>
+<p>Note that for the remainder of chapter 1 you should follow along using the Node.js console as we will be discussing the language itself. Nevertheless, as we begin writing the project in chapter 2, we will have to write JavaScript for the browser runtime environment on a regular basis.</p>
+<h3 id="statements-and-expressions"><a class="header" href="#statements-and-expressions">Statements and expressions</a></h3>
+<p>Before we dive into JavaScript, you should know what statements and expressions are.</p>
+<p>A <strong>statement</strong> is a syntactic unit responsible for executing some action. A program is then essentially a sequence of statements which should be executed when running the program. For example <code>console.log('Hello, world!')</code> is a statement which executes the action of printing &quot;Hello, world!&quot; to the console.</p>
+<p>An <strong>expression</strong> is a syntactic unit that may be evaluated to get its value. For example <code>2 + 2</code> would be an expression which would evaluate to <code>4</code>. Note that since any expression also executes some action, any expression is therefore a statement.</p>
+<p>You could put it this way: Statements in general are executed to make something happen, while expressions in specific are evaluated to produce a value.</p>
+<h3 id="comments"><a class="header" href="#comments">Comments</a></h3>
+<p>Everything that is between a double slash and the end of the line in JavaScript is a <strong>comment</strong>. Comments are ignored by the runtime and therefore have no effect for the execution of your program:</p>
+<pre><code class="language-javascript">// This is just a comment
+// Comments have no effect
+console.log('Hello, world!');
+// Therefore this program is equivalent to the
+// program from the previous chapter
+</code></pre>
+<p>We will heavily utilize comments throughout this book inside the code blocks to highlight important ideas.</p>
+<blockquote>
+<p>There is a lot of discussion on how much you should comment your programs. We will return to this when discussing functions. However one rule is that if your code is so terrible that it requires <em>extensive commentary</em> to explain its purpose, you should fix the code. Just like a work of art, your code stand on it's own merits. Imagine <em>commenting</em> a work of art (oh, wait)... However it is better to have terrible code and comments than have terrible code and no comments.</p>
+</blockquote>
+<p>We will also adopt the convention that if a comment is next to a line with a <code>console.log</code> call that comment shows the output of that call. For example:</p>
+<pre><code class="language-javascript">console.log('Hello, world!'); // Hello, world!
+</code></pre>
+<p>This is the point where we tell you that while you are reading this book you should <em>absolutely follow along in some runtime</em> (probably Node.js, but a browser is fine too). This is <em>very important</em>. Go ahead and open a Node.js console <em>now</em>.</p>
+<p>Come on, we'll wait...</p>
+<p>...</p>
+<p>...</p>
+<p>...</p>
+<p><em>Finally</em>. Let's move on.</p>
+<h3 id="summary"><a class="header" href="#summary">Summary</a></h3>
+<p>You learned about JavaScript runtimes and console. You also learned how to print &quot;Hello, world!&quot; to the console to check that your runtime works as expected.</p>
+<h3 id="further-reading"><a class="header" href="#further-reading">Further reading</a></h3>
+<p>There is no further reading for this section.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../chapter1/index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                            <a rel="next" href="../chapter1/02-primitive-data-types.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../chapter1/index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                    <a rel="next" href="../chapter1/02-primitive-data-types.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+    </body>
+</html>
