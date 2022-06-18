@@ -209,7 +209,7 @@ const greeting = `Hello ${s}!`;
 console.log(greeting); // Hello world!
 ```
 
-Template strings are written using backticks (*not* single quotes). They may contain so called *placeholders* which are expressions embedded inside `${...}`. These expressions can be any valid JavaScript expression that evaluates to a value convertible to a string:
+Template strings are written using backticks (*not* single quotes). They may contain so called *placeholders* which are expressions embedded inside `${...}`. These expressions can be any valid JavaScript expression that evaluates to a value implicitly convertible to a string:
 
 ```javascript
 console.log(`2 + 2 = ${2 + 2}`); // 2 + 2 = 4
