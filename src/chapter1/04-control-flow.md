@@ -29,9 +29,9 @@ if (condition) {
 }
 ```
 
-If `condition` is true, then the `statements` inside the curly braces will be executed. If `condition` is false, nothing happens.
+If `condition` is true, then the `statements` inside the curly braces will be executed. If `condition` is false, nothing will happens.
 
-> Note that technically it suffices that condition is *truthy* or *falsy*. We will ignore this detail for now and return to it in a second.
+> Note that technically it suffices if the condition is *truthy* or *falsy*. We will ignore this detail for now and return to it in a second.
 
 The simplest condition is a boolean variable. However, nothing prevents us from writing more complex conditions. For example, let's say we have a list of uncompleted tasks (conveniently) named `tasks`. Then we could check that all tasks have been completed by checking whether `tasks` is empty (i.e. the length of `tasks` is zero):
 
@@ -128,7 +128,7 @@ if (tasks.length === 0) {
 }
 ```
 
-Note that the `else` block is not required. If it's missing an no conditions are true, then nothing will happen.
+Note that the `else` block is not required. If it's missing an none of the conditions is true, nothing will happen.
 
 ### Truthiness and falsiness
 
@@ -136,15 +136,15 @@ Note that the condition does not necessary have to be boolean as JavaScript will
 
 ```javascript
 if (1) {
-  console.log('One');
+  console.log('1 is truthy.');
 } else {
-  console.log('Something else');
+  console.log('1 is falsy.');
 }
 ```
 
-This will print `One` because JavaScript will consider `1` to be `true` in this context since `1` is a *truthy* value.
+This will print "1 is truthy." because JavaScript will consider `1` to be `true` in this context since `1` is a *truthy* value.
 
-Generally speaking, a **truthy** value is considered to be true when encountered in a boolean context (like a condition). A **falsy** value is considered to be false when encountered in a boolean context. The most important falsy values are `false`, `0`, `''` (empty string), `null` and `undefined`. Most other values (like `1`, `[]`, `[3]`, `{example: 'hello'}` etc) are truthy.
+Generally speaking, a **truthy** value is considered to be true when encountered in a boolean context (like a condition). A **falsy** value is considered to be false when encountered in a boolean context. The most important falsy values are `false`, `0`, `''` (empty string), `null` and `undefined`. Most other values (like `1`, `[]` (empty array), `[3]`, `{ example: 'hello' }` etc) are truthy.
 
 Try to *avoid using non-boolean values in boolean contexts* as it can lead to surprising behaviour. Nevertheless it's still useful to know about truthiness and falsiness, as it will otherwise trip you up in certain cases.
 
@@ -191,12 +191,28 @@ const mernTask = {
   date: {
     day: 8,
     month: 6,
-    year: 2022 
-  } 
+    year: 2022,
+  },
 };
 ```
 
 Let's say we want to access the day of the task. We can do this by using `mernTask.date.day`. But what if the day does not have to be present, i.e. is *optional*? This could e.g. happen because the user didn't enter a task.
+
+The object could look like this:
+
+```javascript
+const mernTask = {
+  summary: 'Read the MERN book',
+  description: 'Read and understand the MERN book',
+};
+
+// or like this if you were to use `null`
+const mernTask = {
+  summary: 'Read the MERN book',
+  description: 'Read and understand the MERN book',
+  date: null,
+};
+```
 
 Then `mernTask.date.day` will fail with
 
@@ -207,7 +223,7 @@ Uncaught TypeError: Cannot read properties of undefined (reading 'day')
 This makes sense since `mernTask.date` will result in `undefined` and you can't access a property on `undefined`. But let's say we would like to access the day and setting it to `undefined` if the `date` property is not present. Then we would need to do something like the following:
 
 ```javascript
-const day = mernTask.date !== null ? mernTask.date.day : undefined;
+const day = typeof mernTask.date !== undefined && mernTask.date !== null ? mernTask.date.day : undefined;
 ```
 
 Alternatively we could make use of `&&` and write:
@@ -226,7 +242,7 @@ Now the result will be `undefined` instead of giving you a TypeError.
 
 ### For..of loops
 
-`For..of` loops allow you to *iterate over arrays and strings* (and some other things that we will cover later on) and perform a task for each element/character. Let's say you want to print all tasks from a list named `tasks`. You could do it like this:
+`For..of` loops allow you to *iterate over arrays and strings* (and some other things that we will cover later on) and perform a task for each element / character. Let's say you want to print all tasks from a list named `tasks`. You could do it like this:
 
 ```javascript
 const tasks = ['Task 1', 'Task 2', 'Task 3'];
@@ -246,9 +262,9 @@ Task 3
 As we already mentioned, you can use a `for..of` loop to iterate over a string:
 
 ```javascript
-const s = 'Task';
-for (let task of tasks) {
-  console.log(task);
+const str = 'Task';
+for (let char of str) {
+  console.log(char);
 }
 ```
 
@@ -278,7 +294,7 @@ for (const task of tasks) {
 }
 ```
 
-> There are also a bunch of other loops. We will cover them later. This is because you don't need them nearly as often as you some people think.
+> There are also a bunch of other loops. We will cover them later. This is because you don't need them nearly as often as some people think.
 
 ### Summary
 
