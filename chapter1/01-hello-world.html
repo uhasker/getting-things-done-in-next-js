@@ -138,7 +138,7 @@
 <div style="text-align: right"> <i> A journey of a thousand miles begins with a single "Hello, world!" program. <br> — Anchient Chinese proverb </i> </div>
 <h3 id="runtime-environments"><a class="header" href="#runtime-environments">Runtime environments</a></h3>
 <p>Contrary to popular belief, code sadly doesn't run on magic or unicorn tears. Instead, it runs on something called a <strong>runtime</strong> (also referred to as <em>runtime environment</em>). Put simply, a runtime is a program capable of executing code written in some programming language. It <em>provides the environment in which programs can run</em>. In order to execute all the <em>awesome</em> JavaScript code we are about to write, we therefore need a runtime first.</p>
-<p>There are two runtimes capable of executing JavaScript code which are relevant to this book - the browser and Node.js. Every runtime environment comes with a <strong>console</strong> which allows us to interactively and observe output of JavaScript code.</p>
+<p>There are two runtimes capable of executing JavaScript code which are relevant to this book - the browser and Node.js. Every runtime environment comes with a <strong>console</strong> which allows us to interact with and observe the output of JavaScript code.</p>
 <p>In this section we will setup the browser and Node.js runtimes. Then we will print &quot;Hello, world!&quot; both to the browser console and to the Node.js console to test that our setup works as expected.</p>
 <h3 id="the-browser-environment"><a class="header" href="#the-browser-environment">The browser environment</a></h3>
 <p>Open a browser and open the console in your browser. If you are using <em>Firefox</em> the shortcut for opening the console is <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>K</kbd> on Windows or Linux and <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>K</kbd> on a Mac. If you are using <em>Chrome</em> or <em>Microsoft Edge</em> the shortcut is <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>J</kbd> on Windows or Linux and <kbd>Cmd</kbd> + <kbd>Option</kbd> + <kbd>J</kbd> on a Mac.</p>
@@ -148,7 +148,7 @@
 <p>This is how the browser console will approximately look like on Firefox:</p>
 <p><img src="images/browser-console.png" alt="" /></p>
 <blockquote>
-<p>Note that if you see a bunch of scary error or warning messages upon opening the console, <em>don't panic</em> (this is also good life advice in general). Most of these will probably come from from various extensions you might have installed. Simply delete the messages by clicking the trash can icon, as we don't care about them.</p>
+<p>Note that if you see a bunch of scary error or warning messages upon opening the console, <em>don't panic</em> (this is also good life advice in general). Most of these will probably come from various extensions you might have installed or the web page you are currently viewing. Simply delete the messages by clicking the icon in the top left of the console (trash can in Firefox - might vary in different browsers), as we don't care about them.</p>
 </blockquote>
 <p>The browser as well as the Node.js console have <strong>REPL</strong> (read-eval-print-loop) capabilities. This just means that you can type some code into the console directly and execute it. REPLs are very nice, because they allow you to quickly test what you just learned.</p>
 <p>Let's print something using the <code>console.log</code> method. Type the following into the browser console:</p>
@@ -161,8 +161,8 @@
 </blockquote>
 <p>Hooray, we printed something to the browser console! This is the point at which you go tell everyone that you are now a <em>programmer</em>™.</p>
 <h3 id="executing-javascript-from-an-html-file"><a class="header" href="#executing-javascript-from-an-html-file">Executing JavaScript from an HTML file</a></h3>
-<p>Instead of executing JavaScript in the browser console directly, we can (and often will) execute it from an HTML file. HTML is short for <em>HyperText Markup Language</em> and is the standard markup language for documents that should be displayed in a browser. We will cover HTML in chapter 2 - for now we just want to get a quick glimpse into it.</p>
-<p>Create a new HTML file. We will call it <em>hello.html</em>, however you can name it anything you want. The filename should have an <em>html</em> extension though.</p>
+<p>Instead of executing JavaScript in the browser console directly, we can (and often will) execute it from an HTML file. HTML is short for <em>HyperText Markup Language</em> and is the standard markup language for documents that should be displayed in a browser. We will cover HTML in chapter 2 - for now we just want to get a quick glimpse at it.</p>
+<p>Create a new HTML file. We will call it <em>hello.html</em>, however you can name it whatever you want. The filename should have an <em>html</em> extension though.</p>
 <blockquote>
 <p>If you are on a Windows machine, you probably cannot create a file with an <code>html</code> extension directly. In that case simply create an empty <code>txt</code> file and change the extension to <code>html</code>.</p>
 </blockquote>
@@ -183,7 +183,7 @@
 </blockquote>
 <p>Now open this file in your browser. If the <code>html</code> file extension is associated with your browser, you should be able to do so by simply double-clicking the file. If this is not the case, <em>right-click</em> the file. A menu containing the option &quot;Open with&quot; should pop up. Click on any browser name from the &quot;Open with&quot; submenu. This is how it would look like on Windows 11:</p>
 <p><img src="images/open-with.png" alt="" /></p>
-<p>Alternatively just copy the path of the file and paste it into the address bar of your browser prefixed by <code>file:///</code>. For example if the file name is <code>C:/Users/Example/Desktop/hello.html</code>, you can open the file by typing <code>file:///C:/Users/Example/Desktop/hello.html</code> into the address bar and hitting <code>Return</code>:</p>
+<p>Alternatively just copy the path of the file and paste it into the address bar of your browser prefixed by <code>file:///</code>. For example if the file name is <code>C:/Users/Example/Desktop/hello.html</code>, you can open the file by typing <code>file:///C:/Users/Example/Desktop/hello.html</code> into the address bar and hitting <kbd>Return</kbd>:</p>
 <p><img src="images/address-bar.png" alt="" /></p>
 <blockquote>
 <p>You can find out the path of a file by right-clicking the file and selecting <em>Properties</em>. The window that opens should show the file location.</p>
@@ -194,7 +194,7 @@
 <p>Node.js will probably not be installed on your machine, so let's fix that. Grab Node.js from <code>https://nodejs.org</code>:</p>
 <p><img src="images/node-js.png" alt="" /></p>
 <blockquote>
-<p>Note that of course by time you get to this book the Node.js version you see on <code>https://nodejs.org</code> might be different.</p>
+<p>Note that by the time you are reading this book the Node.js version you see on <code>https://nodejs.org</code> might be different.</p>
 </blockquote>
 <p>You want to download the LTS (long term support) version. Click the big green button with the <em>LTS</em> version. This will download a Windows installer file. Execute the installer file just like you would execute any installer by double-clicking it. You will be presented with a bunch of options during the installation - just click &quot;Next&quot; everywhere and you will be fine.</p>
 <p>Now we need to open a <strong>command-line interface</strong> (also called command line, command prompt or CLI) on our computer. A command line allows you to execute various tasks (called commands) on your computer.</p>
@@ -220,7 +220,7 @@
 <p>You should see &quot;Hello, world!&quot; printed to the console:</p>
 <p><img src="images/node-js-console-log.png" alt="" /></p>
 <h3 id="executing-a-file"><a class="header" href="#executing-a-file">Executing a file</a></h3>
-<p>Before moving on, let's execute a JavaScript file containing some code. Create a file named <code>hello.js</code>. Open the file in any editor and add the following content to the file:</p>
+<p>Before moving on, let's execute a JavaScript file containing some code. Create a file named <code>hello.js</code>. Open the file in any text editor (preferably Visual Studio Code) and add the following content to the file:</p>
 <pre><code class="language-javascript">console.log(&quot;Hello, world!&quot;);
 </code></pre>
 <blockquote>
@@ -244,7 +244,7 @@
 <p>An <strong>expression</strong> is a syntactic unit that may be evaluated to get its value. For example <code>2 + 2</code> would be an expression which would evaluate to <code>4</code>. Note that since any expression also executes some action, any expression is therefore a statement.</p>
 <p>You could put it this way: Statements in general are executed to make something happen, while expressions in specific are evaluated to produce a value.</p>
 <h3 id="comments"><a class="header" href="#comments">Comments</a></h3>
-<p>Everything that is between a double slash and the end of the line in JavaScript is a <strong>comment</strong>. Comments are ignored by the runtime and therefore have no effect for the execution of your program:</p>
+<p>Everything that is after a double slash on a line in JavaScript is a <strong>comment</strong>. Comments are ignored by the runtime and therefore have no effect for the execution of your program:</p>
 <pre><code class="language-javascript">// This is just a comment
 // Comments have no effect
 console.log('Hello, world!');
@@ -253,9 +253,9 @@ console.log('Hello, world!');
 </code></pre>
 <p>We will heavily utilize comments throughout this book inside the code blocks to highlight important ideas.</p>
 <blockquote>
-<p>There is a lot of discussion on how much you should comment your programs. We will return to this when discussing functions. However one rule is that if your code is so terrible that it requires <em>extensive commentary</em> to explain its purpose, you should fix the code. Just like a work of art, your code stand on it's own merits. Imagine <em>commenting</em> a work of art (oh, wait)... However it is better to have terrible code and comments than have terrible code and no comments.</p>
+<p>There is a lot of discussion on how much you should comment your programs. We will return to this when discussing functions. However one rule is that if your code is so terrible that it requires <em>extensive commentary</em> to explain its behavior or purpose, you should fix the code. Just like a work of art, your code should stand on it's own merits. Imagine <em>commenting</em> a work of art (oh, wait)... However it is better to have terrible code and comments than have terrible code and no comments.</p>
 </blockquote>
-<p>We will also adopt the convention that if a comment is next to a line with a <code>console.log</code> call that comment shows the output of that call. For example:</p>
+<p>We will also adopt the convention that if a comment is next to a line with a <code>console.log</code> statement, that comment shows the output that would be logged to the console if the code was run. For example:</p>
 <pre><code class="language-javascript">console.log('Hello, world!'); // Hello, world!
 </code></pre>
 <p>This is the point where we tell you that while you are reading this book you should <em>absolutely follow along in some runtime</em> (probably Node.js, but a browser is fine too). This is <em>very important</em>. Go ahead and open a Node.js console <em>now</em>.</p>
@@ -265,7 +265,7 @@ console.log('Hello, world!');
 <p>...</p>
 <p><em>Finally</em>. Let's move on.</p>
 <h3 id="summary"><a class="header" href="#summary">Summary</a></h3>
-<p>You learned about JavaScript runtimes and console. You also learned how to print &quot;Hello, world!&quot; to the console to check that your runtime works as expected.</p>
+<p>You learned about JavaScript runtimes and the console. You also learned how to print &quot;Hello, world!&quot; to the console to check that your runtime works as expected.</p>
 <h3 id="further-reading"><a class="header" href="#further-reading">Further reading</a></h3>
 <p>There is no further reading for this section.</p>
 
