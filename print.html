@@ -615,9 +615,9 @@ if (completed) {
   statements
 }
 </code></pre>
-<p>If <code>condition</code> is true, then the <code>statements</code> inside the curly braces will be executed. If <code>condition</code> is false, nothing happens.</p>
+<p>If <code>condition</code> is true, then the <code>statements</code> inside the curly braces will be executed. If <code>condition</code> is false, nothing will happens.</p>
 <blockquote>
-<p>Note that technically it suffices that condition is <em>truthy</em> or <em>falsy</em>. We will ignore this detail for now and return to it in a second.</p>
+<p>Note that technically it suffices if the condition is <em>truthy</em> or <em>falsy</em>. We will ignore this detail for now and return to it in a second.</p>
 </blockquote>
 <p>The simplest condition is a boolean variable. However, nothing prevents us from writing more complex conditions. For example, let's say we have a list of uncompleted tasks (conveniently) named <code>tasks</code>. Then we could check that all tasks have been completed by checking whether <code>tasks</code> is empty (i.e. the length of <code>tasks</code> is zero):</p>
 <pre><code class="language-javascript">if (tasks.length === 0) {
@@ -688,17 +688,17 @@ No really, you are amazing!
   console.log('You still have some tasks to complete.');
 }
 </code></pre>
-<p>Note that the <code>else</code> block is not required. If it's missing an no conditions are true, then nothing will happen.</p>
+<p>Note that the <code>else</code> block is not required. If it's missing an none of the conditions is true, nothing will happen.</p>
 <h3 id="truthiness-and-falsiness"><a class="header" href="#truthiness-and-falsiness">Truthiness and falsiness</a></h3>
 <p>Note that the condition does not necessary have to be boolean as JavaScript will automatically convert non-boolean values to booleans. For example you could write something like this:</p>
 <pre><code class="language-javascript">if (1) {
-  console.log('One');
+  console.log('1 is truthy.');
 } else {
-  console.log('Something else');
+  console.log('1 is falsy.');
 }
 </code></pre>
-<p>This will print <code>One</code> because JavaScript will consider <code>1</code> to be <code>true</code> in this context since <code>1</code> is a <em>truthy</em> value.</p>
-<p>Generally speaking, a <strong>truthy</strong> value is considered to be true when encountered in a boolean context (like a condition). A <strong>falsy</strong> value is considered to be false when encountered in a boolean context. The most important falsy values are <code>false</code>, <code>0</code>, <code>''</code> (empty string), <code>null</code> and <code>undefined</code>. Most other values (like <code>1</code>, <code>[]</code>, <code>[3]</code>, <code>{example: 'hello'}</code> etc) are truthy.</p>
+<p>This will print &quot;1 is truthy.&quot; because JavaScript will consider <code>1</code> to be <code>true</code> in this context since <code>1</code> is a <em>truthy</em> value.</p>
+<p>Generally speaking, a <strong>truthy</strong> value is considered to be true when encountered in a boolean context (like a condition). A <strong>falsy</strong> value is considered to be false when encountered in a boolean context. The most important falsy values are <code>false</code>, <code>0</code>, <code>''</code> (empty string), <code>null</code> and <code>undefined</code>. Most other values (like <code>1</code>, <code>[]</code> (empty array), <code>[3]</code>, <code>{ example: 'hello' }</code> etc) are truthy.</p>
 <p>Try to <em>avoid using non-boolean values in boolean contexts</em> as it can lead to surprising behaviour. Nevertheless it's still useful to know about truthiness and falsiness, as it will otherwise trip you up in certain cases.</p>
 <h3 id="ternary-operator"><a class="header" href="#ternary-operator">Ternary operator</a></h3>
 <p>The <strong>ternary operator</strong> takes a <em>condition</em>, an <em>expression to execute if the condition is truthy</em> and an <em>expression to execute if the condition is falsy</em>. It looks like this:</p>
@@ -725,16 +725,29 @@ const msg = done ? doneMsg : notDoneMsg;
   date: {
     day: 8,
     month: 6,
-    year: 2022 
-  } 
+    year: 2022,
+  },
 };
 </code></pre>
 <p>Let's say we want to access the day of the task. We can do this by using <code>mernTask.date.day</code>. But what if the day does not have to be present, i.e. is <em>optional</em>? This could e.g. happen because the user didn't enter a task.</p>
+<p>The object could look like this:</p>
+<pre><code class="language-javascript">const mernTask = {
+  summary: 'Read the MERN book',
+  description: 'Read and understand the MERN book',
+};
+
+// or like this if you were to use `null`
+const mernTask = {
+  summary: 'Read the MERN book',
+  description: 'Read and understand the MERN book',
+  date: null,
+};
+</code></pre>
 <p>Then <code>mernTask.date.day</code> will fail with</p>
 <pre><code>Uncaught TypeError: Cannot read properties of undefined (reading 'day')
 </code></pre>
 <p>This makes sense since <code>mernTask.date</code> will result in <code>undefined</code> and you can't access a property on <code>undefined</code>. But let's say we would like to access the day and setting it to <code>undefined</code> if the <code>date</code> property is not present. Then we would need to do something like the following:</p>
-<pre><code class="language-javascript">const day = mernTask.date !== null ? mernTask.date.day : undefined;
+<pre><code class="language-javascript">const day = typeof mernTask.date !== undefined &amp;&amp; mernTask.date !== null ? mernTask.date.day : undefined;
 </code></pre>
 <p>Alternatively we could make use of <code>&amp;&amp;</code> and write:</p>
 <pre><code class="language-javascript">const day = mernTask.date &amp;&amp; mernTask.date.day;
@@ -744,7 +757,7 @@ const msg = done ? doneMsg : notDoneMsg;
 </code></pre>
 <p>Now the result will be <code>undefined</code> instead of giving you a TypeError.</p>
 <h3 id="forof-loops"><a class="header" href="#forof-loops">For..of loops</a></h3>
-<p><code>For..of</code> loops allow you to <em>iterate over arrays and strings</em> (and some other things that we will cover later on) and perform a task for each element/character. Let's say you want to print all tasks from a list named <code>tasks</code>. You could do it like this:</p>
+<p><code>For..of</code> loops allow you to <em>iterate over arrays and strings</em> (and some other things that we will cover later on) and perform a task for each element / character. Let's say you want to print all tasks from a list named <code>tasks</code>. You could do it like this:</p>
 <pre><code class="language-javascript">const tasks = ['Task 1', 'Task 2', 'Task 3'];
 for (let task of tasks) {
   console.log(task);
@@ -756,9 +769,9 @@ Task 2
 Task 3
 </code></pre>
 <p>As we already mentioned, you can use a <code>for..of</code> loop to iterate over a string:</p>
-<pre><code class="language-javascript">const s = 'Task';
-for (let task of tasks) {
-  console.log(task);
+<pre><code class="language-javascript">const str = 'Task';
+for (let char of str) {
+  console.log(char);
 }
 </code></pre>
 <p>This would print each charachter of the string, i.e.:</p>
@@ -779,7 +792,7 @@ for (const task of tasks) {
 }
 </code></pre>
 <blockquote>
-<p>There are also a bunch of other loops. We will cover them later. This is because you don't need them nearly as often as you some people think.</p>
+<p>There are also a bunch of other loops. We will cover them later. This is because you don't need them nearly as often as some people think.</p>
 </blockquote>
 <h3 id="summary-3"><a class="header" href="#summary-3">Summary</a></h3>
 <p>You learned how to make decisions using <code>if</code> statements, <code>if...else</code> statements, <code>if...else if...else</code> statements and the ternary operator. You also learned how to address missing properties using <em>optional chaining</em>. Finally you learned how to iterate over strings and arrays using the <code>for...of</code> loop.</p>
