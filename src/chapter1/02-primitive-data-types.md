@@ -170,7 +170,7 @@ const x2 = 10;
 const x3 = 5;
 console.log(x1 === x1); // true
 console.log(x1 === x2); // false
-console.log(x2 === x3); // true
+console.log(x1 === x3); // true
 ```
 
 > There is also another equality operator (`==`). It can be best described as an April Fools' joke that somehow made it into the language. *Never use it*.
