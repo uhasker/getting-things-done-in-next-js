@@ -29,7 +29,7 @@ if (condition) {
 }
 ```
 
-If `condition` is true, then the `statements` inside the curly braces will be executed. If `condition` is false, nothing will happens.
+If `condition` is true, then the `statements` inside the curly braces will be executed. If `condition` is false, nothing will happen.
 
 > Note that technically it suffices if the condition is *truthy* or *falsy*. We will ignore this detail for now and return to it in a second.
 
