@@ -128,7 +128,7 @@ if (tasks.length === 0) {
 }
 ```
 
-Note that the `else` block is not required. If it's missing an none of the conditions is true, nothing will happen.
+Note that the `else` block is not required. If it's missing and none of the conditions are true, nothing will happen.
 
 ### Truthiness and falsiness
 
