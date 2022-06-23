@@ -134,7 +134,7 @@ You can call a method like this:
 greeter.greet(); // Hello, world!
 ```
 
-Methdos can refer to the properties of an object using the `this` keyword which is simply a reference to the current object:
+Methods can refer to the properties of an object using the `this` keyword which is simply a reference to the current object:
 
 ```javascript
 const task = {
