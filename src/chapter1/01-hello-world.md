@@ -1,6 +1,6 @@
 ## Hello world
 
-<div style="text-align: right"> <i> A journey of a thousand miles begins with a single "Hello, world!" program. <br> — Anchient Chinese proverb </i> </div>
+<div style="text-align: right"> <i> A journey of a thousand miles begins with a single "Hello, world!" program. <br> — Ancient Chinese proverb </i> </div>
 
 ### Runtime environments
 
