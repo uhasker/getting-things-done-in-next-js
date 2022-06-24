@@ -1,5 +1,9 @@
 # MERN book
 
+## Contributing
+
+If you want to contribute, **read the `CONTRIBUTING.md` first**. We will reject PRs that fail to adhere to the `CONTRIBUTING.md` without further review.
+
 ## Installation
 
 To get a preview of the book you need to install the [mdBook CLI](https://rust-lang.github.io/mdBook/guide/installation.html).
