@@ -218,7 +218,7 @@ The `longTasks` array will look like this:
 ]
 ```
 
-The `filter` function allows you to select elements from an array based on some condition. It takes a function `f` which returns `true` or `false` for some input(s).
+The `filter` function allows you to select elements from an array based on some condition. It takes a function `f` which returns `true` or `false` for some input(s). All elements for which `f` returns `true` are kept, all elements for which `f` returns `false` are thrown away.
 
 > A function which returns `true` or `false` is commonly referred to as a *predicate*.
 
