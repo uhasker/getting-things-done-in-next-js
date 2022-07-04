@@ -26,13 +26,13 @@ Navigate to the client directory and create a file named `index.html` in there. 
   </head>
   <body>
     <div id="root">
-      <div id="app">
-        <h1 id="headline">My tasks</h1>
-        <div id="taskList">
-          <p id="task1">
+      <div>
+        <h1>My tasks</h1>
+        <div>
+          <p>
             Read the MERN book: Read and understand the MERN book.
           </p>
-          <p id="task2">
+          <p>
             Write a website: Create a new and cool website.
           </p>
         </div>
@@ -79,11 +79,11 @@ If you look at `index.html` you will see the structure of an HTML document. An H
 Once you open an HTML document in a browser, it is represented by the **Document Object Model** (DOM for short). Basically DOM is a model for documents which represent *editable logical trees*. This sounds *way* scarier than it really is. Let's explain this using an example. Looking at our HTML file, we have some HTML that looks like this:
 
 ```html
-<div id="todoList">
-  <p id="task1">
+<div>
+  <p>
     Read the MERN book: Read and understand the MERN book.
   </p>
-  <p id="task2">
+  <p>
     Write a website: Create a new and cool website.
   </p>
 </div>
@@ -94,13 +94,13 @@ Here we have a `<div>` element (which is a generic container) and two `<p>` (par
 Consider this HTML:
 
 ```html
-<div id="app">
-  <h1 id="headline">My tasks</h1>
-  <div id="todoList">
-    <p id="task1">
+<div id="root">
+  <h1>My tasks</h1>
+  <div>
+    <p>
       Read the MERN book: Read and understand the MERN book.
     </p>
-    <p id="task2">
+    <p>
       Write a website: Create a new and cool website.
     </p>
   </div>
