@@ -120,9 +120,9 @@ Whenever you write applications which have a lot of logic in the client, you wil
 ```javascript
 const taskText = 'Do something else: Just do something already.'
 const element = document.createElement('p');
-element.innerHTML = taskText;
+element.append(taskText);
 const todoList = document.getElementById('todoList');
-todoList.append(element);
+todoList.appendChild(element);
 ```
 
 This JavaScript™® code already looks cumbersome and annoying. It will only get more annoying once the logic becomes more complex. Manually manipulating the DOM in JavaScript™®℠ is generally a bad idea as it leads to unreadable and unmaintainable code. And unreadable code is almost as bad as inserting unnecessary trademark symbols into a text just for the heck of it. Your fellow developers will *really* hate you if you do that.
