@@ -60,7 +60,7 @@ An HTML element usually has some *content* inside an *opening tag* and a *closin
 
 There are many different HTML elements. We already learned that `p` is a paragraph and `div` is a generic container. We will talk about other elements later on.
 
-What makes HTML so powerful is the fact that elements can be *nested*. For example here is how you can nest a paragraph inside a generic container:
+What makes HTML so powerful is the fact that *most* elements can be *nested*. For example here is how you can nest a paragraph inside a generic container:
 
 ```html
 <div>
@@ -68,7 +68,7 @@ What makes HTML so powerful is the fact that elements can be *nested*. For examp
 </div>
 ```
 
-Elements can also have *attributes*. Two of the most important attributes are `id` and `class`. The `id` attribute is used to specify a *unique identity* for an HTML element. You can the use that attribute to uniquely identify the element. The `class` attribute is used to specify a *class* for an HTML element. Unlike unique identifiers, multiple HTML elements can have the same class. This is extremely useful for example if you want to *style* multiple HTML elements in the same way. For example you could color all HTML elements of class `blue-text` blue. There any many more attributes and different HTML elements often have different attributes - we will discuss this in a second.
+Elements can also have *attributes*. Two of the most important attributes are `id` and `class`. The `id` attribute is used to specify a *unique identity* for an HTML element. You can use that attribute to uniquely identify the element. The `class` attribute is used to specify a *class* for an HTML element. Unlike unique identifiers, multiple HTML elements can have the same class. This is extremely useful for example if you want to *style* multiple HTML elements in the same way. For example you could color all HTML elements of class `blue-text` blue. There are many more attributes and different HTML elements often have different attributes - we will discuss this in a second.
 
 If you look at `index.html` you will see the structure of an HTML document. An HTML document begins with `<!DOCTYPE html>` which is a *document type declaration*. This is followed by an `html` element which contains all the content of the document. The `head` element contains everything that is not directly related to the content that will be displayed on the page. In the above example we declared the title of the page (which will become the name of the tab once the page is opened) and what kind of character encoding we use. Finally the `body` element contains all the content that will actually be rendered on the page. In our example the task list we want to render is inside the `body` element.
 
@@ -131,7 +131,7 @@ To make our lives simpler, we will use a UI library called **React**. The idea b
 
 ### Summary
 
-You know what HTML is and how HTML elements look like. You also know about the DOM is and why you wouldn't want to manipulate it using JavaScript manually.
+You know what HTML is and how HTML elements look like. You also know about the DOM and why you wouldn't want to manipulate it using JavaScript manually.
 
 ### Further reading
 
