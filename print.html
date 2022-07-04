@@ -76,7 +76,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="title-page.html">Getting things done in MERN</a></li><li class="chapter-item expanded affix "><a href="introduction.html">Introduction</a></li><li class="chapter-item expanded "><a href="chapter1/index.html"><strong aria-hidden="true">1.</strong> A brief introduction to JavaScript</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter1/01-hello-world.html"><strong aria-hidden="true">1.1.</strong> Hello world</a></li><li class="chapter-item expanded "><a href="chapter1/02-primitive-data-types.html"><strong aria-hidden="true">1.2.</strong> Primitive data types</a></li><li class="chapter-item expanded "><a href="chapter1/03-arrays-and-objects.html"><strong aria-hidden="true">1.3.</strong> Arrays and objects</a></li><li class="chapter-item expanded "><a href="chapter1/04-control-flow.html"><strong aria-hidden="true">1.4.</strong> Control flow</a></li><li class="chapter-item expanded "><a href="chapter1/05-functions.html"><strong aria-hidden="true">1.5.</strong> Functions</a></li><li class="chapter-item expanded "><a href="chapter1/06-functional-thinking.html"><strong aria-hidden="true">1.6.</strong> Functional thinking</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="title-page.html">Getting things done in MERN</a></li><li class="chapter-item expanded affix "><a href="introduction.html">Introduction</a></li><li class="chapter-item expanded "><a href="chapter1/index.html"><strong aria-hidden="true">1.</strong> A brief introduction to JavaScript</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter1/01-hello-world.html"><strong aria-hidden="true">1.1.</strong> Hello world</a></li><li class="chapter-item expanded "><a href="chapter1/02-primitive-data-types.html"><strong aria-hidden="true">1.2.</strong> Primitive data types</a></li><li class="chapter-item expanded "><a href="chapter1/03-arrays-and-objects.html"><strong aria-hidden="true">1.3.</strong> Arrays and objects</a></li><li class="chapter-item expanded "><a href="chapter1/04-control-flow.html"><strong aria-hidden="true">1.4.</strong> Control flow</a></li><li class="chapter-item expanded "><a href="chapter1/05-functions.html"><strong aria-hidden="true">1.5.</strong> Functions</a></li><li class="chapter-item expanded "><a href="chapter1/06-functional-thinking.html"><strong aria-hidden="true">1.6.</strong> Functional thinking</a></li></ol></li><li class="chapter-item expanded "><a href="chapter2/index.html"><strong aria-hidden="true">2.</strong> The client</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter2/01-html-and-the-dom.html"><strong aria-hidden="true">2.1.</strong> HTML and the DOM</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -1085,6 +1085,111 @@ for (const number in numbers) {
 <p>You learned about important functional concepts like pure functions, immutability and higher-order functions. You also learned about the three most important higher-order functions - <code>map</code>, <code>filter</code> and <code>reduce</code>.</p>
 <h3 id="further-reading-5"><a class="header" href="#further-reading-5">Further reading</a></h3>
 <p>There is no further reading for this section.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="chapter-2-the-client"><a class="header" href="#chapter-2-the-client">Chapter 2: The client</a></h1>
+<div style="text-align: right"> This website needs to work on Internet Explorer 6.0 <br> <i> - Famous last words </i> </div>
+<p>In this chapter we will create a simple (website) client. This client will allow us to add and delete tasks. Each task will have a summary and a description.</p>
+<p>Create a directory which will contain your project. We called that directory <em>easy-opus</em> (it is common to name your project directory after the project). Of course, feel free to give your directory any <em>meaningful</em> name.</p>
+<p>Enough blabla, let's dive right in!</p>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="html-and-the-dom"><a class="header" href="#html-and-the-dom">HTML and the DOM</a></h2>
+<div style="text-align: right"> Hey guys, how do I parse HTML with a regular expression? <br> <i> - Famous last words </i> </div>
+<h3 id="a-minimal-html-file"><a class="header" href="#a-minimal-html-file">A minimal HTML file</a></h3>
+<p>Inside your project directory (<em>easy-opus</em> in our case) create a directory which will contain the (website) client. Give the directory a descriptive name (for example <em>client</em>). If you followed our naming scheme, your directory structure should now look as follows:</p>
+<pre><code>easy-opus/
+└─── client/
+</code></pre>
+<p>Let's write our first webpage. We do so using <strong>HTML</strong> which is a <em>markup language</em> for defining for documents that should be displayed in a browser.</p>
+<blockquote>
+<p>A markup language specifies rules which define what kind of information can be included in a document. Note that markup languages and programming languages are different things. A markup language essentially allows you to create documents to be displayed, while programming languages are much more powerful than that.</p>
+</blockquote>
+<p>Navigate to the client directory and create a file named <code>index.html</code> in there. Now write some minimal useful HTML to display a bunch of tasks:</p>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+  &lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot; /&gt;
+    &lt;title&gt;Easy Opus&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div id=&quot;root&quot;&gt;
+      &lt;div&gt;
+        &lt;h1&gt;My tasks&lt;/h1&gt;
+        &lt;div&gt;
+          &lt;p&gt;
+            Read the MERN book: Read and understand the MERN book.
+          &lt;/p&gt;
+          &lt;p&gt;
+            Write a website: Create a new and cool website.
+          &lt;/p&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>If you open the HTML file in your browser you should see something like this:</p>
+<p><img src="chapter2/images/minimal.png" alt="" /></p>
+<p>Hooray, you've created a simple HTML document! Now you can close this book and go procrastinate. No? Hm, that's weird. Oh, your boss forced you to read this book (<em>blink once</em> if you need help)? Well in that case, we continue by trying to figure out what we just wrote.</p>
+<h3 id="html-elements"><a class="header" href="#html-elements">HTML elements</a></h3>
+<p>HTML essentially consists of elements which you can use to declare what <em>kind</em> of content you would like to render. For example the <code>p</code> element is a paragraph:</p>
+<pre><code class="language-html">&lt;p&gt; Read the MERN book: Read and understand the MERN book. &lt;/p&gt;
+</code></pre>
+<p>An HTML element usually has some <em>content</em> inside an <em>opening tag</em> and a <em>closing tag</em>. The opening tag is the name of the element wrapped in angle brackets (<code>&lt;p&gt;</code> in the above example). The closing tag is the name of the element wrapped in angle brackets with a <em>forward slash before the name</em> (<code>&lt;/p&gt;</code> in the above example).</p>
+<p>There are many different HTML elements. We already learned that <code>p</code> is a paragraph and <code>div</code> is a generic container. We will talk about other elements later on.</p>
+<p>What makes HTML so powerful is the fact that <em>most</em> elements can be <em>nested</em>. For example here is how you can nest a paragraph inside a generic container:</p>
+<pre><code class="language-html">&lt;div&gt;
+  &lt;p&gt; Read the MERN book: Read and understand the MERN book. &lt;/p&gt;
+&lt;/div&gt;
+</code></pre>
+<p>Elements can also have <em>attributes</em>. Two of the most important attributes are <code>id</code> and <code>class</code>. The <code>id</code> attribute is used to specify a <em>unique identity</em> for an HTML element. You can use that attribute to uniquely identify the element. The <code>class</code> attribute is used to specify a <em>class</em> for an HTML element. Unlike unique identifiers, multiple HTML elements can have the same class. This is extremely useful for example if you want to <em>style</em> multiple HTML elements in the same way. For example you could color all HTML elements of class <code>blue-text</code> blue. There are many more attributes and different HTML elements often have different attributes - we will discuss this in a second.</p>
+<p>If you look at <code>index.html</code> you will see the structure of an HTML document. An HTML document begins with <code>&lt;!DOCTYPE html&gt;</code> which is a <em>document type declaration</em>. This is followed by an <code>html</code> element which contains all the content of the document. The <code>head</code> element contains everything that is not directly related to the content that will be displayed on the page. In the above example we declared the title of the page (which will become the name of the tab once the page is opened) and what kind of character encoding we use. Finally the <code>body</code> element contains all the content that will actually be rendered on the page. In our example the task list we want to render is inside the <code>body</code> element.</p>
+<blockquote>
+<p>We will later talk about character encodings in great detail.</p>
+</blockquote>
+<h3 id="the-document-object-model"><a class="header" href="#the-document-object-model">The Document Object Model</a></h3>
+<p>Once you open an HTML document in a browser, it is represented by the <strong>Document Object Model</strong> (DOM for short). Basically DOM is a model for documents which represent <em>editable logical trees</em>. This sounds <em>way</em> scarier than it really is. Let's explain this using an example. Looking at our HTML file, we have some HTML that looks like this:</p>
+<pre><code class="language-html">&lt;div&gt;
+  &lt;p&gt;
+    Read the MERN book: Read and understand the MERN book.
+  &lt;/p&gt;
+  &lt;p&gt;
+    Write a website: Create a new and cool website.
+  &lt;/p&gt;
+&lt;/div&gt;
+</code></pre>
+<p>Here we have a <code>&lt;div&gt;</code> element (which is a generic container) and two <code>&lt;p&gt;</code> (paragraph) elements inside that div element. The <code>&lt;div&gt;</code> element is the <em>parent</em> of the <code>&lt;p&gt;</code> elements and the <code>&lt;p&gt;</code> elements are the <em>children</em> of the <code>&lt;div&gt;</code> element. The elements form a <em>tree</em>.</p>
+<p>Consider this HTML:</p>
+<pre><code class="language-html">&lt;div id=&quot;root&quot;&gt;
+  &lt;h1&gt;My tasks&lt;/h1&gt;
+  &lt;div&gt;
+    &lt;p&gt;
+      Read the MERN book: Read and understand the MERN book.
+    &lt;/p&gt;
+    &lt;p&gt;
+      Write a website: Create a new and cool website.
+    &lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<p>You can visualize it like this:</p>
+<p><img src="chapter2/images/tree.png" alt="" /></p>
+<blockquote>
+<p>As a side note, HTML elements do not need to have an ID.</p>
+</blockquote>
+<h2 id="manipulating-the-dom-using-javascript"><a class="header" href="#manipulating-the-dom-using-javascript">Manipulating the DOM using JavaScript</a></h2>
+<p>Whenever you write applications which have a lot of logic in the client, you will need to manipulate the DOM (i.e. add or remove items). For example, if we add a task, we might need to add some elements to the current tree representing the task. This is how the corresponding JavaScript™ code would look like:</p>
+<pre><code class="language-javascript">const taskText = 'Do something else: Just do something already.'
+const element = document.createElement('p');
+element.innerHTML = taskText;
+const todoList = document.getElementById('todoList');
+todoList.append(element);
+</code></pre>
+<p>This JavaScript™® code already looks cumbersome and annoying. It will only get more annoying once the logic becomes more complex. Manually manipulating the DOM in JavaScript™®℠ is generally a bad idea as it leads to unreadable and unmaintainable code. And unreadable code is almost as bad as inserting unnecessary trademark symbols into a text just for the heck of it. Your fellow developers will <em>really</em> hate you if you do that.</p>
+<p>To make our lives simpler, we will use a UI library called <strong>React</strong>. The idea behind React is to create declarative UIs with nicely separated components. Basically we only define how the application should look like (hence the <em>declarative</em>) and React will figure out the rest (like which DOM manipulations are needed). This is pretty neat, as you will soon see for yourself.</p>
+<h3 id="summary-6"><a class="header" href="#summary-6">Summary</a></h3>
+<p>You know what HTML is and how HTML elements look like. You also know about the DOM and why you wouldn't want to manipulate it using JavaScript manually.</p>
+<h3 id="further-reading-6"><a class="header" href="#further-reading-6">Further reading</a></h3>
+<ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Learn/HTML/Introduction_to_HTML/Getting_started">Introduction to HTML - Getting started with HTML</a></li>
+</ul>
 
                     </main>
 
