@@ -10,3 +10,7 @@
   - [Control flow](chapter1/04-control-flow.md)
   - [Functions](chapter1/05-functions.md)
   - [Functional thinking](chapter1/06-functional-thinking.md)
+
+- [The client](chapter2/README.md)
+  - [HTML and the DOM](chapter2/01-html-and-the-dom.md)
+
