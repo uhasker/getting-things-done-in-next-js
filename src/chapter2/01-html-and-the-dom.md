@@ -28,9 +28,9 @@ Navigate to the client directory and create a file named `index.html` in there. 
     <div id="root">
       <div>
         <h1>My tasks</h1>
-        <div>
-          <p>Read the MERN book: Read and understand the MERN book.</p>
-          <p>Write a website: Create a new and cool website.</p>
+        <div id="taskList">
+          <p> Read the MERN book: Read and understand the MERN book. </p>
+          <p> Write a website: Create a new and cool website. </p>
         </div>
       </div>
     </div>
@@ -75,9 +75,9 @@ If you look at `index.html` you will see the structure of an HTML document. An H
 Once you open an HTML document in a browser, it is represented by the **Document Object Model** (DOM for short). Basically DOM is a model for documents which represent _editable logical trees_. This sounds _way_ scarier than it really is. Let's explain this using an example. Looking at our HTML file, we have some HTML that looks like this:
 
 ```html
-<div>
-  <p>Read the MERN book: Read and understand the MERN book.</p>
-  <p>Write a website: Create a new and cool website.</p>
+<div id="taskList">
+  <p> Read the MERN book: Read and understand the MERN book. </p>
+  <p> Write a website: Create a new and cool website. </p>
 </div>
 ```
 
@@ -88,9 +88,9 @@ Consider this HTML:
 ```html
 <div id="root">
   <h1>My tasks</h1>
-  <div>
-    <p>Read the MERN book: Read and understand the MERN book.</p>
-    <p>Write a website: Create a new and cool website.</p>
+  <div id="taskList">
+    <p> Read the MERN book: Read and understand the MERN book. </p>
+    <p> Write a website: Create a new and cool website. </p>
   </div>
 </div>
 ```
@@ -108,9 +108,9 @@ Whenever you write applications which have a lot of logic in the client, you wil
 ```javascript
 const taskText = 'Do something else: Just do something already.';
 const element = document.createElement('p');
-element.innerHTML = taskText;
-const todoList = document.getElementById('todoList');
-todoList.append(element);
+element.append(taskText);
+const taskList = document.getElementById('taskList');
+taskList.appendChild(element);
 ```
 
 This JavaScript™® code already looks cumbersome and annoying. It will only get more annoying once the logic becomes more complex. Manually manipulating the DOM in JavaScript™®℠ is generally a bad idea as it leads to unreadable and unmaintainable code. And unreadable code is almost as bad as inserting unnecessary trademark symbols into a text just for the heck of it. Your fellow developers will _really_ hate you if you do that.
