@@ -1113,9 +1113,9 @@ for (const number in numbers) {
     &lt;div id=&quot;root&quot;&gt;
       &lt;div&gt;
         &lt;h1&gt;My tasks&lt;/h1&gt;
-        &lt;div&gt;
-          &lt;p&gt;Read the MERN book: Read and understand the MERN book.&lt;/p&gt;
-          &lt;p&gt;Write a website: Create a new and cool website.&lt;/p&gt;
+        &lt;div id=&quot;taskList&quot;&gt;
+          &lt;p&gt; Read the MERN book: Read and understand the MERN book. &lt;/p&gt;
+          &lt;p&gt; Write a website: Create a new and cool website. &lt;/p&gt;
         &lt;/div&gt;
       &lt;/div&gt;
     &lt;/div&gt;
@@ -1143,18 +1143,18 @@ for (const number in numbers) {
 </blockquote>
 <h3 id="the-document-object-model"><a class="header" href="#the-document-object-model">The Document Object Model</a></h3>
 <p>Once you open an HTML document in a browser, it is represented by the <strong>Document Object Model</strong> (DOM for short). Basically DOM is a model for documents which represent <em>editable logical trees</em>. This sounds <em>way</em> scarier than it really is. Let's explain this using an example. Looking at our HTML file, we have some HTML that looks like this:</p>
-<pre><code class="language-html">&lt;div&gt;
-  &lt;p&gt;Read the MERN book: Read and understand the MERN book.&lt;/p&gt;
-  &lt;p&gt;Write a website: Create a new and cool website.&lt;/p&gt;
+<pre><code class="language-html">&lt;div id=&quot;taskList&quot;&gt;
+  &lt;p&gt; Read the MERN book: Read and understand the MERN book. &lt;/p&gt;
+  &lt;p&gt; Write a website: Create a new and cool website. &lt;/p&gt;
 &lt;/div&gt;
 </code></pre>
 <p>Here we have a <code>&lt;div&gt;</code> element (which is a generic container) and two <code>&lt;p&gt;</code> (paragraph) elements inside that div element. The <code>&lt;div&gt;</code> element is the <em>parent</em> of the <code>&lt;p&gt;</code> elements and the <code>&lt;p&gt;</code> elements are the <em>children</em> of the <code>&lt;div&gt;</code> element. The elements form a <em>tree</em>.</p>
 <p>Consider this HTML:</p>
 <pre><code class="language-html">&lt;div id=&quot;root&quot;&gt;
   &lt;h1&gt;My tasks&lt;/h1&gt;
-  &lt;div&gt;
-    &lt;p&gt;Read the MERN book: Read and understand the MERN book.&lt;/p&gt;
-    &lt;p&gt;Write a website: Create a new and cool website.&lt;/p&gt;
+  &lt;div id=&quot;taskList&quot;&gt;
+    &lt;p&gt; Read the MERN book: Read and understand the MERN book. &lt;/p&gt;
+    &lt;p&gt; Write a website: Create a new and cool website. &lt;/p&gt;
   &lt;/div&gt;
 &lt;/div&gt;
 </code></pre>
@@ -1167,9 +1167,9 @@ for (const number in numbers) {
 <p>Whenever you write applications which have a lot of logic in the client, you will need to manipulate the DOM (i.e. add or remove items). For example, if we add a task, we might need to add some elements to the current tree representing the task. This is how the corresponding JavaScript™ code would look like:</p>
 <pre><code class="language-javascript">const taskText = 'Do something else: Just do something already.';
 const element = document.createElement('p');
-element.innerHTML = taskText;
-const todoList = document.getElementById('todoList');
-todoList.append(element);
+element.append(taskText);
+const taskList = document.getElementById('taskList');
+taskList.appendChild(element);
 </code></pre>
 <p>This JavaScript™® code already looks cumbersome and annoying. It will only get more annoying once the logic becomes more complex. Manually manipulating the DOM in JavaScript™®℠ is generally a bad idea as it leads to unreadable and unmaintainable code. And unreadable code is almost as bad as inserting unnecessary trademark symbols into a text just for the heck of it. Your fellow developers will <em>really</em> hate you if you do that.</p>
 <p>To make our lives simpler, we will use a UI library called <strong>React</strong>. The idea behind React is to create declarative UIs with nicely separated components. Basically we only define how the application should look like (hence the <em>declarative</em>) and React will figure out the rest (like which DOM manipulations are needed). This is pretty neat, as you will soon see for yourself.</p>
