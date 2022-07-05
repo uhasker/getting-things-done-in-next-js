@@ -1,6 +1,6 @@
 ## Control flow
 
-<div style="text-align: right"> <i> Don't push the for loop, it flows by itself. <br> — Anchient Chinese proverb </i> </div>
+<div style="text-align: right"> <i> Don't push the for loop, it flows by itself. <br> — Ancient Chinese proverb </i> </div>
 
 ### If statements
 
