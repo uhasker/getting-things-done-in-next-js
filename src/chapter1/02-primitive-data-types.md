@@ -4,9 +4,9 @@
 
 ### Variables
 
-Whenever we write programs, we need to manipulate data. This data needs to be stored somewhere and we need to be able to access it somehow. We also need to deal with the fact that when we execute a program, the values we deal with are not predictable in advance. For example we don't know which tasks a user might create. Nevertheless, we must be able to access created tasks through a predictable name like `tasks` or `createdTasks`. Therefore we need a way to put an *unpredictable* value in storage and refer to it using a *predictable* name.
+Whenever we write programs, we need to manipulate data. This data needs to be stored somewhere and we need to be able to access it somehow. We also need to deal with the fact that when we execute a program, the values we deal with are not predictable in advance. For example we don't know which tasks a user might create. Nevertheless, we must be able to access created tasks through a predictable name like `tasks` or `createdTasks`. Therefore we need a way to put an _unpredictable_ value in storage and refer to it using a _predictable_ name.
 
-A **variable** is just that - a storage location containing a value which is referred to by a symbolic name. This *sounds* really fancy, but it just means that there is a value somewhere in your storage and you can refer to that value using a predictable name (even if the value itself is not predictable).
+A **variable** is just that - a storage location containing a value which is referred to by a symbolic name. This _sounds_ really fancy, but it just means that there is a value somewhere in your storage and you can refer to that value using a predictable name (even if the value itself is not predictable).
 
 For example you could have a variable `x` which has the value `5` (we say that `x` is equal to `5`):
 
@@ -74,7 +74,7 @@ Uncaught TypeError: Assignment to constant variable.
 
 You will almost exclusively see us using `const` instead of `let` from now on. Reassignment is not nearly as necessary as you might think right now.
 
-> You can also declare variables using the `var` keyword. We will not cover it here and you essentially only need to know one thing about `var` - you should *basically never use it*. It's mostly a historical artifact of the language at this point.
+> You can also declare variables using the `var` keyword. We will not cover it here and you essentially only need to know one thing about `var` - you should _basically never use it_. It's mostly a historical artifact of the language at this point.
 
 Any variable has a **data type** which denotes the range of values it can take and which operations can be performed on the variable. You can use the `typeof` operator to obtain the data type of a variable.
 
@@ -125,7 +125,7 @@ console.log(typeof thisBookSucks); // boolean
 
 You can do simple logic using the logical operators `&&` (which denotes **and**), `||` (which denotes **or**) and `!` (which denotes **not**).
 
-The `&&` (*and*) operator takes two values and evaluates to `true` only if both values are `true` and to `false` otherwise:
+The `&&` (_and_) operator takes two values and evaluates to `true` only if both values are `true` and to `false` otherwise:
 
 ```javascript
 console.log(true && true); // true
@@ -134,7 +134,7 @@ console.log(true && false); // false
 console.log(false && false); // false
 ```
 
-The `||` (*or*) operator takes two values and evaluates to `true` if *at least one* of the values is `true` (and to `false` otherwise):
+The `||` (_or_) operator takes two values and evaluates to `true` if _at least one_ of the values is `true` (and to `false` otherwise):
 
 ```javascript
 console.log(true || true); // true
@@ -143,7 +143,7 @@ console.log(true || false); // true
 console.log(false || false); // false
 ```
 
-The `!` (*not*) operator takes a single value and simply negates it:
+The `!` (_not_) operator takes a single value and simply negates it:
 
 ```javascript
 console.log(!true); // false
@@ -160,7 +160,7 @@ console.log(b1 || b2); // true
 console.log(!b1); // false
 ```
 
-> Note that technically all the logical operators can take *any* value (not just boolean values). The result of the logical operator application is then dependent on whether the values are *truthy* or *falsy*. We will discuss this a bit later.
+> Note that technically all the logical operators can take _any_ value (not just boolean values). The result of the logical operator application is then dependent on whether the values are _truthy_ or _falsy_. We will discuss this a bit later.
 
 A boolean variable is usually the result of an expression. Often it is the result of an expression containing the **equality operator** (`===`) which allows us to compare the values of variables:
 
@@ -173,9 +173,9 @@ console.log(x1 === x2); // false
 console.log(x1 === x3); // true
 ```
 
-> There is also another equality operator (`==`). It can be best described as an April Fools' joke that somehow made it into the language. *Never use it*.
+> There is also another equality operator (`==`). It can be best described as an April Fools' joke that somehow made it into the language. _Never use it_.
 
-If you want to write *not equals* you can use `!==`:
+If you want to write _not equals_ you can use `!==`:
 
 ```javascript
 console.log(5 !== 10); // true
@@ -184,7 +184,7 @@ console.log(5 !== 5); // false
 
 ### Strings
 
-Another primitive data type is the `String` type. A string is simply a bunch of characters and is used to represent text. Strings are usually written using single quotes in JavaScript: 
+Another primitive data type is the `String` type. A string is simply a bunch of characters and is used to represent text. Strings are usually written using single quotes in JavaScript:
 
 ```javascript
 const s = 'Some text';
@@ -209,7 +209,7 @@ const greeting = `Hello ${s}!`;
 console.log(greeting); // Hello world!
 ```
 
-Template strings are written using backticks (*not* single quotes). They may contain so called *placeholders* which are expressions embedded inside `${...}`. These expressions can be any valid JavaScript expression that evaluates to a value implicitly convertible to a string:
+Template strings are written using backticks (_not_ single quotes). They may contain so called _placeholders_ which are expressions embedded inside `${...}`. These expressions can be any valid JavaScript expression that evaluates to a value implicitly convertible to a string:
 
 ```javascript
 console.log(`2 + 2 = ${2 + 2}`); // 2 + 2 = 4
@@ -240,4 +240,4 @@ You learned how to declare variables using `let` and constants using `const`. Yo
 
 ### Further reading
 
-* [JavaScript Guide - Grammar and types](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_Types)
+- [JavaScript Guide - Grammar and types](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_Types)
