@@ -1,3 +1,3 @@
 # Getting things done in MERN
 
-*by Mikhail Berkov and Jannis Morgenstern*
+_by Mikhail Berkov and Jannis Morgenstern_

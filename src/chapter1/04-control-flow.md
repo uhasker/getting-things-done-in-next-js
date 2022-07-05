@@ -4,7 +4,7 @@
 
 ### If statements
 
-Quite often, we need to make *decisions* in our programs. Let's say we want to display a fancy message when a bunch of tasks are completed. This is a decision: *If* all the tasks are completed, *then* we want to display a message. Put generally: *If* a condition holds (is true), *then* we want to do something.
+Quite often, we need to make _decisions_ in our programs. Let's say we want to display a fancy message when a bunch of tasks are completed. This is a decision: _If_ all the tasks are completed, _then_ we want to display a message. Put generally: _If_ a condition holds (is true), _then_ we want to do something.
 
 Conveniently, the language keyword that allows us to accomplish this is called `if`:
 
@@ -25,13 +25,13 @@ The general form of an `if` statement looks like this:
 
 ```javascript
 if (condition) {
-  statements
+  statements;
 }
 ```
 
 If `condition` is true, then the `statements` inside the curly braces will be executed. If `condition` is false, nothing will happen.
 
-> Note that technically it suffices if the condition is *truthy* or *falsy*. We will ignore this detail for now and return to it in a second.
+> Note that technically it suffices if the condition is _truthy_ or _falsy_. We will ignore this detail for now and return to it in a second.
 
 The simplest condition is a boolean variable. However, nothing prevents us from writing more complex conditions. For example, let's say we have a list of uncompleted tasks (conveniently) named `tasks`. Then we could check that all tasks have been completed by checking whether `tasks` is empty (i.e. the length of `tasks` is zero):
 
@@ -55,9 +55,9 @@ The general form of an `if...else` statement looks like this:
 
 ```javascript
 if (condition) {
-  statements1
+  statements1;
 } else {
-  statements2
+  statements2;
 }
 ```
 
@@ -100,13 +100,13 @@ The general form of an `if...else if...else` statement looks like this:
 
 ```javascript
 if (condition1) {
-  statements1
+  statements1;
 } else if (condition2) {
-  statements2
+  statements2;
 } /*possibly more else ifs*/ else if (conditionN) {
-  statementsN
+  statementsN;
 } else {
-  statementsElse
+  statementsElse;
 }
 ```
 
@@ -142,15 +142,15 @@ if (1) {
 }
 ```
 
-This will print "1 is truthy." because JavaScript will consider `1` to be `true` in this context since `1` is a *truthy* value.
+This will print "1 is truthy." because JavaScript will consider `1` to be `true` in this context since `1` is a _truthy_ value.
 
 Generally speaking, a **truthy** value is considered to be true when encountered in a boolean context (like a condition). A **falsy** value is considered to be false when encountered in a boolean context. The most important falsy values are `false`, `0`, `''` (empty string), `null` and `undefined`. Most other values (like `1`, `[]` (empty array), `[3]`, `{ example: 'hello' }` etc) are truthy.
 
-Try to *avoid using non-boolean values in boolean contexts* as it can lead to surprising behaviour. Nevertheless it's still useful to know about truthiness and falsiness, as it will otherwise trip you up in certain cases.
+Try to _avoid using non-boolean values in boolean contexts_ as it can lead to surprising behaviour. Nevertheless it's still useful to know about truthiness and falsiness, as it will otherwise trip you up in certain cases.
 
 ### Ternary operator
 
-The **ternary operator** takes a *condition*, an *expression to execute if the condition is truthy* and an *expression to execute if the condition is falsy*. It looks like this:
+The **ternary operator** takes a _condition_, an _expression to execute if the condition is truthy_ and an _expression to execute if the condition is falsy_. It looks like this:
 
 ```javascript
 const doneMsg = 'All tasks are done';
@@ -172,7 +172,7 @@ const finished = tasks.length === 0 ? true : false;
 
 You should stop for a second a think about why this is unneccessary.
 
-*Thought* about it? That's right. You can just write
+_Thought_ about it? That's right. You can just write
 
 ```javascript
 const finished = tasks.length === 0;
@@ -196,7 +196,7 @@ const mernTask = {
 };
 ```
 
-Let's say we want to access the day of the task. We can do this by using `mernTask.date.day`. But what if the day does not have to be present, i.e. is *optional*? This could e.g. happen because the user didn't enter a task.
+Let's say we want to access the day of the task. We can do this by using `mernTask.date.day`. But what if the day does not have to be present, i.e. is _optional_? This could e.g. happen because the user didn't enter a task.
 
 The object could look like this:
 
@@ -223,7 +223,8 @@ Uncaught TypeError: Cannot read properties of undefined (reading 'day')
 This makes sense since `mernTask.date` will result in `undefined` and you can't access a property on `undefined`. But let's say we would like to access the day and setting it to `undefined` if the `date` property is not present. Then we would need to do something like the following:
 
 ```javascript
-const day = typeof mernTask.date !== undefined && mernTask.date !== null ? mernTask.date.day : undefined;
+const day =
+  typeof mernTask.date !== undefined && mernTask.date !== null ? mernTask.date.day : undefined;
 ```
 
 Alternatively we could make use of `&&` and write:
@@ -242,7 +243,7 @@ Now the result will be `undefined` instead of giving you a TypeError.
 
 ### For..of loops
 
-`For..of` loops allow you to *iterate over arrays and strings* (and some other things that we will cover later on) and perform a task for each element / character. Let's say you want to print all tasks from a list named `tasks`. You could do it like this:
+`For..of` loops allow you to _iterate over arrays and strings_ (and some other things that we will cover later on) and perform a task for each element / character. Let's say you want to print all tasks from a list named `tasks`. You could do it like this:
 
 ```javascript
 const tasks = ['Task 1', 'Task 2', 'Task 3'];
@@ -281,7 +282,7 @@ The general syntax of a `for..of` loop is
 
 ```javascript
 for (let variable of arrayOrString) {
-  statements
+  statements;
 }
 ```
 
@@ -298,8 +299,8 @@ for (const task of tasks) {
 
 ### Summary
 
-You learned how to make decisions using `if` statements, `if...else` statements, `if...else if...else` statements and the ternary operator. You also learned how to address missing properties using *optional chaining*. Finally you learned how to iterate over strings and arrays using the `for...of` loop.
+You learned how to make decisions using `if` statements, `if...else` statements, `if...else if...else` statements and the ternary operator. You also learned how to address missing properties using _optional chaining_. Finally you learned how to iterate over strings and arrays using the `for...of` loop.
 
 ### Further reading
 
-* [JavaScript Guide - Loops and iteration](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Loops_and_iteration)
+- [JavaScript Guide - Loops and iteration](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Loops_and_iteration)
