@@ -16,7 +16,7 @@ function printGreeting() {
 }
 ```
 
-Function definitions begin with the `function` keyword followed by the function name (in this case `printGreeting`). We will cover the meaning of the parentheses in a second, but the curly braces contain the *body* of the function. These are all the statements that will be executed when the function is called. In this case we have one statement, which will simply print `Hello world!` to the console.
+Function definitions begin with the `function` keyword followed by the function name (in this case `printGreeting`). We will cover the meaning of the parentheses in a second, but the curly braces contain the _body_ of the function. These are all the statements that will be executed when the function is called. In this case we have one statement, which will simply print `Hello world!` to the console.
 
 You can call / invoke the `printGreeting` function by writing `printGreeting()`:
 
@@ -71,7 +71,7 @@ This means that we can assign functions as variables, pass them to other functio
 ```javascript
 const square = function square(num) {
   return num * num;
-}
+};
 ```
 
 We could then call this like a regular function by doing e.g. `square(3)`.
@@ -79,9 +79,9 @@ We could then call this like a regular function by doing e.g. `square(3)`.
 This is called a **function expression**. Note that the function may be **anonymous** here (i.e. it doesn't have a name). We could write this:
 
 ```javascript
-const square = function(num) {
+const square = function (num) {
   return num * num;
-}
+};
 ```
 
 The syntax for calling such a function is still the same, e.g. we could write `square(3)`.
@@ -91,10 +91,10 @@ The syntax for calling such a function is still the same, e.g. we could write `s
 There is a shorthand notation available in JavaScript called the **arrow function** notation. This notation allows you to omit certain keywords in certain situations. For example here is how you could rewrite the `square` function using the arrow function notation:
 
 ```javascript
-const square = num => num * num;
+const square = (num) => num * num;
 ```
 
-This is much shorter and less *tedious* (haha) indeed.
+This is much shorter and less _tedious_ (haha) indeed.
 
 For an arrow function you only have to specify the parameter(s), followed by an arrow, followed by the returned value. If you have multiple parameters, you need to put them inside parentheses:
 
@@ -105,7 +105,7 @@ const add = (x, y) => x + y;
 You can also have multiple statements in the function body, but then you have to specify the `return` keyword and surround the statements with curly braces:
 
 ```javascript
-const printAndGreet = user => {
+const printAndGreet = (user) => {
   const greeting = `Hello ${user}`;
   console.log(greeting);
   return greeting;
@@ -114,7 +114,7 @@ const printAndGreet = user => {
 
 As you can see this is not too different from a regular function declaration or expression (unlike the `square` function, where the arrow notation was much shorter). It is therefore common practice to only use arrow functions for short functions like `square`. However this is again just convention.
 
-One thing you might have noticed, is that we only showed you **arrow function expressions**. This is not an oversight but stems from the fact that there is no way to write a **function declaration** with the **arrow function notation**. Another difference is that **arrow functions** are *always* anonymous.
+One thing you might have noticed, is that we only showed you **arrow function expressions**. This is not an oversight but stems from the fact that there is no way to write a **function declaration** with the **arrow function notation**. Another difference is that **arrow functions** are _always_ anonymous.
 
 ### Methods
 
@@ -122,9 +122,9 @@ A method is a function which is a property of an object.
 
 ```javascript
 const greeter = {
-  greet: function() {
-    console.log("Hello, world!");
-  }
+  greet: function () {
+    console.log('Hello, world!');
+  },
 };
 ```
 
@@ -141,9 +141,9 @@ const task = {
   id: 1,
   summary: 'Read the MERN book',
   description: 'Read and understand the MERN book.',
-  longDescription: function() {
-    return `${this.summary}(ID = ${this.id}): ${this.description}`
-  }
+  longDescription: function () {
+    return `${this.summary}(ID = ${this.id}): ${this.description}`;
+  },
 };
 ```
 
@@ -155,9 +155,9 @@ Read the MERN book(ID = 1): Read and understand the MERN book.
 
 A method can also change the properties of an object using the `this` keyword.
 
-We will not dwell on methods for too long, since we will not use them all that often as this would lead to a *ghastly* thing called *Object-Oriented Programming* (OOP for short). Instead we want you to think *functionally*, which is what the next section will be about.
+We will not dwell on methods for too long, since we will not use them all that often as this would lead to a _ghastly_ thing called _Object-Oriented Programming_ (OOP for short). Instead we want you to think _functionally_, which is what the next section will be about.
 
-> Inevitable disclaimer for *certain* Java/C#/... people: The sentence about OOP was a joke and used correctly, OOP has its merits. We just wanted to be funny. We're very sorry about that and will now perform the appropriate penance procedure.
+> Inevitable disclaimer for _certain_ Java/C#/... people: The sentence about OOP was a joke and used correctly, OOP has its merits. We just wanted to be funny. We're very sorry about that and will now perform the appropriate penance procedure.
 
 ### Summary
 
@@ -165,4 +165,4 @@ You learned how to declare and call functions and methods. You also learned abou
 
 ### Further reading
 
-* [JavaScript Guide - Functions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Functions)
+- [JavaScript Guide - Functions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Functions)
