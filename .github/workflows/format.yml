@@ -23,3 +23,4 @@ jobs:
         with:
           prettier_options: --write .
           only_changed: True
+          commit_message: 'chore: format'
