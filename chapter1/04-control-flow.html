@@ -149,7 +149,7 @@ if (completed) {
 </code></pre>
 <p>The general form of an <code>if</code> statement looks like this:</p>
 <pre><code class="language-javascript">if (condition) {
-  statements
+  statements;
 }
 </code></pre>
 <p>If <code>condition</code> is true, then the <code>statements</code> inside the curly braces will be executed. If <code>condition</code> is false, nothing will happen.</p>
@@ -170,9 +170,9 @@ if (completed) {
 </code></pre>
 <p>The general form of an <code>if...else</code> statement looks like this:</p>
 <pre><code class="language-javascript">if (condition) {
-  statements1
+  statements1;
 } else {
-  statements2
+  statements2;
 }
 </code></pre>
 <p>If <code>condition</code> is true, the statements corresponding to <code>statements1</code> will be executed (i.e. the statements inside the curly braces after the <code>if</code>). If <code>condition</code> is false, the statements corresponding to <code>statements2</code> will be executed (i.e. the statements inside the curly braces after the <code>else</code>).</p>
@@ -202,13 +202,13 @@ No really, you are amazing!
 </code></pre>
 <p>The general form of an <code>if...else if...else</code> statement looks like this:</p>
 <pre><code class="language-javascript">if (condition1) {
-  statements1
+  statements1;
 } else if (condition2) {
-  statements2
+  statements2;
 } /*possibly more else ifs*/ else if (conditionN) {
-  statementsN
+  statementsN;
 } else {
-  statementsElse
+  statementsElse;
 }
 </code></pre>
 <p>Here all the conditions will be checked one after another. As soon as a condition is true, the corresponding statements will be executed. If no condition matches, the statements corresponding to <code>statementsElse</code> will be executed.</p>
@@ -284,7 +284,8 @@ const mernTask = {
 <pre><code>Uncaught TypeError: Cannot read properties of undefined (reading 'day')
 </code></pre>
 <p>This makes sense since <code>mernTask.date</code> will result in <code>undefined</code> and you can't access a property on <code>undefined</code>. But let's say we would like to access the day and setting it to <code>undefined</code> if the <code>date</code> property is not present. Then we would need to do something like the following:</p>
-<pre><code class="language-javascript">const day = typeof mernTask.date !== undefined &amp;&amp; mernTask.date !== null ? mernTask.date.day : undefined;
+<pre><code class="language-javascript">const day =
+  typeof mernTask.date !== undefined &amp;&amp; mernTask.date !== null ? mernTask.date.day : undefined;
 </code></pre>
 <p>Alternatively we could make use of <code>&amp;&amp;</code> and write:</p>
 <pre><code class="language-javascript">const day = mernTask.date &amp;&amp; mernTask.date.day;
@@ -319,7 +320,7 @@ k
 </code></pre>
 <p>The general syntax of a <code>for..of</code> loop is</p>
 <pre><code class="language-javascript">for (let variable of arrayOrString) {
-  statements
+  statements;
 }
 </code></pre>
 <p>It should be noted that you if don't change the variable inside the loop, you can and should also declare it as <code>const</code>. Our first example could therefore be rewritten to</p>

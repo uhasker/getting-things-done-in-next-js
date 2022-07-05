@@ -177,25 +177,25 @@ console.log(squaredNum); // 9
 <p>This means that we can assign functions as variables, pass them to other functions as arguments and do all the other neat things we can do with primitives and objects. For example we could assign the <code>square</code> function to a variable:</p>
 <pre><code class="language-javascript">const square = function square(num) {
   return num * num;
-}
+};
 </code></pre>
 <p>We could then call this like a regular function by doing e.g. <code>square(3)</code>.</p>
 <p>This is called a <strong>function expression</strong>. Note that the function may be <strong>anonymous</strong> here (i.e. it doesn't have a name). We could write this:</p>
-<pre><code class="language-javascript">const square = function(num) {
+<pre><code class="language-javascript">const square = function (num) {
   return num * num;
-}
+};
 </code></pre>
 <p>The syntax for calling such a function is still the same, e.g. we could write <code>square(3)</code>.</p>
 <h3 id="arrow-functions"><a class="header" href="#arrow-functions">Arrow functions</a></h3>
 <p>There is a shorthand notation available in JavaScript called the <strong>arrow function</strong> notation. This notation allows you to omit certain keywords in certain situations. For example here is how you could rewrite the <code>square</code> function using the arrow function notation:</p>
-<pre><code class="language-javascript">const square = num =&gt; num * num;
+<pre><code class="language-javascript">const square = (num) =&gt; num * num;
 </code></pre>
 <p>This is much shorter and less <em>tedious</em> (haha) indeed.</p>
 <p>For an arrow function you only have to specify the parameter(s), followed by an arrow, followed by the returned value. If you have multiple parameters, you need to put them inside parentheses:</p>
 <pre><code class="language-javascript">const add = (x, y) =&gt; x + y;
 </code></pre>
 <p>You can also have multiple statements in the function body, but then you have to specify the <code>return</code> keyword and surround the statements with curly braces:</p>
-<pre><code class="language-javascript">const printAndGreet = user =&gt; {
+<pre><code class="language-javascript">const printAndGreet = (user) =&gt; {
   const greeting = `Hello ${user}`;
   console.log(greeting);
   return greeting;
@@ -206,9 +206,9 @@ console.log(squaredNum); // 9
 <h3 id="methods"><a class="header" href="#methods">Methods</a></h3>
 <p>A method is a function which is a property of an object.</p>
 <pre><code class="language-javascript">const greeter = {
-  greet: function() {
-    console.log(&quot;Hello, world!&quot;);
-  }
+  greet: function () {
+    console.log('Hello, world!');
+  },
 };
 </code></pre>
 <p>You can call a method like this:</p>
@@ -219,9 +219,9 @@ console.log(squaredNum); // 9
   id: 1,
   summary: 'Read the MERN book',
   description: 'Read and understand the MERN book.',
-  longDescription: function() {
-    return `${this.summary}(ID = ${this.id}): ${this.description}`
-  }
+  longDescription: function () {
+    return `${this.summary}(ID = ${this.id}): ${this.description}`;
+  },
 };
 </code></pre>
 <p>You can call the method by doing <code>task.longDescription()</code>. This would print:</p>

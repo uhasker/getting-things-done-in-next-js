@@ -201,7 +201,7 @@ console.log(copied[0]); // 1
 <p>This looks good. This is the mental picture you should have in your head for copying an array:</p>
 <p><img src="images/array-copy-correct.png" alt="" /></p>
 <blockquote>
-<p>If you only briefly skimmed the section on array destructuring and the spread syntax, go right back and read it carefully. These two concepts will come up <em>a lot</em> in the following chapters (much more often than you think right now). </p>
+<p>If you only briefly skimmed the section on array destructuring and the spread syntax, go right back and read it carefully. These two concepts will come up <em>a lot</em> in the following chapters (much more often than you think right now).</p>
 </blockquote>
 <h3 id="objects"><a class="header" href="#objects">Objects</a></h3>
 <p>Let's return to our (yet) imaginary task application. A task will probably be something more than just a string. For example it might contain an ID, a summary and a description. We could again store these in constants:</p>
@@ -213,7 +213,7 @@ const taskDescription = 'Read and understand the MERN book.';
 <pre><code class="language-javascript">const task = {
   id: 1,
   summary: 'Read the MERN book',
-  description: 'Read and understand the MERN book.'
+  description: 'Read and understand the MERN book.',
 };
 </code></pre>
 <p>Every such value is called a <strong>property</strong>. We can access properties using the dot notation or the square bracket notation. For example to access the <code>summary</code> property of the <code>task</code> object, you would write <code>task.summary</code> or <code>task['summary']</code>. Try it out:</p>
@@ -230,8 +230,8 @@ console.log(task['description']); // Read and understand the MERN book.
   task: {
     id: 1,
     summary: 'Read the MERN book',
-    description: 'Read and understand the MERN book.'
-  }
+    description: 'Read and understand the MERN book.',
+  },
 };
 </code></pre>
 <p>In this case you can use the <code>.</code> notation to access properties at any nesting level. Let's you want to get the summary of the task that's been assigned to the <code>person</code>. Then you can write <code>person.task.summary</code>:</p>
@@ -243,13 +243,13 @@ console.log(task['description']); // Read and understand the MERN book.
 <p>Sometimes you want to explicitly indicate that a property may be absent. For example a person may not have a task assigned to them. You could do something like this:</p>
 <pre><code class="language-javascript">const person = {
   name: 'John Doe',
-  task: undefined
+  task: undefined,
 };
 </code></pre>
 <p>This has the <em>potential</em> problem that someone referring to <code>person.task</code> will have no idea whether it is <code>undefined</code> because the property is not supposed to exist at all or because it it simply absent for this particular person. This is why JavaScript introduced <code>null</code>:</p>
 <pre><code class="language-javascript">const person = {
   name: 'Max Mustermann',
-  task: null
+  task: null,
 };
 </code></pre>
 <p>Basically <code>null</code> allows you to say - &quot;hey, this property does exist in principle, it's just absent for this particular variable&quot;. However note that this is only a convention. There is nothing that prevents you from using <code>undefined</code> to denote absence all the time and in fact we will do so in this very book. Just keep in mind that <code>null</code> exists and that some developers use it to indicate absence (and that it's totally fine to do so).</p>
@@ -258,14 +258,14 @@ console.log(task['description']); // Read and understand the MERN book.
 <pre><code class="language-javascript">const task = {
   id: 1,
   summary: 'Read the MERN book',
-  description: 'Read and understand the MERN book.'
+  description: 'Read and understand the MERN book.',
 };
 const { id, summary, description } = task;
 </code></pre>
 <p>And just like with arrays, you can use the spread syntax:</p>
 <pre><code class="language-javascript">const taskWithAssignee = {
   assignee: 'Max',
-  ...task
+  ...task,
 };
 console.log(taskWithAssignee);
 </code></pre>

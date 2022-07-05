@@ -138,9 +138,9 @@
                         <h1 id="getting-things-done-in-mern"><a class="header" href="#getting-things-done-in-mern">Getting things done in MERN</a></h1>
 <p><em>by Mikhail Berkov and Jannis Morgenstern</em></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="introduction"><a class="header" href="#introduction">Introduction</a></h1>
-<div style="text-align: right"> <i> No one reads introductions anyway. <br> — Sun Tzu </i> </div>
+<div style="text-align: right"> <i>No one reads introductions anyway.<br> — Sun Tzu</i></div>
 <p>Long gone are the times when JavaScript was just a scripting language to add simple interactive behaviour to websites. The ECMAScript 2015 standard significantly improved the usability of the language. Excellent UI libraries like React allow you to write straightforward declarative code which massively simplifies building user interfaces. Thanks to Node.js you can write JavaScript on the server. Express.js empowers you to write complex APIs very quickly and MongoDB provides a document-oriented database that fits right in with the other tools. The MERN stack (<strong>M</strong>ongoDb, <strong>E</strong>xpress.js, <strong>R</strong>eact, <strong>N</strong>ode.js) therefore allows you to quickly develop complex applications using just one language - JavaScript (with optional static typing via TypeScript).</p>
-<p>This book serves as an introduction to the MERN stack. However you don't learn software development by <em>just</em> reading books, you learn it by creating projects. We will therefore not bombard you with useless language trivia for hundreds of pages. If you care about that, go read the standard - it's <em>pretty comprehensive</em>. Instead we will create a real software project - an application for managing tasks called <strong>easy-opus</strong> (get it?). We will begin with nothing more than an empty project directory and the <em>will to learn</em>. We will end with a useful piece of software that allows us to create tasks, assign tasks to different users, update their statuses and much more. </p>
+<p>This book serves as an introduction to the MERN stack. However you don't learn software development by <em>just</em> reading books, you learn it by creating projects. We will therefore not bombard you with useless language trivia for hundreds of pages. If you care about that, go read the standard - it's <em>pretty comprehensive</em>. Instead we will create a real software project - an application for managing tasks called <strong>easy-opus</strong> (get it?). We will begin with nothing more than an empty project directory and the <em>will to learn</em>. We will end with a useful piece of software that allows us to create tasks, assign tasks to different users, update their statuses and much more.</p>
 <p>This book is therefore <em>inherently practical</em> - unlike some other literature we will not dwell much on theoretical considerations. On the other hand, purely practical concerns are first-class citizens here (for example there is an entire chapter devoted to hosting your application). This doesn't mean that <em>theory bad, practice good</em>. It simply means that the approach for <em>this particular book</em> is heavily geared towards completing a real software project.</p>
 <p>This book is therefore also <em>not</em> about becoming <em>yet another JavaScript guru</em>™ (there are already too many of them). It's about writing a useful product. It is fundamentally about <strong>getting things done</strong>. The MERN stack is really just a tool we use to get things done.</p>
 <p>This book is suitable for both beginners who want to pick up their first tech stack as well as for seasoned software developers looking to expand their knowledge.</p>
@@ -170,7 +170,7 @@
 </blockquote>
 <p>The browser as well as the Node.js console have <strong>REPL</strong> (read-eval-print-loop) capabilities. This just means that you can type some code into the console directly and execute it. REPLs are very nice, because they allow you to quickly test what you just learned.</p>
 <p>Let's print something using the <code>console.log</code> method. Type the following into the browser console:</p>
-<pre><code class="language-javascript">console.log(&quot;Hello, world!&quot;);
+<pre><code class="language-javascript">console.log('Hello, world!');
 </code></pre>
 <p>Now hit <kbd>Return</kbd> (you may also know this as <kbd>Enter</kbd> or simply <kbd>⏎</kbd>). You will see the output &quot;Hello, world!&quot; in the console:</p>
 <p><img src="chapter1/images/browser-console-log.png" alt="" /></p>
@@ -187,12 +187,12 @@
 <p>Open the HTML file in any text editor (we recommend you use <a href="https://code.visualstudio.com">Visual Studio Code</a>) and add the following text to the file:</p>
 <pre><code class="language-html">&lt;!DOCTYPE html&gt;
 &lt;html&gt;
-&lt;head&gt;&lt;/head&gt;
-&lt;body&gt;
-  &lt;script&gt;
-    console.log(&quot;Hello, world!&quot;);
-  &lt;/script&gt;
-&lt;/body&gt;
+  &lt;head&gt;&lt;/head&gt;
+  &lt;body&gt;
+    &lt;script&gt;
+      console.log('Hello, world!');
+    &lt;/script&gt;
+  &lt;/body&gt;
 &lt;/html&gt;
 </code></pre>
 <p>Don't forget to save the file!</p>
@@ -233,13 +233,13 @@
 <p>Now that the command line is open, execute the <code>node</code> command to open a Node.js console. You can do so by typing <code>node</code> and hitting <kbd>Return</kbd>. You should see something like the following (again the Node.js version might be different):</p>
 <p><img src="chapter1/images/cli-node.png" alt="" /></p>
 <p>Now let's again print &quot;Hello, world!&quot; using the <code>console.log</code> method. Type the following into the Node.js console and hit <kbd>Return</kbd>:</p>
-<pre><code class="language-javascript">console.log(&quot;Hello, world!&quot;);
+<pre><code class="language-javascript">console.log('Hello, world!');
 </code></pre>
 <p>You should see &quot;Hello, world!&quot; printed to the console:</p>
 <p><img src="chapter1/images/node-js-console-log.png" alt="" /></p>
 <h3 id="executing-a-file"><a class="header" href="#executing-a-file">Executing a file</a></h3>
 <p>Before moving on, let's execute a JavaScript file containing some code. Create a file named <code>hello.js</code>. Open the file in any text editor (preferably Visual Studio Code) and add the following content to the file:</p>
-<pre><code class="language-javascript">console.log(&quot;Hello, world!&quot;);
+<pre><code class="language-javascript">console.log('Hello, world!');
 </code></pre>
 <blockquote>
 <p>If you are on a Windows machine, you probably cannot create a file with a <code>js</code> extension directly. In that case simply create an empty <code>txt</code> file and change the extension to <code>js</code>.</p>
@@ -408,7 +408,7 @@ console.log(x1 === x3); // true
 console.log(5 !== 5); // false
 </code></pre>
 <h3 id="strings"><a class="header" href="#strings">Strings</a></h3>
-<p>Another primitive data type is the <code>String</code> type. A string is simply a bunch of characters and is used to represent text. Strings are usually written using single quotes in JavaScript: </p>
+<p>Another primitive data type is the <code>String</code> type. A string is simply a bunch of characters and is used to represent text. Strings are usually written using single quotes in JavaScript:</p>
 <pre><code class="language-javascript">const s = 'Some text';
 console.log(typeof s); // string
 </code></pre>
@@ -514,7 +514,7 @@ console.log(copied[0]); // 1
 <p>This looks good. This is the mental picture you should have in your head for copying an array:</p>
 <p><img src="chapter1/images/array-copy-correct.png" alt="" /></p>
 <blockquote>
-<p>If you only briefly skimmed the section on array destructuring and the spread syntax, go right back and read it carefully. These two concepts will come up <em>a lot</em> in the following chapters (much more often than you think right now). </p>
+<p>If you only briefly skimmed the section on array destructuring and the spread syntax, go right back and read it carefully. These two concepts will come up <em>a lot</em> in the following chapters (much more often than you think right now).</p>
 </blockquote>
 <h3 id="objects"><a class="header" href="#objects">Objects</a></h3>
 <p>Let's return to our (yet) imaginary task application. A task will probably be something more than just a string. For example it might contain an ID, a summary and a description. We could again store these in constants:</p>
@@ -526,7 +526,7 @@ const taskDescription = 'Read and understand the MERN book.';
 <pre><code class="language-javascript">const task = {
   id: 1,
   summary: 'Read the MERN book',
-  description: 'Read and understand the MERN book.'
+  description: 'Read and understand the MERN book.',
 };
 </code></pre>
 <p>Every such value is called a <strong>property</strong>. We can access properties using the dot notation or the square bracket notation. For example to access the <code>summary</code> property of the <code>task</code> object, you would write <code>task.summary</code> or <code>task['summary']</code>. Try it out:</p>
@@ -543,8 +543,8 @@ console.log(task['description']); // Read and understand the MERN book.
   task: {
     id: 1,
     summary: 'Read the MERN book',
-    description: 'Read and understand the MERN book.'
-  }
+    description: 'Read and understand the MERN book.',
+  },
 };
 </code></pre>
 <p>In this case you can use the <code>.</code> notation to access properties at any nesting level. Let's you want to get the summary of the task that's been assigned to the <code>person</code>. Then you can write <code>person.task.summary</code>:</p>
@@ -556,13 +556,13 @@ console.log(task['description']); // Read and understand the MERN book.
 <p>Sometimes you want to explicitly indicate that a property may be absent. For example a person may not have a task assigned to them. You could do something like this:</p>
 <pre><code class="language-javascript">const person = {
   name: 'John Doe',
-  task: undefined
+  task: undefined,
 };
 </code></pre>
 <p>This has the <em>potential</em> problem that someone referring to <code>person.task</code> will have no idea whether it is <code>undefined</code> because the property is not supposed to exist at all or because it it simply absent for this particular person. This is why JavaScript introduced <code>null</code>:</p>
 <pre><code class="language-javascript">const person = {
   name: 'Max Mustermann',
-  task: null
+  task: null,
 };
 </code></pre>
 <p>Basically <code>null</code> allows you to say - &quot;hey, this property does exist in principle, it's just absent for this particular variable&quot;. However note that this is only a convention. There is nothing that prevents you from using <code>undefined</code> to denote absence all the time and in fact we will do so in this very book. Just keep in mind that <code>null</code> exists and that some developers use it to indicate absence (and that it's totally fine to do so).</p>
@@ -571,14 +571,14 @@ console.log(task['description']); // Read and understand the MERN book.
 <pre><code class="language-javascript">const task = {
   id: 1,
   summary: 'Read the MERN book',
-  description: 'Read and understand the MERN book.'
+  description: 'Read and understand the MERN book.',
 };
 const { id, summary, description } = task;
 </code></pre>
 <p>And just like with arrays, you can use the spread syntax:</p>
 <pre><code class="language-javascript">const taskWithAssignee = {
   assignee: 'Max',
-  ...task
+  ...task,
 };
 console.log(taskWithAssignee);
 </code></pre>
@@ -612,7 +612,7 @@ if (completed) {
 </code></pre>
 <p>The general form of an <code>if</code> statement looks like this:</p>
 <pre><code class="language-javascript">if (condition) {
-  statements
+  statements;
 }
 </code></pre>
 <p>If <code>condition</code> is true, then the <code>statements</code> inside the curly braces will be executed. If <code>condition</code> is false, nothing will happen.</p>
@@ -633,9 +633,9 @@ if (completed) {
 </code></pre>
 <p>The general form of an <code>if...else</code> statement looks like this:</p>
 <pre><code class="language-javascript">if (condition) {
-  statements1
+  statements1;
 } else {
-  statements2
+  statements2;
 }
 </code></pre>
 <p>If <code>condition</code> is true, the statements corresponding to <code>statements1</code> will be executed (i.e. the statements inside the curly braces after the <code>if</code>). If <code>condition</code> is false, the statements corresponding to <code>statements2</code> will be executed (i.e. the statements inside the curly braces after the <code>else</code>).</p>
@@ -665,13 +665,13 @@ No really, you are amazing!
 </code></pre>
 <p>The general form of an <code>if...else if...else</code> statement looks like this:</p>
 <pre><code class="language-javascript">if (condition1) {
-  statements1
+  statements1;
 } else if (condition2) {
-  statements2
+  statements2;
 } /*possibly more else ifs*/ else if (conditionN) {
-  statementsN
+  statementsN;
 } else {
-  statementsElse
+  statementsElse;
 }
 </code></pre>
 <p>Here all the conditions will be checked one after another. As soon as a condition is true, the corresponding statements will be executed. If no condition matches, the statements corresponding to <code>statementsElse</code> will be executed.</p>
@@ -747,7 +747,8 @@ const mernTask = {
 <pre><code>Uncaught TypeError: Cannot read properties of undefined (reading 'day')
 </code></pre>
 <p>This makes sense since <code>mernTask.date</code> will result in <code>undefined</code> and you can't access a property on <code>undefined</code>. But let's say we would like to access the day and setting it to <code>undefined</code> if the <code>date</code> property is not present. Then we would need to do something like the following:</p>
-<pre><code class="language-javascript">const day = typeof mernTask.date !== undefined &amp;&amp; mernTask.date !== null ? mernTask.date.day : undefined;
+<pre><code class="language-javascript">const day =
+  typeof mernTask.date !== undefined &amp;&amp; mernTask.date !== null ? mernTask.date.day : undefined;
 </code></pre>
 <p>Alternatively we could make use of <code>&amp;&amp;</code> and write:</p>
 <pre><code class="language-javascript">const day = mernTask.date &amp;&amp; mernTask.date.day;
@@ -782,7 +783,7 @@ k
 </code></pre>
 <p>The general syntax of a <code>for..of</code> loop is</p>
 <pre><code class="language-javascript">for (let variable of arrayOrString) {
-  statements
+  statements;
 }
 </code></pre>
 <p>It should be noted that you if don't change the variable inside the loop, you can and should also declare it as <code>const</code>. Our first example could therefore be rewritten to</p>
@@ -843,25 +844,25 @@ console.log(squaredNum); // 9
 <p>This means that we can assign functions as variables, pass them to other functions as arguments and do all the other neat things we can do with primitives and objects. For example we could assign the <code>square</code> function to a variable:</p>
 <pre><code class="language-javascript">const square = function square(num) {
   return num * num;
-}
+};
 </code></pre>
 <p>We could then call this like a regular function by doing e.g. <code>square(3)</code>.</p>
 <p>This is called a <strong>function expression</strong>. Note that the function may be <strong>anonymous</strong> here (i.e. it doesn't have a name). We could write this:</p>
-<pre><code class="language-javascript">const square = function(num) {
+<pre><code class="language-javascript">const square = function (num) {
   return num * num;
-}
+};
 </code></pre>
 <p>The syntax for calling such a function is still the same, e.g. we could write <code>square(3)</code>.</p>
 <h3 id="arrow-functions"><a class="header" href="#arrow-functions">Arrow functions</a></h3>
 <p>There is a shorthand notation available in JavaScript called the <strong>arrow function</strong> notation. This notation allows you to omit certain keywords in certain situations. For example here is how you could rewrite the <code>square</code> function using the arrow function notation:</p>
-<pre><code class="language-javascript">const square = num =&gt; num * num;
+<pre><code class="language-javascript">const square = (num) =&gt; num * num;
 </code></pre>
 <p>This is much shorter and less <em>tedious</em> (haha) indeed.</p>
 <p>For an arrow function you only have to specify the parameter(s), followed by an arrow, followed by the returned value. If you have multiple parameters, you need to put them inside parentheses:</p>
 <pre><code class="language-javascript">const add = (x, y) =&gt; x + y;
 </code></pre>
 <p>You can also have multiple statements in the function body, but then you have to specify the <code>return</code> keyword and surround the statements with curly braces:</p>
-<pre><code class="language-javascript">const printAndGreet = user =&gt; {
+<pre><code class="language-javascript">const printAndGreet = (user) =&gt; {
   const greeting = `Hello ${user}`;
   console.log(greeting);
   return greeting;
@@ -872,9 +873,9 @@ console.log(squaredNum); // 9
 <h3 id="methods"><a class="header" href="#methods">Methods</a></h3>
 <p>A method is a function which is a property of an object.</p>
 <pre><code class="language-javascript">const greeter = {
-  greet: function() {
-    console.log(&quot;Hello, world!&quot;);
-  }
+  greet: function () {
+    console.log('Hello, world!');
+  },
 };
 </code></pre>
 <p>You can call a method like this:</p>
@@ -885,9 +886,9 @@ console.log(squaredNum); // 9
   id: 1,
   summary: 'Read the MERN book',
   description: 'Read and understand the MERN book.',
-  longDescription: function() {
-    return `${this.summary}(ID = ${this.id}): ${this.description}`
-  }
+  longDescription: function () {
+    return `${this.summary}(ID = ${this.id}): ${this.description}`;
+  },
 };
 </code></pre>
 <p>You can call the method by doing <code>task.longDescription()</code>. This would print:</p>
@@ -907,18 +908,18 @@ console.log(squaredNum); // 9
 <div style="break-before: page; page-break-before: always;"></div><h2 id="functional-thinking"><a class="header" href="#functional-thinking">Functional thinking</a></h2>
 <div style="text-align: right"> <i> Gold can't be pure, but functions can. <br> — Ancient Chinese proverb </i> </div>
 <h3 id="pure-functions"><a class="header" href="#pure-functions">Pure functions</a></h3>
-<p>A function is called <strong>pure</strong> if its outputs (the returned values) depend only on its inputs and if the function does not have any <em>side effects</em> (i.e. it doesn't change program state and doesn't write anything to an external data source). </p>
+<p>A function is called <strong>pure</strong> if its outputs (the returned values) depend only on its inputs and if the function does not have any <em>side effects</em> (i.e. it doesn't change program state and doesn't write anything to an external data source).</p>
 <p>Here is an example of a pure function:</p>
-<pre><code class="language-javascript">const square = x =&gt; x * 2;
+<pre><code class="language-javascript">const square = (x) =&gt; x * 2;
 </code></pre>
 <p>Indeed, the output of <code>square</code> depends only on its input and nothing else. In addition, <code>square</code> doesn't produce any side effects.</p>
 <p>Here is an example of a function that is <em>not</em> pure:</p>
 <pre><code class="language-javascript">const x = 2;
-const addImpure = y =&gt; x + y;
+const addImpure = (y) =&gt; x + y;
 </code></pre>
 <p>The output of this function doesn't depend just on its input variables, but also on a global variable <code>x</code>.</p>
 <p>Here is another function that's not pure:</p>
-<pre><code class="language-javascript">const hello = () =&gt; console.log(&quot;Hello, world!&quot;);
+<pre><code class="language-javascript">const hello = () =&gt; console.log('Hello, world!');
 </code></pre>
 <p>The <code>hello</code> function has a side effect - it outputs something to the console.</p>
 <p>Why do we care about all of this? The fundamental reason is that <em>pure functions are very easy to reason about</em>. There is practically no room for suprising behaviour.</p>
@@ -936,8 +937,8 @@ const addImpure = y =&gt; x + y;
 <pre><code class="language-javascript">const task = {
   id: 1,
   summary: 'Read the MERN book',
-  description: 'Read and understand the MERN book.'
-}
+  description: 'Read and understand the MERN book.',
+};
 </code></pre>
 <p>Now let's say we want to change the summary:</p>
 <pre><code class="language-javascript">task.summary = 'MERN book';
@@ -946,14 +947,14 @@ const addImpure = y =&gt; x + y;
 <p>Instead we can create copies of the objects which contain the changes we need:</p>
 <pre><code class="language-javascript">const newTask = {
   ...task,
-  summary: 'MERN book'
-}
+  summary: 'MERN book',
+};
 </code></pre>
 <p>Note that we didn't change the original object, but created a copy of the object with a different summary.</p>
 <p>Immutability and pure functions are closely linked. You want to have immutable datastructures which get passed through pure functions to compute results.</p>
 <h3 id="higher-order-functions"><a class="header" href="#higher-order-functions">Higher-order functions</a></h3>
 <p>We already talked about the fact that JavaScript functions are just objects. We even showed an example of how you can assign a function to a variable:</p>
-<pre><code class="language-javascript">const square = num =&gt; num * num;
+<pre><code class="language-javascript">const square = (num) =&gt; num * num;
 </code></pre>
 <p>However we can do much more. Since functions are just objects we can pass them to other functions. For example let's define a function that repeats some action <code>n</code> times:</p>
 <pre><code class="language-javascript">function repeat(fun, n) {
@@ -963,7 +964,7 @@ const addImpure = y =&gt; x + y;
 }
 </code></pre>
 <p>We can use it like this:</p>
-<pre><code class="language-javascript">const hello = () =&gt; console.log(&quot;Hello, world!&quot;);
+<pre><code class="language-javascript">const hello = () =&gt; console.log('Hello, world!');
 repeat(hello, 4);
 </code></pre>
 <p>This will output:</p>
@@ -977,7 +978,7 @@ Hello, world!
 <h3 id="the-trinity-of-map-reduce-and-filter"><a class="header" href="#the-trinity-of-map-reduce-and-filter">The trinity of map, reduce and filter</a></h3>
 <p>We now introduce the three most important higher-order functions - <code>map</code>, <code>reduce</code> and <code>filter</code>. These functions allow you to perform an <em>incredibly</em> rich set of operations on arrays.</p>
 <blockquote>
-<p>We want to use this blockquote to emphasize <em>how often</em> you will be using <code>map</code>, <code>reduce</code> and <code>filter</code>. </p>
+<p>We want to use this blockquote to emphasize <em>how often</em> you will be using <code>map</code>, <code>reduce</code> and <code>filter</code>.</p>
 </blockquote>
 <p>We will use two running examples throughout the section - an array of <code>numbers</code> and an array of <code>tasks</code>:</p>
 <pre><code class="language-javascript">const numbers = [1, 2, 3, 4];
@@ -987,22 +988,22 @@ const tasks = [
     summary: 'Read the MERN book',
     description: 'Read and understand the MERN book.',
     timeLogged: 60,
-    status: 'In progress'
+    status: 'In progress',
   },
   {
     id: 2,
     summary: 'Write a task app',
     description: 'Write an awesome task app.',
     timeLogged: 0,
-    status: 'Todo'
+    status: 'Todo',
   },
   {
     id: 3,
     summary: 'Think of a funny joke',
     description: 'Come up with a funny joke to lighten the mood.',
     timeLogged: 120,
-    status: 'In progress'
-  }
+    status: 'In progress',
+  },
 ];
 </code></pre>
 <p>The <code>map</code> function takes one argument - a function <code>f</code> to apply to every element of the array. It returns the array resulting from applying <code>f</code> to every element of the original array.</p>
@@ -1013,15 +1014,15 @@ for (const number in numbers) {
 }
 </code></pre>
 <p>This is ugly and (you guessed it) <em>tedious</em>. Instead we can (and should) use the <code>map</code> function:</p>
-<pre><code class="language-javascript">const result = numbers.map(number =&gt; number ** 2);
+<pre><code class="language-javascript">const result = numbers.map((number) =&gt; number ** 2);
 </code></pre>
 <p>The <code>result</code> array has the following content:</p>
-<pre><code class="language-javascript">[ 1, 4, 9, 16 ]
+<pre><code class="language-javascript">[1, 4, 9, 16];
 </code></pre>
 <p>Consider another example. Let's say we wanted to add a long description to all the <code>tasks</code> based on the summary and the description. We can use the <code>map</code> function again:</p>
-<pre><code class="language-javascript">const longTasks = tasks.map(task =&gt; ({
+<pre><code class="language-javascript">const longTasks = tasks.map((task) =&gt; ({
   ...task,
-  longDescription: `${task.summary}: ${task.description}`
+  longDescription: `${task.summary}: ${task.description}`,
 }));
 </code></pre>
 <blockquote>
@@ -1035,7 +1036,7 @@ for (const number in numbers) {
     description: 'Read and understand the MERN book.',
     timeLogged: 60,
     status: 'In progress',
-    longDescription: 'Read the MERN book: Read and understand the MERN book.'
+    longDescription: 'Read the MERN book: Read and understand the MERN book.',
   },
   {
     id: 2,
@@ -1043,7 +1044,7 @@ for (const number in numbers) {
     description: 'Write an awesome task app.',
     timeLogged: 0,
     status: 'Todo',
-    longDescription: 'Write a task app: Write an awesome task app.'
+    longDescription: 'Write a task app: Write an awesome task app.',
   },
   {
     id: 3,
@@ -1051,9 +1052,9 @@ for (const number in numbers) {
     description: 'Come up with a funny joke to lighten the mood.',
     timeLogged: 120,
     status: 'In progress',
-    longDescription: 'Think of a funny joke: Come up with a funny joke to lighten the mood.'
-  }
-]
+    longDescription: 'Think of a funny joke: Come up with a funny joke to lighten the mood.',
+  },
+];
 </code></pre>
 <p>The <code>filter</code> function allows you to select elements from an array based on some condition. It takes a function <code>f</code> which returns <code>true</code> or <code>false</code> for some input(s). All elements for which <code>f</code> returns <code>true</code> are kept, all elements for which <code>f</code> returns <code>false</code> are thrown away.</p>
 <blockquote>
@@ -1068,11 +1069,11 @@ for (const number in numbers) {
 }
 </code></pre>
 <p>Ugh! I don't even want to look at that. For loops and if statements all over the place. Let's rest our eyes and consider the <em>functional</em> approach:</p>
-<pre><code class="language-javascript">const result = numbers.filter(number =&gt; number % 2 === 0);
+<pre><code class="language-javascript">const result = numbers.filter((number) =&gt; number % 2 === 0);
 </code></pre>
 <p>Consider another example - we might want to select all tasks from the <code>tasks</code> array which have the status 'Todo'. Think for a moment what the appropriate predicate would be.</p>
 <p>That's right, it looks like this:</p>
-<pre><code class="language-javascript">const todoTasks = tasks.filter(task =&gt; task.status === 'Todo');
+<pre><code class="language-javascript">const todoTasks = tasks.filter((task) =&gt; task.status === 'Todo');
 </code></pre>
 <p>Finally there is the <code>reduce</code> function which (you guessed it) <em>reduces</em> an array to a single value. The <code>reduce</code> function moves over an array from left to right and keeps track of a <em>current value</em>. At every element of the array it recomputes the current value based on a function <code>f</code> (this is the first argument of the <code>reduce</code> function). The second argument of the reduce function is the initial value.</p>
 <p>Here is how we might compute the sum of an array:</p>
@@ -1113,12 +1114,8 @@ for (const number in numbers) {
       &lt;div&gt;
         &lt;h1&gt;My tasks&lt;/h1&gt;
         &lt;div&gt;
-          &lt;p&gt;
-            Read the MERN book: Read and understand the MERN book.
-          &lt;/p&gt;
-          &lt;p&gt;
-            Write a website: Create a new and cool website.
-          &lt;/p&gt;
+          &lt;p&gt;Read the MERN book: Read and understand the MERN book.&lt;/p&gt;
+          &lt;p&gt;Write a website: Create a new and cool website.&lt;/p&gt;
         &lt;/div&gt;
       &lt;/div&gt;
     &lt;/div&gt;
@@ -1130,13 +1127,13 @@ for (const number in numbers) {
 <p>Hooray, you've created a simple HTML document! Now you can close this book and go procrastinate. No? Hm, that's weird. Oh, your boss forced you to read this book (<em>blink once</em> if you need help)? Well in that case, we continue by trying to figure out what we just wrote.</p>
 <h3 id="html-elements"><a class="header" href="#html-elements">HTML elements</a></h3>
 <p>HTML essentially consists of elements which you can use to declare what <em>kind</em> of content you would like to render. For example the <code>p</code> element is a paragraph:</p>
-<pre><code class="language-html">&lt;p&gt; Read the MERN book: Read and understand the MERN book. &lt;/p&gt;
+<pre><code class="language-html">&lt;p&gt;Read the MERN book: Read and understand the MERN book.&lt;/p&gt;
 </code></pre>
 <p>An HTML element usually has some <em>content</em> inside an <em>opening tag</em> and a <em>closing tag</em>. The opening tag is the name of the element wrapped in angle brackets (<code>&lt;p&gt;</code> in the above example). The closing tag is the name of the element wrapped in angle brackets with a <em>forward slash before the name</em> (<code>&lt;/p&gt;</code> in the above example).</p>
 <p>There are many different HTML elements. We already learned that <code>p</code> is a paragraph and <code>div</code> is a generic container. We will talk about other elements later on.</p>
 <p>What makes HTML so powerful is the fact that <em>most</em> elements can be <em>nested</em>. For example here is how you can nest a paragraph inside a generic container:</p>
 <pre><code class="language-html">&lt;div&gt;
-  &lt;p&gt; Read the MERN book: Read and understand the MERN book. &lt;/p&gt;
+  &lt;p&gt;Read the MERN book: Read and understand the MERN book.&lt;/p&gt;
 &lt;/div&gt;
 </code></pre>
 <p>Elements can also have <em>attributes</em>. Two of the most important attributes are <code>id</code> and <code>class</code>. The <code>id</code> attribute is used to specify a <em>unique identity</em> for an HTML element. You can use that attribute to uniquely identify the element. The <code>class</code> attribute is used to specify a <em>class</em> for an HTML element. Unlike unique identifiers, multiple HTML elements can have the same class. This is extremely useful for example if you want to <em>style</em> multiple HTML elements in the same way. For example you could color all HTML elements of class <code>blue-text</code> blue. There are many more attributes and different HTML elements often have different attributes - we will discuss this in a second.</p>
@@ -1147,12 +1144,8 @@ for (const number in numbers) {
 <h3 id="the-document-object-model"><a class="header" href="#the-document-object-model">The Document Object Model</a></h3>
 <p>Once you open an HTML document in a browser, it is represented by the <strong>Document Object Model</strong> (DOM for short). Basically DOM is a model for documents which represent <em>editable logical trees</em>. This sounds <em>way</em> scarier than it really is. Let's explain this using an example. Looking at our HTML file, we have some HTML that looks like this:</p>
 <pre><code class="language-html">&lt;div&gt;
-  &lt;p&gt;
-    Read the MERN book: Read and understand the MERN book.
-  &lt;/p&gt;
-  &lt;p&gt;
-    Write a website: Create a new and cool website.
-  &lt;/p&gt;
+  &lt;p&gt;Read the MERN book: Read and understand the MERN book.&lt;/p&gt;
+  &lt;p&gt;Write a website: Create a new and cool website.&lt;/p&gt;
 &lt;/div&gt;
 </code></pre>
 <p>Here we have a <code>&lt;div&gt;</code> element (which is a generic container) and two <code>&lt;p&gt;</code> (paragraph) elements inside that div element. The <code>&lt;div&gt;</code> element is the <em>parent</em> of the <code>&lt;p&gt;</code> elements and the <code>&lt;p&gt;</code> elements are the <em>children</em> of the <code>&lt;div&gt;</code> element. The elements form a <em>tree</em>.</p>
@@ -1160,12 +1153,8 @@ for (const number in numbers) {
 <pre><code class="language-html">&lt;div id=&quot;root&quot;&gt;
   &lt;h1&gt;My tasks&lt;/h1&gt;
   &lt;div&gt;
-    &lt;p&gt;
-      Read the MERN book: Read and understand the MERN book.
-    &lt;/p&gt;
-    &lt;p&gt;
-      Write a website: Create a new and cool website.
-    &lt;/p&gt;
+    &lt;p&gt;Read the MERN book: Read and understand the MERN book.&lt;/p&gt;
+    &lt;p&gt;Write a website: Create a new and cool website.&lt;/p&gt;
   &lt;/div&gt;
 &lt;/div&gt;
 </code></pre>
@@ -1176,7 +1165,7 @@ for (const number in numbers) {
 </blockquote>
 <h2 id="manipulating-the-dom-using-javascript"><a class="header" href="#manipulating-the-dom-using-javascript">Manipulating the DOM using JavaScript</a></h2>
 <p>Whenever you write applications which have a lot of logic in the client, you will need to manipulate the DOM (i.e. add or remove items). For example, if we add a task, we might need to add some elements to the current tree representing the task. This is how the corresponding JavaScript™ code would look like:</p>
-<pre><code class="language-javascript">const taskText = 'Do something else: Just do something already.'
+<pre><code class="language-javascript">const taskText = 'Do something else: Just do something already.';
 const element = document.createElement('p');
 element.innerHTML = taskText;
 const todoList = document.getElementById('todoList');

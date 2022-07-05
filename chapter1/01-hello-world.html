@@ -152,7 +152,7 @@
 </blockquote>
 <p>The browser as well as the Node.js console have <strong>REPL</strong> (read-eval-print-loop) capabilities. This just means that you can type some code into the console directly and execute it. REPLs are very nice, because they allow you to quickly test what you just learned.</p>
 <p>Let's print something using the <code>console.log</code> method. Type the following into the browser console:</p>
-<pre><code class="language-javascript">console.log(&quot;Hello, world!&quot;);
+<pre><code class="language-javascript">console.log('Hello, world!');
 </code></pre>
 <p>Now hit <kbd>Return</kbd> (you may also know this as <kbd>Enter</kbd> or simply <kbd>⏎</kbd>). You will see the output &quot;Hello, world!&quot; in the console:</p>
 <p><img src="images/browser-console-log.png" alt="" /></p>
@@ -169,12 +169,12 @@
 <p>Open the HTML file in any text editor (we recommend you use <a href="https://code.visualstudio.com">Visual Studio Code</a>) and add the following text to the file:</p>
 <pre><code class="language-html">&lt;!DOCTYPE html&gt;
 &lt;html&gt;
-&lt;head&gt;&lt;/head&gt;
-&lt;body&gt;
-  &lt;script&gt;
-    console.log(&quot;Hello, world!&quot;);
-  &lt;/script&gt;
-&lt;/body&gt;
+  &lt;head&gt;&lt;/head&gt;
+  &lt;body&gt;
+    &lt;script&gt;
+      console.log('Hello, world!');
+    &lt;/script&gt;
+  &lt;/body&gt;
 &lt;/html&gt;
 </code></pre>
 <p>Don't forget to save the file!</p>
@@ -215,13 +215,13 @@
 <p>Now that the command line is open, execute the <code>node</code> command to open a Node.js console. You can do so by typing <code>node</code> and hitting <kbd>Return</kbd>. You should see something like the following (again the Node.js version might be different):</p>
 <p><img src="images/cli-node.png" alt="" /></p>
 <p>Now let's again print &quot;Hello, world!&quot; using the <code>console.log</code> method. Type the following into the Node.js console and hit <kbd>Return</kbd>:</p>
-<pre><code class="language-javascript">console.log(&quot;Hello, world!&quot;);
+<pre><code class="language-javascript">console.log('Hello, world!');
 </code></pre>
 <p>You should see &quot;Hello, world!&quot; printed to the console:</p>
 <p><img src="images/node-js-console-log.png" alt="" /></p>
 <h3 id="executing-a-file"><a class="header" href="#executing-a-file">Executing a file</a></h3>
 <p>Before moving on, let's execute a JavaScript file containing some code. Create a file named <code>hello.js</code>. Open the file in any text editor (preferably Visual Studio Code) and add the following content to the file:</p>
-<pre><code class="language-javascript">console.log(&quot;Hello, world!&quot;);
+<pre><code class="language-javascript">console.log('Hello, world!');
 </code></pre>
 <blockquote>
 <p>If you are on a Windows machine, you probably cannot create a file with a <code>js</code> extension directly. In that case simply create an empty <code>txt</code> file and change the extension to <code>js</code>.</p>

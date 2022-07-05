@@ -157,12 +157,8 @@
       &lt;div&gt;
         &lt;h1&gt;My tasks&lt;/h1&gt;
         &lt;div&gt;
-          &lt;p&gt;
-            Read the MERN book: Read and understand the MERN book.
-          &lt;/p&gt;
-          &lt;p&gt;
-            Write a website: Create a new and cool website.
-          &lt;/p&gt;
+          &lt;p&gt;Read the MERN book: Read and understand the MERN book.&lt;/p&gt;
+          &lt;p&gt;Write a website: Create a new and cool website.&lt;/p&gt;
         &lt;/div&gt;
       &lt;/div&gt;
     &lt;/div&gt;
@@ -174,13 +170,13 @@
 <p>Hooray, you've created a simple HTML document! Now you can close this book and go procrastinate. No? Hm, that's weird. Oh, your boss forced you to read this book (<em>blink once</em> if you need help)? Well in that case, we continue by trying to figure out what we just wrote.</p>
 <h3 id="html-elements"><a class="header" href="#html-elements">HTML elements</a></h3>
 <p>HTML essentially consists of elements which you can use to declare what <em>kind</em> of content you would like to render. For example the <code>p</code> element is a paragraph:</p>
-<pre><code class="language-html">&lt;p&gt; Read the MERN book: Read and understand the MERN book. &lt;/p&gt;
+<pre><code class="language-html">&lt;p&gt;Read the MERN book: Read and understand the MERN book.&lt;/p&gt;
 </code></pre>
 <p>An HTML element usually has some <em>content</em> inside an <em>opening tag</em> and a <em>closing tag</em>. The opening tag is the name of the element wrapped in angle brackets (<code>&lt;p&gt;</code> in the above example). The closing tag is the name of the element wrapped in angle brackets with a <em>forward slash before the name</em> (<code>&lt;/p&gt;</code> in the above example).</p>
 <p>There are many different HTML elements. We already learned that <code>p</code> is a paragraph and <code>div</code> is a generic container. We will talk about other elements later on.</p>
 <p>What makes HTML so powerful is the fact that <em>most</em> elements can be <em>nested</em>. For example here is how you can nest a paragraph inside a generic container:</p>
 <pre><code class="language-html">&lt;div&gt;
-  &lt;p&gt; Read the MERN book: Read and understand the MERN book. &lt;/p&gt;
+  &lt;p&gt;Read the MERN book: Read and understand the MERN book.&lt;/p&gt;
 &lt;/div&gt;
 </code></pre>
 <p>Elements can also have <em>attributes</em>. Two of the most important attributes are <code>id</code> and <code>class</code>. The <code>id</code> attribute is used to specify a <em>unique identity</em> for an HTML element. You can use that attribute to uniquely identify the element. The <code>class</code> attribute is used to specify a <em>class</em> for an HTML element. Unlike unique identifiers, multiple HTML elements can have the same class. This is extremely useful for example if you want to <em>style</em> multiple HTML elements in the same way. For example you could color all HTML elements of class <code>blue-text</code> blue. There are many more attributes and different HTML elements often have different attributes - we will discuss this in a second.</p>
@@ -191,12 +187,8 @@
 <h3 id="the-document-object-model"><a class="header" href="#the-document-object-model">The Document Object Model</a></h3>
 <p>Once you open an HTML document in a browser, it is represented by the <strong>Document Object Model</strong> (DOM for short). Basically DOM is a model for documents which represent <em>editable logical trees</em>. This sounds <em>way</em> scarier than it really is. Let's explain this using an example. Looking at our HTML file, we have some HTML that looks like this:</p>
 <pre><code class="language-html">&lt;div&gt;
-  &lt;p&gt;
-    Read the MERN book: Read and understand the MERN book.
-  &lt;/p&gt;
-  &lt;p&gt;
-    Write a website: Create a new and cool website.
-  &lt;/p&gt;
+  &lt;p&gt;Read the MERN book: Read and understand the MERN book.&lt;/p&gt;
+  &lt;p&gt;Write a website: Create a new and cool website.&lt;/p&gt;
 &lt;/div&gt;
 </code></pre>
 <p>Here we have a <code>&lt;div&gt;</code> element (which is a generic container) and two <code>&lt;p&gt;</code> (paragraph) elements inside that div element. The <code>&lt;div&gt;</code> element is the <em>parent</em> of the <code>&lt;p&gt;</code> elements and the <code>&lt;p&gt;</code> elements are the <em>children</em> of the <code>&lt;div&gt;</code> element. The elements form a <em>tree</em>.</p>
@@ -204,12 +196,8 @@
 <pre><code class="language-html">&lt;div id=&quot;root&quot;&gt;
   &lt;h1&gt;My tasks&lt;/h1&gt;
   &lt;div&gt;
-    &lt;p&gt;
-      Read the MERN book: Read and understand the MERN book.
-    &lt;/p&gt;
-    &lt;p&gt;
-      Write a website: Create a new and cool website.
-    &lt;/p&gt;
+    &lt;p&gt;Read the MERN book: Read and understand the MERN book.&lt;/p&gt;
+    &lt;p&gt;Write a website: Create a new and cool website.&lt;/p&gt;
   &lt;/div&gt;
 &lt;/div&gt;
 </code></pre>
@@ -220,7 +208,7 @@
 </blockquote>
 <h2 id="manipulating-the-dom-using-javascript"><a class="header" href="#manipulating-the-dom-using-javascript">Manipulating the DOM using JavaScript</a></h2>
 <p>Whenever you write applications which have a lot of logic in the client, you will need to manipulate the DOM (i.e. add or remove items). For example, if we add a task, we might need to add some elements to the current tree representing the task. This is how the corresponding JavaScript™ code would look like:</p>
-<pre><code class="language-javascript">const taskText = 'Do something else: Just do something already.'
+<pre><code class="language-javascript">const taskText = 'Do something else: Just do something already.';
 const element = document.createElement('p');
 element.innerHTML = taskText;
 const todoList = document.getElementById('todoList');
