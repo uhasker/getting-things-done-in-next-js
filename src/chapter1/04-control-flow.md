@@ -286,7 +286,7 @@ for (let variable of arrayOrString) {
 }
 ```
 
-It should be noted that you if don't change the variable inside the loop, you can and should also declare it as `const`. Our first example could therefore be rewritten to
+It should be noted that if you don't change the variable inside the loop, you can and should also declare it as `const`. Our first example could therefore be rewritten to
 
 ```javascript
 const tasks = ['Task 1', 'Task 2', 'Task 3'];
