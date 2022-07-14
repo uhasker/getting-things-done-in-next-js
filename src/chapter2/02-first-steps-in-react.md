@@ -2,7 +2,7 @@
 
 ### What is React?
 
-React is a _declarative_ UI library. Declarative means that we simply _declare_ the way our UI should look like. In practice this means that instead of manipulating the DOM tree manually, we _declare_ how our DOM tree should look like and let React figure out how to get there.
+React is a _declarative_ UI library. Declarative means that we simply _declare_ the way our UI should look like. In practice this means that instead of manipulating the DOM manually, we _declare_ how our DOM tree should look like and let React figure out how to get there.
 
 ### Rendering a React element
 
@@ -25,19 +25,19 @@ Now we remove the `<h1>` in the `<div>` element (since we are about to insert it
 </body>
 ```
 
-First we need create a React **root**. This the container in which we will render all our fancy UI elements. React provides a `createRoot` function to accomplish that. The function takes a container, creates a React root for the container and returns the root:
+First we need create a React **root**. This the container in which we will render all our fancy UI elements. React DOM provides a `createRoot` function to accomplish that. The function takes a container, creates a React root for the container and returns the root:
 
 ```javascript
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.querySelector('#root'));
 ```
 
 Next we want to actually create our React elements using the `React.createElement` function. A **React element** is essentially a building block describing some part of your UI. For example we could create a heading containing the text "Tasks" like this:
 
 ```javascript
-const element = React.createElement('h1', null, 'Tasks');
+const element = React.createElement('h1', undefined, 'Tasks');
 ```
 
-Let's have a look at the arguments here. The first argument is the _type_ of the element. This can for example be the name of a regular HTML tag - however other types are possible and will in fact become very important soon. The second argument describes the _props_ of the element. Here we could e.g. pass the ID of the element - if we need one. If we don't want to pass any props, we simply pass `null`. The third argument contains the _children_ of the element. In this case we only have one child which is the text inside the heading.
+Let's have a look at the arguments here. The first argument is the _type_ of the element. This can for example be the name of a regular HTML tag - however other types are possible and will in fact become very important soon. The second argument describes the _props_ of the element. Here we could e.g. pass the ID of the element - if we need one. If we don't want to pass any props, we simply pass `undefined`. The third argument contains the _children_ of the element. In this case we only have one child which is the text inside the heading.
 
 Now that we have created a root and an element, we can render the element inside the root by using the conveniently named `render` function:
 
@@ -48,12 +48,12 @@ root.render(element);
 This is how it all looks together (remember that this code should be between the `<script>` tags):
 
 ```javascript
-const element = React.createElement('h1', null, 'Tasks');
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const element = React.createElement('h1', undefined, 'Tasks');
+const root = ReactDOM.createRoot(document.querySelector('#root'));
 root.render(element);
 ```
 
-Now open the HTML file in your browser. You should see a heading "Tasks". Let us now inspect the DOM using the browser inspector (press <kbd>F12</kbd> and open the tab labeled "Inspector" _or_ "Elements"). This is how the DOM inside the body looks like:
+Now open the HTML file in your browser. You should see a heading "Tasks". Let us now inspect the resulting HTML using the browser inspector (press <kbd>F12</kbd> and open the tab labeled "Inspector" _or_ "Elements"). This is how the HTML inside the body looks like:
 
 ```html
 <div id="root">
@@ -70,14 +70,14 @@ Let us now add some tasks and render them just like we did in the previous secti
 ```javascript
 const task1 = React.createElement(
   'p',
-  null,
+  undefined,
   'Read the MERN book: Read and understand the MERN book.',
 );
-const task2 = React.createElement('p', null, 'Write a website: Create a new and cool website.');
+const task2 = React.createElement('p', undefined, 'Write a website: Create a new and cool website.');
 const taskList = React.createElement('div', { id: 'taskList' }, task1, task2);
-const heading = React.createElement('h1', null, 'Tasks');
+const heading = React.createElement('h1', undefined, 'Tasks');
 const app = React.createElement('div', { id: 'app' }, heading, taskList);
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.querySelector('#root'));
 root.render(app);
 ```
 
@@ -87,4 +87,4 @@ At this point you are probably asking yourself: _Didn't you just promise me that
 
 ### Summary
 
-Now you know how to import React using a CDN and how to dynamically manipulate the DOM using `React.createElement` and `ReactDOM.createRoot`. You also know you shouldn't actually do that.
+Now you know how to import React using a CDN and how to dynamically manipulate the DOM using `React.createElement` and `ReactDOM.createRoot`. You also know you shouldn't actually do this.
