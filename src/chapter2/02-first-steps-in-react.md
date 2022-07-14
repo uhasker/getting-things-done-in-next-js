@@ -73,7 +73,11 @@ const task1 = React.createElement(
   undefined,
   'Read the MERN book: Read and understand the MERN book.',
 );
-const task2 = React.createElement('p', undefined, 'Write a website: Create a new and cool website.');
+const task2 = React.createElement(
+  'p',
+  undefined,
+  'Write a website: Create a new and cool website.',
+);
 const taskList = React.createElement('div', { id: 'taskList' }, task1, task2);
 const heading = React.createElement('h1', undefined, 'Tasks');
 const app = React.createElement('div', { id: 'app' }, heading, taskList);
