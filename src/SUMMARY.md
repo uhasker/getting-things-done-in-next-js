@@ -14,3 +14,5 @@
 
 - [The client](chapter2/README.md)
   - [HTML and the DOM](chapter2/01-html-and-the-dom.md)
+  - [First steps in React](chapter2/02-first-steps-in-react.md)
+
