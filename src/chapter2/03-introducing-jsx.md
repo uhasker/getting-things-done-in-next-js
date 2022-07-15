@@ -56,11 +56,11 @@ const app = (
     </div>
   </div>
 );
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.querySelector('#root'));
 root.render(app);
 ```
 
-This looks pretty much exactly like regular HTML. However, it is important to remember that JSX is _emphatically not_ HTML. Instead it is a **syntax extension** to JavaScript that can be transpiled to _normal_ JavaScript. This will lead to a number of important consequences down the line (namely that JSX can express things HTML can not).
+This looks pretty much exactly like regular HTML. However, it is important to remember that JSX is _emphatically not_ HTML. Instead it is a **syntax extension** to JavaScript that can be transpiled to _normal_ JavaScript. This will lead to a number of important consequences down the road (namely that JSX can express things HTML can not).
 
 Right now you are probably wondering why we are bothering with React at all. We took perfectly fine HTML and for some reason insisted on doing a bunch of complex things just to get essentially the same HTML, but dynamically. However, this setup will now payoff in a _huge_ way, as we introduce React components.
 
