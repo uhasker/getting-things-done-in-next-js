@@ -26,6 +26,12 @@ mdbook build
 
 Please adhere to https://www.conventionalcommits.org/en/v1.0.0/ when writing commit messages.
 
+If you are working on a particular chapter the scope should always be of the form `C3.5`. For example if you make some minor improvements in chapter 3.5, your commit message should look like this:
+
+```
+chore(C3.5): minor improvements
+```
+
 ### Branches
 
 Branch names should be `lisp-case` and should start with the chapter name the feature of fix applies to.
