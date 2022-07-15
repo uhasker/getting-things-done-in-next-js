@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>The client</title>
+        <title>Introducing JSX</title>
         <!-- Custom HTML head -->
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
@@ -75,7 +75,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../title-page.html">Getting things done in MERN</a></li><li class="chapter-item expanded affix "><a href="../introduction.html">Introduction</a></li><li class="chapter-item expanded "><a href="../chapter1/index.html"><strong aria-hidden="true">1.</strong> A brief introduction to JavaScript</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../chapter1/01-hello-world.html"><strong aria-hidden="true">1.1.</strong> Hello world</a></li><li class="chapter-item expanded "><a href="../chapter1/02-primitive-data-types.html"><strong aria-hidden="true">1.2.</strong> Primitive data types</a></li><li class="chapter-item expanded "><a href="../chapter1/03-arrays-and-objects.html"><strong aria-hidden="true">1.3.</strong> Arrays and objects</a></li><li class="chapter-item expanded "><a href="../chapter1/04-control-flow.html"><strong aria-hidden="true">1.4.</strong> Control flow</a></li><li class="chapter-item expanded "><a href="../chapter1/05-functions.html"><strong aria-hidden="true">1.5.</strong> Functions</a></li><li class="chapter-item expanded "><a href="../chapter1/06-functional-thinking.html"><strong aria-hidden="true">1.6.</strong> Functional thinking</a></li></ol></li><li class="chapter-item expanded "><a href="../chapter2/index.html" class="active"><strong aria-hidden="true">2.</strong> The client</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../chapter2/01-html-and-the-dom.html"><strong aria-hidden="true">2.1.</strong> HTML and the DOM</a></li><li class="chapter-item expanded "><a href="../chapter2/02-first-steps-in-react.html"><strong aria-hidden="true">2.2.</strong> First steps in React</a></li><li class="chapter-item expanded "><a href="../chapter2/03-introducing-jsx.html"><strong aria-hidden="true">2.3.</strong> Introducing JSX</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../title-page.html">Getting things done in MERN</a></li><li class="chapter-item expanded affix "><a href="../introduction.html">Introduction</a></li><li class="chapter-item expanded "><a href="../chapter1/index.html"><strong aria-hidden="true">1.</strong> A brief introduction to JavaScript</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../chapter1/01-hello-world.html"><strong aria-hidden="true">1.1.</strong> Hello world</a></li><li class="chapter-item expanded "><a href="../chapter1/02-primitive-data-types.html"><strong aria-hidden="true">1.2.</strong> Primitive data types</a></li><li class="chapter-item expanded "><a href="../chapter1/03-arrays-and-objects.html"><strong aria-hidden="true">1.3.</strong> Arrays and objects</a></li><li class="chapter-item expanded "><a href="../chapter1/04-control-flow.html"><strong aria-hidden="true">1.4.</strong> Control flow</a></li><li class="chapter-item expanded "><a href="../chapter1/05-functions.html"><strong aria-hidden="true">1.5.</strong> Functions</a></li><li class="chapter-item expanded "><a href="../chapter1/06-functional-thinking.html"><strong aria-hidden="true">1.6.</strong> Functional thinking</a></li></ol></li><li class="chapter-item expanded "><a href="../chapter2/index.html"><strong aria-hidden="true">2.</strong> The client</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../chapter2/01-html-and-the-dom.html"><strong aria-hidden="true">2.1.</strong> HTML and the DOM</a></li><li class="chapter-item expanded "><a href="../chapter2/02-first-steps-in-react.html"><strong aria-hidden="true">2.2.</strong> First steps in React</a></li><li class="chapter-item expanded "><a href="../chapter2/03-introducing-jsx.html" class="active"><strong aria-hidden="true">2.3.</strong> Introducing JSX</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -134,21 +134,57 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="chapter-2-the-client"><a class="header" href="#chapter-2-the-client">Chapter 2: The client</a></h1>
-<div style="text-align: right"> This website needs to work on Internet Explorer 6.0 <br> <i> - Famous last words </i> </div>
-<p>In this chapter we will create a simple (website) client. This client will allow us to add and delete tasks. Each task will have a summary and a description.</p>
-<p>Create a directory which will contain your project. We called that directory <em>easy-opus</em> (it is common to name your project directory after the project). Of course, feel free to give your directory any <em>meaningful</em> name.</p>
-<p>Enough blabla, let's dive right in!</p>
+                        <h2 id="introducing-jsx"><a class="header" href="#introducing-jsx">Introducing JSX</a></h2>
+<h3 id="add-jsx"><a class="header" href="#add-jsx">Add JSX</a></h3>
+<p>Instead of writing increasingly convoluted <code>React.createElement</code> calls until we lose the last scraps of our sanity, we would like to use syntax that looks like HTML. For example we would <em>really like</em> to be able to write stuff like this:</p>
+<pre><code class="language-javascript">const element = &lt;li id=&quot;task1&quot;&gt;Task 1&lt;/li&gt;;
+</code></pre>
+<p>Unfortunately this is not possible as the above is not valid JavaScript (no trademarks this time, we promise). Feel free to try it out and add the above JavaScript to your <code>&lt;script&gt;</code> tags inside <code>index.html</code>. When you open the page you will see the following error in your console:</p>
+<pre><code class="language-shell">Uncaught SyntaxError: expected expression, got '&lt;'
+</code></pre>
+<p><strong>Babel</strong> to the rescue! This tool allows us to <em>transpile</em> <strong>JSX</strong> (which looks like HTML) to JavaScript.</p>
+<p>First we need to import Babel. We will use a CDN for now (like we did with React). Add this below the React script tags:</p>
+<pre><code class="language-html">&lt;script src=&quot;https://unpkg.com/@babel/standalone/babel.js&quot;&gt;&lt;/script&gt;
+</code></pre>
+<p>Next set the <code>type</code> <em>attribute</em> of the <code>&lt;script&gt;</code> tag inside the body to &quot;text/babel&quot; and replace the calls to <code>React.createElement</code> with JSX:</p>
+<pre><code class="language-html">&lt;script type=&quot;text/babel&quot;&gt;
+  const task1 = &lt;p&gt;Task 1&lt;/p&gt;;
+  const task2 = &lt;p&gt;Task 2&lt;/p&gt;;
+  const taskList = &lt;div id=&quot;taskList&quot; children={[task1, task2]} /&gt;;
+  const heading = &lt;h1&gt;Tasks&lt;/h1&gt;;
+  const app = &lt;div id=&quot;app&quot; children={[heading, taskList]} /&gt;;
+  const root = ReactDOM.createRoot(document.querySelector('#root'));
+  root.render(app);
+&lt;/script&gt;
+</code></pre>
+<p>Now open the <code>index.html</code> in your browser. Incredibly enough, it <em>just works</em>™.</p>
+<p>But why does it work? Let us again open the browser inspector and look inside the head element of the document. We will see that Babel <em>sneakily</em> added another script tag below the title. If we take a look inside, we will see that this script tag just contains a bunch of <code>React.createElement</code> calls.</p>
+<p>Babel <em>transpiled</em> our JSX into <code>React.createElement</code> calls. Sneaky indeed! But this is <em>the good kind of sneaky</em> as it allows us to write <em>more readable code</em>. And as we all know - writing readable code makes you both a better programmer and a better person.</p>
+<h3 id="inline-jsx"><a class="header" href="#inline-jsx">Inline JSX</a></h3>
+<p>The new code looks much better, but is still a bit ugly. Luckily, we can inline the JSX. This simply means that we can nest JSX elements inside each other (similar to HTML). This is how the new JavaScript inside our script tag looks like:</p>
+<pre><code class="language-javascript">const app = (
+  &lt;div id=&quot;app&quot;&gt;
+    &lt;h1&gt;Tasks&lt;/h1&gt;
+    &lt;div id=&quot;taskList&quot;&gt;
+      &lt;p&gt;Task 1&lt;/p&gt;
+      &lt;p&gt;Item 2&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+);
+const root = ReactDOM.createRoot(document.querySelector('#root'));
+root.render(app);
+</code></pre>
+<p>This looks pretty much exactly like regular HTML. However, it is important to remember that JSX is <em>emphatically not</em> HTML. Instead it is a <strong>syntax extension</strong> to JavaScript that can be transpiled to <em>normal</em> JavaScript. This will lead to a number of important consequences down the road (namely that JSX can express things HTML can not).</p>
+<p>Right now you are probably wondering why we are bothering with React at all. We took perfectly fine HTML and for some reason insisted on doing a bunch of complex things just to get essentially the same HTML, but dynamically. However, this setup will now payoff in a <em>huge</em> way, as we introduce React components.</p>
+<h3 id="summary"><a class="header" href="#summary">Summary</a></h3>
+<p>You know how to dynamically manipulate the DOM using JSX and that you should write JSX instead of <code>React.createElement</code> calls.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../chapter1/06-functional-thinking.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../chapter2/02-first-steps-in-react.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
-                            </a>
-                            <a rel="next" href="../chapter2/01-html-and-the-dom.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                                <i class="fa fa-angle-right"></i>
                             </a>
                         <div style="clear: both"></div>
                     </nav>
@@ -156,11 +192,8 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../chapter1/06-functional-thinking.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../chapter2/02-first-steps-in-react.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
-                    </a>
-                    <a rel="next" href="../chapter2/01-html-and-the-dom.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                        <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
 
