@@ -1,0 +1,399 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Project structure</title>
+        <!-- Custom HTML head -->
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../title-page.html">Getting things done in MERN</a></li><li class="chapter-item expanded affix "><a href="../introduction.html">Introduction</a></li><li class="chapter-item expanded "><a href="../chapter1/index.html"><strong aria-hidden="true">1.</strong> A brief introduction to JavaScript</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../chapter1/01-hello-world.html"><strong aria-hidden="true">1.1.</strong> Hello world</a></li><li class="chapter-item expanded "><a href="../chapter1/02-primitive-data-types.html"><strong aria-hidden="true">1.2.</strong> Primitive data types</a></li><li class="chapter-item expanded "><a href="../chapter1/03-arrays-and-objects.html"><strong aria-hidden="true">1.3.</strong> Arrays and objects</a></li><li class="chapter-item expanded "><a href="../chapter1/04-control-flow.html"><strong aria-hidden="true">1.4.</strong> Control flow</a></li><li class="chapter-item expanded "><a href="../chapter1/05-functions.html"><strong aria-hidden="true">1.5.</strong> Functions</a></li><li class="chapter-item expanded "><a href="../chapter1/06-functional-thinking.html"><strong aria-hidden="true">1.6.</strong> Functional thinking</a></li></ol></li><li class="chapter-item expanded "><a href="../chapter2/index.html"><strong aria-hidden="true">2.</strong> The client</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../chapter2/01-html-and-the-dom.html"><strong aria-hidden="true">2.1.</strong> HTML and the DOM</a></li><li class="chapter-item expanded "><a href="../chapter2/02-first-steps-in-react.html"><strong aria-hidden="true">2.2.</strong> First steps in React</a></li><li class="chapter-item expanded "><a href="../chapter2/03-introducing-jsx.html"><strong aria-hidden="true">2.3.</strong> Introducing JSX</a></li><li class="chapter-item expanded "><a href="../chapter2/04-react-components.html"><strong aria-hidden="true">2.4.</strong> React components</a></li><li class="chapter-item expanded "><a href="../chapter2/05-project-structure.html" class="active"><strong aria-hidden="true">2.5.</strong> Project structure</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title"></h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h2 id="project-structure"><a class="header" href="#project-structure">Project structure</a></h2>
+<h3 id="splitting-files"><a class="header" href="#splitting-files">Splitting files</a></h3>
+<p>All this time we were working inside a single index.html. This is bad for three main reasons:</p>
+<ol>
+<li>We want to split the HTML and JavaScript (and later the CSS) into separate files. This will improve the maintainability of the project.</li>
+<li>We want to split the JavaScript files as well. For example it is very common to have a component per JavaScript file.</li>
+<li>We want to avoid loading the scripts from a CDN and performing the Babel transpilation at run time. Instead we want to put everything into a <em>bundle</em> and then simply use that bundle.</li>
+</ol>
+<p>In order to be able to do all of this we need a <em>build toolchain</em>. Let us begin the setup of the toolchain by creating a directory public/ and moving the index.html file into public/. You can do this using your file explorer or using the command line:</p>
+<pre><code class="language-shell">mkdir public
+mv index.html public/
+</code></pre>
+<p>The public/ directory will mostly just contain your index.html file and things like the favicon. We now create a src/ directory.</p>
+<pre><code>mkdir src
+</code></pre>
+<p>This is where all the JavaScript <em>source</em> files (i.e. the files you use for development) will live.</p>
+<p>Next we move the Javascript from <code>public/index.html</code> into <code>src/index.js</code>.</p>
+<p>The <code>public/index.html</code> should therefore now look like this:</p>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+  &lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot; /&gt;
+    &lt;title&gt;Easy Opus&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div id=&quot;root&quot;&gt; &lt;/div&gt;
+    &lt;script src=&quot;../dist/bundle.js&quot;&gt;&lt;/script&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>Note that we include a file called <code>dist/bundle.js</code> and not <code>src/index.js</code>. We will return to this in a second.</p>
+<p>The <code>src/index.js</code> file should look like this:</p>
+<pre><code class="language-javascript">const TaskList = ({ tasks }) =&gt; {
+  return (
+    &lt;div id=&quot;taskList&quot;&gt;
+      {tasks.map(({ summary, description }) =&gt; (
+        &lt;p&gt;{`${summary}: ${description}`}&lt;/p&gt;
+      ))}
+    &lt;/div&gt;
+  );
+};
+
+const tasks = [
+  {
+    summary: 'Read the MERN book',
+    description: 'Read and understand the MERN book.',
+  },
+  {
+    summary: 'Write a website',
+    description: 'Create a new and cool website.',
+  },
+];
+
+const app = (
+  &lt;div id=&quot;app&quot;&gt;
+    &lt;h1&gt;Tasks&lt;/h1&gt;
+    &lt;TaskList tasks={tasks} /&gt;
+  &lt;/div&gt;
+);
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(app);
+</code></pre>
+<p>Your folder structure should look as follows:</p>
+<pre><code>easy-opus/
+└── client/
+    ├── public/
+    │   └── index.html
+    └── src/
+        └── index.js
+</code></pre>
+<h3 id="initialize-a-nodejs-project"><a class="header" href="#initialize-a-nodejs-project">Initialize a node.js project</a></h3>
+<p>In chapter 1 we always worked with either individual code snippets or JavaScript files. However now we want to create a Node.js project.</p>
+<p>Initialize a Node.js project by running:</p>
+<pre><code class="language-shell">npm init -y
+</code></pre>
+<p>We pass the -y flag to avoid all kinds of annoying questions about things we currently don't care about.</p>
+<p>If you inspect your root directory you will now see a package.json which looks approximately like this:</p>
+<pre><code class="language-json">{
+  &quot;name&quot;: &quot;client&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;description&quot;: &quot;&quot;,
+  &quot;main&quot;: &quot;index.js&quot;,
+  &quot;scripts&quot;: {
+    &quot;test&quot;: &quot;echo \&quot;Error: no test specified\&quot; &amp;&amp; exit 1&quot;
+  },
+  &quot;keywords&quot;: [],
+  &quot;author&quot;: &quot;&quot;,
+  &quot;license&quot;: &quot;ISC&quot;
+}
+</code></pre>
+<p>We already met babel. Instead of serving it from a CDN we now install it as a development dependency. In addition we install the react-preset to allow the transpilation of JSX:</p>
+<pre><code class="language-shell">npm install --save-dev @babel/cli @babel/core @babel/preset-react babel-loader
+</code></pre>
+<p>Next we install webpack and the webpack development server as a dev dependency:</p>
+<pre><code class="language-shell">npm install --save-dev webpack webpack-cli webpack-dev-server
+</code></pre>
+<p>If you look inside the project you will see that there are two new things. The first thing is a directory called node_modules. This contains the newly installed dependencies. The second thing is a file called package-lock.json which contains all the dependencies (include the dependencies of the dependencies) with their exact version. This file allows other developers to reconstruct your <em>exact dependencies</em> - especially in large projects this can become extremely important. Hunting down errors that stem from dependendency problems is some of the worst pastime you can think of in software development.</p>
+<blockquote>
+<p>As a side note, the node_modules directory already contains approximately 45MB. Nothing to see here... This is an unfortunate artifact of JavaScript developers generally using <em>a lot</em> of dependencies (not all of which are always necessary).</p>
+</blockquote>
+<p>Next we create the webpack configuration in a file called <em>webpack.config.js</em>:</p>
+<pre><code class="language-javascript">const path = require('path');
+
+module.exports = {
+  entry: './src/index.js',
+  output: {
+    path: path.join(__dirname, 'dist'),
+    filename: 'bundle.js',
+    publicPath: '/dist/',
+  },
+  mode: 'development',
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: [
+          {
+            loader: 'babel-loader',
+            options: {
+              presets: ['@babel/preset-react'],
+            },
+          },
+        ],
+      },
+    ],
+  },
+};
+</code></pre>
+<p>Now we can build the project:</p>
+<pre><code class="language-shell">npx webpack build
+</code></pre>
+<p>This builds the project into <code>dist/bundle.js</code>. Remember that this is the file we are including in our <code>index.html</code>. Your project structure should look like this:</p>
+<pre><code>todo-app
+├── node_modules
+├── dist
+│   └── bundle.js
+├── public
+│   └── index.html
+├── src
+│   └── index.js
+├── package.json
+├── package-lock.json
+└── webpack.config.js
+</code></pre>
+<p>Open <code>index.html</code> in your browser and you will see a list of tasks.</p>
+<h3 id="add-npm-scripts"><a class="header" href="#add-npm-scripts">Add npm scripts</a></h3>
+<p>Instead of running command like <code>npx webpack serve</code> all the time, we can tell npm to map commands:</p>
+<pre><code class="language-shell">&quot;scripts&quot;: {
+  &quot;build&quot;: &quot;webpack build&quot;,
+  &quot;serve&quot;: &quot;webpack serve&quot;
+}
+</code></pre>
+<p>Now instead of executing <code>npx webpack build</code> and <code>npx webpack serve</code> we simply do <code>npm run build</code> and <code>npm run serve</code> respectively. This will become especially important when we will migrate from webpack to other bundlers since we can then simply edit the package.json and the commands will not change.</p>
+<p>Let us now further improve the project structure.</p>
+<h3 id="splitting-the-javascript"><a class="header" href="#splitting-the-javascript">Splitting the JavaScript</a></h3>
+<p>Instead of having a single JavaScript file for the entire application, we want to split the JavaScript code as well. It is common practice to put every JavaScript component into its own file.</p>
+<p>We now move Task into a separate component and put that component into a file called <em>src/task.js</em>:</p>
+<pre><code class="language-javascript">const Task = ({ summary, description }) =&gt; {
+  return &lt;p&gt;{`${summary}: ${description}`}&lt;/p&gt;;
+};
+
+export default Task;
+</code></pre>
+<p>This looks like overkill at first glance. However the tasks will inevitably become more complicated (this is a task management application after all). It is therefore already clear that the task should be its own component. Don't just blindly implement the current requirements, think about probable scenarios for the future and what they mean for your code.</p>
+<p>Next we move the TaskList component to src/task-list.js:</p>
+<pre><code class="language-javascript">const TaskList = ({ tasks }) =&gt; {
+  return (
+    &lt;div id=&quot;taskList&quot;&gt;
+      {tasks.map(({ summary, description }) =&gt; (
+        &lt;Task summary={summary} description={description} /&gt;
+      ))}
+    &lt;/div&gt;
+  );
+};
+
+export default TaskList;
+</code></pre>
+<p>By now you know the drill. The App component goes into src/app.js:</p>
+<pre><code class="language-javascript">const App = () =&gt; {
+  const tasks = [
+    {
+      summary: 'Item 1',
+      description: 'Description of item 1',
+    },
+    {
+      summary: 'Item 2',
+      description: 'Description of item 2',
+    },
+  ];
+
+  return (
+    &lt;div id=&quot;app&quot;&gt;
+      &lt;h1&gt;Tasks&lt;/h1&gt;
+      &lt;TaskList tasks={tasks} /&gt;
+    &lt;/div&gt;
+  );
+};
+
+export default App;
+</code></pre>
+<p>Finally our src/index.js becomes really simple:</p>
+<pre><code class="language-javascript">import App from './app';
+
+root.render(&lt;App /&gt;);
+</code></pre>
+<h3 id="install-react-as-a-dependency-instead-of-serving-from-cdn"><a class="header" href="#install-react-as-a-dependency-instead-of-serving-from-cdn">Install React as a dependency instead of serving from CDN</a></h3>
+<p>We no longer want to serve React from CDN, but install it as a dependency instead.</p>
+<p>Run:</p>
+<pre><code class="language-shell">npm install react react-dom
+</code></pre>
+<p>We also need to change the webconfig:</p>
+<pre><code class="language-javascript">options: {
+  presets: [
+    [
+      &quot;@babel/preset-react&quot;,
+      {
+        runtime: &quot;automatic&quot;,
+      },
+    ],
+  ],
+}
+</code></pre>
+<p>We now need to import ReactDOM at the top of src/index.js:</p>
+<pre><code class="language-javascript">import ReactDOM from 'react-dom/client';
+</code></pre>
+<p>Run the webpack build again (<code>npx webpack build</code>) and open <code>index.html</code> in a browser. You will again see the same task list. Note that not much has changed in terms of <em>features</em>, however the structure of our project is now <em>much</em> cleaner. We will make some minor improvements later on (like using a <em>development server</em>), however all in all this is the project structure we will stick to for now.</p>
+<h3 id="summary"><a class="header" href="#summary">Summary</a></h3>
+<p>You learned about webpack and how to structure a JavaScript project.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../chapter2/04-react-components.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../chapter2/04-react-components.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+    </body>
+</html>
