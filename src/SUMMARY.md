@@ -17,3 +17,4 @@
   - [First steps in React](chapter2/02-first-steps-in-react.md)
   - [Introducing JSX](chapter2/03-introducing-jsx.md)
   - [React components](chapter2/04-react-components.md)
+  - [Project structure](chapter2/05-project-structure.md)
