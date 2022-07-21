@@ -129,9 +129,9 @@ Next we install webpack and the webpack development server as a dev dependency:
 npm install --save-dev webpack webpack-cli webpack-dev-server
 ```
 
-If you look inside the project you will see that there are two new things. The first thing is a directory called node_modules. This contains the newly installed dependencies. The second thing is a file called package-lock.json which contains all the dependencies (include the dependencies of the dependencies) with their exact version. This file allows other developers to reconstruct your _exact dependencies_ - especially in large projects this can become extremely important. Hunting down errors that stem from dependendency problems is some of the worst pastime you can think of in software development.
+If you look inside the project you will see that there are two new things. The first thing is a directory called node*modules. This contains the newly installed dependencies. The second thing is a file called package-lock.json which contains all the dependencies (include the dependencies of the dependencies) with their exact version. This file allows other developers to reconstruct your \_exact dependencies* - especially in large projects this can become extremely important. Hunting down errors that stem from dependendency problems is some of the worst pastime you can think of in software development.
 
-> As a side note, the node_modules directory already contains approximately 45MB. Nothing to see here... This is an unfortunate artifact of JavaScript developers generally using _a lot_ of dependencies (not all of which are always necessary).
+> As a side note, the node*modules directory already contains approximately 45MB. Nothing to see here... This is an unfortunate artifact of JavaScript developers generally using \_a lot* of dependencies (not all of which are always necessary).
 
 Next we create the webpack configuration in a file called _webpack.config.js_:
 
