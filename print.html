@@ -76,7 +76,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="title-page.html">Getting things done in MERN</a></li><li class="chapter-item expanded affix "><a href="introduction.html">Introduction</a></li><li class="chapter-item expanded "><a href="chapter1/index.html"><strong aria-hidden="true">1.</strong> A brief introduction to JavaScript</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter1/01-hello-world.html"><strong aria-hidden="true">1.1.</strong> Hello world</a></li><li class="chapter-item expanded "><a href="chapter1/02-primitive-data-types.html"><strong aria-hidden="true">1.2.</strong> Primitive data types</a></li><li class="chapter-item expanded "><a href="chapter1/03-arrays-and-objects.html"><strong aria-hidden="true">1.3.</strong> Arrays and objects</a></li><li class="chapter-item expanded "><a href="chapter1/04-control-flow.html"><strong aria-hidden="true">1.4.</strong> Control flow</a></li><li class="chapter-item expanded "><a href="chapter1/05-functions.html"><strong aria-hidden="true">1.5.</strong> Functions</a></li><li class="chapter-item expanded "><a href="chapter1/06-functional-thinking.html"><strong aria-hidden="true">1.6.</strong> Functional thinking</a></li></ol></li><li class="chapter-item expanded "><a href="chapter2/index.html"><strong aria-hidden="true">2.</strong> The client</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter2/01-html-and-the-dom.html"><strong aria-hidden="true">2.1.</strong> HTML and the DOM</a></li><li class="chapter-item expanded "><a href="chapter2/02-first-steps-in-react.html"><strong aria-hidden="true">2.2.</strong> First steps in React</a></li><li class="chapter-item expanded "><a href="chapter2/03-introducing-jsx.html"><strong aria-hidden="true">2.3.</strong> Introducing JSX</a></li><li class="chapter-item expanded "><a href="chapter2/04-react-components.html"><strong aria-hidden="true">2.4.</strong> React components</a></li><li class="chapter-item expanded "><a href="chapter2/05-project-structure.html"><strong aria-hidden="true">2.5.</strong> Project structure</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="title-page.html">Getting things done in MERN</a></li><li class="chapter-item expanded affix "><a href="introduction.html">Introduction</a></li><li class="chapter-item expanded "><a href="chapter1/index.html"><strong aria-hidden="true">1.</strong> A brief introduction to JavaScript</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter1/01-hello-world.html"><strong aria-hidden="true">1.1.</strong> Hello world</a></li><li class="chapter-item expanded "><a href="chapter1/02-primitive-data-types.html"><strong aria-hidden="true">1.2.</strong> Primitive data types</a></li><li class="chapter-item expanded "><a href="chapter1/03-arrays-and-objects.html"><strong aria-hidden="true">1.3.</strong> Arrays and objects</a></li><li class="chapter-item expanded "><a href="chapter1/04-control-flow.html"><strong aria-hidden="true">1.4.</strong> Control flow</a></li><li class="chapter-item expanded "><a href="chapter1/05-functions.html"><strong aria-hidden="true">1.5.</strong> Functions</a></li><li class="chapter-item expanded "><a href="chapter1/06-functional-thinking.html"><strong aria-hidden="true">1.6.</strong> Functional thinking</a></li></ol></li><li class="chapter-item expanded "><a href="chapter2/index.html"><strong aria-hidden="true">2.</strong> The client</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter2/01-html-and-the-dom.html"><strong aria-hidden="true">2.1.</strong> HTML and the DOM</a></li><li class="chapter-item expanded "><a href="chapter2/02-first-steps-in-react.html"><strong aria-hidden="true">2.2.</strong> First steps in React</a></li><li class="chapter-item expanded "><a href="chapter2/03-introducing-jsx.html"><strong aria-hidden="true">2.3.</strong> Introducing JSX</a></li><li class="chapter-item expanded "><a href="chapter2/04-react-components.html"><strong aria-hidden="true">2.4.</strong> React components</a></li><li class="chapter-item expanded "><a href="chapter2/05-project-structure.html"><strong aria-hidden="true">2.5.</strong> Project structure</a></li><li class="chapter-item expanded "><a href="chapter2/06-react-state.html"><strong aria-hidden="true">2.6.</strong> React state</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -1615,6 +1615,53 @@ root.render(&lt;App /&gt;);
 <p>Run the webpack build again (<code>npx webpack build</code>) and open <code>index.html</code> in a browser. You will again see the same task list. Note that not much has changed in terms of <em>features</em>, however the structure of our project is now <em>much</em> cleaner. We will make some minor improvements later on (like using a <em>development server</em>), however all in all this is the project structure we will stick to for now.</p>
 <h3 id="summary-9"><a class="header" href="#summary-9">Summary</a></h3>
 <p>You learned about webpack and how to structure a JavaScript project.</p>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="react-state"><a class="header" href="#react-state">React State</a></h2>
+<h3 id="forms"><a class="header" href="#forms">Forms</a></h3>
+<p>Let us now add the form for creating a new task. Before you continue reading, here is a mental exercise - <em>which component should contain this form</em>?</p>
+<p>If you thought &quot;obviously, it's the TaskList component&quot;, you are right! Let's enter src/task-list.js and import React at the top:</p>
+<pre><code class="language-javascript">import * as React from 'react';
+</code></pre>
+<p>Next we add the form inside the div (below all the p elements representing the tasks):</p>
+<pre><code class="language-html">&lt;form onSubmit=&quot;{handleSubmit}&quot;&gt;
+  &lt;label htmlFor=&quot;summary&quot;&gt;Summary:&lt;/label&gt;
+  &lt;input type=&quot;text&quot; id=&quot;summary&quot; /&gt;
+  &lt;br /&gt;
+  &lt;label htmlFor=&quot;description&quot;&gt;Description:&lt;/label&gt;
+  &lt;textarea id=&quot;description&quot; /&gt;
+  &lt;br /&gt;
+  &lt;button type=&quot;submit&quot;&gt;Add task&lt;/button&gt;
+&lt;/form&gt;
+</code></pre>
+<p>This form contains the summary, the description and the &quot;Add task&quot; button. Try clicking the button - it won't do much. The reason for that is that we haven't yet told the button what to do on submit. Let's change that now.</p>
+<p>We create a handleSubmit function, which simply logs something to the console. Note that the default behaviour of a form submission includes a browser refresh, which we don't want. To prevent the default behaviour, we have to call (surprise) the preventDefault function of the event:</p>
+<pre><code class="language-javascript">function handleSubmit(event) {
+  event.preventDefault();
+  console.log('Submit');
+}
+</code></pre>
+<p>Next we make sure that the onSubmit function is called when the button is clicked. To accomplish that, we set the onSubmit property of the button to the <code>handleSubmit</code> function:</p>
+<pre><code class="language-html">&lt;button type=&quot;submit&quot; onSubmit=&quot;{handleSubmit}&quot;&gt;Add task&lt;/button&gt;
+</code></pre>
+<p>If you click the button, you should now see &quot;Submit&quot; logged to the console.</p>
+<h3 id="use-react-state-to-create-new-items"><a class="header" href="#use-react-state-to-create-new-items">Use React state to create new items</a></h3>
+<p>Now that we can add new tasks, our components needs to track <strong>state</strong> (the list of tasks in this case). React has the useState hook for this purpose. A <strong>hook</strong> is nothing more than a (special) function. This particular hook is a function that allows you to add state to a component:</p>
+<pre><code class="language-javascript">const [tasks, setTasks] = React.useState([]);
+</code></pre>
+<p>The <code>useState</code> hook declares a &quot;state variable&quot;. The argument to the hook is the initial state. In this case, we begin with an empty list, since we have no tasks in the beginning. The hook returns a pair of values. The first element is the current state and the second element is a function for updating state. <em>You should never set the first element directly and only use the updating function. Otherwise React will get confused since it won't realize that your state has changed and will not update the DOM correctly.</em></p>
+<p>The updater function takes the previous state and returns the next state. Here we take the list of previous tasks (i.e. the tasks that were present before the button click) and return the new tasks (i.e. the tasks that should be present after the button click). In this case we simply add the task to the end:</p>
+<pre><code class="language-javascript">function handleSubmit(event) {
+  event.preventDefault();
+  const [{ value: summary }, { value: description }] = event.target.elements;
+  setTasks((previousTasks) =&gt; [
+    ...previousTasks,
+    {
+      summary,
+      description,
+    },
+  ]);
+}
+</code></pre>
+<p>Try clicking the button - a new task should appear.</p>
 
                     </main>
 
