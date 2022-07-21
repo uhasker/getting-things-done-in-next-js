@@ -16,3 +16,4 @@
   - [HTML and the DOM](chapter2/01-html-and-the-dom.md)
   - [First steps in React](chapter2/02-first-steps-in-react.md)
   - [Introducing JSX](chapter2/03-introducing-jsx.md)
+  - [React components](chapter2/04-react-components.md)
