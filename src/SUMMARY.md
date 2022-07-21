@@ -18,3 +18,4 @@
   - [Introducing JSX](chapter2/03-introducing-jsx.md)
   - [React components](chapter2/04-react-components.md)
   - [Project structure](chapter2/05-project-structure.md)
+  - [React state](chapter2/06-react-state.md)
