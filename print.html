@@ -1087,30 +1087,31 @@ for (const number in numbers) {
 <h3 id="further-reading-5"><a class="header" href="#further-reading-5">Further reading</a></h3>
 <p>There is no further reading for this section.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="chapter-2-the-client"><a class="header" href="#chapter-2-the-client">Chapter 2: The client</a></h1>
-<div style="text-align: right"> This website needs to work on Internet Explorer 6.0 <br> <i> - Famous last words </i> </div>
+<div style="text-align: right"> <i> This website needs to work on Internet Explorer 6.0 <br> - Famous last words </i> </div>
 <p>In this chapter we will create a simple (website) client. This client will allow us to add and delete tasks. Each task will have a summary and a description.</p>
 <p>Create a directory which will contain your project. We called that directory <em>easy-opus</em> (it is common to name your project directory after the project). Of course, feel free to give your directory any <em>meaningful</em> name.</p>
-<p>Enough blabla, let's dive right in!</p>
+<p>Let's begin.</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="html-and-the-dom"><a class="header" href="#html-and-the-dom">HTML and the DOM</a></h2>
-<div style="text-align: right"> Hey guys, how do I parse HTML with a regular expression? <br> <i> - Famous last words </i> </div>
+<div style="text-align: right"> <i> Hey guys, how do I parse HTML with a regular expression? <br> - Famous last words </i> </div>
 <h3 id="a-minimal-html-file"><a class="header" href="#a-minimal-html-file">A minimal HTML file</a></h3>
 <p>Inside your project directory (<em>easy-opus</em> in our case) create a directory which will contain the (website) client. Give the directory a descriptive name (for example <em>client</em>). If you followed our naming scheme, your directory structure should now look as follows:</p>
 <pre><code>easy-opus/
 └─── client/
 </code></pre>
-<p>Let's write our first webpage. We do so using <strong>HTML</strong> which is a <em>markup language</em> for defining for documents that should be displayed in a browser.</p>
+<p>All further work will be done <em>inside the client directory</em>.</p>
+<p>Let's write our first webpage. We will do so using <strong>HTML</strong> which is a <em>markup language</em> for defining documents that should be displayed in a browser.</p>
 <blockquote>
 <p>A markup language specifies rules which define what kind of information can be included in a document. Note that markup languages and programming languages are different things. A markup language essentially allows you to create documents to be displayed, while programming languages are much more powerful than that.</p>
 </blockquote>
-<p>Navigate to the client directory and create a file named <code>index.html</code> in there. Now write some minimal useful HTML to display a bunch of tasks:</p>
+<p>Navigate to the client directory and create a file named <code>index.html</code> in there. Now write some minimal useful HTML to display a bunch of hardcoded tasks:</p>
 <pre><code class="language-html">&lt;!DOCTYPE html&gt;
 &lt;html lang=&quot;en&quot;&gt;
   &lt;head&gt;
-    &lt;meta charset=&quot;UTF-8&quot; /&gt;
+    &lt;meta charset=&quot;utf-8&quot; /&gt;
     &lt;title&gt;Easy Opus&lt;/title&gt;
   &lt;/head&gt;
   &lt;body&gt;
-    &lt;div id=&quot;root&quot;&gt;
+    &lt;div id=&quot;app&quot;&gt;
       &lt;div&gt;
         &lt;h1&gt;My tasks&lt;/h1&gt;
         &lt;div id=&quot;taskList&quot;&gt;
@@ -1124,19 +1125,19 @@ for (const number in numbers) {
 </code></pre>
 <p>If you open the HTML file in your browser you should see something like this:</p>
 <p><img src="chapter2/images/minimal.png" alt="" /></p>
-<p>Hooray, you've created a simple HTML document! Now you can close this book and go procrastinate. No? Hm, that's weird. Oh, your boss forced you to read this book (<em>blink once</em> if you need help)? Well in that case, we continue by trying to figure out what we just wrote.</p>
+<p>Hooray, you've created a simple HTML document! Now you can close this book and go procrastinate. No? Hm, that's weird. Oh I see, you've been forced you to read this book (blink <em>once</em> for help). In that case, we continue by trying to understand what we just wrote.</p>
 <h3 id="html-elements"><a class="header" href="#html-elements">HTML elements</a></h3>
 <p>HTML essentially consists of elements which you can use to declare what <em>kind</em> of content you would like to render. For example the <code>p</code> element is a paragraph:</p>
 <pre><code class="language-html">&lt;p&gt;Read the MERN book: Read and understand the MERN book.&lt;/p&gt;
 </code></pre>
 <p>An HTML element usually has some <em>content</em> inside an <em>opening tag</em> and a <em>closing tag</em>. The opening tag is the name of the element wrapped in angle brackets (<code>&lt;p&gt;</code> in the above example). The closing tag is the name of the element wrapped in angle brackets with a <em>forward slash before the name</em> (<code>&lt;/p&gt;</code> in the above example).</p>
-<p>There are many different HTML elements. We already learned that <code>p</code> is a paragraph and <code>div</code> is a generic container. We will talk about other elements later on.</p>
+<p>There are many different HTML elements. For example <code>p</code> is a paragraph and <code>div</code> is a generic container. We will talk about other elements later on.</p>
 <p>What makes HTML so powerful is the fact that <em>most</em> elements can be <em>nested</em>. For example here is how you can nest a paragraph inside a generic container:</p>
 <pre><code class="language-html">&lt;div&gt;
   &lt;p&gt;Read the MERN book: Read and understand the MERN book.&lt;/p&gt;
 &lt;/div&gt;
 </code></pre>
-<p>Elements can also have <em>attributes</em>. Two of the most important attributes are <code>id</code> and <code>class</code>. The <code>id</code> attribute is used to specify a <em>unique identity</em> for an HTML element. You can use that attribute to uniquely identify the element. The <code>class</code> attribute is used to specify a <em>class</em> for an HTML element. Unlike unique identifiers, multiple HTML elements can have the same class. This is extremely useful for example if you want to <em>style</em> multiple HTML elements in the same way. For example you could color all HTML elements of class <code>blue-text</code> blue. There are many more attributes and different HTML elements often have different attributes - we will discuss this in a second.</p>
+<p>Elements can also have <em>attributes</em>. Two of the most important attributes are <code>id</code> and <code>class</code>. The <code>id</code> attribute is used to specify a <em>unique identity</em> for an HTML element. You can use that attribute to - well - uniquely identify an element. The <code>class</code> attribute is used to specify a <em>class</em> for an HTML element. Unlike unique identifiers, multiple HTML elements can have the same class. This is extremely useful for example if you want to <em>style</em> multiple HTML elements in the same way. For example you could color all HTML elements of class <code>blue-text</code> blue. There are many more attributes and different HTML elements often have different attributes.</p>
 <p>If you look at <code>index.html</code> you will see the structure of an HTML document. An HTML document begins with <code>&lt;!DOCTYPE html&gt;</code> which is a <em>document type declaration</em>. This is followed by an <code>html</code> element which contains all the content of the document. The <code>head</code> element contains everything that is not directly related to the content that will be displayed on the page. In the above example we declared the title of the page (which will become the name of the tab once the page is opened) and what kind of character encoding we use. Finally the <code>body</code> element contains all the content that will actually be rendered on the page. In our example the task list we want to render is inside the <code>body</code> element.</p>
 <blockquote>
 <p>We will later talk about character encodings in great detail.</p>
@@ -1150,7 +1151,7 @@ for (const number in numbers) {
 </code></pre>
 <p>Here we have a <code>&lt;div&gt;</code> element (which is a generic container) and two <code>&lt;p&gt;</code> (paragraph) elements inside that div element. The <code>&lt;div&gt;</code> element is the <em>parent</em> of the <code>&lt;p&gt;</code> elements and the <code>&lt;p&gt;</code> elements are the <em>children</em> of the <code>&lt;div&gt;</code> element. The elements form a <em>tree</em>.</p>
 <p>Consider this HTML:</p>
-<pre><code class="language-html">&lt;div id=&quot;root&quot;&gt;
+<pre><code class="language-html">&lt;div id=&quot;app&quot;&gt;
   &lt;h1&gt;My tasks&lt;/h1&gt;
   &lt;div id=&quot;taskList&quot;&gt;
     &lt;p&gt; Read the MERN book: Read and understand the MERN book. &lt;/p&gt;
@@ -1160,9 +1161,7 @@ for (const number in numbers) {
 </code></pre>
 <p>You can visualize it like this:</p>
 <p><img src="chapter2/images/tree.png" alt="" /></p>
-<blockquote>
-<p>As a side note, HTML elements do not need to have an ID.</p>
-</blockquote>
+<p>Note that HTML and DOM are <em>absolutely not the same thing</em>. DOM is a <em>language-independent</em> model which represents document structure. HTML is a <em>concrete language</em> that lets you a certain kind of DOM in text.</p>
 <h2 id="manipulating-the-dom-using-javascript"><a class="header" href="#manipulating-the-dom-using-javascript">Manipulating the DOM using JavaScript</a></h2>
 <p>Whenever you write applications which have a lot of logic in the client, you will need to manipulate the DOM (i.e. add or remove items). For example, if we add a task, we might need to add some elements to the current tree representing the task. This is how the corresponding JavaScript™ code would look like:</p>
 <pre><code class="language-javascript">const taskText = 'Do something else: Just do something already.';
@@ -1180,16 +1179,16 @@ taskList.appendChild(element);
 <li><a href="https://developer.mozilla.org/en-US/docs/Learn/HTML/Introduction_to_HTML/Getting_started">Introduction to HTML - Getting started with HTML</a></li>
 </ul>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="first-steps-in-react"><a class="header" href="#first-steps-in-react">First steps in React</a></h2>
-<h3 id="what-is-react"><a class="header" href="#what-is-react">What is React?</a></h3>
-<p>React is a <em>declarative</em> UI library. Declarative means that we simply <em>declare</em> the way our UI should look like. In practice this means that instead of manipulating the DOM manually, we <em>declare</em> how our DOM tree should look like and let React figure out how to get there.</p>
+<div style="text-align: right"> <i> The last thing the world needs is another JavaScript library. <br> - Ancient Chinese proverb </i> </div>
 <h3 id="rendering-a-react-element"><a class="header" href="#rendering-a-react-element">Rendering a React element</a></h3>
-<p>Let us import React from a CDN (content delivery network). Insert the following <code>&lt;script&gt;</code> between the <code>&lt;head&gt;</code> head tags:</p>
+<p>Let us import React using a <strong>content delivery network</strong> (CDN for short). Open <code>client/index.html</code> and insert the following <code>&lt;script&gt;</code> between the <code>&lt;head&gt;</code> tags:</p>
 <pre><code class="language-html">&lt;head&gt;
   ...
   &lt;script src=&quot;https://unpkg.com/react@18/umd/react.development.js&quot;&gt;&lt;/script&gt;
   &lt;script src=&quot;https://unpkg.com/react-dom@18/umd/react-dom.development.js&quot;&gt;&lt;/script&gt;
 &lt;/head&gt;
 </code></pre>
+<p>This instructs our browser to obtain and execute the respective JavaScript files enabling us to use React.</p>
 <p>Now we remove the <code>&lt;h1&gt;</code> in the <code>&lt;div&gt;</code> element (since we are about to insert it dynamically). We also add a pair of <code>&lt;script&gt;</code> tags - all the JavaScript we are about to write will go between those <code>&lt;script&gt;</code> tags. The body now looks like this:</p>
 <pre><code class="language-html">&lt;body&gt;
   &lt;div id=&quot;root&quot;&gt;&lt;/div&gt;
@@ -1203,6 +1202,9 @@ taskList.appendChild(element);
 <pre><code class="language-javascript">const element = React.createElement('h1', undefined, 'Tasks');
 </code></pre>
 <p>Let's have a look at the arguments here. The first argument is the <em>type</em> of the element. This can for example be the name of a regular HTML tag - however other types are possible and will in fact become very important soon. The second argument describes the <em>props</em> of the element. Here we could e.g. pass the ID of the element - if we need one. If we don't want to pass any props, we simply pass <code>undefined</code>. The third argument contains the <em>children</em> of the element. In this case we only have one child which is the text inside the heading.</p>
+<blockquote>
+<p>Note that quite often you will see people passing <code>null</code> as the second argument if no props are present. This goes back to our discussion regarding <code>null</code> and <code>undefined</code> - in this book we always use <code>undefined</code> to indicate value absence.</p>
+</blockquote>
 <p>Now that we have created a root and an element, we can render the element inside the root by using the conveniently named <code>render</code> function:</p>
 <pre><code class="language-javascript">root.render(element);
 </code></pre>
@@ -1210,6 +1212,25 @@ taskList.appendChild(element);
 <pre><code class="language-javascript">const element = React.createElement('h1', undefined, 'Tasks');
 const root = ReactDOM.createRoot(document.querySelector('#root'));
 root.render(element);
+</code></pre>
+<p>This is how the entire HTML file should look like:</p>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+  &lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot; /&gt;
+    &lt;title&gt;Easy Opus&lt;/title&gt;
+    &lt;script src=&quot;https://unpkg.com/react@18/umd/react.development.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;https://unpkg.com/react-dom@18/umd/react-dom.development.js&quot;&gt;&lt;/script&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div id=&quot;root&quot;&gt;&lt;/div&gt;
+    &lt;script&gt;
+      const element = React.createElement('h1', undefined, 'Tasks');
+      const root = ReactDOM.createRoot(document.querySelector('#root'));
+      root.render(element);
+    &lt;/script&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
 </code></pre>
 <p>Now open the HTML file in your browser. You should see a heading &quot;Tasks&quot;. Let us now inspect the resulting HTML using the browser inspector (press <kbd>F12</kbd> and open the tab labeled &quot;Inspector&quot; <em>or</em> &quot;Elements&quot;). This is how the HTML inside the body looks like:</p>
 <pre><code class="language-html">&lt;div id=&quot;root&quot;&gt;
@@ -1239,12 +1260,15 @@ root.render(app);
 <p>At this point you are probably asking yourself: <em>Didn't you just promise me that manipulating the DOM in React will be simple, you liars? This looks just like regular Javascript™®℠.</em> You have a point (the one after the trademark symbols) and we will indeed vastly simplify this code in the next section via black magic called <strong>JSX</strong>.</p>
 <h3 id="summary-7"><a class="header" href="#summary-7">Summary</a></h3>
 <p>Now you know how to import React using a CDN and how to dynamically manipulate the DOM using <code>React.createElement</code> and <code>ReactDOM.createRoot</code>. You also know you shouldn't actually do this.</p>
+<h2 id="further-reading-7"><a class="header" href="#further-reading-7">Further reading</a></h2>
+<p>There is no further reading for this section.</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="introducing-jsx"><a class="header" href="#introducing-jsx">Introducing JSX</a></h2>
+<div style="text-align: right"> <i> So, JSX is basically HTML... <br> - Famous last words </i> </div>
 <h3 id="add-jsx"><a class="header" href="#add-jsx">Add JSX</a></h3>
 <p>Instead of writing increasingly convoluted <code>React.createElement</code> calls until we lose the last scraps of our sanity, we would like to use syntax that looks like HTML. For example we would <em>really like</em> to be able to write stuff like this:</p>
 <pre><code class="language-javascript">const element = &lt;li id=&quot;task1&quot;&gt;Task 1&lt;/li&gt;;
 </code></pre>
-<p>Unfortunately this is not possible as the above is not valid JavaScript (no trademarks this time, we promise). Feel free to try it out and add the above JavaScript to your <code>&lt;script&gt;</code> tags inside <code>index.html</code>. When you open the page you will see the following error in your console:</p>
+<p>Unfortunately this is not possible as the above is not valid JavaScript (no trademarks this time, we promise). Feel free to try it out and add the above JavaScript to your <code>&lt;script&gt;</code> tags inside <code>client/index.html</code>. When you open the page you will see the following error in your console:</p>
 <pre><code class="language-shell">Uncaught SyntaxError: expected expression, got '&lt;'
 </code></pre>
 <p><strong>Babel</strong> to the rescue! This tool allows us to <em>transpile</em> <strong>JSX</strong> (which looks like HTML) to JavaScript.</p>
@@ -1283,13 +1307,21 @@ root.render(app);
 <p>Right now you are probably wondering why we are bothering with React at all. We took perfectly fine HTML and for some reason insisted on doing a bunch of complex things just to get essentially the same HTML, but dynamically. However, this setup will now payoff in a <em>huge</em> way, as we introduce React components.</p>
 <h3 id="summary-8"><a class="header" href="#summary-8">Summary</a></h3>
 <p>You know how to dynamically manipulate the DOM using JSX and that you should write JSX instead of <code>React.createElement</code> calls.</p>
+<h3 id="further-reading-8"><a class="header" href="#further-reading-8">Further reading</a></h3>
+<ul>
+<li><a href="https://reactjs.org/docs/introducing-jsx.html">React docs - Introducing JSX</a></li>
+</ul>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="react-components"><a class="header" href="#react-components">React components</a></h2>
+<div style="text-align: right"> <i> Why do React components have great self-esteem? <br> Because they keep getting props. <br> - From "1000 programming dad-jokes" </i> </div>
 <h3 id="create-your-first-react-component"><a class="header" href="#create-your-first-react-component">Create your first React component</a></h3>
 <p>Conceptually, a component is an independent and reusable piece of the UI. By thinking about an HTML page in terms of isolated components you can easily create well-designed pages.</p>
 <p>Consider the first version of the easy-opus app. We will need to display a bunch of tasks. Every task should be its own component containing the task summary, description and a button to delete the task. These tasks are grouped in a task list component. In addition to the tasks, the task list component has a button to add a new task.</p>
 <p>This is how it would look like in an image:</p>
 <p><img src="chapter2/images/components.png" alt="" /></p>
 <p>In terms of implementation, a component is just a JavaScript function that takes the data it should render as input and returns the UI representation of the data as output. It will probably not come as a surprise to you at this point that the returned UI representation is given by JSX.</p>
+<blockquote>
+<p>Do note that all the code we are about to write goes between the <code>&lt;script&gt;</code> tags. We will fix this in the next section.</p>
+</blockquote>
 <p>Let us move the task list into its own component:</p>
 <pre><code class="language-javascript">const TaskList = () =&gt; {
   return (
@@ -1303,17 +1335,17 @@ root.render(app);
 <p>Hooray! You created your first React component. Ok, now you can <em>definitely</em> add React to your resume. No? Well, apparently you are really one of those weird people who actually learn things before putting them on their resume...</p>
 <p>We could now call the TaskList component the same way we would call a regular JavaScript function. We could also wrap it in a <code>React.createElement</code> call. However thanks to the power of JSX we can just do this:</p>
 <pre><code class="language-javascript">const app = (
-  &lt;div&gt;
-    &lt;h1&gt;TODOs&lt;/h1&gt;
+  &lt;div id=&quot;app&quot;&gt;
+    &lt;h1&gt;Tasks&lt;/h1&gt;
     &lt;TaskList /&gt;
   &lt;/div&gt;
 );
 </code></pre>
 <p>This looks just as if <code>&lt;TaskList&gt;</code> is a regular HTML tag! This means that we can use and nest our own components exactly like we would use and nest HTML elements. This leads to very simple code that is describing our UI in a very concise and straightforward manner.</p>
-<p>This is why you should not confuse HTML and JSX. It's much more complicated (and relatively rare) to add you own custom tags in HTML. In comparison - creating custom components in JSX is easy and you will do so often. Isn't that great? Hint: <em>It totally is</em>.</p>
+<p>This is why you should not confuse HTML and JSX. It's much more complicated (and relatively rare) to add your own custom tags in HTML. In comparison - creating custom components in JSX is easy and you will do so often. Isn't that great? Hint: <em>It totally is</em>.</p>
 <h3 id="add-props-to-a-react-component"><a class="header" href="#add-props-to-a-react-component">Add props to a React component</a></h3>
 <p>JSX is great, but the above code snippet is not. The main problem is that the data it represents is hardcoded into the component.</p>
-<p>Let us fix that by passing properties (<code>props</code>) into the component. This is simply a JavaScript object containing the data the component should render. In our case we will simply pass an array of strings named <code>tasks</code> containing our task names. We can then use <code>map</code> to create a list of p elements from that array:</p>
+<p>Let us fix that by passing properties (<code>props</code>) into the component. This is simply a JavaScript object containing the data the component should render. In our case we will simply pass an array of strings named <code>tasks</code> containing our - well - tasks. We can then use <code>map</code> to create a list of p elements from that array:</p>
 <pre><code class="language-javascript">const TaskList = (props) =&gt; {
   return (
     &lt;div id=&quot;taskList&quot;&gt;
@@ -1324,12 +1356,12 @@ root.render(app);
   );
 };
 </code></pre>
-<p>This is already not too bad, but of course we want to take advantage of the latest and greatest JavaScript syntax there is. Writing <code>props.items</code> or <code>item.summary</code> is annoying. This will become even more annoying when we have a lot of props. We can use object destructuring to alleviate this:</p>
+<p>This is already not too bad, but of course we want to take advantage of the latest and greatest JavaScript syntax there is. Writing <code>props.tasks</code> or <code>task.summary</code> is annoying. This will become even more annoying when we have a lot of props. We can use object destructuring to alleviate this:</p>
 <pre><code class="language-javascript">const TaskList = ({ tasks }) =&gt; {
   return (
     &lt;div id=&quot;taskList&quot;&gt;
       {tasks.map(({ id, summary, description }) =&gt; (
-        &lt;p id={id}&gt;{`${summary}: ${description}`}&lt;/p&gt;
+        &lt;p&gt;{`${summary}: ${description}`}&lt;/p&gt;
       ))}
     &lt;/div&gt;
   );
@@ -1341,12 +1373,12 @@ root.render(app);
 <p>Excellent! We can use the new component like this:</p>
 <pre><code class="language-javascript">const tasks = [
   {
-    id: 'task1',
+    id: 'TSK-1',
     summary: 'Read the MERN book',
     description: 'Read and understand the MERN book.',
   },
   {
-    id: 'task2',
+    id: 'TSK-2',
     summary: 'Write a website',
     description: 'Create a new and cool website.',
   },
@@ -1354,22 +1386,20 @@ root.render(app);
 
 const app = (
   &lt;div id=&quot;app&quot;&gt;
-    &lt;h1 id=&quot;headline&quot;&gt;TODOs&lt;/h1&gt;
+    &lt;h1&gt;TODOs&lt;/h1&gt;
     &lt;TaskList tasks={tasks} /&gt;
   &lt;/div&gt;
 );
 </code></pre>
-<p>While we're at it, let's also make our <code>app</code> constant an actual component. This might seem redundant at the moment but soon you will see what advantages this approach has. Now that the <code>App</code> is a <em>function</em> we can no longer pass it directly to <code>root.render(app)</code> but have to invoke it <em>or</em> use JSX to do essentially the same.</p>
+<p>While we're at it, let's also make our app an actual component.</p>
 <pre><code class="language-javascript">const App = () =&gt; {
   return (
-    &lt;div id='app'&gt;
-      &lt;h1 id='headline'&gt;Tasks&lt;/h1&gt;
+    &lt;div id=&quot;app&quot;&gt;
+      &lt;h1 id=&quot;headline&quot;&gt;Tasks&lt;/h1&gt;
       &lt;TaskList tasks={tasks} /&gt;
     &lt;/div&gt;
-  )
-}
-
-...
+  );
+};
 
 root.render(&lt;App /&gt;);
 </code></pre>
@@ -1380,12 +1410,18 @@ root.render(&lt;App /&gt;);
   return (
     &lt;div id=&quot;taskList&quot;&gt;
       {tasks.map(({ id, summary, description }) =&gt; (
-        &lt;p id={id} key={id}&gt;{`${summary}: ${description}`}&lt;/p&gt;
+        &lt;p key={id}&gt;{`${summary}: ${description}`}&lt;/p&gt;
       ))}
     &lt;/div&gt;
   );
 };
 </code></pre>
+<h2 id="summary-9"><a class="header" href="#summary-9">Summary</a></h2>
+<p>You learned how to create React components and how to pass properties to components.</p>
+<h2 id="further-reading-9"><a class="header" href="#further-reading-9">Further reading</a></h2>
+<ul>
+<li><a href="https://reactjs.org/docs/components-and-props.html">React docs - Components and props</a></li>
+</ul>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="project-structure"><a class="header" href="#project-structure">Project structure</a></h2>
 <h3 id="splitting-files"><a class="header" href="#splitting-files">Splitting files</a></h3>
 <p>All this time we were working inside a single index.html. This is bad for three main reasons:</p>
@@ -1613,7 +1649,7 @@ root.render(&lt;App /&gt;);
 <pre><code class="language-javascript">import ReactDOM from 'react-dom/client';
 </code></pre>
 <p>Run the webpack build again (<code>npx webpack build</code>) and open <code>index.html</code> in a browser. You will again see the same task list. Note that not much has changed in terms of <em>features</em>, however the structure of our project is now <em>much</em> cleaner. We will make some minor improvements later on (like using a <em>development server</em>), however all in all this is the project structure we will stick to for now.</p>
-<h3 id="summary-9"><a class="header" href="#summary-9">Summary</a></h3>
+<h3 id="summary-10"><a class="header" href="#summary-10">Summary</a></h3>
 <p>You learned about webpack and how to structure a JavaScript project.</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="react-state"><a class="header" href="#react-state">React State</a></h2>
 <h3 id="forms"><a class="header" href="#forms">Forms</a></h3>

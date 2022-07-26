@@ -135,16 +135,16 @@
                 <div id="content" class="content">
                     <main>
                         <h2 id="first-steps-in-react"><a class="header" href="#first-steps-in-react">First steps in React</a></h2>
-<h3 id="what-is-react"><a class="header" href="#what-is-react">What is React?</a></h3>
-<p>React is a <em>declarative</em> UI library. Declarative means that we simply <em>declare</em> the way our UI should look like. In practice this means that instead of manipulating the DOM manually, we <em>declare</em> how our DOM tree should look like and let React figure out how to get there.</p>
+<div style="text-align: right"> <i> The last thing the world needs is another JavaScript library. <br> - Ancient Chinese proverb </i> </div>
 <h3 id="rendering-a-react-element"><a class="header" href="#rendering-a-react-element">Rendering a React element</a></h3>
-<p>Let us import React from a CDN (content delivery network). Insert the following <code>&lt;script&gt;</code> between the <code>&lt;head&gt;</code> head tags:</p>
+<p>Let us import React using a <strong>content delivery network</strong> (CDN for short). Open <code>client/index.html</code> and insert the following <code>&lt;script&gt;</code> between the <code>&lt;head&gt;</code> tags:</p>
 <pre><code class="language-html">&lt;head&gt;
   ...
   &lt;script src=&quot;https://unpkg.com/react@18/umd/react.development.js&quot;&gt;&lt;/script&gt;
   &lt;script src=&quot;https://unpkg.com/react-dom@18/umd/react-dom.development.js&quot;&gt;&lt;/script&gt;
 &lt;/head&gt;
 </code></pre>
+<p>This instructs our browser to obtain and execute the respective JavaScript files enabling us to use React.</p>
 <p>Now we remove the <code>&lt;h1&gt;</code> in the <code>&lt;div&gt;</code> element (since we are about to insert it dynamically). We also add a pair of <code>&lt;script&gt;</code> tags - all the JavaScript we are about to write will go between those <code>&lt;script&gt;</code> tags. The body now looks like this:</p>
 <pre><code class="language-html">&lt;body&gt;
   &lt;div id=&quot;root&quot;&gt;&lt;/div&gt;
@@ -158,6 +158,9 @@
 <pre><code class="language-javascript">const element = React.createElement('h1', undefined, 'Tasks');
 </code></pre>
 <p>Let's have a look at the arguments here. The first argument is the <em>type</em> of the element. This can for example be the name of a regular HTML tag - however other types are possible and will in fact become very important soon. The second argument describes the <em>props</em> of the element. Here we could e.g. pass the ID of the element - if we need one. If we don't want to pass any props, we simply pass <code>undefined</code>. The third argument contains the <em>children</em> of the element. In this case we only have one child which is the text inside the heading.</p>
+<blockquote>
+<p>Note that quite often you will see people passing <code>null</code> as the second argument if no props are present. This goes back to our discussion regarding <code>null</code> and <code>undefined</code> - in this book we always use <code>undefined</code> to indicate value absence.</p>
+</blockquote>
 <p>Now that we have created a root and an element, we can render the element inside the root by using the conveniently named <code>render</code> function:</p>
 <pre><code class="language-javascript">root.render(element);
 </code></pre>
@@ -165,6 +168,25 @@
 <pre><code class="language-javascript">const element = React.createElement('h1', undefined, 'Tasks');
 const root = ReactDOM.createRoot(document.querySelector('#root'));
 root.render(element);
+</code></pre>
+<p>This is how the entire HTML file should look like:</p>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+  &lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot; /&gt;
+    &lt;title&gt;Easy Opus&lt;/title&gt;
+    &lt;script src=&quot;https://unpkg.com/react@18/umd/react.development.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;https://unpkg.com/react-dom@18/umd/react-dom.development.js&quot;&gt;&lt;/script&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div id=&quot;root&quot;&gt;&lt;/div&gt;
+    &lt;script&gt;
+      const element = React.createElement('h1', undefined, 'Tasks');
+      const root = ReactDOM.createRoot(document.querySelector('#root'));
+      root.render(element);
+    &lt;/script&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
 </code></pre>
 <p>Now open the HTML file in your browser. You should see a heading &quot;Tasks&quot;. Let us now inspect the resulting HTML using the browser inspector (press <kbd>F12</kbd> and open the tab labeled &quot;Inspector&quot; <em>or</em> &quot;Elements&quot;). This is how the HTML inside the body looks like:</p>
 <pre><code class="language-html">&lt;div id=&quot;root&quot;&gt;
@@ -194,6 +216,8 @@ root.render(app);
 <p>At this point you are probably asking yourself: <em>Didn't you just promise me that manipulating the DOM in React will be simple, you liars? This looks just like regular Javascript™®℠.</em> You have a point (the one after the trademark symbols) and we will indeed vastly simplify this code in the next section via black magic called <strong>JSX</strong>.</p>
 <h3 id="summary"><a class="header" href="#summary">Summary</a></h3>
 <p>Now you know how to import React using a CDN and how to dynamically manipulate the DOM using <code>React.createElement</code> and <code>ReactDOM.createRoot</code>. You also know you shouldn't actually do this.</p>
+<h2 id="further-reading"><a class="header" href="#further-reading">Further reading</a></h2>
+<p>There is no further reading for this section.</p>
 
                     </main>
 

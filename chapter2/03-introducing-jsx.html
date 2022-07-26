@@ -135,11 +135,12 @@
                 <div id="content" class="content">
                     <main>
                         <h2 id="introducing-jsx"><a class="header" href="#introducing-jsx">Introducing JSX</a></h2>
+<div style="text-align: right"> <i> So, JSX is basically HTML... <br> - Famous last words </i> </div>
 <h3 id="add-jsx"><a class="header" href="#add-jsx">Add JSX</a></h3>
 <p>Instead of writing increasingly convoluted <code>React.createElement</code> calls until we lose the last scraps of our sanity, we would like to use syntax that looks like HTML. For example we would <em>really like</em> to be able to write stuff like this:</p>
 <pre><code class="language-javascript">const element = &lt;li id=&quot;task1&quot;&gt;Task 1&lt;/li&gt;;
 </code></pre>
-<p>Unfortunately this is not possible as the above is not valid JavaScript (no trademarks this time, we promise). Feel free to try it out and add the above JavaScript to your <code>&lt;script&gt;</code> tags inside <code>index.html</code>. When you open the page you will see the following error in your console:</p>
+<p>Unfortunately this is not possible as the above is not valid JavaScript (no trademarks this time, we promise). Feel free to try it out and add the above JavaScript to your <code>&lt;script&gt;</code> tags inside <code>client/index.html</code>. When you open the page you will see the following error in your console:</p>
 <pre><code class="language-shell">Uncaught SyntaxError: expected expression, got '&lt;'
 </code></pre>
 <p><strong>Babel</strong> to the rescue! This tool allows us to <em>transpile</em> <strong>JSX</strong> (which looks like HTML) to JavaScript.</p>
@@ -178,6 +179,10 @@ root.render(app);
 <p>Right now you are probably wondering why we are bothering with React at all. We took perfectly fine HTML and for some reason insisted on doing a bunch of complex things just to get essentially the same HTML, but dynamically. However, this setup will now payoff in a <em>huge</em> way, as we introduce React components.</p>
 <h3 id="summary"><a class="header" href="#summary">Summary</a></h3>
 <p>You know how to dynamically manipulate the DOM using JSX and that you should write JSX instead of <code>React.createElement</code> calls.</p>
+<h3 id="further-reading"><a class="header" href="#further-reading">Further reading</a></h3>
+<ul>
+<li><a href="https://reactjs.org/docs/introducing-jsx.html">React docs - Introducing JSX</a></li>
+</ul>
 
                     </main>
 
