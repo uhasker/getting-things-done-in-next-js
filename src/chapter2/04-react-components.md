@@ -1,5 +1,7 @@
 ## React components
 
+<div style="text-align: right"> <i> Why do React components have great self-esteem? <br> Because they keep getting props. <br> - From "1000 programming dad-jokes" </i> </div>
+
 ### Create your first React component
 
 Conceptually, a component is an independent and reusable piece of the UI. By thinking about an HTML page in terms of isolated components you can easily create well-designed pages.
@@ -11,6 +13,8 @@ This is how it would look like in an image:
 ![](images/components.png)
 
 In terms of implementation, a component is just a JavaScript function that takes the data it should render as input and returns the UI representation of the data as output. It will probably not come as a surprise to you at this point that the returned UI representation is given by JSX.
+
+> Do note that all the code we are about to write goes between the `<script>` tags. We will fix this in the next section.
 
 Let us move the task list into its own component:
 
@@ -31,8 +35,8 @@ We could now call the TaskList component the same way we would call a regular Ja
 
 ```javascript
 const app = (
-  <div>
-    <h1>TODOs</h1>
+  <div id="app">
+    <h1>Tasks</h1>
     <TaskList />
   </div>
 );
@@ -40,13 +44,13 @@ const app = (
 
 This looks just as if `<TaskList>` is a regular HTML tag! This means that we can use and nest our own components exactly like we would use and nest HTML elements. This leads to very simple code that is describing our UI in a very concise and straightforward manner.
 
-This is why you should not confuse HTML and JSX. It's much more complicated (and relatively rare) to add you own custom tags in HTML. In comparison - creating custom components in JSX is easy and you will do so often. Isn't that great? Hint: _It totally is_.
+This is why you should not confuse HTML and JSX. It's much more complicated (and relatively rare) to add your own custom tags in HTML. In comparison - creating custom components in JSX is easy and you will do so often. Isn't that great? Hint: _It totally is_.
 
 ### Add props to a React component
 
 JSX is great, but the above code snippet is not. The main problem is that the data it represents is hardcoded into the component.
 
-Let us fix that by passing properties (`props`) into the component. This is simply a JavaScript object containing the data the component should render. In our case we will simply pass an array of strings named `tasks` containing our task names. We can then use `map` to create a list of p elements from that array:
+Let us fix that by passing properties (`props`) into the component. This is simply a JavaScript object containing the data the component should render. In our case we will simply pass an array of strings named `tasks` containing our - well - tasks. We can then use `map` to create a list of p elements from that array:
 
 ```javascript
 const TaskList = (props) => {
@@ -60,14 +64,14 @@ const TaskList = (props) => {
 };
 ```
 
-This is already not too bad, but of course we want to take advantage of the latest and greatest JavaScript syntax there is. Writing `props.items` or `item.summary` is annoying. This will become even more annoying when we have a lot of props. We can use object destructuring to alleviate this:
+This is already not too bad, but of course we want to take advantage of the latest and greatest JavaScript syntax there is. Writing `props.tasks` or `task.summary` is annoying. This will become even more annoying when we have a lot of props. We can use object destructuring to alleviate this:
 
 ```javascript
 const TaskList = ({ tasks }) => {
   return (
     <div id="taskList">
       {tasks.map(({ id, summary, description }) => (
-        <p id={id}>{`${summary}: ${description}`}</p>
+        <p>{`${summary}: ${description}`}</p>
       ))}
     </div>
   );
@@ -81,12 +85,12 @@ Excellent! We can use the new component like this:
 ```javascript
 const tasks = [
   {
-    id: 'task1',
+    id: 'TSK-1',
     summary: 'Read the MERN book',
     description: 'Read and understand the MERN book.',
   },
   {
-    id: 'task2',
+    id: 'TSK-2',
     summary: 'Write a website',
     description: 'Create a new and cool website.',
   },
@@ -94,25 +98,23 @@ const tasks = [
 
 const app = (
   <div id="app">
-    <h1 id="headline">TODOs</h1>
+    <h1>TODOs</h1>
     <TaskList tasks={tasks} />
   </div>
 );
 ```
 
-While we're at it, let's also make our `app` constant an actual component. This might seem redundant at the moment but soon you will see what advantages this approach has. Now that the `App` is a _function_ we can no longer pass it directly to `root.render(app)` but have to invoke it _or_ use JSX to do essentially the same.
+While we're at it, let's also make our app an actual component.
 
 ```javascript
 const App = () => {
   return (
-    <div id='app'>
-      <h1 id='headline'>Tasks</h1>
+    <div id="app">
+      <h1 id="headline">Tasks</h1>
       <TaskList tasks={tasks} />
     </div>
-  )
-}
-
-...
+  );
+};
 
 root.render(<App />);
 ```
@@ -128,9 +130,17 @@ const TaskList = ({ tasks }) => {
   return (
     <div id="taskList">
       {tasks.map(({ id, summary, description }) => (
-        <p id={id} key={id}>{`${summary}: ${description}`}</p>
+        <p key={id}>{`${summary}: ${description}`}</p>
       ))}
     </div>
   );
 };
 ```
+
+## Summary
+
+You learned how to create React components and how to pass properties to components.
+
+## Further reading
+
+- [React docs - Components and props](https://reactjs.org/docs/components-and-props.html)

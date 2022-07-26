@@ -1,5 +1,7 @@
 ## Introducing JSX
 
+<div style="text-align: right"> <i> So, JSX is basically HTML... <br> - Famous last words </i> </div>
+
 ### Add JSX
 
 Instead of writing increasingly convoluted `React.createElement` calls until we lose the last scraps of our sanity, we would like to use syntax that looks like HTML. For example we would _really like_ to be able to write stuff like this:
@@ -8,7 +10,7 @@ Instead of writing increasingly convoluted `React.createElement` calls until we 
 const element = <li id="task1">Task 1</li>;
 ```
 
-Unfortunately this is not possible as the above is not valid JavaScript (no trademarks this time, we promise). Feel free to try it out and add the above JavaScript to your `<script>` tags inside `index.html`. When you open the page you will see the following error in your console:
+Unfortunately this is not possible as the above is not valid JavaScript (no trademarks this time, we promise). Feel free to try it out and add the above JavaScript to your `<script>` tags inside `client/index.html`. When you open the page you will see the following error in your console:
 
 ```shell
 Uncaught SyntaxError: expected expression, got '<'
@@ -67,3 +69,7 @@ Right now you are probably wondering why we are bothering with React at all. We 
 ### Summary
 
 You know how to dynamically manipulate the DOM using JSX and that you should write JSX instead of `React.createElement` calls.
+
+### Further reading
+
+- [React docs - Introducing JSX](https://reactjs.org/docs/introducing-jsx.html)

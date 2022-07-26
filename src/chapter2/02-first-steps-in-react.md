@@ -1,12 +1,10 @@
 ## First steps in React
 
-### What is React?
-
-React is a _declarative_ UI library. Declarative means that we simply _declare_ the way our UI should look like. In practice this means that instead of manipulating the DOM manually, we _declare_ how our DOM tree should look like and let React figure out how to get there.
+<div style="text-align: right"> <i> The last thing the world needs is another JavaScript library. <br> - Ancient Chinese proverb </i> </div>
 
 ### Rendering a React element
 
-Let us import React from a CDN (content delivery network). Insert the following `<script>` between the `<head>` head tags:
+Let us import React using a **content delivery network** (CDN for short). Open `client/index.html` and insert the following `<script>` between the `<head>` tags:
 
 ```html
 <head>
@@ -15,6 +13,8 @@ Let us import React from a CDN (content delivery network). Insert the following 
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
 </head>
 ```
+
+This instructs our browser to obtain and execute the respective JavaScript files enabling us to use React.
 
 Now we remove the `<h1>` in the `<div>` element (since we are about to insert it dynamically). We also add a pair of `<script>` tags - all the JavaScript we are about to write will go between those `<script>` tags. The body now looks like this:
 
@@ -39,6 +39,8 @@ const element = React.createElement('h1', undefined, 'Tasks');
 
 Let's have a look at the arguments here. The first argument is the _type_ of the element. This can for example be the name of a regular HTML tag - however other types are possible and will in fact become very important soon. The second argument describes the _props_ of the element. Here we could e.g. pass the ID of the element - if we need one. If we don't want to pass any props, we simply pass `undefined`. The third argument contains the _children_ of the element. In this case we only have one child which is the text inside the heading.
 
+> Note that quite often you will see people passing `null` as the second argument if no props are present. This goes back to our discussion regarding `null` and `undefined` - in this book we always use `undefined` to indicate value absence.
+
 Now that we have created a root and an element, we can render the element inside the root by using the conveniently named `render` function:
 
 ```javascript
@@ -51,6 +53,28 @@ This is how it all looks together (remember that this code should be between the
 const element = React.createElement('h1', undefined, 'Tasks');
 const root = ReactDOM.createRoot(document.querySelector('#root'));
 root.render(element);
+```
+
+This is how the entire HTML file should look like:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Easy Opus</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script>
+      const element = React.createElement('h1', undefined, 'Tasks');
+      const root = ReactDOM.createRoot(document.querySelector('#root'));
+      root.render(element);
+    </script>
+  </body>
+</html>
 ```
 
 Now open the HTML file in your browser. You should see a heading "Tasks". Let us now inspect the resulting HTML using the browser inspector (press <kbd>F12</kbd> and open the tab labeled "Inspector" _or_ "Elements"). This is how the HTML inside the body looks like:
@@ -92,3 +116,7 @@ At this point you are probably asking yourself: _Didn't you just promise me that
 ### Summary
 
 Now you know how to import React using a CDN and how to dynamically manipulate the DOM using `React.createElement` and `ReactDOM.createRoot`. You also know you shouldn't actually do this.
+
+## Further reading
+
+There is no further reading for this section.
