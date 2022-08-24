@@ -11,9 +11,9 @@ We could use the built-in HTTP module of Node.js, but this is not terribly conve
 Instead we will use an extremely popular framework called **Express.js**.
 While Express.js builts on top of the HTTP module, it provides a lot of additional useful functionality.
 
-Inside our root directory (_easy-opus_ in our case) create a directory named *api*.
+Inside our root directory (_easy-opus_ in our case) create a directory named _api_.
 As usual this name can be something else, but it should be descriptive.
-Navigate inside the *api* directory and create a new Node.js project:
+Navigate inside the _api_ directory and create a new Node.js project:
 
 ```shell
 npm init -y
@@ -97,10 +97,10 @@ Generally speaking, a typical HTTP URL has the following form:
 scheme://host:port/path?key1=value1&key2=value2#test
 ```
 
-> Note the word *typical* here.
-HTTP URLs (and especially more general URLs) can become *much more* complicated, but we will not cover all the little details in this book.
-In fact the complexity of URLs is often a source of subtle bugs and browser crashes.
-For example - at some point Android Chrome would [crash](https://news.ycombinator.com/item?id=28639708) when trying to open `http://../foo`.
+> Note the word _typical_ here.
+> HTTP URLs (and especially more general URLs) can become _much more_ complicated, but we will not cover all the little details in this book.
+> In fact the complexity of URLs is often a source of subtle bugs and browser crashes.
+> For example - at some point Android Chrome would [crash](https://news.ycombinator.com/item?id=28639708) when trying to open `http://../foo`.
 
 The **scheme** specifies the scheme used and usually indicates the protocol.
 We will almost exclusively use HTTP or HTTPS (which is just secure HTTP) in this book.
@@ -113,7 +113,7 @@ Usually we will work with domain names since they are stable (unlike a lot of IP
 Together the host and the port make up the **authority**.
 
 > At the time of this writing 142.251.36.238 is one of Google's IP addresses.
-This may of course change by the time you are reading this book.
+> This may of course change by the time you are reading this book.
 
 The next part is the **path**.
 Assuming it is not empty, the path begins with a forward slash ("/") and uniquely identifies the resource we want to query.
@@ -172,7 +172,7 @@ How do we test this?
 You cannot simply send a POST request in a browser the way you would send a GET request.
 This is where curl comes in really handy.
 We need to specify that we want to send a POST request using the `-X` flag.
-In addition we specify the data that we want to send in the *body* of the POST request using the `-d` flag.
+In addition we specify the data that we want to send in the _body_ of the POST request using the `-d` flag.
 Finally we specify a header called `Content-Type` and set it to `text/plain`.
 This indicates that the data we want to send is plain text.
 
@@ -191,12 +191,12 @@ A typical JSON could look like this:
 
 ```json
 {
-	"tasks": [ "Task 1", "Task 2", "Task 3" ],
-	"date": {
-		"year": 2022,
-		"month": 06,
-		"date": 18
-	}
+  "tasks": ["Task 1", "Task 2", "Task 3"],
+  "date": {
+    "year": 2022,
+    "month": 06,
+    "date": 18
+  }
 }
 ```
 
@@ -215,13 +215,12 @@ curl -X POST -H "Content-Type: application/json" -d '{ "key": "value" }' http://
 Note that here we specify the `application/json` content type.
 
 > This is all fine and dandy, but how do client and server know how to interpret all these things?
-The answer to that question is the IETF (short for Internet Engineering Task Force).
-This is an organization that sets standards for the Internet (hence the name).
-Among other things it is responsible for creating the various RFCs (Request for Comments) that outline the workings of HTTP.
-For example HTTP 1.1 (which is the most common HTTP version you will encounter at the time of this writing) is outlined in RFCs 7230-7235.
-URIs on the other hand are outlined in RFC 3986.
-We encourage you to have a quick look at the respective RFCs.
-You should *definitely not* read them all at this stage, but just understand the sheer complexity of the things we are discussing here.
-We are really just scratching a very tiny part of the surface of it all.
-Lucky for you, most of the RFCs will probably not be terribly relevant in your day-to-day life.
-
+> The answer to that question is the IETF (short for Internet Engineering Task Force).
+> This is an organization that sets standards for the Internet (hence the name).
+> Among other things it is responsible for creating the various RFCs (Request for Comments) that outline the workings of HTTP.
+> For example HTTP 1.1 (which is the most common HTTP version you will encounter at the time of this writing) is outlined in RFCs 7230-7235.
+> URIs on the other hand are outlined in RFC 3986.
+> We encourage you to have a quick look at the respective RFCs.
+> You should _definitely not_ read them all at this stage, but just understand the sheer complexity of the things we are discussing here.
+> We are really just scratching a very tiny part of the surface of it all.
+> Lucky for you, most of the RFCs will probably not be terribly relevant in your day-to-day life.
