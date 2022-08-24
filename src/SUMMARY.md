@@ -17,6 +17,9 @@
   - [HTML and the DOM](chapter2/01-html-and-the-dom.md)
   - [First steps in React](chapter2/02-first-steps-in-react.md)
   - [Introducing JSX](chapter2/03-introducing-jsx.md)
+  - [React components](chapter2/04-react-components.md)
+  - [Project structure](chapter2/05-project-structure.md)
+  - [React state](chapter2/06-react-state.md)
 
 - [The server](chapter3/README.md)
   - [A HTTP primer](chapter3/01-a-http-primer.md)
