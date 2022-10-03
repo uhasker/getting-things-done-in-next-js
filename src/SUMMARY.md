@@ -22,4 +22,5 @@
   - [React state](chapter2/06-react-state.md)
 
 - [The server](chapter3/README.md)
+
   - [A HTTP primer](chapter3/01-a-http-primer.md)

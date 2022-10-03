@@ -1,6 +1,6 @@
 ## A HTTP primer
 
-### HTTP and Express.js
+### HTTP and Express
 
 When writing a web application, the most common way to get data from a server to a client is via the HTTP procotol (usually augmented by SSL resulting in the HTTPS procotol).
 HTTP is a **request/response protocol**, i.e. HTTP clients send requests to an HTTP server and receive a response in return.
@@ -8,8 +8,8 @@ You have in fact already used the HTTP protocol.
 Every time you browse the internet, HTTP requests are sent under the hood.
 
 We could use the built-in HTTP module of Node.js, but this is not terribly convenient.
-Instead we will use an extremely popular framework called **Express.js**.
-While Express.js builts on top of the HTTP module, it provides a lot of additional useful functionality.
+Instead we will use an extremely popular framework called **Express**.
+While Express builts on top of the HTTP module, it provides a lot of additional useful functionality.
 
 Inside our root directory (_easy-opus_ in our case) create a directory named _api_.
 As usual this name can be something else, but it should be descriptive.
@@ -19,13 +19,13 @@ Navigate inside the _api_ directory and create a new Node.js project:
 npm init -y
 ```
 
-Install Express.js:
+Install Express:
 
 ```shell
 npm install express
 ```
 
-Now create a file named server.js inside the api directory.
+Now create a file named app.js inside the api directory.
 As usual the name of the file is up to you, but it should be something meaningful.
 Inside the file we will create an Express application and then make that application listen for connections on a specified host and port.
 
@@ -39,10 +39,10 @@ This is how you can create an Express application and make it listen on port 300
 ```javascript
 const express = require('express');
 const app = express();
-const port = 3000;
+const PORT = 3000;
 
-app.listen(port, () => {
-  console.log(`Server listening on port ${port}...`);
+app.listen(PORT, () => {
+  console.log(`Server listening on port ${PORT}...`);
 });
 ```
 
@@ -94,7 +94,7 @@ https://www.google.com:443/search?q=mern+stack
 Generally speaking, a typical HTTP URL has the following form:
 
 ```
-scheme://host:port/path?key1=value1&key2=value2#test
+scheme://host:port/path?key1=value1&key2=value2#fragment
 ```
 
 > Note the word _typical_ here.
@@ -102,7 +102,7 @@ scheme://host:port/path?key1=value1&key2=value2#test
 > In fact the complexity of URLs is often a source of subtle bugs and browser crashes.
 > For example - at some point Android Chrome would [crash](https://news.ycombinator.com/item?id=28639708) when trying to open `http://../foo`.
 
-The **scheme** specifies the scheme used and usually indicates the protocol.
+The **scheme** usually indicates the protocol which describes how information should be transmitted.
 We will almost exclusively use HTTP or HTTPS (which is just secure HTTP) in this book.
 Therefore the scheme will almost always either be http or https.
 In the above Google URL the scheme is clearly https.
@@ -130,7 +130,6 @@ For example the query could be "?key1=value1&key2=value2".
 
 The query can be followed by a **fragment**.
 This is used for navigation by the client and is not sent to server.
-We will return to fragment a bit later in the book.
 
 ### GET and POST requests
 
