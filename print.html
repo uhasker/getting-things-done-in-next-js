@@ -76,7 +76,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="title-page.html">Getting things done in MERN</a></li><li class="chapter-item expanded affix "><a href="introduction.html">Introduction</a></li><li class="chapter-item expanded "><a href="chapter1/index.html"><strong aria-hidden="true">1.</strong> A brief introduction to JavaScript</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter1/01-hello-world.html"><strong aria-hidden="true">1.1.</strong> Hello world</a></li><li class="chapter-item expanded "><a href="chapter1/02-primitive-data-types.html"><strong aria-hidden="true">1.2.</strong> Primitive data types</a></li><li class="chapter-item expanded "><a href="chapter1/03-arrays-and-objects.html"><strong aria-hidden="true">1.3.</strong> Arrays and objects</a></li><li class="chapter-item expanded "><a href="chapter1/04-control-flow.html"><strong aria-hidden="true">1.4.</strong> Control flow</a></li><li class="chapter-item expanded "><a href="chapter1/05-functions.html"><strong aria-hidden="true">1.5.</strong> Functions</a></li><li class="chapter-item expanded "><a href="chapter1/06-functional-thinking.html"><strong aria-hidden="true">1.6.</strong> Functional thinking</a></li></ol></li><li class="chapter-item expanded "><a href="chapter2/index.html"><strong aria-hidden="true">2.</strong> The client</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter2/01-html-and-the-dom.html"><strong aria-hidden="true">2.1.</strong> HTML and the DOM</a></li><li class="chapter-item expanded "><a href="chapter2/02-first-steps-in-react.html"><strong aria-hidden="true">2.2.</strong> First steps in React</a></li><li class="chapter-item expanded "><a href="chapter2/03-introducing-jsx.html"><strong aria-hidden="true">2.3.</strong> Introducing JSX</a></li><li class="chapter-item expanded "><a href="chapter2/04-react-components.html"><strong aria-hidden="true">2.4.</strong> React components</a></li><li class="chapter-item expanded "><a href="chapter2/05-project-structure.html"><strong aria-hidden="true">2.5.</strong> Project structure</a></li><li class="chapter-item expanded "><a href="chapter2/06-react-state.html"><strong aria-hidden="true">2.6.</strong> React state</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="title-page.html">Getting things done in MERN</a></li><li class="chapter-item expanded affix "><a href="introduction.html">Introduction</a></li><li class="chapter-item expanded "><a href="chapter1/index.html"><strong aria-hidden="true">1.</strong> A brief introduction to JavaScript</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter1/01-hello-world.html"><strong aria-hidden="true">1.1.</strong> Hello world</a></li><li class="chapter-item expanded "><a href="chapter1/02-primitive-data-types.html"><strong aria-hidden="true">1.2.</strong> Primitive data types</a></li><li class="chapter-item expanded "><a href="chapter1/03-arrays-and-objects.html"><strong aria-hidden="true">1.3.</strong> Arrays and objects</a></li><li class="chapter-item expanded "><a href="chapter1/04-control-flow.html"><strong aria-hidden="true">1.4.</strong> Control flow</a></li><li class="chapter-item expanded "><a href="chapter1/05-functions.html"><strong aria-hidden="true">1.5.</strong> Functions</a></li><li class="chapter-item expanded "><a href="chapter1/06-functional-thinking.html"><strong aria-hidden="true">1.6.</strong> Functional thinking</a></li></ol></li><li class="chapter-item expanded "><a href="chapter2/index.html"><strong aria-hidden="true">2.</strong> The client</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter2/01-html-and-the-dom.html"><strong aria-hidden="true">2.1.</strong> HTML and the DOM</a></li><li class="chapter-item expanded "><a href="chapter2/02-first-steps-in-react.html"><strong aria-hidden="true">2.2.</strong> First steps in React</a></li><li class="chapter-item expanded "><a href="chapter2/03-introducing-jsx.html"><strong aria-hidden="true">2.3.</strong> Introducing JSX</a></li><li class="chapter-item expanded "><a href="chapter2/04-react-components.html"><strong aria-hidden="true">2.4.</strong> React components</a></li><li class="chapter-item expanded "><a href="chapter2/05-project-structure.html"><strong aria-hidden="true">2.5.</strong> Project structure</a></li><li class="chapter-item expanded "><a href="chapter2/06-react-state.html"><strong aria-hidden="true">2.6.</strong> React state</a></li></ol></li><li class="chapter-item expanded "><a href="chapter3/index.html"><strong aria-hidden="true">3.</strong> The server</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter3/01-a-http-primer.html"><strong aria-hidden="true">3.1.</strong> A HTTP primer</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -1698,6 +1698,167 @@ root.render(&lt;App /&gt;);
 }
 </code></pre>
 <p>Try clicking the button - a new task should appear.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="chapter-3-the-server"><a class="header" href="#chapter-3-the-server">Chapter 3: The server</a></h1>
+<p>In this chapter we will create a simple server.</p>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="an-http-primer"><a class="header" href="#an-http-primer">An HTTP primer</a></h2>
+<h3 id="http-and-express"><a class="header" href="#http-and-express">HTTP and Express</a></h3>
+<p>When writing a web application, the most common way to get data from a server to a client is via the HTTP procotol (usually augmented by SSL resulting in the HTTPS procotol).
+HTTP is a <strong>request/response protocol</strong>, i.e. HTTP clients send requests to an HTTP server and receive a response in return.
+You have in fact already used the HTTP protocol.
+Every time you browse the internet, HTTP requests are sent under the hood.</p>
+<p>We could use the built-in HTTP module of Node.js, but this is not terribly convenient.
+Instead we will use an extremely popular framework called <strong>Express</strong>.
+While Express builts on top of the HTTP module, it provides a lot of additional useful functionality.</p>
+<p>Inside our root directory (<em>easy-opus</em> in our case) create a directory named <em>api</em>.
+As usual this name can be something else, but it should be descriptive.
+Navigate inside the <em>api</em> directory and create a new Node.js project:</p>
+<pre><code class="language-shell">npm init -y
+</code></pre>
+<p>Install Express:</p>
+<pre><code class="language-shell">npm install express
+</code></pre>
+<p>Now create a file named app.js inside the api directory.
+As usual the name of the file is up to you, but it should be something meaningful.
+Inside the file we will create an Express application and then make that application listen for connections on a specified host and port.</p>
+<p>If you are very new to computer networks, a host is simply a device connected to some (computer) network.
+A port is a communication endpoint on that host.
+The concept of ports allows you to run multiple network applications on the same device.
+For example, your awesome website might run on port 80 and a service allowing you to remotely login onto your machine might run on port 22.</p>
+<p>This is how you can create an Express application and make it listen on port 3000:</p>
+<pre><code class="language-javascript">const express = require('express');
+const app = express();
+const PORT = 3000;
+
+app.listen(PORT, () =&gt; {
+  console.log(`Server listening on port ${PORT}...`);
+});
+</code></pre>
+<p>This application is not very useful, so let's add a <strong>route</strong> to it.
+Add this above the call to <code>listen</code>:</p>
+<pre><code class="language-javascript">app.get('/', (req, res) =&gt; {
+  res.send('Hello, world!');
+});
+</code></pre>
+<p>If you open a browser and navigate to (http://localhost:3000) you will see</p>
+<pre><code>Hello, world!
+</code></pre>
+<p>You can also use cURL, which includes a command-line tool for transferring data on a network.
+Among other things it supports HTTP and is available on both Windows and most Linux distributions.
+Open a command line and run:</p>
+<pre><code class="language-shell">curl http://localhost:3000/
+</code></pre>
+<p>The will output the following:</p>
+<pre><code>Hello, world!
+</code></pre>
+<h3 id="http-urls"><a class="header" href="#http-urls">HTTP URLs</a></h3>
+<p>The string <code>http://localhost:3000/</code> is a so called URL.
+You have probably seen URLs before.
+Navigate to Google and search for &quot;MERN stack&quot; - you will notice that the URL in your browser looks like this:</p>
+<pre><code>https://www.google.com/search?q=mern+stack
+</code></pre>
+<p>For didactic reasons we will include the port:</p>
+<pre><code>https://www.google.com:443/search?q=mern+stack
+</code></pre>
+<p>Generally speaking, a typical HTTP URL has the following form:</p>
+<pre><code>scheme://host:port/path?key1=value1&amp;key2=value2#fragment
+</code></pre>
+<blockquote>
+<p>Note the word <em>typical</em> here.
+HTTP URLs (and especially more general URLs) can become <em>much more</em> complicated, but we will not cover all the little details in this book.
+In fact the complexity of URLs is often a source of subtle bugs and browser crashes.
+For example - at some point Android Chrome would <a href="https://news.ycombinator.com/item?id=28639708">crash</a> when trying to open <code>http://../foo</code>.</p>
+</blockquote>
+<p>The <strong>scheme</strong> usually indicates the protocol which describes how information should be transmitted.
+We will almost exclusively use HTTP or HTTPS (which is just secure HTTP) in this book.
+Therefore the scheme will almost always either be http or https.
+In the above Google URL the scheme is clearly https.</p>
+<p>You already learned about the <strong>host</strong> and the <strong>port</strong> - the host identifies the device you wish to connect to and the port is the communication endpoint on that device.
+Note that the host could be a domain name (like www.google.com) or an IP address (like 142.251.36.238).
+Usually we will work with domain names since they are stable (unlike a lot of IP addresses).
+Together the host and the port make up the <strong>authority</strong>.</p>
+<blockquote>
+<p>At the time of this writing 142.251.36.238 is one of Google's IP addresses.
+This may of course change by the time you are reading this book.</p>
+</blockquote>
+<p>The next part is the <strong>path</strong>.
+Assuming it is not empty, the path begins with a forward slash (&quot;/&quot;) and uniquely identifies the resource we want to query.
+In the Google URL the path is &quot;/search&quot;.
+Often paths will be hierarchical.
+In this case the different components of the hierarchy are generally separated by slashes - for example &quot;/path/to/resource&quot;.</p>
+<p>The path can be followed by a <strong>query</strong>.
+The query begins with a question mark and is followed by key-value pairs.
+In the Google URL this is &quot;?q=mern+stack&quot;.
+Here the query provides information about your search.
+If there are multiple key-value pairs, they are separated by ampersands (&quot;&amp;&quot;).
+For example the query could be &quot;?key1=value1&amp;key2=value2&quot;.</p>
+<p>The query can be followed by a <strong>fragment</strong>.
+This is used for navigation by the client and is not sent to server.</p>
+<h3 id="get-and-post-requests"><a class="header" href="#get-and-post-requests">GET and POST requests</a></h3>
+<p>HTTP knows multiple <strong>request methods</strong>.
+We primarily care about two request methods for now - namely <strong>GET</strong> and <strong>POST</strong>.
+GET requests are generally used to retrieve data.</p>
+<p>Recall out route from above:</p>
+<pre><code class="language-javascript">app.get('/', (req, res) =&gt; {
+  res.send('Hello world!');
+});
+</code></pre>
+<p>This indicates that if a GET request is sent to path '/', we would like to return 'Hello, world!' to the client.
+The <code>req</code> is the <strong>request object</strong> and <code>res</code> is the <strong>respose object</strong>.
+If we want to send a HTTP response to the client we therefore use <code>res.send</code>.</p>
+<p>POST requests are generally used to send information to the server.
+For example a login request will generally be a POST request since it tells the server that a user has logged in to the application.
+Here we are less interested in the data the server returns us and more in telling the server that something happened.</p>
+<p>Note that we need to enable some middleware (we will return to the concept of middleware in a second):</p>
+<pre><code class="language-javascript">app.use(express.text());
+</code></pre>
+<p>Consider the following route which simply returns the request body back to the client:</p>
+<pre><code class="language-javascript">app.post('/post-example', (req, res) =&gt; {
+  res.send(req.body);
+});
+</code></pre>
+<p>How do we test this?
+You cannot simply send a POST request in a browser the way you would send a GET request.
+This is where curl comes in really handy.
+We need to specify that we want to send a POST request using the <code>-X</code> flag.
+In addition we specify the data that we want to send in the <em>body</em> of the POST request using the <code>-d</code> flag.
+Finally we specify a header called <code>Content-Type</code> and set it to <code>text/plain</code>.
+This indicates that the data we want to send is plain text.</p>
+<p>The final command looks like this:</p>
+<pre><code>curl -X POST -H &quot;Content-Type: text/plain&quot; -d 'haha' http://localhost:3000/post-example
+</code></pre>
+<p>Generally speaking GET requests transmit information using the querystring, while POST requests transmit information in the request body.</p>
+<p>Note that we will rarely send plain text in the request.
+Instead we will use a special format called JSON.
+This is a file format that supports a bunch of primitive values, arrays and dictionaries.
+A typical JSON could look like this:</p>
+<pre><code class="language-json">{
+  &quot;tasks&quot;: [&quot;Task 1&quot;, &quot;Task 2&quot;, &quot;Task 3&quot;],
+  &quot;date&quot;: {
+    &quot;year&quot;: 2022,
+    &quot;month&quot;: 06,
+    &quot;date&quot;: 18
+  }
+}
+</code></pre>
+<p>In order to accept JSON requests, we need to replace the <code>express.text</code> middleware with the <code>express.json</code> middleware:</p>
+<pre><code class="language-json">app.use(express.json());
+</code></pre>
+<p>Now we can curl the same path like this:</p>
+<pre><code>curl -X POST -H &quot;Content-Type: application/json&quot; -d '{ &quot;key&quot;: &quot;value&quot; }' http://localhost:3000/post-example
+</code></pre>
+<p>Note that here we specify the <code>application/json</code> content type.</p>
+<blockquote>
+<p>This is all fine and dandy, but how do client and server know how to interpret all these things?
+The answer to that question is the IETF (short for Internet Engineering Task Force).
+This is an organization that sets standards for the Internet (hence the name).
+Among other things it is responsible for creating the various RFCs (Request for Comments) that outline the workings of HTTP.
+For example HTTP 1.1 (which is the most common HTTP version you will encounter at the time of this writing) is outlined in RFCs 7230-7235.
+URIs on the other hand are outlined in RFC 3986.
+We encourage you to have a quick look at the respective RFCs.
+You should <em>definitely not</em> read them all at this stage, but just understand the sheer complexity of the things we are discussing here.
+We are really just scratching a very tiny part of the surface of it all.
+Lucky for you, most of the RFCs will probably not be terribly relevant in your day-to-day life.</p>
+</blockquote>
 
                     </main>
 
