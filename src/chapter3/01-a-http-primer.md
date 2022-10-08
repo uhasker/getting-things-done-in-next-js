@@ -1,4 +1,4 @@
-## A HTTP primer
+## An HTTP primer
 
 ### HTTP and Express
 
@@ -51,11 +51,11 @@ Add this above the call to `listen`:
 
 ```javascript
 app.get('/', (req, res) => {
-	res.send('Hello, world!');
-}
+  res.send('Hello, world!');
+});
 ```
 
-If you open a browser and navigate to <http://localhost:3000> you will see
+If you open a browser and navigate to (http://localhost:3000) you will see
 
 ```
 Hello, world!
