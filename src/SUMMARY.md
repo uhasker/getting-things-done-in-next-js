@@ -24,3 +24,4 @@
 - [The server](chapter3/README.md)
 
   - [A HTTP primer](chapter3/01-a-http-primer.md)
+  - [Writing the API](chapter3/02-writing-the-api.md)
