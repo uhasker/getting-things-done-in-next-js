@@ -223,11 +223,13 @@ This looks like overkill at first glance. However the tasks will inevitably beco
 Next we move the TaskList component to src/task-list.js:
 
 ```javascript
+import Task from './task';
+
 const TaskList = ({ tasks }) => {
   return (
     <div id="taskList">
-      {tasks.map(({ summary, description }) => (
-        <Task summary={summary} description={description} />
+      {tasks.map(({ summary, description }, index) => (
+        <Task key={index} summary={summary} description={description} />
       ))}
     </div>
   );
@@ -239,6 +241,8 @@ export default TaskList;
 By now you know the drill. The App component goes into src/app.js:
 
 ```javascript
+import TaskList from './task-list';
+
 const App = () => {
   const tasks = [
     {
@@ -266,7 +270,9 @@ Finally our src/index.js becomes really simple:
 
 ```javascript
 import App from './app';
+import ReactDOM from 'react-dom/client';
 
+const root = ReactDOM.createRoot(document.querySelector('#root'));
 root.render(<App />);
 ```
 
@@ -293,12 +299,6 @@ options: {
     ],
   ],
 }
-```
-
-We now need to import ReactDOM at the top of src/index.js:
-
-```javascript
-import ReactDOM from 'react-dom/client';
 ```
 
 Run the webpack build again (`npx webpack build`) and open `index.html` in a browser. You will again see the same task list. Note that not much has changed in terms of _features_, however the structure of our project is now _much_ cleaner. We will make some minor improvements later on (like using a _development server_), however all in all this is the project structure we will stick to for now.
