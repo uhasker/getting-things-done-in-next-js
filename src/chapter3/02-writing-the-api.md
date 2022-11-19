@@ -2,14 +2,14 @@
 
 ## Our tasks
 
-For now we will store our tasks in a global variables named `tasks`.
+For now we will store our tasks in a variable named `tasks`.
 Note that this is something we don't want to do in the final version of our application.
 The reason for that is pretty obvious - every time we stop our server, we will lose the contents of the `tasks` variable.
 We will learn how to persistently save the tasks to a database in the next chapter.
 But for now let us just focus on building a web API using Express.
 
 Let us create the `tasks` variable together with a bunch of tasks.
-We simply use a dictionary, where every the keys are unique task IDs and the values are the task objects.
+We simply use a dictionary, where all keys are unique task IDs and the values are the task objects.
 Every task object will have the `summary` and `description` fields.
 These should be fairly self-explanatory.
 Here is how our first version of `app.js` looks like:
