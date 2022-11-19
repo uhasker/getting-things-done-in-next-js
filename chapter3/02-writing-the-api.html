@@ -1,0 +1,409 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Writing the API</title>
+        <!-- Custom HTML head -->
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../title-page.html">Getting things done in MERN</a></li><li class="chapter-item expanded affix "><a href="../introduction.html">Introduction</a></li><li class="chapter-item expanded "><a href="../chapter1/index.html"><strong aria-hidden="true">1.</strong> A brief introduction to JavaScript</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../chapter1/01-hello-world.html"><strong aria-hidden="true">1.1.</strong> Hello world</a></li><li class="chapter-item expanded "><a href="../chapter1/02-primitive-data-types.html"><strong aria-hidden="true">1.2.</strong> Primitive data types</a></li><li class="chapter-item expanded "><a href="../chapter1/03-arrays-and-objects.html"><strong aria-hidden="true">1.3.</strong> Arrays and objects</a></li><li class="chapter-item expanded "><a href="../chapter1/04-control-flow.html"><strong aria-hidden="true">1.4.</strong> Control flow</a></li><li class="chapter-item expanded "><a href="../chapter1/05-functions.html"><strong aria-hidden="true">1.5.</strong> Functions</a></li><li class="chapter-item expanded "><a href="../chapter1/06-functional-thinking.html"><strong aria-hidden="true">1.6.</strong> Functional thinking</a></li></ol></li><li class="chapter-item expanded "><a href="../chapter2/index.html"><strong aria-hidden="true">2.</strong> The client</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../chapter2/01-html-and-the-dom.html"><strong aria-hidden="true">2.1.</strong> HTML and the DOM</a></li><li class="chapter-item expanded "><a href="../chapter2/02-first-steps-in-react.html"><strong aria-hidden="true">2.2.</strong> First steps in React</a></li><li class="chapter-item expanded "><a href="../chapter2/03-introducing-jsx.html"><strong aria-hidden="true">2.3.</strong> Introducing JSX</a></li><li class="chapter-item expanded "><a href="../chapter2/04-react-components.html"><strong aria-hidden="true">2.4.</strong> React components</a></li><li class="chapter-item expanded "><a href="../chapter2/05-project-structure.html"><strong aria-hidden="true">2.5.</strong> Project structure</a></li><li class="chapter-item expanded "><a href="../chapter2/06-react-state.html"><strong aria-hidden="true">2.6.</strong> React state</a></li></ol></li><li class="chapter-item expanded "><a href="../chapter3/index.html"><strong aria-hidden="true">3.</strong> The server</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../chapter3/01-a-http-primer.html"><strong aria-hidden="true">3.1.</strong> A HTTP primer</a></li><li class="chapter-item expanded "><a href="../chapter3/02-writing-the-api.html" class="active"><strong aria-hidden="true">3.2.</strong> Writing the API</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title"></h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="writing-the-api"><a class="header" href="#writing-the-api">Writing the API</a></h1>
+<h2 id="our-tasks"><a class="header" href="#our-tasks">Our tasks</a></h2>
+<p>For now we will store our tasks in a variable named <code>tasks</code>.
+Note that this is something we don't want to do in the final version of our application.
+The reason for that is pretty obvious - every time we stop our server, we will lose the contents of the <code>tasks</code> variable.
+We will learn how to persistently save the tasks to a database in the next chapter.
+But for now let us just focus on building a web API using Express.</p>
+<p>Let us create the <code>tasks</code> variable together with a bunch of tasks.
+We simply use a dictionary, where all keys are unique task IDs and the values are the task objects.
+Every task object will have the <code>summary</code> and <code>description</code> fields.
+These should be fairly self-explanatory.
+Here is how our first version of <code>app.js</code> looks like:</p>
+<pre><code class="language-javascript">const express = require('express');
+const app = express();
+const PORT = 3000;
+
+const tasks = {
+  '00b2a368-5269-4cee-9cdc-efab98f8b54a': {
+    summary: 'Read the MERN book',
+    description: 'Read and understand the MERN book.',
+  },
+  'd7b74e8f-34bc-4c11-9260-9369102c53f6': {
+    summary: 'Write a task app',
+    description: 'Write an awesome task app.',
+  },
+};
+
+app.listen(PORT, () =&gt; {
+  console.log(`Server listening on port ${PORT}...`);
+});
+</code></pre>
+<p>Note that there are currently no routes present - we will add them in a second.</p>
+<h2 id="an-intermezzo-regarding-uuids"><a class="header" href="#an-intermezzo-regarding-uuids">An intermezzo regarding UUIDs</a></h2>
+<p>The task IDs we use here are so called UUIDs - short for <strong>universally unique identifiers</strong>.
+Such an ID can be easily generated randomly and is, for all practical purposes, unique.
+This means that if you generate a UUID for your application, it has never been generated before - therefore UUIDs are a good way of, well, uniquely identifying a resource.
+There are multiple variants of UUIDs - here we use UUIDv4, which is just a special way of creating UUIDs.</p>
+<p>When we create a new task later on, we will need to automatically generate new UUIDs.
+For that we can use the <code>uuid</code> package.
+Install it by running:</p>
+<pre><code class="language-javascript">npm install uuid
+</code></pre>
+<p>Now we can generate UUIDs as follows:</p>
+<pre><code class="language-javascript">const { v4: uuidv4 } = require('uuid');
+const generatedId = uuidv4();
+console.log(generatedId);
+</code></pre>
+<p>This will print a UUID.
+In fact this is how the IDs of the two tasks in the <code>tasks</code> variable were generated.</p>
+<p>There are many other versions of unique IDs, some of which we will return to later.</p>
+<h2 id="rest-and-crud"><a class="header" href="#rest-and-crud">REST and CRUD</a></h2>
+<p>There are two words you will hear very often when people talk about web APIs and the like - REST and CRUD.</p>
+<p><strong>REST</strong> is short for &quot;Representational State Transfer&quot; and outlines guidelines for managing communications between clients and servers.
+If you read about REST online, there will be a lot of verbose language like &quot;layered system architecture&quot; or &quot;code on demand&quot;.
+However, at its core a REST API is about writing requests that ask for resources using some kind of uniform resource identifier (like UUIDs) and receiving a representation of those resources.
+For example, a client might ask for the task with the UUID <code>d7b74e8f-34bc-4c11-9260-9369102c53f6</code> and receive a representation of the respective task which might look as follows:</p>
+<pre><code class="language-json">{
+  &quot;summary&quot;: &quot;Write a task app&quot;,
+  &quot;description&quot;: &quot;Write an awesome task app.&quot;
+}
+</code></pre>
+<p><strong>CRUD</strong> stands for &quot;Create, Read, Update, Delete&quot; and describes the four basic operations most simple web APIs will support.
+For example, we might want to:</p>
+<ul>
+<li>create a new task</li>
+<li>read the contents of a task (by its UUID)</li>
+<li>update a task (e.g. with a new summary or description)</li>
+<li>delete a task</li>
+</ul>
+<p>CRUD maps very nicely to HTTP, because you can use</p>
+<ul>
+<li>POST requests for creating</li>
+<li>GET requests for reading</li>
+<li>PUT requests for updating (although POST is commonly used as well for this purpose)</li>
+<li>DELETE requests for deleting</li>
+</ul>
+<p>Together REST and CRUD will guide the design of our web API.</p>
+<h2 id="get-routes-to-obtain-the-tasks"><a class="header" href="#get-routes-to-obtain-the-tasks">GET routes to obtain the tasks</a></h2>
+<p>We will write two GET routes.
+The <code>/task</code> GET route will return all tasks as a JSON dictionary.
+The <code>/task/:id</code> GET route will return the task by its ID.
+For example <code>/task/d7b74e8f-34bc-4c11-9260-9369102c53f6</code> will return a JSON representing the first task.
+Here is the <code>/task</code> route:</p>
+<pre><code class="language-javascript">app.get('/task', (req, res) =&gt; {
+  res.send(tasks);
+});
+</code></pre>
+<blockquote>
+<p>Just like in chapter 3.1, you should put the all the routes above the call to <code>app.listen</code>.</p>
+</blockquote>
+<p>The second route is a bit more complex since it is a <strong>dynamic route</strong>, i.e. it takes additional parameters (namely the task ID).
+Lucky for us, Express has support for dynamic routes.
+We can use <code>req.params</code> to get the named URL segments (like an ID).
+Let us take the following GET route:</p>
+<pre><code class="language-javascript">app.get('/users/:userId/tasks/:taskId/subtasks/:subTaskId', (req, res) =&gt; {
+  res.send(req.params);
+});
+</code></pre>
+<p>If we try to query <code>/users/1/tasks/2/subtasks/3</code> this route will be matched and <code>req.params</code> will be the following dictionary:</p>
+<pre><code class="language-javascript">{ userId: '1', taskId: '2', subTaskId: '3' }
+</code></pre>
+<blockquote>
+<p>Try adding <code>console.log(req.params)</code> to see the contents of <code>req.params</code>.
+As a general side note - <code>console.log</code> is a very useful tool if you want to peek into the contents of a value to understand its structure.</p>
+</blockquote>
+<p>Based on this, the <code>/task/:id</code> route should look as follows:</p>
+<pre><code class="language-javascript">app.get('/task/:id', (req, res) =&gt; {
+  const taskId = req.params.id;
+  res.send(tasks[taskId]);
+});
+</code></pre>
+<p>Now that you have created the two routes, start the server with <code>node app.js</code>.
+If you navigate to <code>http://localhost:3000/task</code>, you will see:</p>
+<pre><code class="language-json">{
+  &quot;00b2a368-5269-4cee-9cdc-efab98f8b54a&quot;: {
+    &quot;summary&quot;: &quot;Read the MERN book&quot;,
+    &quot;description&quot;: &quot;Read and understand the MERN book.&quot;
+  },
+  &quot;d7b74e8f-34bc-4c11-9260-9369102c53f6&quot;: {
+    &quot;summary&quot;: &quot;Write a task app&quot;,
+    &quot;description&quot;: &quot;Write an awesome task app.&quot;
+  }
+}
+</code></pre>
+<p>If you navigate to <code>http://localhost:3000/task/d7b74e8f-34bc-4c11-9260-9369102c53f6</code>, you will see the second task:</p>
+<pre><code class="language-json">{
+  &quot;summary&quot;: &quot;Write a task app&quot;,
+  &quot;description&quot;: &quot;Write an awesome task app.&quot;
+}
+</code></pre>
+<h2 id="a-post-route-to-create-tasks"><a class="header" href="#a-post-route-to-create-tasks">A POST route to create tasks</a></h2>
+<p>To create a task, we will use a POST route.
+Remember that we obtain the data from the POST body by accessing <code>req.body</code>.
+We need to generate random task IDs when creating a task, so don't forget to <code>require</code> the <code>uuid</code> module.</p>
+<pre><code class="language-javascript">const express = require('express');
+const { v4: uuidv4 } = require('uuid');
+
+// ... your code ...
+
+app.post('/task', (req, res) =&gt; {
+  const taskId = uuidv4();
+  tasks[taskId] = { summary: req.body.summary, description: req.body.description };
+  res.send(tasks[taskId]);
+});
+</code></pre>
+<p>We return <code>tasks[taskId]</code> because it is customary to return the newly created resource when the request creates a new resource.</p>
+<p>Here is the curl command to create a new task:</p>
+<pre><code class="language-sh">curl -X POST -H &quot;Content-Type: application/json&quot; -d '{&quot;summary&quot;: &quot;Think of a funny joke&quot;, &quot;description&quot;: &quot;Come up with a funny joke to lighten the mood.&quot;}' http://localhost:3000/task
+</code></pre>
+<p>If you create the <code>/task</code> GET route, you will see that an additional task is now present.</p>
+<h2 id="a-put-route-to-update-tasks"><a class="header" href="#a-put-route-to-update-tasks">A PUT route to update tasks</a></h2>
+<p>We can update a task via a PUT request:</p>
+<pre><code class="language-javascript">app.put('/task/:id', (req, res) =&gt; {
+  const taskId = req.params.id;
+  tasks[taskId].summary = req.body.summary;
+  tasks[taskId].description = req.body.description;
+  res.send(tasks[req.params.id]);
+});
+</code></pre>
+<p>Here is a <code>curl</code> command that updates the task with the ID <code>d7b74e8f-34bc-4c11-9260-9369102c53f6</code> to change its summary and description:</p>
+<pre><code class="language-sh">curl -X PUT -H &quot;Content-Type: application/json&quot; -d '{&quot;summary&quot;: &quot;Do something else&quot;, &quot;description&quot;: &quot;Make something interesting happen.&quot;}' &quot;http://localhost:3000/task/d7b74e8f-34bc-4c11-9260-9369102c53f6&quot;
+</code></pre>
+<h2 id="a-delete-route-to-delete-tasks"><a class="header" href="#a-delete-route-to-delete-tasks">A DELETE route to delete tasks</a></h2>
+<p>We can delete tasks via a DELETE request:</p>
+<pre><code class="language-javascript">app.delete('/task/:id', (req, res) =&gt; {
+  const deletedTask = tasks[taskId];
+  delete tasks[taskId];
+  res.send(deletedTask);
+});
+</code></pre>
+<p>Here is a <code>curl</code> command that deletes the task with the ID <code>d7b74e8f-34bc-4c11-9260-9369102c53f6</code>:</p>
+<pre><code class="language-sh">curl -X DELETE http://localhost:3000/task/d7b74e8f-34bc-4c11-9260-9369102c53f6
+</code></pre>
+<h2 id="error-handling"><a class="header" href="#error-handling">Error handling</a></h2>
+<p>Theoretically all the routes are in place now, but if you would submit this server for a review by your fellow developers, they would probably not approve of this (and not just because we are storing the tasks in a global variable instead of using a database).
+The reason for that is we have no error handling.
+Essentially our application assumes that the user of our API will submit only valid requests and nothing bad will ever happen.</p>
+<p><em>This is a terrible assumption to make and if you make this assumption, inevitable sleepless nights await you.</em></p>
+<p><em>We are dead serious.</em></p>
+<p>Programming that assumes nothing bad will ever happen is called <em>happy path programming</em>.
+The <strong>happy path</strong> is the &quot;default&quot; program workflow, where nothing exceptional happens.
+In our current implementation of the API we assume that the user will never do anything wrong, like trying to read a task with an ID that doesn't exist.
+But of course that will inevitably happen.
+Therefore let us make our API robust against such accidents.</p>
+<p>First, we should check that the ID the user is trying to view is valid.
+If the ID does not exist, we will return a response with status code 404, which means &quot;Not found&quot;.</p>
+<pre><code class="language-javascript">app.get('/task/:id', (req, res) =&gt; {
+  const taskId = req.params.id;
+  if (!(id in tasks)) {
+    res.sendStatus(404);
+  }
+  res.send(tasks[taskId]);
+});
+</code></pre>
+<p>We will need similar checks when trying to update or delete an ID.
+This is the new PUT route:</p>
+<pre><code class="language-javascript">app.put('/task/:id', (req, res) =&gt; {
+  const taskId = req.params.id;
+  if (!(taskId in tasks)) {
+    res.sendStatus(404);
+  }
+  tasks[taskId].summary = req.body.summary;
+  tasks[taskId].description = req.body.description;
+  res.send(tasks[taskId]);
+});
+</code></pre>
+<p>And this is the new DELETE route:</p>
+<pre><code class="language-javascript">app.delete('/task/:id', (req, res) =&gt; {
+  const taskId = req.params.id;
+  if (!(taskId in tasks)) {
+    res.sendStatus(404);
+  }
+  const deletedTask = tasks[taskId];
+  delete tasks[taskId];
+  res.send(deletedTask);
+});
+</code></pre>
+<p>There is one more problem we need to address.
+Currently our POST and PUT requests assume that <code>summary</code> and <code>description</code> will always be present in the body.
+But what if the user submits a POST request without these fields?
+In that case the task will not be updated or created correctly.
+Therefore we should check for the presence of the <code>summary</code> and <code>description</code> fields in the POST body and return a status code 400 (Bad Request) in case these fields are missing.
+For example this is how the new and improved PUT request might look like:</p>
+<pre><code class="language-javascript">app.put('/task/:id', (req, res) =&gt; {
+  const taskId = req.params.id;
+  if (!(summary in req.body) or !(description in req.body)) {
+  	res.sendStatus(400);
+  }
+  if (!(taskId in tasks)) {
+  	res.sendStatus(404);
+  }
+  tasks[taskId].summary = req.body.summary;
+  tasks[taskId].description = req.body.description;
+  res.send(tasks[taskId]);
+});
+</code></pre>
+<p>Later we will learn a more intelligent way to validate fields in POST request bodies without all this boilerplate, but for now this will do.</p>
+<p>We have a working API now (except for that thing with the global variable which we will replace in chapter 4)!
+Now our client has to actually use it, so let us go ahead and make some changes to the client.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../chapter3/01-a-http-primer.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../chapter3/01-a-http-primer.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+    </body>
+</html>
