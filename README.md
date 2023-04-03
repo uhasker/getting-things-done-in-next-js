@@ -1,10 +1,10 @@
-# Getting things done in MERN
+# Getting things done in Next.js
 
-This is the repository for the book "Getting things done in MERN".
+This is the repository for the book "Getting things done in Next.js".
 
 The book is aimed at both complete novices as well as seasoned developers.
 
-You can find the book at https://uhasker.github.io/getting-things-done-in-mern/.
+You can find the book at https://uhasker.github.io/getting-things-done-in-next-js/.
 
 Do note that the book is still very much **work in progress**.
 
