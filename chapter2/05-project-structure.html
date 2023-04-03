@@ -310,11 +310,13 @@ export default Task;
 </code></pre>
 <p>This looks like overkill at first glance. However the tasks will inevitably become more complicated (this is a task management application after all). It is therefore already clear that the task should be its own component. Don't just blindly implement the current requirements, think about probable scenarios for the future and what they mean for your code.</p>
 <p>Next we move the TaskList component to src/task-list.js:</p>
-<pre><code class="language-javascript">const TaskList = ({ tasks }) =&gt; {
+<pre><code class="language-javascript">import Task from './task';
+
+const TaskList = ({ tasks }) =&gt; {
   return (
     &lt;div id=&quot;taskList&quot;&gt;
-      {tasks.map(({ summary, description }) =&gt; (
-        &lt;Task summary={summary} description={description} /&gt;
+      {tasks.map(({ summary, description }, index) =&gt; (
+        &lt;Task key={index} summary={summary} description={description} /&gt;
       ))}
     &lt;/div&gt;
   );
@@ -323,7 +325,9 @@ export default Task;
 export default TaskList;
 </code></pre>
 <p>By now you know the drill. The App component goes into src/app.js:</p>
-<pre><code class="language-javascript">const App = () =&gt; {
+<pre><code class="language-javascript">import TaskList from './task-list';
+
+const App = () =&gt; {
   const tasks = [
     {
       summary: 'Item 1',
@@ -347,7 +351,9 @@ export default App;
 </code></pre>
 <p>Finally our src/index.js becomes really simple:</p>
 <pre><code class="language-javascript">import App from './app';
+import ReactDOM from 'react-dom/client';
 
+const root = ReactDOM.createRoot(document.querySelector('#root'));
 root.render(&lt;App /&gt;);
 </code></pre>
 <h3 id="install-react-as-a-dependency-instead-of-serving-from-cdn"><a class="header" href="#install-react-as-a-dependency-instead-of-serving-from-cdn">Install React as a dependency instead of serving from CDN</a></h3>
@@ -366,9 +372,6 @@ root.render(&lt;App /&gt;);
     ],
   ],
 }
-</code></pre>
-<p>We now need to import ReactDOM at the top of src/index.js:</p>
-<pre><code class="language-javascript">import ReactDOM from 'react-dom/client';
 </code></pre>
 <p>Run the webpack build again (<code>npx webpack build</code>) and open <code>index.html</code> in a browser. You will again see the same task list. Note that not much has changed in terms of <em>features</em>, however the structure of our project is now <em>much</em> cleaner. We will make some minor improvements later on (like using a <em>development server</em>), however all in all this is the project structure we will stick to for now.</p>
 <h3 id="summary"><a class="header" href="#summary">Summary</a></h3>
