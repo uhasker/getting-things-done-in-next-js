@@ -1,6 +1,6 @@
-# Getting things done in MERN
+# Getting things done in Next.js
 
-[Getting things done in MERN](title-page.md)
+[Getting things done in Next.js](title-page.md)
 [Introduction](introduction.md)
 
 - [A brief introduction to JavaScript](chapter1/README.md)
