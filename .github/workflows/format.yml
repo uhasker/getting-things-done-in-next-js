@@ -18,6 +18,9 @@ jobs:
           ref: ${{ github.head_ref }}
           fetch-depth: 0
 
+      - name: Install npm v8 (workaround for https://github.com/creyD/prettier_action/issues/113)
+        run: npm i -g npm@8
+
       - name: Prettify code
         uses: creyD/prettier_action@v4.2
         with:
