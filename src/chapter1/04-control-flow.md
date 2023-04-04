@@ -220,7 +220,7 @@ Then `mernTask.date.day` will fail with
 Uncaught TypeError: Cannot read properties of undefined (reading 'day')
 ```
 
-This makes sense since `mernTask.date` will result in `undefined` and you can't access a property on `undefined`. But let's say we would like to access the day and setting it to `undefined` if the `date` property is not present. Then we would need to do something like the following:
+This makes sense since `mernTask.date` will result in `undefined` and you can't access a property on `undefined`. But let's say we would like to access the day and set it to `undefined` if the `date` property is not present. Then we would need to do something like the following:
 
 ```javascript
 const day =
