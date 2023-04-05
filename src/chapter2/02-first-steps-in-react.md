@@ -25,7 +25,7 @@ Now we remove the `<h1>` in the `<div>` element (since we are about to insert it
 </body>
 ```
 
-First we need create a React **root**. This the container in which we will render all our fancy UI elements. React DOM provides a `createRoot` function to accomplish that. The function takes a container, creates a React root for the container and returns the root:
+First we need to create a React **root**. This is the container in which we will render all our fancy UI elements. React DOM provides a `createRoot` function to accomplish that. The function takes a container, creates a React root for the container and returns the root:
 
 ```javascript
 const root = ReactDOM.createRoot(document.querySelector('#root'));
