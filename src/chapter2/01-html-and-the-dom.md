@@ -101,7 +101,7 @@ You can visualize it like this:
 
 ![](images/tree.png)
 
-Note that HTML and DOM are _absolutely not the same thing_. DOM is a _language-independent_ model which represents document structure. HTML is a _concrete language_ that lets you a certain kind of DOM in text.
+Note that HTML and DOM are _absolutely not the same thing_. DOM is a _language-independent_ model which represents document structure. HTML is a _concrete language_ that lets you translate a certain kind of DOM into text.
 
 ## Manipulating the DOM using JavaScript
 
