@@ -293,7 +293,7 @@ const mernTask = {
 <p>Then <code>mernTask.date.day</code> will fail with</p>
 <pre><code>Uncaught TypeError: Cannot read properties of undefined (reading 'day')
 </code></pre>
-<p>This makes sense since <code>mernTask.date</code> will result in <code>undefined</code> and you can't access a property on <code>undefined</code>. But let's say we would like to access the day and setting it to <code>undefined</code> if the <code>date</code> property is not present. Then we would need to do something like the following:</p>
+<p>This makes sense since <code>mernTask.date</code> will result in <code>undefined</code> and you can't access a property on <code>undefined</code>. But let's say we would like to access the day and set it to <code>undefined</code> if the <code>date</code> property is not present. Then we would need to do something like the following:</p>
 <pre><code class="language-javascript">const day =
   typeof mernTask.date !== undefined &amp;&amp; mernTask.date !== null ? mernTask.date.day : undefined;
 </code></pre>
