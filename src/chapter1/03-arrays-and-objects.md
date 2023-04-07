@@ -160,7 +160,7 @@ const person = {
 };
 ```
 
-In this case you can use the `.` notation to access properties at any nesting level. Let's you want to get the summary of the task that's been assigned to the `person`. Then you can write `person.task.summary`:
+In this case you can use the `.` notation to access properties at any nesting level. Let's say you want to get the summary of the task that's been assigned to the `person`. Then you can write `person.task.summary`:
 
 ```javascript
 console.log(person.task.summary); // Read the MERN book
