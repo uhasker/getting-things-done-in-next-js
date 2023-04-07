@@ -6,7 +6,7 @@
 
 When programming we often have to perform some common actions over and over again. For example we might want to get the list of tasks assigned to a user at multiple parts within our software. Instead of writing code that (essentially) does the same thing multiple times we could use a **function**.
 
-Within the **function definition** we would specify what statements should be executed. Then we can write a **function call** (also called **function invocation**). This would then actually execute the statements specified in the definition. We can simply group common actions into a function and then just call the function whenever we need the execute those actions.
+Within the **function definition** we would specify what statements should be executed. Then we can write a **function call** (also called **function invocation**). This would then actually execute the statements specified in the definition. We can simply group common actions into a function and then just call the function whenever we need to execute those actions.
 
 Here is a very simple function definition:
 
