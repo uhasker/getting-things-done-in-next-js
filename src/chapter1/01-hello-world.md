@@ -109,7 +109,7 @@ Grab Node.js from https://nodejs.org:
 
 ![](images/node-js-macos.jpeg)
 
-> Note that by the time you are reading this book the Node.js version you see on `https://nodejs.org` might be different.
+> Note that by the time you are reading this book the Node.js version you see on https://nodejs.org might be different.
 
 You want to download the LTS (long term support) version. Click the big green button with the _LTS_ version. This will download a pkg file. Execute the pkg file by double-clicking it. You will be presented with the following screen:
 
