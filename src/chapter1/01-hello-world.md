@@ -14,13 +14,13 @@ In this section we will setup the browser and Node.js runtimes. Then we will pri
 
 Open a browser and open the console in your browser. If you are using _Firefox_ the shortcut for opening the console is <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>K</kbd> on Windows or Linux and <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>K</kbd> on a Mac. If you are using _Chrome_ or _Microsoft Edge_ the shortcut is <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>J</kbd> on Windows or Linux and <kbd>Cmd</kbd> + <kbd>Option</kbd> + <kbd>J</kbd> on a Mac.
 
-> If you are using Internet Explorer, please navigate to `google.com` and search for "Firefox" to install a _real_ browser. This line was originally intended to be a funny joke, but on June 15, 2022 Microsoft ended support for Internet Explorer, so it's not even a joke anymore. We recommend Firefox, but this is purely a personal preference. Chrome and Microsoft Edge are absolutely fine as well.
+> If you are using Internet Explorer, please navigate to `google.com` and search for "Firefox" to install a _real_ browser. Although this line was originally intended to be a humorous joke, on June 15, 2022, Microsoft [discontinued](https://learn.microsoft.com/en-us/lifecycle/products/internet-explorer-11) support for Internet Explorer, making it no longer a laughing matter. While we suggest Firefox, the choice of browser is purely a personal preference, as Chrome and Microsoft Edge are both excellent options.
 
 This is how the browser console will approximately look like on Firefox:
 
 ![](images/browser-console.png)
 
-> Note that if you see a bunch of scary error or warning messages upon opening the console, _don't panic_ (this is also good life advice in general). Most of these will probably come from various extensions you might have installed or the web page you are currently viewing. Simply delete the messages by clicking the icon in the top left of the console (trash can in Firefox - might vary in different browsers), as we don't care about them.
+> Note that if you see a bunch of scary errors or warning messages upon opening the console, _don't panic_ (this is also good life advice in general). Most of these likely originate from various extensions you might have installed or the web page you are currently viewing. You can simply ignore or delete these messages.
 
 The browser as well as the Node.js console have **REPL** (read-eval-print-loop) capabilities. This just means that you can type some code into the console directly and execute it. REPLs are very nice, because they allow you to quickly test what you just learned.
 
@@ -30,21 +30,21 @@ Let's print something using the `console.log` method. Type the following into th
 console.log('Hello, world!');
 ```
 
-Now hit <kbd>Return</kbd> (you may also know this as <kbd>Enter</kbd> or simply <kbd>⏎</kbd>). You will see the output "Hello, world!" in the console:
+Now hit <kbd>Return</kbd> (you may also know this as <kbd>Enter</kbd> or simply <kbd>⏎</kbd>). You will see the output `Hello, world!` in the console:
 
 ![](images/browser-console-log.png)
 
-> Ignore the "undefined" for now.
+> Ignore the `undefined` for now.
 
 Hooray, we printed something to the browser console! This is the point at which you go tell everyone that you are now a *programmer*™.
 
 ### Executing JavaScript from an HTML file
 
-Instead of executing JavaScript in the browser console directly, we can (and often will) execute it from an HTML file. HTML is short for _HyperText Markup Language_ and is the standard markup language for documents that should be displayed in a browser. We will cover HTML in chapter 2 - for now we just want to get a quick glimpse at it.
+Instead of executing JavaScript in the browser console directly, we can (and often will) execute it from an HTML file. HTML is short for _HyperText Markup Language_ and is the standard markup language for documents that should be displayed in a browser. We will delve into HTML in Chapter 2, but for now, we just want to provide a very brief introduction to it.
 
-Create a new HTML file. We will call it _hello.html_, however you can name it whatever you want. The filename should have an _html_ extension though.
+Create a new HTML file. We will call it _hello.html_, though you can name it whatever you want. The filename should have an _html_ extension though.
 
-> If you are on a Windows machine, you probably cannot create a file with an `html` extension directly. In that case simply create an empty `txt` file and change the extension to `html`.
+> If you are on a Windows machine, you might be unable to create a file with an `html` extension directly. In that case simply create an empty `txt` file and change the extension to `html`.
 
 Open the HTML file in any text editor (we recommend you use [Visual Studio Code](https://code.visualstudio.com)) and add the following text to the file:
 
@@ -62,7 +62,7 @@ Open the HTML file in any text editor (we recommend you use [Visual Studio Code]
 
 Don't forget to save the file!
 
-> Note the semicolon after the console.log. It terminates the `console.log` statement. The semicolon is not technically required here. Indeed there are many JavaScript programmers who don't write semicolons. However to avoid a bunch of pitfalls we will use semicolons throughout this book and therefore we want you to get used to them as soon as possible.
+> Note the semicolon after the `console.log` which terminates the `console.log` statement. The semicolon is not technically required here. Indeed there are many JavaScript programmers who don't use semicolons. However to avoid a bunch of pitfalls we will always use semicolons throughout this book and therefore we want you to get used to them as soon as possible.
 
 Now open this file in your browser. If the `html` file extension is associated with your browser, you should be able to do so by simply double-clicking the file. If this is not the case, _right-click_ the file. A menu containing the option "Open with" should pop up. Click on any browser name from the "Open with" submenu. This is how it would look like on Windows 11:
 
@@ -80,7 +80,12 @@ After opening this file in your browser, open the console again. You should see 
 
 For a long time, programmers used JavaScript mostly inside the browser runtime environment. However in 2009 Node.js came along and changed that by allowing programmers to easily run JavaScript outside the browser.
 
-Node.js will probably not be installed on your machine, so let's fix that. Grab Node.js from `https://nodejs.org`:
+Node.js will probably not be installed on your machine, so we need to install it first.
+Follow the installation instructions for your operating system (Windows and macOS).
+
+#### Installing Node.js on Windows
+
+Grab Node.js from `https://nodejs.org`:
 
 ![](images/node-js.png)
 
@@ -98,7 +103,26 @@ Alternatively you can type "cmd" into the search field. An app called "command p
 
 ![](images/search-field.png)
 
-No matter how you do it, you should now stare at a _beautiful_ command line. Take a second and _bask in it's glory_ for a while.
+#### Installing Node.js on macOS
+
+Grab Node.js from `https://nodejs.org`:
+
+![](images/node-js-macos.jpeg)
+
+> Note that by the time you are reading this book the Node.js version you see on `https://nodejs.org` might be different.
+
+You want to download the LTS (long term support) version. Click the big green button with the _LTS_ version. This will download a pkg file. Execute the pkg file by double-clicking it. You will be presented with the following screen:
+
+![](images/node-js-macos-installer.jpeg)
+
+You will be presented with a bunch of options during the installation - just click "Continue" everywhere and you will be fine.
+
+Now we need to open a **command-line interface** (also called command line, command prompt or CLI) on our computer. A command line allows you to execute various tasks (called commands) on your computer. On a Mac you can open the command line by hitting <kbd>Cmd</kbd> + <kbd>Space</kbd> to open _search_, typing _terminal_ and hitting <kbd>Return</kbd>.
+
+### Working with the CLI
+
+No matter which operating system you're on, you should now stare at a _beautiful_ command line.
+Take a second and _bask in it's glory_ for a while.
 
 After you're done basking, let's try and execute a command. For example we can use the `echo` command to output text. Try typing the following in your CLI:
 
@@ -110,9 +134,7 @@ Now hit <kbd>Return</kbd> and you should see the following result:
 
 ![](images/cli.png)
 
-Note that on a Mac you can open the command line by hitting <kbd>Cmd</kbd> + <kbd>Space</kbd> to open _search_, typing _terminal_ and hitting <kbd>Return</kbd>.
-
-> If you're on a Linux system you should _really_ know how to open a command line.
+> Note that while the images of the CLI have been taken on a Windows machine, the commands are the same on macOS.
 
 Now that the command line is open, execute the `node` command to open a Node.js console. You can do so by typing `node` and hitting <kbd>Return</kbd>. You should see something like the following (again the Node.js version might be different):
 
@@ -162,22 +184,28 @@ Note that for the remainder of chapter 1 you should follow along using the Node.
 
 Before we dive into JavaScript, you should know what statements and expressions are.
 
-A **statement** is a syntactic unit responsible for executing some action. A program is then essentially a sequence of statements which should be executed when running the program. For example `console.log('Hello, world!')` is a statement which executes the action of printing "Hello, world!" to the console.
+An **expression** is a "phrase" of JavaScript that may be evaluated to get its value.
+For example `2 + 2` would be an expression which would evaluate to `4`.
 
-An **expression** is a syntactic unit that may be evaluated to get its value. For example `2 + 2` would be an expression which would evaluate to `4`. Note that since any expression also executes some action, any expression is therefore a statement.
+A **statement** is a "sentence" of JavaScript responsible for executing some action.
+For example `console.log('Hello, world!')` is a statement which executes the action of printing "Hello, world!" to the console.
+Statements usually contain expressions which compute the values that are needed to correctly execute some action.
 
-You could put it this way: Statements in general are executed to make something happen, while expressions in specific are evaluated to produce a value.
+Finally, a **program** is a sequence of statements.
+If we run the program, the sequence of statements is executed.
+For example the `hello.js` program contains a single statement `console.log('Hello, world!')` which is executed when we run the program.
 
 ### Comments
 
-Everything that is after a double slash on a line in JavaScript is a **comment**. Comments are ignored by the runtime and therefore have no effect for the execution of your program:
+In JavaScript, any text that appears after a double slash on a line is considered a **comment**.
+Comments are disregarded by the runtime, so they have no impact on the execution of your program:
 
 ```javascript
 // This is just a comment
 // Comments have no effect
 console.log('Hello, world!');
 // Therefore this program is equivalent to the
-// program from the previous chapter
+// program from the previous section
 ```
 
 We will heavily utilize comments throughout this book inside the code blocks to highlight important ideas.
