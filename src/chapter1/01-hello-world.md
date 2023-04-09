@@ -105,7 +105,7 @@ Alternatively you can type "cmd" into the search field. An app called "command p
 
 #### Installing Node.js on macOS
 
-Grab Node.js from `https://nodejs.org`:
+Grab Node.js from https://nodejs.org:
 
 ![](images/node-js-macos.jpeg)
 
