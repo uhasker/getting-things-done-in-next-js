@@ -85,7 +85,7 @@ Follow the installation instructions for your operating system (Windows and macO
 
 #### Installing Node.js on Windows
 
-Grab Node.js from `https://nodejs.org`:
+Grab Node.js from https://nodejs.org:
 
 ![](images/node-js.png)
 
