@@ -92,7 +92,7 @@ Your fellow developers will _really_ hate you if you do that.
 To simplify our lives, we will use a UI library called **React**.
 The idea behind React is to create declarative UIs with nicely separated components.
 Basically we only define how the application should look like (hence the _declarative_ aspect) and React takes care of the rest, such as determining the necessary DOM manipulations.
-As you will soon see, this is an incredibly useful feature.
+As you will see soon, this is an incredibly useful feature.
 
 ### Summary
 
