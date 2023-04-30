@@ -77,7 +77,7 @@ For example, you could nest paragraphs within a generic container:
 ```html
 <div>
   <p>Read the MERN book: Read and understand the MERN book.</p>
-  <p> Write a website: Create a new and cool website. </p>
+  <p> Write a website: Create a new and cool website.</p>
 </div>
 ```
 
