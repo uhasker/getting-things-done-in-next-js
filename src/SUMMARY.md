@@ -14,7 +14,7 @@
 
 - [The Client](chapter2/README.md)
 
-  - [Hypertext Markup Language](chapter2/01-html-and-the-dom.md)
+  - [Hypertext Markup Language](chapter2/01-hypertext-markup-language.md)
   - [The Document Object Model](chapter2/02-the-document-object-model.md)
   - [First Steps in React](chapter2/03-first-steps-in-react.md)
   - [Introducing JSX](chapter2/04-introducing-jsx.md)
