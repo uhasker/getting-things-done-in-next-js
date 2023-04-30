@@ -84,7 +84,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="title-page.html">Getting Things Done in Next.js</a></li><li class="chapter-item expanded affix "><a href="introduction.html">Introduction</a></li><li class="chapter-item expanded "><a href="chapter1/index.html"><strong aria-hidden="true">1.</strong> A Brief Introduction to JavaScript</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter1/01-hello-world.html"><strong aria-hidden="true">1.1.</strong> Hello World</a></li><li class="chapter-item expanded "><a href="chapter1/02-primitive-data-types.html"><strong aria-hidden="true">1.2.</strong> Primitive Data Types</a></li><li class="chapter-item expanded "><a href="chapter1/03-arrays-and-objects.html"><strong aria-hidden="true">1.3.</strong> Arrays and Objects</a></li><li class="chapter-item expanded "><a href="chapter1/04-control-flow.html"><strong aria-hidden="true">1.4.</strong> Control Flow</a></li><li class="chapter-item expanded "><a href="chapter1/05-functions.html"><strong aria-hidden="true">1.5.</strong> Functions</a></li><li class="chapter-item expanded "><a href="chapter1/06-functional-thinking.html"><strong aria-hidden="true">1.6.</strong> Functional Thinking</a></li></ol></li><li class="chapter-item expanded "><a href="chapter2/index.html"><strong aria-hidden="true">2.</strong> The Client</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter2/01-html-and-the-dom.html"><strong aria-hidden="true">2.1.</strong> Hypertext Markup Language</a></li><li class="chapter-item expanded "><a href="chapter2/02-the-document-object-model.html"><strong aria-hidden="true">2.2.</strong> The Document Object Model</a></li><li class="chapter-item expanded "><a href="chapter2/03-first-steps-in-react.html"><strong aria-hidden="true">2.3.</strong> First Steps in React</a></li><li class="chapter-item expanded "><a href="chapter2/04-introducing-jsx.html"><strong aria-hidden="true">2.4.</strong> Introducing JSX</a></li><li class="chapter-item expanded "><a href="chapter2/05-react-components.html"><strong aria-hidden="true">2.5.</strong> React Components</a></li><li class="chapter-item expanded "><a href="chapter2/06-project-structure.html"><strong aria-hidden="true">2.6.</strong> Project Structure</a></li><li class="chapter-item expanded "><a href="chapter2/07-react-state.html"><strong aria-hidden="true">2.7.</strong> React State</a></li></ol></li><li class="chapter-item expanded "><a href="chapter3/index.html"><strong aria-hidden="true">3.</strong> The server</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter3/01-a-http-primer.html"><strong aria-hidden="true">3.1.</strong> A HTTP primer</a></li><li class="chapter-item expanded "><a href="chapter3/02-writing-the-api.html"><strong aria-hidden="true">3.2.</strong> Writing the API</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="title-page.html">Getting Things Done in Next.js</a></li><li class="chapter-item expanded affix "><a href="introduction.html">Introduction</a></li><li class="chapter-item expanded "><a href="chapter1/index.html"><strong aria-hidden="true">1.</strong> A Brief Introduction to JavaScript</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter1/01-hello-world.html"><strong aria-hidden="true">1.1.</strong> Hello World</a></li><li class="chapter-item expanded "><a href="chapter1/02-primitive-data-types.html"><strong aria-hidden="true">1.2.</strong> Primitive Data Types</a></li><li class="chapter-item expanded "><a href="chapter1/03-arrays-and-objects.html"><strong aria-hidden="true">1.3.</strong> Arrays and Objects</a></li><li class="chapter-item expanded "><a href="chapter1/04-control-flow.html"><strong aria-hidden="true">1.4.</strong> Control Flow</a></li><li class="chapter-item expanded "><a href="chapter1/05-functions.html"><strong aria-hidden="true">1.5.</strong> Functions</a></li><li class="chapter-item expanded "><a href="chapter1/06-functional-thinking.html"><strong aria-hidden="true">1.6.</strong> Functional Thinking</a></li></ol></li><li class="chapter-item expanded "><a href="chapter2/index.html"><strong aria-hidden="true">2.</strong> The Client</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter2/01-hypertext-markup-language.html"><strong aria-hidden="true">2.1.</strong> Hypertext Markup Language</a></li><li class="chapter-item expanded "><a href="chapter2/02-the-document-object-model.html"><strong aria-hidden="true">2.2.</strong> The Document Object Model</a></li><li class="chapter-item expanded "><a href="chapter2/03-first-steps-in-react.html"><strong aria-hidden="true">2.3.</strong> First Steps in React</a></li><li class="chapter-item expanded "><a href="chapter2/04-introducing-jsx.html"><strong aria-hidden="true">2.4.</strong> Introducing JSX</a></li><li class="chapter-item expanded "><a href="chapter2/05-react-components.html"><strong aria-hidden="true">2.5.</strong> React Components</a></li><li class="chapter-item expanded "><a href="chapter2/06-project-structure.html"><strong aria-hidden="true">2.6.</strong> Project Structure</a></li><li class="chapter-item expanded "><a href="chapter2/07-react-state.html"><strong aria-hidden="true">2.7.</strong> React State</a></li></ol></li><li class="chapter-item expanded "><a href="chapter3/index.html"><strong aria-hidden="true">3.</strong> The server</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter3/01-a-http-primer.html"><strong aria-hidden="true">3.1.</strong> A HTTP primer</a></li><li class="chapter-item expanded "><a href="chapter3/02-writing-the-api.html"><strong aria-hidden="true">3.2.</strong> Writing the API</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -1101,7 +1101,91 @@ for (const number in numbers) {
 <p>In this chapter we will create a simple (website) client. This client will allow us to add and delete tasks. Each task will have a summary and a description.</p>
 <p>Create a directory which will contain your project. We called that directory <em>easy-opus</em> (it is common to name your project directory after the project). Of course, feel free to give your directory any <em>meaningful</em> name.</p>
 <p>Let's begin.</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="hypertext-markup-language"><a class="header" href="#hypertext-markup-language">Hypertext Markup Language</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="hypertext-markup-language"><a class="header" href="#hypertext-markup-language">Hypertext Markup Language</a></h2>
+<div style="text-align: right"> <i> Hey guys, how do I parse HTML with a regular expression? <br> - Seconds before disaster </i> </div>
+<h3 id="a-minimal-html-file"><a class="header" href="#a-minimal-html-file">A minimal HTML file</a></h3>
+<p>Create a project directory (<em>easy-opus</em> for example) and within that, a directory for the website client.
+Name it something descriptive, like <em>client</em>.
+Your directory structure should now appear as follows:</p>
+<pre><code>easy-opus/
+└─── client/
+</code></pre>
+<p>From here on, all work will be done within the <em>client</em> directory.</p>
+<p>Now, let's create your first webpage using <strong>HTML</strong>, a markup language designed for defining documents to be displayed in a browser.</p>
+<blockquote>
+<p>Markup languages provide rules for defining the type of information contained in a document.
+Markup languages differ from programming languages - while markup languages enable the creation of displayable documents, programming languages offer much more powerful capabilities.</p>
+</blockquote>
+<p>Navigate to the client directory and create a file named <code>index.html</code> in there. Now write some minimal useful HTML to display two hardcoded tasks:</p>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+  &lt;head&gt;
+    &lt;meta charset=&quot;utf-8&quot; /&gt;
+    &lt;title&gt;Easy Opus&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div id=&quot;app&quot;&gt;
+      &lt;div&gt;
+        &lt;h1&gt;My tasks&lt;/h1&gt;
+        &lt;div id=&quot;taskList&quot;&gt;
+          &lt;p&gt; Read the MERN book: Read and understand the MERN book.&lt;/p&gt;
+          &lt;p&gt; Write a website: Create a new and cool website.&lt;/p&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>When you open the HTML file in your browser you should see something like this:</p>
+<p><img src="chapter2/images/minimal.png" alt="" /></p>
+<p>Hooray, you've created a simple HTML document!
+Now you can close this book and go procrastinate.
+What's that?
+You're not budging?
+Hm, that's weird.
+Oh we see, you've been forced to read this book (blink <em>once</em> for help).
+Well, since we both have to be here anyway, let's march onwards and dissect the masterpiece you've just created!</p>
+<h3 id="html-elements"><a class="header" href="#html-elements">HTML elements</a></h3>
+<p>HTML is comprised of elements used to specify the type of content you want to render.
+For example, the <code>p</code> element represents a paragraph:</p>
+<pre><code class="language-html">&lt;p&gt;Read the MERN book: Read and understand the MERN book.&lt;/p&gt;
+</code></pre>
+<p>An HTML element usually has some <em>content</em> between an <em>opening tag</em> and a <em>closing tag</em>.
+The opening tag is the name of the element wrapped in angle brackets (like <code>&lt;p&gt;</code>).
+The closing tag is the name of the element wrapped in angle brackets with a <em>forward slash before the name</em> (like <code>&lt;/p&gt;</code>).</p>
+<p>There are various HTML elements, such as <code>p</code> for paragraphs and <code>div</code> for generic containers.
+We will discuss more elements later.</p>
+<p>HTML's power lies in the fact that most elements can be nested.
+For example, you could nest paragraphs within a generic container:</p>
+<pre><code class="language-html">&lt;div&gt;
+  &lt;p&gt;Read the MERN book: Read and understand the MERN book.&lt;/p&gt;
+  &lt;p&gt; Write a website: Create a new and cool website.&lt;/p&gt;
+&lt;/div&gt;
+</code></pre>
+<p>Elements can also have <em>attributes</em>.
+Two particularly important attributes are <code>id</code> and <code>class</code>.</p>
+<p>The <code>id</code> attribute is used to specify a <em>unique identity</em> for an HTML element.
+You can use that attribute to - well - uniquely identify an element.
+This allows us to reference that element using JavaScript or CSS.</p>
+<p>The <code>class</code> attribute is used to specify a <em>class</em> for an HTML element.
+Unlike unique identifiers, multiple HTML elements can share the same class, which is useful for applying consistent styles to multiple elements.
+For example you could color all HTML elements of class <code>blue-text</code> blue.</p>
+<p>There are many more attributes and different HTML elements often have different attributes.</p>
+<p>Examining <code>index.html</code>, you can observe the structure of an HTML document.
+An HTML document begins with <code>&lt;!DOCTYPE html&gt;</code> which is a <em>document type declaration</em>.
+This is followed by an <code>html</code> element which contains all the content of the document.
+The head element includes content not directly related to the displayed content, such as the page title and character encoding.
+Finally the <code>body</code> element contains all the content that will actually be rendered on the page.
+In our example, the task list is within the <code>body</code> element.</p>
+<blockquote>
+<p>We will discuss character encodings in greater detail later.</p>
+</blockquote>
+<h3 id="summary-6"><a class="header" href="#summary-6">Summary</a></h3>
+<p>You know what HTML is and how HTML elements look like.</p>
+<h3 id="further-reading-6"><a class="header" href="#further-reading-6">Further reading</a></h3>
+<ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Learn/HTML/Introduction_to_HTML/Getting_started">Introduction to HTML - Getting started with HTML</a></li>
+</ul>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="the-document-object-model"><a class="header" href="#the-document-object-model">The Document Object Model</a></h2>
 <div style="text-align: right"> <i> Well, DOM and HTML are baaaasically the same thing. <br> - Famous last words </i> </div>
 <h3 id="html-and-dom"><a class="header" href="#html-and-dom">HTML and DOM</a></h3>
@@ -1171,9 +1255,9 @@ Your fellow developers will <em>really</em> hate you if you do that.</p>
 The idea behind React is to create declarative UIs with nicely separated components.
 Basically we only define how the application should look like (hence the <em>declarative</em> aspect) and React takes care of the rest, such as determining the necessary DOM manipulations.
 As you will see soon, this is an incredibly useful feature.</p>
-<h3 id="summary-6"><a class="header" href="#summary-6">Summary</a></h3>
+<h3 id="summary-7"><a class="header" href="#summary-7">Summary</a></h3>
 <p>You know what HTML is and how HTML elements look like. You also know about the DOM and why you wouldn't want to manipulate it using JavaScript manually.</p>
-<h3 id="further-reading-6"><a class="header" href="#further-reading-6">Further reading</a></h3>
+<h3 id="further-reading-7"><a class="header" href="#further-reading-7">Further reading</a></h3>
 <ul>
 <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model/Introduction">Introduction to the DOM</a></li>
 </ul>
@@ -1257,9 +1341,9 @@ root.render(app);
 </code></pre>
 <p>Here we create two tasks (<code>task1</code> and <code>task2</code>). Then we create a <code>&lt;div&gt;</code> (<code>taskList</code>) containing those tasks. Then we create a heading element (<code>heading</code>). Finally we create a div containing the list of tasks and the heading (<code>app</code>) and render that element inside the root.</p>
 <p>At this point you are probably asking yourself: <em>Didn't you just promise me that manipulating the DOM in React will be simple, you liars? This looks just like regular Javascript™®℠.</em> You have a point (the one after the trademark symbols) and we will indeed vastly simplify this code in the next section via black magic called <strong>JSX</strong>.</p>
-<h3 id="summary-7"><a class="header" href="#summary-7">Summary</a></h3>
+<h3 id="summary-8"><a class="header" href="#summary-8">Summary</a></h3>
 <p>Now you know how to import React using a CDN and how to dynamically manipulate the DOM using <code>React.createElement</code> and <code>ReactDOM.createRoot</code>. You also know you shouldn't actually do this.</p>
-<h2 id="further-reading-7"><a class="header" href="#further-reading-7">Further reading</a></h2>
+<h2 id="further-reading-8"><a class="header" href="#further-reading-8">Further reading</a></h2>
 <p>There is no further reading for this section.</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="introducing-jsx"><a class="header" href="#introducing-jsx">Introducing JSX</a></h2>
 <div style="text-align: right"> <i> So, JSX is basically HTML... <br> - Famous last words </i> </div>
@@ -1304,9 +1388,9 @@ root.render(app);
 </code></pre>
 <p>This looks pretty much exactly like regular HTML. However, it is important to remember that JSX is <em>emphatically not</em> HTML. Instead it is a <strong>syntax extension</strong> to JavaScript that can be transpiled to <em>normal</em> JavaScript. This will lead to a number of important consequences down the road (namely that JSX can express things HTML can not).</p>
 <p>Right now you are probably wondering why we are bothering with React at all. We took perfectly fine HTML and for some reason insisted on doing a bunch of complex things just to get essentially the same HTML, but dynamically. However, this setup will now payoff in a <em>huge</em> way, as we introduce React components.</p>
-<h3 id="summary-8"><a class="header" href="#summary-8">Summary</a></h3>
+<h3 id="summary-9"><a class="header" href="#summary-9">Summary</a></h3>
 <p>You know how to dynamically manipulate the DOM using JSX and that you should write JSX instead of <code>React.createElement</code> calls.</p>
-<h3 id="further-reading-8"><a class="header" href="#further-reading-8">Further reading</a></h3>
+<h3 id="further-reading-9"><a class="header" href="#further-reading-9">Further reading</a></h3>
 <ul>
 <li><a href="https://reactjs.org/docs/introducing-jsx.html">React docs - Introducing JSX</a></li>
 </ul>
@@ -1415,9 +1499,9 @@ root.render(&lt;App /&gt;);
   );
 };
 </code></pre>
-<h2 id="summary-9"><a class="header" href="#summary-9">Summary</a></h2>
+<h2 id="summary-10"><a class="header" href="#summary-10">Summary</a></h2>
 <p>You learned how to create React components and how to pass properties to components.</p>
-<h2 id="further-reading-9"><a class="header" href="#further-reading-9">Further reading</a></h2>
+<h2 id="further-reading-10"><a class="header" href="#further-reading-10">Further reading</a></h2>
 <ul>
 <li><a href="https://reactjs.org/docs/components-and-props.html">React docs - Components and props</a></li>
 </ul>
@@ -1651,7 +1735,7 @@ root.render(&lt;App /&gt;);
 }
 </code></pre>
 <p>Run the webpack build again (<code>npx webpack build</code>) and open <code>index.html</code> in a browser. You will again see the same task list. Note that not much has changed in terms of <em>features</em>, however the structure of our project is now <em>much</em> cleaner. We will make some minor improvements later on (like using a <em>development server</em>), however all in all this is the project structure we will stick to for now.</p>
-<h3 id="summary-10"><a class="header" href="#summary-10">Summary</a></h3>
+<h3 id="summary-11"><a class="header" href="#summary-11">Summary</a></h3>
 <p>You learned about webpack and how to structure a JavaScript project.</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="react-state"><a class="header" href="#react-state">React State</a></h2>
 <h3 id="forms"><a class="header" href="#forms">Forms</a></h3>
