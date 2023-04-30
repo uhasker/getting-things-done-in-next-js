@@ -86,7 +86,7 @@ Two particularly important attributes are `id` and `class`.
 
 The `id` attribute is used to specify a _unique identity_ for an HTML element.
 You can use that attribute to - well - uniquely identify an element.
-This allows us to reference that element using JavaScript.
+This allows us to reference that element using JavaScript or CSS.
 
 The `class` attribute is used to specify a _class_ for an HTML element.
 Unlike unique identifiers, multiple HTML elements can share the same class, which is useful for applying consistent styles to multiple elements.
