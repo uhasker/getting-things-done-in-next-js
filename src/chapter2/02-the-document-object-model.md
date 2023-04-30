@@ -2,7 +2,7 @@
 
 <div style="text-align: right"> <i> Well, DOM and HTML are baaaasically the same thing. <br> - Famous last words </i> </div>
 
-### The Document Object Model
+### HTML and DOM
 
 When you open an HTML document in a browser, it is represented by the **Document Object Model** (DOM for short).
 Essentially, the DOM is a model for documents which represent _editable logical trees_.
@@ -69,15 +69,11 @@ We could now add a button and execute this code whenever the button is clicked b
         const taskList = document.querySelector('#taskList');
         taskList.appendChild(paragraph);
       }
-      function setup() {
-        const button = document.querySelector('#addTask');
-        button.addEventListener('click', addTask);
-      }
     </script>
   </head>
-  <body onload="setup()">
+  <body>
     <div id="taskList">
-      <button id="addTask">Add a task</button>
+      <button id="addTask" onclick="addTask()">Add a task</button>
     </div>
   </body>
 </html>
@@ -89,7 +85,7 @@ Manually manipulating the DOM in JavaScript™®℠ is generally a bad idea as i
 And unreadable code is almost as bad as inserting unnecessary trademark symbols into a text just for the heck of it.
 Your fellow developers will _really_ hate you if you do that.
 
-To simplify our lives, we will use a UI library called **React**.
+To simplify our lives, we will use a library called **React**.
 The idea behind React is to create declarative UIs with nicely separated components.
 Basically we only define how the application should look like (hence the _declarative_ aspect) and React takes care of the rest, such as determining the necessary DOM manipulations.
 As you will see soon, this is an incredibly useful feature.

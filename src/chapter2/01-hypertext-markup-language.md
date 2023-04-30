@@ -20,7 +20,7 @@ Now, let's create your first webpage using **HTML**, a markup language designed 
 > Markup languages provide rules for defining the type of information contained in a document.
 > Markup languages differ from programming languages - while markup languages enable the creation of displayable documents, programming languages offer much more powerful capabilities.
 
-Navigate to the client directory and create a file named `index.html` in there. Now write some minimal useful HTML to display a bunch of hardcoded tasks:
+Navigate to the client directory and create a file named `index.html` in there. Now write some minimal useful HTML to display two hardcoded tasks:
 
 ```html
 <!DOCTYPE html>
