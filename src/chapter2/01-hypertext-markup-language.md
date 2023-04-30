@@ -1,6 +1,6 @@
-## HTML
+## Hypertext Markup Language
 
-<div style="text-align: right"> <i> Hey guys, how do I parse HTML with a regular expression? <br> - Famous last words </i> </div>
+<div style="text-align: right"> <i> Hey guys, how do I parse HTML with a regular expression? <br> - Seconds before disaster </i> </div>
 
 ### A minimal HTML file
 

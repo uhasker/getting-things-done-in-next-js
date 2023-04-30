@@ -1,5 +1,7 @@
 ## The Document Object Model
 
+<div style="text-align: right"> <i> Well, DOM and HTML are baaaasically the same thing. <br> - Famous last words </i> </div>
+
 ### The Document Object Model
 
 When you open an HTML document in a browser, it is represented by the **Document Object Model** (DOM for short).

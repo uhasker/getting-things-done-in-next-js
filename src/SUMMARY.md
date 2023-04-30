@@ -14,12 +14,13 @@
 
 - [The client](chapter2/README.md)
 
-  - [HTML and the DOM](chapter2/01-html-and-the-dom.md)
-  - [First steps in React](chapter2/02-first-steps-in-react.md)
-  - [Introducing JSX](chapter2/03-introducing-jsx.md)
-  - [React components](chapter2/04-react-components.md)
-  - [Project structure](chapter2/05-project-structure.md)
-  - [React state](chapter2/06-react-state.md)
+  - [Hypertext Markup Language](chapter2/01-html-and-the-dom.md)
+  - [The Document Object Model](chapter2/02-the-document-object-model.md)
+  - [First steps in React](chapter2/03-first-steps-in-react.md)
+  - [Introducing JSX](chapter2/04-introducing-jsx.md)
+  - [React components](chapter2/05-react-components.md)
+  - [Project structure](chapter2/06-project-structure.md)
+  - [React state](chapter2/07-react-state.md)
 
 - [The server](chapter3/README.md)
 
