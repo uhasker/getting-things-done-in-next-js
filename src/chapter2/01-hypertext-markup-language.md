@@ -34,8 +34,8 @@ Navigate to the client directory and create a file named `index.html` in there. 
       <div>
         <h1>My tasks</h1>
         <div id="taskList">
-          <p> Read the MERN book: Read and understand the MERN book. </p>
-          <p> Write a website: Create a new and cool website. </p>
+          <p> Read the MERN book: Read and understand the MERN book.</p>
+          <p> Write a website: Create a new and cool website.</p>
         </div>
       </div>
     </div>
