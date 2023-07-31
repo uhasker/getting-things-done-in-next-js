@@ -8,7 +8,7 @@ A function is called **pure** if its outputs (the returned values) depend only o
 
 Here is an example of a pure function:
 
-```javascript
+```js
 const square = (x) => x * 2;
 ```
 
@@ -17,7 +17,7 @@ In addition, `square` doesn't produce any side effects.
 
 Here is an example of a function that is _not_ pure:
 
-```javascript
+```js
 const x = 2;
 const addImpure = (y) => x + y;
 ```
@@ -26,7 +26,7 @@ The output of this function doesn't depend just on its input variables, but also
 
 Here is another function that's not pure:
 
-```javascript
+```js
 const hello = () => console.log('Hello, world!');
 ```
 
@@ -69,7 +69,7 @@ You can of course manipulate data directly by mutating global state.
 
 Consider the following `task` object:
 
-```javascript
+```js
 const task = {
   id: 1,
   summary: 'Read the Next.js book',
@@ -79,7 +79,7 @@ const task = {
 
 Now let's say we want to change the summary:
 
-```javascript
+```js
 task.summary = 'Next.js book';
 ```
 
@@ -89,7 +89,7 @@ _Reasoning about state and state changes is really hard._
 
 Instead we can create copies of the objects which contain the changes we need:
 
-```javascript
+```js
 const newTask = {
   ...task,
   summary: 'Next.js book',
@@ -106,14 +106,14 @@ You want to have immutable datastructures which get passed through pure function
 We already talked about the fact that JavaScript functions are just objects.
 We even showed an example of how you can assign a function to a variable:
 
-```javascript
+```js
 const square = (num) => num * num;
 ```
 
 However we can do much more. Since functions are just objects we can _pass them to other functions_.
 For example let's define a function that repeats some action `n` times:
 
-```javascript
+```js
 function repeat(fun, n) {
   for (let i = 0; i < n; i++) {
     fun();
@@ -123,7 +123,7 @@ function repeat(fun, n) {
 
 We can use it like this:
 
-```javascript
+```js
 const hello = () => console.log('Hello, world!');
 repeat(hello, 4);
 ```
@@ -151,7 +151,7 @@ These functions allow you to perform an _incredibly_ rich set of operations on a
 
 We will use two running examples throughout the section - an array of `numbers` and an array of `tasks`:
 
-```javascript
+```js
 const numbers = [1, 2, 3, 4];
 const tasks = [
   {
@@ -184,7 +184,7 @@ It returns the array resulting from applying `f` to every element of the origina
 Let's say we wanted to square all the elements of `numbers`.
 We could write something like this:
 
-```javascript
+```js
 const result = [];
 for (const number in numbers) {
   result.push(number ** 2);
@@ -194,13 +194,13 @@ for (const number in numbers) {
 This is ugly and (you guessed it) _tedious_.
 Instead we can (and should) use the `map` function:
 
-```javascript
+```js
 const result = numbers.map((number) => number ** 2);
 ```
 
 The `result` array has the following content:
 
-```javascript
+```js
 [1, 4, 9, 16];
 ```
 
@@ -208,7 +208,7 @@ Consider another example.
 Let's say we wanted to add a long description to all the `tasks` based on the summary and the description.
 We can use the `map` function again:
 
-```javascript
+```js
 const longTasks = tasks.map((task) => ({
   ...task,
   longDescription: `${task.summary}: ${task.description}`,
@@ -220,7 +220,7 @@ const longTasks = tasks.map((task) => ({
 
 The `longTasks` array will look like this:
 
-```javascript
+```js
 [
   {
     id: 1,
@@ -258,7 +258,7 @@ All elements for which `f` returns `true` are kept, all elements for which `f` r
 For example let's say we want to select all even elements from `numbers`.
 Here is the non-functional way:
 
-```javascript
+```js
 const result = [];
 for (const number in numbers) {
   if (number % 2 === 0) {
@@ -272,7 +272,7 @@ I don't even want to look at that.
 For loops and if statements all over the place.
 Let's rest our eyes and consider the _functional_ approach:
 
-```javascript
+```js
 const result = numbers.filter((number) => number % 2 === 0);
 ```
 
@@ -281,7 +281,7 @@ Think for a moment what the appropriate predicate would be.
 
 That's right, it looks like this:
 
-```javascript
+```js
 const todoTasks = tasks.filter((task) => task.status === 'Todo');
 ```
 
@@ -292,7 +292,7 @@ The second argument of the reduce function is the initial value.
 
 Here is how we might compute the sum of an array:
 
-```javascript
+```js
 const sum = numbers.reduce((acc, curr) => acc + curr, 0);
 ```
 
@@ -305,7 +305,7 @@ Therefore `sum` will be `10`.
 For another example, let's say we would like to compute the total logged time (i.e. the time logged for all the tasks combined).
 This would look like this:
 
-```javascript
+```js
 const totalTime = tasks.reduce((task, curr) => task.loggedTime + curr, 0);
 ```
 
