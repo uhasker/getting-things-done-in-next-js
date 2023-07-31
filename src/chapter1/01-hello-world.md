@@ -32,8 +32,8 @@ Then we will print "Hello, world!" to both the browser console and the Node.js c
 Open a browser, and open its console.
 How you do this will depend on the browser.
 
-If you are using _Firefox_ the shortcut for opening the console is <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>K</kbd> on Windows or Linux and <kbd>Cmd</kbd> + <kbd>Option</kbd> + <kbd>K</kbd> on a Mac.
-If you are using _Chrome_ or _Microsoft Edge_ the shortcut is <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>J</kbd> on Windows or Linux and <kbd>Cmd</kbd> + <kbd>Option</kbd> + <kbd>J</kbd> on a Mac.
+If you are using _Firefox_ the shortcut for opening the console is <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>K</kbd> on Ubuntu/Debian and <kbd>Cmd</kbd> + <kbd>Option</kbd> + <kbd>K</kbd> on a Mac.
+If you are using _Chrome_ or _Microsoft Edge_ the shortcut is <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>J</kbd> on Ubuntu/Debian and <kbd>Cmd</kbd> + <kbd>Option</kbd> + <kbd>J</kbd> on a Mac.
 If you are using _Safari_ on a Mac, you will need to enable the develop menu first by going to `Settings > Advanced` and ticking the box `Show Develop menu in menu bar`. Then you can open the console using <kbd>Cmd</kbd> + <kbd>Option</kbd> + <kbd>K</kbd>.
 
 > If you are using Internet Explorer, please navigate to `google.com` and search for "Firefox" to install a _real_ browser.
@@ -134,7 +134,7 @@ However in 2009 Node.js came along and changed that by allowing programmers to e
 Node.js will probably not be installed on your machine, so let's fix that.
 First, we will install the **Fast Node Manager** (**fnm** for short) which will allow us to manage Node.js versions in a simple and straightforward manner.
 
-On Linux you will need to run the following:
+On Ubuntu/Debian you will need to run the following:
 
 ```sh
 curl -fsSL https://fnm.vercel.app/install | bash
@@ -217,6 +217,9 @@ For example `2 + 2` would be an expression which would evaluate to `4`.
 Note that since any expression also executes some action, any expression is therefore a statement.
 
 You could put it this way: Statements in general are executed to make something happen, while expressions in specific are evaluated to produce a value.
+
+> Note that other authors might define statements and expressions in a slightly different manner.
+> However we will stick to these definitions throughout the book.
 
 ### Comments
 

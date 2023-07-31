@@ -43,7 +43,7 @@ This list is not exhaustive - if you think that an interesting piece of trivia o
 When submitting improvements suggestions, remember that:
 
 - this book should be suitable for beginners, i.e. all new terminology must be explained
-- this book maitains an informal tone (and even dares to make jokes) to make it more accessible to a general audience
+- this book maintains an informal tone (and even dares to make jokes) to make it more accessible to a general audience
 
 If you want to contribute, you can either create an issue or a pull request.
 
