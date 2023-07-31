@@ -148,7 +148,7 @@ If it's missing and none of the conditions are true, nothing will happen.
 
 ### Truthiness and falsiness
 
-Note that the condition does not necessary have to be boolean as JavaScript will automatically convert non-boolean values to booleans.
+Note that the condition does not necessary have to be boolean as JavaScript will automatically evaluate non-boolean values as "truthy" or "falsy" in boolean contexts.
 For example you could write something like this:
 
 ```js
@@ -186,21 +186,25 @@ The general form is:
 condition ? expression1 : expression2;
 ```
 
+You can think of the ternary operator as a short, compact way to write an `if ... else` statement.
+It evaluates a condition, and if that condition is `true` (truthy), the result will have the value of the first expression.
+If the condition is `false` (falsy), the result will have the value of the second expression.
+
 There is a very common thing complete beginners do with ternary operators which looks like this:
 
 ```js
 const finished = tasks.length === 0 ? true : false;
 ```
 
-You should stop for a second a think about why this is unneccessary.
+You should stop for a second and think about why this is unnecessary.
 
-_Thought_ about it? That's right. You can just write
+_Thought_ about it?
+That's right - the expression `tasks.length === 0` already evaluates to a boolean value.
+You can just write
 
 ```js
 const finished = tasks.length === 0;
 ```
-
-Note that you cannot write arbitrary statements inside a ternary operator (and it wouldn't make a lot of sense anyway).
 
 ### Optional chaining
 
@@ -221,7 +225,7 @@ const nextTask = {
 Let's say we want to access the day of the task.
 We can do this by using `nextTask.date.day`.
 But what if the day does not have to be present, i.e. is _optional_?
-This could e.g. happen because the user didn't enter a task.
+This could happen, for example, because the user didn't enter a task.
 
 The object could look like this:
 
@@ -250,9 +254,12 @@ But let's say we would like to access the day and set it to `undefined` if the `
 Then we would need to do something like the following:
 
 ```js
-const day =
-  typeof nextTask.date !== undefined && nextTask.date !== null ? nextTask.date.day : undefined;
+const day = nextTask.date !== undefined ? nextTask.date.day : undefined;
 ```
+
+Here is what this line does:
+If `nextTask.date` is defined, then `nextTask.date.day` is assigned to `day`.
+If `nextTask.date` is not defined, the `undefined` is assigned to `day`.
 
 Alternatively we could make use of `&&` and write:
 
@@ -306,7 +313,7 @@ for (let char of str) {
 }
 ```
 
-This would print each charachter of the string, i.e.:
+This would print each character of the string, i.e.:
 
 ```
 T
@@ -333,8 +340,8 @@ for (const task of tasks) {
 }
 ```
 
-> There are also a bunch of other loops that we will cover later.
-> This is because you don't need them nearly as often as some people think.
+> There are also a bunch of other loops (like `while` and `do...while`) that we will cover later.
+> However, `for...of` loops are commonly used and often sufficient for many use cases
 
 ### Summary
 
