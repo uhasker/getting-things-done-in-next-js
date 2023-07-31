@@ -1,4 +1,4 @@
-## Hello world
+## Hello World
 
 <div style="text-align: right"> <i> A journey of a thousand miles begins with a single "Hello, world!" program. <br> — Ancient Chinese proverb </i> </div>
 
@@ -27,7 +27,7 @@ Think of it as a conversation between you and the program - you tell it what to 
 In this section we will set up the browser and Node.js runtimes.
 Then we will print "Hello, world!" to both the browser console and the Node.js console to test that our setup functions as anticipated.
 
-### The browser environment
+### The Browser Environment
 
 Open a browser, and open its console.
 How you do this will depend on the browser.
@@ -64,7 +64,7 @@ You will see the output "Hello, world!" in the console:
 Hooray, we printed something to the browser console!
 This is the point at which you go tell everyone that you are now a *programmer*™.
 
-### Executing JavaScript from an HTML file
+### Executing JavaScript from an HTML File
 
 As we already mentioned, instead of executing JavaScript in the browser console directly, we can (and often will) execute it from a JavaScript file.
 Since we're on the browser, we will need to create two files - an HTML file and a JavaScript file.
@@ -107,7 +107,7 @@ After opening this file in your browser, open the console again. You should see 
 
 Congratulations, you wrote your first script!
 
-### Working with a Command Line
+### Working With a Command Line
 
 Now that we know how to use the browser runtime, we will move on to Node.js.
 However, before we can do that, we will need to learn how to interact with the **command-line interface** (also called command line, command prompt or CLI).
@@ -126,7 +126,7 @@ echo 'Hello, world!'
 
 > Generally whenever we tell you to execute a command you need to type it in the CLI and hit <kbd>Return</kbd>.
 
-### Node.js
+### The Node.js Runtime
 
 For a long time, JavaScript was mostly used inside the browser runtime environment by programmers.
 However in 2009 Node.js came along and changed that by allowing programmers to easily run JavaScript outside the browser.
@@ -176,7 +176,7 @@ console.log('Hello, world!');
 
 You should see `"Hello, world!"` printed to the console.
 
-### Executing a file
+### Executing a File
 
 Before moving on, let's execute a JavaScript file in Node.js as well.
 Create a file named `hello.js`.
@@ -204,7 +204,7 @@ This should again print `"Hello, world!"`.
 Note that for the remainder of chapter 1 you should follow along using the Node.js console as we will be discussing the language itself.
 Nevertheless, as we begin writing the project in chapter 2, we will have to write JavaScript for the browser runtime environment on a regular basis.
 
-### Statements and expressions
+### Statements And Expressions
 
 Before we dive into JavaScript, you should know that programs are made of statements and expressions.
 
@@ -269,6 +269,6 @@ Let's move on.
 You learned about the JavaScript browser runtime, Node.js and how to use the console of the various runtimes.
 You learned how to execute code in a REPL as well as how to execute scripts.
 
-### Further reading
+### Further Reading
 
 There is no further reading for this section.
