@@ -286,26 +286,35 @@ const todoTasks = tasks.filter((task) => task.status === 'Todo');
 ```
 
 Finally there is the `reduce` function which (you guessed it) _reduces_ an array to a single value.
-The `reduce` function moves over an array from left to right and keeps track of a _current value_.
-At every element of the array it recomputes the current value based on a function `f` (this is the first argument of the `reduce` function).
+The `reduce` function moves over an array from left to right and keeps track of a value (a so called _accumulator_).
+At every element of the array it recomputes the accumulator based on a function `f` (this function `f` is the first argument of the `reduce` function).
 The second argument of the reduce function is the initial value.
 
 Here is how we might compute the sum of an array:
 
 ```javascript
-const sum = numbers.reduce((num, curr) => num + curr, 0);
+const sum = numbers.reduce((acc, curr) => acc + curr, 0);
 ```
 
-Let's say we would like to compute the total logged time (i.e. the time logged for all the tasks combined).
+Basically this is what happens:
+The `reduce` function looks at `acc` (which is the initial value, i.e. `0` at the beginning) and `curr` (which is `1`), produces `acc + curr`, and sets this as the new accumulator (i.e. the new accumulator is `1`).
+Next the `reduce` function again looks at `acc` (which is now `1`) and `curr` (which is `2`), produces `acc + curr`, and sets this as the new accumulator (i.e. the new accumulator is `3`).
+The next update results in the accumulator being `6` and the final update result in the accumulator being `10`.
+Therefore `sum` will be `10`.
+
+For another example, let's say we would like to compute the total logged time (i.e. the time logged for all the tasks combined).
 This would look like this:
 
 ```javascript
 const totalTime = tasks.reduce((task, curr) => task.loggedTime + curr, 0);
 ```
 
+> We recommend that you try to reason through this `reduce` for a deeper understanding of this topic.
+
 ### Summary
 
-You learned about important functional concepts like pure functions, immutability and higher-order functions. You also learned about the three most important higher-order functions - `map`, `filter` and `reduce`.
+You learned about important functional concepts like pure functions, immutability and higher-order functions.
+You also learned about the three most important higher-order functions - `map`, `filter` and `reduce`.
 
 ### Further reading
 
