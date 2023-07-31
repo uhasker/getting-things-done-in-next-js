@@ -2,7 +2,7 @@
 
 <div style="text-align: right"> <i> "The best time to write a function was twenty years ago. But the second best time is today." <br> "That makes no sense." <br> "Actually, it kind of does if you think about the history of functional programming." <br> — Dialogue between a master and his student </i> </div>
 
-### Declaring and calling functions
+### Declaring and Calling Functions
 
 When programming we often have to perform some common actions over and over again.
 For example we might want to get the list of tasks assigned to a user at multiple parts within our software.
@@ -79,7 +79,7 @@ const squaredNum = square(3);
 console.log(squaredNum); // 9
 ```
 
-### Functions are objects
+### Functions are Objects
 
 Despite the fact that you get "function" when you use `typeof` with a function, functions are really just objects.
 
@@ -106,7 +106,7 @@ const square = function (num) {
 
 The syntax for calling such a function is still the same, e.g. we could write `square(3)`.
 
-### Arrow functions
+### Arrow Functions
 
 There is a shorthand notation available in JavaScript called the **arrow function** notation.
 This notation allows you to omit certain keywords in certain situations.
@@ -195,6 +195,6 @@ Instead we want you to think _functionally_, which is what the next section will
 You learned how to declare and call functions and methods.
 You also learned about the arrow notation as a convenient shorthand for functions.
 
-### Further reading
+### Further Reading
 
 - [JavaScript Guide - Functions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Functions)

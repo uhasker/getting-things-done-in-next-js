@@ -1,8 +1,8 @@
-## Functional thinking
+## Functional Thinking
 
 <div style="text-align: right"> <i> Gold can't be pure, but functions can. <br> — Ancient Chinese proverb </i> </div>
 
-### Pure functions
+### Pure Functions
 
 A function is called **pure** if its outputs (the returned values) depend only on its inputs and if the function does not have any _side effects_ (i.e. it doesn't change program state and doesn't write anything to an external data source).
 
@@ -12,7 +12,8 @@ Here is an example of a pure function:
 const square = (x) => x * 2;
 ```
 
-Indeed, the output of `square` depends only on its input and nothing else. In addition, `square` doesn't produce any side effects.
+Indeed, the output of `square` depends only on its input and nothing else.
+In addition, `square` doesn't produce any side effects.
 
 Here is an example of a function that is _not_ pure:
 
@@ -31,64 +32,86 @@ const hello = () => console.log('Hello, world!');
 
 The `hello` function has a side effect - it outputs something to the console.
 
-Why do we care about all of this? The fundamental reason is that _pure functions are very easy to reason about_. There is practically no room for suprising behaviour.
+Why do we care about all of this?
+The fundamental reason is that _pure functions are very easy to reason about_.
+There is practically no room for suprising behaviour.
 
-Consider the above `square` function. It takes an input and produces an output that is dependent _only on the input_. It doesn't matter what the rest of the program is doing - the function will always produce identical outputs for identical inputs.
+Consider the above `square` function.
+It takes an input and produces an output that is dependent _only on the input_.
+It doesn't matter what the rest of the program is doing - the function will always produce identical outputs for identical inputs.
 
-> If you are mathematically inclined, pure functions are basically regular mathematical functions. They take an input which is a member of some domain and produce an output which is a member of some codomain. For example the `square` function is simply the function f: A → B, f(x) = x² where A and B are certain sets of numbers. Note that A and B are emphatically _not_ equal to the set of real numbers since of course JavaScript cannot represent every possible real number (due to underlying hardware limitatations - computers can't possibly store arbitrarily large numbers).
+> If you are mathematically inclined, pure functions are basically regular mathematical functions.
+> They take an input which is a member of some domain and produce an output which is a member of some codomain.
+> For example the `square` function is simply the function f: A → B, f(x) = x² where A and B are certain sets of numbers.
+> Note that A and B are emphatically _not_ equal to the set of real numbers since of course JavaScript cannot represent every possible real number (due to underlying hardware limitatations - computers can't possibly store arbitrarily large numbers).
 
-All of the above is not true for the `addImpure` function. This function can produce _different_ outputs for identical inputs. This makes it hard very hard to troubleshoot if there is an error. After all you may not know what the (global) state of the program was when the error occured.
+All of the above is not true for the `addImpure` function.
+This function can produce _different_ outputs for identical inputs.
+This makes it hard very hard to troubleshoot if there is an error.
+After all you may not know what the (global) state of the program was when the error occured.
 
-Closely related is another very nice property of pure functions - they are _easily testable_. There is no need to fake dependencies or global state - as the function only takes an input and produces some output. Therefore all you need to do is to call the function, pass some input and check whether the output matches the expected output. We will return to this _extensively_ when we cover testing.
+Closely related is another very nice property of pure functions - they are _easily testable_.
+There is no need to fake some global state - as the function only takes an input and produces some output.
+Therefore all you need to do is to call the function, pass some input and check whether the output matches the expected output.
+We will return to this _extensively_ when we cover testing.
 
 ### Immutability
 
-A variable is **immutable** if it is unchangeable. Otherwise we call it **mutable**. The more mutability we have inside our program the more can go wrong since it's hard to reason about (global) state.
+A variable is **immutable** if it is unchangeable.
+Otherwise we call it **mutable**.
+The more mutability we have inside our program the more can go wrong since it's hard to reason about (global) state.
 
-This is where the alert reader might interject - after all, isn't the purpose of a program to do something? And how can we achieve that if we don't change state?
+This is where the alert reader might interject - after all, isn't the purpose of a program to do something?
+And how can we achieve that if we don't change state?
 
-A fundamental correction is in order here - the purpose of every program is not _to do something_, but to _manipulate data_. You can of course manipulate data directly by mutating global state.
+A fundamental correction is in order here - the purpose of every program is not _to do something_, but to _manipulate data_.
+You can of course manipulate data directly by mutating global state.
 
 Consider the following `task` object:
 
 ```javascript
 const task = {
   id: 1,
-  summary: 'Read the MERN book',
-  description: 'Read and understand the MERN book.',
+  summary: 'Read the Next.js book',
+  description: 'Read and understand the Next.js book.',
 };
 ```
 
 Now let's say we want to change the summary:
 
 ```javascript
-task.summary = 'MERN book';
+task.summary = 'Next.js book';
 ```
 
-This works for simple objects and changes. But this will quickly become brittle with growing complexity. _Reasoning about state and state changes is really hard._
+This works for simple objects and changes.
+But this will quickly become brittle with growing complexity.
+_Reasoning about state and state changes is really hard._
 
 Instead we can create copies of the objects which contain the changes we need:
 
 ```javascript
 const newTask = {
   ...task,
-  summary: 'MERN book',
+  summary: 'Next.js book',
 };
 ```
 
 Note that we didn't change the original object, but created a copy of the object with a different summary.
 
-Immutability and pure functions are closely linked. You want to have immutable datastructures which get passed through pure functions to compute results.
+Immutability and pure functions are closely linked.
+You want to have immutable datastructures which get passed through pure functions to compute results.
 
 ### Higher-order functions
 
-We already talked about the fact that JavaScript functions are just objects. We even showed an example of how you can assign a function to a variable:
+We already talked about the fact that JavaScript functions are just objects.
+We even showed an example of how you can assign a function to a variable:
 
 ```javascript
 const square = (num) => num * num;
 ```
 
-However we can do much more. Since functions are just objects we can pass them to other functions. For example let's define a function that repeats some action `n` times:
+However we can do much more. Since functions are just objects we can _pass them to other functions_.
+For example let's define a function that repeats some action `n` times:
 
 ```javascript
 function repeat(fun, n) {
@@ -114,13 +137,15 @@ Hello, world!
 Hello, world!
 ```
 
-Note that the `repeat` function doesn't care what `fun` is - `fun` could be a simple `console.log` or a function which produces a simulated universe. All the `repeat` function does is it simply repeats `fun` the specified number of times.
+Note that the `repeat` function doesn't care what `fun` is - `fun` could be a simple `console.log` or a function which produces a simulated universe.
+All the `repeat` function does is to simply repeat `fun` the specified number of times.
 
 Functions which take (or return) functions are called **higher-order functions**.
 
 ### The trinity of map, reduce and filter
 
-We now introduce the three most important higher-order functions - `map`, `reduce` and `filter`. These functions allow you to perform an _incredibly_ rich set of operations on arrays.
+We now introduce the three most important higher-order functions - `map`, `reduce` and `filter`.
+These functions allow you to perform an _incredibly_ rich set of operations on arrays.
 
 > We want to use this blockquote to emphasize _how often_ you will be using `map`, `reduce` and `filter`.
 
@@ -131,8 +156,8 @@ const numbers = [1, 2, 3, 4];
 const tasks = [
   {
     id: 1,
-    summary: 'Read the MERN book',
-    description: 'Read and understand the MERN book.',
+    summary: 'Read the Next.js book',
+    description: 'Read and understand the Next.js book.',
     timeLogged: 60,
     status: 'In progress',
   },
@@ -153,9 +178,11 @@ const tasks = [
 ];
 ```
 
-The `map` function takes one argument - a function `f` to apply to every element of the array. It returns the array resulting from applying `f` to every element of the original array.
+The `map` function takes one argument - a function `f` to apply to every element of the array.
+It returns the array resulting from applying `f` to every element of the original array.
 
-Let's say we wanted to square all the elements of `numbers`. We could write something like this:
+Let's say we wanted to square all the elements of `numbers`.
+We could write something like this:
 
 ```javascript
 const result = [];
@@ -164,7 +191,8 @@ for (const number in numbers) {
 }
 ```
 
-This is ugly and (you guessed it) _tedious_. Instead we can (and should) use the `map` function:
+This is ugly and (you guessed it) _tedious_.
+Instead we can (and should) use the `map` function:
 
 ```javascript
 const result = numbers.map((number) => number ** 2);
@@ -176,7 +204,9 @@ The `result` array has the following content:
 [1, 4, 9, 16];
 ```
 
-Consider another example. Let's say we wanted to add a long description to all the `tasks` based on the summary and the description. We can use the `map` function again:
+Consider another example.
+Let's say we wanted to add a long description to all the `tasks` based on the summary and the description.
+We can use the `map` function again:
 
 ```javascript
 const longTasks = tasks.map((task) => ({
@@ -185,7 +215,8 @@ const longTasks = tasks.map((task) => ({
 }));
 ```
 
-> You can see why the spread syntax is so handy. Thanks to this _incredible innovation_, you only need to explicitly specify the object parts where something interesting happens.
+> You can see why the spread syntax is so handy.
+> Thanks to this _incredible innovation_, you only need to explicitly specify the object parts where something interesting happens.
 
 The `longTasks` array will look like this:
 
@@ -193,11 +224,11 @@ The `longTasks` array will look like this:
 [
   {
     id: 1,
-    summary: 'Read the MERN book',
-    description: 'Read and understand the MERN book.',
+    summary: 'Read the Next.js book',
+    description: 'Read and understand the Next.js book.',
     timeLogged: 60,
     status: 'In progress',
-    longDescription: 'Read the MERN book: Read and understand the MERN book.',
+    longDescription: 'Read the Next.js book: Read and understand the Next.js book.',
   },
   {
     id: 2,
@@ -218,11 +249,14 @@ The `longTasks` array will look like this:
 ];
 ```
 
-The `filter` function allows you to select elements from an array based on some condition. It takes a function `f` which returns `true` or `false` for some input(s). All elements for which `f` returns `true` are kept, all elements for which `f` returns `false` are thrown away.
+The `filter` function allows you to select elements from an array based on some condition.
+It takes a function `f` which returns `true` or `false` for some input(s).
+All elements for which `f` returns `true` are kept, all elements for which `f` returns `false` are thrown away.
 
 > A function which returns `true` or `false` is commonly referred to as a _predicate_.
 
-For example let's say we want to select all even elements from `numbers`. Here is the non-functional way:
+For example let's say we want to select all even elements from `numbers`.
+Here is the non-functional way:
 
 ```javascript
 const result = [];
@@ -233,13 +267,17 @@ for (const number in numbers) {
 }
 ```
 
-Ugh! I don't even want to look at that. For loops and if statements all over the place. Let's rest our eyes and consider the _functional_ approach:
+Ugh!
+I don't even want to look at that.
+For loops and if statements all over the place.
+Let's rest our eyes and consider the _functional_ approach:
 
 ```javascript
 const result = numbers.filter((number) => number % 2 === 0);
 ```
 
-Consider another example - we might want to select all tasks from the `tasks` array which have the status 'Todo'. Think for a moment what the appropriate predicate would be.
+Consider another example - we might want to select all tasks from the `tasks` array which have the status 'Todo'.
+Think for a moment what the appropriate predicate would be.
 
 That's right, it looks like this:
 
@@ -247,7 +285,10 @@ That's right, it looks like this:
 const todoTasks = tasks.filter((task) => task.status === 'Todo');
 ```
 
-Finally there is the `reduce` function which (you guessed it) _reduces_ an array to a single value. The `reduce` function moves over an array from left to right and keeps track of a _current value_. At every element of the array it recomputes the current value based on a function `f` (this is the first argument of the `reduce` function). The second argument of the reduce function is the initial value.
+Finally there is the `reduce` function which (you guessed it) _reduces_ an array to a single value.
+The `reduce` function moves over an array from left to right and keeps track of a _current value_.
+At every element of the array it recomputes the current value based on a function `f` (this is the first argument of the `reduce` function).
+The second argument of the reduce function is the initial value.
 
 Here is how we might compute the sum of an array:
 
@@ -255,7 +296,8 @@ Here is how we might compute the sum of an array:
 const sum = numbers.reduce((num, curr) => num + curr, 0);
 ```
 
-Let's say we would like to compute the total logged time (i.e. the time logged for all the tasks combined). This would look like this:
+Let's say we would like to compute the total logged time (i.e. the time logged for all the tasks combined).
+This would look like this:
 
 ```javascript
 const totalTime = tasks.reduce((task, curr) => task.loggedTime + curr, 0);
