@@ -16,4 +16,4 @@ This book is intended to be a standalone resource. While there are resources for
 
 _Happy hacking_
 
-_Mikhail Berkov and Jannis Morgenstern_
+_Mikhail Berkov_

@@ -2,6 +2,7 @@
 
 [Getting Things Done in Next.js](title-page.md)
 [Introduction](introduction.md)
+[Acknowledgments](acknowledgments.md)
 
 - [A Brief Introduction to JavaScript](chapter1/README.md)
 
