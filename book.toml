@@ -1,0 +1,5 @@
+[book]
+authors = ["Mikhail Berkov", "Jannis Morgenstern"]
+language = "en"
+multilingual = false
+src = "src"
