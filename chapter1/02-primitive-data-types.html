@@ -83,16 +83,38 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../title-page.html">Getting Things Done in Next.js</a></li><li class="chapter-item expanded affix "><a href="../introduction.html">Introduction</a></li><li class="chapter-item expanded "><a href="../chapter1/index.html"><strong aria-hidden="true">1.</strong> A Brief Introduction to JavaScript</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../chapter1/01-hello-world.html"><strong aria-hidden="true">1.1.</strong> Hello World</a></li><li class="chapter-item expanded "><a href="../chapter1/02-primitive-data-types.html" class="active"><strong aria-hidden="true">1.2.</strong> Primitive Data Types</a></li><li class="chapter-item expanded "><a href="../chapter1/03-arrays-and-objects.html"><strong aria-hidden="true">1.3.</strong> Arrays and Objects</a></li><li class="chapter-item expanded "><a href="../chapter1/04-control-flow.html"><strong aria-hidden="true">1.4.</strong> Control Flow</a></li><li class="chapter-item expanded "><a href="../chapter1/05-functions.html"><strong aria-hidden="true">1.5.</strong> Functions</a></li><li class="chapter-item expanded "><a href="../chapter1/06-functional-thinking.html"><strong aria-hidden="true">1.6.</strong> Functional Thinking</a></li></ol></li><li class="chapter-item expanded "><a href="../chapter2/index.html"><strong aria-hidden="true">2.</strong> The Client</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../chapter2/01-hypertext-markup-language.html"><strong aria-hidden="true">2.1.</strong> Hypertext Markup Language</a></li><li class="chapter-item expanded "><a href="../chapter2/02-the-document-object-model.html"><strong aria-hidden="true">2.2.</strong> The Document Object Model</a></li><li class="chapter-item expanded "><a href="../chapter2/03-first-steps-in-react.html"><strong aria-hidden="true">2.3.</strong> First Steps in React</a></li><li class="chapter-item expanded "><a href="../chapter2/04-introducing-jsx.html"><strong aria-hidden="true">2.4.</strong> Introducing JSX</a></li><li class="chapter-item expanded "><a href="../chapter2/05-react-components.html"><strong aria-hidden="true">2.5.</strong> React Components</a></li><li class="chapter-item expanded "><a href="../chapter2/06-project-structure.html"><strong aria-hidden="true">2.6.</strong> Project Structure</a></li><li class="chapter-item expanded "><a href="../chapter2/07-react-state.html"><strong aria-hidden="true">2.7.</strong> React State</a></li></ol></li><li class="chapter-item expanded "><a href="../chapter3/index.html"><strong aria-hidden="true">3.</strong> The server</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../chapter3/01-a-http-primer.html"><strong aria-hidden="true">3.1.</strong> A HTTP primer</a></li><li class="chapter-item expanded "><a href="../chapter3/02-writing-the-api.html"><strong aria-hidden="true">3.2.</strong> Writing the API</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../title-page.html">Getting Things Done in Next.js</a></li><li class="chapter-item expanded affix "><a href="../introduction.html">Introduction</a></li><li class="chapter-item expanded affix "><a href="../acknowledgments.html">Acknowledgments</a></li><li class="chapter-item expanded "><a href="../chapter1/index.html"><strong aria-hidden="true">1.</strong> A Brief Introduction to JavaScript</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../chapter1/01-hello-world.html"><strong aria-hidden="true">1.1.</strong> Hello World</a></li><li class="chapter-item expanded "><a href="../chapter1/02-primitive-data-types.html" class="active"><strong aria-hidden="true">1.2.</strong> Primitive Data Types</a></li><li class="chapter-item expanded "><a href="../chapter1/03-arrays-and-objects.html"><strong aria-hidden="true">1.3.</strong> Arrays and Objects</a></li><li class="chapter-item expanded "><a href="../chapter1/04-control-flow.html"><strong aria-hidden="true">1.4.</strong> Control Flow</a></li><li class="chapter-item expanded "><a href="../chapter1/05-functions.html"><strong aria-hidden="true">1.5.</strong> Functions</a></li><li class="chapter-item expanded "><a href="../chapter1/06-functional-thinking.html"><strong aria-hidden="true">1.6.</strong> Functional Thinking</a></li></ol></li><li class="chapter-item expanded "><a href="../chapter2/index.html"><strong aria-hidden="true">2.</strong> The Client</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../chapter2/01-hypertext-markup-language.html"><strong aria-hidden="true">2.1.</strong> Hypertext Markup Language</a></li><li class="chapter-item expanded "><a href="../chapter2/02-the-document-object-model.html"><strong aria-hidden="true">2.2.</strong> The Document Object Model</a></li><li class="chapter-item expanded "><a href="../chapter2/03-first-steps-in-react.html"><strong aria-hidden="true">2.3.</strong> First Steps in React</a></li><li class="chapter-item expanded "><a href="../chapter2/04-introducing-jsx.html"><strong aria-hidden="true">2.4.</strong> Introducing JSX</a></li><li class="chapter-item expanded "><a href="../chapter2/05-react-components.html"><strong aria-hidden="true">2.5.</strong> React Components</a></li><li class="chapter-item expanded "><a href="../chapter2/06-project-structure.html"><strong aria-hidden="true">2.6.</strong> Project Structure</a></li><li class="chapter-item expanded "><a href="../chapter2/07-react-state.html"><strong aria-hidden="true">2.7.</strong> React State</a></li></ol></li><li class="chapter-item expanded "><a href="../chapter3/index.html"><strong aria-hidden="true">3.</strong> The server</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../chapter3/01-a-http-primer.html"><strong aria-hidden="true">3.1.</strong> A HTTP primer</a></li><li class="chapter-item expanded "><a href="../chapter3/02-writing-the-api.html"><strong aria-hidden="true">3.2.</strong> Writing the API</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
 
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
                                 <div id="menu-bar-hover-placeholder"></div>
-                <div id="menu-bar" class="menu-bar sticky bordered">
+                <div id="menu-bar" class="menu-bar sticky">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
                             <i class="fa fa-bars"></i>
@@ -144,33 +166,46 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h2 id="primitive-data-types"><a class="header" href="#primitive-data-types">Primitive data types</a></h2>
-<div style="text-align: right"> <i> == is the equality operator <br> === is the one and true equality operator <br> ==== is the equality operator which transcends time and space <br> ===== is the equality operator which transcends all other equality operators <br> ======= is the equality operator which summons the UNSPEAKABLE DOOM h̷̳͓͝ě̵̞͂ ̵̮͍͊͋i̴͎͂s̵̗͒ ̷̘̤̓̅h̸͜͝ḙ̵̀r̶͈̆ȇ̶̗̱̍ ̸͕̾h̴̲̗̾̅e̷̟̋ả̶̬v̶̯́̐͜ẽ̸̛͔n̶̩̒͊ ̴̢̯̍ḣ̵̳̻e̴̙̒̓l̵͇̟̃p̶̘̑ ̷̠͛͝ŭ̴͇̯̕s̶̮͕̒ <br> — from "The Book of the Equality Operators and their Virtue" by Laozi </i> </div>
+                        <h2 id="primitive-data-types"><a class="header" href="#primitive-data-types">Primitive Data Types</a></h2>
+<div style="text-align: right"> <i> == is the equality operator <br> === is the one and true equality operator <br> ==== is the equality operator which transcends time and space <br> ===== is the equality operator which transcends all other equality operators <br> ====== is the equality operator which summons the UNSPEAKABLE DOOM h̷̳͓͝ě̵̞͂ ̵̮͍͊͋i̴͎͂s̵̗͒ ̷̘̤̓̅h̸͜͝ḙ̵̀r̶͈̆ȇ̶̗̱̍ ̸͕̾h̴̲̗̾̅e̷̟̋ả̶̬v̶̯́̐͜ẽ̸̛͔n̶̩̒͊ ̴̢̯̍ḣ̵̳̻e̴̙̒̓l̵͇̟̃p̶̘̑ ̷̠͛͝ŭ̴͇̯̕s̶̮͕̒ <br> — from "The Book of the Equality Operators and their Virtue" by Laozi </i> </div>
 <h3 id="variables"><a class="header" href="#variables">Variables</a></h3>
-<p>Whenever we write programs, we need to manipulate data. This data needs to be stored somewhere and we need to be able to access it somehow. We also need to deal with the fact that when we execute a program, the values we deal with are not predictable in advance. For example we don't know which tasks a user might create. Nevertheless, we must be able to access created tasks through a predictable name like <code>tasks</code> or <code>createdTasks</code>. Therefore we need a way to put an <em>unpredictable</em> value in storage and refer to it using a <em>predictable</em> name.</p>
-<p>A <strong>variable</strong> is just that - a storage location containing a value which is referred to by a symbolic name. This <em>sounds</em> really fancy, but it just means that there is a value somewhere in your storage and you can refer to that value using a predictable name (even if the value itself is not predictable).</p>
-<p>For example you could have a variable <code>x</code> which has the value <code>5</code> (we say that <code>x</code> is equal to <code>5</code>):</p>
+<p>Whenever we write programs, we need to manipulate data.
+This data needs to be stored somewhere and we need to be able to access it somehow.
+We also need to deal with the fact that when we execute a program, the values we deal with are not predictable in advance.
+For example we don't know which tasks a user might create.
+Nevertheless, we must be able to access created tasks through a predictable name like <code>tasks</code> or <code>createdTasks</code>.</p>
+<p>Therefore we need a way to put an <em>unpredictable</em> value in a &quot;box&quot; somewhere and refer to it using a <em>predictable</em> name.
+This box is referred to as 'storage' and the predictable name as <em>symbolic name</em> in programming.</p>
+<p>A <strong>variable</strong> is just that - a storage location containing a value which is referred to by a symbolic name.
+This <em>sounds</em> really fancy, but it just means that there is a value somewhere in your storage and you can refer to that value using a symbolic name (even if the value itself is not predictable).</p>
+<p>You can think of a variable as a labeled box in a storage room.
+The box contains some stuff (the unpredictable value) which we can find later by looking for the label (the predictable symbolic name).</p>
+<p>For example you could have a variable <code>age</code> which has the value <code>20</code> (we say that <code>age</code> is equal to <code>20</code>):</p>
 <p><img src="images/variable.png" alt="" /></p>
-<p>Now even if the value of <code>x</code> changes (e.g. to <code>6</code>), the variable name doesn't change, only the value does. That is the variable name is still <code>x</code>, however now <code>x</code> has the value <code>6</code> (i.e. <code>x</code> is equal to <code>6</code>):</p>
+<p>Now even if the value of <code>age</code> changes (e.g. to <code>21</code> because a birthday happened), the variable name doesn't change, only the value does.
+That is the variable name is still <code>age</code>, however now <code>age</code> has the value <code>21</code> (i.e. <code>age</code> is equal to <code>21</code>):</p>
 <p><img src="images/variable-changed.png" alt="" /></p>
-<p>JavaScript lets you declare variables with the <code>let</code> keyword. You can assign values to variables using the <strong>assignment operator</strong> (<code>=</code>):</p>
-<pre><code class="language-javascript">// Declare a variable
+<p>To continue our &quot;labeled box&quot; metapher, you can <em>change</em> what's inside the box - maybe today it's a rubber duck, tomorrow it's a chocolate chip cookie - but the label on the box stays the <em>same</em>.</p>
+<p>JavaScript lets you declare variables with the <code>let</code> keyword.
+You can assign values to variables using the <strong>assignment operator</strong> (<code>=</code>):</p>
+<pre><code class="language-js">// Declare a variable
 let x;
 
 // Assign a value to a variable
 x = 10;
 </code></pre>
-<p>We can print the value of the variable using the <code>console.log</code> method:</p>
-<pre><code class="language-javascript">console.log(x); // 10
+<p>You can print the value of the variable using the <code>console.log</code> method:</p>
+<pre><code class="language-js">console.log(x); // 10
 </code></pre>
 <blockquote>
-<p>If you follow along in the Node.js (or browser) console, you don't actually need to use the <code>console.log</code> method to print the value of a variable. Instead you can simply type the variable (or any expression for that matter) and the console will display its value.</p>
+<p>If you follow along in the Node.js (or browser) console, you don't actually need to use the <code>console.log</code> method to print the value of a variable.
+Instead you can simply type the variable (or any expression for that matter) and the console will display its value.</p>
 </blockquote>
 <p>You can also have a declaration and an assignment on a single line. In fact, this is usually the way to go:</p>
-<pre><code class="language-javascript">let y = 10;
+<pre><code class="language-js">let y = 10;
 </code></pre>
 <p>The value of a variable may change over the course of a program:</p>
-<pre><code class="language-javascript">let y = 10;
+<pre><code class="language-js">let y = 10;
 console.log(y); // 10
 
 // Assign a new value to the variable
@@ -178,36 +213,49 @@ y = 20;
 console.log(y); // 20
 </code></pre>
 <p>This will print <code>10</code> first and then <code>20</code>.</p>
-<p>If you want to declare a symbolic name for a value that never changes, you can declare a <strong>constant</strong>. This is done using the <code>const</code> keyword:</p>
-<pre><code class="language-javascript">const ten = 10;
+<p>If you want to declare a predictable name for a value that never changes, you can declare a <strong>constant</strong>.
+This is done using the <code>const</code> keyword:</p>
+<pre><code class="language-js">const ten = 10;
 </code></pre>
 <p>If you try to reassign a value to a constant, you get an error. For example if you do</p>
-<pre><code class="language-javascript">const ten = 10;
+<pre><code class="language-js">const ten = 10;
 ten = 20;
 </code></pre>
 <p>you get</p>
 <pre><code>Uncaught TypeError: Assignment to constant variable.
 </code></pre>
-<p>You will almost exclusively see us using <code>const</code> instead of <code>let</code> from now on. Reassignment is not nearly as necessary as you might think right now.</p>
+<p>You will almost exclusively see us using <code>const</code> instead of <code>let</code> from now on.
+Reassignment is not nearly as necessary as you might think right now.</p>
 <blockquote>
-<p>You can also declare variables using the <code>var</code> keyword. We will not cover it here and you essentially only need to know one thing about <code>var</code> - you should <em>basically never use it</em>. It's mostly a historical artifact of the language at this point.</p>
+<p>You can also declare variables using the <code>var</code> keyword.
+We will not cover it here and you essentially only need to know one thing about <code>var</code> - you should <em>basically never use it</em>.
+It's mostly a historical artifact of the language at this point.</p>
 </blockquote>
-<p>Any variable has a <strong>data type</strong> which denotes the range of values it can take and which operations can be performed on the variable. You can use the <code>typeof</code> operator to obtain the data type of a variable.</p>
-<p>We begin with the <strong>primitive data types</strong>.</p>
+<p>Any variable has a <strong>data type</strong> which denotes the range of values it can take and which operations can be performed on the variable.
+You can use the <code>typeof</code> operator to obtain the data type of a variable.</p>
+<p>We begin with the <strong>primitive data types</strong>.
+Let's talk about numbers, booleans, strings and <code>undefined</code>.</p>
 <h3 id="numbers"><a class="header" href="#numbers">Numbers</a></h3>
 <p>You've already encountered the <code>Number</code> data type:</p>
-<pre><code class="language-javascript">const n = 10;
-console.log(typeof n); // number
+<pre><code class="language-js">const age = 20;
+console.log(typeof age); // number
 </code></pre>
-<p>Any integer or real number is a <code>Number</code>. So far, so obvious. However there are also some other things which have type <code>Number</code> like <code>Infinity</code>. We don't care about these for now, just keep in mind that JavaScript numbers are more than just integers and reals.</p>
-<pre><code class="language-javascript">console.log(typeof 42); // number
+<p>Any integer or real number is a <code>Number</code>:</p>
+<pre><code class="language-js">console.log(typeof 42); // number
 console.log(typeof -20); // number
 console.log(typeof 3.4); // number
 console.log(typeof -1.7); // number
-console.log(typeof Infinity); // number
 </code></pre>
-<p>You can perform arithmetic on numbers using the usual arithmetic operators <code>+</code>, <code>-</code>, <code>*</code> and <code>/</code>. There is also the <code>%</code> (modulo) operator which returns the remainder of a division. Finally, there is the <code>**</code> operator which does exponentiation:</p>
-<pre><code class="language-javascript">const a = 3;
+<p>So far, so obvious.
+However there are also some other things which have type <code>Number</code> like <code>Infinity</code>.
+<code>Infinity</code> is a special value that represents mathematical infinity:</p>
+<pre><code class="language-js">console.log(typeof Infinity); // number
+</code></pre>
+<p>We don't care about things like <code>Infinity</code> for now, just keep in mind that JavaScript numbers are more than only integers and real numbers.</p>
+<p>You can perform arithmetic on numbers using the usual arithmetic operators <code>+</code>, <code>-</code>, <code>*</code> and <code>/</code>.
+There is also the <code>%</code> (modulo) operator which returns the remainder of a division.
+Finally, there is the <code>**</code> operator which does exponentiation:</p>
+<pre><code class="language-js">const a = 3;
 const b = 4;
 console.log(a + b); // 7
 console.log(a - b); // -1
@@ -217,41 +265,45 @@ console.log(a % b); // 3
 console.log(a ** b); // 81
 </code></pre>
 <h3 id="booleans"><a class="header" href="#booleans">Booleans</a></h3>
-<p>Another primitive type is the <code>Boolean</code> type. This allows you to represent values which are either <code>true</code> or <code>false</code>:</p>
-<pre><code class="language-javascript">const thisBookIsAwesome = true;
+<p>Another primitive type is the <code>Boolean</code> type.
+This allows you to represent values which are either <code>true</code> or <code>false</code>:</p>
+<pre><code class="language-js">const thisBookIsAwesome = true;
 const thisBookSucks = false;
 console.log(typeof thisBookIsAwesome); // boolean
 console.log(typeof thisBookSucks); // boolean
 </code></pre>
 <p>You can do simple logic using the logical operators <code>&amp;&amp;</code> (which denotes <strong>and</strong>), <code>||</code> (which denotes <strong>or</strong>) and <code>!</code> (which denotes <strong>not</strong>).</p>
 <p>The <code>&amp;&amp;</code> (<em>and</em>) operator takes two values and evaluates to <code>true</code> only if both values are <code>true</code> and to <code>false</code> otherwise:</p>
-<pre><code class="language-javascript">console.log(true &amp;&amp; true); // true
+<pre><code class="language-js">console.log(true &amp;&amp; true); // true
 console.log(false &amp;&amp; true); // false
 console.log(true &amp;&amp; false); // false
 console.log(false &amp;&amp; false); // false
 </code></pre>
 <p>The <code>||</code> (<em>or</em>) operator takes two values and evaluates to <code>true</code> if <em>at least one</em> of the values is <code>true</code> (and to <code>false</code> otherwise):</p>
-<pre><code class="language-javascript">console.log(true || true); // true
+<pre><code class="language-js">console.log(true || true); // true
 console.log(false || true); // true
 console.log(true || false); // true
 console.log(false || false); // false
 </code></pre>
-<p>The <code>!</code> (<em>not</em>) operator takes a single value and simply negates it:</p>
-<pre><code class="language-javascript">console.log(!true); // false
+<p>The <code>!</code> (<em>not</em>) operator takes a single value and simply negates it, i.e. &quot;switches&quot; a value to it's opposite:</p>
+<pre><code class="language-js">console.log(!true); // false
 console.log(!false); // true
 </code></pre>
 <p>Here is an example with all the operators together:</p>
-<pre><code class="language-javascript">const b1 = true;
+<pre><code class="language-js">const b1 = true;
 const b2 = false;
 console.log(b1 &amp;&amp; b2); // false
 console.log(b1 || b2); // true
 console.log(!b1); // false
 </code></pre>
 <blockquote>
-<p>Note that technically all the logical operators can take <em>any</em> value (not just boolean values). The result of the logical operator application is then dependent on whether the values are <em>truthy</em> or <em>falsy</em>. We will discuss this a bit later.</p>
+<p>Note that technically all the logical operators can take <em>any</em> value (not just boolean values).
+The result of the logical operator application is then dependent on whether the values are <em>truthy</em> or <em>falsy</em>.
+We will discuss this a bit later.</p>
 </blockquote>
-<p>A boolean variable is usually the result of an expression. Often it is the result of an expression containing the <strong>equality operator</strong> (<code>===</code>) which allows us to compare the values of variables:</p>
-<pre><code class="language-javascript">const x1 = 5;
+<p>A boolean variable is usually the result of an expression.
+Often it is the result of an expression containing the <strong>equality operator</strong> (<code>===</code>) which allows us to compare the values of variables:</p>
+<pre><code class="language-js">const x1 = 5;
 const x2 = 10;
 const x3 = 5;
 console.log(x1 === x1); // true
@@ -259,49 +311,69 @@ console.log(x1 === x2); // false
 console.log(x1 === x3); // true
 </code></pre>
 <blockquote>
-<p>There is also another equality operator (<code>==</code>). It can be best described as an April Fools' joke that somehow made it into the language. <em>Never use it</em>.</p>
+<p>There is also another equality operator (<code>==</code>) which performs various type coercions before doing the equality comparison.
+This operator can be best described as an April Fools' joke that somehow made it into the language.
+<em>Never use it</em>.</p>
 </blockquote>
 <p>If you want to write <em>not equals</em> you can use <code>!==</code>:</p>
-<pre><code class="language-javascript">console.log(5 !== 10); // true
+<pre><code class="language-js">console.log(5 !== 10); // true
 console.log(5 !== 5); // false
 </code></pre>
 <h3 id="strings"><a class="header" href="#strings">Strings</a></h3>
-<p>Another primitive data type is the <code>String</code> type. A string is simply a bunch of characters and is used to represent text. Strings are usually written using single quotes in JavaScript:</p>
-<pre><code class="language-javascript">const s = 'Some text';
+<p>Another primitive data type is the <code>String</code> type.
+A string is simply a bunch of characters and is used to represent text.
+Strings are usually written using single quotes in JavaScript:</p>
+<pre><code class="language-js">const s = 'Some text';
 console.log(typeof s); // string
 </code></pre>
 <blockquote>
-<p>Note that it's also possible to write strings using double quotes, however in most projects strings are written using single quotes. We will stick to this convention.</p>
+<p>Note that it's also possible to write strings using double quotes, however in most projects strings are written using single quotes.
+We will stick to this convention.</p>
 </blockquote>
 <p>The <code>+</code> operator works on strings and does concatenation:</p>
-<pre><code class="language-javascript">const s1 = 'MERN ';
+<pre><code class="language-js">const s1 = 'MERN ';
 const s2 = 'book';
 console.log(s1 + s2); // MERN book
 </code></pre>
-<p>Note that instead of doing concatentation all the time you can also use <strong>template strings</strong> (also called template literals). This allows writing JavaScript expressions directly inside strings. Consider the following example:</p>
-<pre><code class="language-javascript">const s = 'world';
+<p>Note that instead of doing concatenation all the time you can also use <strong>template strings</strong> (also called template literals).
+This allows writing JavaScript expressions directly inside strings.
+Consider the following example:</p>
+<pre><code class="language-js">const s = 'world';
 const greeting = `Hello ${s}!`;
 console.log(greeting); // Hello world!
 </code></pre>
-<p>Template strings are written using backticks (<em>not</em> single quotes). They may contain so called <em>placeholders</em> which are expressions embedded inside <code>${...}</code>. These expressions can be any valid JavaScript expression that evaluates to a value implicitly convertible to a string:</p>
-<pre><code class="language-javascript">console.log(`2 + 2 = ${2 + 2}`); // 2 + 2 = 4
+<p>Template strings are written using backticks (<em>not</em> single quotes).
+They may contain so called <em>placeholders</em> which are expressions embedded inside <code>${...}</code>.
+These expressions can be any valid JavaScript expression that evaluates to a value implicitly convertible to a string.
+JavaScript will then try to convert any value inside the placeholder to a string:</p>
+<pre><code class="language-js">console.log(`2 + 2 = ${2 + 2}`); // 2 + 2 = 4
 </code></pre>
 <p>You can get the length (i.e. the number of characters) of a string like this:</p>
-<pre><code class="language-javascript">const s = 'MERN book';
+<pre><code class="language-js">const s = 'MERN book';
 console.log(s.length); // 9
 </code></pre>
+<blockquote>
+<p>Note that JavaScript does not have a special &quot;character&quot; data type (unlike Java for example).
+Instead, characters are simply strings of length 1.</p>
+</blockquote>
 <h3 id="undefined"><a class="header" href="#undefined">Undefined</a></h3>
-<p>Finally there is one more primitive type that is of interest to us, namely <code>undefined</code>. There is only one value of this type, which is also called <code>undefined</code>. If a variable has the value <code>undefined</code> this (quite logically) means that it hasn't been defined. For example, whenever you have a variable that has been initialized, but not assigned to, it will automatically have the value and therefore the type <code>undefined</code>.</p>
-<pre><code class="language-javascript">let someVariable;
+<p>Finally there is one more primitive type that is of interest to us, namely <code>undefined</code>.
+There is only one value of this type: <code>undefined</code>.
+If a variable has the value <code>undefined</code> this (quite logically) means that it hasn't been defined.
+For example, whenever you have a variable that has been initialized, but not assigned to, it will automatically have the value and therefore the type <code>undefined</code>.</p>
+<pre><code class="language-js">let someVariable;
 console.log(someVariable); // undefined
 console.log(typeof someVariable); // undefined
 </code></pre>
 <blockquote>
-<p>Note that <code>string</code>, <code>number</code>, <code>boolean</code> and <code>undefined</code> are not the only primitive data types. Two other primitive data types are <code>symbol</code> and <code>bigint</code>. And there is one more primitive data type that we will encounter soon.</p>
+<p>Note that <code>string</code>, <code>number</code>, <code>boolean</code> and <code>undefined</code> are not the only primitive data types.
+Two other primitive data types are <code>symbol</code> and <code>bigint</code>.
+And there is one more primitive data type that we will encounter soon.</p>
 </blockquote>
 <h3 id="summary"><a class="header" href="#summary">Summary</a></h3>
-<p>You learned how to declare variables using <code>let</code> and constants using <code>const</code>. You also learned about numbers, strings, booleans and <code>undefined</code>.</p>
-<h3 id="further-reading"><a class="header" href="#further-reading">Further reading</a></h3>
+<p>You learned how to declare variables using <code>let</code> and constants using <code>const</code>.
+You also learned about the most important primitive data types: numbers, strings, booleans and <code>undefined</code>.</p>
+<h3 id="further-reading"><a class="header" href="#further-reading">Further Reading</a></h3>
 <ul>
 <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_Types">JavaScript Guide - Grammar and types</a></li>
 </ul>

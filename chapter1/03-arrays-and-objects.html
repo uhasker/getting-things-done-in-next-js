@@ -83,16 +83,38 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../title-page.html">Getting Things Done in Next.js</a></li><li class="chapter-item expanded affix "><a href="../introduction.html">Introduction</a></li><li class="chapter-item expanded "><a href="../chapter1/index.html"><strong aria-hidden="true">1.</strong> A Brief Introduction to JavaScript</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../chapter1/01-hello-world.html"><strong aria-hidden="true">1.1.</strong> Hello World</a></li><li class="chapter-item expanded "><a href="../chapter1/02-primitive-data-types.html"><strong aria-hidden="true">1.2.</strong> Primitive Data Types</a></li><li class="chapter-item expanded "><a href="../chapter1/03-arrays-and-objects.html" class="active"><strong aria-hidden="true">1.3.</strong> Arrays and Objects</a></li><li class="chapter-item expanded "><a href="../chapter1/04-control-flow.html"><strong aria-hidden="true">1.4.</strong> Control Flow</a></li><li class="chapter-item expanded "><a href="../chapter1/05-functions.html"><strong aria-hidden="true">1.5.</strong> Functions</a></li><li class="chapter-item expanded "><a href="../chapter1/06-functional-thinking.html"><strong aria-hidden="true">1.6.</strong> Functional Thinking</a></li></ol></li><li class="chapter-item expanded "><a href="../chapter2/index.html"><strong aria-hidden="true">2.</strong> The Client</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../chapter2/01-hypertext-markup-language.html"><strong aria-hidden="true">2.1.</strong> Hypertext Markup Language</a></li><li class="chapter-item expanded "><a href="../chapter2/02-the-document-object-model.html"><strong aria-hidden="true">2.2.</strong> The Document Object Model</a></li><li class="chapter-item expanded "><a href="../chapter2/03-first-steps-in-react.html"><strong aria-hidden="true">2.3.</strong> First Steps in React</a></li><li class="chapter-item expanded "><a href="../chapter2/04-introducing-jsx.html"><strong aria-hidden="true">2.4.</strong> Introducing JSX</a></li><li class="chapter-item expanded "><a href="../chapter2/05-react-components.html"><strong aria-hidden="true">2.5.</strong> React Components</a></li><li class="chapter-item expanded "><a href="../chapter2/06-project-structure.html"><strong aria-hidden="true">2.6.</strong> Project Structure</a></li><li class="chapter-item expanded "><a href="../chapter2/07-react-state.html"><strong aria-hidden="true">2.7.</strong> React State</a></li></ol></li><li class="chapter-item expanded "><a href="../chapter3/index.html"><strong aria-hidden="true">3.</strong> The server</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../chapter3/01-a-http-primer.html"><strong aria-hidden="true">3.1.</strong> A HTTP primer</a></li><li class="chapter-item expanded "><a href="../chapter3/02-writing-the-api.html"><strong aria-hidden="true">3.2.</strong> Writing the API</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../title-page.html">Getting Things Done in Next.js</a></li><li class="chapter-item expanded affix "><a href="../introduction.html">Introduction</a></li><li class="chapter-item expanded affix "><a href="../acknowledgments.html">Acknowledgments</a></li><li class="chapter-item expanded "><a href="../chapter1/index.html"><strong aria-hidden="true">1.</strong> A Brief Introduction to JavaScript</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../chapter1/01-hello-world.html"><strong aria-hidden="true">1.1.</strong> Hello World</a></li><li class="chapter-item expanded "><a href="../chapter1/02-primitive-data-types.html"><strong aria-hidden="true">1.2.</strong> Primitive Data Types</a></li><li class="chapter-item expanded "><a href="../chapter1/03-arrays-and-objects.html" class="active"><strong aria-hidden="true">1.3.</strong> Arrays and Objects</a></li><li class="chapter-item expanded "><a href="../chapter1/04-control-flow.html"><strong aria-hidden="true">1.4.</strong> Control Flow</a></li><li class="chapter-item expanded "><a href="../chapter1/05-functions.html"><strong aria-hidden="true">1.5.</strong> Functions</a></li><li class="chapter-item expanded "><a href="../chapter1/06-functional-thinking.html"><strong aria-hidden="true">1.6.</strong> Functional Thinking</a></li></ol></li><li class="chapter-item expanded "><a href="../chapter2/index.html"><strong aria-hidden="true">2.</strong> The Client</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../chapter2/01-hypertext-markup-language.html"><strong aria-hidden="true">2.1.</strong> Hypertext Markup Language</a></li><li class="chapter-item expanded "><a href="../chapter2/02-the-document-object-model.html"><strong aria-hidden="true">2.2.</strong> The Document Object Model</a></li><li class="chapter-item expanded "><a href="../chapter2/03-first-steps-in-react.html"><strong aria-hidden="true">2.3.</strong> First Steps in React</a></li><li class="chapter-item expanded "><a href="../chapter2/04-introducing-jsx.html"><strong aria-hidden="true">2.4.</strong> Introducing JSX</a></li><li class="chapter-item expanded "><a href="../chapter2/05-react-components.html"><strong aria-hidden="true">2.5.</strong> React Components</a></li><li class="chapter-item expanded "><a href="../chapter2/06-project-structure.html"><strong aria-hidden="true">2.6.</strong> Project Structure</a></li><li class="chapter-item expanded "><a href="../chapter2/07-react-state.html"><strong aria-hidden="true">2.7.</strong> React State</a></li></ol></li><li class="chapter-item expanded "><a href="../chapter3/index.html"><strong aria-hidden="true">3.</strong> The server</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../chapter3/01-a-http-primer.html"><strong aria-hidden="true">3.1.</strong> A HTTP primer</a></li><li class="chapter-item expanded "><a href="../chapter3/02-writing-the-api.html"><strong aria-hidden="true">3.2.</strong> Writing the API</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
 
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
                                 <div id="menu-bar-hover-placeholder"></div>
-                <div id="menu-bar" class="menu-bar sticky bordered">
+                <div id="menu-bar" class="menu-bar sticky">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
                             <i class="fa fa-bars"></i>
@@ -147,151 +169,204 @@
                         <h2 id="arrays-and-objects"><a class="header" href="#arrays-and-objects">Arrays and objects</a></h2>
 <div style="text-align: right"> <i> The object of the superior programmer is truthy. <br> — Confucius </i> </div>
 <h3 id="arrays"><a class="header" href="#arrays">Arrays</a></h3>
-<p>Let's say you are writing a task application (<em>just how did I come up with that example?</em>) and you need to store a bunch of tasks. You could of course declare a separate variable for every task like this:</p>
-<pre><code class="language-javascript">const task1 = 'First task';
+<p>Let's say you are writing a task application (<em>just how did I come up with that example?</em>) and you need to store a bunch of tasks.
+You could of course declare a separate variable for every task like this:</p>
+<pre><code class="language-js">const task1 = 'First task';
 const task2 = 'Second task';
 const task3 = 'Third task';
 </code></pre>
-<p>However this would quickly become very <em>tedious</em>. In addition you may want to add or delete tasks. Adding and deleting variables will become even more <em>tedious</em>. It would become almost as <em>tedious</em> as repeating the word <em>tedious</em> over and over. Did we mention that this is really <em>tedious</em>? As you can see, we need a way to store multiple values in a single variable.</p>
-<p>A JavaScript <strong>array</strong> is an ordered collection of multiple values. You can declare an array using square brackets:</p>
-<pre><code class="language-javascript">const tasks = ['First task', 'Second task', 'Third task'];
+<p>However this would quickly become very <em>tedious</em>.
+In addition you may want to add or delete tasks.
+Adding and deleting variables will become even more <em>tedious</em>.
+It would become almost as <em>tedious</em> as repeating the word <em>tedious</em> over and over.
+Did we mention that this is really <em>tedious</em>?
+As you can see, we need a way to store multiple values in a single variable.</p>
+<p>A JavaScript <strong>array</strong> is an ordered collection of multiple values.
+You can declare an array using an <strong>array literal</strong> (also called an <em>array initializer</em> in this context):</p>
+<pre><code class="language-js">const tasks = ['First task', 'Second task', 'Third task'];
 </code></pre>
-<p>Note that an array is no longer a primitive type, instead arrays have type <code>object</code>:</p>
-<pre><code class="language-javascript">console.log(typeof tasks); // object
+<p>Note that an array is no longer a primitive type, instead arrays have the type <code>object</code>:</p>
+<pre><code class="language-js">console.log(typeof tasks); // object
 </code></pre>
-<p>You can access individual elements of an array using the index notation. You simply write the name of the array, followed by the position of the element you want to retrieve inside square brackets. Note that when we count the indices (positions), we starts at <code>0</code>, <em>not</em> at <code>1</code>:</p>
-<pre><code class="language-javascript">console.log(tasks[0]); // First task
+<p>You can access individual elements of an array using the index notation.
+This works by writing the name of the array, followed by the position of the element you want to retrieve inside square brackets.
+Note that when we count the indices (positions), we start at <code>0</code>, <em>not</em> at <code>1</code>:</p>
+<pre><code class="language-js">console.log(tasks[0]); // First task
 console.log(tasks[1]); // Second task
 console.log(tasks[2]); // Third task
 </code></pre>
 <p>If the array index is too big, trying to access the element at that index will return <code>undefined</code>:</p>
-<pre><code class="language-javascript">console.log(tasks[3]); // undefined
+<pre><code class="language-js">console.log(tasks[3]); // undefined
 </code></pre>
 <p>You can get the length of an array by using <code>.length</code>:</p>
-<pre><code class="language-javascript">console.log(tasks.length); // 3
+<pre><code class="language-js">console.log(tasks.length); // 3
 </code></pre>
-<p>You can change an array element using the index notation and the assignment operator. For example here is how you would change the second element of the <code>tasks</code> array (remember that the second element has index <code>1</code>):</p>
-<pre><code class="language-javascript">tasks[1] = 'Some other task';
+<p>You can change an array element using the index notation and the assignment operator.
+For example here is how you would change the second element of the <code>tasks</code> array (remember that the second element has index <code>1</code>):</p>
+<pre><code class="language-js">tasks[1] = 'Some other task';
 console.log(tasks[1]); // Some other task
 </code></pre>
 <blockquote>
-<p>Note that even despite the fact the <code>tasks</code> array is declared as a constant here, you can still change the <em>contents</em> of the array. However you can't <em>reassign</em> <code>tasks</code> to something else, i.e. you can't write something like <code>tasks = [1]</code>.</p>
+<p>Note that even despite the fact the <code>tasks</code> array is declared as a constant here, you can still change the <em>contents</em> of the array.
+However you can't <em>reassign</em> <code>tasks</code> to something else, i.e. you can't write something like <code>tasks = [1]</code>.</p>
 </blockquote>
 <p>JavaScript has some elegant syntax for working with arrays. If you want to assign variables based on values of an array, you would normally have to do something like this:</p>
-<pre><code class="language-javascript">const firstTask = tasks[0];
+<pre><code class="language-js">const firstTask = tasks[0];
 const secondTask = tasks[1];
 const thirdTask = tasks[2];
 </code></pre>
-<p>This is (you guessed it) <em>tedious</em>. Instead you can do this:</p>
-<pre><code class="language-javascript">const [firstTask, secondTask, thirdTask] = tasks;
+<p>This is (you guessed it) <em>tedious</em>.
+Instead you can use the <strong>array destructuring assignment</strong>:</p>
+<pre><code class="language-js">const [firstTask, secondTask, thirdTask] = tasks;
 </code></pre>
-<p>This is called <strong>array destructuring assignment</strong>. If you only care about some of the elements, you can use the <strong>spread</strong> (<code>...</code>) syntax:</p>
-<pre><code class="language-javascript">const [firstTask, ...otherTasks] = tasks;
+<p>If you only care about some of the elements, you can use the <strong>spread</strong> (<code>...</code>) syntax:</p>
+<pre><code class="language-js">const [firstTask, ...otherTasks] = tasks;
 </code></pre>
-<p>Something that commonly trips up beginners is trying to <em>copy</em> an array. Let's say you have an array of numbers called <code>arr</code> and you want to create a copy called <code>arr2</code>. You would probably try something like</p>
-<pre><code class="language-javascript">const arr = [1, 2, 3, 4];
+<p>Something that commonly trips up beginners is trying to <em>copy</em> an array. Let's say you have an array of numbers called <code>arr</code> and you want to create a copy called <code>arr2</code>.
+You would probably try something like</p>
+<pre><code class="language-js">const arr = [1, 2, 3, 4];
 const arr2 = arr;
 </code></pre>
 <p>This is <em>wrong</em>. Let's try changing the first element of <code>arr</code> and look at <code>arr[0]</code> and <code>arr2[0]</code>:</p>
-<pre><code class="language-javascript">arr[0] = 5;
+<pre><code class="language-js">arr[0] = 5;
 console.log(arr[0]); // 5
 console.log(arr2[0]); // 5
 </code></pre>
-<p>Uh-oh! That's probably not what we want. The reason for this behaviour is that <code>arr</code> and <code>arr2</code> both point to the same array. Remember how we were careful to introduce a variable <em>as a storage location together with a symbolic name</em>? Well, it turns out that <em>different symbol names</em> may refer to the <em>exact same storage location</em>. You can visualize it like this:</p>
+<p>Uh-oh!
+That's probably not what we want.
+The reason for this behaviour is that <code>arr</code> and <code>arr2</code> both point to the same array.
+Remember how we were careful to introduce a variable <em>as a storage location together with a symbolic name</em>?
+Well, it turns out that <em>different symbolic names</em> may refer to the <em>exact same storage location</em>.
+You can visualize it like this:</p>
 <p><img src="images/array-copy-incorrect.png" alt="" /></p>
-<p>Here we have a storage location containing the values <code>1</code>, <code>2</code>, <code>3</code> and <code>4</code> somewhere. We also have two symbolic names <code>arr</code> and <code>arr2</code>. While the symbolic names are different, they point to the same storage location. Therefore if we change the storage location, we will observe a change via both symbolic names.</p>
-<p>In order to actually copy the storage location as well, we can in fact use the spread syntax as this will <em>copy</em> the values:</p>
-<pre><code class="language-javascript">const copied = [...arr];
+<p>Here we have a storage location containing the values <code>1</code>, <code>2</code>, <code>3</code> and <code>4</code> somewhere.
+We also have two symbolic names <code>arr</code> and <code>arr2</code>.
+While the symbolic names are different, they point to the same storage location.
+Therefore if we change the storage location, we will observe a change via both symbolic names.</p>
+<p>In order to actually copy the values, we can in fact use the spread syntax as this will <em>copy</em> the values:</p>
+<pre><code class="language-js">const copied = [...arr];
 </code></pre>
 <p>Let's check that this indeed an actual copy:</p>
-<pre><code class="language-javascript">arr[0] = 5;
+<pre><code class="language-js">arr[0] = 5;
 console.log(arr[0]); // 5
 console.log(copied[0]); // 1
 </code></pre>
-<p>This looks good. This is the mental picture you should have in your head for copying an array:</p>
+<p>This looks good.
+Here is the mental picture you should have in your head for copying an array:</p>
 <p><img src="images/array-copy-correct.png" alt="" /></p>
 <blockquote>
-<p>If you only briefly skimmed the section on array destructuring and the spread syntax, go right back and read it carefully. These two concepts will come up <em>a lot</em> in the following chapters (much more often than you think right now).</p>
+<p>If you only briefly skimmed the section on array destructuring and the spread syntax, go right back and read it carefully.
+These two concepts will come up <em>a lot</em> in the following chapters (much more often than you think right now).</p>
 </blockquote>
 <h3 id="objects"><a class="header" href="#objects">Objects</a></h3>
-<p>Let's return to our (yet) imaginary task application. A task will probably be something more than just a string. For example it might contain an ID, a summary and a description. We could again store these in constants:</p>
-<pre><code class="language-javascript">const taskId = 1;
-const taskSummary = 'Read the MERN book';
-const taskDescription = 'Read and understand the MERN book.';
+<p>Let's return to our (yet) imaginary task application.
+A task will probably be something more than just a string.
+For example it might contain an ID, a summary and a description.
+We could again store these in constants:</p>
+<pre><code class="language-js">const taskId = 1;
+const taskSummary = 'Read the Next.js book';
+const taskDescription = 'Read and understand the Next.js book.';
 </code></pre>
-<p>As you can probably guess, this will quickly become <em>tedious</em> (oh no, not this again). <strong>Objects</strong> to the rescue! These allow us to store name-value pairs inside a single variable:</p>
-<pre><code class="language-javascript">const task = {
+<p>As you can probably guess, this will quickly become <em>tedious</em> (oh no, not this again).
+<strong>Objects</strong> to the rescue!
+These allow us to store name-value pairs inside a single variable.
+Here is how we might create a <code>task</code> object that contains all the information we want to know about a task:</p>
+<pre><code class="language-js">const task = {
   id: 1,
-  summary: 'Read the MERN book',
-  description: 'Read and understand the MERN book.',
+  summary: 'Read the Next.js book',
+  description: 'Read and understand the Next.js book.',
 };
 </code></pre>
-<p>Every such value is called a <strong>property</strong>. We can access properties using the dot notation or the square bracket notation. For example to access the <code>summary</code> property of the <code>task</code> object, you would write <code>task.summary</code> or <code>task['summary']</code>. Try it out:</p>
-<pre><code class="language-javascript">console.log(task.id); // 1
-console.log(task.summary); // Read the MERN book
-console.log(task.description); // Read and understand the MERN book.
+<p>Every such value is called a <strong>property</strong>.
+We can access properties using the dot notation or the square bracket notation.
+For example to access the <code>summary</code> property of the <code>task</code> object, you would write <code>task.summary</code> or <code>task['summary']</code>.
+Try it out:</p>
+<pre><code class="language-js">console.log(task.id); // 1
+console.log(task.summary); // Read the Next.js book
+console.log(task.description); // Read and understand the Next.js book.
 console.log(task['id']); // 1
-console.log(task['summary']); // Read the MERN book
-console.log(task['description']); // Read and understand the MERN book.
+console.log(task['summary']); // Read the Next.js book
+console.log(task['description']); // Read and understand the Next.js book.
 </code></pre>
-<p>Properties don't have to be primitive values. They can also be other objects. Generally speaking, you can arbitrarily nest objects and arrays. For example, here is how you can nest an object inside an object:</p>
-<pre><code class="language-javascript">const person = {
+<blockquote>
+<p>Note that we will practically always use the dot notation.</p>
+</blockquote>
+<p>Properties don't have to be primitive values.
+They can also be other objects.
+Generally speaking, you can arbitrarily nest objects and arrays.
+For example, here is how you can nest an object inside an object:</p>
+<pre><code class="language-js">const person = {
   name: 'John Doe',
   task: {
     id: 1,
-    summary: 'Read the MERN book',
-    description: 'Read and understand the MERN book.',
+    summary: 'Read the Next.js book',
+    description: 'Read and understand the Next.js book.',
   },
 };
 </code></pre>
-<p>In this case you can use the <code>.</code> notation to access properties at any nesting level. Let's say you want to get the summary of the task that's been assigned to the <code>person</code>. Then you can write <code>person.task.summary</code>:</p>
-<pre><code class="language-javascript">console.log(person.task.summary); // Read the MERN book
+<p>In this case you can use the <code>.</code> notation to access properties at any nesting level.
+Let's say you want to get the summary of the task that's been assigned to the <code>person</code>.
+Then you can write <code>person.task.summary</code>:</p>
+<pre><code class="language-js">console.log(person.task.summary); // Read the Next.js book
 </code></pre>
 <p>If you try to access a property that doesn't exist, the result will be <code>undefined</code> (there it is again):</p>
-<pre><code class="language-javascript">console.log(task.date); // undefined
+<pre><code class="language-js">console.log(task.date); // undefined
 </code></pre>
-<p>Sometimes you want to explicitly indicate that a property may be absent. For example a person may not have a task assigned to them. You could do something like this:</p>
-<pre><code class="language-javascript">const person = {
+<p>Sometimes you want to explicitly indicate that a property may be absent.
+For example a person may not have a task assigned to them.
+You could do something like this:</p>
+<pre><code class="language-js">const person = {
   name: 'John Doe',
   task: undefined,
 };
 </code></pre>
-<p>This has the <em>potential</em> problem that someone referring to <code>person.task</code> will have no idea whether it is <code>undefined</code> because the property is not supposed to exist at all or because it it simply absent for this particular person. This is why JavaScript introduced <code>null</code>:</p>
-<pre><code class="language-javascript">const person = {
+<p>This has the <em>potential</em> problem that someone referring to <code>person.task</code> will have no idea whether it is <code>undefined</code> because the property is not supposed to exist at all or because it it simply absent for this particular person.
+This is why JavaScript introduced <code>null</code>:</p>
+<pre><code class="language-js">const person = {
   name: 'Max Mustermann',
   task: null,
 };
 </code></pre>
-<p>Basically <code>null</code> allows you to say - &quot;hey, this property does exist in principle, it's just absent for this particular variable&quot;. However note that this is only a convention. There is nothing that prevents you from using <code>undefined</code> to denote absence all the time and in fact we will do so in this very book. Just keep in mind that <code>null</code> exists and that some developers use it to indicate absence (and that it's totally fine to do so).</p>
-<p>Remember how we said that there is one more primitive data type left? Well - there it is. The final primitive data type is <code>null</code>. This is something a lot of people are really confused about, because <code>typeof null</code> returns <code>object</code> (and not e.g. <code>null</code>). However this is primarily a technical detail. Despite the fact that <code>null</code> is a separate data type it doesn't hurt to think of it as an object (namely an absent one).</p>
+<p>Basically <code>null</code> allows you to say - &quot;hey, this property does exist in principle, it's just absent for this particular variable&quot;.
+However this is only a convention.
+There is nothing that prevents you from using <code>undefined</code> to denote absence all the time and in fact we will do so in this very book.
+Just keep in mind that <code>null</code> exists and that some developers use it to indicate absence (and that it's totally fine to do so).</p>
+<p>Remember how we said that there is one more primitive data type left?
+Well - there it is.
+The final primitive data type is <code>null</code>.
+This is something a lot of people are really confused about, because <code>typeof null</code> returns <code>object</code> (and not e.g. <code>null</code>).
+However this is primarily a technical detail.
+Despite the fact that <code>null</code> is a separate data type it doesn't hurt to think of it as an object (namely an absent one).</p>
 <p>Just as with arrays, you can use <strong>destructuring assignment</strong> when working with objects:</p>
-<pre><code class="language-javascript">const task = {
+<pre><code class="language-js">const task = {
   id: 1,
-  summary: 'Read the MERN book',
-  description: 'Read and understand the MERN book.',
+  summary: 'Read the Next.js book',
+  description: 'Read and understand the Next.js book.',
 };
 const { id, summary, description } = task;
 </code></pre>
 <p>And just like with arrays, you can use the spread syntax:</p>
-<pre><code class="language-javascript">const taskWithAssignee = {
+<pre><code class="language-js">const taskWithAssignee = {
   assignee: 'Max',
   ...task,
 };
 console.log(taskWithAssignee);
 </code></pre>
 <p>This will print:</p>
-<pre><code>{
-  assignee: 'Max',
-  id: 1,
-  summary: 'Read the MERN book',
-  description: 'Read and understand the MERN book.'
+<pre><code class="language-json">{
+  &quot;assignee&quot;: &quot;Max&quot;,
+  &quot;id&quot;: 1,
+  &quot;summary&quot;: &quot;Read the Next.js book&quot;,
+  &quot;description&quot;: &quot;Read and understand the Next.js book.&quot;
 }
 </code></pre>
 <blockquote>
-<p>Note that objects are more than just containers for values. We will talk about this in the section on functions.</p>
+<p>Note that objects are more than just containers for values.
+We will talk about this in the section on functions.</p>
 </blockquote>
 <h3 id="summary"><a class="header" href="#summary">Summary</a></h3>
-<p>You have learned how to work with arrays and objects. You have also learned about (array and object) destructuring and the spread syntax.</p>
+<p>You have learned how to work with arrays and objects.
+You have also learned about (array and object) destructuring and the spread syntax.</p>
 <h3 id="further-reading"><a class="header" href="#further-reading">Further reading</a></h3>
 <p>There is no further reading for this section.</p>
 

@@ -83,16 +83,38 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../title-page.html">Getting Things Done in Next.js</a></li><li class="chapter-item expanded affix "><a href="../introduction.html">Introduction</a></li><li class="chapter-item expanded "><a href="../chapter1/index.html"><strong aria-hidden="true">1.</strong> A Brief Introduction to JavaScript</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../chapter1/01-hello-world.html"><strong aria-hidden="true">1.1.</strong> Hello World</a></li><li class="chapter-item expanded "><a href="../chapter1/02-primitive-data-types.html"><strong aria-hidden="true">1.2.</strong> Primitive Data Types</a></li><li class="chapter-item expanded "><a href="../chapter1/03-arrays-and-objects.html"><strong aria-hidden="true">1.3.</strong> Arrays and Objects</a></li><li class="chapter-item expanded "><a href="../chapter1/04-control-flow.html"><strong aria-hidden="true">1.4.</strong> Control Flow</a></li><li class="chapter-item expanded "><a href="../chapter1/05-functions.html"><strong aria-hidden="true">1.5.</strong> Functions</a></li><li class="chapter-item expanded "><a href="../chapter1/06-functional-thinking.html" class="active"><strong aria-hidden="true">1.6.</strong> Functional Thinking</a></li></ol></li><li class="chapter-item expanded "><a href="../chapter2/index.html"><strong aria-hidden="true">2.</strong> The Client</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../chapter2/01-hypertext-markup-language.html"><strong aria-hidden="true">2.1.</strong> Hypertext Markup Language</a></li><li class="chapter-item expanded "><a href="../chapter2/02-the-document-object-model.html"><strong aria-hidden="true">2.2.</strong> The Document Object Model</a></li><li class="chapter-item expanded "><a href="../chapter2/03-first-steps-in-react.html"><strong aria-hidden="true">2.3.</strong> First Steps in React</a></li><li class="chapter-item expanded "><a href="../chapter2/04-introducing-jsx.html"><strong aria-hidden="true">2.4.</strong> Introducing JSX</a></li><li class="chapter-item expanded "><a href="../chapter2/05-react-components.html"><strong aria-hidden="true">2.5.</strong> React Components</a></li><li class="chapter-item expanded "><a href="../chapter2/06-project-structure.html"><strong aria-hidden="true">2.6.</strong> Project Structure</a></li><li class="chapter-item expanded "><a href="../chapter2/07-react-state.html"><strong aria-hidden="true">2.7.</strong> React State</a></li></ol></li><li class="chapter-item expanded "><a href="../chapter3/index.html"><strong aria-hidden="true">3.</strong> The server</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../chapter3/01-a-http-primer.html"><strong aria-hidden="true">3.1.</strong> A HTTP primer</a></li><li class="chapter-item expanded "><a href="../chapter3/02-writing-the-api.html"><strong aria-hidden="true">3.2.</strong> Writing the API</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../title-page.html">Getting Things Done in Next.js</a></li><li class="chapter-item expanded affix "><a href="../introduction.html">Introduction</a></li><li class="chapter-item expanded affix "><a href="../acknowledgments.html">Acknowledgments</a></li><li class="chapter-item expanded "><a href="../chapter1/index.html"><strong aria-hidden="true">1.</strong> A Brief Introduction to JavaScript</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../chapter1/01-hello-world.html"><strong aria-hidden="true">1.1.</strong> Hello World</a></li><li class="chapter-item expanded "><a href="../chapter1/02-primitive-data-types.html"><strong aria-hidden="true">1.2.</strong> Primitive Data Types</a></li><li class="chapter-item expanded "><a href="../chapter1/03-arrays-and-objects.html"><strong aria-hidden="true">1.3.</strong> Arrays and Objects</a></li><li class="chapter-item expanded "><a href="../chapter1/04-control-flow.html"><strong aria-hidden="true">1.4.</strong> Control Flow</a></li><li class="chapter-item expanded "><a href="../chapter1/05-functions.html"><strong aria-hidden="true">1.5.</strong> Functions</a></li><li class="chapter-item expanded "><a href="../chapter1/06-functional-thinking.html" class="active"><strong aria-hidden="true">1.6.</strong> Functional Thinking</a></li></ol></li><li class="chapter-item expanded "><a href="../chapter2/index.html"><strong aria-hidden="true">2.</strong> The Client</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../chapter2/01-hypertext-markup-language.html"><strong aria-hidden="true">2.1.</strong> Hypertext Markup Language</a></li><li class="chapter-item expanded "><a href="../chapter2/02-the-document-object-model.html"><strong aria-hidden="true">2.2.</strong> The Document Object Model</a></li><li class="chapter-item expanded "><a href="../chapter2/03-first-steps-in-react.html"><strong aria-hidden="true">2.3.</strong> First Steps in React</a></li><li class="chapter-item expanded "><a href="../chapter2/04-introducing-jsx.html"><strong aria-hidden="true">2.4.</strong> Introducing JSX</a></li><li class="chapter-item expanded "><a href="../chapter2/05-react-components.html"><strong aria-hidden="true">2.5.</strong> React Components</a></li><li class="chapter-item expanded "><a href="../chapter2/06-project-structure.html"><strong aria-hidden="true">2.6.</strong> Project Structure</a></li><li class="chapter-item expanded "><a href="../chapter2/07-react-state.html"><strong aria-hidden="true">2.7.</strong> React State</a></li></ol></li><li class="chapter-item expanded "><a href="../chapter3/index.html"><strong aria-hidden="true">3.</strong> The server</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../chapter3/01-a-http-primer.html"><strong aria-hidden="true">3.1.</strong> A HTTP primer</a></li><li class="chapter-item expanded "><a href="../chapter3/02-writing-the-api.html"><strong aria-hidden="true">3.2.</strong> Writing the API</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
 
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
                                 <div id="menu-bar-hover-placeholder"></div>
-                <div id="menu-bar" class="menu-bar sticky bordered">
+                <div id="menu-bar" class="menu-bar sticky">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
                             <i class="fa fa-bars"></i>
@@ -144,66 +166,89 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h2 id="functional-thinking"><a class="header" href="#functional-thinking">Functional thinking</a></h2>
+                        <h2 id="functional-thinking"><a class="header" href="#functional-thinking">Functional Thinking</a></h2>
 <div style="text-align: right"> <i> Gold can't be pure, but functions can. <br> — Ancient Chinese proverb </i> </div>
-<h3 id="pure-functions"><a class="header" href="#pure-functions">Pure functions</a></h3>
+<h3 id="pure-functions"><a class="header" href="#pure-functions">Pure Functions</a></h3>
 <p>A function is called <strong>pure</strong> if its outputs (the returned values) depend only on its inputs and if the function does not have any <em>side effects</em> (i.e. it doesn't change program state and doesn't write anything to an external data source).</p>
 <p>Here is an example of a pure function:</p>
-<pre><code class="language-javascript">const square = (x) =&gt; x * 2;
+<pre><code class="language-js">const square = (x) =&gt; x * 2;
 </code></pre>
-<p>Indeed, the output of <code>square</code> depends only on its input and nothing else. In addition, <code>square</code> doesn't produce any side effects.</p>
+<p>Indeed, the output of <code>square</code> depends only on its input and nothing else.
+In addition, <code>square</code> doesn't produce any side effects.</p>
 <p>Here is an example of a function that is <em>not</em> pure:</p>
-<pre><code class="language-javascript">const x = 2;
+<pre><code class="language-js">const x = 2;
 const addImpure = (y) =&gt; x + y;
 </code></pre>
 <p>The output of this function doesn't depend just on its input variables, but also on a global variable <code>x</code>.</p>
 <p>Here is another function that's not pure:</p>
-<pre><code class="language-javascript">const hello = () =&gt; console.log('Hello, world!');
+<pre><code class="language-js">const hello = () =&gt; console.log('Hello, world!');
 </code></pre>
 <p>The <code>hello</code> function has a side effect - it outputs something to the console.</p>
-<p>Why do we care about all of this? The fundamental reason is that <em>pure functions are very easy to reason about</em>. There is practically no room for suprising behaviour.</p>
-<p>Consider the above <code>square</code> function. It takes an input and produces an output that is dependent <em>only on the input</em>. It doesn't matter what the rest of the program is doing - the function will always produce identical outputs for identical inputs.</p>
+<p>Why do we care about all of this?
+The fundamental reason is that <em>pure functions are very easy to reason about</em>.
+There is practically no room for suprising behaviour.</p>
+<p>Consider the above <code>square</code> function.
+It takes an input and produces an output that is dependent <em>only on the input</em>.
+It doesn't matter what the rest of the program is doing - the function will always produce identical outputs for identical inputs.</p>
 <blockquote>
-<p>If you are mathematically inclined, pure functions are basically regular mathematical functions. They take an input which is a member of some domain and produce an output which is a member of some codomain. For example the <code>square</code> function is simply the function f: A → B, f(x) = x² where A and B are certain sets of numbers. Note that A and B are emphatically <em>not</em> equal to the set of real numbers since of course JavaScript cannot represent every possible real number (due to underlying hardware limitatations - computers can't possibly store arbitrarily large numbers).</p>
+<p>If you are mathematically inclined, pure functions are basically regular mathematical functions.
+They take an input which is a member of some domain and produce an output which is a member of some codomain.
+For example the <code>square</code> function is simply the function f: A → B, f(x) = x² where A and B are certain sets of numbers.
+Note that A and B are emphatically <em>not</em> equal to the set of real numbers since of course JavaScript cannot represent every possible real number (due to underlying hardware limitatations - computers can't possibly store arbitrarily large numbers).</p>
 </blockquote>
-<p>All of the above is not true for the <code>addImpure</code> function. This function can produce <em>different</em> outputs for identical inputs. This makes it hard very hard to troubleshoot if there is an error. After all you may not know what the (global) state of the program was when the error occured.</p>
-<p>Closely related is another very nice property of pure functions - they are <em>easily testable</em>. There is no need to fake dependencies or global state - as the function only takes an input and produces some output. Therefore all you need to do is to call the function, pass some input and check whether the output matches the expected output. We will return to this <em>extensively</em> when we cover testing.</p>
+<p>All of the above is not true for the <code>addImpure</code> function.
+This function can produce <em>different</em> outputs for identical inputs.
+This makes it hard very hard to troubleshoot if there is an error.
+After all you may not know what the (global) state of the program was when the error occured.</p>
+<p>Closely related is another very nice property of pure functions - they are <em>easily testable</em>.
+There is no need to fake some global state - as the function only takes an input and produces some output.
+Therefore all you need to do is to call the function, pass some input and check whether the output matches the expected output.
+We will return to this <em>extensively</em> when we cover testing.</p>
 <h3 id="immutability"><a class="header" href="#immutability">Immutability</a></h3>
-<p>A variable is <strong>immutable</strong> if it is unchangeable. Otherwise we call it <strong>mutable</strong>. The more mutability we have inside our program the more can go wrong since it's hard to reason about (global) state.</p>
-<p>This is where the alert reader might interject - after all, isn't the purpose of a program to do something? And how can we achieve that if we don't change state?</p>
-<p>A fundamental correction is in order here - the purpose of every program is not <em>to do something</em>, but to <em>manipulate data</em>. You can of course manipulate data directly by mutating global state.</p>
+<p>A variable is <strong>immutable</strong> if it is unchangeable.
+Otherwise we call it <strong>mutable</strong>.
+The more mutability we have inside our program the more can go wrong since it's hard to reason about (global) state.</p>
+<p>This is where the alert reader might interject - after all, isn't the purpose of a program to do something?
+And how can we achieve that if we don't change state?</p>
+<p>A fundamental correction is in order here - the purpose of every program is not <em>to do something</em>, but to <em>manipulate data</em>.
+You can of course manipulate data directly by mutating global state.</p>
 <p>Consider the following <code>task</code> object:</p>
-<pre><code class="language-javascript">const task = {
+<pre><code class="language-js">const task = {
   id: 1,
-  summary: 'Read the MERN book',
-  description: 'Read and understand the MERN book.',
+  summary: 'Read the Next.js book',
+  description: 'Read and understand the Next.js book.',
 };
 </code></pre>
 <p>Now let's say we want to change the summary:</p>
-<pre><code class="language-javascript">task.summary = 'MERN book';
+<pre><code class="language-js">task.summary = 'Next.js book';
 </code></pre>
-<p>This works for simple objects and changes. But this will quickly become brittle with growing complexity. <em>Reasoning about state and state changes is really hard.</em></p>
+<p>This works for simple objects and changes.
+But this will quickly become brittle with growing complexity.
+<em>Reasoning about state and state changes is really hard.</em></p>
 <p>Instead we can create copies of the objects which contain the changes we need:</p>
-<pre><code class="language-javascript">const newTask = {
+<pre><code class="language-js">const newTask = {
   ...task,
-  summary: 'MERN book',
+  summary: 'Next.js book',
 };
 </code></pre>
 <p>Note that we didn't change the original object, but created a copy of the object with a different summary.</p>
-<p>Immutability and pure functions are closely linked. You want to have immutable datastructures which get passed through pure functions to compute results.</p>
+<p>Immutability and pure functions are closely linked.
+You want to have immutable datastructures which get passed through pure functions to compute results.</p>
 <h3 id="higher-order-functions"><a class="header" href="#higher-order-functions">Higher-order functions</a></h3>
-<p>We already talked about the fact that JavaScript functions are just objects. We even showed an example of how you can assign a function to a variable:</p>
-<pre><code class="language-javascript">const square = (num) =&gt; num * num;
+<p>We already talked about the fact that JavaScript functions are just objects.
+We even showed an example of how you can assign a function to a variable:</p>
+<pre><code class="language-js">const square = (num) =&gt; num * num;
 </code></pre>
-<p>However we can do much more. Since functions are just objects we can pass them to other functions. For example let's define a function that repeats some action <code>n</code> times:</p>
-<pre><code class="language-javascript">function repeat(fun, n) {
+<p>However we can do much more. Since functions are just objects we can <em>pass them to other functions</em>.
+For example let's define a function that repeats some action <code>n</code> times:</p>
+<pre><code class="language-js">function repeat(fun, n) {
   for (let i = 0; i &lt; n; i++) {
     fun();
   }
 }
 </code></pre>
 <p>We can use it like this:</p>
-<pre><code class="language-javascript">const hello = () =&gt; console.log('Hello, world!');
+<pre><code class="language-js">const hello = () =&gt; console.log('Hello, world!');
 repeat(hello, 4);
 </code></pre>
 <p>This will output:</p>
@@ -212,20 +257,22 @@ Hello, world!
 Hello, world!
 Hello, world!
 </code></pre>
-<p>Note that the <code>repeat</code> function doesn't care what <code>fun</code> is - <code>fun</code> could be a simple <code>console.log</code> or a function which produces a simulated universe. All the <code>repeat</code> function does is it simply repeats <code>fun</code> the specified number of times.</p>
+<p>Note that the <code>repeat</code> function doesn't care what <code>fun</code> is - <code>fun</code> could be a simple <code>console.log</code> or a function which produces a simulated universe.
+All the <code>repeat</code> function does is to simply repeat <code>fun</code> the specified number of times.</p>
 <p>Functions which take (or return) functions are called <strong>higher-order functions</strong>.</p>
 <h3 id="the-trinity-of-map-reduce-and-filter"><a class="header" href="#the-trinity-of-map-reduce-and-filter">The trinity of map, reduce and filter</a></h3>
-<p>We now introduce the three most important higher-order functions - <code>map</code>, <code>reduce</code> and <code>filter</code>. These functions allow you to perform an <em>incredibly</em> rich set of operations on arrays.</p>
+<p>We now introduce the three most important higher-order functions - <code>map</code>, <code>reduce</code> and <code>filter</code>.
+These functions allow you to perform an <em>incredibly</em> rich set of operations on arrays.</p>
 <blockquote>
 <p>We want to use this blockquote to emphasize <em>how often</em> you will be using <code>map</code>, <code>reduce</code> and <code>filter</code>.</p>
 </blockquote>
 <p>We will use two running examples throughout the section - an array of <code>numbers</code> and an array of <code>tasks</code>:</p>
-<pre><code class="language-javascript">const numbers = [1, 2, 3, 4];
+<pre><code class="language-js">const numbers = [1, 2, 3, 4];
 const tasks = [
   {
     id: 1,
-    summary: 'Read the MERN book',
-    description: 'Read and understand the MERN book.',
+    summary: 'Read the Next.js book',
+    description: 'Read and understand the Next.js book.',
     timeLogged: 60,
     status: 'In progress',
   },
@@ -245,37 +292,43 @@ const tasks = [
   },
 ];
 </code></pre>
-<p>The <code>map</code> function takes one argument - a function <code>f</code> to apply to every element of the array. It returns the array resulting from applying <code>f</code> to every element of the original array.</p>
-<p>Let's say we wanted to square all the elements of <code>numbers</code>. We could write something like this:</p>
-<pre><code class="language-javascript">const result = [];
+<p>The <code>map</code> function takes one argument - a function <code>f</code> to apply to every element of the array.
+It returns the array resulting from applying <code>f</code> to every element of the original array.</p>
+<p>Let's say we wanted to square all the elements of <code>numbers</code>.
+We could write something like this:</p>
+<pre><code class="language-js">const result = [];
 for (const number in numbers) {
   result.push(number ** 2);
 }
 </code></pre>
-<p>This is ugly and (you guessed it) <em>tedious</em>. Instead we can (and should) use the <code>map</code> function:</p>
-<pre><code class="language-javascript">const result = numbers.map((number) =&gt; number ** 2);
+<p>This is ugly and (you guessed it) <em>tedious</em>.
+Instead we can (and should) use the <code>map</code> function:</p>
+<pre><code class="language-js">const result = numbers.map((number) =&gt; number ** 2);
 </code></pre>
 <p>The <code>result</code> array has the following content:</p>
-<pre><code class="language-javascript">[1, 4, 9, 16];
+<pre><code class="language-js">[1, 4, 9, 16];
 </code></pre>
-<p>Consider another example. Let's say we wanted to add a long description to all the <code>tasks</code> based on the summary and the description. We can use the <code>map</code> function again:</p>
-<pre><code class="language-javascript">const longTasks = tasks.map((task) =&gt; ({
+<p>Consider another example.
+Let's say we wanted to add a long description to all the <code>tasks</code> based on the summary and the description.
+We can use the <code>map</code> function again:</p>
+<pre><code class="language-js">const longTasks = tasks.map((task) =&gt; ({
   ...task,
   longDescription: `${task.summary}: ${task.description}`,
 }));
 </code></pre>
 <blockquote>
-<p>You can see why the spread syntax is so handy. Thanks to this <em>incredible innovation</em>, you only need to explicitly specify the object parts where something interesting happens.</p>
+<p>You can see why the spread syntax is so handy.
+Thanks to this <em>incredible innovation</em>, you only need to explicitly specify the object parts where something interesting happens.</p>
 </blockquote>
 <p>The <code>longTasks</code> array will look like this:</p>
-<pre><code class="language-javascript">[
+<pre><code class="language-js">[
   {
     id: 1,
-    summary: 'Read the MERN book',
-    description: 'Read and understand the MERN book.',
+    summary: 'Read the Next.js book',
+    description: 'Read and understand the Next.js book.',
     timeLogged: 60,
     status: 'In progress',
-    longDescription: 'Read the MERN book: Read and understand the MERN book.',
+    longDescription: 'Read the Next.js book: Read and understand the Next.js book.',
   },
   {
     id: 2,
@@ -295,34 +348,54 @@ for (const number in numbers) {
   },
 ];
 </code></pre>
-<p>The <code>filter</code> function allows you to select elements from an array based on some condition. It takes a function <code>f</code> which returns <code>true</code> or <code>false</code> for some input(s). All elements for which <code>f</code> returns <code>true</code> are kept, all elements for which <code>f</code> returns <code>false</code> are thrown away.</p>
+<p>The <code>filter</code> function allows you to select elements from an array based on some condition.
+It takes a function <code>f</code> which returns <code>true</code> or <code>false</code> for some input(s).
+All elements for which <code>f</code> returns <code>true</code> are kept, all elements for which <code>f</code> returns <code>false</code> are thrown away.</p>
 <blockquote>
 <p>A function which returns <code>true</code> or <code>false</code> is commonly referred to as a <em>predicate</em>.</p>
 </blockquote>
-<p>For example let's say we want to select all even elements from <code>numbers</code>. Here is the non-functional way:</p>
-<pre><code class="language-javascript">const result = [];
+<p>For example let's say we want to select all even elements from <code>numbers</code>.
+Here is the non-functional way:</p>
+<pre><code class="language-js">const result = [];
 for (const number in numbers) {
   if (number % 2 === 0) {
     result.push(number ** 2);
   }
 }
 </code></pre>
-<p>Ugh! I don't even want to look at that. For loops and if statements all over the place. Let's rest our eyes and consider the <em>functional</em> approach:</p>
-<pre><code class="language-javascript">const result = numbers.filter((number) =&gt; number % 2 === 0);
+<p>Ugh!
+I don't even want to look at that.
+For loops and if statements all over the place.
+Let's rest our eyes and consider the <em>functional</em> approach:</p>
+<pre><code class="language-js">const result = numbers.filter((number) =&gt; number % 2 === 0);
 </code></pre>
-<p>Consider another example - we might want to select all tasks from the <code>tasks</code> array which have the status 'Todo'. Think for a moment what the appropriate predicate would be.</p>
+<p>Consider another example - we might want to select all tasks from the <code>tasks</code> array which have the status 'Todo'.
+Think for a moment what the appropriate predicate would be.</p>
 <p>That's right, it looks like this:</p>
-<pre><code class="language-javascript">const todoTasks = tasks.filter((task) =&gt; task.status === 'Todo');
+<pre><code class="language-js">const todoTasks = tasks.filter((task) =&gt; task.status === 'Todo');
 </code></pre>
-<p>Finally there is the <code>reduce</code> function which (you guessed it) <em>reduces</em> an array to a single value. The <code>reduce</code> function moves over an array from left to right and keeps track of a <em>current value</em>. At every element of the array it recomputes the current value based on a function <code>f</code> (this is the first argument of the <code>reduce</code> function). The second argument of the reduce function is the initial value.</p>
+<p>Finally there is the <code>reduce</code> function which (you guessed it) <em>reduces</em> an array to a single value.
+The <code>reduce</code> function moves over an array from left to right and keeps track of a value (a so called <em>accumulator</em>).
+At every element of the array it recomputes the accumulator based on a function <code>f</code> (this function <code>f</code> is the first argument of the <code>reduce</code> function).
+The second argument of the reduce function is the initial value.</p>
 <p>Here is how we might compute the sum of an array:</p>
-<pre><code class="language-javascript">const sum = numbers.reduce((num, curr) =&gt; num + curr, 0);
+<pre><code class="language-js">const sum = numbers.reduce((acc, curr) =&gt; acc + curr, 0);
 </code></pre>
-<p>Let's say we would like to compute the total logged time (i.e. the time logged for all the tasks combined). This would look like this:</p>
-<pre><code class="language-javascript">const totalTime = tasks.reduce((task, curr) =&gt; task.loggedTime + curr, 0);
+<p>Basically this is what happens:
+The <code>reduce</code> function looks at <code>acc</code> (which is the initial value, i.e. <code>0</code> at the beginning) and <code>curr</code> (which is <code>1</code>), produces <code>acc + curr</code>, and sets this as the new accumulator (i.e. the new accumulator is <code>1</code>).
+Next the <code>reduce</code> function again looks at <code>acc</code> (which is now <code>1</code>) and <code>curr</code> (which is <code>2</code>), produces <code>acc + curr</code>, and sets this as the new accumulator (i.e. the new accumulator is <code>3</code>).
+The next update results in the accumulator being <code>6</code> and the final update result in the accumulator being <code>10</code>.
+Therefore <code>sum</code> will be <code>10</code>.</p>
+<p>For another example, let's say we would like to compute the total logged time (i.e. the time logged for all the tasks combined).
+This would look like this:</p>
+<pre><code class="language-js">const totalTime = tasks.reduce((task, curr) =&gt; task.loggedTime + curr, 0);
 </code></pre>
+<blockquote>
+<p>We recommend that you try to reason through this <code>reduce</code> for a deeper understanding of this topic.</p>
+</blockquote>
 <h3 id="summary"><a class="header" href="#summary">Summary</a></h3>
-<p>You learned about important functional concepts like pure functions, immutability and higher-order functions. You also learned about the three most important higher-order functions - <code>map</code>, <code>filter</code> and <code>reduce</code>.</p>
+<p>You learned about important functional concepts like pure functions, immutability and higher-order functions.
+You also learned about the three most important higher-order functions - <code>map</code>, <code>filter</code> and <code>reduce</code>.</p>
 <h3 id="further-reading"><a class="header" href="#further-reading">Further reading</a></h3>
 <p>There is no further reading for this section.</p>
 

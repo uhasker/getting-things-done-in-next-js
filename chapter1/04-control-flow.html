@@ -83,16 +83,38 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../title-page.html">Getting Things Done in Next.js</a></li><li class="chapter-item expanded affix "><a href="../introduction.html">Introduction</a></li><li class="chapter-item expanded "><a href="../chapter1/index.html"><strong aria-hidden="true">1.</strong> A Brief Introduction to JavaScript</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../chapter1/01-hello-world.html"><strong aria-hidden="true">1.1.</strong> Hello World</a></li><li class="chapter-item expanded "><a href="../chapter1/02-primitive-data-types.html"><strong aria-hidden="true">1.2.</strong> Primitive Data Types</a></li><li class="chapter-item expanded "><a href="../chapter1/03-arrays-and-objects.html"><strong aria-hidden="true">1.3.</strong> Arrays and Objects</a></li><li class="chapter-item expanded "><a href="../chapter1/04-control-flow.html" class="active"><strong aria-hidden="true">1.4.</strong> Control Flow</a></li><li class="chapter-item expanded "><a href="../chapter1/05-functions.html"><strong aria-hidden="true">1.5.</strong> Functions</a></li><li class="chapter-item expanded "><a href="../chapter1/06-functional-thinking.html"><strong aria-hidden="true">1.6.</strong> Functional Thinking</a></li></ol></li><li class="chapter-item expanded "><a href="../chapter2/index.html"><strong aria-hidden="true">2.</strong> The Client</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../chapter2/01-hypertext-markup-language.html"><strong aria-hidden="true">2.1.</strong> Hypertext Markup Language</a></li><li class="chapter-item expanded "><a href="../chapter2/02-the-document-object-model.html"><strong aria-hidden="true">2.2.</strong> The Document Object Model</a></li><li class="chapter-item expanded "><a href="../chapter2/03-first-steps-in-react.html"><strong aria-hidden="true">2.3.</strong> First Steps in React</a></li><li class="chapter-item expanded "><a href="../chapter2/04-introducing-jsx.html"><strong aria-hidden="true">2.4.</strong> Introducing JSX</a></li><li class="chapter-item expanded "><a href="../chapter2/05-react-components.html"><strong aria-hidden="true">2.5.</strong> React Components</a></li><li class="chapter-item expanded "><a href="../chapter2/06-project-structure.html"><strong aria-hidden="true">2.6.</strong> Project Structure</a></li><li class="chapter-item expanded "><a href="../chapter2/07-react-state.html"><strong aria-hidden="true">2.7.</strong> React State</a></li></ol></li><li class="chapter-item expanded "><a href="../chapter3/index.html"><strong aria-hidden="true">3.</strong> The server</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../chapter3/01-a-http-primer.html"><strong aria-hidden="true">3.1.</strong> A HTTP primer</a></li><li class="chapter-item expanded "><a href="../chapter3/02-writing-the-api.html"><strong aria-hidden="true">3.2.</strong> Writing the API</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../title-page.html">Getting Things Done in Next.js</a></li><li class="chapter-item expanded affix "><a href="../introduction.html">Introduction</a></li><li class="chapter-item expanded affix "><a href="../acknowledgments.html">Acknowledgments</a></li><li class="chapter-item expanded "><a href="../chapter1/index.html"><strong aria-hidden="true">1.</strong> A Brief Introduction to JavaScript</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../chapter1/01-hello-world.html"><strong aria-hidden="true">1.1.</strong> Hello World</a></li><li class="chapter-item expanded "><a href="../chapter1/02-primitive-data-types.html"><strong aria-hidden="true">1.2.</strong> Primitive Data Types</a></li><li class="chapter-item expanded "><a href="../chapter1/03-arrays-and-objects.html"><strong aria-hidden="true">1.3.</strong> Arrays and Objects</a></li><li class="chapter-item expanded "><a href="../chapter1/04-control-flow.html" class="active"><strong aria-hidden="true">1.4.</strong> Control Flow</a></li><li class="chapter-item expanded "><a href="../chapter1/05-functions.html"><strong aria-hidden="true">1.5.</strong> Functions</a></li><li class="chapter-item expanded "><a href="../chapter1/06-functional-thinking.html"><strong aria-hidden="true">1.6.</strong> Functional Thinking</a></li></ol></li><li class="chapter-item expanded "><a href="../chapter2/index.html"><strong aria-hidden="true">2.</strong> The Client</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../chapter2/01-hypertext-markup-language.html"><strong aria-hidden="true">2.1.</strong> Hypertext Markup Language</a></li><li class="chapter-item expanded "><a href="../chapter2/02-the-document-object-model.html"><strong aria-hidden="true">2.2.</strong> The Document Object Model</a></li><li class="chapter-item expanded "><a href="../chapter2/03-first-steps-in-react.html"><strong aria-hidden="true">2.3.</strong> First Steps in React</a></li><li class="chapter-item expanded "><a href="../chapter2/04-introducing-jsx.html"><strong aria-hidden="true">2.4.</strong> Introducing JSX</a></li><li class="chapter-item expanded "><a href="../chapter2/05-react-components.html"><strong aria-hidden="true">2.5.</strong> React Components</a></li><li class="chapter-item expanded "><a href="../chapter2/06-project-structure.html"><strong aria-hidden="true">2.6.</strong> Project Structure</a></li><li class="chapter-item expanded "><a href="../chapter2/07-react-state.html"><strong aria-hidden="true">2.7.</strong> React State</a></li></ol></li><li class="chapter-item expanded "><a href="../chapter3/index.html"><strong aria-hidden="true">3.</strong> The server</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../chapter3/01-a-http-primer.html"><strong aria-hidden="true">3.1.</strong> A HTTP primer</a></li><li class="chapter-item expanded "><a href="../chapter3/02-writing-the-api.html"><strong aria-hidden="true">3.2.</strong> Writing the API</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
 
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
                                 <div id="menu-bar-hover-placeholder"></div>
-                <div id="menu-bar" class="menu-bar sticky bordered">
+                <div id="menu-bar" class="menu-bar sticky">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
                             <i class="fa fa-bars"></i>
@@ -147,9 +169,12 @@
                         <h2 id="control-flow"><a class="header" href="#control-flow">Control flow</a></h2>
 <div style="text-align: right"> <i> Don't push the for loop, it flows by itself. <br> — Ancient Chinese proverb </i> </div>
 <h3 id="if-statements"><a class="header" href="#if-statements">If statements</a></h3>
-<p>Quite often, we need to make <em>decisions</em> in our programs. Let's say we want to display a fancy message when a bunch of tasks are completed. This is a decision: <em>If</em> all the tasks are completed, <em>then</em> we want to display a message. Put generally: <em>If</em> a condition holds (is true), <em>then</em> we want to do something.</p>
+<p>Quite often, we need to make <em>decisions</em> in our programs.
+Let's say we want to display a fancy message when a bunch of tasks are completed.
+This is a decision: <em>If</em> all the tasks are completed, <em>then</em> we want to display a message.
+Put generally: <em>If</em> a condition holds (is true), <em>then</em> we want to do something.</p>
 <p>Conveniently, the language keyword that allows us to accomplish this is called <code>if</code>:</p>
-<pre><code class="language-javascript">const completed = true;
+<pre><code class="language-js">const completed = true;
 if (completed) {
   console.log('Hooray, you completed all your tasks!');
 }
@@ -158,36 +183,44 @@ if (completed) {
 <pre><code>Hooray, you completed all your tasks!
 </code></pre>
 <p>The general form of an <code>if</code> statement looks like this:</p>
-<pre><code class="language-javascript">if (condition) {
+<pre><code class="language-js">if (condition) {
   statements;
 }
 </code></pre>
-<p>If <code>condition</code> is true, then the <code>statements</code> inside the curly braces will be executed. If <code>condition</code> is false, nothing will happen.</p>
+<p>If <code>condition</code> is true, then the <code>statements</code> inside the curly braces will be executed.
+If <code>condition</code> is false, nothing will happen.</p>
 <blockquote>
 <p>Note that technically it suffices if the condition is <em>truthy</em> or <em>falsy</em>. We will ignore this detail for now and return to it in a second.</p>
 </blockquote>
-<p>The simplest condition is a boolean variable. However, nothing prevents us from writing more complex conditions. For example, let's say we have a list of uncompleted tasks (conveniently) named <code>tasks</code>. Then we could check that all tasks have been completed by checking whether <code>tasks</code> is empty (i.e. the length of <code>tasks</code> is zero):</p>
-<pre><code class="language-javascript">if (tasks.length === 0) {
+<p>The simplest condition is a boolean variable.
+However, nothing prevents us from writing more complex conditions.
+For example, let's say we have a list of uncompleted tasks (conveniently) named <code>tasks</code>.
+Then we could check that all tasks have been completed by checking whether <code>tasks</code> is empty (i.e. the length of <code>tasks</code> is zero):</p>
+<pre><code class="language-js">if (tasks.length === 0) {
   console.log('Hooray, you completed all your tasks!');
 }
 </code></pre>
-<p>Sometimes you need to do something in one case and something else in another case. The (also conveniently named) <code>else</code> keyword allows you to accomplish exactly that. Let's say that if all the tasks haven't been completed yet, we want to display a different message:</p>
-<pre><code class="language-javascript">if (tasks.length === 0) {
+<p>Sometimes you need to do something in one case and something else in another case.
+The (also conveniently named) <code>else</code> keyword allows you to accomplish exactly that.
+Let's say that if all the tasks haven't been completed yet, we want to display a different message:</p>
+<pre><code class="language-js">if (tasks.length === 0) {
   console.log('Hooray, you completed all your tasks!');
 } else {
   console.log('You still have some tasks to complete.');
 }
 </code></pre>
 <p>The general form of an <code>if...else</code> statement looks like this:</p>
-<pre><code class="language-javascript">if (condition) {
-  statements1;
+<pre><code class="language-js">if (condition) {
+  block1;
 } else {
-  statements2;
+  block2;
 }
 </code></pre>
-<p>If <code>condition</code> is true, the statements corresponding to <code>statements1</code> will be executed (i.e. the statements inside the curly braces after the <code>if</code>). If <code>condition</code> is false, the statements corresponding to <code>statements2</code> will be executed (i.e. the statements inside the curly braces after the <code>else</code>).</p>
-<p>Also note that there may be multiple statements between the curly braces. This is totally valid:</p>
-<pre><code class="language-javascript">if (tasks.length === 0) {
+<p>If <code>condition</code> is true, the statements corresponding to <code>block1</code> will be executed (i.e. the statements inside the curly braces after the <code>if</code>).
+If <code>condition</code> is false, the statements corresponding to <code>block2</code> will be executed (i.e. the statements inside the curly braces after the <code>else</code>).</p>
+<p>Note that there may be multiple statements between the curly braces.
+This is totally valid:</p>
+<pre><code class="language-js">if (tasks.length === 0) {
   console.log('Hooray, you completed all your tasks!');
   console.log('Congratulations!');
   console.log('No really, you are amazing!');
@@ -201,8 +234,9 @@ if (completed) {
 Congratulations!
 No really, you are amazing!
 </code></pre>
-<p>Sometimes you need to handle more than two cases. Since JavaScript was fresh out of keywords at this point, they allowed you to do so using <code>else if</code>:</p>
-<pre><code class="language-javascript">if (tasks.length === 0) {
+<p>Sometimes you need to handle more than two cases.
+Since JavaScript was fresh out of keywords at this point, they allowed you to do so using <code>else if</code>:</p>
+<pre><code class="language-js">if (tasks.length === 0) {
   console.log('Hooray, you completed all your tasks!');
 } else if (tasks.length === 1) {
   console.log('Only one task left! Go! Go! Go!');
@@ -211,19 +245,22 @@ No really, you are amazing!
 }
 </code></pre>
 <p>The general form of an <code>if...else if...else</code> statement looks like this:</p>
-<pre><code class="language-javascript">if (condition1) {
-  statements1;
+<pre><code class="language-js">if (condition1) {
+  block1;
 } else if (condition2) {
-  statements2;
+  block2;
 } /*possibly more else ifs*/ else if (conditionN) {
-  statementsN;
+  blockN;
 } else {
-  statementsElse;
+  blockElse;
 }
 </code></pre>
-<p>Here all the conditions will be checked one after another. As soon as a condition is true, the corresponding statements will be executed. If no condition matches, the statements corresponding to <code>statementsElse</code> will be executed.</p>
-<p>You can have any number of <code>else if</code> statements. For example this is valid:</p>
-<pre><code class="language-javascript">if (tasks.length === 0) {
+<p>Here all the conditions will be checked one after another.
+As soon as a condition is true, the corresponding statements will be executed.
+If no condition matches, the statements corresponding to <code>statementsElse</code> will be executed.</p>
+<p>You can have any number of <code>else if</code> statements.
+For example, this is valid:</p>
+<pre><code class="language-js">if (tasks.length === 0) {
   console.log('Hooray, you completed all your tasks!');
 } else if (tasks.length === 1) {
   console.log('Only one task left! Go! Go! Go!');
@@ -235,40 +272,51 @@ No really, you are amazing!
   console.log('You still have some tasks to complete.');
 }
 </code></pre>
-<p>Note that the <code>else</code> block is not required. If it's missing and none of the conditions are true, nothing will happen.</p>
+<p>Note that the <code>else</code> block is not required.
+If it's missing and none of the conditions are true, nothing will happen.</p>
 <h3 id="truthiness-and-falsiness"><a class="header" href="#truthiness-and-falsiness">Truthiness and falsiness</a></h3>
-<p>Note that the condition does not necessary have to be boolean as JavaScript will automatically convert non-boolean values to booleans. For example you could write something like this:</p>
-<pre><code class="language-javascript">if (1) {
+<p>Note that the condition does not necessary have to be boolean as JavaScript will automatically evaluate non-boolean values as &quot;truthy&quot; or &quot;falsy&quot; in boolean contexts.
+For example you could write something like this:</p>
+<pre><code class="language-js">if (1) {
   console.log('1 is truthy.');
 } else {
   console.log('1 is falsy.');
 }
 </code></pre>
 <p>This will print &quot;1 is truthy.&quot; because JavaScript will consider <code>1</code> to be <code>true</code> in this context since <code>1</code> is a <em>truthy</em> value.</p>
-<p>Generally speaking, a <strong>truthy</strong> value is considered to be true when encountered in a boolean context (like a condition). A <strong>falsy</strong> value is considered to be false when encountered in a boolean context. The most important falsy values are <code>false</code>, <code>0</code>, <code>''</code> (empty string), <code>null</code> and <code>undefined</code>. Most other values (like <code>1</code>, <code>[]</code> (empty array), <code>[3]</code>, <code>{ example: 'hello' }</code> etc) are truthy.</p>
-<p>Try to <em>avoid using non-boolean values in boolean contexts</em> as it can lead to surprising behaviour. Nevertheless it's still useful to know about truthiness and falsiness, as it will otherwise trip you up in certain cases.</p>
+<p>Generally speaking, a <strong>truthy</strong> value is considered to be true when encountered in a boolean context (like a condition).
+A <strong>falsy</strong> value is considered to be false when encountered in a boolean context.
+The most important falsy values are <code>false</code>, <code>0</code>, <code>''</code> (empty string), <code>null</code> and <code>undefined</code>.
+Most other values (like <code>1</code>, <code>[]</code> (empty array), <code>[3]</code>, <code>{ example: 'hello' }</code> etc) are truthy.</p>
+<p>Try to <em>avoid using non-boolean values in boolean contexts</em> as it can lead to surprising behaviour.
+Nevertheless it's still useful to know about truthiness and falsiness, as it will otherwise trip you up in certain cases.</p>
 <h3 id="ternary-operator"><a class="header" href="#ternary-operator">Ternary operator</a></h3>
-<p>The <strong>ternary operator</strong> takes a <em>condition</em>, an <em>expression to execute if the condition is truthy</em> and an <em>expression to execute if the condition is falsy</em>. It looks like this:</p>
-<pre><code class="language-javascript">const doneMsg = 'All tasks are done';
+<p>The <strong>ternary operator</strong> takes a <em>condition</em>, an <em>expression to execute if the condition is truthy</em> and an <em>expression to execute if the condition is falsy</em>.
+It looks like this:</p>
+<pre><code class="language-js">const doneMsg = 'All tasks are done';
 const notDoneMsg = 'There are tasks left';
 const msg = done ? doneMsg : notDoneMsg;
 </code></pre>
 <p>The general form is:</p>
-<pre><code class="language-javascript">condition ? expression1 : expression2;
+<pre><code class="language-js">condition ? expression1 : expression2;
 </code></pre>
+<p>You can think of the ternary operator as a short, compact way to write an <code>if ... else</code> statement.
+It evaluates a condition, and if that condition is <code>true</code> (truthy), the result will have the value of the first expression.
+If the condition is <code>false</code> (falsy), the result will have the value of the second expression.</p>
 <p>There is a very common thing complete beginners do with ternary operators which looks like this:</p>
-<pre><code class="language-javascript">const finished = tasks.length === 0 ? true : false;
+<pre><code class="language-js">const finished = tasks.length === 0 ? true : false;
 </code></pre>
-<p>You should stop for a second a think about why this is unneccessary.</p>
-<p><em>Thought</em> about it? That's right. You can just write</p>
-<pre><code class="language-javascript">const finished = tasks.length === 0;
+<p>You should stop for a second and think about why this is unnecessary.</p>
+<p><em>Thought</em> about it?
+That's right - the expression <code>tasks.length === 0</code> already evaluates to a boolean value.
+You can just write</p>
+<pre><code class="language-js">const finished = tasks.length === 0;
 </code></pre>
-<p>Note that you cannot write arbitrary statements inside a ternary operator (and it wouldn't make a lot of sense anyway).</p>
 <h3 id="optional-chaining"><a class="header" href="#optional-chaining">Optional chaining</a></h3>
 <p>Consider the following task object:</p>
-<pre><code class="language-javascript">const mernTask = {
-  summary: 'Read the MERN book',
-  description: 'Read and understand the MERN book',
+<pre><code class="language-js">const nextTask = {
+  summary: 'Read the Next.js book',
+  description: 'Read and understand the Next.js book',
   date: {
     day: 8,
     month: 6,
@@ -276,37 +324,55 @@ const msg = done ? doneMsg : notDoneMsg;
   },
 };
 </code></pre>
-<p>Let's say we want to access the day of the task. We can do this by using <code>mernTask.date.day</code>. But what if the day does not have to be present, i.e. is <em>optional</em>? This could e.g. happen because the user didn't enter a task.</p>
+<p>Let's say we want to access the day of the task.
+We can do this by using <code>nextTask.date.day</code>.
+But what if the day does not have to be present, i.e. is <em>optional</em>?
+This could happen, for example, because the user didn't enter a task.</p>
 <p>The object could look like this:</p>
-<pre><code class="language-javascript">const mernTask = {
-  summary: 'Read the MERN book',
-  description: 'Read and understand the MERN book',
+<pre><code class="language-js">const nextTask = {
+  summary: 'Read the Next.js book',
+  description: 'Read and understand the Next.js book',
 };
 
 // or like this if you were to use `null`
-const mernTask = {
-  summary: 'Read the MERN book',
-  description: 'Read and understand the MERN book',
+const nextTask = {
+  summary: 'Read the Next.js book',
+  description: 'Read and understand the Next.js book',
   date: null,
 };
 </code></pre>
-<p>Then <code>mernTask.date.day</code> will fail with</p>
+<p>Then <code>nextTask.date.day</code> will fail with</p>
 <pre><code>Uncaught TypeError: Cannot read properties of undefined (reading 'day')
 </code></pre>
-<p>This makes sense since <code>mernTask.date</code> will result in <code>undefined</code> and you can't access a property on <code>undefined</code>. But let's say we would like to access the day and set it to <code>undefined</code> if the <code>date</code> property is not present. Then we would need to do something like the following:</p>
-<pre><code class="language-javascript">const day =
-  typeof mernTask.date !== undefined &amp;&amp; mernTask.date !== null ? mernTask.date.day : undefined;
+<p>This makes sense since <code>nextTask.date</code> will result in <code>undefined</code> and you can't access a property on <code>undefined</code>.
+But let's say we would like to access the day and set it to <code>undefined</code> if the <code>date</code> property is not present.
+Then we would need to do something like the following:</p>
+<pre><code class="language-js">const day = nextTask.date !== undefined ? nextTask.date.day : undefined;
 </code></pre>
+<p>Here is what this line does:
+If <code>nextTask.date</code> is defined, then <code>nextTask.date.day</code> is assigned to <code>day</code>.
+If <code>nextTask.date</code> is not defined, the <code>undefined</code> is assigned to <code>day</code>.</p>
 <p>Alternatively we could make use of <code>&amp;&amp;</code> and write:</p>
-<pre><code class="language-javascript">const day = mernTask.date &amp;&amp; mernTask.date.day;
+<pre><code class="language-js">const day = nextTask.date &amp;&amp; nextTask.date.day;
 </code></pre>
-<p>Generally consider an object that has a bunch of values that may be absent (i.e. <code>null</code> or <code>undefined</code>). Working with such value will be annoying and only grow more cumbersome with deeper nesting. To avoid all this JavaScript allows you to do <strong>optional chaining</strong>. This works by writing <code>?.</code> instead of <code>.</code> when trying to work on something that may be undefined. The above line would then become:</p>
-<pre><code class="language-javascript">const day = mernTask.date?.day;
+<blockquote>
+<p>This is correct because of the way the <code>&amp;&amp;</code> works.
+If the first expression is <code>false</code> (or falsy) then <code>&amp;&amp;</code> doesn't look at the second expression and immediately returns the value of the first expression.
+If the first expression is <code>true</code> (or truthy) then <code>&amp;&amp;</code> returns the second expression.</p>
+</blockquote>
+<p>Generally consider an object that has a bunch of values that may be absent (i.e. <code>null</code> or <code>undefined</code>).
+Working with such values will be annoying and only grow more cumbersome with deeper nesting.
+To avoid all this JavaScript allows you to do <strong>optional chaining</strong>.
+This works by writing <code>?.</code> instead of <code>.</code> when trying to work on something that may be <code>undefined</code>.
+The above line would then become:</p>
+<pre><code class="language-js">const day = nextTask.date?.day;
 </code></pre>
 <p>Now the result will be <code>undefined</code> instead of giving you a TypeError.</p>
 <h3 id="forof-loops"><a class="header" href="#forof-loops">For..of loops</a></h3>
-<p><code>For..of</code> loops allow you to <em>iterate over arrays and strings</em> (and some other things that we will cover later on) and perform a task for each element / character. Let's say you want to print all tasks from a list named <code>tasks</code>. You could do it like this:</p>
-<pre><code class="language-javascript">const tasks = ['Task 1', 'Task 2', 'Task 3'];
+<p><code>For..of</code> loops allow you to <em>iterate over arrays and strings</em> (and some other things that we will cover later on) and perform a task for each element / character.
+Let's say you want to print all tasks from a list named <code>tasks</code>.
+You could do it like this:</p>
+<pre><code class="language-js">const tasks = ['Task 1', 'Task 2', 'Task 3'];
 for (let task of tasks) {
   console.log(task);
 }
@@ -317,33 +383,37 @@ Task 2
 Task 3
 </code></pre>
 <p>As we already mentioned, you can use a <code>for..of</code> loop to iterate over a string:</p>
-<pre><code class="language-javascript">const str = 'Task';
+<pre><code class="language-js">const str = 'Task';
 for (let char of str) {
   console.log(char);
 }
 </code></pre>
-<p>This would print each charachter of the string, i.e.:</p>
+<p>This would print each character of the string, i.e.:</p>
 <pre><code>T
 a
 s
 k
 </code></pre>
 <p>The general syntax of a <code>for..of</code> loop is</p>
-<pre><code class="language-javascript">for (let variable of arrayOrString) {
+<pre><code class="language-js">for (let variable of arrayOrString) {
   statements;
 }
 </code></pre>
-<p>It should be noted that if you don't change the variable inside the loop, you can and should also declare it as <code>const</code>. Our first example could therefore be rewritten to</p>
-<pre><code class="language-javascript">const tasks = ['Task 1', 'Task 2', 'Task 3'];
+<p>It should be noted that if you don't change the variable inside the loop, you can and should also declare it as <code>const</code>.
+Our first example could therefore be rewritten to</p>
+<pre><code class="language-js">const tasks = ['Task 1', 'Task 2', 'Task 3'];
 for (const task of tasks) {
   console.log(task);
 }
 </code></pre>
 <blockquote>
-<p>There are also a bunch of other loops. We will cover them later. This is because you don't need them nearly as often as some people think.</p>
+<p>There are also a bunch of other loops (like <code>while</code> and <code>do...while</code>) that we will cover later.
+However, <code>for...of</code> loops are commonly used and often sufficient for many use cases</p>
 </blockquote>
 <h3 id="summary"><a class="header" href="#summary">Summary</a></h3>
-<p>You learned how to make decisions using <code>if</code> statements, <code>if...else</code> statements, <code>if...else if...else</code> statements and the ternary operator. You also learned how to address missing properties using <em>optional chaining</em>. Finally you learned how to iterate over strings and arrays using the <code>for...of</code> loop.</p>
+<p>You learned how to make decisions using <code>if</code> statements, <code>if...else</code> statements, <code>if...else if...else</code> statements and the ternary operator.
+You also learned how to address missing properties using <em>optional chaining</em>.
+Finally you learned how to iterate over strings and arrays using the <code>for...of</code> loop.</p>
 <h3 id="further-reading"><a class="header" href="#further-reading">Further reading</a></h3>
 <ul>
 <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Loops_and_iteration">JavaScript Guide - Loops and iteration</a></li>
