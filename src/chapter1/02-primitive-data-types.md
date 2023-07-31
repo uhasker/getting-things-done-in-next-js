@@ -11,13 +11,13 @@ For example we don't know which tasks a user might create.
 Nevertheless, we must be able to access created tasks through a predictable name like `tasks` or `createdTasks`.
 
 Therefore we need a way to put an _unpredictable_ value in a "box" somewhere and refer to it using a _predictable_ name.
-This box is referred to as 'storage' in programming.
+This box is referred to as 'storage' and the predictable name as _symbolic name_ in programming.
 
-A **variable** is just that - a storage location containing a value which is referred to by a predictable name.
-This _sounds_ really fancy, but it just means that there is a value somewhere in your storage and you can refer to that value using a predictable name (even if the value itself is not predictable).
+A **variable** is just that - a storage location containing a value which is referred to by a symbolic name.
+This _sounds_ really fancy, but it just means that there is a value somewhere in your storage and you can refer to that value using a symbolic name (even if the value itself is not predictable).
 
 You can think of a variable as a labeled box in a storage room.
-It contains a value which we can find later by looking for the label, or as we programmers like to call it, the "predictable name".
+The box contains some stuff (the unpredictable value) which we can find later by looking for the label (the predictable symbolic name).
 
 For example you could have a variable `age` which has the value `20` (we say that `age` is equal to `20`):
 
