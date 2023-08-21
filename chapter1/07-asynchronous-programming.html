@@ -368,8 +368,8 @@ To this end, we can declare an <code>async</code> function and then use the <cod
 const url = 'https://jsonplaceholder.typicode.com/todos/1';
 fetchTask(url).then((json) =&gt; console.log(json));
 </code></pre>
-<p>Note that you can only use <code>await</code> inside an <code>async</code> function (unless your code is in a so called &quot;module&quot;).
-This why we have to use <code>then</code> with <code>fetchTask</code> instead of <code>await</code>ing the promise returned by <code>fetchTask</code>.</p>
+<p>Note that for some runtimes you can only use <code>await</code> inside an <code>async</code> function.
+This is why we use <code>then</code> with <code>fetchTask</code> instead of <code>await</code>ing the promise returned by <code>fetchTask</code>.</p>
 <h3 id="summary"><a class="header" href="#summary">Summary</a></h3>
 <p>You learned about asynchronous programming.
 You learned how to create promises, chain promises, handle errors in promise chains and how to simplify asynchronous code by using the async and await keywords.</p>
