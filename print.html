@@ -84,7 +84,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="title-page.html">Getting Things Done in Next.js</a></li><li class="chapter-item expanded affix "><a href="introduction.html">Introduction</a></li><li class="chapter-item expanded affix "><a href="acknowledgments.html">Acknowledgments</a></li><li class="chapter-item expanded "><a href="chapter1/index.html"><strong aria-hidden="true">1.</strong> A Brief Introduction to JavaScript</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter1/01-hello-world.html"><strong aria-hidden="true">1.1.</strong> Hello World</a></li><li class="chapter-item expanded "><a href="chapter1/02-primitive-data-types.html"><strong aria-hidden="true">1.2.</strong> Primitive Data Types</a></li><li class="chapter-item expanded "><a href="chapter1/03-arrays-and-objects.html"><strong aria-hidden="true">1.3.</strong> Arrays and Objects</a></li><li class="chapter-item expanded "><a href="chapter1/04-control-flow.html"><strong aria-hidden="true">1.4.</strong> Control Flow</a></li><li class="chapter-item expanded "><a href="chapter1/05-functions.html"><strong aria-hidden="true">1.5.</strong> Functions</a></li><li class="chapter-item expanded "><a href="chapter1/06-functional-thinking.html"><strong aria-hidden="true">1.6.</strong> Functional Thinking</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="title-page.html">Getting Things Done in Next.js</a></li><li class="chapter-item expanded affix "><a href="introduction.html">Introduction</a></li><li class="chapter-item expanded affix "><a href="acknowledgments.html">Acknowledgments</a></li><li class="chapter-item expanded "><a href="chapter1/index.html"><strong aria-hidden="true">1.</strong> A Brief Introduction to JavaScript</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter1/01-hello-world.html"><strong aria-hidden="true">1.1.</strong> Hello World</a></li><li class="chapter-item expanded "><a href="chapter1/02-primitive-data-types.html"><strong aria-hidden="true">1.2.</strong> Primitive Data Types</a></li><li class="chapter-item expanded "><a href="chapter1/03-arrays-and-objects.html"><strong aria-hidden="true">1.3.</strong> Arrays and Objects</a></li><li class="chapter-item expanded "><a href="chapter1/04-control-flow.html"><strong aria-hidden="true">1.4.</strong> Control Flow</a></li><li class="chapter-item expanded "><a href="chapter1/05-functions.html"><strong aria-hidden="true">1.5.</strong> Functions</a></li><li class="chapter-item expanded "><a href="chapter1/06-functional-thinking.html"><strong aria-hidden="true">1.6.</strong> Functional Thinking</a></li><li class="chapter-item expanded "><a href="chapter1/07-asynchronous-programming.html"><strong aria-hidden="true">1.7.</strong> Asynchronous Programming</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -308,6 +308,10 @@ source ~/.zshrc
 <p>And again verify that Node.js was successfully installed:</p>
 <pre><code class="language-sh">node --version
 </code></pre>
+<p>The installation script also automatically installed the <strong>node package manager</strong> (<em>npm</em> for short) which will later become necessary for managing dependencies in our projects.
+Verify that npm was installed as well:</p>
+<pre><code class="language-sh">npm --version
+</code></pre>
 <p>Now that Node.js is installed, you can open a Node.js console by typing node in the command line.
 Now let's again print &quot;Hello, world!&quot; using the <code>console.log</code> method.
 Type the following into the Node.js console and hit <kbd>Return</kbd>:</p>
@@ -376,8 +380,6 @@ Let's move on.</p>
 <h3 id="summary"><a class="header" href="#summary">Summary</a></h3>
 <p>You learned about the JavaScript browser runtime, Node.js and how to use the console of the various runtimes.
 You learned how to execute code in a REPL as well as how to execute scripts.</p>
-<h3 id="further-reading"><a class="header" href="#further-reading">Further Reading</a></h3>
-<p>There is no further reading for this section.</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="primitive-data-types"><a class="header" href="#primitive-data-types">Primitive Data Types</a></h2>
 <div style="text-align: right"> <i> == is the equality operator <br> === is the one and true equality operator <br> ==== is the equality operator which transcends time and space <br> ===== is the equality operator which transcends all other equality operators <br> ====== is the equality operator which summons the UNSPEAKABLE DOOM h̷̳͓͝ě̵̞͂ ̵̮͍͊͋i̴͎͂s̵̗͒ ̷̘̤̓̅h̸͜͝ḙ̵̀r̶͈̆ȇ̶̗̱̍ ̸͕̾h̴̲̗̾̅e̷̟̋ả̶̬v̶̯́̐͜ẽ̸̛͔n̶̩̒͊ ̴̢̯̍ḣ̵̳̻e̴̙̒̓l̵͇̟̃p̶̘̑ ̷̠͛͝ŭ̴͇̯̕s̶̮͕̒ <br> — from "The Book of the Equality Operators and their Virtue" by Laozi </i> </div>
 <h3 id="variables"><a class="header" href="#variables">Variables</a></h3>
@@ -585,10 +587,6 @@ And there is one more primitive data type that we will encounter soon.</p>
 <h3 id="summary-1"><a class="header" href="#summary-1">Summary</a></h3>
 <p>You learned how to declare variables using <code>let</code> and constants using <code>const</code>.
 You also learned about the most important primitive data types: numbers, strings, booleans and <code>undefined</code>.</p>
-<h3 id="further-reading-1"><a class="header" href="#further-reading-1">Further Reading</a></h3>
-<ul>
-<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_Types">JavaScript Guide - Grammar and types</a></li>
-</ul>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="arrays-and-objects"><a class="header" href="#arrays-and-objects">Arrays and objects</a></h2>
 <div style="text-align: right"> <i> The object of the superior programmer is truthy. <br> — Confucius </i> </div>
 <h3 id="arrays"><a class="header" href="#arrays">Arrays</a></h3>
@@ -790,8 +788,6 @@ We will talk about this in the section on functions.</p>
 <h3 id="summary-2"><a class="header" href="#summary-2">Summary</a></h3>
 <p>You have learned how to work with arrays and objects.
 You have also learned about (array and object) destructuring and the spread syntax.</p>
-<h3 id="further-reading-2"><a class="header" href="#further-reading-2">Further reading</a></h3>
-<p>There is no further reading for this section.</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="control-flow"><a class="header" href="#control-flow">Control flow</a></h2>
 <div style="text-align: right"> <i> Don't push the for loop, it flows by itself. <br> — Ancient Chinese proverb </i> </div>
 <h3 id="if-statements"><a class="header" href="#if-statements">If statements</a></h3>
@@ -1040,10 +1036,6 @@ However, <code>for...of</code> loops are commonly used and often sufficient for 
 <p>You learned how to make decisions using <code>if</code> statements, <code>if...else</code> statements, <code>if...else if...else</code> statements and the ternary operator.
 You also learned how to address missing properties using <em>optional chaining</em>.
 Finally you learned how to iterate over strings and arrays using the <code>for...of</code> loop.</p>
-<h3 id="further-reading-3"><a class="header" href="#further-reading-3">Further reading</a></h3>
-<ul>
-<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Loops_and_iteration">JavaScript Guide - Loops and iteration</a></li>
-</ul>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="functions"><a class="header" href="#functions">Functions</a></h2>
 <div style="text-align: right"> <i> "The best time to write a function was twenty years ago. But the second best time is today." <br> "That makes no sense." <br> "Actually, it kind of does if you think about the history of functional programming." <br> — Dialogue between a master and his student </i> </div>
 <h3 id="declaring-and-calling-functions"><a class="header" href="#declaring-and-calling-functions">Declaring and Calling Functions</a></h3>
@@ -1175,10 +1167,6 @@ We're very sorry about that and will now perform the appropriate penance procedu
 <h3 id="summary-4"><a class="header" href="#summary-4">Summary</a></h3>
 <p>You learned how to declare and call functions and methods.
 You also learned about the arrow notation as a convenient shorthand for functions.</p>
-<h3 id="further-reading-4"><a class="header" href="#further-reading-4">Further Reading</a></h3>
-<ul>
-<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Functions">JavaScript Guide - Functions</a></li>
-</ul>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="functional-thinking"><a class="header" href="#functional-thinking">Functional Thinking</a></h2>
 <div style="text-align: right"> <i> Gold can't be pure, but functions can. <br> — Ancient Chinese proverb </i> </div>
 <h3 id="pure-functions"><a class="header" href="#pure-functions">Pure Functions</a></h3>
@@ -1409,8 +1397,215 @@ This would look like this:</p>
 <h3 id="summary-5"><a class="header" href="#summary-5">Summary</a></h3>
 <p>You learned about important functional concepts like pure functions, immutability and higher-order functions.
 You also learned about the three most important higher-order functions - <code>map</code>, <code>filter</code> and <code>reduce</code>.</p>
-<h3 id="further-reading-5"><a class="header" href="#further-reading-5">Further reading</a></h3>
+<h3 id="further-reading"><a class="header" href="#further-reading">Further reading</a></h3>
 <p>There is no further reading for this section.</p>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="asynchronous-programming"><a class="header" href="#asynchronous-programming">Asynchronous Programming</a></h2>
+<div style="text-align: right"> <i> - proverb Ancient Chinese <br> is hard Asynchronous programming </i> </div>
+<h3 id="why-asynchronous-programming"><a class="header" href="#why-asynchronous-programming">Why Asynchronous Programming?</a></h3>
+<p>We often need to execute long-running operations (especially in web development).
+For example, we might need to fetch a resource from a server or request camera access from a user.
+In the first case, we need to wait for all the network packets to arrive, which might take a long time depending on your network connectivity.
+In the second case, we need to wait for the user to grant us access to the resource we require.</p>
+<p>We want do be able to do this without &quot;blocking&quot;.
+To accomplish this, we need to break with the &quot;synchronous&quot; programming model where statements are executed one after another.</p>
+<p>Consider the following example:</p>
+<pre><code class="language-js">function getTask(taskId) {
+  return `Task with ID ${taskId}`;
+}
+
+const task = getTask(0);
+console.log(task);
+</code></pre>
+<p>The <code>getTask</code> function is a <strong>synchronous function</strong>.
+This means that the calling code (i.e. <code>const task = getTask(0)</code>) has to wait until <code>getTask</code> has finished its work to continue.
+That is all fine and dandy here, given that <code>getTask</code> should (hopefully) complete its &quot;work&quot; very fast.</p>
+<p>But what if <code>getTask</code> represents a long-running operation, like retrieving a task from a server?</p>
+<pre><code class="language-js">function getTask(taskId) {
+  return retrieveTaskFromServer(taskId);
+}
+
+const task = getTask(0);
+console.log(task);
+</code></pre>
+<p>Now the calling code has to wait for the request to complete before it can do anything else.
+This will become a huge problem in the browser environment, given that synchronous functions like <code>getTask</code> are &quot;blocking&quot;.
+Therefore as long as <code>getTask</code> is executing, no other code will be able to run, including code that handles user events.
+This means that the user will not be able to select text, click buttons or do anything else with the website, i.e. the website &quot;hangs&quot;.</p>
+<p>Of course we want to avoid such a nuisance since this will result in the much dreaded <em>negative user experience</em>.</p>
+<blockquote>
+<p>If you ever clicked a button on a website and everything just freezes for three seconds, this often means that some developer wrote a synchronous function that handles a long-running task.</p>
+</blockquote>
+<p>We need a mechanism to start a (potentially) long-running task and still be able to do other things (like respond to user events) instead of blocking until the task is finished.
+Once the task is completed, our program needs to be notified with result.</p>
+<p>Here is a step-by-step breakdown of what we want to accomplish:</p>
+<ol>
+<li>Call a function that starts a long-running operation.</li>
+<li>The function should return immediately, so that the &quot;main&quot; program is able to do something else.</li>
+<li>Once the long-running operation is completed, the &quot;main&quot; program should be notified.</li>
+</ol>
+<blockquote>
+<p>In case you think to yourself right now &quot;this all sounds very complicated and when do I need long-running tasks anyway, maybe I'll skip this section&quot; - don't.
+Almost every project you'll write (essentially when doing web development) will contain asynchronous code.</p>
+</blockquote>
+<h3 id="promises"><a class="header" href="#promises">Promises</a></h3>
+<p>The central object in asynchronous JavaScript is the <strong>promise</strong>.
+A promise represents the eventual completion (or failure) of an asynchronous operation.</p>
+<p>Basically a promise is a like an IOU document - it &quot;promises&quot; you that it is currently working on some long-running operation and that it will eventually get back to you with the result of that long-running operation.</p>
+<p>If you want another metaphor, you can think about how you would order a hamburger at a fast food restaurant.
+In the “synchronous” world, you would walk up, tell your order to the hardworking employee of the restaurant and then immediately receive your hamburger.
+However since the preparation of a hamburger does not happen immediately (it's a &quot;long-running operation&quot;), the synchronous approach would block both you and the kitchen from doing something else.</p>
+<p>Instead the employee hands you an order receipt with a number.
+That order receipt is the promise that represents the eventual completion of the asynchronous operation (preparing your hamburger).</p>
+<p>We say that a promise is <strong>pending</strong> when it has been created, but the asynchronous operation it represents has not been completed yet.
+We say that a promise is <strong>fulfilled</strong> when the asynchronous operation it represents has been successfully completed.
+Finally a promise is <strong>rejected</strong> when the asynchronous operation it represents has failed.</p>
+<h3 id="working-with-promises-in-javascript"><a class="header" href="#working-with-promises-in-javascript">Working with Promises in JavaScript</a></h3>
+<p>Let's work through an example - fetching a resource from a server via HTTP.
+The HTTP protocol will be discussed in more detail later, but basically it enables us to send a request to a server and get a response.
+Since network packets don't arrive immediately, this can take a while, so we are dealing with a &quot;long-running operation&quot;.</p>
+<p>Both the browser as well as Node.js allow us to retrieve a resource from the network via the asynchronous <code>fetch</code> function.
+Consider this example:</p>
+<pre><code class="language-js">const url = 'https://jsonplaceholder.typicode.com/todos/1';
+fetch(url).then((response) =&gt; console.log(response));
+</code></pre>
+<p>This will log the response object we get from <code>https://jsonplaceholder.typicode.com/todos/1</code> to the console (we will learn how to deal with this response object in a second).</p>
+<p>We can rewrite the above example in a more explicit manner:</p>
+<pre><code class="language-js">const url = 'https://jsonplaceholder.typicode.com/todos/1';
+const fetchPromise = fetch(url);
+fetchPromise.then((response) =&gt; console.log(response));
+console.log(fetchPromise);
+</code></pre>
+<p>This is what happens:</p>
+<ol>
+<li>We call <code>fetch</code> which <em>immediately</em> returns a <em>pending</em> promise.</li>
+<li>We pass a handler function into the <code>then</code> method.
+The handler function will be called when the <code>fetch</code> succeeds (i.e. the promise returned by <code>fetch</code> is fulfilled).</li>
+<li>After a while the <code>fetch</code> succeeds, <code>fetchPromise</code> is fulfilled and the <code>response</code> object is logged.</li>
+</ol>
+<p>Note that because <code>fetch</code> returns immediately <code>console.log(fetchPromise)</code> is executed before <code>console.log(response)</code>.
+This is why you see the following output in your console:</p>
+<pre><code>Promise { &lt;pending&gt; }
+Response {
+    ...
+}
+</code></pre>
+<p>On one hand this is what we want - while we are waiting for the network request to complete, we can do other stuff (like logging <code>fetchPromise</code>).</p>
+<p>On the other hand this is the reason why asynchronous programming is often so confusing to beginners - it &quot;breaks&quot; the regular programming model.
+When we write synchronous code, we just execute statements one after another.
+With asynchronous code this is no longer the case - here we &quot;register&quot; a function to be executed later, do something else, and then at some point the registered function is executed.</p>
+<blockquote>
+<p>You should pause and think about this for a second.
+If you understand this point, you (mostly) understand asynchronous programming.</p>
+</blockquote>
+<h3 id="chaining-promises"><a class="header" href="#chaining-promises">Chaining Promises</a></h3>
+<p>The <code>response</code> object is not terribly useful.
+Let's retrieve the &quot;actual&quot; response which is a JSON object.
+JSON is a data format for data exchange (e.g. on a network) and can basically store arbitrary JavaScript objects.
+Here is how the JSON we get from <code>https://jsonplaceholder.typicode.com/todos/1</code> looks like:</p>
+<pre><code class="language-json">{
+  &quot;userId&quot;: 1,
+  &quot;id&quot;: 1,
+  &quot;title&quot;: &quot;delectus aut autem&quot;,
+  &quot;completed&quot;: false
+}
+</code></pre>
+<p>The <code>response</code> object has a <code>json</code> method to retrieve the JSON contained in a response.
+However, the <code>json</code> method is also asynchronous, so we are again dealing with promises.</p>
+<p>Your first instinct would be to write something like this:</p>
+<pre><code class="language-js">const url = 'https://jsonplaceholder.typicode.com/todos/1';
+const fetchPromise = fetch(url);
+const jsonPromise = fetchPromise.then((response) =&gt; {
+  const jsonPromise = response.json();
+  jsonPromise.then((json) =&gt; console.log(json));
+});
+</code></pre>
+<p>This is <em>technically</em> not wrong, but it's ugly.
+Basically every time we need to add an asynchronous operation to our code that depends on the result of a previous asynchronous operation, we would need to add one level of nesting which will quickly become unreadable.</p>
+<p>Luckily for us, the benevolent god-emperors of JavaScript have eliminated this problem by making <code>then</code> returns a promise that &quot;resolves&quot; to the result of the handler function.
+Therefore instead of nesting promises, we can <strong>chain</strong> promises:</p>
+<pre><code class="language-js">const url = 'https://jsonplaceholder.typicode.com/todos/1';
+const fetchPromise = fetch(url);
+const jsonPromise = fetchPromise.then((response) =&gt; response.json());
+jsonPromise.then((json) =&gt; console.log(json));
+</code></pre>
+<p>This is called <strong>promise chaining</strong>.</p>
+<p>We can rewrite this to be a bit more elegant:</p>
+<pre><code class="language-js">const url = 'https://jsonplaceholder.typicode.com/todos/1';
+fetch(url)
+  .then((response) =&gt; response.json())
+  .then((json) =&gt; console.log(json));
+</code></pre>
+<h3 id="handling-errors"><a class="header" href="#handling-errors">Handling Errors</a></h3>
+<p>The above code is missing error handling.
+Most long-running operations (especially those that involve external resources like a network or a file system) can fail.
+For example <code>fetch</code> can fail if your network is down.</p>
+<p>You can turn off your network and execute the above code again.
+You will get a weird error that looks approximately like this:</p>
+<pre><code>TypeError: fetch failed
+    at Object.fetch (node:internal/deps/undici/undici:11457:11)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5) {
+  cause: Error: getaddrinfo EAI_AGAIN jsonplaceholder.typicode.com
+      at GetAddrInfoReqWrap.onlookup [as oncomplete] (node:dns:107:26) {
+    errno: -3001,
+    code: 'EAI_AGAIN',
+    syscall: 'getaddrinfo',
+    hostname: 'jsonplaceholder.typicode.com'
+  }
+}
+</code></pre>
+<p>Additionally, we will usually want to throw an error if <code>fetch</code> itself succeeds, but the status of the response is &quot;not ok&quot; (we will return to this in more detail in the section about HTTP):</p>
+<pre><code class="language-js">const url = 'https://jsonplaceholder.typicode.com/todos/1';
+fetch(url)
+  .then((response) =&gt; {
+    if (!response.ok) {
+      throw new Error(`Request failed with status ${response.status}`);
+    }
+    return response.json();
+  })
+  .then((json) =&gt; console.log(json));
+</code></pre>
+<p>We want to be able to catch all the errors that can happen and log an error message to the console.
+The Promise API gives us the appropriately named <code>catch</code> method to accomplish this.
+We simply add a catch handler to the end of our promise chain - it will be called when any of the asynchronous operations fail:</p>
+<pre><code class="language-js">const url = 'https://jsonplaceholder.typicode.com/todos/1';
+fetch(url)
+  .then((response) =&gt; {
+    if (!response.ok) {
+      throw new Error(`Request failed with status ${response.status}`);
+    }
+    return response.json();
+  })
+  .then((json) =&gt; console.log(json))
+  .catch((error) =&gt; console.error(error));
+</code></pre>
+<p>Turn off your network and try running the <code>fetch</code> again.
+You will now see an appropriately logged error.
+Instead of just crashing, you program can now do something else (like showing an error modal to the user and informing him that something went wrong).</p>
+<h3 id="async-and-await"><a class="header" href="#async-and-await">Async and Await</a></h3>
+<p>Promises are great, but as discussed, the are not completely intuitive.
+We can use <code>async</code> and <code>await</code> keywords to simplify asynchronous code and make it look more like synchronous code.
+To this end, we can declare an <code>async</code> function and then use the <code>await</code> keyword to wait for a promise and get its fulfillment value:</p>
+<pre><code class="language-js">async function fetchTask(url) {
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`Request failed with status ${response.status}`);
+    }
+    const json = await response.json();
+    return json;
+  } catch (error) {
+    console.error(`Could not fetch URL ${url}`);
+  }
+}
+
+const url = 'https://jsonplaceholder.typicode.com/todos/1';
+fetchTask(url).then((json) =&gt; console.log(json));
+</code></pre>
+<p>Note that you can only use <code>await</code> inside an <code>async</code> function (unless your code is in a so called &quot;module&quot;).
+This why we have to use <code>then</code> with <code>fetchTask</code> instead of <code>await</code>ing the promise returned by <code>fetchTask</code>.</p>
+<h3 id="summary-6"><a class="header" href="#summary-6">Summary</a></h3>
+<p>You learned about asynchronous programming.
+You learned how to create promises, chain promises, handle errors in promise chains and how to simplify asynchronous code by using the async and await keywords.</p>
 
                     </main>
 
