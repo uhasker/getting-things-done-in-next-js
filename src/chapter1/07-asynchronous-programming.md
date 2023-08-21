@@ -264,8 +264,8 @@ const url = 'https://jsonplaceholder.typicode.com/todos/1';
 fetchTask(url).then((json) => console.log(json));
 ```
 
-Note that you can only use `await` inside an `async` function (unless your code is in a so called "module").
-This why we have to use `then` with `fetchTask` instead of `await`ing the promise returned by `fetchTask`.
+Note that for some runtimes you can only use `await` inside an `async` function.
+This is why we use `then` with `fetchTask` instead of `await`ing the promise returned by `fetchTask`.
 
 ### Summary
 
