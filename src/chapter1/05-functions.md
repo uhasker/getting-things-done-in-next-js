@@ -194,7 +194,3 @@ Instead we want you to think _functionally_, which is what the next section will
 
 You learned how to declare and call functions and methods.
 You also learned about the arrow notation as a convenient shorthand for functions.
-
-### Further Reading
-
-- [JavaScript Guide - Functions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Functions)

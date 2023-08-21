@@ -348,7 +348,3 @@ for (const task of tasks) {
 You learned how to make decisions using `if` statements, `if...else` statements, `if...else if...else` statements and the ternary operator.
 You also learned how to address missing properties using _optional chaining_.
 Finally you learned how to iterate over strings and arrays using the `for...of` loop.
-
-### Further reading
-
-- [JavaScript Guide - Loops and iteration](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Loops_and_iteration)

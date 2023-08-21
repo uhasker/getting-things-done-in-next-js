@@ -12,4 +12,4 @@
   - [Control Flow](chapter1/04-control-flow.md)
   - [Functions](chapter1/05-functions.md)
   - [Functional Thinking](chapter1/06-functional-thinking.md)
-
+  - [Asynchronous Programming](chapter1/07-asynchronous-programming.md)

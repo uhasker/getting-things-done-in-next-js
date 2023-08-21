@@ -166,6 +166,13 @@ And again verify that Node.js was successfully installed:
 node --version
 ```
 
+The installation script also automatically installed the **node package manager** (_npm_ for short) which will later become necessary for managing dependencies in our projects.
+Verify that npm was installed as well:
+
+```sh
+npm --version
+```
+
 Now that Node.js is installed, you can open a Node.js console by typing node in the command line.
 Now let's again print "Hello, world!" using the `console.log` method.
 Type the following into the Node.js console and hit <kbd>Return</kbd>:
@@ -268,7 +275,3 @@ Let's move on.
 
 You learned about the JavaScript browser runtime, Node.js and how to use the console of the various runtimes.
 You learned how to execute code in a REPL as well as how to execute scripts.
-
-### Further Reading
-
-There is no further reading for this section.

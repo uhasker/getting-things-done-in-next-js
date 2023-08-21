@@ -283,7 +283,3 @@ This will print:
 
 You have learned how to work with arrays and objects.
 You have also learned about (array and object) destructuring and the spread syntax.
-
-### Further reading
-
-There is no further reading for this section.

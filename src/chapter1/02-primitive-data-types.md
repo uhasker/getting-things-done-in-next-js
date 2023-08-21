@@ -293,7 +293,3 @@ console.log(typeof someVariable); // undefined
 
 You learned how to declare variables using `let` and constants using `const`.
 You also learned about the most important primitive data types: numbers, strings, booleans and `undefined`.
-
-### Further Reading
-
-- [JavaScript Guide - Grammar and types](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_Types)
