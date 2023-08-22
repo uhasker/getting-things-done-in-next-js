@@ -1,6 +1,6 @@
 ## Functions
 
-<div style="text-align: right"> <i> "The best time to write a function was twenty years ago. But the second best time is today." <br> "That makes no sense." <br> "Actually, it kind of does if you think about the history of functional programming." <br> — Dialogue between a master and his student </i> </div>
+<div style="text-align: right"> <i> A function with no purpose is like a dragon with no fire. <br> — Ancient Chinese proverb </i> </div>
 
 ### Declaring and Calling Functions
 
