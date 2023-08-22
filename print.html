@@ -1639,7 +1639,7 @@ console.log(greet('John Doe'));
 <p>This is the basic setup, but in order to execute this in the browser or in Node.js we need to make some more adjustments.</p>
 <h3 id="esm-in-the-browser"><a class="header" href="#esm-in-the-browser">ESM in the Browser</a></h3>
 <p>Let's create a file named <code>index.html</code> in which we use <code>main.js</code> as a JavaScript module:</p>
-<pre><code class="language-html">&lt;!doctype html&gt;
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
 &lt;html lang=&quot;en&quot;&gt;
   &lt;head&gt;
     &lt;meta charset=&quot;UTF-8&quot; /&gt;
@@ -1744,12 +1744,12 @@ import { greet as otherGreet } from './other-greet.js';
 <pre><code class="language-js">import thingy from './greet.js';
 </code></pre>
 <h3 id="namespace-imports"><a class="header" href="#namespace-imports">Namespace Imports</a></h3>
-<p>If you wish to avoid name conflicts (like the <code>greet</code> situation presented above) you can do even better with module objects:</p>
+<p>If you wish to avoid name conflicts (like the <code>greet</code> situation presented above) you can do even better with namespace imports:</p>
 <pre><code class="language-js">import * as greet from './greet.js';
 
 greet.getGreeting('Hello');
 </code></pre>
-<p>The <code>import * as</code> syntax retrieves all exports available in <code>greet.js</code>, creates an object <code>greet</code> and makes all the exports available as a member of that object.
+<p>The <code>import * as</code> syntax retrieves all exports available in <code>greet.js</code>, creates a <strong>namespace object</strong> <code>greet</code> and makes all the exports available as a member of that object.
 This means that the <code>greet</code> conflict can be resolved like this:</p>
 <pre><code class="language-js">import * as greetModule from './greet.js';
 import * as otherGreetModule from './other-greet.js';
@@ -1757,7 +1757,6 @@ import * as otherGreetModule from './other-greet.js';
 greetModule.greet('John');
 otherGreeetModule.greet('John');
 </code></pre>
-<p>Here <code>greet</code> represents a namespace object which contains all exports as properties.</p>
 
                     </main>
 
