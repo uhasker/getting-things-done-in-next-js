@@ -1,5 +1,7 @@
 ## Modules
 
+<div style="text-align: right"> <i> He who writes with clarity, simplicity, and purpose will find his modules cherished by many. <br> — Ancient Chinese proverb </i> </div>
+
 ### Module System
 
 At the moment, the scripts we write are not large and easily fit into a single file.
