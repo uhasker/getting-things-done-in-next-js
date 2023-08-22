@@ -1521,7 +1521,7 @@ const jsonPromise = fetchPromise.then((response) =&gt; {
 </code></pre>
 <p>This is <em>technically</em> not wrong, but it's ugly.
 Basically every time we need to add an asynchronous operation to our code that depends on the result of a previous asynchronous operation, we would need to add one level of nesting which will quickly become unreadable.</p>
-<p>Luckily for us, the benevolent god-emperors of JavaScript have eliminated this problem by making <code>then</code> return a promise that &quot;resolves&quot; to the result of the handler function.
+<p>Luckily for us, the benevolent god-emperors of JavaScript have eliminated this problem by making <code>then</code> returns a promise that &quot;resolves&quot; to the result of the handler function.
 Therefore instead of nesting promises, we can <strong>chain</strong> promises:</p>
 <pre><code class="language-js">const url = 'https://jsonplaceholder.typicode.com/todos/1';
 const fetchPromise = fetch(url);
