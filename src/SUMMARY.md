@@ -14,3 +14,7 @@
   - [Functional Thinking](chapter1/06-functional-thinking.md)
   - [Asynchronous Programming](chapter1/07-asynchronous-programming.md)
   - [Modules](chapter1/08-modules.md)
+
+- [A Vanilla Client](chapter2/README.md)
+
+  - [Hypertext Markup Language](chapter2/01-hypertext-markup-language.md)
