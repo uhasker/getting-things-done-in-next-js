@@ -84,7 +84,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="title-page.html">Getting Things Done in Next.js</a></li><li class="chapter-item expanded affix "><a href="introduction.html">Introduction</a></li><li class="chapter-item expanded affix "><a href="acknowledgments.html">Acknowledgments</a></li><li class="chapter-item expanded "><a href="chapter1/index.html"><strong aria-hidden="true">1.</strong> A Brief Introduction to JavaScript</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter1/01-hello-world.html"><strong aria-hidden="true">1.1.</strong> Hello World</a></li><li class="chapter-item expanded "><a href="chapter1/02-primitive-data-types.html"><strong aria-hidden="true">1.2.</strong> Primitive Data Types</a></li><li class="chapter-item expanded "><a href="chapter1/03-arrays-and-objects.html"><strong aria-hidden="true">1.3.</strong> Arrays and Objects</a></li><li class="chapter-item expanded "><a href="chapter1/04-control-flow.html"><strong aria-hidden="true">1.4.</strong> Control Flow</a></li><li class="chapter-item expanded "><a href="chapter1/05-functions.html"><strong aria-hidden="true">1.5.</strong> Functions</a></li><li class="chapter-item expanded "><a href="chapter1/06-functional-thinking.html"><strong aria-hidden="true">1.6.</strong> Functional Thinking</a></li><li class="chapter-item expanded "><a href="chapter1/07-asynchronous-programming.html"><strong aria-hidden="true">1.7.</strong> Asynchronous Programming</a></li><li class="chapter-item expanded "><a href="chapter1/08-modules.html"><strong aria-hidden="true">1.8.</strong> Modules</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="title-page.html">Getting Things Done in Next.js</a></li><li class="chapter-item expanded affix "><a href="introduction.html">Introduction</a></li><li class="chapter-item expanded affix "><a href="acknowledgments.html">Acknowledgments</a></li><li class="chapter-item expanded "><a href="chapter1/index.html"><strong aria-hidden="true">1.</strong> A Brief Introduction to JavaScript</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter1/01-hello-world.html"><strong aria-hidden="true">1.1.</strong> Hello World</a></li><li class="chapter-item expanded "><a href="chapter1/02-primitive-data-types.html"><strong aria-hidden="true">1.2.</strong> Primitive Data Types</a></li><li class="chapter-item expanded "><a href="chapter1/03-arrays-and-objects.html"><strong aria-hidden="true">1.3.</strong> Arrays and Objects</a></li><li class="chapter-item expanded "><a href="chapter1/04-control-flow.html"><strong aria-hidden="true">1.4.</strong> Control Flow</a></li><li class="chapter-item expanded "><a href="chapter1/05-functions.html"><strong aria-hidden="true">1.5.</strong> Functions</a></li><li class="chapter-item expanded "><a href="chapter1/06-functional-thinking.html"><strong aria-hidden="true">1.6.</strong> Functional Thinking</a></li><li class="chapter-item expanded "><a href="chapter1/07-asynchronous-programming.html"><strong aria-hidden="true">1.7.</strong> Asynchronous Programming</a></li><li class="chapter-item expanded "><a href="chapter1/08-modules.html"><strong aria-hidden="true">1.8.</strong> Modules</a></li></ol></li><li class="chapter-item expanded "><a href="chapter2/index.html"><strong aria-hidden="true">2.</strong> A Vanilla Client</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter2/01-hypertext-markup-language.html"><strong aria-hidden="true">2.1.</strong> Hypertext Markup Language</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -1757,6 +1757,132 @@ import * as otherGreetModule from './other-greet.js';
 greetModule.greet('John');
 otherGreeetModule.greet('John');
 </code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="the-client"><a class="header" href="#the-client">The Client</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="hypertext-markup-language"><a class="header" href="#hypertext-markup-language">Hypertext Markup Language</a></h2>
+<div style="text-align: right"> <i> Hey guys, how do I parse HTML with a regular expression? <br> - Seconds before disaster </i> </div>
+<h3 id="a-minimal-html-file"><a class="header" href="#a-minimal-html-file">A minimal HTML file</a></h3>
+<p>Create a project directory (<em>easy-opus</em> for example).
+From here on, all work will be done within the <em>easy-opus</em> directory.</p>
+<p>Now, let's create a webpage using <strong>HTML</strong>, a markup language designed for defining documents to be displayed in a browser.
+We briefly touched on HTML in section 1.1, but now we will look at HTML a bit more detail.</p>
+<blockquote>
+<p>Markup languages provide rules for defining the type of information contained in a document.
+Markup languages differ from programming languages - while markup languages enable the creation of displayable documents, programming languages offer much more powerful capabilities.
+Therefore HTML is a markup language and JavaScript is a programming language.</p>
+</blockquote>
+<p>Create a file named <code>index.html</code> in the project directory.
+Now write some minimal useful HTML to display two hardcoded tasks:</p>
+<pre><code class="language-html">&lt;!doctype html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+  &lt;head&gt;
+    &lt;meta charset=&quot;utf-8&quot; /&gt;
+    &lt;title&gt;Easy Opus&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div id=&quot;app&quot;&gt;
+      &lt;div&gt;
+        &lt;h1&gt;My tasks&lt;/h1&gt;
+        &lt;div id=&quot;taskList&quot;&gt;
+          &lt;p&gt;Read the Next.js book&lt;/p&gt;
+          &lt;p&gt;Write a website&lt;/p&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>When you open the HTML file in your browser you should a heading and two tasks.</p>
+<p>Hooray, you've created a simple HTML document!
+Now you can close this book and go procrastinate.</p>
+<p>What's that?
+You're not budging?
+Hm, that's weird.
+Oh we see, you've <em>unfortunately</em> been <em>forced</em> to read this book (blink <em>once</em> for help).</p>
+<p>Well, since we both have to be here anyway, let's march onwards and dissect the masterpiece you've just created!</p>
+<h3 id="html-elements"><a class="header" href="#html-elements">HTML elements</a></h3>
+<p>HTML is comprised of <strong>HTML elements</strong> used to specify the type of content you want to render.
+For example, the <code>p</code> element represents a paragraph:</p>
+<pre><code class="language-html">&lt;p&gt;Read the Next.js book&lt;/p&gt;
+</code></pre>
+<p>An HTML element usually has some <strong>content</strong> between an <strong>opening tag</strong> and a <strong>closing tag</strong>.
+The opening tag is the name of the element wrapped in angle brackets (like <code>&lt;p&gt;</code>).
+The closing tag is the name of the element wrapped in angle brackets with a <em>forward slash before the element name</em> (like <code>&lt;/p&gt;</code>).</p>
+<p>There are various HTML elements, such as <code>p</code> for paragraphs and <code>div</code> for generic containers.
+We will discuss more elements later.</p>
+<p>HTML's power lies in the fact that most elements can be nested.
+For example, you could nest paragraphs within a generic container:</p>
+<pre><code class="language-html">&lt;div&gt;
+  &lt;p&gt;Read the Next.js book&lt;/p&gt;
+  &lt;p&gt;Create a website&lt;/p&gt;
+  &lt;p&gt;???&lt;/p&gt;
+  &lt;p&gt;Profit!&lt;/p&gt;
+&lt;/div&gt;
+</code></pre>
+<p>The nesting can go as many levels as you want.
+For example, we could use the <code>&lt;em&gt;</code> element to emphasize some of the words in the previous example:</p>
+<pre><code class="language-html">&lt;div&gt;
+  &lt;p&gt;Read the &lt;em&gt;Next.js&lt;/em&gt; book&lt;/p&gt;
+  &lt;p&gt;Create a &lt;em&gt;website&lt;/em&gt;&lt;/p&gt;
+  &lt;p&gt;???&lt;/p&gt;
+  &lt;p&gt;Profit!&lt;/p&gt;
+&lt;/div&gt;
+</code></pre>
+<p>Note that to do nesting correctly, the tags of the element being nested must be inside the tags of the element it is being nested in.
+For example the tags of the element <code>&lt;em&gt;Next.js&lt;/em&gt;</code> are inside the element <code>&lt;p&gt;Read the &lt;em&gt;Next.js&lt;/em&gt; book&lt;/p&gt;</code>.</p>
+<h3 id="html-attributes"><a class="header" href="#html-attributes">HTML Attributes</a></h3>
+<p>Elements can also have <strong>HTML attributes</strong>.
+Attributes contain further information about the element.
+Two particularly important attributes are <code>id</code> and <code>class</code>.</p>
+<p>The <code>id</code> attribute is used to specify a <strong>unique identity</strong> for an HTML element.
+You can use that attribute to - well - uniquely identify an element.
+This allows us to reference that element using JavaScript or CSS.</p>
+<p>Here is how we can create an element with an <code>id</code> attribute:</p>
+<pre><code class="language-html">&lt;p id=&quot;readBook&quot;&gt;Read the Next.js book&lt;/p&gt;
+</code></pre>
+<p>Generally speaking, you can specify attributes by writing the attribute name, followed by an equal sign, followed by the attribute value (which is wrapped inside double quotes).</p>
+<p>The <code>class</code> attribute is used to specify a <strong>class</strong> for an HTML element.
+Unlike unique identifiers, multiple HTML elements can share the same class, which is useful for applying consistent styles to multiple elements.
+For example you could color all HTML elements of class <code>blue-text</code> blue.</p>
+<p>There are many more attributes and different HTML elements often have different attributes.</p>
+<p>We will cover some of the most important elements together with their attributes in the next section.</p>
+<h3 id="structure-of-an-html-document"><a class="header" href="#structure-of-an-html-document">Structure of an HTML Document</a></h3>
+<p>Let's have a look at <code>index.html</code> again:</p>
+<pre><code class="language-html">&lt;!doctype html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+  &lt;head&gt;
+    &lt;meta charset=&quot;utf-8&quot; /&gt;
+    &lt;title&gt;Easy Opus&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div id=&quot;app&quot;&gt;
+      &lt;div&gt;
+        &lt;h1&gt;My tasks&lt;/h1&gt;
+        &lt;div id=&quot;taskList&quot;&gt;
+          &lt;p&gt;Read the Next.js book&lt;/p&gt;
+          &lt;p&gt;Write a website&lt;/p&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>The document begins with <code>&lt;!DOCTYPE html&gt;</code> which is a <em>document type declaration</em>.
+It is there mainly for historical reasons - in the <em>olden days</em> of HTML the doctype specified which rules the HTML page followed.
+Nowadays, we just use the shortest valid doctype which happens to be <code>&lt;!DOCTYPE html&gt;</code>.</p>
+<p>The doctype is followed by an <code>&lt;html&gt;</code> element which contains all the content of the document.
+This element is usually called the <strong>root element</strong>.</p>
+<p>The <code>&lt;head&gt;</code> element includes important information about the page.
+Here is where we could specify how our page would appear in search results, which character encoding our website uses and more.</p>
+<p>In our example the <code>&lt;head&gt;</code> element includes a <code>&lt;meta&gt;</code> element with a <code>charset</code> attribute and a <code>&lt;title&gt;</code> element.
+This particular <code>&lt;meta&gt;</code> element describes the character encoding for the HTML document (we will return to this later in more detail) and the <code>&lt;title&gt;</code> element sets the title of the page (i.e. the title that will appear in the browser tab).</p>
+<p>Finally the <code>&lt;body&gt;</code> element contains all the content that will actually be rendered on the page.
+In our example, the heading and the task list are within the <code>&lt;body&gt;</code> element.</p>
+<blockquote>
+<p>We will discuss character encodings in greater detail later.</p>
+</blockquote>
+<h3 id="summary-7"><a class="header" href="#summary-7">Summary</a></h3>
+<p>You know what HTML is, how HTML elements look like and how to use HTML attributes.
+You also know how the basic structure of an HTML document looks like.</p>
 
                     </main>
 
