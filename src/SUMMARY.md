@@ -18,3 +18,4 @@
 - [A Vanilla Client](chapter2/README.md)
 
   - [Hypertext Markup Language](chapter2/01-hypertext-markup-language.md)
+  - [Marking Up Text](chapter2/02-marking-up-text.md)
