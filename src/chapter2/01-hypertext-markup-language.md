@@ -38,7 +38,7 @@ Now write some minimal useful HTML to display two hardcoded tasks:
 </html>
 ```
 
-When you open the HTML file in your browser you should a heading and two tasks.
+When you open the HTML file in your browser you should see a heading and two tasks.
 
 Hooray, you've created a simple HTML document!
 Now you can close this book and go procrastinate.
