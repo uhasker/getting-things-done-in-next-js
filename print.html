@@ -84,7 +84,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="title-page.html">Getting Things Done in Next.js</a></li><li class="chapter-item expanded affix "><a href="introduction.html">Introduction</a></li><li class="chapter-item expanded affix "><a href="acknowledgments.html">Acknowledgments</a></li><li class="chapter-item expanded "><a href="chapter1/index.html"><strong aria-hidden="true">1.</strong> A Brief Introduction to JavaScript</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter1/01-hello-world.html"><strong aria-hidden="true">1.1.</strong> Hello World</a></li><li class="chapter-item expanded "><a href="chapter1/02-primitive-data-types.html"><strong aria-hidden="true">1.2.</strong> Primitive Data Types</a></li><li class="chapter-item expanded "><a href="chapter1/03-arrays-and-objects.html"><strong aria-hidden="true">1.3.</strong> Arrays and Objects</a></li><li class="chapter-item expanded "><a href="chapter1/04-control-flow.html"><strong aria-hidden="true">1.4.</strong> Control Flow</a></li><li class="chapter-item expanded "><a href="chapter1/05-functions.html"><strong aria-hidden="true">1.5.</strong> Functions</a></li><li class="chapter-item expanded "><a href="chapter1/06-functional-thinking.html"><strong aria-hidden="true">1.6.</strong> Functional Thinking</a></li><li class="chapter-item expanded "><a href="chapter1/07-asynchronous-programming.html"><strong aria-hidden="true">1.7.</strong> Asynchronous Programming</a></li><li class="chapter-item expanded "><a href="chapter1/08-modules.html"><strong aria-hidden="true">1.8.</strong> Modules</a></li></ol></li><li class="chapter-item expanded "><a href="chapter2/index.html"><strong aria-hidden="true">2.</strong> A Vanilla Client</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter2/01-hypertext-markup-language.html"><strong aria-hidden="true">2.1.</strong> Hypertext Markup Language</a></li><li class="chapter-item expanded "><a href="chapter2/02-marking-up-text.html"><strong aria-hidden="true">2.2.</strong> Marking Up Text</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="title-page.html">Getting Things Done in Next.js</a></li><li class="chapter-item expanded affix "><a href="introduction.html">Introduction</a></li><li class="chapter-item expanded affix "><a href="acknowledgments.html">Acknowledgments</a></li><li class="chapter-item expanded "><a href="chapter1/index.html"><strong aria-hidden="true">1.</strong> A Brief Introduction to JavaScript</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter1/01-hello-world.html"><strong aria-hidden="true">1.1.</strong> Hello World</a></li><li class="chapter-item expanded "><a href="chapter1/02-primitive-data-types.html"><strong aria-hidden="true">1.2.</strong> Primitive Data Types</a></li><li class="chapter-item expanded "><a href="chapter1/03-arrays-and-objects.html"><strong aria-hidden="true">1.3.</strong> Arrays and Objects</a></li><li class="chapter-item expanded "><a href="chapter1/04-control-flow.html"><strong aria-hidden="true">1.4.</strong> Control Flow</a></li><li class="chapter-item expanded "><a href="chapter1/05-functions.html"><strong aria-hidden="true">1.5.</strong> Functions</a></li><li class="chapter-item expanded "><a href="chapter1/06-functional-thinking.html"><strong aria-hidden="true">1.6.</strong> Functional Thinking</a></li><li class="chapter-item expanded "><a href="chapter1/07-asynchronous-programming.html"><strong aria-hidden="true">1.7.</strong> Asynchronous Programming</a></li><li class="chapter-item expanded "><a href="chapter1/08-modules.html"><strong aria-hidden="true">1.8.</strong> Modules</a></li></ol></li><li class="chapter-item expanded "><a href="chapter2/index.html"><strong aria-hidden="true">2.</strong> Leveling Up with TypeScript</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter2/01-why-typescript.html"><strong aria-hidden="true">2.1.</strong> Why TypeScript?</a></li><li class="chapter-item expanded "><a href="chapter2/02-basic-types.html"><strong aria-hidden="true">2.2.</strong> Basic Types</a></li><li class="chapter-item expanded "><a href="chapter2/03-annotating-functions.html"><strong aria-hidden="true">2.3.</strong> Annotating Functions</a></li><li class="chapter-item expanded "><a href="chapter2/04-union-types.html"><strong aria-hidden="true">2.4.</strong> Union Types</a></li><li class="chapter-item expanded "><a href="chapter2/05-generics.html"><strong aria-hidden="true">2.5.</strong> Generics</a></li><li class="chapter-item expanded "><a href="chapter2/06-the-keyof-and-typeof-operators.html"><strong aria-hidden="true">2.6.</strong> The keyof and typeof Type Operators</a></li></ol></li><li class="chapter-item expanded "><a href="chapter3/index.html"><strong aria-hidden="true">3.</strong> A Vanilla Client</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter3/01-hypertext-markup-language.html"><strong aria-hidden="true">3.1.</strong> Hypertext Markup Language</a></li><li class="chapter-item expanded "><a href="chapter3/02-marking-up-text.html"><strong aria-hidden="true">3.2.</strong> Marking Up Text</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -1757,7 +1757,555 @@ import * as otherGreetModule from './other-greet.js';
 greetModule.greet('John');
 otherGreeetModule.greet('John');
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="chapter-2-a-vanilla-client"><a class="header" href="#chapter-2-a-vanilla-client">Chapter 2: A Vanilla Client</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="chapter-2-leveling-up-with-typescript"><a class="header" href="#chapter-2-leveling-up-with-typescript">Chapter 2: Leveling Up with TypeScript</a></h1>
+<div style="text-align: right"> <i> To employ TypeScript is to light a lantern on the dim path of JavaScript, revealing the stones upon which one may trip. <br> - Ancient Chinese proverb </i> </div>
+<p>Now that we learned the basics of JavaScript, we could theoretically dive right into writing our application.
+However, JavaScript as a language has a central problem - it does not come with type checking.
+For example, there is nothing preventing you from trying to add two objects except the fact that you will get a runtime error.</p>
+<p>We would like to be able to see this during development.
+Enter TypeScript which allows us to annotate our objects and functions.
+If we make a mistake, we will see it immediately.</p>
+<p>The most common kinds of errors that programmers write can be described as type errors: a certain kind of value was used where a different kind of value was expected. This could be due to simple typos, a failure to understand the API surface of a library, incorrect assumptions about runtime behavior, or other errors. The goal of TypeScript is to be a static typechecker for JavaScript programs - in other words, a tool that runs before your code runs (static) and ensures that the types of the program are correct (typechecked).</p>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="why-typescript"><a class="header" href="#why-typescript">Why TypeScript?</a></h2>
+<div style="text-align: right"> <i> Better to wrangle with TypeScript's compiler today, than to wrestle with JavaScript bugs tomorrow. <br> - Ancient Chinese proverb </i> </div>
+<h3 id="a-little-story"><a class="header" href="#a-little-story">A Little Story</a></h3>
+<p>Consider the following scenario.
+You have a JavaScript function <code>showTask(task)</code> which takes a <code>task</code> object and displays the task in a UI (or in the console).
+Whenever you want to use this function you need to find out if the object you are dealing with can be passed to the function.</p>
+<p>Let's say you have the following task object:</p>
+<pre><code class="language-js">const task = {
+  id: 1,
+  summary: 'Read the Next.js book',
+  description: 'Read and understand the Next.js book.',
+};
+</code></pre>
+<p>Can you pass this object to <code>showTask</code>?
+Well, you can't tell because maybe the <code>showTask</code> function expects an object that has <code>id</code>, <code>summary</code>, <code>description</code> <em>and</em> <code>status</code> fields.
+The only way to find out if your <code>task</code> object is a valid input for <code>showTask</code> is to - well - actually pass it and find out.
+This is obviously not the ideal workflow (especially if you happen to find out that your object lacked some important properties <em>in production</em>).</p>
+<p>Additionally, if the author of the <code>showTask</code> function changes his function to expect additional properties on the <code>task</code> object, he would now have to check all the invocations of <code>showTask</code> to verify that he didn't accidentally break something.</p>
+<p>This is where TypeScript comes in.
+With TypeScript we would be able to <em>statically type</em> the function by adding <em>type annotations</em> like so:</p>
+<pre><code class="language-ts">type Task = {
+  id: number;
+  summary: string;
+  description: string;
+};
+
+function showTask(task: Task) {
+  // Implementation here
+}
+</code></pre>
+<p>Now we know <em>exactly</em> what kind of object <code>showTask</code> expects.
+If we pass an object that lacks some of the expected properties and run <em>type checks</em> (more on that later) we will get an error long before the bad code can make it anywhere near production.
+Even better - your editor will be able to show you that you might have a problem during development:</p>
+<pre><code class="language-ts">showTask({
+  id: 1,
+  summary: 'Read the Next.js book',
+});
+// Most editors will now show a squiggly red line somewhere around here and inform you that you
+// that the object is missing a description property.
+</code></pre>
+<p>Better still, you now get <em>autocompletion</em> - editors will show possible suggestions for the property names your object should have while you type.
+This saves an enormous amount of time and effort when writing code.</p>
+<p>To summarize, using TypeScript massively enhances your developer workflow which is why nowadays most large projects no longer use vanilla JavaScript, but TypeScript instead.</p>
+<h3 id="installing-typescript"><a class="header" href="#installing-typescript">Installing TypeScript</a></h3>
+<p>Install TypeScript by running the following command:</p>
+<pre><code class="language-sh">npm install -g typescript
+</code></pre>
+<p>This installs the TypeScript compiler <code>tsc</code> - the <code>-g</code> flag tells <code>npm</code> to install it globally.</p>
+<p>Let's see how we can use it - create a file <code>index.ts</code>:</p>
+<pre><code class="language-ts">type Task = {
+  id: number;
+  summary: string;
+  description: string;
+};
+
+function showTask(task: Task) {
+  console.log(
+    `Task with ID=${task.id} has the summary ${task.summary} and description ${task.description}`,
+  );
+}
+
+showTask({
+  id: 1,
+  summary: 'Read the Next.js book',
+  description: 'Read and understand the Next.js book.',
+});
+</code></pre>
+<p>We can't execute TypeScript files in the browser or in Node.js directly.
+Instead we need to first <em>compile</em> the TypeScript code to JavaScript and then run the resulting JavaScript code.
+Here is how we can compile the <code>index.ts</code> file:</p>
+<pre><code class="language-sh">tsc index.ts
+</code></pre>
+<p>Since there were no type errors, nothing is logged on the console and we get a file <code>index.js</code> which looks (approximately) as follows:</p>
+<pre><code class="language-js">function showTask(task) {
+  console.log(
+    'Task with ID='
+      .concat(task.id, ' has the summary ')
+      .concat(task.summary, ' and description ')
+      .concat(task.description),
+  );
+}
+showTask({
+  id: 1,
+  summary: 'Read the Next.js book',
+  description: 'Read and understand the Next.js book.',
+});
+</code></pre>
+<p>Note that all the type annotations are gone and all we get is vanilla JavaScript that we can execute.
+Additionally the TypeScript compiler <em>downleved</em> our code so that it can be executed by older platforms.
+Here the template string syntax (which is not supported by very old browser) was replaced by a series of <code>concat</code> calls.</p>
+<p>What if there is an error in <code>index.ts</code>?</p>
+<pre><code class="language-ts">type Task = {
+  id: number;
+  summary: string;
+  description: string;
+};
+
+function showTask(task: Task) {
+  console.log(
+    `Task with ID=${task.id} has the summary ${task.summary} and description ${task.description}`,
+  );
+}
+
+showTask({
+  id: 1,
+  summary: 'Read the Next.js book',
+});
+</code></pre>
+<p>Now we get an error if we try to run <code>tsc index.ts</code>:</p>
+<pre><code>index.ts:13:10 - error TS2345: Argument of type '{ id: number; summary: string; }' is not assignable to parameter of type 'Task'.
+  Property 'description' is missing in type '{ id: number; summary: string; }' but required in type 'Task'.
+13 showTask({
+            ~
+14   id: 1,
+   ~~~~~~~~
+15   summary: 'Read the Next.js book',
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+16 });
+   ~
+  index.ts:4:3
+    4   description: string;
+        ~~~~~~~~~~~
+    'description' is declared here.
+Found 1 error in index.ts:13
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="basic-types"><a class="header" href="#basic-types">Basic Types</a></h2>
+<div style="text-align: right"> <i> Use TypeScript, find enlightenment. Ignore TypeScript, trip over undefined. <br> - Ancient Chinese proverb </i> </div>
+<h3 id="annotating-variables"><a class="header" href="#annotating-variables">Annotating Variables</a></h3>
+<p>You can annotate variables by adding a type annotation:</p>
+<pre><code class="language-ts">let task: string = 'Read the Next.js book';
+</code></pre>
+<p>You can annotate constants in a similar fashion:</p>
+<pre><code class="language-ts">const name: string = 'Read the Next.js book';
+</code></pre>
+<p>Note that this usually is not needed, since TypeScript can automatically perform <em>type inference</em> and infer the type of a variable or a constant:</p>
+<pre><code class="language-ts">let name = 'Read the Next.js book';
+</code></pre>
+<p>We will very rarely write explicit type annotations (only if we really need them) and instead let TypeScript infer as much as it can.
+You be suprised by how few type annotations you need to get completely type checked code!</p>
+<h3 id="primitive-types"><a class="header" href="#primitive-types">Primitive Types</a></h3>
+<p>The primitive types that are present in TypeScript should already be familiar to you from the chapter on JavaScript.
+TypeScript has the <code>number</code> type:</p>
+<pre><code class="language-ts">const id: number = 1;
+</code></pre>
+<p>TypeScript also has the <code>string</code> type:</p>
+<pre><code class="language-ts">const task: string = 'Read the Next.js book';
+</code></pre>
+<p>Additionally TypeScript has the <code>null</code> and <code>undefined</code> types:</p>
+<pre><code class="language-ts">const undefinedTask: undefined = undefined;
+const nullTask: null = null;
+</code></pre>
+<p>Remember that in a real codebase we would let TypeScript infer the variables:</p>
+<pre><code class="language-ts">const id = 1;
+const task = 'Read the Next.js book';
+const undefinedTask = undefined;
+const nullTask = null;
+</code></pre>
+<h3 id="the-any-and-unknown-types"><a class="header" href="#the-any-and-unknown-types">The Any and Unknown Types</a></h3>
+<p>TypeScript also has the <code>any</code> type.
+When a value is of &quot;any&quot; type, you can access its properties, call it, or assign it freely, and basically do anything (get it?) that's syntactically correct.</p>
+<p>Let's say you have a <code>task</code> variable of type <code>any</code> - then these are all legal:</p>
+<pre><code class="language-ts">console.log(task.summary);
+task();
+const otherTask = task;
+</code></pre>
+<p>Basically <code>any</code> is way to tell the compiler to &quot;shut up&quot; and skip type checking.
+This is also the reason why using <code>any</code> is generally a terrible idea since it defeats the purpose of using TypeScript in the first place!</p>
+<p>However sometimes you do find yourself in a situation where you don't know much about a variable type.
+In this case it's better to use <code>unknown</code>.
+If you have a <code>task</code> variable of type <code>unknown</code>, then these are all no longer legal:</p>
+<pre><code class="language-ts">console.log(task.summary);
+task();
+const otherTask = task;
+</code></pre>
+<h3 id="typing-arrays"><a class="header" href="#typing-arrays">Typing Arrays</a></h3>
+<p>You can type arrays as <code>T[]</code> where <code>T</code> is the type of the elements of the array.
+For example here is how you could type an array of numbers:</p>
+<pre><code class="language-ts">const evenNumbers: number[] = [1, 2, 3, 4];
+</code></pre>
+<p>Here is how you would an array of strings:</p>
+<pre><code class="language-ts">const tasks: string[] = ['First task', 'Second task', 'Third task'];
+</code></pre>
+<p>Note that for these simple example we could again infer the types.</p>
+<h3 id="typing-objects"><a class="header" href="#typing-objects">Typing Objects</a></h3>
+<p>You can type an object by writing the property names and types of its properties inside curly braces <code>{}</code>.
+For example here how you could declare an object that has the properties <code>id</code> of type <code>number</code>, <code>summary</code> of type <code>string</code> and <code>description</code> of type <code>string</code>:</p>
+<pre><code class="language-ts">const task: { id: number; summary: string; description: string } = {
+  id: 1,
+  summary: 'Read the Next.js book',
+  description: 'Read and understand the Next.js book.',
+};
+</code></pre>
+<p>You can mark properties as <em>optional</em> by using the question mark <code>?</code>.
+If a property is marked as optional, you don't need to specify it.
+For example this is valid:</p>
+<pre><code class="language-ts">const task: { id: number; summary: string; description?: string } = {
+  id: 1,
+  summary: 'Read the Next.js book',
+};
+</code></pre>
+<h3 id="type-alias"><a class="header" href="#type-alias">Type Alias</a></h3>
+<p>The object syntax we just introduced is not particulary readable.
+This is why TypeScript gives you the possibility to specify a <strong>type alias</strong> (i.e. another name) for an object type:</p>
+<pre><code class="language-ts">type Task = {
+  id: number;
+  summary: string;
+  description: string;
+};
+</code></pre>
+<p>Note that you can specify type aliases for more than just object types sind type aliases are basically just different names for types.
+For example we could specify a type alias for the primitive type <code>string</code>:</p>
+<pre><code class="language-ts">type ID = string;
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="annotating-functions"><a class="header" href="#annotating-functions">Annotating Functions</a></h2>
+<div style="text-align: right"> <i> The function without types is like a river without banks: boundless, yet directionless. <br> - Ancient Chinese proverb </i> </div>
+<h3 id="annotating-parameters"><a class="header" href="#annotating-parameters">Annotating Parameters</a></h3>
+<p>We can annotate functions in TypeScript by annotating their parameters.
+Consider a function <code>greet</code> that takes a parameter <code>name</code> of type <code>string</code> and simply logs a greeting to the console.
+Here is how we would annotate the function:</p>
+<pre><code class="language-ts">function greet(name: string) {
+  console.log(`Hello, ${name}`);
+}
+</code></pre>
+<p>Now arguments to the function are checked:</p>
+<pre><code class="language-ts">greet(false);
+// This will result in an error
+</code></pre>
+<p>You can also annotate functions if they take array and object by simply using the syntax you learned in the previous section:</p>
+<pre><code class="language-ts">function showTask(task: { id: number; summary: string; description: string }) {
+  console.log(
+    `Task with ID=${task.id} has the summary ${task.summary} and description ${task.description}`,
+  );
+}
+</code></pre>
+<p>This is not particularly readable, so normally we would use a type alias:</p>
+<pre><code class="language-ts">type Task = {
+  id: number;
+  summary: string;
+  description: string;
+};
+
+function showTask(task: Task) {
+  console.log(
+    `Task with ID=${task.id} has the summary ${task.summary} and description ${task.description}`,
+  );
+}
+</code></pre>
+<p>Note that TypeScript will not just check that the passed arguments have the correct types, but also check that the correct number of argument was passed.
+This has an interesting side effect - namely that introducing the TypeScript compiler in a JavaScript codebase can already find potential bugs:</p>
+<pre><code class="language-js">function showTask(task) {
+  console.log(
+    `Task with ID=${task.id} has the summary ${task.summary} and description ${task.description}`,
+  );
+}
+
+// Uh-oh, we are passing multiple variables instead of a single object!
+showTask(1, 'Read the Next.js book', 'Read and understand the Next.js book.');
+</code></pre>
+<p>If we run <code>tsc</code> on this code, we will get the following error:</p>
+<pre><code>index.ts:8:13 - error TS2554: Expected 1 arguments, but got 3.
+
+8 showTask(1, 'Read the Next.js book', 'Read and understand the Next.js book.');
+</code></pre>
+<p>TypeScript is useful indeed!</p>
+<h3 id="return-type-annotations"><a class="header" href="#return-type-annotations">Return Type Annotations</a></h3>
+<p>We can also type the return types of our functions:</p>
+<pre><code class="language-ts">function getGreeting(name: string): string {
+  return `Hello, ${name}`;
+}
+</code></pre>
+<p>Note that you usually don't need a return type annotation because TypeScript can do type inference for them:</p>
+<pre><code class="language-ts">function getGreeting(name: string) {
+  return `Hello, ${name}`;
+}
+</code></pre>
+<p>Nevertheless, return types are often typed explicitly to avoid accidentally returning a type you didn't want to return or to prevent accidental changes to the return type.</p>
+<h3 id="optional-parameters"><a class="header" href="#optional-parameters">Optional Parameters</a></h3>
+<p>Similar to object properties, function parameters can be marked as <em>optional</em>.
+In this case we can, but don't need to pass the corresponding argument to the function:</p>
+<pre><code class="language-ts">function getGreeting(name: string, message?: string): string {
+  return `${message !== undefined ? message : 'Hello'}, ${name}`;
+}
+
+// These are both valid
+getGreeting('John Doe', 'Welcome');
+getGreeting('John Doe');
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="union-types"><a class="header" href="#union-types">Union Types</a></h2>
+<h3 id="literal-types"><a class="header" href="#literal-types">Literal Types</a></h3>
+<p>A literal type is a type whose only value is a literal.
+Here is how we could define a literal type <code>&quot;Todo&quot;</code>:</p>
+<pre><code class="language-ts">type TodoType = 'Todo';
+</code></pre>
+<p>Here is how we can use it:</p>
+<pre><code class="language-ts">let todo: TodoType = 'Todo';
+</code></pre>
+<p>Note that we can't assign any other value to <code>todo</code> including other strings.
+For example this is not possible:</p>
+<pre><code class="language-ts">let todo: TodoType = 'Done';
+</code></pre>
+<p>We could also skip declaring the type alias and just use the literal type directly:</p>
+<pre><code class="language-ts">let todo: 'Todo' = 'Todo';
+</code></pre>
+<p>While literal types by themselves are not very useful, they are extremely useful in the context of union types.</p>
+<h3 id="unions-of-literal-types"><a class="header" href="#unions-of-literal-types">Unions of Literal Types</a></h3>
+<p>A union type is a type that represents a value which may be one of multiple values.
+Consider the type <code>TaskState</code> which represents one of the following states:</p>
+<ul>
+<li>Todo</li>
+<li>InProgress</li>
+<li>Done</li>
+</ul>
+<p>Here is how we would defined the <code>TaskState</code> type:</p>
+<pre><code class="language-ts">type TaskState = 'Todo' | 'InProgress' | 'Done';
+</code></pre>
+<p>The <code>TaskState</code> type is a union type and each of the literal types <code>'Todo'</code>, <code>'InProgress'</code> and <code>'Done'</code> is a member of the union.
+A variable of type <code>TaskState</code> can only be of one of these literal types, i.e. it can only have one of the respective values.
+For example these are all valid:</p>
+<pre><code class="language-ts">const state: TaskState = 'Todo';
+const state2: TaskState = 'InProgress';
+const state3: TaskState = 'Done';
+</code></pre>
+<p>But this is not:</p>
+<pre><code class="language-ts">const invalidState: TaskState = 'Dropped';
+</code></pre>
+<h3 id="other-union-types"><a class="header" href="#other-union-types">Other Union Types</a></h3>
+<p>We can also declare unions of arbitrary types.
+One particulary useful union type is <code>T | undefined</code>, for example:</p>
+<pre><code class="language-ts">function getTaskId(taskName: string): string | undefined {
+  // Implementation here
+}
+</code></pre>
+<p>This function takes a <code>taskName</code> and returns the corresponding ID.
+However since it might be the case that no task with the given name is present, we return either a <code>string</code> or <code>undefined</code>.</p>
+<h3 id="working-with-a-union-type"><a class="header" href="#working-with-a-union-type">Working with a Union Type</a></h3>
+<p>It's relatively clear how to define a union type, but how can we work with a union type?
+Consider the following function:</p>
+<pre><code class="language-ts">function logTaskName(taskName: string | undefined) {
+  console.log({
+    taskName,
+    taskNameLength: taskName.length,
+  });
+}
+</code></pre>
+<p>This will result in the following error:</p>
+<pre><code>index.ts:4:21 - error TS18048: 'taskName' is possibly 'undefined'.
+4     taskNameLength: taskName.length,
+                      ~~~~~~~~
+Found 1 error in index.ts:4
+</code></pre>
+<p>TypeScript will only allow to do something with the value of a union type if that something is valid for every member of the union.
+Since <code>taskName</code> can be either a <code>string</code> or <code>undefined</code>, we can't call <code>.length</code> on it!</p>
+<p>Instead we need to <em>narrow</em> the type:</p>
+<pre><code class="language-ts">function logTaskName(taskName: string | undefined) {
+  if (taskName !== undefined) {
+    console.log({
+      taskName,
+      taskNameLength: taskName.length,
+    });
+  } else {
+    console.log('the task is not defined');
+  }
+}
+</code></pre>
+<p>We narrow the type of <code>taskName</code> in the <code>taskName !== undefined</code> branch.
+TypeScript can inspect the control flow and realize that since <code>taskName</code> had the <code>string | undefined</code> type and <code>taskName !== undefined</code> in the truthy branch of the if statement, <code>taskName</code> must be of type <code>string</code> inside that branch.</p>
+<p>Narrowing can be done by using <code>typeof</code>, checking truthiness of values or with equality checks <code>x === y</code>.</p>
+<h3 id="discriminated-unions"><a class="header" href="#discriminated-unions">Discriminated Unions</a></h3>
+<p>A particularly important union type is the <strong>discriminated union</strong>.
+This is a union where a property is used to discriminate between union members.
+Consider the following classical example:</p>
+<pre><code class="language-ts">type Square = {
+  kind: 'square';
+  size: number;
+};
+
+type Rectangle = {
+  kind: 'rectangle';
+  width: number;
+  height: number;
+};
+
+type Shape = Square | Rectangle;
+</code></pre>
+<p>We can now narrow values of the discriminated union based on the <strong>discriminant property</strong> (which in this case is <code>kind</code>):</p>
+<pre><code class="language-ts">function getArea(shape: Shape) {
+  if (shape.kind === 'square') {
+    return shape.size * shape.size;
+  } else {
+    return shape.width * shape.height;
+  }
+}
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="generics"><a class="header" href="#generics">Generics</a></h2>
+<div style="text-align: right"> <i> Generics are the invisible hat of the TypeScript sage, fitting the heads of both the giant and the dwarf. <br> - Ancient Chinese proverb </i> </div>
+<h3 id="why-generics"><a class="header" href="#why-generics">Why Generics?</a></h3>
+<p>Generics allow us to write code that is independent of specific types.
+Consider the example of retrieving the first element of an array:</p>
+<pre><code class="language-js">function getFirstElement(arr) {
+  return arr[0];
+}
+</code></pre>
+<p>How would we type this?
+We could use <code>any</code>:</p>
+<pre><code class="language-ts">function getFirstElement(arr: any): any {
+  return arr[0];
+}
+</code></pre>
+<p>However using <code>any</code> is bad since we lose all the type information even if we pass in an array of a known type.</p>
+<p>We could also make use of <em>function overloads</em> and write something like this:</p>
+<pre><code class="language-ts">function getFirstElement(arr: number[]): number;
+function getFirstElement(arr: string[]): string;
+function getFirstElement(arr: undefined[]): undefined;
+// More overloads and implementation here
+</code></pre>
+<p>But this obviously gets very tedious and error-prone the more we do it.
+Instead TypeScript allows us to use <em>generics</em> to specify that we don't really care about a type.</p>
+<h3 id="generic-functions"><a class="header" href="#generic-functions">Generic Functions</a></h3>
+<p>Consider the identity function that simply takes an argument <code>arg</code> and returns it unchanged.
+We can use a type variable <code>Type</code> and type it like this:</p>
+<pre><code class="language-ts">function identity&lt;Type&gt;(arg: Type): Type {
+  return arg;
+}
+</code></pre>
+<p>This basically says that the <code>identity</code> function takes an argument of type <code>Type</code> and that its return type is of the same type as the argument.
+Now we get proper type inference:</p>
+<pre><code class="language-ts">let val = 'Hello, world!';
+let val2 = identity&lt;string&gt;(val); // val2 is of type string
+</code></pre>
+<p>We dont actually have to manually specify the type <code>string</code> when calling the function and can instead rely on TypeScripts inference:</p>
+<pre><code class="language-ts">let val = 'Hello, world!';
+let val2 = identity(val); // val2 is of type string
+</code></pre>
+<blockquote>
+<p>There is no single convention for naming type parameters.
+Common names includew <code>T</code>, <code>Type</code> and <code>TType</code>.</p>
+</blockquote>
+<h3 id="generic-object-types"><a class="header" href="#generic-object-types">Generic Object Types</a></h3>
+<p>Just like with functions, we can use type parameters with objects:</p>
+<pre><code class="language-ts">type Box&lt;Type&gt; = {
+  content: Type;
+};
+</code></pre>
+<p>Now we can use the <code>Box</code> type with any type:</p>
+<pre><code class="language-ts">// box has the type Box&lt;number&gt;
+const box = {
+  content: 0,
+};
+
+// box2 has the type Box&lt;string&gt;
+const box2 = {
+  content: 'Hello, world!',
+};
+</code></pre>
+<h3 id="important-builtin-generics"><a class="header" href="#important-builtin-generics">Important Builtin Generics</a></h3>
+<p>Generic object types can function as versatile containers, unaffected by the specific types of items they hold.
+Such flexibility in data structures is preferred, allowing them to be applied across various data kinds.</p>
+<p>Examples of generic object types are:</p>
+<ul>
+<li><code>Array&lt;Type&gt;</code></li>
+<li><code>Map&lt;Key, Value&gt;</code></li>
+<li><code>Set&lt;Type&gt;</code></li>
+<li><code>Record&lt;Key, Value&gt;</code></li>
+</ul>
+<p>One other very important generic type is the <code>Promise</code> type which can be used to annotate asynchronous functions.
+For example, if we have an asynchronous function <code>f</code> that returns a promise with a string, we would annotate it like this:</p>
+<pre><code class="language-ts">async function f(): Promise&lt;string&gt; {
+  // Implementation here
+}
+</code></pre>
+<h3 id="generic-constraints"><a class="header" href="#generic-constraints">Generic Constraints</a></h3>
+<p>Often, we don't want to pass <em>completely arbitrary</em> type parameters.
+For example we might want to ensure that the variable we pass has the <code>length</code> property.
+We can't just use it though, since this will lead to an error.
+Consider this example:</p>
+<pre><code class="language-ts">function printLength&lt;Type&gt;(arg: Type): number {
+  return arg.length;
+}
+</code></pre>
+<p>This will throw the following error:</p>
+<pre><code>index.ts:2:14 - error TS2339: Property 'length' does not exist on type 'Type'.
+2   return arg.length;
+               ~~~~~~
+Found 1 error in index.ts:2
+</code></pre>
+<p>This makes sense since <code>arg</code> can be of literally any type and there is no guarantee that <code>arg</code> will actually have the property <code>length</code>.
+To change this, we need to constrain the type <code>Type</code>:</p>
+<pre><code class="language-ts">function printLength&lt;Type extends { length: number }&gt;(arg: Type): number {
+  return arg.length;
+}
+</code></pre>
+<p>As usual, we can use a type alias here:</p>
+<pre><code class="language-ts">type HasLength = {
+  length: number;
+};
+
+function printLength&lt;Type extends HasLength&gt;(arg: Type): number {
+  return arg.length;
+}
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="the-keyof-and-typeof-type-operators"><a class="header" href="#the-keyof-and-typeof-type-operators">The keyof and typeof Type Operators</a></h2>
+<div style="text-align: right"> <i> He who understands the keyof can unlock the mysteries of the object, and with typeof, discern its essence. <br> - Ancient Chinese proverb </i> </div>
+<h3 id="the-keyof-type-operator"><a class="header" href="#the-keyof-type-operator">The keyof Type Operator</a></h3>
+<p>The <code>keyof</code> type operator takes an object type and produces a literal union of its keys.
+For example:</p>
+<pre><code class="language-ts">type User = { name: string; email: string; age: number };
+type UserKeys = keyof User;
+
+// UserKeys is equivalent to &quot;name&quot; | &quot;email&quot; | &quot;age&quot;
+</code></pre>
+<p>The <code>keyof</code> type operator is particularly useful with generics.
+Consider the following example:</p>
+<pre><code class="language-ts">function getProperty&lt;Type, Key&gt;(obj: Type, key: Key) {
+  return obj[key];
+}
+</code></pre>
+<p>This will <em>not</em> compile because we have no idea if <code>key</code> can be used to index into <code>obj</code> so you will get the following error:</p>
+<pre><code>index.ts:2:10 - error TS2536: Type 'Key' cannot be used to index type 'Type'.
+2   return obj[key];
+           ~~~~~~~~
+Found 1 error in index.ts:2
+</code></pre>
+<p>Therefore we need to specify that <code>Key</code> should be of a type that can be used to index into an object of type <code>Type</code>.
+In other words, <code>Key</code> should extend <code>keyof Type</code>:</p>
+<pre><code class="language-ts">function getProperty&lt;Type, Key extends keyof Type&gt;(obj: Type, key: Key) {
+  return obj[key];
+}
+</code></pre>
+<h3 id="the-typeof-type-operator"><a class="header" href="#the-typeof-type-operator">The typeof Type Operator</a></h3>
+<p>The <code>typeof</code> type operator can be used to refer to the type of a variable:</p>
+<pre><code class="language-ts">let str = 'Hello, world!';
+let str2: typeof str; // str2 is a string
+</code></pre>
+<p>An example where this is useful is when you want to create a type that is equivalent to the return type of a function.
+You can use the generic type <code>ReturnType&lt;T&gt;</code> - the type parameter <code>T</code> is a function type and <code>ReturnType&lt;T&gt;</code> is then the return type of the function.</p>
+<p>Consider a function <code>getTask(...)</code> which returns an object of some type.
+Then you could get the return type like this:</p>
+<pre><code class="language-ts">type MyReturnType = ReturnType&lt;typeof getTask&gt;;
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="chapter-3-a-vanilla-client"><a class="header" href="#chapter-3-a-vanilla-client">Chapter 3: A Vanilla Client</a></h1>
 <div style="text-align: right"> <i> Whenever you write a web app in vanilla JavaScript, you end up creating your own framework. <br> And who in their right mind wants another JavaScript framework? <br> - Common programmer idiom </i> </div>
 <p>In this chapter we will write a client a in <em>vanilla</em> HTML and JavaScript (i.e. without using any frameworks).
 Then we will realize why this is not such a great idea and why we might want to consider using a library (spoiler: it's going to be React) to help us out.</p>
