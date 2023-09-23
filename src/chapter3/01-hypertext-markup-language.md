@@ -18,7 +18,7 @@ Create a file named `index.html` in the project directory.
 Now write some minimal useful HTML to display two hardcoded tasks:
 
 ```html
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
@@ -38,7 +38,7 @@ Now write some minimal useful HTML to display two hardcoded tasks:
 </html>
 ```
 
-When you open the HTML file in your browser you should a heading and two tasks.
+When you open the HTML file in your browser you should see a heading and two tasks.
 
 Hooray, you've created a simple HTML document!
 Now you can close this book and go procrastinate.
@@ -124,7 +124,7 @@ We will cover some of the most important elements together with their attributes
 Let's have a look at `index.html` again:
 
 ```html
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />

@@ -111,7 +111,7 @@ The point here is not to learn everything single HTML element for marking up tex
 ### Semantic HTML
 
 In a few chapters, we will introduce you to CSS, which will allow you to style your HTML elements however you like.
-At this point most people forget that there any elements besides the generic containers `<div>` and `<span>` since they can now just _style_ a `<span>` to look like an `<h1>`.
+At this point most people forget that there are any elements besides the generic containers `<div>` and `<span>` since they can now just _style_ a `<span>` to look like an `<h1>`.
 
 This is bad.
 
