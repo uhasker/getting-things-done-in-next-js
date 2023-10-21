@@ -131,7 +131,3 @@ Therefore you should _absolutely not_ forget about the _semantically correct_ HT
 
 > Also, if you don't use semantically correct HTML, your fellow developers will let you know about this in the _smuggest_ way possible which will feel bad for you.
 > After all, _you_ want to be one smuggly telling your collegue - "you know, I don't think that this is semantically correct".
-
-### Summary
-
-You learned how to mark up text in a semantically correct way.

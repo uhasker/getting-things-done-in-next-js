@@ -28,3 +28,6 @@
 
   - [Hypertext Markup Language](chapter3/01-hypertext-markup-language.md)
   - [Marking Up Text](chapter3/02-marking-up-text.md)
+  - [Hyperlinks and Images](chapter3/03-hyperlinks-and-images.md)
+  - [Web Forms](chapter3/04-web-forms.md)
+  - [A Simple Client](chapter3/05-a-simple-client.md)
