@@ -2,7 +2,7 @@
 
 <div style="text-align: right"> <i> Hey guys, how do I parse HTML with a regular expression? <br> - Seconds before disaster </i> </div>
 
-### A minimal HTML file
+### A Minimal HTML File
 
 Create a project directory (_easy-opus_ for example).
 From here on, all work will be done within the _easy-opus_ directory.
@@ -18,7 +18,7 @@ Create a file named `index.html` in the project directory.
 Now write some minimal useful HTML to display two hardcoded tasks:
 
 ```html
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
@@ -50,7 +50,7 @@ Oh we see, you've _unfortunately_ been _forced_ to read this book (blink _once_ 
 
 Well, since we both have to be here anyway, let's march onwards and dissect the masterpiece you've just created!
 
-### HTML elements
+### HTML Elements
 
 HTML is comprised of **HTML elements** used to specify the type of content you want to render.
 For example, the `p` element represents a paragraph:
@@ -124,7 +124,7 @@ We will cover some of the most important elements together with their attributes
 Let's have a look at `index.html` again:
 
 ```html
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
@@ -161,8 +161,3 @@ Finally the `<body>` element contains all the content that will actually be rend
 In our example, the heading and the task list are within the `<body>` element.
 
 > We will discuss character encodings in greater detail later.
-
-### Summary
-
-You know what HTML is, how HTML elements look like and how to use HTML attributes.
-You also know how the basic structure of an HTML document looks like.
