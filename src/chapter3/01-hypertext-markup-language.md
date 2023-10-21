@@ -18,7 +18,7 @@ Create a file named `index.html` in the project directory.
 Now write some minimal useful HTML to display two hardcoded tasks:
 
 ```html
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
@@ -124,7 +124,7 @@ We will cover some of the most important elements together with their attributes
 Let's have a look at `index.html` again:
 
 ```html
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />

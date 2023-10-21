@@ -1,17 +1,19 @@
 ## A Simple Client
 
+<div style="text-align: right"> <i> Why use a framework? I'll just write my own in a weekend. <br> - Seconds before disaster </i> </div>
+
 ### The Requirements
 
-One day you sit around and dream about the sunshine outside as suddently the dreaded _Project Manager_ walks up to you and asks you to build a small task application.
+One day you sit around and dream about some sunshine as suddently the dreaded _Project Manager_ approaches you and asks you to build a small task application.
 The application should consist of a list showing the current tasks.
-Additionally, a web form should allow the user to create a new task (which should then be showed in the list of current tasks).
+Additionally, a web form should allow the user to create a new task (which should then be displayed in the list of current tasks).
 
 ### The Initial HTML
 
 You get to work and quickly come up with the initial document:
 
 ```html
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
@@ -57,7 +59,7 @@ Next, we need to add an event listener to `taskForm`.
 This can be done via the `addEventListener` function which takes two arguments.
 The first argument is the event to listen to (which is `'submit'` in this case).
 The second argument is a function that takes the specific event and handles it.
-Note that `addEventListener` is a typical example of higher-order function since it takes a function as one of its arguments.
+Note that `addEventListener` is a typical example of a higher-order function since it takes a function as one of its arguments.
 
 Let's just log the `currentTarget` of the event for now.
 This property identifies the element to which the event handler has been attached (in this case it's the task form).
@@ -95,7 +97,7 @@ taskForm.addEventListener('submit', function (event) {
 });
 ```
 
-Finally:
+Finally we will use the `createElement` method to create a new `li` element and the `appendChild` method to add the newly created element to our task list:
 
 ```js
 taskForm.addEventListener('submit', function (event) {
@@ -113,32 +115,40 @@ taskForm.addEventListener('submit', function (event) {
 });
 ```
 
-If you click the button, a task is added.
+Now you click the button, you will see that a task will be added.
 
 ### Adding a Delete Button
 
-We need to add a delete button:
+As you complete the project, the _Project Manager_ once again walks up to you and remembers that it might be a good idea to allow the user to delete tasks.
+So now you need to add a delete button.
+
+This means that whenever you create a new element, you need to add a delete button to it.
+To accomplish this we first need to create the delete button:
 
 ```js
 const li = document.createElement('li');
 li.textContent = task;
 
-// Create a delete button for the task
+// New code starts here
+
 const deleteButton = document.createElement('button');
 deleteButton.textContent = 'Delete';
+```
 
-// Attach event listener to the delete button
+Then we need to attach an event listener to the delete button:
+
+```js
 deleteButton.addEventListener('click', function () {
   taskList.removeChild(li);
 });
-
-// Append the delete button to the task item
-li.appendChild(deleteButton);
-
-// Append the task item to the task list
-taskList.appendChild(li);
 ```
 
-### Problems
+Finally we need to add the delete button to the task item:
 
-Our code is all over the place.
+```js
+li.appendChild(deleteButton);
+```
+
+Quite a lot of work to just add a little delete button.
+Additionally our code is now all over the place and not really reusable.
+This doesn't seem like it will scale to a larger application.
