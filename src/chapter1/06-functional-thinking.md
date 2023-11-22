@@ -306,7 +306,7 @@ For another example, let's say we would like to compute the total logged time (i
 This would look like this:
 
 ```js
-const totalTime = tasks.reduce((task, curr) => task.loggedTime + curr, 0);
+const totalTime = tasks.reduce((task, curr) => task + curr.loggedTime, 0);
 ```
 
 > We recommend that you try to reason through this `reduce` for a deeper understanding of this topic.
