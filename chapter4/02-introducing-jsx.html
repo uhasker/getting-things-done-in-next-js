@@ -1,0 +1,276 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Introducing JSX</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../title-page.html">Getting Things Done in Next.js</a></li><li class="chapter-item expanded affix "><a href="../introduction.html">Introduction</a></li><li class="chapter-item expanded affix "><a href="../acknowledgments.html">Acknowledgments</a></li><li class="chapter-item expanded "><a href="../chapter1/index.html"><strong aria-hidden="true">1.</strong> A Brief Introduction to JavaScript</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../chapter1/01-hello-world.html"><strong aria-hidden="true">1.1.</strong> Hello World</a></li><li class="chapter-item expanded "><a href="../chapter1/02-primitive-data-types.html"><strong aria-hidden="true">1.2.</strong> Primitive Data Types</a></li><li class="chapter-item expanded "><a href="../chapter1/03-arrays-and-objects.html"><strong aria-hidden="true">1.3.</strong> Arrays and Objects</a></li><li class="chapter-item expanded "><a href="../chapter1/04-control-flow.html"><strong aria-hidden="true">1.4.</strong> Control Flow</a></li><li class="chapter-item expanded "><a href="../chapter1/05-functions.html"><strong aria-hidden="true">1.5.</strong> Functions</a></li><li class="chapter-item expanded "><a href="../chapter1/06-basic-datastructures.html"><strong aria-hidden="true">1.6.</strong> Basic Data Structures</a></li><li class="chapter-item expanded "><a href="../chapter1/07-functional-thinking.html"><strong aria-hidden="true">1.7.</strong> Functional Thinking</a></li><li class="chapter-item expanded "><a href="../chapter1/08-asynchronous-programming.html"><strong aria-hidden="true">1.8.</strong> Asynchronous Programming</a></li><li class="chapter-item expanded "><a href="../chapter1/09-modules.html"><strong aria-hidden="true">1.9.</strong> Modules</a></li></ol></li><li class="chapter-item expanded "><a href="../chapter2/index.html"><strong aria-hidden="true">2.</strong> Leveling Up with TypeScript</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../chapter2/01-why-typescript.html"><strong aria-hidden="true">2.1.</strong> Why TypeScript?</a></li><li class="chapter-item expanded "><a href="../chapter2/02-basic-types.html"><strong aria-hidden="true">2.2.</strong> Basic Types</a></li><li class="chapter-item expanded "><a href="../chapter2/03-annotating-functions.html"><strong aria-hidden="true">2.3.</strong> Annotating Functions</a></li><li class="chapter-item expanded "><a href="../chapter2/04-union-types.html"><strong aria-hidden="true">2.4.</strong> Union Types</a></li><li class="chapter-item expanded "><a href="../chapter2/05-generics.html"><strong aria-hidden="true">2.5.</strong> Generics</a></li><li class="chapter-item expanded "><a href="../chapter2/06-the-keyof-and-typeof-operators.html"><strong aria-hidden="true">2.6.</strong> The keyof and typeof Type Operators</a></li></ol></li><li class="chapter-item expanded "><a href="../chapter3/index.html"><strong aria-hidden="true">3.</strong> A Vanilla Client</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../chapter3/01-hypertext-markup-language.html"><strong aria-hidden="true">3.1.</strong> Hypertext Markup Language</a></li><li class="chapter-item expanded "><a href="../chapter3/02-marking-up-text.html"><strong aria-hidden="true">3.2.</strong> Marking Up Text</a></li><li class="chapter-item expanded "><a href="../chapter3/03-hyperlinks-and-images.html"><strong aria-hidden="true">3.3.</strong> Hyperlinks and Images</a></li><li class="chapter-item expanded "><a href="../chapter3/04-the-document-object-model.html"><strong aria-hidden="true">3.4.</strong> The Document Object Model</a></li><li class="chapter-item expanded "><a href="../chapter3/05-web-forms.html"><strong aria-hidden="true">3.5.</strong> Web Forms</a></li><li class="chapter-item expanded "><a href="../chapter3/06-a-simple-client.html"><strong aria-hidden="true">3.6.</strong> A Simple Client</a></li></ol></li><li class="chapter-item expanded "><a href="../chapter4/index.html"><strong aria-hidden="true">4.</strong> Adding Spice with React</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../chapter4/01-first-steps-in-react.html"><strong aria-hidden="true">4.1.</strong> First Steps in React</a></li><li class="chapter-item expanded "><a href="../chapter4/02-introducing-jsx.html" class="active"><strong aria-hidden="true">4.2.</strong> Introducing JSX</a></li><li class="chapter-item expanded "><a href="../chapter4/03-react-components.html"><strong aria-hidden="true">4.3.</strong> React Components</a></li><li class="chapter-item expanded "><a href="../chapter4/04-structuring-a-react-project.html"><strong aria-hidden="true">4.4.</strong> Structuring a React Project</a></li><li class="chapter-item expanded "><a href="../chapter4/05-react-state.html"><strong aria-hidden="true">4.5.</strong> React State</a></li><li class="chapter-item expanded "><a href="../chapter4/06-react-effects.html"><strong aria-hidden="true">4.6.</strong> React Effects</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title"></h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h2 id="introducing-jsx"><a class="header" href="#introducing-jsx">Introducing JSX</a></h2>
+<div style="text-align: right"> <i> So, JSX is basically HTML... <br> - Famous last words </i> </div>
+<h3 id="add-jsx"><a class="header" href="#add-jsx">Add JSX</a></h3>
+<p>Instead of writing increasingly convoluted <code>React.createElement</code> calls until we lose the last scraps of our sanity, we would like to use syntax that looks like HTML. For example we would <em>really like</em> to be able to write stuff like this:</p>
+<pre><code class="language-javascript">const element = &lt;li id=&quot;task1&quot;&gt;Task 1&lt;/li&gt;;
+</code></pre>
+<p>Unfortunately this is not possible as the above is not valid JavaScript (no trademarks this time, we promise). Feel free to try it out and add the above JavaScript to your <code>&lt;script&gt;</code> tags inside <code>client/index.html</code>. When you open the page you will see the following error in your console:</p>
+<pre><code class="language-shell">Uncaught SyntaxError: expected expression, got '&lt;'
+</code></pre>
+<p><strong>Babel</strong> to the rescue! This tool allows us to <em>transpile</em> <strong>JSX</strong> (which looks like HTML) to JavaScript.</p>
+<p>First we need to import Babel. We will use a CDN for now (like we did with React). Add this below the React script tags:</p>
+<pre><code class="language-html">&lt;script src=&quot;https://unpkg.com/@babel/standalone/babel.js&quot;&gt;&lt;/script&gt;
+</code></pre>
+<p>Next set the <code>type</code> <em>attribute</em> of the <code>&lt;script&gt;</code> tag inside the body to &quot;text/babel&quot; and replace the calls to <code>React.createElement</code> with JSX:</p>
+<pre><code class="language-html">&lt;script type=&quot;text/babel&quot;&gt;
+  const task1 = &lt;p&gt;Task 1&lt;/p&gt;;
+  const task2 = &lt;p&gt;Task 2&lt;/p&gt;;
+  const taskList = &lt;div id=&quot;taskList&quot; children={[task1, task2]} /&gt;;
+  const heading = &lt;h1&gt;Tasks&lt;/h1&gt;;
+  const app = &lt;div id=&quot;app&quot; children={[heading, taskList]} /&gt;;
+  const root = ReactDOM.createRoot(document.querySelector('#root'));
+  root.render(app);
+&lt;/script&gt;
+</code></pre>
+<p>Now open the <code>index.html</code> in your browser. Incredibly enough, it <em>just works</em>™.</p>
+<p>But why does it work? Let us again open the browser inspector and look inside the head element of the document. We will see that Babel <em>sneakily</em> added another script tag below the title. If we take a look inside, we will see that this script tag just contains a bunch of <code>React.createElement</code> calls.</p>
+<p>Babel <em>transpiled</em> our JSX into <code>React.createElement</code> calls. Sneaky indeed! But this is <em>the good kind of sneaky</em> as it allows us to write <em>more readable code</em>. And as we all know - writing readable code makes you both a better programmer and a better person.</p>
+<h3 id="inline-jsx"><a class="header" href="#inline-jsx">Inline JSX</a></h3>
+<p>The new code looks much better, but is still a bit ugly. Luckily, we can inline the JSX. This simply means that we can nest JSX elements inside each other (similar to HTML). This is how the new JavaScript inside our script tag looks like:</p>
+<pre><code class="language-javascript">const app = (
+  &lt;div id=&quot;app&quot;&gt;
+    &lt;h1&gt;Tasks&lt;/h1&gt;
+    &lt;div id=&quot;taskList&quot;&gt;
+      &lt;p&gt;Task 1&lt;/p&gt;
+      &lt;p&gt;Item 2&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+);
+const root = ReactDOM.createRoot(document.querySelector('#root'));
+root.render(app);
+</code></pre>
+<p>This looks pretty much exactly like regular HTML. However, it is important to remember that JSX is <em>emphatically not</em> HTML. Instead it is a <strong>syntax extension</strong> to JavaScript that can be transpiled to <em>normal</em> JavaScript. This will lead to a number of important consequences down the road (namely that JSX can express things HTML can not).</p>
+<p>Right now you are probably wondering why we are bothering with React at all. We took perfectly fine HTML and for some reason insisted on doing a bunch of complex things just to get essentially the same HTML, but dynamically. However, this setup will now payoff in a <em>huge</em> way, as we introduce React components.</p>
+<h3 id="summary"><a class="header" href="#summary">Summary</a></h3>
+<p>You know how to dynamically manipulate the DOM using JSX and that you should write JSX instead of <code>React.createElement</code> calls.</p>
+<h3 id="further-reading"><a class="header" href="#further-reading">Further reading</a></h3>
+<ul>
+<li><a href="https://reactjs.org/docs/introducing-jsx.html">React docs - Introducing JSX</a></li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../chapter4/01-first-steps-in-react.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../chapter4/03-react-components.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../chapter4/01-first-steps-in-react.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../chapter4/03-react-components.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>
