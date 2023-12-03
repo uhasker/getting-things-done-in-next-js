@@ -258,7 +258,7 @@ We will cover HTML in chapter 2, for now we just want to get a quick glimpse at 
 We will call it <em>hello.html</em>; however you can name it whatever you want.
 The filename should have an <em>html</em> extension though.</p>
 <p>Open the HTML file in any text editor (we recommend you use <a href="https://code.visualstudio.com">Visual Studio Code</a>) and add the following text to the file:</p>
-<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+<pre><code class="language-html">&lt;!doctype html&gt;
 &lt;html&gt;
   &lt;head&gt;&lt;/head&gt;
   &lt;body&gt;
@@ -1975,7 +1975,7 @@ console.log(greet('John Doe'));
 <p>This is the basic setup, but in order to execute this in the browser or in Node.js we need to make some more adjustments.</p>
 <h3 id="esm-in-the-browser"><a class="header" href="#esm-in-the-browser">ESM in the Browser</a></h3>
 <p>Let's create a file named <code>index.html</code> in which we use <code>main.js</code> as a JavaScript module:</p>
-<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+<pre><code class="language-html">&lt;!doctype html&gt;
 &lt;html lang=&quot;en&quot;&gt;
   &lt;head&gt;
     &lt;meta charset=&quot;UTF-8&quot; /&gt;
@@ -2948,7 +2948,7 @@ const taskList = document.querySelector('#taskList');
 taskList.appendChild(paragraph);
 </code></pre>
 <p>We could now add a button and execute this code whenever the button is clicked by registering a <code>click</code> event listener on the button:</p>
-<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+<pre><code class="language-html">&lt;!doctype html&gt;
 &lt;html lang=&quot;en&quot;&gt;
   &lt;head&gt;
     &lt;meta charset=&quot;utf-8&quot; /&gt;
@@ -3210,7 +3210,7 @@ const root = ReactDOM.createRoot(document.querySelector('#root'));
 root.render(element);
 </code></pre>
 <p>This is how the entire HTML file should look like:</p>
-<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+<pre><code class="language-html">&lt;!doctype html&gt;
 &lt;html lang=&quot;en&quot;&gt;
   &lt;head&gt;
     &lt;meta charset=&quot;UTF-8&quot; /&gt;
@@ -3436,7 +3436,7 @@ mv index.html public/
 <p>This is where all the JavaScript <em>source</em> files (i.e. the files you use for development) will live.</p>
 <p>Next we move the Javascript from <code>public/index.html</code> into <code>src/index.js</code>.</p>
 <p>The <code>public/index.html</code> should therefore now look like this:</p>
-<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+<pre><code class="language-html">&lt;!doctype html&gt;
 &lt;html lang=&quot;en&quot;&gt;
   &lt;head&gt;
     &lt;meta charset=&quot;UTF-8&quot; /&gt;
