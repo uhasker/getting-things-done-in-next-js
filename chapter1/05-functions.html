@@ -292,8 +292,8 @@ It is therefore common practice to only use arrow functions for short functions 
 However this is again just convention.</p>
 <p>One thing you might have noticed, is that we only showed you <strong>arrow function expressions</strong>.
 This is not an oversight but stems from the fact that there is no way to write a <strong>function declaration</strong> with the <strong>arrow function notation</strong>.</p>
-<h3 id="methods"><a class="header" href="#methods">Methods</a></h3>
-<p>A method is a function which is a property of an object.</p>
+<h3 id="instance-methods"><a class="header" href="#instance-methods">Instance Methods</a></h3>
+<p>An <strong>instance method</strong> (sometimes methods for short) is a function which is a property of an object.</p>
 <pre><code class="language-js">const greeter = {
   greet: function () {
     console.log('Hello, world!');
@@ -325,6 +325,15 @@ Instead we want you to think <em>functionally</em>, which is what the next secti
 The sentence about OOP was a joke and used correctly, OOP has its merits.
 We just wanted to be funny.
 We're very sorry about that and will now perform the appropriate penance procedure.</p>
+</blockquote>
+<h3 id="static-methods"><a class="header" href="#static-methods">Static Methods</a></h3>
+<p>Static methods are methods that are like regular functions which need to be prefixed with a name.
+For example you can use <code>Number.parseInt</code> to parse a string argument:</p>
+<pre><code class="language-js">console.log(Number.parseInt('123')); // 123
+</code></pre>
+<p>Static methods will become important in a few sections, when we introduce a few useful static methods that deal with arrays and objects.</p>
+<blockquote>
+<p>Our definition of static methods is a bit ugly because the technically correct definition would require the concept of a class, which we don't have yet.</p>
 </blockquote>
 <h3 id="scope"><a class="header" href="#scope">Scope</a></h3>
 <p>The <strong>scope</strong> of a variable is the part of the program in which it can be referenced.
