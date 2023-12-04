@@ -1798,7 +1798,7 @@ It returns the array resulting from applying <code>f</code> to every element of 
 <p>Let's say we wanted to square all the elements of <code>numbers</code>.
 We could write something like this:</p>
 <pre><code class="language-js">const result = [];
-for (const number in numbers) {
+for (const number of numbers) {
   result.push(number ** 2);
 }
 </code></pre>
@@ -1894,11 +1894,57 @@ This would look like this:</p>
 <blockquote>
 <p>We recommend that you try to reason through this <code>reduce</code> for a deeper understanding of this topic.</p>
 </blockquote>
-<h3 id="summary"><a class="header" href="#summary">Summary</a></h3>
-<p>You learned about important functional concepts like pure functions, immutability and higher-order functions.
-You also learned about the three most important higher-order functions - <code>map</code>, <code>filter</code> and <code>reduce</code>.</p>
-<h3 id="further-reading"><a class="header" href="#further-reading">Further reading</a></h3>
-<p>There is no further reading for this section.</p>
+<h3 id="more-higher-order-functions"><a class="header" href="#more-higher-order-functions">More Higher-Order Functions</a></h3>
+<p>While <code>map</code>, <code>filter</code> and <code>reduce</code> are the best known higher-order functions, JavaScript defines many more.
+It is worthwhile to get to know them since they will make a lot of tasks easier.</p>
+<p>The <code>find</code> method returns the first element in an array that satisfies some predicate:</p>
+<pre><code class="language-js">const numbers = [2, 8, 4, 12, 6, 10];
+console.log(numbers.find((x) =&gt; x &gt; 9)); // 12
+</code></pre>
+<p>The <code>findIndex</code> method is similar, except that it returns the <em>index</em> of the first element in an array that satisfies some predicate:</p>
+<pre><code class="language-js">const numbers = [2, 8, 4, 12, 6, 10];
+console.log(numbers.findIndex((x) =&gt; x &gt; 9)); // 3
+</code></pre>
+<p>The <code>every</code> method checks whether all elements in an array satisfy a predicate:</p>
+<pre><code class="language-js">const numbers = [2, 8, 4, 12, 6, 10];
+console.log(numbers.every((x) =&gt; x % 2 === 0)); // true
+console.log(numbers.every((x) =&gt; x &lt; 9)); // false
+</code></pre>
+<p>The <code>some</code> method checks whether there is at least one element in an array that satisfies a predicate:</p>
+<pre><code class="language-js">const numbers = [2, 8, 4, 12, 6, 10];
+console.log(numbers.some((x) =&gt; x &lt; 9)); // true
+console.log(numbers.some((x) =&gt; x % 2 !== 0)); // false
+</code></pre>
+<p>The <code>forEach</code> method executes some function for every array element.
+This is very similar to a for loop (hence the name):</p>
+<pre><code class="language-js">const numbers = [2, 8, 4, 12, 6, 10];
+numbers.forEach((x) =&gt; console.log(x));
+</code></pre>
+<p>This will log:</p>
+<pre><code>2
+8
+4
+12
+6
+10
+</code></pre>
+<h3 id="sorting-arrays"><a class="header" href="#sorting-arrays">Sorting Arrays</a></h3>
+<p>The <code>sort</code> method can be used to sort the elements of an array:</p>
+<pre><code class="language-js">const tasks = ['Task 2', 'Task 1', 'Task 3'];
+tasks.sort();
+console.log(tasks); // [ 'Task 1', 'Task 2', 'Task 3' ]
+</code></pre>
+<p>The default sort order is ascending and elements are sorted by converting them to strings and then sorting the strings lexicographically.
+However this may not be what you want, especially when you're trying to sort numbers:</p>
+<pre><code class="language-js">const numbers = [2, 8, 4, 12, 6, 10];
+numbers.sort();
+console.log(numbers); // [ 10, 12, 2, 4, 6, 8 ]
+</code></pre>
+<p>If you want to sort differently, you need to specify a comparison function:</p>
+<pre><code class="language-js">const numbers = [2, 8, 4, 12, 6, 10];
+numbers.sort((x, y) =&gt; x - y);
+console.log(numbers); // [ 2, 4, 6, 8, 10, 12 ]
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="asynchronous-programming"><a class="header" href="#asynchronous-programming">Asynchronous Programming</a></h2>
 <div style="text-align: right"> <i> - proverb Ancient Chinese <br> is hard Asynchronous programming </i> </div>
 <h3 id="why-asynchronous-programming"><a class="header" href="#why-asynchronous-programming">Why Asynchronous Programming?</a></h3>
@@ -2103,7 +2149,7 @@ fetchTask(url).then((json) =&gt; console.log(json));
 </code></pre>
 <p>Note that for some runtimes you can only use <code>await</code> inside an <code>async</code> function.
 This is why we use <code>then</code> with <code>fetchTask</code> instead of <code>await</code>ing the promise returned by <code>fetchTask</code>.</p>
-<h3 id="summary-1"><a class="header" href="#summary-1">Summary</a></h3>
+<h3 id="summary"><a class="header" href="#summary">Summary</a></h3>
 <p>You learned about asynchronous programming.
 You learned how to create promises, chain promises, handle errors in promise chains and how to simplify asynchronous code by using the async and await keywords.</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="modules"><a class="header" href="#modules">Modules</a></h2>
@@ -3418,9 +3464,9 @@ root.render(app);
 </code></pre>
 <p>Here we create two tasks (<code>task1</code> and <code>task2</code>). Then we create a <code>&lt;div&gt;</code> (<code>taskList</code>) containing those tasks. Then we create a heading element (<code>heading</code>). Finally we create a div containing the list of tasks and the heading (<code>app</code>) and render that element inside the root.</p>
 <p>At this point you are probably asking yourself: <em>Didn't you just promise me that manipulating the DOM in React will be simple, you liars? This looks just like regular Javascript™®℠.</em> You have a point (the one after the trademark symbols) and we will indeed vastly simplify this code in the next section via black magic called <strong>JSX</strong>.</p>
-<h3 id="summary-2"><a class="header" href="#summary-2">Summary</a></h3>
+<h3 id="summary-1"><a class="header" href="#summary-1">Summary</a></h3>
 <p>Now you know how to import React using a CDN and how to dynamically manipulate the DOM using <code>React.createElement</code> and <code>ReactDOM.createRoot</code>. You also know you shouldn't actually do this.</p>
-<h2 id="further-reading-1"><a class="header" href="#further-reading-1">Further reading</a></h2>
+<h2 id="further-reading"><a class="header" href="#further-reading">Further reading</a></h2>
 <p>There is no further reading for this section.</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="introducing-jsx"><a class="header" href="#introducing-jsx">Introducing JSX</a></h2>
 <div style="text-align: right"> <i> So, JSX is basically HTML... <br> - Famous last words </i> </div>
@@ -3465,9 +3511,9 @@ root.render(app);
 </code></pre>
 <p>This looks pretty much exactly like regular HTML. However, it is important to remember that JSX is <em>emphatically not</em> HTML. Instead it is a <strong>syntax extension</strong> to JavaScript that can be transpiled to <em>normal</em> JavaScript. This will lead to a number of important consequences down the road (namely that JSX can express things HTML can not).</p>
 <p>Right now you are probably wondering why we are bothering with React at all. We took perfectly fine HTML and for some reason insisted on doing a bunch of complex things just to get essentially the same HTML, but dynamically. However, this setup will now payoff in a <em>huge</em> way, as we introduce React components.</p>
-<h3 id="summary-3"><a class="header" href="#summary-3">Summary</a></h3>
+<h3 id="summary-2"><a class="header" href="#summary-2">Summary</a></h3>
 <p>You know how to dynamically manipulate the DOM using JSX and that you should write JSX instead of <code>React.createElement</code> calls.</p>
-<h3 id="further-reading-2"><a class="header" href="#further-reading-2">Further reading</a></h3>
+<h3 id="further-reading-1"><a class="header" href="#further-reading-1">Further reading</a></h3>
 <ul>
 <li><a href="https://reactjs.org/docs/introducing-jsx.html">React docs - Introducing JSX</a></li>
 </ul>
@@ -3576,9 +3622,9 @@ root.render(&lt;App /&gt;);
   );
 };
 </code></pre>
-<h2 id="summary-4"><a class="header" href="#summary-4">Summary</a></h2>
+<h2 id="summary-3"><a class="header" href="#summary-3">Summary</a></h2>
 <p>You learned how to create React components and how to pass properties to components.</p>
-<h2 id="further-reading-3"><a class="header" href="#further-reading-3">Further reading</a></h2>
+<h2 id="further-reading-2"><a class="header" href="#further-reading-2">Further reading</a></h2>
 <ul>
 <li><a href="https://reactjs.org/docs/components-and-props.html">React docs - Components and props</a></li>
 </ul>
@@ -3812,7 +3858,7 @@ root.render(&lt;App /&gt;);
 }
 </code></pre>
 <p>Run the webpack build again (<code>npx webpack build</code>) and open <code>index.html</code> in a browser. You will again see the same task list. Note that not much has changed in terms of <em>features</em>, however the structure of our project is now <em>much</em> cleaner. We will make some minor improvements later on (like using a <em>development server</em>), however all in all this is the project structure we will stick to for now.</p>
-<h3 id="summary-5"><a class="header" href="#summary-5">Summary</a></h3>
+<h3 id="summary-4"><a class="header" href="#summary-4">Summary</a></h3>
 <p>You learned about webpack and how to structure a JavaScript project.</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="react-state"><a class="header" href="#react-state">React State</a></h2>
 <h3 id="forms"><a class="header" href="#forms">Forms</a></h3>

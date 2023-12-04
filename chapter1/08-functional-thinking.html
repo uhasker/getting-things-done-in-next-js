@@ -304,7 +304,7 @@ It returns the array resulting from applying <code>f</code> to every element of 
 <p>Let's say we wanted to square all the elements of <code>numbers</code>.
 We could write something like this:</p>
 <pre><code class="language-js">const result = [];
-for (const number in numbers) {
+for (const number of numbers) {
   result.push(number ** 2);
 }
 </code></pre>
@@ -400,11 +400,57 @@ This would look like this:</p>
 <blockquote>
 <p>We recommend that you try to reason through this <code>reduce</code> for a deeper understanding of this topic.</p>
 </blockquote>
-<h3 id="summary"><a class="header" href="#summary">Summary</a></h3>
-<p>You learned about important functional concepts like pure functions, immutability and higher-order functions.
-You also learned about the three most important higher-order functions - <code>map</code>, <code>filter</code> and <code>reduce</code>.</p>
-<h3 id="further-reading"><a class="header" href="#further-reading">Further reading</a></h3>
-<p>There is no further reading for this section.</p>
+<h3 id="more-higher-order-functions"><a class="header" href="#more-higher-order-functions">More Higher-Order Functions</a></h3>
+<p>While <code>map</code>, <code>filter</code> and <code>reduce</code> are the best known higher-order functions, JavaScript defines many more.
+It is worthwhile to get to know them since they will make a lot of tasks easier.</p>
+<p>The <code>find</code> method returns the first element in an array that satisfies some predicate:</p>
+<pre><code class="language-js">const numbers = [2, 8, 4, 12, 6, 10];
+console.log(numbers.find((x) =&gt; x &gt; 9)); // 12
+</code></pre>
+<p>The <code>findIndex</code> method is similar, except that it returns the <em>index</em> of the first element in an array that satisfies some predicate:</p>
+<pre><code class="language-js">const numbers = [2, 8, 4, 12, 6, 10];
+console.log(numbers.findIndex((x) =&gt; x &gt; 9)); // 3
+</code></pre>
+<p>The <code>every</code> method checks whether all elements in an array satisfy a predicate:</p>
+<pre><code class="language-js">const numbers = [2, 8, 4, 12, 6, 10];
+console.log(numbers.every((x) =&gt; x % 2 === 0)); // true
+console.log(numbers.every((x) =&gt; x &lt; 9)); // false
+</code></pre>
+<p>The <code>some</code> method checks whether there is at least one element in an array that satisfies a predicate:</p>
+<pre><code class="language-js">const numbers = [2, 8, 4, 12, 6, 10];
+console.log(numbers.some((x) =&gt; x &lt; 9)); // true
+console.log(numbers.some((x) =&gt; x % 2 !== 0)); // false
+</code></pre>
+<p>The <code>forEach</code> method executes some function for every array element.
+This is very similar to a for loop (hence the name):</p>
+<pre><code class="language-js">const numbers = [2, 8, 4, 12, 6, 10];
+numbers.forEach((x) =&gt; console.log(x));
+</code></pre>
+<p>This will log:</p>
+<pre><code>2
+8
+4
+12
+6
+10
+</code></pre>
+<h3 id="sorting-arrays"><a class="header" href="#sorting-arrays">Sorting Arrays</a></h3>
+<p>The <code>sort</code> method can be used to sort the elements of an array:</p>
+<pre><code class="language-js">const tasks = ['Task 2', 'Task 1', 'Task 3'];
+tasks.sort();
+console.log(tasks); // [ 'Task 1', 'Task 2', 'Task 3' ]
+</code></pre>
+<p>The default sort order is ascending and elements are sorted by converting them to strings and then sorting the strings lexicographically.
+However this may not be what you want, especially when you're trying to sort numbers:</p>
+<pre><code class="language-js">const numbers = [2, 8, 4, 12, 6, 10];
+numbers.sort();
+console.log(numbers); // [ 10, 12, 2, 4, 6, 8 ]
+</code></pre>
+<p>If you want to sort differently, you need to specify a comparison function:</p>
+<pre><code class="language-js">const numbers = [2, 8, 4, 12, 6, 10];
+numbers.sort((x, y) =&gt; x - y);
+console.log(numbers); // [ 2, 4, 6, 8, 10, 12 ]
+</code></pre>
 
                     </main>
 
