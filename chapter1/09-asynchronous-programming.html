@@ -223,16 +223,46 @@ Almost every project you'll write (essentially when doing web development) will 
 </blockquote>
 <h3 id="promises"><a class="header" href="#promises">Promises</a></h3>
 <p>The central object in asynchronous JavaScript is the <strong>promise</strong>.
-A promise represents the eventual completion (or failure) of an asynchronous operation.</p>
+A promise represents the eventual completion (or failure) of an asynchronous operation.
+Now that you are sufficiently confused by this opaque definition, we can move on to an actually useful explanation.</p>
 <p>Basically a promise is a like an IOU document - it &quot;promises&quot; you that it is currently working on some long-running operation and that it will eventually get back to you with the result of that long-running operation.</p>
-<p>If you want another metaphor, you can think about how you would order a hamburger at a fast food restaurant.
-In the “synchronous” world, you would walk up, tell your order to the hardworking employee of the restaurant and then immediately receive your hamburger.
-However since the preparation of a hamburger does not happen immediately (it's a &quot;long-running operation&quot;), the synchronous approach would block both you and the kitchen from doing something else.</p>
-<p>Instead the employee hands you an order receipt with a number.
-That order receipt is the promise that represents the eventual completion of the asynchronous operation (preparing your hamburger).</p>
+<p>To give another metaphor, consider the process of ordering a hamburger at SyncMcBurgers.
+For simplicity (and improved metaphormaking) we will pretend that SyncMcBurgers only has one counter.</p>
+<p>In a perfect “synchronous” world, you would walk up, tell your order to the hardworking employee of the restaurant and then he would immediately create the hamburger right then and there.
+However, unless SyncMcBurgers has rediscovered the ancient secret art of instant burgermaking using dark magic, the preparation of a hamburger does not happen immediately (it's a &quot;long-running operation&quot;).</p>
+<p>Therefore, in reality the following process happen when you try to order something at SyncMcBurgers.
+You walk up to the counter and the employee takes your order (a hamburger) and starts preparing the hamburger right there at the counter in front of you.
+In the meantime, you have to wait at the counter until the hamburger is finished.</p>
+<p>This process has an obvious problem - both you and the employee now block the entire restaurant from doing anything else (remember, there is only a single counter).
+No other customer can try to order anything (because you are standing at the counter) and no other employee can take an order anyway (because the employee serving you is blocking the counter with his hamburger preparation).
+This doesn't sound like a recipe for success.</p>
+<p>Luckily, there is a change in management and SyncMcBurgers rebrands as AsyncMcBurgers.
+The important difference between SyncMcBurgers and the new and improved AsyncMcBurgers is a change in the burger ordering process.</p>
+<blockquote>
+<p>There is still only one counter though.
+After all the managers at AsyncMcBurgers want to respect our metaphor.</p>
+</blockquote>
+<p>The new process looks as follows.
+You walk up to the counter, an employee takes your order and hands it to the kitchen.
+Instead of the burger, he hands you receipt, which is a <em>promise</em> (get it?) that you will get your burger after some time.
+Now you don't have to stand in front of the counter waiting for the employee to finish.
+Instead you take your receipt, leave the counter and the next customer may order.</p>
+<p>In case you missed it, this is how every normal fast food restaurant in the world operates - and for good reason (except that normal fast food restaurants usually have more than a single counter).</p>
+<p>Armed with these examples, we can now actually understand the definition of a promise.
+Remember, that a promise represents the eventual completion (or failure) of an asynchronous operation.</p>
+<p>In this example, the asynchronous operation is the preparation of the hamburger.
+This asynchronous operation will eventually complete (the hamburger will be prepared) or fail (there will a problem during the hamburger preparation).
+The order receipt that you get represents the eventual (i.e. probably not immediate) completion of the burger prepartion.</p>
+<p>Now that we made sense of the definition, we can introduce the three states of a promise:</p>
 <p>We say that a promise is <strong>pending</strong> when it has been created, but the asynchronous operation it represents has not been completed yet.
-We say that a promise is <strong>fulfilled</strong> when the asynchronous operation it represents has been successfully completed.
-Finally a promise is <strong>rejected</strong> when the asynchronous operation it represents has failed.</p>
+This would be the case when you already received the order receipt but you're still waiting for the hamburger.</p>
+<p>We say that a promise is <strong>fulfilled</strong> when the asynchronous operation it represents has been successfully completed.
+This would be the case when the hamburger is successfully prepared and handed to you.</p>
+<p>We say that a promise is <strong>rejected</strong> when the asynchronous operation it represents has failed.
+This would be the case when (for example) the kitchen spontaneously combusts due to the ongoing AsyncMcBurger dark magic experiments in the backroom lab.</p>
+<p>Finally a promise is <strong>settled</strong> when is either fulfilled or rejected, but not pending.</p>
+<p>Promises also allow us to associate <strong>handlers</strong> (also called handler functions) with the eventual success or failure.
+For example, we could say that when the hamburger is prepared, we want to eat it (or throw it in the trash, which might actually be the preferrable alternative in some cases).</p>
 <h3 id="working-with-promises-in-javascript"><a class="header" href="#working-with-promises-in-javascript">Working with Promises in JavaScript</a></h3>
 <p>Let's work through an example - fetching a resource from a server via HTTP.
 The HTTP protocol will be discussed in more detail later, but basically it enables us to send a request to a server and get a response.
@@ -256,23 +286,22 @@ console.log(fetchPromise);
 The handler function will be called when the <code>fetch</code> succeeds (i.e. the promise returned by <code>fetch</code> is fulfilled).</li>
 <li>After a while the <code>fetch</code> succeeds, <code>fetchPromise</code> is fulfilled and the <code>response</code> object is logged.</li>
 </ol>
-<p>Note that because <code>fetch</code> returns immediately <code>console.log(fetchPromise)</code> is executed before <code>console.log(response)</code>.
-This is why you see the following output in your console:</p>
+<p>It is important to note <code>fetch</code> returns immediately.
+The return value of <code>fetch</code> is a pending promise (that will eventually settle with either a response value or some kind of error).</p>
+<p>This is why <code>console.log(fetchPromise)</code> is executed before <code>console.log(response)</code> and you see the following output in the console:</p>
 <pre><code>Promise { &lt;pending&gt; }
 Response {
     ...
 }
 </code></pre>
+<p>Additionally the <code>then</code> method <em>also</em> returns immediately, after it has attached the handler function to the <code>fetchPromise</code>.
+However the execution of the <em>handler function</em> happens only after the promise returned by fetch is fulfilled.</p>
 <p>On one hand this is what we want - while we are waiting for the network request to complete, we can do other stuff (like logging <code>fetchPromise</code>).</p>
 <p>On the other hand this is the reason why asynchronous programming is often so confusing to beginners - it &quot;breaks&quot; the regular programming model.
 When we write synchronous code, we just execute statements one after another.
 With asynchronous code this is no longer the case - here we &quot;register&quot; a function to be executed later, do something else, and then at some point the registered function is executed.</p>
-<blockquote>
-<p>You should pause and think about this for a second.
-If you understand this point, you (mostly) understand asynchronous programming.</p>
-</blockquote>
 <h3 id="chaining-promises"><a class="header" href="#chaining-promises">Chaining Promises</a></h3>
-<p>The <code>response</code> object is not terribly useful.
+<p>The <code>response</code> object is not terribly useful by itself.
 Let's retrieve the &quot;actual&quot; response which is a JSON object.
 JSON is a data format for data exchange (e.g. on a network) and can basically store arbitrary JavaScript objects.
 Here is how the JSON we get from <code>https://jsonplaceholder.typicode.com/todos/1</code> looks like:</p>
@@ -285,7 +314,7 @@ Here is how the JSON we get from <code>https://jsonplaceholder.typicode.com/todo
 </code></pre>
 <p>The <code>response</code> object has a <code>json</code> method to retrieve the JSON contained in a response.
 However, the <code>json</code> method is also asynchronous, so we are again dealing with promises.</p>
-<p>Your first instinct would be to write something like this:</p>
+<p>Your first instinct might be to write something like this:</p>
 <pre><code class="language-js">const url = 'https://jsonplaceholder.typicode.com/todos/1';
 const fetchPromise = fetch(url);
 const jsonPromise = fetchPromise.then((response) =&gt; {
@@ -295,25 +324,46 @@ const jsonPromise = fetchPromise.then((response) =&gt; {
 </code></pre>
 <p>This is <em>technically</em> not wrong, but it's ugly.
 Basically every time we need to add an asynchronous operation to our code that depends on the result of a previous asynchronous operation, we would need to add one level of nesting which will quickly become unreadable.</p>
-<p>Luckily for us, the benevolent god-emperors of JavaScript have eliminated this problem by making <code>then</code> returns a promise that &quot;resolves&quot; to the result of the handler function.
+<p>Luckily for us, the benevolent god-emperors of JavaScript have eliminated this problem by making <code>then</code> return a promise that &quot;resolves&quot; to the result of the handler function.
 Therefore instead of nesting promises, we can <strong>chain</strong> promises:</p>
 <pre><code class="language-js">const url = 'https://jsonplaceholder.typicode.com/todos/1';
 const fetchPromise = fetch(url);
 const jsonPromise = fetchPromise.then((response) =&gt; response.json());
 jsonPromise.then((json) =&gt; console.log(json));
 </code></pre>
-<p>This is called <strong>promise chaining</strong>.</p>
-<p>We can rewrite this to be a bit more elegant:</p>
+<p>This is (quite appropriately) called <strong>promise chaining</strong>.</p>
+<p>Here is what happens, when we call this code:</p>
+<ol>
+<li>The <code>fetch</code> method immediately returns a pending promise <code>fetchPromise</code>.</li>
+<li>The <code>then</code> method of <code>fetchPromise</code> attaches the handler function <code>(response) =&gt; response.json()</code> to the <code>fetchPromise</code> and also immediately returns.
+This time the return value is the pending promise <code>jsonPromise</code>.</li>
+<li>The <code>then</code> method of <code>jsonPromise</code> attaches the handler function <code>(json) =&gt; console.log(json)</code> and also immediately returns another pending promise (which we ignore here).</li>
+<li>The network request initiated by <code>fetch</code> finishes and <code>fetchPromise</code> is fulfilled (with a <code>Response</code> object as its fulfillment value).</li>
+<li>Now that <code>fetchPromise</code> is fulfilled the handler function <code>(response) =&gt; response.json()</code> is kicked off and attempts to parse the response as a JSON object.</li>
+<li>At some point the JSON parsing is finished and <code>jsonPromise</code> is fulfilled.</li>
+<li>Now that <code>jsonPromise</code> is fulfilled the handler function <code>(json) =&gt; console.log(json)</code> is kicked off and the JSON object is logged to the console.</li>
+</ol>
+<p>You can basically think of a chain as being executed in two stages.
+In the first stage the promises are set up and the handler functions are attached using the <code>then</code> method.
+This stage happens immediately.
+In the second stage the promises are settled and the attached handler functions are actually executed.
+This stage can take quite some time, depending on how long the tasks we want to accomplish take.</p>
+<blockquote>
+<p>This explanation is the most important part of this entire section.
+You should pause and think about this promise chain for a second (or maybe even multiple seconds).
+If you understand this point, you (mostly) understand asynchronous programming.</p>
+</blockquote>
+<p>Note that we can rewrite our promise chain to be a bit more elegant:</p>
 <pre><code class="language-js">const url = 'https://jsonplaceholder.typicode.com/todos/1';
 fetch(url)
   .then((response) =&gt; response.json())
   .then((json) =&gt; console.log(json));
 </code></pre>
 <h3 id="handling-errors"><a class="header" href="#handling-errors">Handling Errors</a></h3>
-<p>The above code is missing error handling.
+<p>The above code is completely missing one very important point - error handling.
 Most long-running operations (especially those that involve external resources like a network or a file system) can fail.
-For example <code>fetch</code> can fail if your network is down.</p>
-<p>You can turn off your network and execute the above code again.
+For example <code>fetch</code> will fail (and <code>fetchPromise</code> will thus be rejected) if your network is down.</p>
+<p>You can test this - turn off your network and execute the above code again.
 You will get a weird error that looks approximately like this:</p>
 <pre><code>TypeError: fetch failed
     at Object.fetch (node:internal/deps/undici/undici:11457:11)
