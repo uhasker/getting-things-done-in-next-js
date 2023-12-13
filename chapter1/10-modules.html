@@ -177,7 +177,7 @@
 <div style="text-align: right"> <i> He who writes with clarity, simplicity, and purpose will find his modules cherished by many. <br> — Ancient Chinese proverb </i> </div>
 <h3 id="module-system"><a class="header" href="#module-system">Module System</a></h3>
 <p>At the moment, the scripts we write are not large and easily fit into a single file.
-However, as we begin writing our task application, we will run into the problem that if we try to fit our project into a single file, that script will quickly become unreadable and unmaintainable.</p>
+However, as we begin writing our task application, we will run into the problem that if we try to fit our project into a single file, that file will quickly become unreadable and unmaintainable.</p>
 <p>Additionally, we might often want to use third-party libraries (i.e. libraries written by someone else) in our project.
 Copy and pasting the code from a third-party library seems like an obviously bad idea.
 First, this would make our scripts even less readable.
@@ -206,7 +206,7 @@ console.log(greet('John Doe'));
 <p>This is the basic setup, but in order to execute this in the browser or in Node.js we need to make some more adjustments.</p>
 <h3 id="esm-in-the-browser"><a class="header" href="#esm-in-the-browser">ESM in the Browser</a></h3>
 <p>Let's create a file named <code>index.html</code> in which we use <code>main.js</code> as a JavaScript module:</p>
-<pre><code class="language-html">&lt;!doctype html&gt;
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
 &lt;html lang=&quot;en&quot;&gt;
   &lt;head&gt;
     &lt;meta charset=&quot;UTF-8&quot; /&gt;
@@ -233,7 +233,7 @@ We therefore need to serve our files over a server instead of just trying to ope
 </code></pre>
 <p>Go to <code>http://localhost:8080</code>, open the console and you should see <code>Hello, John Doe</code> in your console.</p>
 <h3 id="esm-in-nodejs"><a class="header" href="#esm-in-nodejs">ESM in Node.js</a></h3>
-<p>To use <code>main.js</code> and <code>greeter.js</code> in Node.js create the following <code>package.json</code> file:</p>
+<p>To use <code>main.js</code> and <code>greeter.js</code> in Node.js create the following <code>package.json</code> file in the same directory as <code>main.js</code> and <code>greeter.js</code>:</p>
 <pre><code>{
   &quot;name&quot;: &quot;projectname&quot;,
   &quot;version&quot;: &quot;1.0.0&quot;,
@@ -241,7 +241,12 @@ We therefore need to serve our files over a server instead of just trying to ope
   &quot;type&quot;: &quot;module&quot;
 }
 </code></pre>
-<p>Now you can execute <code>main.js</code> by running:</p>
+<blockquote>
+<p>Note that it is very important that you specify <code>type</code> as <code>module</code>.
+This tells node to interpret JavaScript files as using ES module syntax (which is what we use in this section).</p>
+</blockquote>
+<p>This <code>package.json</code> file specifies that the directory is now a <strong>node project</strong>.</p>
+<p>You can then execute <code>main.js</code> by running:</p>
 <pre><code class="language-sh">node main.js
 </code></pre>
 <h3 id="named-exports-and-imports"><a class="header" href="#named-exports-and-imports">Named Exports and Imports</a></h3>
@@ -276,12 +281,12 @@ export { getGreeting, greet };
   return `Hello ${name}!`;
 }
 
-export { greet as sayHello };
+export { getImportantGreeting as getGreeting };
 </code></pre>
 <p>If you need to import multiple functions, you can do that as well:</p>
 <pre><code class="language-js">import { getGreeting, greet } from './greet.js';
 </code></pre>
-<p>You can also rename on imports:</p>
+<p>You can also rename imports:</p>
 <pre><code class="language-js">import { getGreeting, greet as sayHello } from './greet.js';
 </code></pre>
 <p>This is useful if you have several modules that export functions with a same name.
@@ -307,7 +312,7 @@ import { greet as otherGreet } from './other-greet.js';
 <p>Alternatively you could use <code>default as</code>:</p>
 <pre><code class="language-js">import { default as getGreeting } from './greet.js';
 </code></pre>
-<p>Note that you can import the default export under any name:</p>
+<p>Note that you can import the default export using any name you like:</p>
 <pre><code class="language-js">import thingy from './greet.js';
 </code></pre>
 <h3 id="namespace-imports"><a class="header" href="#namespace-imports">Namespace Imports</a></h3>
