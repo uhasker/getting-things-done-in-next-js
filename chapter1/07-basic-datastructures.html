@@ -302,17 +302,17 @@ for (const task of tasks) {
 <p>Objects have methods to retrieve their keys and their values:</p>
 <pre><code class="language-js">const task = {
   id: 1,
-  summary: 'Read the Next.js book',
+  title: 'Read the Next.js book',
   description: 'Read and understand the Next.js book.',
 };
 
-console.log(Object.keys(task)); // [ 'id', 'summary', 'description' ]
+console.log(Object.keys(task)); // [ 'id', 'title', 'description' ]
 console.log(Object.values(task)); // [ 1, 'Read the Next.js book', 'Read and understand the Next.js book.' ]
 </code></pre>
 <p>You can also use the <code>entries</code> method to retrieve the key-value pairs:</p>
 <pre><code class="language-js">const task = {
   id: 1,
-  summary: 'Read the Next.js book',
+  title: 'Read the Next.js book',
   description: 'Read and understand the Next.js book.',
 };
 
@@ -321,7 +321,7 @@ console.log(Object.entries(task));
 <p>This will log:</p>
 <pre><code>[
   [ 'id', 1 ],
-  [ 'summary', 'Read the Next.js book' ],
+  [ 'title', 'Read the Next.js book' ],
   [ 'description', 'Read and understand the Next.js book.' ]
 ]
 </code></pre>
@@ -329,7 +329,7 @@ console.log(Object.entries(task));
 <p>The <code>for...in</code> loop allows you to iterate over the properties of an object:</p>
 <pre><code class="language-js">const task = {
   id: 1,
-  summary: 'Read the Next.js book',
+  title: 'Read the Next.js book',
   description: 'Read and understand the Next.js book.',
 };
 
@@ -339,7 +339,7 @@ for (const prop in task) {
 </code></pre>
 <p>This will log:</p>
 <pre><code>id
-summary
+title
 description
 </code></pre>
 <h3 id="maps"><a class="header" href="#maps">Maps</a></h3>

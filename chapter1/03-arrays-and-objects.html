@@ -265,10 +265,10 @@ These two concepts will come up <em>a lot</em> in the following chapters (much m
 <h3 id="objects"><a class="header" href="#objects">Objects</a></h3>
 <p>Let's return to our (yet) imaginary task application.
 A task will probably be something more than just a string.
-For example it might contain an ID, a summary and a description.
+For example it might contain an ID, a title and a description.
 We could again store these in constants:</p>
 <pre><code class="language-js">const taskId = 1;
-const taskSummary = 'Read the Next.js book';
+const taskTitle = 'Read the Next.js book';
 const taskDescription = 'Read and understand the Next.js book.';
 </code></pre>
 <p>As you can probably guess, this will quickly become <em>tedious</em> (oh no, not this again).
@@ -277,19 +277,19 @@ These allow us to store name-value pairs inside a single variable.
 Here is how we might create a <code>task</code> object that contains all the information we want to know about a task:</p>
 <pre><code class="language-js">const task = {
   id: 1,
-  summary: 'Read the Next.js book',
+  title: 'Read the Next.js book',
   description: 'Read and understand the Next.js book.',
 };
 </code></pre>
 <p>Every such value is called a <strong>property</strong>.
 We can access properties using the dot notation or the square bracket notation.
-For example to access the <code>summary</code> property of the <code>task</code> object, you would write <code>task.summary</code> or <code>task['summary']</code>.
+For example to access the <code>title</code> property of the <code>task</code> object, you would write <code>task.title</code> or <code>task['title']</code>.
 Try it out:</p>
 <pre><code class="language-js">console.log(task.id); // 1
-console.log(task.summary); // Read the Next.js book
+console.log(task.title); // Read the Next.js book
 console.log(task.description); // Read and understand the Next.js book.
 console.log(task['id']); // 1
-console.log(task['summary']); // Read the Next.js book
+console.log(task['title']); // Read the Next.js book
 console.log(task['description']); // Read and understand the Next.js book.
 </code></pre>
 <blockquote>
@@ -303,13 +303,13 @@ For example, here is how you can nest an object inside an object:</p>
   name: 'John Doe',
   task: {
     id: 1,
-    summary: 'Read the Next.js book',
+    title: 'Read the Next.js book',
     description: 'Read and understand the Next.js book.',
   },
 };
 </code></pre>
-<p>flowe <code>person.task.summary</code>:</p>
-<pre><code class="language-js">console.log(person.task.summary); // Read the Next.js book
+<p>You can access the <code>title</code> property of the <code>person.task</code> object like this:</p>
+<pre><code class="language-js">console.log(person.task.title); // Read the Next.js book
 </code></pre>
 <p>If you try to access a property that doesn't exist, the result will be <code>undefined</code> (there it is again):</p>
 <pre><code class="language-js">console.log(task.date); // undefined
@@ -334,10 +334,10 @@ Despite the fact that <code>null</code> is a separate data type it doesn't hurt 
 <p>Just as with arrays, you can use <strong>destructuring assignment</strong> when working with objects:</p>
 <pre><code class="language-js">const task = {
   id: 1,
-  summary: 'Read the Next.js book',
+  title: 'Read the Next.js book',
   description: 'Read and understand the Next.js book.',
 };
-const { id, summary, description } = task;
+const { id, title, description } = task;
 </code></pre>
 <p>And just like with arrays, you can use the spread syntax:</p>
 <pre><code class="language-js">const taskWithAssignee = {
@@ -350,7 +350,7 @@ console.log(taskWithAssignee);
 <pre><code class="language-json">{
   &quot;assignee&quot;: &quot;Max&quot;,
   &quot;id&quot;: 1,
-  &quot;summary&quot;: &quot;Read the Next.js book&quot;,
+  &quot;title&quot;: &quot;Read the Next.js book&quot;,
   &quot;description&quot;: &quot;Read and understand the Next.js book.&quot;
 }
 </code></pre>

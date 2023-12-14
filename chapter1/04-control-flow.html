@@ -322,7 +322,7 @@ You can just write</p>
 <h3 id="optional-chaining"><a class="header" href="#optional-chaining">Optional chaining</a></h3>
 <p>Consider the following task object:</p>
 <pre><code class="language-js">const nextTask = {
-  summary: 'Read the Next.js book',
+  title: 'Read the Next.js book',
   description: 'Read and understand the Next.js book',
   date: {
     day: 8,
@@ -337,13 +337,13 @@ But what if the day does not have to be present, i.e. is <em>optional</em>?
 This could happen, for example, because the user didn't enter a task.</p>
 <p>The object could look like this:</p>
 <pre><code class="language-js">const nextTask = {
-  summary: 'Read the Next.js book',
+  title: 'Read the Next.js book',
   description: 'Read and understand the Next.js book',
 };
 
 // or like this if you were to use `null`
 const nextTask = {
-  summary: 'Read the Next.js book',
+  title: 'Read the Next.js book',
   description: 'Read and understand the Next.js book',
   date: null,
 };

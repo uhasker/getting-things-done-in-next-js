@@ -739,10 +739,10 @@ These two concepts will come up <em>a lot</em> in the following chapters (much m
 <h3 id="objects"><a class="header" href="#objects">Objects</a></h3>
 <p>Let's return to our (yet) imaginary task application.
 A task will probably be something more than just a string.
-For example it might contain an ID, a summary and a description.
+For example it might contain an ID, a title and a description.
 We could again store these in constants:</p>
 <pre><code class="language-js">const taskId = 1;
-const taskSummary = 'Read the Next.js book';
+const taskTitle = 'Read the Next.js book';
 const taskDescription = 'Read and understand the Next.js book.';
 </code></pre>
 <p>As you can probably guess, this will quickly become <em>tedious</em> (oh no, not this again).
@@ -751,19 +751,19 @@ These allow us to store name-value pairs inside a single variable.
 Here is how we might create a <code>task</code> object that contains all the information we want to know about a task:</p>
 <pre><code class="language-js">const task = {
   id: 1,
-  summary: 'Read the Next.js book',
+  title: 'Read the Next.js book',
   description: 'Read and understand the Next.js book.',
 };
 </code></pre>
 <p>Every such value is called a <strong>property</strong>.
 We can access properties using the dot notation or the square bracket notation.
-For example to access the <code>summary</code> property of the <code>task</code> object, you would write <code>task.summary</code> or <code>task['summary']</code>.
+For example to access the <code>title</code> property of the <code>task</code> object, you would write <code>task.title</code> or <code>task['title']</code>.
 Try it out:</p>
 <pre><code class="language-js">console.log(task.id); // 1
-console.log(task.summary); // Read the Next.js book
+console.log(task.title); // Read the Next.js book
 console.log(task.description); // Read and understand the Next.js book.
 console.log(task['id']); // 1
-console.log(task['summary']); // Read the Next.js book
+console.log(task['title']); // Read the Next.js book
 console.log(task['description']); // Read and understand the Next.js book.
 </code></pre>
 <blockquote>
@@ -777,13 +777,13 @@ For example, here is how you can nest an object inside an object:</p>
   name: 'John Doe',
   task: {
     id: 1,
-    summary: 'Read the Next.js book',
+    title: 'Read the Next.js book',
     description: 'Read and understand the Next.js book.',
   },
 };
 </code></pre>
-<p>flowe <code>person.task.summary</code>:</p>
-<pre><code class="language-js">console.log(person.task.summary); // Read the Next.js book
+<p>You can access the <code>title</code> property of the <code>person.task</code> object like this:</p>
+<pre><code class="language-js">console.log(person.task.title); // Read the Next.js book
 </code></pre>
 <p>If you try to access a property that doesn't exist, the result will be <code>undefined</code> (there it is again):</p>
 <pre><code class="language-js">console.log(task.date); // undefined
@@ -808,10 +808,10 @@ Despite the fact that <code>null</code> is a separate data type it doesn't hurt 
 <p>Just as with arrays, you can use <strong>destructuring assignment</strong> when working with objects:</p>
 <pre><code class="language-js">const task = {
   id: 1,
-  summary: 'Read the Next.js book',
+  title: 'Read the Next.js book',
   description: 'Read and understand the Next.js book.',
 };
-const { id, summary, description } = task;
+const { id, title, description } = task;
 </code></pre>
 <p>And just like with arrays, you can use the spread syntax:</p>
 <pre><code class="language-js">const taskWithAssignee = {
@@ -824,7 +824,7 @@ console.log(taskWithAssignee);
 <pre><code class="language-json">{
   &quot;assignee&quot;: &quot;Max&quot;,
   &quot;id&quot;: 1,
-  &quot;summary&quot;: &quot;Read the Next.js book&quot;,
+  &quot;title&quot;: &quot;Read the Next.js book&quot;,
   &quot;description&quot;: &quot;Read and understand the Next.js book.&quot;
 }
 </code></pre>
@@ -981,7 +981,7 @@ You can just write</p>
 <h3 id="optional-chaining"><a class="header" href="#optional-chaining">Optional chaining</a></h3>
 <p>Consider the following task object:</p>
 <pre><code class="language-js">const nextTask = {
-  summary: 'Read the Next.js book',
+  title: 'Read the Next.js book',
   description: 'Read and understand the Next.js book',
   date: {
     day: 8,
@@ -996,13 +996,13 @@ But what if the day does not have to be present, i.e. is <em>optional</em>?
 This could happen, for example, because the user didn't enter a task.</p>
 <p>The object could look like this:</p>
 <pre><code class="language-js">const nextTask = {
-  summary: 'Read the Next.js book',
+  title: 'Read the Next.js book',
   description: 'Read and understand the Next.js book',
 };
 
 // or like this if you were to use `null`
 const nextTask = {
-  summary: 'Read the Next.js book',
+  title: 'Read the Next.js book',
   description: 'Read and understand the Next.js book',
   date: null,
 };
@@ -1290,10 +1290,10 @@ This is not an oversight but stems from the fact that there is no way to write a
 <p>Methods can refer to the properties of an object using the <code>this</code> keyword which is simply a reference to the current object:</p>
 <pre><code class="language-js">const task = {
   id: 1,
-  summary: 'Read the MERN book',
+  title: 'Read the MERN book',
   description: 'Read and understand the MERN book.',
   longDescription: function () {
-    return `${this.summary}(ID = ${this.id}): ${this.description}`;
+    return `${this.title}(ID = ${this.id}): ${this.description}`;
   },
 };
 </code></pre>
@@ -1598,17 +1598,17 @@ for (const task of tasks) {
 <p>Objects have methods to retrieve their keys and their values:</p>
 <pre><code class="language-js">const task = {
   id: 1,
-  summary: 'Read the Next.js book',
+  title: 'Read the Next.js book',
   description: 'Read and understand the Next.js book.',
 };
 
-console.log(Object.keys(task)); // [ 'id', 'summary', 'description' ]
+console.log(Object.keys(task)); // [ 'id', 'title', 'description' ]
 console.log(Object.values(task)); // [ 1, 'Read the Next.js book', 'Read and understand the Next.js book.' ]
 </code></pre>
 <p>You can also use the <code>entries</code> method to retrieve the key-value pairs:</p>
 <pre><code class="language-js">const task = {
   id: 1,
-  summary: 'Read the Next.js book',
+  title: 'Read the Next.js book',
   description: 'Read and understand the Next.js book.',
 };
 
@@ -1617,7 +1617,7 @@ console.log(Object.entries(task));
 <p>This will log:</p>
 <pre><code>[
   [ 'id', 1 ],
-  [ 'summary', 'Read the Next.js book' ],
+  [ 'title', 'Read the Next.js book' ],
   [ 'description', 'Read and understand the Next.js book.' ]
 ]
 </code></pre>
@@ -1625,7 +1625,7 @@ console.log(Object.entries(task));
 <p>The <code>for...in</code> loop allows you to iterate over the properties of an object:</p>
 <pre><code class="language-js">const task = {
   id: 1,
-  summary: 'Read the Next.js book',
+  title: 'Read the Next.js book',
   description: 'Read and understand the Next.js book.',
 };
 
@@ -1635,7 +1635,7 @@ for (const prop in task) {
 </code></pre>
 <p>This will log:</p>
 <pre><code>id
-summary
+title
 description
 </code></pre>
 <h3 id="maps"><a class="header" href="#maps">Maps</a></h3>
@@ -1716,12 +1716,12 @@ You can of course manipulate data directly by mutating global state.</p>
 <p>Consider the following <code>task</code> object:</p>
 <pre><code class="language-js">const task = {
   id: 1,
-  summary: 'Read the Next.js book',
+  title: 'Read the Next.js book',
   description: 'Read and understand the Next.js book.',
 };
 </code></pre>
-<p>Now let's say we want to change the summary:</p>
-<pre><code class="language-js">task.summary = 'Next.js book';
+<p>Now let's say we want to change the title:</p>
+<pre><code class="language-js">task.title = 'Next.js book';
 </code></pre>
 <p>This works for simple objects and changes.
 But this will quickly become brittle with growing complexity.
@@ -1729,10 +1729,10 @@ But this will quickly become brittle with growing complexity.
 <p>Instead we can create copies of the objects which contain the changes we need:</p>
 <pre><code class="language-js">const newTask = {
   ...task,
-  summary: 'Next.js book',
+  title: 'Next.js book',
 };
 </code></pre>
-<p>Note that we didn't change the original object, but created a copy of the object with a different summary.</p>
+<p>Note that we didn't change the original object, but created a copy of the object with a different title.</p>
 <p>Immutability and pure functions are closely linked.
 You want to have immutable datastructures which get passed through pure functions to compute results.</p>
 <h3 id="higher-order-functions"><a class="header" href="#higher-order-functions">Higher-order functions</a></h3>
@@ -1772,21 +1772,21 @@ These functions allow you to perform an <em>incredibly</em> rich set of operatio
 const tasks = [
   {
     id: 1,
-    summary: 'Read the Next.js book',
+    title: 'Read the Next.js book',
     description: 'Read and understand the Next.js book.',
     timeLogged: 60,
     status: 'In progress',
   },
   {
     id: 2,
-    summary: 'Write a task app',
+    title: 'Write a task app',
     description: 'Write an awesome task app.',
     timeLogged: 0,
     status: 'Todo',
   },
   {
     id: 3,
-    summary: 'Think of a funny joke',
+    title: 'Think of a funny joke',
     description: 'Come up with a funny joke to lighten the mood.',
     timeLogged: 120,
     status: 'In progress',
@@ -1810,11 +1810,11 @@ Instead we can (and should) use the <code>map</code> function:</p>
 <pre><code class="language-js">[1, 4, 9, 16];
 </code></pre>
 <p>Consider another example.
-Let's say we wanted to add a long description to all the <code>tasks</code> based on the summary and the description.
+Let's say we wanted to add a long description to all the <code>tasks</code> based on the title and the description.
 We can use the <code>map</code> function again:</p>
 <pre><code class="language-js">const longTasks = tasks.map((task) =&gt; ({
   ...task,
-  longDescription: `${task.summary}: ${task.description}`,
+  longDescription: `${task.title}: ${task.description}`,
 }));
 </code></pre>
 <blockquote>
@@ -1825,7 +1825,7 @@ Thanks to this <em>incredible innovation</em>, you only need to explicitly speci
 <pre><code class="language-js">[
   {
     id: 1,
-    summary: 'Read the Next.js book',
+    title: 'Read the Next.js book',
     description: 'Read and understand the Next.js book.',
     timeLogged: 60,
     status: 'In progress',
@@ -1833,7 +1833,7 @@ Thanks to this <em>incredible innovation</em>, you only need to explicitly speci
   },
   {
     id: 2,
-    summary: 'Write a task app',
+    title: 'Write a task app',
     description: 'Write an awesome task app.',
     timeLogged: 0,
     status: 'Todo',
@@ -1841,7 +1841,7 @@ Thanks to this <em>incredible innovation</em>, you only need to explicitly speci
   },
   {
     id: 3,
-    summary: 'Think of a funny joke',
+    title: 'Think of a funny joke',
     description: 'Come up with a funny joke to lighten the mood.',
     timeLogged: 120,
     status: 'In progress',

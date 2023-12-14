@@ -306,10 +306,10 @@ This is not an oversight but stems from the fact that there is no way to write a
 <p>Methods can refer to the properties of an object using the <code>this</code> keyword which is simply a reference to the current object:</p>
 <pre><code class="language-js">const task = {
   id: 1,
-  summary: 'Read the MERN book',
+  title: 'Read the MERN book',
   description: 'Read and understand the MERN book.',
   longDescription: function () {
-    return `${this.summary}(ID = ${this.id}): ${this.description}`;
+    return `${this.title}(ID = ${this.id}): ${this.description}`;
   },
 };
 </code></pre>
