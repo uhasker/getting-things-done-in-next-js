@@ -178,10 +178,10 @@
 <h3 id="it-just-works"><a class="header" href="#it-just-works">It Just Works</a></h3>
 <p>A common misunderstanding among beginner programmers is that if the program runs correctly, then the code must automatically be fine.
 While a correctly running program is indeed better than a crashing program (a truly shocking insight for some developers), code should not only work, but also be maintainable.</p>
-<p>This <strong>maintainability</strong> has to aspects:</p>
+<p>This <strong>maintainability</strong> has two aspects:</p>
 <ol>
-<li>It should be maintainable by future you in (let's say) six months.</li>
-<li>It should be maintanable by other people that are not you.</li>
+<li>Code should be maintainable by future you in (let's say) six months.</li>
+<li>Code should be maintanable by other people that are not you.</li>
 </ol>
 <blockquote>
 <p>We wish to reiterate that there are indeed people that are not you in the world.
@@ -220,7 +220,8 @@ It's absolutely unreadable and the unreadability is solely down to really terrib
 <p>The function <code>getTaskTitlesByStatus</code> gets all the titles of the tasks that have a certain status.
 And we know that, because it is literally in the name of the function!</p>
 <p>Not only does the function have a good name (which is important when trying to use this function), but so do the variables (which is important when we need to fix possible mistakes in this function).</p>
-<p>Of course, this is a very extreme example (on purpose), but it's really incredible how often programmers give really terrible names to functions and variables (even developers that should really know better).</p>
+<p>Of course, this is a very extreme example (on purpose), but it's really incredible how often programmers give terrible names to functions and variables.
+This happens even to developers that should know better.</p>
 <p>We will note, that naming things is usually not as easy as in this example.
 There are many legitime cases where giving something a good name is not trivial, but you should at least always try to have sensible names.
 Your colleagues will really appreciate it.</p>
@@ -237,9 +238,9 @@ We <code>filter</code> all the <code>tasks</code> by their <code>status</code> a
 <p>Of course you shouldn't overdo it - especially with functions like <code>reduce</code> it is possible to write completely unreadable code even in a functional style.
 In the end there is no silver bullet programming paradigm.</p>
 <h3 id="write-small-helper-functions"><a class="header" href="#write-small-helper-functions">Write Small Helper Functions</a></h3>
-<p>Well, we know how to write good functions, right?
+<p>Well, now we know how to write good functions, right?
 Just give everything descriptive names and use a functional style.</p>
-<p>Unfortunately this won't always help because some functions have to do complicated things.
+<p>Unfortunately this won't always help because some functions legitimately have to do complicated things.
 Consider a function that takes an array of tasks and returns an array of generated notifications to be shown to the user.</p>
 <p>The notifications are generated for urgent tasks (i.e. tasks where the deadline is in the next two days).
 Additionally, we want to to generate a notification with the number of uncompleted tasks.</p>
@@ -276,7 +277,7 @@ Additionally, we want to to generate a notification with the number of uncomplet
 }
 </code></pre>
 <p>Try to read this function and understand it.
-This probably takes some time, especially if you are a beginner who is not used to digesting large chunk of code quickly.</p>
+This probably takes some time, especially if you are a beginner who is not used to digesting large chunks of code quickly.</p>
 <p>We can partially alleviate this problem by splitting the function into small helper functions:</p>
 <pre><code class="language-js">function findUrgentTasks(tasks) {
   const urgentTasks = [];
@@ -322,7 +323,7 @@ function generateNotifications(tasks) {
 }
 </code></pre>
 <p>This is much simpler to read.
-Additionally, if you look carefully at the code, you should realize that we can rewrite <code>findUrgentTasks</code> and <code>countUncompletedTasks</code> can be rewritten in a functional style (try to do this yourself).</p>
+Additionally, if you look carefully at the code, you should realize that <code>findUrgentTasks</code> and <code>countUncompletedTasks</code> can be rewritten in a functional style (try to do this yourself).</p>
 <p>This is a common occurrence when improving your code - one improvement often leads to another.</p>
 <h3 id="avoid-deep-nesting"><a class="header" href="#avoid-deep-nesting">Avoid Deep Nesting</a></h3>
 <p>Consider a function that filters tasks based on their status, user ID and days until deadline.
@@ -414,18 +415,11 @@ In this case we can check the &quot;inverted&quot; conditions one by one and &qu
   return task.deadline &lt;= futureDate;
 }
 </code></pre>
-<h3 id="additional-tips"><a class="header" href="#additional-tips">Additional Tips</a></h3>
-<p>There are couple of additional tips:</p>
-<ul>
-<li>don't repeat yourself</li>
-<li>use temporary variables</li>
-<li>think about edge cases</li>
-<li>use well structured modules</li>
-<li>write comments and docstrings</li>
-<li>format and style your code consistenly</li>
-<li>don't forget to handle errors</li>
-<li>don't try to outsmart yourself</li>
-</ul>
+<h3 id="final-remarks"><a class="header" href="#final-remarks">Final Remarks</a></h3>
+<p>Generally try to not outsmart yourself and stick to writing actual features instead of fancy abstractions that might or might not come in handy later.
+Keep your code simple and well organized.</p>
+<p>Finally, there is no list that will instantly make you an awesome programmer.
+In the end, experience is king - at least if actually <em>learn</em> from that experience and reflect on your mistakes.</p>
 
                     </main>
 
