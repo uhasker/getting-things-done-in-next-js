@@ -2200,7 +2200,7 @@ fetchTask(url).then((json) =&gt; console.log(json));
 <p>Note that for some runtimes you can only use <code>await</code> inside an <code>async</code> function.
 This is why we use <code>then</code> with <code>fetchTask</code> instead of <code>await</code>ing the promise returned by <code>fetchTask</code>.</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="modules"><a class="header" href="#modules">Modules</a></h2>
-<div style="text-align: right"> <i> He who writes with clarity, simplicity, and purpose will find his modules cherished by many. <br> — Ancient Chinese proverb </i> </div>
+<div style="text-align: right"> <i> A wise coder knows that exporting too much is like opening all doors of the house; both invite unexpected guests. <br> — Ancient Chinese proverb </i> </div>
 <h3 id="module-system"><a class="header" href="#module-system">Module System</a></h3>
 <p>At the moment, the scripts we write are not large and easily fit into a single file.
 However, as we begin writing our task application, we will run into the problem that if we try to fit our project into a single file, that file will quickly become unreadable and unmaintainable.</p>
@@ -2366,12 +2366,12 @@ While a correctly running program is indeed better than a crashing program (a tr
 <li>Code should be maintanable by other people that are not you.</li>
 </ol>
 <blockquote>
-<p>We wish to reiterate that there are indeed people that are not you in the world.
-Some programmers tend to forget that.</p>
+<p>We wish to reiterate that there are indeed people that are not you in the world, some of which might even end up on your team.
+There are programmers that tend to forget that.</p>
 </blockquote>
 <p>This section is aimed at giving you a few practical tips to achieve these goals.
 It won't make you a great programmer, but it will help you to make your teammates hate you slightly less (which is why the section is called &quot;writing decent code&quot; and not &quot;writing the greatest code of all time&quot;).</p>
-<h3 id="naming-all-the-things-sensibly"><a class="header" href="#naming-all-the-things-sensibly">Naming All The Things (Sensibly)</a></h3>
+<h3 id="sensible-naming"><a class="header" href="#sensible-naming">Sensible Naming</a></h3>
 <p>The ultimate number one tip for writing better code is as obvious in theory, as it is complicated in practice:</p>
 <p><strong>Your variables and functions should have sensible names that describe their purpose.</strong></p>
 <p>Consider this simple example:</p>
@@ -2406,26 +2406,15 @@ And we know that, because it is literally in the name of the function!</p>
 This happens even to developers that should know better.</p>
 <p>We will note, that naming things is usually not as easy as in this example.
 There are many legitime cases where giving something a good name is not trivial, but you should at least always try to have sensible names.
-Your colleagues will really appreciate it.</p>
-<h3 id="be-functional"><a class="header" href="#be-functional">Be Functional</a></h3>
-<p>The function has a descriptive name now, but it can still be simplified by writing in a more functional style:</p>
-<pre><code class="language-js">function getTaskTitlesByStatus(tasks, status) {
-  return tasks.filter((task) =&gt; task.status === status).map((task) =&gt; task.title);
-}
-</code></pre>
-<p>Whoa, suddenly this function is only one line and, even better, the code basically looks like natural language:
-We <code>filter</code> all the <code>tasks</code> by their <code>status</code> and then <code>map</code> them to their <code>title</code>s.</p>
-<p>We already touched on the benefits of the functional style in the section on functional programming, but it's worth repeating:</p>
-<p><strong>Writing in a functional style can often drastically simplify your code.</strong></p>
-<p>Of course you shouldn't overdo it - especially with functions like <code>reduce</code> it is possible to write completely unreadable code even in a functional style.
-In the end there is no silver bullet programming paradigm.</p>
+The poor soul that will have to fix your bugs, will really thank you for that.</p>
 <h3 id="write-small-helper-functions"><a class="header" href="#write-small-helper-functions">Write Small Helper Functions</a></h3>
-<p>Well, now we know how to write good functions, right?
-Just give everything descriptive names and use a functional style.</p>
-<p>Unfortunately this won't always help because some functions legitimately have to do complicated things.
-Consider a function that takes an array of tasks and returns an array of generated notifications to be shown to the user.</p>
+<p>Most of the time a function is not as simple as <code>getTaskTitlesByStatus</code>, which often leads to many lines of complex code that is hard to understand.
+A common practice for such cases is this:</p>
+<p><strong>Extract code from complicated functions into helper functions and then call the helper functions</strong>.</p>
+<p>Consider a function that takes an array of tasks and returns an array of generated notifications to be shown to the user.</p>
 <p>The notifications are generated for urgent tasks (i.e. tasks where the deadline is in the next two days).
-Additionally, we want to to generate a notification with the number of uncompleted tasks.</p>
+Additionally, generate a notification with the number of uncompleted tasks.</p>
+<p>You might write the function like this:</p>
 <pre><code class="language-js">function generateNotifications(tasks) {
   const urgentTasks = [];
 
@@ -2460,7 +2449,7 @@ Additionally, we want to to generate a notification with the number of uncomplet
 </code></pre>
 <p>Try to read this function and understand it.
 This probably takes some time, especially if you are a beginner who is not used to digesting large chunks of code quickly.</p>
-<p>We can partially alleviate this problem by splitting the function into small helper functions:</p>
+<p>We can massively improve this code by splitting the function into small helper functions:</p>
 <pre><code class="language-js">function findUrgentTasks(tasks) {
   const urgentTasks = [];
 
@@ -2504,9 +2493,44 @@ function generateNotifications(tasks) {
   return notifications;
 }
 </code></pre>
-<p>This is much simpler to read.
-Additionally, if you look carefully at the code, you should realize that <code>findUrgentTasks</code> and <code>countUncompletedTasks</code> can be rewritten in a functional style (try to do this yourself).</p>
-<p>This is a common occurrence when improving your code - one improvement often leads to another.</p>
+<p>The <code>generateNotification</code> function is now much simpler to read.
+Instead of a multiple potentially complex calculations, it contains functions where each function is responsible for exactly one complex calculation.</p>
+<p>Note that the loops didn't really change, but they now do isolated things inside helper functions with sensible names.
+For example the for loop that calculates the <code>uncompletedTaskCount</code> is now isolated inside the <code>countUncompletedTasks</code> function and therefore its purpose is immediately clear - even before you've read the actual loop.</p>
+<h3 id="make-functions-reusable"><a class="header" href="#make-functions-reusable">Make Functions Reusable</a></h3>
+<p>There are still some potential improvements that we could make here, one of which is to make the helper functions more reusable.
+A practical hint for making functions more reusable is this:</p>
+<p><strong>Extract values from function bodies into (default) parameters.</strong></p>
+<p>For example <code>findUrgentTasks</code> calculates the future date by adding <code>2</code>.
+But what if that changes, or even worse, different users can set a different number of added days for their notifications?</p>
+<p>Let's move the number of added days into a default parameter:</p>
+<pre><code class="language-js">function findUrgentTasks(tasks, addedDays = 2) {
+  const urgentTasks = [];
+
+  const today = new Date();
+  const laterDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() + addedDays);
+
+  tasks.forEach((task) =&gt; {
+    if (task.deadline &lt;= laterDate) {
+      urgentTasks.push(task);
+    }
+  });
+
+  return urgentTasks;
+}
+</code></pre>
+<p>Note how we also renamed <code>twoDaysLater</code> to <code>laterDate</code> since that variable now has a more general purpose.</p>
+<h3 id="know-and-use-your-language-features"><a class="header" href="#know-and-use-your-language-features">Know and Use Your Language Features</a></h3>
+<p>JavaScript has drastically changed for the better in the past decade - there is no need to write code like it's 2012.
+For example <code>getTaskTitlesByStatus</code> could be rewritten in a functional style:</p>
+<pre><code class="language-js">function getTaskTitlesByStatus(tasks) {
+  return tasks.filter((task) =&gt; task.status === status).map((task) =&gt; task.title);
+}
+</code></pre>
+<p>Same goes for <code>findUrgentTasks</code> and <code>countUncompletedTasks</code>.
+You should in fact try it.</p>
+<p>Generally, the takeaway from the section is this:</p>
+<p><strong>Programming languages have a wide variety of features, most of which can make your life easier. Use them.</strong></p>
 <h3 id="avoid-deep-nesting"><a class="header" href="#avoid-deep-nesting">Avoid Deep Nesting</a></h3>
 <p>Consider a function that filters tasks based on their status, user ID and days until deadline.
 We could write it like this:</p>
@@ -2597,11 +2621,96 @@ In this case we can check the &quot;inverted&quot; conditions one by one and &qu
   return task.deadline &lt;= futureDate;
 }
 </code></pre>
-<h3 id="final-remarks"><a class="header" href="#final-remarks">Final Remarks</a></h3>
+<p>The general takeaway is this:</p>
+<p><strong>Flatten deeply nested code by extracting helper functions and simplifying conditions.</strong></p>
+<h3 id="dont-repeat-yourself"><a class="header" href="#dont-repeat-yourself">Don't Repeat Yourself</a></h3>
+<p>This is probably one of the most well-known idioms in software development:</p>
+<p><strong>Don't repeat yourself.</strong></p>
+<p>For example, if you write a book, you shouldn't repeat the subsection heading in your text - that looks ugly and doesn't make any sense.
+Only a fool would do that.</p>
+<p>The same principle goes for writing code.
+Consider the following example:</p>
+<pre><code class="language-js">function reportOverdueTasks(tasks) {
+  const today = new Date();
+  const overdueTasks = tasks.filter((task) =&gt; {
+    return task.deadline &lt; today &amp;&amp; task.status !== 'done';
+  });
+  return overdueTasks.map((task) =&gt; `Task ID: ${task.id}, Title: ${task.title}`).join('\n');
+}
+
+function reportCompletedTasks(tasks) {
+  const completedTasks = tasks.filter((task) =&gt; task.status === 'done');
+  return completedTasks.map((task) =&gt; `Task ID: ${task.id}, Title: ${task.title}`).join('\n');
+}
+</code></pre>
+<p>You might notice that the last line of both functions is essentially the same.
+This leads to a problem: If the report format changes, we need to update it multiple times.</p>
+<p>Not only does this mean more work, we might even forget to update the report format in some place, leading to inconsistencies in our code.</p>
+<p>We can refactor <code>reportOverdueTasks</code> and <code>reportCompletedTasks</code> like this:</p>
+<pre><code class="language-js">function formatReport(tasks) {
+  return tasks.map((task) =&gt; `Task ID: ${task.id}, Title: ${task.title}`).join('\n');
+}
+
+function reportOverdueTasks(tasks) {
+  const today = new Date();
+  const overdueTasks = tasks.filter((task) =&gt; {
+    return task.deadline &lt; today &amp;&amp; task.status !== 'done';
+  });
+  return formatReport(overdueTasks);
+}
+
+function reportCompletedTasks(tasks) {
+  const completedTasks = tasks.filter((task) =&gt; task.status === 'done');
+  return formatReport(tacompletedTaskssks);
+}
+</code></pre>
+<h3 id="think-about-edge-cases"><a class="header" href="#think-about-edge-cases">Think About Edge Cases</a></h3>
+<p>One of the big differences between junior programmers and more senior developers is that juniors tend to ignore edge cases and just focus on the happy path.</p>
+<p>Consider this piece of code:</p>
+<pre><code class="language-js">const task = tasks.find((task) =&gt; task.id === taskId);
+task.assignee = userId;
+task.status = 'inprogress';
+</code></pre>
+<p>This has a big problem: What if <code>taskId</code> is not present in the IDs of <code>tasks</code>?
+Then <code>task</code> will be <code>undefined</code> and our program will crash when trying to assign the <code>assignee</code> property to <code>task</code>.</p>
+<p>This edge case needs to be handled:</p>
+<pre><code class="language-js">const task = tasks.find((task) =&gt; task.id === taskId);
+if (task === undefined) {
+  console.log(`Task with ID ${taskId} not present`);
+} else {
+  task.assignee = userId;
+  task.status = 'inprogress';
+}
+</code></pre>
+<p>Example operations which can lead to problems if you don't consider edge cases are:</p>
+<ul>
+<li>division (because you could divide by zero)</li>
+<li>processing strings (because strings could be empty or have whitespace at the beginning or the end)</li>
+<li>extracting elements from arrays by a condition (because there might be no elements present that match the condition)</li>
+<li>processing user input (because user can and will type arbitrary garbage into your application)</li>
+</ul>
+<p>The main takeaway from this sections is:</p>
+<p><strong>Don't be satisfied by just writing the happy path. Take edge cases into consideration.</strong></p>
+<h3 id="additional-tips-for-large-projects"><a class="header" href="#additional-tips-for-large-projects">Additional Tips for Large Projects</a></h3>
+<p>Now that we gave you a couple of tips for writing better code, there a few things to consider as your project gets larger.</p>
+<p>You should try to keep the names in your codebase close to the application domain.
+If the client and the project managers talk about tasks and notifications and the UI shows big, fat texts called &quot;Tasks&quot; and &quot;Notifications&quot;, then your variable names should probably not be <code>jobs</code> and <code>reports</code>.
+You will just needlessly confuse everyone.</p>
+<p>Split your code into well structured modules.
+Try to follow the <strong>Single Responsibility Principle</strong> where every module is responsible for a particular part of the application.</p>
+<p>Document your most important functions using docstrings.</p>
 <p>Generally try to not outsmart yourself and stick to writing actual features instead of fancy abstractions that might or might not come in handy later.
-Keep your code simple and well organized.</p>
-<p>Finally, there is no list that will instantly make you an awesome programmer.
-In the end, experience is king - at least if actually <em>learn</em> from that experience and reflect on your mistakes.</p>
+Remember, reading and fixing code is much harder than writing it in the first place.
+This means that if you write code as smart as you can, you are not going to be able to fix it.</p>
+<h3 id="final-remarks"><a class="header" href="#final-remarks">Final Remarks</a></h3>
+<p>Well, now that you made it through this section, are you a great programmer?
+Unfortunately, the answer is a hard no.</p>
+<p>If you could become a great programmer by just reading a list, then there wouldn't be entire book shelves devoted to becoming a better programmer.
+You need to actually go out and write projects.
+There is no way around it.</p>
+<p>In the end, experience is king.
+But there is one important caveat - you have to actually <em>learn</em> from that experience and reflect on your mistakes.</p>
+<p>So go out there and write a feature!</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="chapter-2-leveling-up-with-typescript"><a class="header" href="#chapter-2-leveling-up-with-typescript">Chapter 2: Leveling Up with TypeScript</a></h1>
 <div style="text-align: right"> <i> To employ TypeScript is to light a lantern on the dim path of JavaScript, revealing the stones upon which one may trip. <br> - Ancient Chinese proverb </i> </div>
 <p>Now that we learned the basics of JavaScript, we could theoretically dive right into writing our application.
