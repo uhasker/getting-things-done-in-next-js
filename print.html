@@ -1761,7 +1761,7 @@ Hello, world!
 <p>Note that the <code>repeat</code> function doesn't care what <code>fun</code> is - <code>fun</code> could be a simple <code>console.log</code> or a function which produces a simulated universe.
 All the <code>repeat</code> function does is to simply repeat <code>fun</code> the specified number of times.</p>
 <p>Functions which take (or return) functions are called <strong>higher-order functions</strong>.</p>
-<h3 id="the-trinity-of-map-reduce-and-filter"><a class="header" href="#the-trinity-of-map-reduce-and-filter">The trinity of map, reduce and filter</a></h3>
+<h3 id="the-trinity-of-map-reduce-and-filter"><a class="header" href="#the-trinity-of-map-reduce-and-filter">The Trinity of <code>map</code>, <code>reduce</code> and <code>filter</code></a></h3>
 <p>We now introduce the three most important higher-order functions - <code>map</code>, <code>reduce</code> and <code>filter</code>.
 These functions allow you to perform an <em>incredibly</em> rich set of operations on arrays.</p>
 <blockquote>
@@ -1889,7 +1889,7 @@ The next update results in the accumulator being <code>6</code> and the final up
 Therefore <code>sum</code> will be <code>10</code>.</p>
 <p>For another example, let's say we would like to compute the total logged time (i.e. the time logged for all the tasks combined).
 This would look like this:</p>
-<pre><code class="language-js">const totalTime = tasks.reduce((task, curr) =&gt; task.loggedTime + curr, 0);
+<pre><code class="language-js">const totalTime = tasks.reduce((curr, task) =&gt; task.timeLogged + curr, 0);
 </code></pre>
 <blockquote>
 <p>We recommend that you try to reason through this <code>reduce</code> for a deeper understanding of this topic.</p>
