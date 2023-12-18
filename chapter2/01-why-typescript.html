@@ -177,17 +177,16 @@
 <div style="text-align: right"> <i> Better to wrangle with TypeScript's compiler today, than to wrestle with JavaScript bugs tomorrow. <br> - Ancient Chinese proverb </i> </div>
 <h3 id="a-little-story"><a class="header" href="#a-little-story">A Little Story</a></h3>
 <p>Consider the following scenario.
-You have a JavaScript function <code>showTask(task)</code> which takes a <code>task</code> object and displays the task in a UI (or in the console).
-Whenever you want to use this function you need to find out if the object you are dealing with can be passed to the function.</p>
+You have a JavaScript function <code>showTask(task)</code> which takes a <code>task</code> object and displays the task in a UI (or in the console).</p>
 <p>Let's say you have the following task object:</p>
 <pre><code class="language-js">const task = {
   id: 1,
-  summary: 'Read the Next.js book',
+  title: 'Read the Next.js book',
   description: 'Read and understand the Next.js book.',
 };
 </code></pre>
 <p>Can you pass this object to <code>showTask</code>?
-Well, you can't tell because maybe the <code>showTask</code> function expects an object that has <code>id</code>, <code>summary</code>, <code>description</code> <em>and</em> <code>status</code> fields.
+Well, you can't really tell because maybe the <code>showTask</code> function expects an object that has <code>id</code>, <code>title</code>, <code>description</code> <em>and</em> <code>status</code> fields.
 The only way to find out if your <code>task</code> object is a valid input for <code>showTask</code> is to - well - actually pass it and find out.
 This is obviously not the ideal workflow (especially if you happen to find out that your object lacked some important properties <em>in production</em>).</p>
 <p>Additionally, if the author of the <code>showTask</code> function changes his function to expect additional properties on the <code>task</code> object, he would now have to check all the invocations of <code>showTask</code> to verify that he didn't accidentally break something.</p>
@@ -195,7 +194,7 @@ This is obviously not the ideal workflow (especially if you happen to find out t
 With TypeScript we would be able to <em>statically type</em> the function by adding <em>type annotations</em> like so:</p>
 <pre><code class="language-ts">type Task = {
   id: number;
-  summary: string;
+  title: string;
   description: string;
 };
 
@@ -204,91 +203,110 @@ function showTask(task: Task) {
 }
 </code></pre>
 <p>Now we know <em>exactly</em> what kind of object <code>showTask</code> expects.
-If we pass an object that lacks some of the expected properties and run <em>type checks</em> (more on that later) we will get an error long before the bad code can make it anywhere near production.
+An object that is passed to the function must have an <code>id</code> property which is a <code>number</code>, a <code>title</code> property which is a <code>string</code> and a <code>description</code> property which is also a <code>string</code>.</p>
+<p>For example we could call the function like this:</p>
+<pre><code class="language-ts">showTask({
+  id: 1,
+  title: 'Read the Next.js book',
+  description: 'Read and understand the Next.js book.',
+});
+</code></pre>
+<p>If we pass an object that lacks some of the expected properties and run <em>type checks</em> (more on that later) we will get an error long before the bad code can make it anywhere near production.
 Even better - your editor will be able to show you that you might have a problem during development:</p>
 <pre><code class="language-ts">showTask({
   id: 1,
-  summary: 'Read the Next.js book',
+  title: 'Read the Next.js book',
 });
-// Most editors will now show a squiggly red line somewhere around here and inform you that you
-// that the object is missing a description property.
+// Most editors will now show a squiggly red line somewhere around here and
+// politely scream at you that the object is missing the description property.
 </code></pre>
-<p>Better still, you now get <em>autocompletion</em> - editors will show possible suggestions for the property names your object should have while you type.
+<p>Better still (TypeScript just keeps giving), you now get <em>autocompletion</em> - editors will show possible suggestions for the property names your object should have while you type.
 This saves an enormous amount of time and effort when writing code.</p>
 <p>To summarize, using TypeScript massively enhances your developer workflow which is why nowadays most large projects no longer use vanilla JavaScript, but TypeScript instead.</p>
 <h3 id="installing-typescript"><a class="header" href="#installing-typescript">Installing TypeScript</a></h3>
-<p>Install TypeScript by running the following command:</p>
+<p>You can install the TypeScript compiler by running the following command:</p>
 <pre><code class="language-sh">npm install -g typescript
 </code></pre>
-<p>This installs the TypeScript compiler <code>tsc</code> - the <code>-g</code> flag tells <code>npm</code> to install it globally.</p>
-<p>Let's see how we can use it - create a file <code>index.ts</code>:</p>
+<blockquote>
+<p>The <code>-g</code> flag tells <code>npm</code> to install the package globally and not just for a particular project.</p>
+</blockquote>
+<p>Let's see how we can use the TypeScript compiler.
+First, create a file <code>index.ts</code>:</p>
 <pre><code class="language-ts">type Task = {
   id: number;
-  summary: string;
+  title: string;
   description: string;
 };
 
 function showTask(task: Task) {
   console.log(
-    `Task with ID=${task.id} has the summary ${task.summary} and description ${task.description}`,
+    `Task with ID=${task.id} has the title ${task.title} and description ${task.description}`,
   );
 }
 
 showTask({
   id: 1,
-  summary: 'Read the Next.js book',
+  title: 'Read the Next.js book',
   description: 'Read and understand the Next.js book.',
 });
 </code></pre>
 <p>We can't execute TypeScript files in the browser or in Node.js directly.
-Instead we need to first <em>compile</em> the TypeScript code to JavaScript and then run the resulting JavaScript code.
-Here is how we can compile the <code>index.ts</code> file:</p>
-<pre><code class="language-sh">tsc index.ts
+Instead we need to first <em>compile</em> the TypeScript code to JavaScript - which is why we installed the compiler.
+Finally we can execute the resulting JavaScript code same as usual.</p>
+<p>Here is how we can compile the <code>index.ts</code> file:</p>
+<pre><code class="language-sh">tsc --strict index.ts
 </code></pre>
+<blockquote>
+<p>Note that the <code>--strict</code> turns on certain &quot;strict&quot; type checks.
+We will basically always do this.</p>
+</blockquote>
 <p>Since there were no type errors, nothing is logged on the console and we get a file <code>index.js</code> which looks (approximately) as follows:</p>
 <pre><code class="language-js">function showTask(task) {
   console.log(
     'Task with ID='
-      .concat(task.id, ' has the summary ')
-      .concat(task.summary, ' and description ')
+      .concat(task.id, ' has the title ')
+      .concat(task.title, ' and description ')
       .concat(task.description),
   );
 }
 showTask({
   id: 1,
-  summary: 'Read the Next.js book',
+  title: 'Read the Next.js book',
   description: 'Read and understand the Next.js book.',
 });
 </code></pre>
 <p>Note that all the type annotations are gone and all we get is vanilla JavaScript that we can execute.
 Additionally the TypeScript compiler <em>downleved</em> our code so that it can be executed by older platforms.
-Here the template string syntax (which is not supported by very old browser) was replaced by a series of <code>concat</code> calls.</p>
+Here the template string syntax (which is not supported by very old browsers) was replaced by a series of <code>concat</code> calls.</p>
+<blockquote>
+<p>Note that by the time you're reading this the default target settings might be different and you might not see this particular downleveling anymore.</p>
+</blockquote>
 <p>What if there is an error in <code>index.ts</code>?</p>
 <pre><code class="language-ts">type Task = {
   id: number;
-  summary: string;
+  title: string;
   description: string;
 };
 
 function showTask(task: Task) {
   console.log(
-    `Task with ID=${task.id} has the summary ${task.summary} and description ${task.description}`,
+    `Task with ID=${task.id} has the title ${task.title} and description ${task.description}`,
   );
 }
 
 showTask({
   id: 1,
-  summary: 'Read the Next.js book',
+  title: 'Read the Next.js book',
 });
 </code></pre>
-<p>Now we get an error if we try to run <code>tsc index.ts</code>:</p>
-<pre><code>index.ts:13:10 - error TS2345: Argument of type '{ id: number; summary: string; }' is not assignable to parameter of type 'Task'.
-  Property 'description' is missing in type '{ id: number; summary: string; }' but required in type 'Task'.
+<p>Now we get an error if we try to run <code>tsc --strict index.ts</code>:</p>
+<pre><code>index.ts:13:10 - error TS2345: Argument of type '{ id: number; title: string; }' is not assignable to parameter of type 'Task'.
+  Property 'description' is missing in type '{ id: number; title: string; }' but required in type 'Task'.
 13 showTask({
             ~
 14   id: 1,
    ~~~~~~~~
-15   summary: 'Read the Next.js book',
+15   title: 'Read the Next.js book',
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 16 });
    ~
@@ -298,6 +316,8 @@ showTask({
     'description' is declared here.
 Found 1 error in index.ts:13
 </code></pre>
+<p>The compiler correctly informed us that if we were to run this code it would probably result in bad things happening due to the missing <code>description</code> property.
+We now know that the code is probably wrong long before it made it anywhere near production and can fix it accordingly.</p>
 
                     </main>
 

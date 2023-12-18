@@ -182,11 +182,12 @@
 <p>You can annotate constants in a similar fashion:</p>
 <pre><code class="language-ts">const name: string = 'Read the Next.js book';
 </code></pre>
-<p>Note that this usually is not needed, since TypeScript can automatically perform <em>type inference</em> and infer the type of a variable or a constant:</p>
+<p>Note that this usually is not needed, since TypeScript can automatically perform <em>type inference</em> and infer the type of a variable or a constant.
+For example, here <code>name</code> will automatically be inferred to have the type <code>string</code>:</p>
 <pre><code class="language-ts">let name = 'Read the Next.js book';
 </code></pre>
 <p>We will very rarely write explicit type annotations (only if we really need them) and instead let TypeScript infer as much as it can.
-You be suprised by how few type annotations you need to get completely type checked code!</p>
+You will be suprised by how few type annotations you need to get completely type checked code!</p>
 <h3 id="primitive-types"><a class="header" href="#primitive-types">Primitive Types</a></h3>
 <p>The primitive types that are present in TypeScript should already be familiar to you from the chapter on JavaScript.
 TypeScript has the <code>number</code> type:</p>
@@ -195,6 +196,9 @@ TypeScript has the <code>number</code> type:</p>
 <p>TypeScript also has the <code>string</code> type:</p>
 <pre><code class="language-ts">const task: string = 'Read the Next.js book';
 </code></pre>
+<p>It also has the <code>boolean</code> type:</p>
+<pre><code class="language-ts">const inProgress: boolean = true;
+</code></pre>
 <p>Additionally TypeScript has the <code>null</code> and <code>undefined</code> types:</p>
 <pre><code class="language-ts">const undefinedTask: undefined = undefined;
 const nullTask: null = null;
@@ -202,25 +206,31 @@ const nullTask: null = null;
 <p>Remember that in a real codebase we would let TypeScript infer the variables:</p>
 <pre><code class="language-ts">const id = 1;
 const task = 'Read the Next.js book';
+const inProgress = true;
 const undefinedTask = undefined;
 const nullTask = null;
 </code></pre>
-<h3 id="the-any-and-unknown-types"><a class="header" href="#the-any-and-unknown-types">The Any and Unknown Types</a></h3>
+<h3 id="the-any-and-unknown-types"><a class="header" href="#the-any-and-unknown-types">The <code>any</code> and <code>unknown</code> Types</a></h3>
 <p>TypeScript also has the <code>any</code> type.
-When a value is of &quot;any&quot; type, you can access its properties, call it, or assign it freely, and basically do anything (get it?) that's syntactically correct.</p>
+When a value is of the type <code>any</code>, you can access its properties, call it, or assign it freely, and basically do <em>any</em>thing (get it?) that's syntactically correct.
+Also note that any property that you access will in turn have the type <code>any</code>.</p>
 <p>Let's say you have a <code>task</code> variable of type <code>any</code> - then these are all legal:</p>
-<pre><code class="language-ts">console.log(task.summary);
+<pre><code class="language-ts">let task: any;
+
+console.log(task.title);
 task();
-const otherTask = task;
+task.thingy();
 </code></pre>
-<p>Basically <code>any</code> is way to tell the compiler to &quot;shut up&quot; and skip type checking.
+<p>Basically <code>any</code> is way to tell the compiler to &quot;shut up&quot; and skip type checking altogether.
 This is also the reason why using <code>any</code> is generally a terrible idea since it defeats the purpose of using TypeScript in the first place!</p>
-<p>However sometimes you do find yourself in a situation where you don't know much about a variable type.
-In this case it's better to use <code>unknown</code>.
-If you have a <code>task</code> variable of type <code>unknown</code>, then these are all no longer legal:</p>
-<pre><code class="language-ts">console.log(task.summary);
+<p>However sometimes you do find yourself in a situation where you really don't know much or don't particularly care about a variable type.
+In this case it's better to use the <code>unknown</code> type.</p>
+<p>If you have a <code>task</code> variable of type <code>unknown</code>, then these are all no longer legal:</p>
+<pre><code class="language-ts">let task: unknown;
+
+console.log(task.title);
 task();
-const otherTask = task;
+task.thingy();
 </code></pre>
 <h3 id="typing-arrays"><a class="header" href="#typing-arrays">Typing Arrays</a></h3>
 <p>You can type arrays as <code>T[]</code> where <code>T</code> is the type of the elements of the array.
@@ -230,37 +240,52 @@ For example here is how you could type an array of numbers:</p>
 <p>Here is how you would an array of strings:</p>
 <pre><code class="language-ts">const tasks: string[] = ['First task', 'Second task', 'Third task'];
 </code></pre>
-<p>Note that for these simple example we could again infer the types.</p>
+<p>Note that for these simple examples we could again have TypeScript infer the types for use.
+In this example <code>evenNumbers</code> would have the type <code>number[]</code> and <code>tasks</code> would have the type <code>string[]</code>:</p>
+<pre><code class="language-ts">const evenNumbers: number[] = [1, 2, 3, 4];
+const tasks: string[] = ['First task', 'Second task', 'Third task'];
+</code></pre>
 <h3 id="typing-objects"><a class="header" href="#typing-objects">Typing Objects</a></h3>
 <p>You can type an object by writing the property names and types of its properties inside curly braces <code>{}</code>.
-For example here how you could declare an object that has the properties <code>id</code> of type <code>number</code>, <code>summary</code> of type <code>string</code> and <code>description</code> of type <code>string</code>:</p>
-<pre><code class="language-ts">const task: { id: number; summary: string; description: string } = {
+For example here is how you could declare an object that has the properties <code>id</code> of type <code>number</code>, <code>title</code> of type <code>string</code> and <code>description</code> of type <code>string</code>:</p>
+<pre><code class="language-ts">const task: { id: number; title: string; description: string } = {
   id: 1,
-  summary: 'Read the Next.js book',
+  title: 'Read the Next.js book',
   description: 'Read and understand the Next.js book.',
 };
 </code></pre>
 <p>You can mark properties as <em>optional</em> by using the question mark <code>?</code>.
 If a property is marked as optional, you don't need to specify it.
 For example this is valid:</p>
-<pre><code class="language-ts">const task: { id: number; summary: string; description?: string } = {
+<pre><code class="language-ts">const task: { id: number; title: string; description?: string } = {
   id: 1,
-  summary: 'Read the Next.js book',
+  title: 'Read the Next.js book',
 };
 </code></pre>
 <h3 id="type-alias"><a class="header" href="#type-alias">Type Alias</a></h3>
-<p>The object syntax we just introduced is not particulary readable.
+<p>The object type syntax we just introduced is often quite verbose.
 This is why TypeScript gives you the possibility to specify a <strong>type alias</strong> (i.e. another name) for an object type:</p>
 <pre><code class="language-ts">type Task = {
   id: number;
-  summary: string;
+  title: string;
   description: string;
 };
 </code></pre>
-<p>Note that you can specify type aliases for more than just object types sind type aliases are basically just different names for types.
+<p>Note that you can specify type aliases for more than just object types since type aliases are basically just different names for types.
 For example we could specify a type alias for the primitive type <code>string</code>:</p>
 <pre><code class="language-ts">type ID = string;
 </code></pre>
+<p>Another important point to make about type aliases is that two type aliases are exactly the same as long as the underlying types are the same.
+For example this is valid even though it doesn't look like it:</p>
+<pre><code class="language-ts">type MyString = string;
+
+function getMyString(): MyString {
+  return 'My string';
+}
+
+const s: string = getMyString();
+</code></pre>
+<p>This is because TypeScript uses a <em>structural type system</em> - it doesn't matter what the types are named (except for the primitive types of course), it only matters how their <em>structure</em> looks like.</p>
 
                     </main>
 
