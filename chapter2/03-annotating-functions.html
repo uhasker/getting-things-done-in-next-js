@@ -187,7 +187,7 @@ Here is how we would annotate the function:</p>
 <pre><code class="language-ts">greet(false);
 // This will result in an error
 </code></pre>
-<p>You can also annotate functions if they take array and object by simply using the syntax you learned in the previous section:</p>
+<p>You can also annotate functions if they take arrays and objects by simply using the syntax you learned in the previous section:</p>
 <pre><code class="language-ts">function showTask(task: { id: number; summary: string; description: string }) {
   console.log(
     `Task with ID=${task.id} has the summary ${task.summary} and description ${task.description}`,
@@ -218,12 +218,12 @@ This has an interesting side effect - namely that introducing the TypeScript com
 // Uh-oh, we are passing multiple variables instead of a single object!
 showTask(1, 'Read the Next.js book', 'Read and understand the Next.js book.');
 </code></pre>
-<p>If we run <code>tsc</code> on this code, we will get the following error:</p>
+<p>If we run <code>tsc --strict</code> on this code, we will get the following error:</p>
 <pre><code>index.ts:8:13 - error TS2554: Expected 1 arguments, but got 3.
 
 8 showTask(1, 'Read the Next.js book', 'Read and understand the Next.js book.');
 </code></pre>
-<p>TypeScript is useful indeed!</p>
+<p>TypeScript is quite useful indeed!</p>
 <h3 id="return-type-annotations"><a class="header" href="#return-type-annotations">Return Type Annotations</a></h3>
 <p>We can also type the return types of our functions:</p>
 <pre><code class="language-ts">function getGreeting(name: string): string {
@@ -243,10 +243,39 @@ In this case we can, but don't need to pass the corresponding argument to the fu
   return `${message !== undefined ? message : 'Hello'}, ${name}`;
 }
 
-// These are both valid
-getGreeting('John Doe', 'Welcome');
+// These are all valid
 getGreeting('John Doe');
+getGreeting('John Doe', undefined);
+getGreeting('John Doe', 'Welcome');
 </code></pre>
+<h3 id="function-type-expressions"><a class="header" href="#function-type-expressions">Function Type Expressions</a></h3>
+<p>Sometimes you need to create a type that specifies the function itself, instead of just its parameters or its return type.
+For example, you might want to say that <code>f</code> is a function that takes two strings and returns a string.</p>
+<p>You can achieve this with a <strong>function type expression</strong>:</p>
+<pre><code class="language-ts">let f: (x: string, y: string) =&gt; string;
+</code></pre>
+<p>The parameter names are required here, if you write <code>(string, string) =&gt; string</code> then TypeScript will think that you have a function with two parameters named <code>string</code> of type <code>any</code>.</p>
+<p>This syntax is very useful for typing higher-order functions:</p>
+<pre><code class="language-ts">function getGreeting(name: string, greeter: (name: string) =&gt; string) {
+  return greeter(name);
+}
+
+const myName = 'John Doe';
+const greeter = (name: string) =&gt; `Hello ${name}`;
+
+console.log(getGreeting(myName, greeter));
+</code></pre>
+<p>One interesting consequence of the way TypeScript inference works, is that parameters of anonymous functions can often be inferred.
+Let's change this example and make an anonymous function out of <code>greeter</code>:</p>
+<pre><code class="language-ts">function getGreeting(name: string, greeter: (name: string) =&gt; string) {
+  return greeter(name);
+}
+
+const myName = 'John Doe';
+
+console.log(getGreeting(myName, (name) =&gt; `Hello ${name}`));
+</code></pre>
+<p>Note how we no longer need to type <code>name</code> in the anonymous function - TypeScript has automatically inferred it to be of type <code>string</code>.</p>
 
                     </main>
 

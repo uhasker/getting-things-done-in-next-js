@@ -286,6 +286,16 @@ function getMyString(): MyString {
 const s: string = getMyString();
 </code></pre>
 <p>This is because TypeScript uses a <em>structural type system</em> - it doesn't matter what the types are named (except for the primitive types of course), it only matters how their <em>structure</em> looks like.</p>
+<h2 id="type-assertions"><a class="header" href="#type-assertions">Type Assertions</a></h2>
+<p>Sometimes you know more about the type of a variable than TypeScript.
+For example, let's say that you have a function that returns an <code>any</code> value, but for some reason you know that in fact that value is definitely going to be a <code>string</code> in your case.
+Then you can use a <strong>type assertion</strong> to force TypeScript to treat that value as a <code>string</code>.</p>
+<p>Here is a (slightly contrived) example:</p>
+<pre><code class="language-ts">const str: any = 'This is a string';
+const strLength = (str as string).length;
+</code></pre>
+<p>You should use type assertions <em>extremely sparingly</em> since you give up some of the benefits of using TypeScript.
+Usually there are better ways.</p>
 
                     </main>
 
