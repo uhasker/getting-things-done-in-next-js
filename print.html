@@ -3713,7 +3713,26 @@ Here is an example <code>tsconfig.json</code> to summarize what we learned:</p>
 <p>In this case, we don't produce compilation output, but only type check the code (due to <code>noEmit</code> being <code>true</code>).
 We only look at the files in <code>src</code> and its subdirectories, ignoring the <code>*.test.ts</code> file (because of the <code>include</code> and <code>exclude</code> setting).</p>
 <p>Finally, the type checking process is strict (due to <code>noEmit</code> being <code>true</code>), all features that are not available before ES2015 will be downleveled (since <code>target</code> is <code>es2015</code>) and we can use the DOM API types.</p>
-<p>Now get out there and write some TypeScript!</p>
+<h2 id="reusing-a-tsconfigjson"><a class="header" href="#reusing-a-tsconfigjson">Reusing a <code>tsconfig.json</code></a></h2>
+<p>The <code>extends</code> option can be used to inherit from another configuration file.</p>
+<p>For example we might have a <code>base.json</code> configuration file like this:</p>
+<pre><code class="language-json">{
+  &quot;compilerOptions&quot;: {
+    &quot;strict&quot;: true
+  }
+}
+</code></pre>
+<p>Now the <code>tsconfig.json</code> could extend this file:</p>
+<pre><code class="language-json">{
+  &quot;extends&quot;: &quot;base.json&quot;,
+  &quot;include&quot;: [&quot;src/**/*.ts&quot;],
+  &quot;compilerOptions&quot;: {
+    &quot;noEmit&quot;: true
+  }
+}
+</code></pre>
+<p>The resulting configuration would be strict and not emit JavaScript files.</p>
+<p>This feature is particularly useful because it allows someone to write a TypeScript configuration file that specifies the settings that should be applied to TypeScript codebases in a company/project and then everyone can simply extend this configuration file.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="chapter-3-a-vanilla-client"><a class="header" href="#chapter-3-a-vanilla-client">Chapter 3: A Vanilla Client</a></h1>
 <div style="text-align: right"> <i> Whenever you write a web app in vanilla JavaScript, you end up creating your own framework. <br> And who in their right mind wants another JavaScript framework? <br> - Common programmer idiom </i> </div>
 <p>In this chapter we will write a client a in <em>vanilla</em> HTML and JavaScript (i.e. without using any frameworks).
