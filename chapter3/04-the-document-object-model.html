@@ -207,7 +207,7 @@ On the other hand, HTML is a <em>specific language</em> that encodes a particula
 <p>Whenever you write applications which have a lot of logic in the client, you will need to manipulate the DOM (i.e. add, remove, change or retrieve elements).
 This can be done by using JavaScript functions that exist on the <code>document</code> object, which is is a global variable that refers to currently rendered DOM tree.</p>
 <p>For the rest of this section, we will consider the following document:</p>
-<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+<pre><code class="language-html">&lt;!doctype html&gt;
 &lt;html lang=&quot;en&quot;&gt;
   &lt;head&gt;
     &lt;meta charset=&quot;utf-8&quot; /&gt;
@@ -292,7 +292,7 @@ const taskList = document.querySelector('#taskList');
 taskList.appendChild(paragraph);
 </code></pre>
 <p>We would now have to add a <code>button</code> element and execute this code whenever the button is clicked by registering a <code>click</code> event listener on the button:</p>
-<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+<pre><code class="language-html">&lt;!doctype html&gt;
 &lt;html lang=&quot;en&quot;&gt;
   &lt;head&gt;
     &lt;meta charset=&quot;utf-8&quot; /&gt;

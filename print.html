@@ -258,7 +258,7 @@ We will cover HTML in chapter 2, for now we just want to get a quick glimpse at 
 We will call it <em>hello.html</em>; however you can name it whatever you want.
 The filename should have an <em>html</em> extension though.</p>
 <p>Open the HTML file in any text editor (we recommend you use <a href="https://code.visualstudio.com">Visual Studio Code</a>) and add the following text to the file:</p>
-<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+<pre><code class="language-html">&lt;!doctype html&gt;
 &lt;html&gt;
   &lt;head&gt;&lt;/head&gt;
   &lt;body&gt;
@@ -3756,7 +3756,7 @@ Therefore HTML is a markup language and JavaScript is a programming language.</p
 </blockquote>
 <p>Create a file named <code>index.html</code> in the project directory.
 Now write some minimal useful HTML to display two hardcoded tasks:</p>
-<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+<pre><code class="language-html">&lt;!doctype html&gt;
 &lt;html lang=&quot;en&quot;&gt;
   &lt;head&gt;
     &lt;meta charset=&quot;utf-8&quot; /&gt;
@@ -3834,7 +3834,7 @@ For example you could color all HTML elements of class <code>blue-text</code> bl
 <p>We will cover some of the most important elements together with their attributes in the next section.</p>
 <h3 id="structure-of-an-html-document"><a class="header" href="#structure-of-an-html-document">Structure of an HTML Document</a></h3>
 <p>Let's have a look at <code>index.html</code> again and examine its structure in more detail:</p>
-<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+<pre><code class="language-html">&lt;!doctype html&gt;
 &lt;html lang=&quot;en&quot;&gt;
   &lt;head&gt;
     &lt;meta charset=&quot;utf-8&quot; /&gt;
@@ -4040,7 +4040,7 @@ On the other hand, HTML is a <em>specific language</em> that encodes a particula
 <p>Whenever you write applications which have a lot of logic in the client, you will need to manipulate the DOM (i.e. add, remove, change or retrieve elements).
 This can be done by using JavaScript functions that exist on the <code>document</code> object, which is is a global variable that refers to currently rendered DOM tree.</p>
 <p>For the rest of this section, we will consider the following document:</p>
-<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+<pre><code class="language-html">&lt;!doctype html&gt;
 &lt;html lang=&quot;en&quot;&gt;
   &lt;head&gt;
     &lt;meta charset=&quot;utf-8&quot; /&gt;
@@ -4125,7 +4125,7 @@ const taskList = document.querySelector('#taskList');
 taskList.appendChild(paragraph);
 </code></pre>
 <p>We would now have to add a <code>button</code> element and execute this code whenever the button is clicked by registering a <code>click</code> event listener on the button:</p>
-<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+<pre><code class="language-html">&lt;!doctype html&gt;
 &lt;html lang=&quot;en&quot;&gt;
   &lt;head&gt;
     &lt;meta charset=&quot;utf-8&quot; /&gt;
@@ -4263,7 +4263,7 @@ The application should consist of a list showing the current tasks.
 Additionally, a web form should allow the user to create a new task (which should then be displayed in the list of current tasks).</p>
 <h3 id="the-initial-html"><a class="header" href="#the-initial-html">The Initial HTML</a></h3>
 <p>You get to work and quickly come up with the initial document:</p>
-<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+<pre><code class="language-html">&lt;!doctype html&gt;
 &lt;html lang=&quot;en&quot;&gt;
   &lt;head&gt;
     &lt;meta charset=&quot;utf-8&quot; /&gt;
