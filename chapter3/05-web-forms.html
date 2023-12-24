@@ -206,7 +206,7 @@ However in this book we will handle form submissions manually, so we won't go in
 <p>The form control is represented by the <code>&lt;input&gt;</code> element.
 It has a lot of various attributes, but the two most important ones (apart from the <code>id</code> attribute) are the <code>type</code> and <code>name</code> attribute.
 The <code>type</code> attribute represents the type of the form control.
-For example a plaintext input field would have the type <code>text</code> while a checkbox would have the type <code>checkbox</code>.
+For example a plaintext input field would have the type <code>text</code> while a checkbox would have the type <code>checkbox</code> (big surprise).
 The <code>name</code> attribute specifies a name for the form control.
 This attribute is important when submitting the form (usually by clicking the submit button) as it will identify the submitted value.</p>
 <p>The label is represented by the <code>&lt;label&gt;</code> element.
@@ -230,7 +230,7 @@ This field looks a like a regular text input, but has a few additional nice prop
 <pre><code class="language-html">&lt;button type=&quot;submit&quot;&gt;Send&lt;/button&gt;
 </code></pre>
 <p>Here is how the final form will look like:</p>
-<pre><code class="language-html">&lt;form&gt;
+<pre><code class="language-html">&lt;form id=&quot;contact&quot;&gt;
   &lt;label for=&quot;name&quot;&gt;Name:&lt;/label&gt;
   &lt;input type=&quot;text&quot; id=&quot;name&quot; name=&quot;name&quot; /&gt;
   &lt;label for=&quot;email&quot;&gt;Name:&lt;/label&gt;
@@ -242,7 +242,7 @@ This field looks a like a regular text input, but has a few additional nice prop
 </code></pre>
 <h3 id="structuring-forms-with-fieldset-and-legend"><a class="header" href="#structuring-forms-with-fieldset-and-legend">Structuring Forms with <code>&lt;fieldset&gt;</code> and <code>&lt;legend&gt;</code></a></h3>
 <p>We can use the <code>&lt;fieldset&gt;</code> and <code>&lt;legend&gt;</code> attrributes to further improve our form:</p>
-<pre><code class="language-html">&lt;form&gt;
+<pre><code class="language-html">&lt;form id=&quot;contact&quot;&gt;
   &lt;fieldset&gt;
     &lt;legend&gt;Message Form&lt;/legend&gt;
     &lt;label for=&quot;name&quot;&gt;Name:&lt;/label&gt;
@@ -255,6 +255,27 @@ This field looks a like a regular text input, but has a few additional nice prop
   &lt;/fieldset&gt;
 &lt;/form&gt;
 </code></pre>
+<h2 id="handling-a-form-submission"><a class="header" href="#handling-a-form-submission">Handling a Form Submission</a></h2>
+<p>If you click the button right now, the page will refresh, the URL will change and your inputs will be cleared.
+This is the default behaviour of a form submission, however we often want to intercept and modify this.</p>
+<p>To achieve this, let's add an event listener to the form that will listen for submit events.</p>
+<p>This can be done via the <code>addEventListener</code> function which takes two arguments.
+The first argument is the event to listen to (which is <code>'submit'</code> in this case).
+The second argument is a function that takes the specific event and handles it.</p>
+<blockquote>
+<p>The <code>addEventListener</code> is a typical example of a higher-order function since it takes a function as one of its arguments.</p>
+</blockquote>
+<p>We will just log the <code>currentTarget</code> of the event for now.
+This property identifies the element to which the event handler has been attached (in this case it's the form).</p>
+<pre><code class="language-js">const contactForm = document.getElementById('contact');
+contactForm.addEventListener('submit', function (event) {
+  // Prevent default form submission behaviour
+  event.preventDefault();
+
+  console.log({ currentTarget: event.currentTarget });
+});
+</code></pre>
+<p>Note how the <code>event.currentTarget</code> object contains our inputs (among other properties).</p>
 
                     </main>
 

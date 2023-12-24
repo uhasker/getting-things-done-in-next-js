@@ -187,7 +187,7 @@ Therefore HTML is a markup language and JavaScript is a programming language.</p
 </blockquote>
 <p>Create a file named <code>index.html</code> in the project directory.
 Now write some minimal useful HTML to display two hardcoded tasks:</p>
-<pre><code class="language-html">&lt;!doctype html&gt;
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
 &lt;html lang=&quot;en&quot;&gt;
   &lt;head&gt;
     &lt;meta charset=&quot;utf-8&quot; /&gt;
@@ -213,7 +213,7 @@ Now you can close this book and go procrastinate.</p>
 You're not budging?
 Hm, that's weird.
 Oh we see, you've <em>unfortunately</em> been <em>forced</em> to read this book (blink <em>once</em> for help).</p>
-<p>Well, since we both have to be here anyway, let's march onwards and dissect the masterpiece you've just created!</p>
+<p>Well, since both of us have to be here anyway, let's march onwards and dissect the masterpiece you've just created!</p>
 <h3 id="html-elements"><a class="header" href="#html-elements">HTML Elements</a></h3>
 <p>HTML is comprised of <strong>HTML elements</strong> used to specify the type of content you want to render.
 For example, the <code>p</code> element represents a paragraph:</p>
@@ -222,8 +222,8 @@ For example, the <code>p</code> element represents a paragraph:</p>
 <p>An HTML element usually has some <strong>content</strong> between an <strong>opening tag</strong> and a <strong>closing tag</strong>.
 The opening tag is the name of the element wrapped in angle brackets (like <code>&lt;p&gt;</code>).
 The closing tag is the name of the element wrapped in angle brackets with a <em>forward slash before the element name</em> (like <code>&lt;/p&gt;</code>).</p>
-<p>There are various HTML elements, such as <code>p</code> for paragraphs and <code>div</code> for generic containers.
-We will discuss more elements later.</p>
+<p>There are various HTML elements with different purposes, such as <code>p</code> for paragraphs and <code>div</code> for generic containers.
+We will discuss a few important HTML elements in the following sections.</p>
 <p>HTML's power lies in the fact that most elements can be nested.
 For example, you could nest paragraphs within a generic container:</p>
 <pre><code class="language-html">&lt;div&gt;
@@ -254,15 +254,18 @@ This allows us to reference that element using JavaScript or CSS.</p>
 <p>Here is how we can create an element with an <code>id</code> attribute:</p>
 <pre><code class="language-html">&lt;p id=&quot;readBook&quot;&gt;Read the Next.js book&lt;/p&gt;
 </code></pre>
-<p>Generally speaking, you can specify attributes by writing the attribute name, followed by an equal sign, followed by the attribute value (which is wrapped inside double quotes).</p>
+<p>Generally speaking, you can specify attributes by writing the attribute name, followed by an equal sign, followed by the attribute value wrapped inside double quotes.</p>
 <p>The <code>class</code> attribute is used to specify a <strong>class</strong> for an HTML element.
 Unlike unique identifiers, multiple HTML elements can share the same class, which is useful for applying consistent styles to multiple elements.
 For example you could color all HTML elements of class <code>blue-text</code> blue.</p>
+<p>Here is how we can create an element with a <code>class</code> attribute:</p>
+<pre><code class="language-html">&lt;p class=&quot;blue-text&quot;&gt;Read the Next.js book&lt;/p&gt;
+</code></pre>
 <p>There are many more attributes and different HTML elements often have different attributes.</p>
 <p>We will cover some of the most important elements together with their attributes in the next section.</p>
 <h3 id="structure-of-an-html-document"><a class="header" href="#structure-of-an-html-document">Structure of an HTML Document</a></h3>
-<p>Let's have a look at <code>index.html</code> again:</p>
-<pre><code class="language-html">&lt;!doctype html&gt;
+<p>Let's have a look at <code>index.html</code> again and examine its structure in more detail:</p>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
 &lt;html lang=&quot;en&quot;&gt;
   &lt;head&gt;
     &lt;meta charset=&quot;utf-8&quot; /&gt;
@@ -281,20 +284,18 @@ For example you could color all HTML elements of class <code>blue-text</code> bl
   &lt;/body&gt;
 &lt;/html&gt;
 </code></pre>
-<p>The document begins with <code>&lt;!DOCTYPE html&gt;</code> which is a <em>document type declaration</em>.
+<p>The document begins with <code>&lt;!doctype html&gt;</code> which is a <em>document type declaration</em>.
 It is there mainly for historical reasons - in the <em>olden days</em> of HTML the doctype specified which rules the HTML page followed.
-Nowadays, we just use the shortest valid doctype which happens to be <code>&lt;!DOCTYPE html&gt;</code>.</p>
+Nowadays, we just use the shortest valid doctype which happens to be <code>&lt;!doctype html&gt;</code>.</p>
 <p>The doctype is followed by an <code>&lt;html&gt;</code> element which contains all the content of the document.
 This element is usually called the <strong>root element</strong>.</p>
-<p>The <code>&lt;head&gt;</code> element includes important information about the page.
+<p>The <code>&lt;head&gt;</code> element includes important information about the page that doesn't appear on the page itself.
 Here is where we could specify how our page would appear in search results, which character encoding our website uses and more.</p>
 <p>In our example the <code>&lt;head&gt;</code> element includes a <code>&lt;meta&gt;</code> element with a <code>charset</code> attribute and a <code>&lt;title&gt;</code> element.
-This particular <code>&lt;meta&gt;</code> element describes the character encoding for the HTML document (we will return to this later in more detail) and the <code>&lt;title&gt;</code> element sets the title of the page (i.e. the title that will appear in the browser tab).</p>
+This particular <code>&lt;meta&gt;</code> element describes the character encoding for the HTML document (we will return to this later in more detail) and the <code>&lt;title&gt;</code> element sets the title of the page.
+This title is displayed in the browser tab and is also used when you save the page in your bookmarks.</p>
 <p>Finally the <code>&lt;body&gt;</code> element contains all the content that will actually be rendered on the page.
 In our example, the heading and the task list are within the <code>&lt;body&gt;</code> element.</p>
-<blockquote>
-<p>We will discuss character encodings in greater detail later.</p>
-</blockquote>
 
                     </main>
 

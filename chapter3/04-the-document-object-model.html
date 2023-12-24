@@ -197,22 +197,102 @@ The elements form a (very small) <em>tree</em>:</p>
   &lt;/div&gt;
 &lt;/div&gt;
 </code></pre>
-<p>You can visualize it like this:</p>
+<p>You can visualize this document in the following way:</p>
 <p><img src="images/tree.png" alt="" /></p>
 <p>It's crucial to distinguish between HTML and the DOM, as they are <em>absolutely</em> not the same thing.
 The DOM is a <em>language-agnostic model</em> that represents the structure of a document.
 On the other hand, HTML is a <em>specific language</em> that encodes a particular kind of DOM into text usable by web browsers.</p>
+<p>To simplify, <em>you</em> write HTML, the browser parses that and then <em>the browser</em> displays a DOM tree.</p>
 <h2 id="manipulating-the-dom-using-javascript"><a class="header" href="#manipulating-the-dom-using-javascript">Manipulating the DOM using JavaScript</a></h2>
-<p>Whenever you write applications which have a lot of logic in the client, you will need to manipulate the DOM (i.e. add, remove or change items).
-For example, if we add a task, we might need to add some elements to the current tree representing the task.
-This is how the corresponding JavaScript™ code would look like:</p>
+<p>Whenever you write applications which have a lot of logic in the client, you will need to manipulate the DOM (i.e. add, remove, change or retrieve elements).
+This can be done by using JavaScript functions that exist on the <code>document</code> object, which is is a global variable that refers to currently rendered DOM tree.</p>
+<p>For the rest of this section, we will consider the following document:</p>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+  &lt;head&gt;
+    &lt;meta charset=&quot;utf-8&quot; /&gt;
+    &lt;title&gt;Easy Opus&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div id=&quot;app&quot;&gt;
+      &lt;h1&gt;My tasks&lt;/h1&gt;
+      &lt;div id=&quot;taskList&quot;&gt;
+        &lt;p id=&quot;firstParagraph&quot; class=&quot;task&quot;&gt; Read the Next.js book &lt;/p&gt;
+        &lt;p id=&quot;secondParagraph&quot; class=&quot;task&quot;&gt; Write a website &lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<blockquote>
+<p>If you want to follow along, you can open this document in a browser, open the JavaScript console and then write the code in the console.</p>
+</blockquote>
+<p>First let's talk about how to <em>retrieve</em> elements.</p>
+<p>The <code>document.getElementById(id)</code> function allows you to select an element by its unique ID:</p>
+<pre><code class="language-js">const paragraph = document.getElementById('firstParagraph');
+console.log(paragraph); // &lt;p id=&quot;firstParagraph&quot; class=&quot;task&quot;&gt;
+</code></pre>
+<p>Note that <code>paragraph</code> is just a regular JavaScript object.</p>
+<p>For example, you could access various properties like the element ID and class or the HTML markup contained within the element:</p>
+<pre><code class="language-js">console.log(paragraph.id); // firstParagraph
+console.log(paragraph.className); // task
+console.log(paragraph.innerHTML); // Read the Next.js book
+</code></pre>
+<p>We can also get all the elements that have a certain class using <code>document.getElementsByClassName(className)</code>:</p>
+<pre><code class="language-js">const tasks = document.getElementsByClassName('task');
+console.log(tasks); // HTMLCollection { 0: p#firstParagraph.task, 1: p#secondParagraph.task, length: 2, … }
+</code></pre>
+<p>Note that <code>tasks</code> is an <code>HTMLCollection</code> which is an array-like object.
+This means that it behaves similar to an array (for example you can index it), but doesn't have most of the array methods we learned in the first chapter:</p>
+<pre><code class="language-js">console.log(tasks.length); // 2
+console.log(tasks[0]); // &lt;p id=&quot;firstParagraph&quot; class=&quot;task&quot;&gt;
+
+// This will throw a TypeError: tasks.map is not a function
+const ids = tasks.map((task) =&gt; task.id);
+</code></pre>
+<p>You can also retrieve all elements with a certain tag by using <code>document.getElementsByTagName(tagName)</code>.
+Consider this example:</p>
+<pre><code class="language-js">const paragraphs = document.getElementsByTagName('p');
+console.log(paragraphs); // HTMLCollection { 0: p#firstParagraph.task, 1: p#secondParagraph.task, length: 2, … }
+</code></pre>
+<p>Note how this is again an <code>HTMLCollection</code>.</p>
+<p>The two most important and modern JavaScript methods for element retrieval are <code>document.querySelector(selector)</code> and <code>document.querySelectorAll(selector)</code> which returns the first and all elements that match a certain CSS selector respectively.
+Here is how we could use these methods to accomplish our tasks from before:</p>
+<pre><code class="language-js">// The hash (#) indicates an ID selector
+const paragraph = document.querySelector('#firstParagraph');
+// The period (.) indicates a class selector
+const tasks = document.querySelectorAll('.task');
+const paragraphs = document.querySelectorAll('p');
+</code></pre>
+<p>Note that this time <code>tasks</code> will be a <code>NodeList</code> (instead of an <code>HTMLCollection</code>).
+However it is still an array-like object that you can index with <code>[]</code>.</p>
+<p>JavaScript also allows us to create elements and append them to other elements.
+You can create elements using <code>document.createElement(tagName)</code>.</p>
+<p>This is how you could create a paragraph with an ID, a class and some text:</p>
+<pre><code class="language-js">const element = document.createElement('p');
+element.id = 'thirdParagraph';
+element.classList.add('task');
+element.innerHTML = 'New task';
+</code></pre>
+<p>You can append an element a last child of a parent element using <code>parentElement.appendChild(childElement)</code>.
+For example to append the newly created <code>element</code> to another element <code>taskList</code> you would write this:</p>
+<pre><code class="language-js">// Retrieve the taskList element
+const taskList = document.querySelector('#taskList');
+
+// Append element to taskList
+taskList.appendChild(element);
+</code></pre>
+<p>Let's put all of this together and add a button to our page that allows us to add a new task.</p>
+<p>This is the JavaScript that we would like to execute if the button is clicked:</p>
 <pre><code class="language-javascript">const paragraph = document.createElement('p');
+paragraph.id = 'thirdParagraph';
+paragraph.classList.add('task');
 paragraph.innerHTML = 'New task';
 const taskList = document.querySelector('#taskList');
 taskList.appendChild(paragraph);
 </code></pre>
-<p>We could now add a button and execute this code whenever the button is clicked by registering a <code>click</code> event listener on the button:</p>
-<pre><code class="language-html">&lt;!doctype html&gt;
+<p>We would now have to add a <code>button</code> element and execute this code whenever the button is clicked by registering a <code>click</code> event listener on the button:</p>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
 &lt;html lang=&quot;en&quot;&gt;
   &lt;head&gt;
     &lt;meta charset=&quot;utf-8&quot; /&gt;
@@ -220,6 +300,8 @@ taskList.appendChild(paragraph);
     &lt;script&gt;
       function addTask() {
         const paragraph = document.createElement('p');
+        paragraph.id = 'thirdParagraph';
+        paragraph.classList.add('task');
         paragraph.innerHTML = 'New task';
         const taskList = document.querySelector('#taskList');
         taskList.appendChild(paragraph);
@@ -233,6 +315,10 @@ taskList.appendChild(paragraph);
   &lt;/body&gt;
 &lt;/html&gt;
 </code></pre>
+<blockquote>
+<p>Note that if we want this code to work correctly, if we click the button multiple times, we should change the ID on each button click.
+Try doing this by yourself.</p>
+</blockquote>
 
                     </main>
 

@@ -181,11 +181,13 @@ The application should consist of a list showing the current tasks.
 Additionally, a web form should allow the user to create a new task (which should then be displayed in the list of current tasks).</p>
 <h3 id="the-initial-html"><a class="header" href="#the-initial-html">The Initial HTML</a></h3>
 <p>You get to work and quickly come up with the initial document:</p>
-<pre><code class="language-html">&lt;!doctype html&gt;
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
 &lt;html lang=&quot;en&quot;&gt;
   &lt;head&gt;
     &lt;meta charset=&quot;utf-8&quot; /&gt;
     &lt;title&gt;Task List App&lt;/title&gt;
+    &lt;!-- JavaScript will go here --&gt;
+    &lt;script&gt;&lt;/script&gt;
   &lt;/head&gt;
   &lt;body&gt;
     &lt;h1&gt;Task List&lt;/h1&gt;
@@ -200,37 +202,21 @@ Additionally, a web form should allow the user to create a new task (which shoul
       &lt;input type=&quot;text&quot; id=&quot;taskInput&quot; placeholder=&quot;Enter your task&quot; /&gt;
       &lt;button type=&quot;submit&quot;&gt;Add Task&lt;/button&gt;
     &lt;/form&gt;
-
-    &lt;!-- JavaScript will go here --&gt;
-    &lt;script&gt;&lt;/script&gt;
   &lt;/body&gt;
 &lt;/html&gt;
 </code></pre>
 <p>You now have a heading, a list and a form.
 However if you click the submit button, not a whole lot happens - this is because we haven't added any submit logic to the form yet.</p>
 <h3 id="grabbing-the-items"><a class="header" href="#grabbing-the-items">Grabbing the Items</a></h3>
-<p>Lets first grab the relevant items (the code goes between the <code>&lt;script&gt;&lt;/script&gt;</code> tags).
+<p>Lets first grab the relevant items (remember that the code goes between the <code>&lt;script&gt;&lt;/script&gt;</code> tags).
 This can be done using the <code>querySelector</code> method.
 In this case we want to select by ID, so we use the <code>#</code> selector:</p>
 <pre><code class="language-js">const taskList = document.querySelector('#taskList');
 const taskForm = document.querySelector('#taskForm');
 </code></pre>
 <h3 id="adding-an-event-listener"><a class="header" href="#adding-an-event-listener">Adding an Event Listener</a></h3>
-<p>Next, we need to add an event listener to <code>taskForm</code>.
-This can be done via the <code>addEventListener</code> function which takes two arguments.
-The first argument is the event to listen to (which is <code>'submit'</code> in this case).
-The second argument is a function that takes the specific event and handles it.
-Note that <code>addEventListener</code> is a typical example of a higher-order function since it takes a function as one of its arguments.</p>
-<p>Let's just log the <code>currentTarget</code> of the event for now.
-This property identifies the element to which the event handler has been attached (in this case it's the task form).</p>
-<pre><code class="language-js">taskForm.addEventListener('submit', function (event) {
-  // Prevent default form submission
-  event.preventDefault();
-
-  console.log({ currentTarget: event.currentTarget });
-});
-</code></pre>
-<p>The currentTarget has the proeprty <code>elements</code> which contains <code>taskInput</code> and that has a value:</p>
+<p>Next, we need to add an event listener to <code>taskForm</code>.</p>
+<p>The <code>event.currentTarget</code> will have the proeprty <code>elements</code> which contains <code>taskInput</code> whose property <code>value</code> contains our input:</p>
 <pre><code class="language-js">taskForm.addEventListener('submit', function (event) {
   // Prevent default form submission
   event.preventDefault();

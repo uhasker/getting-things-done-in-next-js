@@ -194,13 +194,17 @@ If you click the text, the web browser opens the page located at <code>https://e
 <p>To show an image, you can use the <code>&lt;img&gt;</code> element:</p>
 <pre><code class="language-html">&lt;img src=&quot;cat.jpg&quot; alt=&quot;A cute cat&quot; /&gt;
 </code></pre>
+<blockquote>
+<p>Notice that the <code>img</code> element is a self-closing HTML element, since it doesn't contain any content.
+Instead of <code>&lt;img&gt;&lt;/img&gt;</code> we write <code>&lt;img /&gt;</code>.</p>
+</blockquote>
 <p>The <code>src</code> attribute contains the path to the image you want to show.
 The <code>alt</code> attribute holds a textual replacement for the image and is necessary in case the image can't be shown.
-Try misspelling the filename on purpose an you will see the textual replacement.</p>
+Try misspelling the filename on purpose and you will see the textual replacement.</p>
 <p>In practice the textual replacement is useful if, for example:</p>
 <ul>
 <li>there is a network error and the image can't be fetched</li>
-<li>the user is using a screen reader (in this case the textual replacement is read out loud to him)</li>
+<li>the user is using a screen reader (in this case the textual replacement may be read out loud to him)</li>
 <li>the browser doesn't support the image type</li>
 <li>the user has turned off images to reduce data transfer</li>
 </ul>

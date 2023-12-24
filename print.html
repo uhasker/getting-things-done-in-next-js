@@ -3756,7 +3756,7 @@ Therefore HTML is a markup language and JavaScript is a programming language.</p
 </blockquote>
 <p>Create a file named <code>index.html</code> in the project directory.
 Now write some minimal useful HTML to display two hardcoded tasks:</p>
-<pre><code class="language-html">&lt;!doctype html&gt;
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
 &lt;html lang=&quot;en&quot;&gt;
   &lt;head&gt;
     &lt;meta charset=&quot;utf-8&quot; /&gt;
@@ -3782,7 +3782,7 @@ Now you can close this book and go procrastinate.</p>
 You're not budging?
 Hm, that's weird.
 Oh we see, you've <em>unfortunately</em> been <em>forced</em> to read this book (blink <em>once</em> for help).</p>
-<p>Well, since we both have to be here anyway, let's march onwards and dissect the masterpiece you've just created!</p>
+<p>Well, since both of us have to be here anyway, let's march onwards and dissect the masterpiece you've just created!</p>
 <h3 id="html-elements"><a class="header" href="#html-elements">HTML Elements</a></h3>
 <p>HTML is comprised of <strong>HTML elements</strong> used to specify the type of content you want to render.
 For example, the <code>p</code> element represents a paragraph:</p>
@@ -3791,8 +3791,8 @@ For example, the <code>p</code> element represents a paragraph:</p>
 <p>An HTML element usually has some <strong>content</strong> between an <strong>opening tag</strong> and a <strong>closing tag</strong>.
 The opening tag is the name of the element wrapped in angle brackets (like <code>&lt;p&gt;</code>).
 The closing tag is the name of the element wrapped in angle brackets with a <em>forward slash before the element name</em> (like <code>&lt;/p&gt;</code>).</p>
-<p>There are various HTML elements, such as <code>p</code> for paragraphs and <code>div</code> for generic containers.
-We will discuss more elements later.</p>
+<p>There are various HTML elements with different purposes, such as <code>p</code> for paragraphs and <code>div</code> for generic containers.
+We will discuss a few important HTML elements in the following sections.</p>
 <p>HTML's power lies in the fact that most elements can be nested.
 For example, you could nest paragraphs within a generic container:</p>
 <pre><code class="language-html">&lt;div&gt;
@@ -3823,15 +3823,18 @@ This allows us to reference that element using JavaScript or CSS.</p>
 <p>Here is how we can create an element with an <code>id</code> attribute:</p>
 <pre><code class="language-html">&lt;p id=&quot;readBook&quot;&gt;Read the Next.js book&lt;/p&gt;
 </code></pre>
-<p>Generally speaking, you can specify attributes by writing the attribute name, followed by an equal sign, followed by the attribute value (which is wrapped inside double quotes).</p>
+<p>Generally speaking, you can specify attributes by writing the attribute name, followed by an equal sign, followed by the attribute value wrapped inside double quotes.</p>
 <p>The <code>class</code> attribute is used to specify a <strong>class</strong> for an HTML element.
 Unlike unique identifiers, multiple HTML elements can share the same class, which is useful for applying consistent styles to multiple elements.
 For example you could color all HTML elements of class <code>blue-text</code> blue.</p>
+<p>Here is how we can create an element with a <code>class</code> attribute:</p>
+<pre><code class="language-html">&lt;p class=&quot;blue-text&quot;&gt;Read the Next.js book&lt;/p&gt;
+</code></pre>
 <p>There are many more attributes and different HTML elements often have different attributes.</p>
 <p>We will cover some of the most important elements together with their attributes in the next section.</p>
 <h3 id="structure-of-an-html-document"><a class="header" href="#structure-of-an-html-document">Structure of an HTML Document</a></h3>
-<p>Let's have a look at <code>index.html</code> again:</p>
-<pre><code class="language-html">&lt;!doctype html&gt;
+<p>Let's have a look at <code>index.html</code> again and examine its structure in more detail:</p>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
 &lt;html lang=&quot;en&quot;&gt;
   &lt;head&gt;
     &lt;meta charset=&quot;utf-8&quot; /&gt;
@@ -3850,20 +3853,18 @@ For example you could color all HTML elements of class <code>blue-text</code> bl
   &lt;/body&gt;
 &lt;/html&gt;
 </code></pre>
-<p>The document begins with <code>&lt;!DOCTYPE html&gt;</code> which is a <em>document type declaration</em>.
+<p>The document begins with <code>&lt;!doctype html&gt;</code> which is a <em>document type declaration</em>.
 It is there mainly for historical reasons - in the <em>olden days</em> of HTML the doctype specified which rules the HTML page followed.
-Nowadays, we just use the shortest valid doctype which happens to be <code>&lt;!DOCTYPE html&gt;</code>.</p>
+Nowadays, we just use the shortest valid doctype which happens to be <code>&lt;!doctype html&gt;</code>.</p>
 <p>The doctype is followed by an <code>&lt;html&gt;</code> element which contains all the content of the document.
 This element is usually called the <strong>root element</strong>.</p>
-<p>The <code>&lt;head&gt;</code> element includes important information about the page.
+<p>The <code>&lt;head&gt;</code> element includes important information about the page that doesn't appear on the page itself.
 Here is where we could specify how our page would appear in search results, which character encoding our website uses and more.</p>
 <p>In our example the <code>&lt;head&gt;</code> element includes a <code>&lt;meta&gt;</code> element with a <code>charset</code> attribute and a <code>&lt;title&gt;</code> element.
-This particular <code>&lt;meta&gt;</code> element describes the character encoding for the HTML document (we will return to this later in more detail) and the <code>&lt;title&gt;</code> element sets the title of the page (i.e. the title that will appear in the browser tab).</p>
+This particular <code>&lt;meta&gt;</code> element describes the character encoding for the HTML document (we will return to this later in more detail) and the <code>&lt;title&gt;</code> element sets the title of the page.
+This title is displayed in the browser tab and is also used when you save the page in your bookmarks.</p>
 <p>Finally the <code>&lt;body&gt;</code> element contains all the content that will actually be rendered on the page.
 In our example, the heading and the task list are within the <code>&lt;body&gt;</code> element.</p>
-<blockquote>
-<p>We will discuss character encodings in greater detail later.</p>
-</blockquote>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="marking-up-text"><a class="header" href="#marking-up-text">Marking Up Text</a></h2>
 <div style="text-align: right"> <i> Who needs semantic HTML anyway? <br> - Seconds before disaster </i> </div>
 <h3 id="the-paragraph-element"><a class="header" href="#the-paragraph-element">The Paragraph Element</a></h3>
@@ -3939,13 +3940,13 @@ For example, you can mark up subscripts and superscripts with <code>&lt;sub&gt;<
   &lt;q&gt;people who build their lifes around random internet quotes are stupid.&lt;/q&gt;
 &lt;/p&gt;
 </code></pre>
-<p>The point here is not to learn everything single HTML element for marking up text, but to be aware that when it comes to marking up text there might be an HTML element for your usecase.</p>
+<p>The point here is not to learn everything single HTML element for marking up text (you can look these up with a simple Google search anyway), but to be aware that when it comes to marking up text there might be an HTML element for your use case.</p>
 <h3 id="semantic-html"><a class="header" href="#semantic-html">Semantic HTML</a></h3>
 <p>In a few chapters, we will introduce you to CSS, which will allow you to style your HTML elements however you like.
 At this point most people forget that there are any elements besides the generic containers <code>&lt;div&gt;</code> and <code>&lt;span&gt;</code> since they can now just <em>style</em> a <code>&lt;span&gt;</code> to look like an <code>&lt;h1&gt;</code>.</p>
-<p>This is bad.</p>
+<p>This is a <em>really bad idea</em>.</p>
 <p>The reason this is bad is that <em>looking</em> at a page is not the only way to browse the web.</p>
-<p>First of, there are a lot of visually impaired people in the world who use screen readers to navigate the internet.
+<p>First of all, there are a lot of visually impaired people in the world who use screen readers to navigate the internet.
 Screen readers tend to focus on the HTML elements and not the styles (which makes sense, since reading out styles is not really something you want to do).</p>
 <p>If you write a heading as a styled <code>&lt;span&gt;</code> instead of an <code>&lt;h1&gt;</code> you are not only doing more (unneccessary) work, you also give visually impaired people a worse experience.
 Screen readers often interpret headings in a special way - for example you can ask most screen readers to read all headings on a page out loud and then jump to some heading you care about.
@@ -3978,13 +3979,17 @@ If you click the text, the web browser opens the page located at <code>https://e
 <p>To show an image, you can use the <code>&lt;img&gt;</code> element:</p>
 <pre><code class="language-html">&lt;img src=&quot;cat.jpg&quot; alt=&quot;A cute cat&quot; /&gt;
 </code></pre>
+<blockquote>
+<p>Notice that the <code>img</code> element is a self-closing HTML element, since it doesn't contain any content.
+Instead of <code>&lt;img&gt;&lt;/img&gt;</code> we write <code>&lt;img /&gt;</code>.</p>
+</blockquote>
 <p>The <code>src</code> attribute contains the path to the image you want to show.
 The <code>alt</code> attribute holds a textual replacement for the image and is necessary in case the image can't be shown.
-Try misspelling the filename on purpose an you will see the textual replacement.</p>
+Try misspelling the filename on purpose and you will see the textual replacement.</p>
 <p>In practice the textual replacement is useful if, for example:</p>
 <ul>
 <li>there is a network error and the image can't be fetched</li>
-<li>the user is using a screen reader (in this case the textual replacement is read out loud to him)</li>
+<li>the user is using a screen reader (in this case the textual replacement may be read out loud to him)</li>
 <li>the browser doesn't support the image type</li>
 <li>the user has turned off images to reduce data transfer</li>
 </ul>
@@ -4025,22 +4030,102 @@ The elements form a (very small) <em>tree</em>:</p>
   &lt;/div&gt;
 &lt;/div&gt;
 </code></pre>
-<p>You can visualize it like this:</p>
+<p>You can visualize this document in the following way:</p>
 <p><img src="chapter3/images/tree.png" alt="" /></p>
 <p>It's crucial to distinguish between HTML and the DOM, as they are <em>absolutely</em> not the same thing.
 The DOM is a <em>language-agnostic model</em> that represents the structure of a document.
 On the other hand, HTML is a <em>specific language</em> that encodes a particular kind of DOM into text usable by web browsers.</p>
+<p>To simplify, <em>you</em> write HTML, the browser parses that and then <em>the browser</em> displays a DOM tree.</p>
 <h2 id="manipulating-the-dom-using-javascript"><a class="header" href="#manipulating-the-dom-using-javascript">Manipulating the DOM using JavaScript</a></h2>
-<p>Whenever you write applications which have a lot of logic in the client, you will need to manipulate the DOM (i.e. add, remove or change items).
-For example, if we add a task, we might need to add some elements to the current tree representing the task.
-This is how the corresponding JavaScript™ code would look like:</p>
+<p>Whenever you write applications which have a lot of logic in the client, you will need to manipulate the DOM (i.e. add, remove, change or retrieve elements).
+This can be done by using JavaScript functions that exist on the <code>document</code> object, which is is a global variable that refers to currently rendered DOM tree.</p>
+<p>For the rest of this section, we will consider the following document:</p>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+  &lt;head&gt;
+    &lt;meta charset=&quot;utf-8&quot; /&gt;
+    &lt;title&gt;Easy Opus&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div id=&quot;app&quot;&gt;
+      &lt;h1&gt;My tasks&lt;/h1&gt;
+      &lt;div id=&quot;taskList&quot;&gt;
+        &lt;p id=&quot;firstParagraph&quot; class=&quot;task&quot;&gt; Read the Next.js book &lt;/p&gt;
+        &lt;p id=&quot;secondParagraph&quot; class=&quot;task&quot;&gt; Write a website &lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<blockquote>
+<p>If you want to follow along, you can open this document in a browser, open the JavaScript console and then write the code in the console.</p>
+</blockquote>
+<p>First let's talk about how to <em>retrieve</em> elements.</p>
+<p>The <code>document.getElementById(id)</code> function allows you to select an element by its unique ID:</p>
+<pre><code class="language-js">const paragraph = document.getElementById('firstParagraph');
+console.log(paragraph); // &lt;p id=&quot;firstParagraph&quot; class=&quot;task&quot;&gt;
+</code></pre>
+<p>Note that <code>paragraph</code> is just a regular JavaScript object.</p>
+<p>For example, you could access various properties like the element ID and class or the HTML markup contained within the element:</p>
+<pre><code class="language-js">console.log(paragraph.id); // firstParagraph
+console.log(paragraph.className); // task
+console.log(paragraph.innerHTML); // Read the Next.js book
+</code></pre>
+<p>We can also get all the elements that have a certain class using <code>document.getElementsByClassName(className)</code>:</p>
+<pre><code class="language-js">const tasks = document.getElementsByClassName('task');
+console.log(tasks); // HTMLCollection { 0: p#firstParagraph.task, 1: p#secondParagraph.task, length: 2, … }
+</code></pre>
+<p>Note that <code>tasks</code> is an <code>HTMLCollection</code> which is an array-like object.
+This means that it behaves similar to an array (for example you can index it), but doesn't have most of the array methods we learned in the first chapter:</p>
+<pre><code class="language-js">console.log(tasks.length); // 2
+console.log(tasks[0]); // &lt;p id=&quot;firstParagraph&quot; class=&quot;task&quot;&gt;
+
+// This will throw a TypeError: tasks.map is not a function
+const ids = tasks.map((task) =&gt; task.id);
+</code></pre>
+<p>You can also retrieve all elements with a certain tag by using <code>document.getElementsByTagName(tagName)</code>.
+Consider this example:</p>
+<pre><code class="language-js">const paragraphs = document.getElementsByTagName('p');
+console.log(paragraphs); // HTMLCollection { 0: p#firstParagraph.task, 1: p#secondParagraph.task, length: 2, … }
+</code></pre>
+<p>Note how this is again an <code>HTMLCollection</code>.</p>
+<p>The two most important and modern JavaScript methods for element retrieval are <code>document.querySelector(selector)</code> and <code>document.querySelectorAll(selector)</code> which returns the first and all elements that match a certain CSS selector respectively.
+Here is how we could use these methods to accomplish our tasks from before:</p>
+<pre><code class="language-js">// The hash (#) indicates an ID selector
+const paragraph = document.querySelector('#firstParagraph');
+// The period (.) indicates a class selector
+const tasks = document.querySelectorAll('.task');
+const paragraphs = document.querySelectorAll('p');
+</code></pre>
+<p>Note that this time <code>tasks</code> will be a <code>NodeList</code> (instead of an <code>HTMLCollection</code>).
+However it is still an array-like object that you can index with <code>[]</code>.</p>
+<p>JavaScript also allows us to create elements and append them to other elements.
+You can create elements using <code>document.createElement(tagName)</code>.</p>
+<p>This is how you could create a paragraph with an ID, a class and some text:</p>
+<pre><code class="language-js">const element = document.createElement('p');
+element.id = 'thirdParagraph';
+element.classList.add('task');
+element.innerHTML = 'New task';
+</code></pre>
+<p>You can append an element a last child of a parent element using <code>parentElement.appendChild(childElement)</code>.
+For example to append the newly created <code>element</code> to another element <code>taskList</code> you would write this:</p>
+<pre><code class="language-js">// Retrieve the taskList element
+const taskList = document.querySelector('#taskList');
+
+// Append element to taskList
+taskList.appendChild(element);
+</code></pre>
+<p>Let's put all of this together and add a button to our page that allows us to add a new task.</p>
+<p>This is the JavaScript that we would like to execute if the button is clicked:</p>
 <pre><code class="language-javascript">const paragraph = document.createElement('p');
+paragraph.id = 'thirdParagraph';
+paragraph.classList.add('task');
 paragraph.innerHTML = 'New task';
 const taskList = document.querySelector('#taskList');
 taskList.appendChild(paragraph);
 </code></pre>
-<p>We could now add a button and execute this code whenever the button is clicked by registering a <code>click</code> event listener on the button:</p>
-<pre><code class="language-html">&lt;!doctype html&gt;
+<p>We would now have to add a <code>button</code> element and execute this code whenever the button is clicked by registering a <code>click</code> event listener on the button:</p>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
 &lt;html lang=&quot;en&quot;&gt;
   &lt;head&gt;
     &lt;meta charset=&quot;utf-8&quot; /&gt;
@@ -4048,6 +4133,8 @@ taskList.appendChild(paragraph);
     &lt;script&gt;
       function addTask() {
         const paragraph = document.createElement('p');
+        paragraph.id = 'thirdParagraph';
+        paragraph.classList.add('task');
         paragraph.innerHTML = 'New task';
         const taskList = document.querySelector('#taskList');
         taskList.appendChild(paragraph);
@@ -4061,6 +4148,10 @@ taskList.appendChild(paragraph);
   &lt;/body&gt;
 &lt;/html&gt;
 </code></pre>
+<blockquote>
+<p>Note that if we want this code to work correctly, if we click the button multiple times, we should change the ID on each button click.
+Try doing this by yourself.</p>
+</blockquote>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="web-forms"><a class="header" href="#web-forms">Web Forms</a></h2>
 <div style="text-align: right"> <i> A 10-page registration form seems reasonable, right? <br> - Seconds before disaster </i> </div>
 <h3 id="why-web-forms"><a class="header" href="#why-web-forms">Why Web Forms?</a></h3>
@@ -4094,7 +4185,7 @@ However in this book we will handle form submissions manually, so we won't go in
 <p>The form control is represented by the <code>&lt;input&gt;</code> element.
 It has a lot of various attributes, but the two most important ones (apart from the <code>id</code> attribute) are the <code>type</code> and <code>name</code> attribute.
 The <code>type</code> attribute represents the type of the form control.
-For example a plaintext input field would have the type <code>text</code> while a checkbox would have the type <code>checkbox</code>.
+For example a plaintext input field would have the type <code>text</code> while a checkbox would have the type <code>checkbox</code> (big surprise).
 The <code>name</code> attribute specifies a name for the form control.
 This attribute is important when submitting the form (usually by clicking the submit button) as it will identify the submitted value.</p>
 <p>The label is represented by the <code>&lt;label&gt;</code> element.
@@ -4118,7 +4209,7 @@ This field looks a like a regular text input, but has a few additional nice prop
 <pre><code class="language-html">&lt;button type=&quot;submit&quot;&gt;Send&lt;/button&gt;
 </code></pre>
 <p>Here is how the final form will look like:</p>
-<pre><code class="language-html">&lt;form&gt;
+<pre><code class="language-html">&lt;form id=&quot;contact&quot;&gt;
   &lt;label for=&quot;name&quot;&gt;Name:&lt;/label&gt;
   &lt;input type=&quot;text&quot; id=&quot;name&quot; name=&quot;name&quot; /&gt;
   &lt;label for=&quot;email&quot;&gt;Name:&lt;/label&gt;
@@ -4130,7 +4221,7 @@ This field looks a like a regular text input, but has a few additional nice prop
 </code></pre>
 <h3 id="structuring-forms-with-fieldset-and-legend"><a class="header" href="#structuring-forms-with-fieldset-and-legend">Structuring Forms with <code>&lt;fieldset&gt;</code> and <code>&lt;legend&gt;</code></a></h3>
 <p>We can use the <code>&lt;fieldset&gt;</code> and <code>&lt;legend&gt;</code> attrributes to further improve our form:</p>
-<pre><code class="language-html">&lt;form&gt;
+<pre><code class="language-html">&lt;form id=&quot;contact&quot;&gt;
   &lt;fieldset&gt;
     &lt;legend&gt;Message Form&lt;/legend&gt;
     &lt;label for=&quot;name&quot;&gt;Name:&lt;/label&gt;
@@ -4143,6 +4234,27 @@ This field looks a like a regular text input, but has a few additional nice prop
   &lt;/fieldset&gt;
 &lt;/form&gt;
 </code></pre>
+<h2 id="handling-a-form-submission"><a class="header" href="#handling-a-form-submission">Handling a Form Submission</a></h2>
+<p>If you click the button right now, the page will refresh, the URL will change and your inputs will be cleared.
+This is the default behaviour of a form submission, however we often want to intercept and modify this.</p>
+<p>To achieve this, let's add an event listener to the form that will listen for submit events.</p>
+<p>This can be done via the <code>addEventListener</code> function which takes two arguments.
+The first argument is the event to listen to (which is <code>'submit'</code> in this case).
+The second argument is a function that takes the specific event and handles it.</p>
+<blockquote>
+<p>The <code>addEventListener</code> is a typical example of a higher-order function since it takes a function as one of its arguments.</p>
+</blockquote>
+<p>We will just log the <code>currentTarget</code> of the event for now.
+This property identifies the element to which the event handler has been attached (in this case it's the form).</p>
+<pre><code class="language-js">const contactForm = document.getElementById('contact');
+contactForm.addEventListener('submit', function (event) {
+  // Prevent default form submission behaviour
+  event.preventDefault();
+
+  console.log({ currentTarget: event.currentTarget });
+});
+</code></pre>
+<p>Note how the <code>event.currentTarget</code> object contains our inputs (among other properties).</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="a-simple-client"><a class="header" href="#a-simple-client">A Simple Client</a></h2>
 <div style="text-align: right"> <i> Why use a framework? I'll just write my own in a weekend. <br> - Seconds before disaster </i> </div>
 <h3 id="the-requirements"><a class="header" href="#the-requirements">The Requirements</a></h3>
@@ -4151,11 +4263,13 @@ The application should consist of a list showing the current tasks.
 Additionally, a web form should allow the user to create a new task (which should then be displayed in the list of current tasks).</p>
 <h3 id="the-initial-html"><a class="header" href="#the-initial-html">The Initial HTML</a></h3>
 <p>You get to work and quickly come up with the initial document:</p>
-<pre><code class="language-html">&lt;!doctype html&gt;
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
 &lt;html lang=&quot;en&quot;&gt;
   &lt;head&gt;
     &lt;meta charset=&quot;utf-8&quot; /&gt;
     &lt;title&gt;Task List App&lt;/title&gt;
+    &lt;!-- JavaScript will go here --&gt;
+    &lt;script&gt;&lt;/script&gt;
   &lt;/head&gt;
   &lt;body&gt;
     &lt;h1&gt;Task List&lt;/h1&gt;
@@ -4170,37 +4284,21 @@ Additionally, a web form should allow the user to create a new task (which shoul
       &lt;input type=&quot;text&quot; id=&quot;taskInput&quot; placeholder=&quot;Enter your task&quot; /&gt;
       &lt;button type=&quot;submit&quot;&gt;Add Task&lt;/button&gt;
     &lt;/form&gt;
-
-    &lt;!-- JavaScript will go here --&gt;
-    &lt;script&gt;&lt;/script&gt;
   &lt;/body&gt;
 &lt;/html&gt;
 </code></pre>
 <p>You now have a heading, a list and a form.
 However if you click the submit button, not a whole lot happens - this is because we haven't added any submit logic to the form yet.</p>
 <h3 id="grabbing-the-items"><a class="header" href="#grabbing-the-items">Grabbing the Items</a></h3>
-<p>Lets first grab the relevant items (the code goes between the <code>&lt;script&gt;&lt;/script&gt;</code> tags).
+<p>Lets first grab the relevant items (remember that the code goes between the <code>&lt;script&gt;&lt;/script&gt;</code> tags).
 This can be done using the <code>querySelector</code> method.
 In this case we want to select by ID, so we use the <code>#</code> selector:</p>
 <pre><code class="language-js">const taskList = document.querySelector('#taskList');
 const taskForm = document.querySelector('#taskForm');
 </code></pre>
 <h3 id="adding-an-event-listener"><a class="header" href="#adding-an-event-listener">Adding an Event Listener</a></h3>
-<p>Next, we need to add an event listener to <code>taskForm</code>.
-This can be done via the <code>addEventListener</code> function which takes two arguments.
-The first argument is the event to listen to (which is <code>'submit'</code> in this case).
-The second argument is a function that takes the specific event and handles it.
-Note that <code>addEventListener</code> is a typical example of a higher-order function since it takes a function as one of its arguments.</p>
-<p>Let's just log the <code>currentTarget</code> of the event for now.
-This property identifies the element to which the event handler has been attached (in this case it's the task form).</p>
-<pre><code class="language-js">taskForm.addEventListener('submit', function (event) {
-  // Prevent default form submission
-  event.preventDefault();
-
-  console.log({ currentTarget: event.currentTarget });
-});
-</code></pre>
-<p>The currentTarget has the proeprty <code>elements</code> which contains <code>taskInput</code> and that has a value:</p>
+<p>Next, we need to add an event listener to <code>taskForm</code>.</p>
+<p>The <code>event.currentTarget</code> will have the proeprty <code>elements</code> which contains <code>taskInput</code> whose property <code>value</code> contains our input:</p>
 <pre><code class="language-js">taskForm.addEventListener('submit', function (event) {
   // Prevent default form submission
   event.preventDefault();
@@ -4261,10 +4359,10 @@ This doesn't seem like it will scale to a larger application.</p>
 The idea behind React is to create declarative UIs with nicely separated components.
 Basically we only define how the application should look like (hence the <em>declarative</em> aspect) and React takes care of the rest, such as determining the necessary DOM manipulations.
 As you will see soon, this is an incredibly useful feature.</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="chapter-2-the-client"><a class="header" href="#chapter-2-the-client">Chapter 2: The client</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="chapter-4-the-client"><a class="header" href="#chapter-4-the-client">Chapter 4: The Client</a></h1>
 <div style="text-align: right"> <i> This website needs to work on Internet Explorer 6.0 <br> - Famous last words </i> </div>
-<p>In this chapter we will create a simple (website) client. This client will allow us to add and delete tasks. Each task will have a summary and a description.</p>
-<p>Create a directory which will contain your project. We called that directory <em>easy-opus</em> (it is common to name your project directory after the project). Of course, feel free to give your directory any <em>meaningful</em> name.</p>
+<p>In this chapter we will create a simple (website) client using React. This client will allow us to add and delete tasks. Each task will have a summary and a description.</p>
+<p>Create a directory which will contain your project or just keep working with the <em>easy-opus</em> directory from the previous chapter (however you should delete it's contents). Of course, feel free to give your directory any <em>meaningful</em> name.</p>
 <p>Let's begin.</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="first-steps-in-react"><a class="header" href="#first-steps-in-react">First steps in React</a></h2>
 <div style="text-align: right"> <i> The last thing the world needs is another JavaScript library. <br> - Ancient Chinese proverb </i> </div>
