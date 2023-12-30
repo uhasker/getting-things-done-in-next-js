@@ -4674,14 +4674,14 @@ In this case we simply add the task to the end:</p>
 }
 </code></pre>
 <p>Try clicking the button - a new task should appear.</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="react-effects"><a class="header" href="#react-effects">React Effects</a></h1>
-<h2 id="why-effects"><a class="header" href="#why-effects">Why Effects?</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="react-effects"><a class="header" href="#react-effects">React Effects</a></h2>
+<h3 id="why-effects"><a class="header" href="#why-effects">Why Effects?</a></h3>
 <p>Effects are useful, if you want to synchronize React with some <em>external system</em> (like a server).</p>
 <p>Consider a component which, upon rendering, needs to fetch a task title and display it to the user.
 While your first instinct, might be to use an event handler together with state, this is not possible - after all there is no real user event here.
 Instead we need to execute something because the component is rendering.</p>
 <p>This is where effects come in handy.</p>
-<h2 id="the-useeffect-hook"><a class="header" href="#the-useeffect-hook">The <code>useEffect</code> Hook</a></h2>
+<h3 id="the-useeffect-hook"><a class="header" href="#the-useeffect-hook">The <code>useEffect</code> Hook</a></h3>
 <p>Here is how we can use the <code>useEffect</code> hook:</p>
 <pre><code class="language-jsx">import * as React from 'react';
 
