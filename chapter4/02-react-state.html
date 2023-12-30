@@ -182,7 +182,7 @@ Let's enter <code>task-list.tsx</code> and import React at the top:</p>
 <pre><code class="language-javascript">import * as React from 'react';
 </code></pre>
 <p>Next we add the form inside the div (below the list with the tasks):</p>
-<pre><code class="language-html">&lt;form onSubmit=&quot;{handleSubmit}&quot;&gt;
+<pre><code class="language-jsx">&lt;form&gt;
   &lt;label htmlFor=&quot;title&quot;&gt;Summary:&lt;/label&gt;
   &lt;input type=&quot;text&quot; id=&quot;title&quot; /&gt;
   &lt;br /&gt;
@@ -190,31 +190,35 @@ Let's enter <code>task-list.tsx</code> and import React at the top:</p>
 &lt;/form&gt;
 </code></pre>
 <p>This form contains a title and the &quot;Add task&quot; button.
-Try clicking the button - it won't do much.
+Try clicking the button - it won't do anyting interesting.
 The reason for that is that we haven't yet told the button what to do on submit.
 Let's change that now.</p>
-<p>We create a <code>handleSubmit</code> function, which simply logs something to the console. Note that the default behaviour of a form submission includes a browser refresh, which we don't want. To prevent the default behaviour, we have to call (surprise) the preventDefault function of the event:</p>
+<p>We need to create a <code>handleSubmit</code> function, which simply logs something to the console.
+Remember that the default behaviour of a form submission includes a browser refresh, which we don't want.
+To prevent the default behaviour, we have to call the <code>preventDefault</code> function of the event:</p>
 <pre><code class="language-javascript">function handleSubmit(event) {
   event.preventDefault();
   const title = event.currentTarget.title.value.trim();
   console.log(`Submitted ${title}`);
 }
 </code></pre>
-<p>Next we make sure that the onSubmit function is called when the button is clicked.
-To accomplish that, we set the onSubmit property of the button to the <code>handleSubmit</code> function:</p>
+<p>Next we make sure that the <code>handleSubmit</code> function is called when the button is clicked.
+To accomplish that, we set the <code>onSubmit</code> property of the button to the <code>handleSubmit</code> function:</p>
 <pre><code class="language-html">&lt;button type=&quot;submit&quot; onSubmit=&quot;{handleSubmit}&quot;&gt;Add task&lt;/button&gt;
 </code></pre>
 <p>If you click the button, you should now see the title logged to the console.</p>
 <h3 id="use-react-state-to-create-new-items"><a class="header" href="#use-react-state-to-create-new-items">Use React state to create new items</a></h3>
-<p>Now that we can add new tasks, our components needs to track <strong>state</strong> (the list of tasks in this case).
-React has the useState hook for this purpose.</p>
+<p>Now that we want to add new tasks, our component needs to have some kind of &quot;memory&quot;.
+To accomplish this, we can use React <strong>state</strong>.
+React has the <code>useState</code> hook for this purpose.</p>
 <p>A <strong>hook</strong> is nothing more than a (special) function.
-This particular hook is a function that allows you to add state to a component:</p>
+This particular hook is a function that allows you to add state (&quot;memory&quot;) to a component:</p>
 <pre><code class="language-javascript">const [tasks, setTasks] = React.useState([]);
 </code></pre>
 <p>The <code>useState</code> hook declares a &quot;state variable&quot;. The argument to the hook is the initial state.
-In this case, we begin with an empty list, since we have no tasks in the beginning.
-The hook returns a pair of values. The first element is the current state and the second element is a function for updating state.</p>
+In this case, we begin with an empty list, since we have no tasks in the beginning.</p>
+<p>The <code>useState</code> hook returns a pair of values.
+The first element is the current state and the second element is a function for updating state.</p>
 <p>Note that you should never set the first element directly and only use the updating function.
 Otherwise React will get confused since it won't realize that your state has changed and will not update the DOM correctly.</p>
 <p>The updater function takes the previous state and returns the next state.
