@@ -4731,7 +4731,52 @@ While your first instinct, might be to use an event handler together with state,
 Instead we need to execute something because the component is rendering.</p>
 <p>This is where effects come in handy.</p>
 <h3 id="the-useeffect-hook"><a class="header" href="#the-useeffect-hook">The <code>useEffect</code> Hook</a></h3>
-<p>Here is how we can use the <code>useEffect</code> hook:</p>
+<p>Here is the simplest possible example for a <code>useEffect</code> hook.
+This hook takes a function which is executed when the component is first rendered or updated:</p>
+<pre><code class="language-jsx">import { useEffect } from 'react';
+
+function ExampleComponent() {
+  useEffect(() =&gt; {
+    console.log('Effect runs');
+  });
+
+  return &lt;div&gt;Hello, World!&lt;/div&gt;;
+}
+</code></pre>
+<p>Additionally we can return a cleanup function, which will run when the component is destroyed:</p>
+<pre><code class="language-jsx">function ExampleComponent() {
+  useEffect(() =&gt; {
+    console.log('Effect runs');
+
+    return () =&gt; {
+      console.log('Component destroyed');
+    };
+  });
+
+  return &lt;div&gt;Hello, World!&lt;/div&gt;;
+}
+</code></pre>
+<h3 id="the-dependency-array"><a class="header" href="#the-dependency-array">The Dependency Array</a></h3>
+<p>The <code>useHook</code> effect takes a second argument - a dependency array.
+This allows you to specify that the effect should run only if a particular value changes:</p>
+<pre><code class="language-jsx">function Counter() {
+  const [count, setCount] = useState(0);
+
+  useEffect(() =&gt; {
+    console.log(`Count has changed to: ${count}`);
+  }, [count]);
+
+  return (
+    &lt;div&gt;
+      &lt;p&gt;You clicked {count} times&lt;/p&gt;
+      &lt;button onClick={() =&gt; setCount(count + 1)}&gt;Click me&lt;/button&gt;
+    &lt;/div&gt;
+  );
+}
+</code></pre>
+<p>If the dependency array is empty, the effect will run only once - when the component is first rendered.</p>
+<h3 id="using-fetch-and-useeffect-together"><a class="header" href="#using-fetch-and-useeffect-together">Using <code>fetch</code> and <code>useEffect</code> Together</a></h3>
+<p>One of the most common usages of <code>useEffect</code> is to synchronize your component with an external API:</p>
 <pre><code class="language-jsx">import * as React from 'react';
 
 function ExampleTask() {
@@ -4739,13 +4784,21 @@ function ExampleTask() {
 
   useEffect(() =&gt; {
     fetch('https://jsonplaceholder.typicode.com/todos/1')
-      .then((response) =&gt; response.json())
-      .then((json) =&gt; setTitle(json.title));
+      .then((response) =&gt; {
+        if (!response.ok) {
+          throw new Error(`Response status was ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((json) =&gt; setTitle(json.title))
+      .catch((error) =&gt; console.log(error));
   }, []);
 
   return &lt;p&gt;{title}&lt;/p&gt;;
 }
 </code></pre>
+<p>Note that we don't have a cleanup function in our effect - normally we would abort the request here.
+However this is out of scope for this introductory book.</p>
 
                     </main>
 
