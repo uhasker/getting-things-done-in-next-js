@@ -381,7 +381,7 @@ function reportOverdueTasks(tasks) {
 
 function reportCompletedTasks(tasks) {
   const completedTasks = tasks.filter((task) => task.status === 'done');
-  return formatReport(tacompletedTaskssks);
+  return formatReport(completedTasks);
 }
 ```
 
