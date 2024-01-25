@@ -1,0 +1,325 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Server and Client Components</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../title-page.html">Getting Things Done in Next.js</a></li><li class="chapter-item expanded affix "><a href="../introduction.html">Introduction</a></li><li class="chapter-item expanded affix "><a href="../acknowledgments.html">Acknowledgments</a></li><li class="chapter-item expanded "><a href="../chapter1/index.html"><strong aria-hidden="true">1.</strong> A Brief Introduction to JavaScript</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../chapter1/01-hello-world.html"><strong aria-hidden="true">1.1.</strong> Hello World</a></li><li class="chapter-item expanded "><a href="../chapter1/02-primitive-data-types.html"><strong aria-hidden="true">1.2.</strong> Primitive Data Types</a></li><li class="chapter-item expanded "><a href="../chapter1/03-arrays-and-objects.html"><strong aria-hidden="true">1.3.</strong> Arrays and Objects</a></li><li class="chapter-item expanded "><a href="../chapter1/04-control-flow.html"><strong aria-hidden="true">1.4.</strong> Control Flow</a></li><li class="chapter-item expanded "><a href="../chapter1/05-functions.html"><strong aria-hidden="true">1.5.</strong> Functions</a></li><li class="chapter-item expanded "><a href="../chapter1/06-error-handling.html"><strong aria-hidden="true">1.6.</strong> Error Handling</a></li><li class="chapter-item expanded "><a href="../chapter1/07-basic-datastructures.html"><strong aria-hidden="true">1.7.</strong> Basic Data Structures</a></li><li class="chapter-item expanded "><a href="../chapter1/08-functional-thinking.html"><strong aria-hidden="true">1.8.</strong> Functional Thinking</a></li><li class="chapter-item expanded "><a href="../chapter1/09-asynchronous-programming.html"><strong aria-hidden="true">1.9.</strong> Asynchronous Programming</a></li><li class="chapter-item expanded "><a href="../chapter1/10-modules.html"><strong aria-hidden="true">1.10.</strong> Modules</a></li><li class="chapter-item expanded "><a href="../chapter1/11-writing-decent-code.html"><strong aria-hidden="true">1.11.</strong> Writing Decent Code</a></li></ol></li><li class="chapter-item expanded "><a href="../chapter2/index.html"><strong aria-hidden="true">2.</strong> Leveling Up with TypeScript</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../chapter2/01-why-typescript.html"><strong aria-hidden="true">2.1.</strong> Why TypeScript?</a></li><li class="chapter-item expanded "><a href="../chapter2/02-basic-types.html"><strong aria-hidden="true">2.2.</strong> Basic Types</a></li><li class="chapter-item expanded "><a href="../chapter2/03-annotating-functions.html"><strong aria-hidden="true">2.3.</strong> Annotating Functions</a></li><li class="chapter-item expanded "><a href="../chapter2/04-union-types.html"><strong aria-hidden="true">2.4.</strong> Union Types</a></li><li class="chapter-item expanded "><a href="../chapter2/05-generics.html"><strong aria-hidden="true">2.5.</strong> Generics</a></li><li class="chapter-item expanded "><a href="../chapter2/06-configuring-typescript.html"><strong aria-hidden="true">2.6.</strong> Configuring TypeScript</a></li></ol></li><li class="chapter-item expanded "><a href="../chapter3/index.html"><strong aria-hidden="true">3.</strong> A Vanilla Client</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../chapter3/01-hypertext-markup-language.html"><strong aria-hidden="true">3.1.</strong> Hypertext Markup Language</a></li><li class="chapter-item expanded "><a href="../chapter3/02-marking-up-text.html"><strong aria-hidden="true">3.2.</strong> Marking Up Text</a></li><li class="chapter-item expanded "><a href="../chapter3/03-hyperlinks-and-images.html"><strong aria-hidden="true">3.3.</strong> Hyperlinks and Images</a></li><li class="chapter-item expanded "><a href="../chapter3/04-the-document-object-model.html"><strong aria-hidden="true">3.4.</strong> The Document Object Model</a></li><li class="chapter-item expanded "><a href="../chapter3/05-web-forms.html"><strong aria-hidden="true">3.5.</strong> Web Forms</a></li><li class="chapter-item expanded "><a href="../chapter3/06-a-simple-client.html"><strong aria-hidden="true">3.6.</strong> A Simple Client</a></li></ol></li><li class="chapter-item expanded "><a href="../chapter4/index.html"><strong aria-hidden="true">4.</strong> Adding Spice with React</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../chapter4/01-react-components.html"><strong aria-hidden="true">4.1.</strong> React Components</a></li><li class="chapter-item expanded "><a href="../chapter4/02-react-state.html"><strong aria-hidden="true">4.2.</strong> React State</a></li><li class="chapter-item expanded "><a href="../chapter4/03-react-effects.html"><strong aria-hidden="true">4.3.</strong> React Effects</a></li></ol></li><li class="chapter-item expanded "><a href="../chapter5/index.html"><strong aria-hidden="true">5.</strong> Moving to the Server with Next.js</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../chapter5/01-setup.html"><strong aria-hidden="true">5.1.</strong> Setup</a></li><li class="chapter-item expanded "><a href="../chapter5/02-pages-and-layouts.html"><strong aria-hidden="true">5.2.</strong> Pages and Layouts</a></li><li class="chapter-item expanded "><a href="../chapter5/03-more-on-routes.html"><strong aria-hidden="true">5.3.</strong> More on Routes</a></li><li class="chapter-item expanded "><a href="../chapter5/04-server-and-client-components.html" class="active"><strong aria-hidden="true">5.4.</strong> Server and Client Components</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title"></h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h2 id="server-and-client-components"><a class="header" href="#server-and-client-components">Server and Client Components</a></h2>
+<h3 id="rendering"><a class="header" href="#rendering">Rendering</a></h3>
+<p>Next.js renders as much as it can on the server.
+By default the React components you write are rendered on the server side and the resulting HTML is sent to the browser.
+However, not all components can be fully rendered on the server.
+For example, components that require interactivity must be partially rendered on the client.</p>
+<p>Therefore the rendering is split into multiple stages:</p>
+<p>First, Next.js renders as much as it can on the server.</p>
+<p>Once the initial HTML is rendered, the client-side JavaScript takes over.
+It reconciles the server-rendered HTML with the client-side React tree.</p>
+<p>After the reconciliation, the server-rendered HTML is &quot;hydrated&quot;.
+This stage involves attaching event handlers and setting up necessary state to make the components interactive.</p>
+<p>There are several benefits to this approach.</p>
+<p>Because the HTML is rendered on the server, you don't get an &quot;empty&quot; HTML page on first load.
+Instead, you see some HTML content immediately (albeit not interactive), which improves the user experience and helps with SEO.</p>
+<p>Server components can also be cached, which means that repeated requests for the same component are served very fast.
+This can significantly improve performance (especially for content that doesn't change a lot).</p>
+<p>Data fetching can be moved from the client to the server which can simplify the code and reduce the amount of data that needs to be sent to the client.
+This is especially beneficial for clients with slow network speeds.</p>
+<p>Additionally, dependencies are now on the server and don't need to be served to the client.
+This helps greatly with reducing bundle sizes.</p>
+<h3 id="server-components"><a class="header" href="#server-components">Server Components</a></h3>
+<p><strong>Server components</strong> are the components that are completely rendered on the server.</p>
+<p>For example this component is a server component:</p>
+<pre><code class="language-jsx">import * as React from 'react';
+
+export default function Task() {
+  return &lt;p&gt;My task&lt;/p&gt;;
+}
+</code></pre>
+<p>There is no interactivity here, so this component can be rendered on the server completely.</p>
+<h3 id="client-components"><a class="header" href="#client-components">Client Components</a></h3>
+<p><strong>Client components</strong> are components that are rendered both on the server and on the client.
+You use client components when you need interactivity or you need to use certain browser APIs.</p>
+<p>You can opt into client components with <code>&quot;use client&quot;</code>.</p>
+<p>Consider the following component:</p>
+<pre><code class="language-jsx">import * as React from 'react';
+
+export default function Counter() {
+  const [count, setCount] = React.useState(0);
+
+  return (
+    &lt;div&gt;
+      &lt;p&gt;{count}&lt;/p&gt;
+      &lt;button onClick={() =&gt; setCount(count + 1)}&gt;+&lt;/button&gt;
+    &lt;/div&gt;
+  );
+}
+</code></pre>
+<p>If you try to go to the corresponding page, you will see an error:</p>
+<pre><code>Error: useState only works in Client Components. Add the &quot;use client&quot; directive at the top of the file to use it. Read more: https://nextjs.org/docs/messages/react-client-hook-in-server-component
+</code></pre>
+<p>This is because you can't use <code>useState</code> on the server since you can't store client state there.</p>
+<p>To fix the error, we need to add the <code>&quot;use client&quot;</code> directive:</p>
+<pre><code class="language-jsx">'use client';
+
+import * as React from 'react';
+
+export default function Counter() {
+  const [count, setCount] = React.useState(0);
+
+  return (
+    &lt;div&gt;
+      &lt;p&gt;{count}&lt;/p&gt;
+      &lt;button onClick={() =&gt; setCount(count + 1)}&gt;+&lt;/button&gt;
+    &lt;/div&gt;
+  );
+}
+</code></pre>
+<p>You can verify that this component is rendered both on the server and the client by adding a <code>console.log</code>:</p>
+<pre><code class="language-jsx">'use client';
+
+import * as React from 'react';
+
+export default function Counter() {
+  const [count, setCount] = React.useState(0);
+
+  console.log('Rendered counter');
+
+  return (
+    &lt;div&gt;
+      &lt;p&gt;{count}&lt;/p&gt;
+      &lt;button onClick={() =&gt; setCount(count + 1)}&gt;+&lt;/button&gt;
+    &lt;/div&gt;
+  );
+}
+</code></pre>
+<p>If you go to <code>http://localhost:3000/counter</code>, you will see that the message is output both on the server as well as the client.
+If you click the button, you will see that message is output only on the client (since the component only rerenders there).
+However, if you refresh the page, you will observe that the message is again logged both to the server as well as the client.</p>
+<h3 id="when-to-use-what"><a class="header" href="#when-to-use-what">When to use what?</a></h3>
+<p>Use server components if:</p>
+<ul>
+<li>you need to fetch data</li>
+<li>you need to access a database</li>
+<li>you need to keep sensitive information on the server</li>
+<li>you want to keep large dependencies on the server</li>
+</ul>
+<p>Use client components if:</p>
+<ul>
+<li>you need event listeners (like <code>onClick</code>)</li>
+<li>you need to use <code>useState</code>, <code>useEffect</code> or <code>useReducer</code></li>
+<li>you need to use certain browser APIs</li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../chapter5/03-more-on-routes.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../chapter5/03-more-on-routes.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>
