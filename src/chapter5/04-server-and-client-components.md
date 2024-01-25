@@ -98,6 +98,31 @@ export default function Counter() {
 }
 ```
 
+You can verify that this component is rendered both on the server and the client by adding a `console.log`:
+
+```jsx
+'use client';
+
+import * as React from 'react';
+
+export default function Counter() {
+  const [count, setCount] = React.useState(0);
+
+  console.log('Rendered counter');
+
+  return (
+    <div>
+      <p>{count}</p>
+      <button onClick={() => setCount(count + 1)}>+</button>
+    </div>
+  );
+}
+```
+
+If you go to `http://localhost:3000/counter`, you will see that the message is output both on the server as well as the client.
+If you click the button, you will see that message is output only on the client (since the component only rerenders there).
+However, if you refresh the page, you will observe that the message is again logged both to the server as well as the client.
+
 ### When to use what?
 
 Use server components if:

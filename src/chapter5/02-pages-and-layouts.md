@@ -7,7 +7,7 @@ Folders are used to define routes and each folder represents a route segment (wh
 You can define nested routes by nesting folder inside each other.
 
 For example the folder `about` would represents the route `/about` (which would be mapped to the URL `/about`).
-If you would have a folder `about` in inside a folder `company` this would represent the route `/company/about` (which would be mapped to the URL `/company/about`).
+If you would have a folder `about` inside a folder `company` this would represent the route `/company/about` (which would be mapped to the URL `/company/about`).
 
 Note that all of this is relative to our root directory (which in our application is `src/app`).
 This means that the route `/about` would actually be located at `src/app/about` and the route `/company/about` would actually be located at `src/app/company/about`.
@@ -21,7 +21,7 @@ You already have one of these files - namely `src/app/page.tsx` which defines th
 Let's create another page.
 Add a new directory `about` in `src/app` and create the following file `src/app/about/page.tsx`:
 
-```tsx
+```jsx
 export default function About() {
   return <h1>About</h1>;
 }
@@ -29,7 +29,8 @@ export default function About() {
 
 Go to `http://localhost:3000/about` and you will see the new page.
 
-> From now on we will stop prefixing everything with `src/app` and simply talk about the "root" directory.
+> From now on we will stop prefixing everything with `src/app` and simply talk assume that you are always in `src/app`.
+> For example, if we tell you to create a file `task/route.ts` you should actually create the file at `src/app/task/route.ts`.
 
 ### Layouts
 
@@ -42,7 +43,7 @@ The component should accept a `children` prop that will be populated with a chil
 
 Let's go to `layout.ts` in the root directory, which currently looks like this:
 
-```tsx
+```jsx
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
@@ -54,7 +55,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
 Let's change it to:
 
-```tsx
+```jsx
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
@@ -94,7 +95,7 @@ It also changes the way navigation works (we will talk more about this in the ne
 
 Here is how you could link the About page from the home page:
 
-```tsx
+```jsx
 import Link from 'next/link';
 
 export default function Home() {

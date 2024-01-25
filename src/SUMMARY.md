@@ -41,3 +41,10 @@
   - [React Components](chapter4/01-react-components.md)
   - [React State](chapter4/02-react-state.md)
   - [React Effects](chapter4/03-react-effects.md)
+
+- [Moving to the Server with Next.js](chapter5/README.md)
+
+  - [Setup](chapter5/01-setup.md)
+  - [Pages and Layouts](chapter5/02-pages-and-layouts.md)
+  - [More on Routes](chapter5/03-more-on-routes.md)
+  - [Server and Client Components](chapter5/04-server-and-client-components.md)
