@@ -176,8 +176,173 @@
                         <h2 id="react-state"><a class="header" href="#react-state">React State</a></h2>
 <div style="text-align: right"> <i> Why was the useState hook feeling nostalgic? <br>
 Because every time it was called, it brought back memories! <br> - From "1000 programming dad-jokes" </i> </div>
-<h3 id="adding-a-form"><a class="header" href="#adding-a-form">Adding a Form</a></h3>
-<p>Let us now add the form for creating a new task.
+<h3 id="why-state"><a class="header" href="#why-state">Why State?</a></h3>
+<p>In the previous section we learned how to render components.
+However, these components are completely &quot;static&quot; right now.
+But in reality, you often need to have &quot;dynamic&quot; components that change based on some action.</p>
+<p>For example, clicking a button might update a counter and typing into a form might update the input field.
+This means that components need to be able to &quot;remember&quot; things (like the current counter or the current input field value).</p>
+<p>To &quot;remember&quot; something, you can use state, which serves as a sort of memory for your component.</p>
+<h3 id="a-simple-example"><a class="header" href="#a-simple-example">A Simple Example</a></h3>
+<p>Let's create a simple counter component.
+This component will have a button that increments a value:</p>
+<pre><code class="language-jsx">import * as React from 'react';
+
+export default function Counter() {
+  const [count, setCount] = React.useState(0);
+
+  return (
+    &lt;&gt;
+      &lt;p&gt;{count}&lt;/p&gt;
+      &lt;button
+        onClick={() =&gt; {
+          setCount(count + 1);
+        }}
+      &gt;
+        Increment
+      &lt;/button&gt;
+    &lt;/&gt;
+  );
+}
+</code></pre>
+<p>Try clicking the &quot;Increment&quot; button - it will increment the count by 1 each time you click it.</p>
+<p>This example is simple, but it still shows exactly how to use state in React.</p>
+<p>State is provided by the <code>useState</code> hook (a hook is basically just a special function).</p>
+<p>This hook returns an array with two elements - a <strong>state variable</strong> and a <strong>state setter function</strong>.
+The state variable (<code>count</code> in this case) will be the value that you want to remember.
+The state setter function (<code>setCount</code> in this case) can be used to update the state variable.
+The <code>useState</code> hook takes a single argument - the initial value of the state variable (which is <code>0</code> in this case).</p>
+<p>Note that we make use of array destructuring here (which you should remember from chapter 1):</p>
+<pre><code class="language-ts">const [count, setCount] = React.useState(0);
+</code></pre>
+<p>Alternatively we could have written:</p>
+<pre><code class="language-ts">const countState = React.useState(0);
+const count = countState[0];
+const setCount = countState[1];
+</code></pre>
+<p>Please don't do that though - it will result in confusion since it's very unconventional to manually destructure the value returned from a hook.</p>
+<h3 id="state-vs-regular-variables"><a class="header" href="#state-vs-regular-variables">State vs Regular Variables</a></h3>
+<p>You should have a big question in the back of your head right now.
+<em>Why do we need to go through all this pain?</em>
+<em>Why not just use a regular variable?</em></p>
+<p>After all, this is how we always remembered values before.
+We simply assigned them to variables.</p>
+<p>Let's have a look at why this doesn't work with React:</p>
+<pre><code class="language-jsx">export default function Counter() {
+  let count = 0;
+
+  return (
+    &lt;&gt;
+      &lt;p&gt;{count}&lt;/p&gt;
+      &lt;button
+        onClick={() =&gt; {
+          count += 1;
+        }}
+      &gt;
+        Increment
+      &lt;/button&gt;
+    &lt;/&gt;
+  );
+}
+</code></pre>
+<p>Try clicking the button know - nothing will happen.
+But why?</p>
+<p>The problem lies in the fact that, while we do update the local variable, React doesn't actually rerender the component to show the change.
+You can verify this by adding a few <code>console.logs</code>:</p>
+<pre><code class="language-jsx">export default function Counter() {
+  let count = 0;
+
+  console.log('Rendered counter component');
+
+  return (
+    &lt;&gt;
+      &lt;p&gt;{count}&lt;/p&gt;
+      &lt;button
+        onClick={() =&gt; {
+          count += 1;
+          console.log(`New value of count is ${count}`);
+        }}
+      &gt;
+        Increment
+      &lt;/button&gt;
+    &lt;/&gt;
+  );
+}
+</code></pre>
+<p>If you open the component and click the button a few times, you will see the following logs:</p>
+<pre><code>Rendered counter component
+New value of count is 1
+New value of count is 2
+New value of count is 3
+</code></pre>
+<p>So the local variable is indeed updated - but this doesn't rerender the component.
+We begin to see the purpose of the <code>useState</code> hook - to define a state whose <em>updates will trigger a rerender</em>.</p>
+<p>This explanation should have immediately raised another question.
+What happens if we skip the state setter function and just set the state variable directly?</p>
+<pre><code class="language-jsx">export default function Counter() {
+  let [count, setCount] = React.useState(0);
+
+  console.log('Rendered counter component');
+
+  return (
+    &lt;&gt;
+      &lt;p&gt;{count}&lt;/p&gt;
+      &lt;button
+        onClick={() =&gt; {
+          count += 1;
+          console.log(`New value of count is ${count}`);
+        }}
+      &gt;
+        Increment
+      &lt;/button&gt;
+    &lt;/&gt;
+  );
+}
+</code></pre>
+<p>If you click the button a few times, you will see the exact same behaviour as with the previous example:</p>
+<pre><code>Rendered counter component
+New value of count is 1
+New value of count is 2
+New value of count is 3
+</code></pre>
+<p>Therefore if you need to update the UI of your component, you can't use local variables and you can't update the state variables directly.
+You need to use the state setter function to not only update the state variable, but also to rerender the component.</p>
+<p>Let's verify that using the state setter function does what we expect:</p>
+<pre><code class="language-jsx">export default function Counter() {
+  let [count, setCount] = React.useState(0);
+
+  console.log(`Rendered counter component with count=${count}`);
+
+  return (
+    &lt;&gt;
+      &lt;p&gt;{count}&lt;/p&gt;
+      &lt;button
+        onClick={() =&gt; {
+          setCount(count + 1);
+          console.log(`New value of count is ${count}`);
+        }}
+      &gt;
+        Increment
+      &lt;/button&gt;
+    &lt;/&gt;
+  );
+}
+</code></pre>
+<p>We will now see that the component rerenders if we click the &quot;Increment&quot; button:</p>
+<pre><code>Rendered counter component with count=0
+New value of count is 0
+Rendered counter component with count=1
+</code></pre>
+<p>Note that the value of <code>count</code> only changes on the <em>next render</em>.
+Here is what happens:</p>
+<p>The component renders for the first time.
+Because the initial value of <code>count</code> is set to <code>0</code>, it will render with <code>count</code> being equal to <code>0</code>.</p>
+<p>You click the button and <code>setCount</code> is called with <code>count + 1</code> (which will be <code>0+1</code>, i.e. <code>1</code>).
+React rerenders the component while remembering that the new <code>count</code> should be <code>1</code>.</p>
+<p>The component renders for the second time.
+Because React remembered that <code>count</code> was set to <code>1</code>, the component will render with <code>count</code> set to <code>1</code>.</p>
+<h3 id="using-state-with-a-form"><a class="header" href="#using-state-with-a-form">Using State with a Form</a></h3>
+<p>Let us return to our task management application and add the form for creating a new task.
 Enter the <code>task-list.tsx</code> file and import React at the top:</p>
 <pre><code class="language-js">import * as React from 'react';
 </code></pre>
@@ -212,29 +377,14 @@ Remember from chapter 3 that we need to call the <code>preventDefault</code> fun
 }
 </code></pre>
 <p>Next we need to make sure that the <code>handleSubmit</code> function is called when the button is clicked.
-To accomplish that, we set the <code>onSubmit</code> property of the button to the <code>handleSubmit</code> function:</p>
-<pre><code class="language-jsx">&lt;button type=&quot;submit&quot; onSubmit={handleSubmit}&gt;
-  Add task
-&lt;/button&gt;
+To accomplish that, we set the <code>onSubmit</code> property of the form to the <code>handleSubmit</code> function:</p>
+<pre><code class="language-jsx">&lt;form onSubmit={handleSubmit}&gt;{/*Additional JSX here*/}&lt;/form&gt;
 </code></pre>
 <p>If you click the button, you should now see the title logged to the console.</p>
-<h3 id="the-usestate-hook"><a class="header" href="#the-usestate-hook">The <code>useState</code> Hook</a></h3>
-<p>Now that we want to add new tasks, our component needs to have some kind of &quot;memory&quot;.
-To accomplish this, we can use React <strong>state</strong>.
-React has the <code>useState</code> hook for this purpose.</p>
-<p>A <strong>hook</strong> is nothing more than a (special) function.
-This particular hook is a function that allows you to add state (&quot;memory&quot;) to a component:</p>
-<pre><code class="language-js">const [tasks, setTasks] = React.useState([]);
+<p>Again we use the <code>useState</code> hook:</p>
+<pre><code class="language-js">const [tasks, setTasks] = React.useState&lt;Task[]&gt;([]);
 </code></pre>
-<p>The <code>useState</code> hook declares a &quot;state variable&quot;. The argument to the hook is the initial state.
-In this case, we begin with an empty list, since we have no tasks in the beginning.</p>
-<p>The <code>useState</code> hook returns a pair of values.
-The first element is the current state and the second element is a function for updating state.</p>
-<p>Note that you should never set the first element directly and only use the updating function.
-Otherwise React will get confused since it won't realize that your state has changed and will not update the DOM correctly.</p>
-<p>The updater function takes the previous state and returns the next state.
-Here we take the list of previous tasks (i.e. the tasks that were present before the button click) and return the new tasks (i.e. the tasks that should be present after the button click).
-In this case we simply add the task to the end:</p>
+<p>We now want add the task to the end when the form is submitted:</p>
 <pre><code class="language-js">function handleSubmit(event) {
   event.preventDefault();
   const taskId = event.currentTarget.taskId.value.trim();
@@ -248,7 +398,201 @@ In this case we simply add the task to the end:</p>
   ]);
 }
 </code></pre>
+<p>This is how the full code looks like:</p>
+<pre><code class="language-jsx">import * as React from &quot;react&quot;;
+
+type Task = {
+  id: string;
+  title: string;
+};
+
+export default function TaskList() {
+  const [tasks, setTasks] = React.useState&lt;Task[]&gt;([]);
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    const taskId = event.currentTarget.taskId.value.trim();
+    const title = event.currentTarget.title.value.trim();
+    setTasks([
+      ...tasks,
+      {
+        id: taskId,
+        title,
+      },
+    ]);
+  }
+
+  return (
+    &lt;&gt;
+      &lt;ul&gt;
+        {tasks.map((item) =&gt; (
+          &lt;li key={item.id}&gt;{item.title}&lt;/li&gt;
+        ))}
+      &lt;/ul&gt;
+      &lt;form onSubmit={handleSubmit}&gt;
+        &lt;label htmlFor=&quot;taskId&quot;&gt;Task ID:&lt;/label&gt;
+        &lt;input type=&quot;text&quot; id=&quot;taskId&quot; /&gt;
+        &lt;label htmlFor=&quot;title&quot;&gt;Title:&lt;/label&gt;
+        &lt;input type=&quot;text&quot; id=&quot;title&quot; /&gt;
+        &lt;br /&gt;
+        &lt;button type=&quot;submit&quot;&gt;Add task&lt;/button&gt;
+      &lt;/form&gt;
+    &lt;/&gt;
+  );
+}
+
+</code></pre>
 <p>Try clicking the button - a new task should appear.</p>
+<h3 id="when-to-use-state"><a class="header" href="#when-to-use-state">When to use State</a></h3>
+<p>There is a common theme regarding state in React - a lot of beginners <em>heavily overuse</em> it.
+This is usually because they misunderstand the purpose of state and what it actually does.</p>
+<p>Before we give specific examples of when to use and when not to use state, we want to reiterate two things we already discussed:</p>
+<p>First, state should only be used if your component needs to remember something.</p>
+<p>Second, state updates are expensive, because a state update will rerender your component.</p>
+<p>The corollary to these two things is that <strong>you should only use state when you absolutely need it</strong>, i.e. <strong>you should keep state to a minimum</strong>.</p>
+<p>First, you should never ever store static data in state.
+For example, this is completely unnecessary:</p>
+<pre><code class="language-jsx">export default function BadTaskList() {
+  const tasks = React.useState([
+    {
+      id: 'TSK-1',
+      title: 'Read the Next.js book',
+    },
+    {
+      id: 'TSK-2',
+      title: 'Write a website',
+    },
+  ]);
+
+  return (
+    &lt;ul&gt;
+      {tasks.map((task) =&gt; (
+        &lt;li key={task.id}&gt;{task.summary}&lt;/li&gt;
+      ))}
+    &lt;/ul&gt;
+  );
+}
+</code></pre>
+<p>Just use a local variable instead:</p>
+<pre><code class="language-jsx">export default function GoodTaskList() {
+  const tasks = [
+    {
+      id: 'TSK-1',
+      title: 'Read the Next.js book',
+    },
+    {
+      id: 'TSK-2',
+      title: 'Write a website',
+    },
+  ];
+
+  return (
+    &lt;ul&gt;
+      {tasks.map((task) =&gt; (
+        &lt;li key={task.id}&gt;{task.summary}&lt;/li&gt;
+      ))}
+    &lt;/ul&gt;
+  );
+}
+</code></pre>
+<blockquote>
+<p>Of course, in this particular example, the <code>tasks</code> variable should really be passed as a prop to the component.
+We just want to show you when to use and when not to use state here.</p>
+</blockquote>
+<p>Second, you should never store data in state that you can derive from other state (or props).
+For example, this is a bad idea:</p>
+<pre><code class="language-jsx">import * as React from 'react';
+
+type Task = {
+  id: string;
+  title: string;
+};
+
+export default function TaskList() {
+  const [tasks, setTasks] = React.useState&lt;Task[]&gt;([]);
+  const [numTasks, setNumTasks] = React.useState(0);
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    const taskId = event.currentTarget.taskId.value.trim();
+    const title = event.currentTarget.title.value.trim();
+    setTasks([
+      ...tasks,
+      {
+        id: taskId,
+        title,
+      },
+    ]);
+    setNumTasks(numTasks + 1);
+  }
+
+  return (
+    &lt;&gt;
+      &lt;ul&gt;
+        {tasks.map((item) =&gt; (
+          &lt;li key={item.id}&gt;{item.title}&lt;/li&gt;
+        ))}
+      &lt;/ul&gt;
+      &lt;p&gt;You have {numTasks} tasks&lt;/p&gt;
+      &lt;form onSubmit={handleSubmit}&gt;
+        &lt;label htmlFor=&quot;taskId&quot;&gt;Task ID:&lt;/label&gt;
+        &lt;input type=&quot;text&quot; id=&quot;taskId&quot; /&gt;
+        &lt;label htmlFor=&quot;title&quot;&gt;Title:&lt;/label&gt;
+        &lt;input type=&quot;text&quot; id=&quot;title&quot; /&gt;
+        &lt;br /&gt;
+        &lt;button type=&quot;submit&quot;&gt;Add task&lt;/button&gt;
+      &lt;/form&gt;
+    &lt;/&gt;
+  );
+}
+</code></pre>
+<p>In this example, you really do need the <code>tasks</code> state (since you need to remember the tasks that have been added so far).
+However, you really don't need the <code>numTasks</code> state, because you can derive it from the value of the <code>tasks</code> state.</p>
+<p>After all, <code>numTasks</code> is simply equal to <code>tasks.length</code>.</p>
+<p>Here is how we can fix the component:</p>
+<pre><code class="language-jsx">import * as React from &quot;react&quot;;
+
+type Task = {
+  id: string;
+  title: string;
+};
+
+export default function TaskList() {
+  const [tasks, setTasks] = React.useState&lt;Task[]&gt;([]);
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    const taskId = event.currentTarget.taskId.value.trim();
+    const title = event.currentTarget.title.value.trim();
+    setTasks([
+      ...tasks,
+      {
+        id: taskId,
+        title,
+      },
+    ]);
+  }
+
+  return (
+    &lt;&gt;
+      &lt;ul&gt;
+        {tasks.map((item) =&gt; (
+          &lt;li key={item.id}&gt;{item.title}&lt;/li&gt;
+        ))}
+      &lt;/ul&gt;
+      &lt;p&gt;You have {tasks.length} tasks&lt;/p&gt;
+      &lt;form onSubmit={handleSubmit}&gt;
+        &lt;label htmlFor=&quot;taskId&quot;&gt;Task ID:&lt;/label&gt;
+        &lt;input type=&quot;text&quot; id=&quot;taskId&quot; /&gt;
+        &lt;label htmlFor=&quot;title&quot;&gt;Title:&lt;/label&gt;
+        &lt;input type=&quot;text&quot; id=&quot;title&quot; /&gt;
+        &lt;br /&gt;
+        &lt;button type=&quot;submit&quot;&gt;Add task&lt;/button&gt;
+      &lt;/form&gt;
+    &lt;/&gt;
+  );
+}
+</code></pre>
 
                     </main>
 
