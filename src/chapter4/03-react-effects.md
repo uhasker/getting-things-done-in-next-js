@@ -263,3 +263,68 @@ Because we only want this to happen on the initial component render, we specify 
 
 Note that we don't have a cleanup function in our effect - normally we would abort the request here.
 However this is out of scope for this introductory book.
+
+### You Rarely Need an Effect
+
+Just like with state, beginners tend to heavily _overuse_ effects.
+
+Remember: **Effects are only needed if you need to synchronize with an external system**.
+You should not need an efefct in any other scenario.
+
+Effects are definitely not needed if you need update some state based on props and other state.
+Something like this is completely unneccessary:
+
+```jsx
+import * as React from 'react';
+
+type Task = {
+  id: string;
+  title: string;
+};
+
+export default function TaskList() {
+  const [tasks, setTasks] = React.useState<Task[]>([]);
+  const [numTasks, setNumTasks] = React.useState(0);
+
+  // This is a really bad idea
+  useEffect(() => {
+    setNumTasks(tasks + 1);
+  }, [tasks])
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    const taskId = event.currentTarget.taskId.value.trim();
+    const title = event.currentTarget.title.value.trim();
+    setTasks([
+      ...tasks,
+      {
+        id: taskId,
+        title,
+      },
+    ]);
+  }
+
+  return (
+    <>
+      <ul>
+        {tasks.map((item) => (
+          <li key={item.id}>{item.title}</li>
+        ))}
+      </ul>
+      <p>You have {numTasks} tasks</p>
+      <form onSubmit={handleSubmit}>
+        <label htmlFor="taskId">Task ID:</label>
+        <input type="text" id="taskId" />
+        <label htmlFor="title">Title:</label>
+        <input type="text" id="title" />
+        <br />
+        <button type="submit">Add task</button>
+      </form>
+    </>
+  );
+}
+```
+
+Instead you should simply calculate the depending value during rendering (like we discussed in the previous section).
+
+Similarly, you don't need effects when you want to reset or adjust some state based on a prop change.
