@@ -20,6 +20,10 @@
 
 - [Networking Fundamentals](chapter2/README.md)
 
+  - [IPs, Ports and Domains](chapter2/01-ips-ports-and-domains.md)
+  - [An HTTP Primer](chapter2/02-an-http-primer.md)
+  - [More on HTTP](chapter2/03-more-on-http.md)
+
 - [Leveling Up with TypeScript](chapter3/README.md)
 
   - [Why TypeScript?](chapter3/01-why-typescript.md)

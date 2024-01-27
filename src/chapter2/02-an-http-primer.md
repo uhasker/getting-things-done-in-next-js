@@ -1,4 +1,4 @@
-## An HTTP primer
+## An HTTP Primer
 
 ### HTTP and Express
 
@@ -9,11 +9,9 @@ Every time you browse the internet, HTTP requests are sent under the hood.
 
 We could use the built-in HTTP module of Node.js, but this is not terribly convenient.
 Instead we will use an extremely popular framework called **Express**.
-While Express builts on top of the HTTP module, it provides a lot of additional useful functionality.
+While Express builds on top of the HTTP module, it provides a lot of additional useful functionality.
 
-Inside our root directory (_easy-opus_ in our case) create a directory named _api_.
-As usual this name can be something else, but it should be descriptive.
-Navigate inside the _api_ directory and create a new Node.js project:
+Create a new Node.js project inside some directory:
 
 ```shell
 npm init -y
@@ -25,16 +23,11 @@ Install Express:
 npm install express
 ```
 
-Now create a file named app.js inside the api directory.
+Now create a file named `app.js` inside the directory.
 As usual the name of the file is up to you, but it should be something meaningful.
-Inside the file we will create an Express application and then make that application listen for connections on a specified host and port.
+In the file we will create an Express application and then make that application listen for connections on a specified host and port.
 
-If you are very new to computer networks, a host is simply a device connected to some (computer) network.
-A port is a communication endpoint on that host.
-The concept of ports allows you to run multiple network applications on the same device.
-For example, your awesome website might run on port 80 and a service allowing you to remotely login onto your machine might run on port 22.
-
-This is how you can create an Express application and make it listen on port 3000:
+This is how you can create an Express application and make it listen on port `3000`:
 
 ```javascript
 const express = require('express');
@@ -55,7 +48,7 @@ app.get('/', (req, res) => {
 });
 ```
 
-If you open a browser and navigate to (http://localhost:3000) you will see
+If you open a browser and navigate to `http://localhost:3000` you will see
 
 ```
 Hello, world!
@@ -79,19 +72,19 @@ Hello, world!
 
 The string `http://localhost:3000/` is a so called URL.
 You have probably seen URLs before.
-Navigate to Google and search for "MERN stack" - you will notice that the URL in your browser looks like this:
+Navigate to Google and search for "Next.js" - you will notice that the URL in your browser looks like this:
 
 ```
-https://www.google.com/search?q=mern+stack
+https://www.google.com/search?q=nextjs
 ```
 
 For didactic reasons we will include the port:
 
 ```
-https://www.google.com:443/search?q=mern+stack
+https://www.google.com:443/search?q=nextjs
 ```
 
-Generally speaking, a typical HTTP URL has the following form:
+Generally speaking, a typical HTTP(s) URL has the following form:
 
 ```
 scheme://host:port/path?key1=value1&key2=value2#fragment
@@ -104,11 +97,11 @@ scheme://host:port/path?key1=value1&key2=value2#fragment
 
 The **scheme** usually indicates the protocol which describes how information should be transmitted.
 We will almost exclusively use HTTP or HTTPS (which is just secure HTTP) in this book.
-Therefore the scheme will almost always either be http or https.
-In the above Google URL the scheme is clearly https.
+Therefore the scheme will almost always either be `http` or `https`.
+In the above Google URL the scheme is clearly `https`.
 
 You already learned about the **host** and the **port** - the host identifies the device you wish to connect to and the port is the communication endpoint on that device.
-Note that the host could be a domain name (like www.google.com) or an IP address (like 142.251.36.238).
+Note that the host could be a domain name (like `www.google.com`) or an IP address (like `142.251.36.238`).
 Usually we will work with domain names since they are stable (unlike a lot of IP addresses).
 Together the host and the port make up the **authority**.
 
@@ -145,13 +138,15 @@ app.get('/', (req, res) => {
 });
 ```
 
-This indicates that if a GET request is sent to path '/', we would like to return 'Hello, world!' to the client.
-The `req` is the **request object** and `res` is the **respose object**.
+This indicates that if a GET request is sent to the path '/', we would like to return 'Hello, world!' to the client.
+The `req` variable represents the **request object** and `res` represents the **respose object**.
 If we want to send a HTTP response to the client we therefore use `res.send`.
 
-POST requests are generally used to send information to the server.
+POST requests are generally used to send information to the server that tell it to update some information.
 For example a login request will generally be a POST request since it tells the server that a user has logged in to the application.
-Here we are less interested in the data the server returns us and more in telling the server that something happened.
+Similary, if you submit a web form, there will usually be a POST request attached to that, since form submissions carry new information.
+
+With POST requests we are less interested in the data the server returns us and more in telling the server that something happened.
 
 Note that we need to enable some middleware (we will return to the concept of middleware in a second):
 
@@ -169,7 +164,7 @@ app.post('/post-example', (req, res) => {
 
 How do we test this?
 You cannot simply send a POST request in a browser the way you would send a GET request.
-This is where curl comes in really handy.
+This is where `curl` comes in really handy.
 We need to specify that we want to send a POST request using the `-X` flag.
 In addition we specify the data that we want to send in the _body_ of the POST request using the `-d` flag.
 Finally we specify a header called `Content-Type` and set it to `text/plain`.
