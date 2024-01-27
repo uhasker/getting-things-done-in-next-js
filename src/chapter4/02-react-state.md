@@ -9,10 +9,10 @@ In the previous section we learned how to render components.
 However, these components are completely "static" right now.
 But in reality, you often need to have "dynamic" components that change based on some action.
 
-For example, clicking a button might need to update a counter and typing intp a form might need to update the input field.
-This means that components need to be able to "remember" things (like the current counter or the input field value).
+For example, clicking a button might update a counter and typing into a form might update the input field.
+This means that components need to be able to "remember" things (like the current counter or the current input field value).
 
-State serves as sort of memory for your component to achieve exactly that.
+To "remember" something, you can use state, which serves as a sort of memory for your component.
 
 ### A Simple Example
 
@@ -40,11 +40,11 @@ export default function Counter() {
 }
 ```
 
-Try clicking the "Increment" button - it will increment the counter by 1 each time you click it.
+Try clicking the "Increment" button - it will increment the count by 1 each time you click it.
 
-This example is simple, but it clearly shows how to use state in React.
+This example is simple, but it still shows exactly how to use state in React.
 
-State is provided by the `useState` hook (a hook is basically just a function with some special properties).
+State is provided by the `useState` hook (a hook is basically just a special function).
 
 This hook returns an array with two elements - a **state variable** and a **state setter function**.
 The state variable (`count` in this case) will be the value that you want to remember.
@@ -76,7 +76,7 @@ _Why not just use a regular variable?_
 After all, this is how we always remembered values before.
 We simply assigned them to variables.
 
-Let's look at the following bad example:
+Let's have a look at why this doesn't work with React:
 
 ```jsx
 export default function Counter() {
@@ -100,7 +100,7 @@ export default function Counter() {
 Try clicking the button know - nothing will happen.
 But why?
 
-The problem lies in the fact that, while we update the local variable, React doesn't actually rerender the component to show the change.
+The problem lies in the fact that, while we do update the local variable, React doesn't actually rerender the component to show the change.
 You can verify this by adding a few `console.logs`:
 
 ```jsx
@@ -135,7 +135,7 @@ New value of count is 3
 ```
 
 So the local variable is indeed updated - but this doesn't rerender the component.
-We begin to see the purpose of the `useState` hook - to define a state whose updates will trigger a rerender.
+We begin to see the purpose of the `useState` hook - to define a state whose _updates will trigger a rerender_.
 
 This explanation should have immediately raised another question.
 What happens if we skip the state setter function and just set the state variable directly?
@@ -171,7 +171,7 @@ New value of count is 2
 New value of count is 3
 ```
 
-Therefore you can't use local variables and you can't update the state variables directly.
+Therefore if you need to update the UI of your component, you can't use local variables and you can't update the state variables directly.
 You need to use the state setter function to not only update the state variable, but also to rerender the component.
 
 Let's verify that using the state setter function does what we expect:
@@ -198,7 +198,7 @@ export default function Counter() {
 }
 ```
 
-We will now see that the component rerender if we click the "Increment" button:
+We will now see that the component rerenders if we click the "Increment" button:
 
 ```
 Rendered counter component with count=0
@@ -346,7 +346,7 @@ Try clicking the button - a new task should appear.
 
 ### When to use State
 
-There is a common theme regaring state in React - a lot of beginners _heavily overuse_ it.
+There is a common theme regarding state in React - a lot of beginners _heavily overuse_ it.
 This is usually because they misunderstand the purpose of state and what it actually does.
 
 Before we give specific examples of when to use and when not to use state, we want to reiterate two things we already discussed:
@@ -409,13 +409,13 @@ export default function GoodTaskList() {
 ```
 
 > Of course, in this particular example, the `tasks` variable should really be passed as a prop to the component.
-> We just want to show you when to use and when not use state here.
+> We just want to show you when to use and when not to use state here.
 
 Second, you should never store data in state that you can derive from other state (or props).
 For example, this is a bad idea:
 
 ```jsx
-import * as React from "react";
+import * as React from 'react';
 
 type Task = {
   id: string;
