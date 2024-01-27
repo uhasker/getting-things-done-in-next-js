@@ -13,6 +13,7 @@ Do note that the book is currently still very much **work in progress**.
 Chapters on the following topics are currently planned:
 
 - [x] JavaScript
+- [x] Networking Fundamentals
 - [x] TypeScript
 - [x] HTML
 - [x] React

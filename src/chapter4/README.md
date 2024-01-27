@@ -1,9 +1,13 @@
-# Chapter 4: Adding Spice with React
+# Chapter 4: A Vanilla Client
 
-<div style="text-align: right"> <i> This website needs to work on Internet Explorer 6.0 <br> - Famous last words </i> </div>
+<div style="text-align: right"> <i> Whenever you write a web app in vanilla JavaScript, you end up creating your own framework. <br> And who in their right mind wants another JavaScript framework? <br> - Common programmer idiom </i> </div>
 
-In this chapter we will create a simple (website) client using React. This client will allow us to add and delete tasks. Each task will have a summary and a description.
+In this chapter we will write a client a in _vanilla_ HTML and JavaScript (i.e. without using any frameworks).
+Then we will realize why this is not such a great idea and why we might want to consider using a library (spoiler: it's going to be React) to help us out.
 
-Create a directory which will contain your project or just keep working with the _easy-opus_ directory from the previous chapter (however you should delete it's contents). Of course, feel free to give your directory any _meaningful_ name.
+If this sounds like a pointless exercise - it's not.
+You need to know the basics of HTML anyway (even if you will use React for everything later).
+Additionally, web development shouldn't consists of stapling a bunch of magic together and praying that it works.
+In order to accomplish this, you will need a solid foundation to build on.
 
-Let's begin.
+This chapter presents that solid foundation.
