@@ -24,7 +24,7 @@ app.post('/', (req, res) => {
 
 ### Headers
 
-Both requests and response can have **headers** which provide important information that is not part of the main request or response content.
+Both requests and responses can have **headers** which provide important information that is not part of the main request or response content.
 For example, request headers might contain the version of the browser that is making the request, what languages are accepted, what encodings are accepted etc.
 
 Similarly, response headers might contain the type of the content, the date of the response etc.
@@ -46,6 +46,7 @@ app.post('/', (req, res) => {
 
 HTTP **cookies** are data that is created by the server, sent to the browser and then saved on the browser.
 Cookies can be used for things like authentication.
+
 For example, the server might generate a cookie for a logged in user, send it to the browser and then the browser could send the cookie with each request (avoiding the need for the user to logged in on every request).
 
 Note that cookies are simply set as part of the headers.
