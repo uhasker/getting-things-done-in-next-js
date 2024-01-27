@@ -1,4 +1,4 @@
-# Chapter 2: Leveling Up with TypeScript
+# Chapter 3: Leveling Up with TypeScript
 
 <div style="text-align: right"> <i> To employ TypeScript is to light a lantern on the dim path of JavaScript, revealing the stones upon which one may trip. <br> - Ancient Chinese proverb </i> </div>
 

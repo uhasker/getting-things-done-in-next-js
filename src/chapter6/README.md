@@ -1,4 +1,4 @@
-# Chapter 5: Moving to the Server with Next.js
+# Chapter 6: Moving to the Server with Next.js
 
 Now that you have a rough overview of React, we want to move to the server.
 Next.js is a React-based framework for building full-stack applications.

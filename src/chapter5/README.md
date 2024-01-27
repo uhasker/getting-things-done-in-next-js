@@ -1,4 +1,4 @@
-# Chapter 4: Adding Spice with React
+# Chapter 5: Adding Spice with React
 
 <div style="text-align: right"> <i> This website needs to work on Internet Explorer 6.0 <br> - Famous last words </i> </div>
 
