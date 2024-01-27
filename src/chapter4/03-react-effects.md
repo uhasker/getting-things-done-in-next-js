@@ -4,10 +4,11 @@
 
 ### Why Effects?
 
-**Effects** are useful, if you want to synchronize React with some _external system_ (like a server).
+**Effects** are useful if you want to synchronize React with some _external system_ (like a server).
 
 Consider a component which, upon rendering, needs to fetch a task title and display it to the user.
-While your first instinct might be to use an event handler together with state, this is not possible - after all there is no real user event here.
+While your first instinct might be to use an event handler together with state, this is not possible.
+After all, there is no real user event here.
 Instead we need to execute something _because the component is rendering_.
 
 This is where effects come in handy.
@@ -15,7 +16,7 @@ This is where effects come in handy.
 ### The `useEffect` Hook
 
 Here is the simplest possible example for a `useEffect` hook.
-This hook takes a function which is executed when the component is first rendered or re-rendered:
+This hook takes a function which is executed when the component is first rendered or rerendered:
 
 ```jsx
 import * as React from 'react';
@@ -29,7 +30,7 @@ export default function ExampleComponent() {
 }
 ```
 
-If you open this component, here is what you will see in the console:
+If you display this component on a page, here is what you will see in the console:
 
 ```
 Effect runs
@@ -62,13 +63,13 @@ export default function ExampleCounter() {
 }
 ```
 
-Open this component again and you will see the following log:
+Open the page containing the component again and you will see the following log:
 
 ```
 Effect runs (currently count=0)
 ```
 
-Now click the button a few times - you will that on each rerender the effects is executed:
+Now click the button a few times - you will see that on each rerender the effect is executed:
 
 ```
 Effect runs (currently count=1)
@@ -77,7 +78,7 @@ Effect runs (currently count=3)
 Effect runs (currently count=4)
 ```
 
-Additionally we can return a cleanup function, which will run when the component is destroyed.
+Additionally we can return a cleanup function, which will run when the component is destroyed (_unmounted_).
 Consider this example:
 
 ```jsx
@@ -107,7 +108,7 @@ For example, if you've connected to an external system, here is were you would d
 
 ### The Dependency Array
 
-The `useHook` effect also takes a second argument - a **dependency array**.
+The `useEffect` hook also takes a second argument - a **dependency array**.
 This allows you to specify that the effect should run only if a particular value changes.
 
 Consider this (slightly constructed) example:
@@ -139,7 +140,7 @@ As usual, the effect runs on the initial render:
 Current counts: firstCount=0, secondCount=0
 ```
 
-If you click the "Increment first count" button, you will see that the effect runs:
+If you click the "Increment first count" button, you will see that the effect runs again:
 
 ```
 Current counts: firstCount=1, secondCount=0
@@ -150,7 +151,7 @@ Current counts: firstCount=4, secondCount=0
 
 However, if you click the "Increment second count" button, you will see that the effect doesn't run (and nothing is logged to the console).
 
-This is because, `firstCount` is in the dependency array, but `secondCount` isn't.
+This is because `firstCount` is in the dependency array, but `secondCount` isn't.
 Therefore, an update to `firstCount` (via the `setFirstCount` setter function) will trigger the effect.
 But an update to `secondCount` (via the `setSecondCount` setter function) won't.
 
@@ -194,9 +195,9 @@ The effect will run on the initial render:
 Current counts: firstCount=0, secondCount=0
 ```
 
-But it will never run again, no matter how often you click the buttons.
+But it won't run again, no matter how often you click the buttons.
 
-Here is a bonus tip from us: **You should always explicitly specify the dependency array**.
+Here is a bonus tip regarding effects: **You should always explicitly specify the dependency array**.
 
 Remember, if you don't specify the dependency array, the effect will rerun on every render, which is rarely the desired behaviour.
 In fact this can result in catastrophic behaviour, like in the following example:
@@ -224,7 +225,10 @@ This is because, the effect calls `useState`, which will trigger a rerender, whi
 React is actually smart enough to realize the problem and will log the following warning to the console:
 
 ```
-Maximum update depth exceeded. This can happen when a component calls setState inside useEffect, but useEffect either doesn't have a dependency array, or one of the dependencies changes on every render.
+Maximum update depth exceeded.
+This can happen when a component calls setState inside useEffect,
+but useEffect either doesn't have a dependency array,
+or one of the dependencies changes on every render.
 ```
 
 ### Using `fetch` and `useEffect` Together
@@ -269,7 +273,7 @@ However this is out of scope for this introductory book.
 Just like with state, beginners tend to heavily _overuse_ effects.
 
 Remember: **Effects are only needed if you need to synchronize with an external system**.
-You should not need an efefct in any other scenario.
+You should not need an effect in any other scenario.
 
 Effects are definitely not needed if you need update some state based on props and other state.
 Something like this is completely unneccessary:
@@ -328,3 +332,7 @@ export default function TaskList() {
 Instead you should simply calculate the depending value during rendering (like we discussed in the previous section).
 
 Similarly, you don't need effects when you want to reset or adjust some state based on a prop change.
+
+> In fact, these days some guidelines recommend to not use an effect even for fetching data.
+> This is because if you fetch data inside an effect in more complex scenarios, you need to think about cleanup functions, race conditions etc.
+> This why most frameworks that build on top of React (like Next.js) usually provide better data fetching mechanisms than fetching data in effects.
