@@ -1418,6 +1418,22 @@ file.js:12
 
 ReferenceError: inBlockScope is not defined
 </code></pre>
+<h3 id="jsdoc"><a class="header" href="#jsdoc">JSDoc</a></h3>
+<p>JSDoc is a markup language that can be used to annotate JavaScript code.
+The most important use is to annotate functions.</p>
+<p>For example, here is how you could annotate a function using JSDoc:</p>
+<pre><code class="language-js">/**
+ * Calculates the sum of two numbers.
+ *
+ * @param {number} a - The first number.
+ * @param {number} b - The second number.
+ * @returns {number} The sum of a and b.
+ */
+function sum(a, b) {
+  return a + b;
+}
+</code></pre>
+<p>This is quite useful if you have complex functions with lots of parameters, because it allows other developers to quickly understand the purpose of your function.</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="error-handling"><a class="header" href="#error-handling">Error Handling</a></h2>
 <div style="text-align: right"> <i> A wise coder once said, 'An error ignored is like an ancestor forgotten – it will return with a vengeance.' <br> — Ancient Chinese proverb </i> </div>
 <h3 id="the-throw-statement"><a class="header" href="#the-throw-statement">The <code>throw</code> Statement</a></h3>
@@ -1673,6 +1689,30 @@ values.delete(3);
 values.add(2);
 console.log(values); // Set(3) { 1, 2, 3 }
 </code></pre>
+<h3 id="json"><a class="header" href="#json">JSON</a></h3>
+<p>JSON is a data format for data exchange (e.g. on a network) and can basically store arbitrary JavaScript objects.</p>
+<p>You can convert a JavaScript value to a JSON string using <code>JSON.stringify</code>:</p>
+<pre><code class="language-js">const result1 = JSON.stringify({ x: 1 });
+console.log(typeof result1); // 'string'
+console.log(result1); // {&quot;x&quot;:1}
+
+const result2 = JSON.stringify([1, 2, 3]);
+console.log(typeof result2); // 'string'
+console.log(result2); // [1,2,3]
+</code></pre>
+<p>Note that <code>JSON.stringify</code> has some unintuitive behaviours.
+For example, running <code>JSON.stringify</code> on a map will always return <code>{}</code>:</p>
+<pre><code class="language-js">console.log(JSON.stringify(new Map([[1, 2]]))); // {}
+</code></pre>
+<p>The reverse operation to <code>JSON.stringify</code> is <code>JSON.parse</code> which takes a JSON string and constructs a JavaScript value from it:</p>
+<pre><code class="language-js">const obj = JSON.parse('{&quot;x&quot;: 1}');
+console.log(typeof obj); // 'object'
+console.log(obj); // { x: 1 }
+
+const arr = JSON.parse('[1, 2, 3]');
+console.log(typeof arr); // 'object'
+console.log(arr); // [ 1, 2, 3 ]
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="functional-thinking"><a class="header" href="#functional-thinking">Functional Thinking</a></h2>
 <div style="text-align: right"> <i> Gold can't be pure, but functions can. <br> — Ancient Chinese proverb </i> </div>
 <h3 id="pure-functions"><a class="header" href="#pure-functions">Pure Functions</a></h3>
@@ -1900,6 +1940,7 @@ This would look like this:</p>
 <blockquote>
 <p>We recommend that you try to reason through this <code>reduce</code> for a deeper understanding of this topic.</p>
 </blockquote>
+<p>Note that unlike <code>map</code> and <code>filter</code>, you should use <code>reduce</code> sparingly as it's very easy to write convoluted code with <code>reduce</code>.</p>
 <h3 id="more-higher-order-functions"><a class="header" href="#more-higher-order-functions">More Higher-Order Functions</a></h3>
 <p>While <code>map</code>, <code>filter</code> and <code>reduce</code> are the best known higher-order functions, JavaScript defines many more.
 It is worthwhile to get to know them since they will make a lot of tasks easier.</p>
@@ -2081,7 +2122,6 @@ With asynchronous code this is no longer the case - here we &quot;register&quot;
 <h3 id="chaining-promises"><a class="header" href="#chaining-promises">Chaining Promises</a></h3>
 <p>The <code>response</code> object is not terribly useful by itself.
 Let's retrieve the &quot;actual&quot; response which is a JSON object.
-JSON is a data format for data exchange (e.g. on a network) and can basically store arbitrary JavaScript objects.
 Here is how the JSON we get from <code>https://jsonplaceholder.typicode.com/todos/1</code> looks like:</p>
 <pre><code class="language-json">{
   &quot;userId&quot;: 1,
@@ -2205,6 +2245,11 @@ fetchTask(url).then((json) =&gt; console.log(json));
 </code></pre>
 <p>Note that for some runtimes you can only use <code>await</code> inside an <code>async</code> function.
 This is why we use <code>then</code> with <code>fetchTask</code> instead of <code>await</code>ing the promise returned by <code>fetchTask</code>.</p>
+<h2 id="the-void-operator"><a class="header" href="#the-void-operator">The <code>void</code> Operator</a></h2>
+<p>The <code>void</code> operator evaluates an expression and returns <code>undefined</code>.
+This can used with promises if you simply want to start an asynchronous operation, but you don't care about the result, for example:</p>
+<pre><code class="language-js">void fetchTask(url);
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="modules"><a class="header" href="#modules">Modules</a></h2>
 <div style="text-align: right"> <i> A wise coder knows that exporting too much is like opening all doors of the house; both invite unexpected guests. <br> — Ancient Chinese proverb </i> </div>
 <h3 id="module-system"><a class="header" href="#module-system">Module System</a></h3>

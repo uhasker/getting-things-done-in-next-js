@@ -303,7 +303,6 @@ With asynchronous code this is no longer the case - here we &quot;register&quot;
 <h3 id="chaining-promises"><a class="header" href="#chaining-promises">Chaining Promises</a></h3>
 <p>The <code>response</code> object is not terribly useful by itself.
 Let's retrieve the &quot;actual&quot; response which is a JSON object.
-JSON is a data format for data exchange (e.g. on a network) and can basically store arbitrary JavaScript objects.
 Here is how the JSON we get from <code>https://jsonplaceholder.typicode.com/todos/1</code> looks like:</p>
 <pre><code class="language-json">{
   &quot;userId&quot;: 1,
@@ -427,6 +426,11 @@ fetchTask(url).then((json) =&gt; console.log(json));
 </code></pre>
 <p>Note that for some runtimes you can only use <code>await</code> inside an <code>async</code> function.
 This is why we use <code>then</code> with <code>fetchTask</code> instead of <code>await</code>ing the promise returned by <code>fetchTask</code>.</p>
+<h2 id="the-void-operator"><a class="header" href="#the-void-operator">The <code>void</code> Operator</a></h2>
+<p>The <code>void</code> operator evaluates an expression and returns <code>undefined</code>.
+This can used with promises if you simply want to start an asynchronous operation, but you don't care about the result, for example:</p>
+<pre><code class="language-js">void fetchTask(url);
+</code></pre>
 
                     </main>
 

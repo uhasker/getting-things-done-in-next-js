@@ -371,6 +371,30 @@ values.delete(3);
 values.add(2);
 console.log(values); // Set(3) { 1, 2, 3 }
 </code></pre>
+<h3 id="json"><a class="header" href="#json">JSON</a></h3>
+<p>JSON is a data format for data exchange (e.g. on a network) and can basically store arbitrary JavaScript objects.</p>
+<p>You can convert a JavaScript value to a JSON string using <code>JSON.stringify</code>:</p>
+<pre><code class="language-js">const result1 = JSON.stringify({ x: 1 });
+console.log(typeof result1); // 'string'
+console.log(result1); // {&quot;x&quot;:1}
+
+const result2 = JSON.stringify([1, 2, 3]);
+console.log(typeof result2); // 'string'
+console.log(result2); // [1,2,3]
+</code></pre>
+<p>Note that <code>JSON.stringify</code> has some unintuitive behaviours.
+For example, running <code>JSON.stringify</code> on a map will always return <code>{}</code>:</p>
+<pre><code class="language-js">console.log(JSON.stringify(new Map([[1, 2]]))); // {}
+</code></pre>
+<p>The reverse operation to <code>JSON.stringify</code> is <code>JSON.parse</code> which takes a JSON string and constructs a JavaScript value from it:</p>
+<pre><code class="language-js">const obj = JSON.parse('{&quot;x&quot;: 1}');
+console.log(typeof obj); // 'object'
+console.log(obj); // { x: 1 }
+
+const arr = JSON.parse('[1, 2, 3]');
+console.log(typeof arr); // 'object'
+console.log(arr); // [ 1, 2, 3 ]
+</code></pre>
 
                     </main>
 
