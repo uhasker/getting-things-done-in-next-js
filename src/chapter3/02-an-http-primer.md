@@ -146,7 +146,7 @@ POST requests are generally used to send information to the server that tell it 
 For example a login request will generally be a POST request since it tells the server that a user has logged in to the application.
 Similarly, if you submit a web form, there will usually be a POST request attached to that, since form submissions carry new information.
 
-With POST requests we are less interested in the data the server returns us and more in telling the server that something happened.
+With POST requests, we are more interested in telling the server that something happened than in the data the server returns to us.
 
 Note that we need to enable some middleware (we will return to the concept of middleware in a second):
 
