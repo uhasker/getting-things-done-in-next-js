@@ -294,3 +294,38 @@ const values = new Set([1, 2, 3]);
 values.add(2);
 console.log(values); // Set(3) { 1, 2, 3 }
 ```
+
+### JSON
+
+JSON is a data format for data exchange (e.g. on a network) and can basically store arbitrary JavaScript objects.
+
+You can convert a JavaScript value to a JSON string using `JSON.stringify`:
+
+```js
+const result1 = JSON.stringify({ x: 1 });
+console.log(typeof result1); // 'string'
+console.log(result1); // {"x":1}
+
+const result2 = JSON.stringify([1, 2, 3]);
+console.log(typeof result2); // 'string'
+console.log(result2); // [1,2,3]
+```
+
+Note that `JSON.stringify` has some unintuitive behaviours.
+For example, running `JSON.stringify` on a map will always return `{}`:
+
+```js
+console.log(JSON.stringify(new Map([[1, 2]]))); // {}
+```
+
+The reverse operation to `JSON.stringify` is `JSON.parse` which takes a JSON string and constructs a JavaScript value from it:
+
+```js
+const obj = JSON.parse('{"x": 1}');
+console.log(typeof obj); // 'object'
+console.log(obj); // { x: 1 }
+
+const arr = JSON.parse('[1, 2, 3]');
+console.log(typeof arr); // 'object'
+console.log(arr); // [ 1, 2, 3 ]
+```

@@ -175,7 +175,6 @@ With asynchronous code this is no longer the case - here we "register" a functio
 
 The `response` object is not terribly useful by itself.
 Let's retrieve the "actual" response which is a JSON object.
-JSON is a data format for data exchange (e.g. on a network) and can basically store arbitrary JavaScript objects.
 Here is how the JSON we get from `https://jsonplaceholder.typicode.com/todos/1` looks like:
 
 ```json
@@ -330,3 +329,12 @@ fetchTask(url).then((json) => console.log(json));
 
 Note that for some runtimes you can only use `await` inside an `async` function.
 This is why we use `then` with `fetchTask` instead of `await`ing the promise returned by `fetchTask`.
+
+## The `void` Operator
+
+The `void` operator evaluates an expression and returns `undefined`.
+This can used with promises if you simply want to start an asynchronous operation, but you don't care about the result, for example:
+
+```js
+void fetchTask(url);
+```
