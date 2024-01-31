@@ -116,7 +116,7 @@ In this case the different components of the hierarchy are generally separated b
 
 The path can be followed by a **query**.
 The query begins with a question mark and is followed by key-value pairs.
-In the Google URL this is "?q=mern+stack".
+In the Google URL this is "?q=nextjs".
 Here the query provides information about your search.
 If there are multiple key-value pairs, they are separated by ampersands ("&").
 For example the query could be "?key1=value1&key2=value2".
