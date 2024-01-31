@@ -18,20 +18,20 @@
   - [Modules](chapter1/10-modules.md)
   - [Writing Decent Code](chapter1/11-writing-decent-code.md)
 
-- [Networking Fundamentals](chapter2/README.md)
+- [Leveling Up with TypeScript](chapter2/README.md)
 
-  - [IPs, Ports and Domains](chapter2/01-ips-ports-and-domains.md)
-  - [An HTTP Primer](chapter2/02-an-http-primer.md)
-  - [More on HTTP](chapter2/03-more-on-http.md)
+  - [Why TypeScript?](chapter2/01-why-typescript.md)
+  - [Basic Types](chapter2/02-basic-types.md)
+  - [Annotating Functions](chapter2/03-annotating-functions.md)
+  - [Union Types](chapter2/04-union-types.md)
+  - [Generics](chapter2/05-generics.md)
+  - [Configuring TypeScript](chapter2/06-configuring-typescript.md)
 
-- [Leveling Up with TypeScript](chapter3/README.md)
+- [Networking Fundamentals](chapter3/README.md)
 
-  - [Why TypeScript?](chapter3/01-why-typescript.md)
-  - [Basic Types](chapter3/02-basic-types.md)
-  - [Annotating Functions](chapter3/03-annotating-functions.md)
-  - [Union Types](chapter3/04-union-types.md)
-  - [Generics](chapter3/05-generics.md)
-  - [Configuring TypeScript](chapter3/06-configuring-typescript.md)
+  - [IPs, Ports and Domains](chapter3/01-ips-ports-and-domains.md)
+  - [An HTTP Primer](chapter3/02-an-http-primer.md)
+  - [More on HTTP](chapter3/03-more-on-http.md)
 
 - [A Vanilla Client](chapter4/README.md)
 
