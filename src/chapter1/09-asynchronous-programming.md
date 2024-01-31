@@ -175,7 +175,6 @@ With asynchronous code this is no longer the case - here we "register" a functio
 
 The `response` object is not terribly useful by itself.
 Let's retrieve the "actual" response which is a JSON object.
-JSON is a data format for data exchange (e.g. on a network) and can basically store arbitrary JavaScript objects.
 Here is how the JSON we get from `https://jsonplaceholder.typicode.com/todos/1` looks like:
 
 ```json
