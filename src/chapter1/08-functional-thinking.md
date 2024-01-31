@@ -311,6 +311,8 @@ const totalTime = tasks.reduce((curr, task) => task.timeLogged + curr, 0);
 
 > We recommend that you try to reason through this `reduce` for a deeper understanding of this topic.
 
+Note that unlike `map` and `filter`, you should use `reduce` sparingly as it's very easy to write convoluted code with `reduce`.
+
 ### More Higher-Order Functions
 
 While `map`, `filter` and `reduce` are the best known higher-order functions, JavaScript defines many more.

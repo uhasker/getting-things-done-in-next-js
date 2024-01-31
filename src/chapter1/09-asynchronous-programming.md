@@ -329,3 +329,12 @@ fetchTask(url).then((json) => console.log(json));
 
 Note that for some runtimes you can only use `await` inside an `async` function.
 This is why we use `then` with `fetchTask` instead of `await`ing the promise returned by `fetchTask`.
+
+## The `void` Operator
+
+The `void` operator evaluates an expression and returns `undefined`.
+This can used with promises if you simply want to start an asynchronous operation, but you don't care about the result, for example:
+
+```js
+void fetchTask(url);
+```
