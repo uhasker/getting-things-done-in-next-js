@@ -97,7 +97,7 @@ scheme://host:port/path?key1=value1&key2=value2#fragment
 
 The **scheme** usually indicates the protocol which describes how information should be transmitted.
 We will almost exclusively use HTTP or HTTPS (which is just secure HTTP) in this book.
-Therefore the scheme will almost always either be `http` or `https`.
+Therefore the scheme will almost always be either `http` or `https`.
 In the above Google URL the scheme is clearly `https`.
 
 You already learned about the **host** and the **port** - the host identifies the device you wish to connect to and the port is the communication endpoint on that device.
