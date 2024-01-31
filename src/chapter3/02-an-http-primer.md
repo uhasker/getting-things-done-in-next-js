@@ -144,7 +144,7 @@ If we want to send a HTTP response to the client we therefore use `res.send`.
 
 POST requests are generally used to send information to the server that tell it to update some information.
 For example a login request will generally be a POST request since it tells the server that a user has logged in to the application.
-Similary, if you submit a web form, there will usually be a POST request attached to that, since form submissions carry new information.
+Similarly, if you submit a web form, there will usually be a POST request attached to that, since form submissions carry new information.
 
 With POST requests we are less interested in the data the server returns us and more in telling the server that something happened.
 
