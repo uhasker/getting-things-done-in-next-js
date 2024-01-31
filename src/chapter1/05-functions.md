@@ -350,3 +350,25 @@ file.js:12
 
 ReferenceError: inBlockScope is not defined
 ```
+
+### JSDoc
+
+JSDoc is a markup language that can be used to annotate JavaScript code.
+The most important use is to annotate functions.
+
+For example, here is how you could annotate a function using JSDoc:
+
+```js
+/**
+ * Calculates the sum of two numbers.
+ *
+ * @param {number} a - The first number.
+ * @param {number} b - The second number.
+ * @returns {number} The sum of a and b.
+ */
+function sum(a, b) {
+  return a + b;
+}
+```
+
+This is quite useful if you have complex functions with lots of parameters, because it allows other developers to quickly understand the purpose of your function.
