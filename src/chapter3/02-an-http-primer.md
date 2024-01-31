@@ -181,7 +181,7 @@ Generally speaking GET requests transmit information using the querystring, whil
 Note that we will rarely send plain text in the request.
 Instead we will use a special format called JSON.
 This is a file format that supports a bunch of primitive values, arrays and dictionaries.
-A typical JSON could look like this:
+A typical JSON object could look like this:
 
 ```json
 {
