@@ -8,8 +8,8 @@ For example, your wireless network interface might have an IP address that it ca
 Such an address consists of 4 numbers between 0 and 255, separated by dots.
 Examples addresses might be `123.56.1.17` or `192.168.178.47`.
 
-A particularly important address is `127.0.0.1` which always identifies the IP of the network interface itself.
-For example, if you run a web server on your computer, its IP address would usually be `127.0.0.1`.
+A particularly important IP address is `127.0.0.1` which can be used to identify the machine you're currently on.
+For example, if you run a web server on your computer, you could access it at `127.0.0.1`.
 
 Note that instead of saying that a network interface has a particular IP, we will often say that a computer has some IP.
 This is because often we only really care about a particular interface (usually your wireless interface).
@@ -23,7 +23,7 @@ This is enabled by ports.
 A **port** is simply a number assigned to uniquely identify a connection endpoint on a machine.
 For example, I might have a web service running on port `443` and an ssh service on port `22`.
 
-> The `ssh` protocol allows you to remotely login on a computer.
+> The `ssh` protocol allows you to remotely log in to a computer and execute commands on it.
 
 These two services might run on the same computer with the same IP, because they can be distinguished by their port numbers.
 
@@ -37,6 +37,9 @@ A domain (or _domain name_) is a string that identifies some network resource an
 
 For example, the domain `google.com` might correspond to the IP address `142.251.37.14`.
 That is, you can identify the resource either via `google.com` or via `142.251.37.14`.
+
+The translation of domains to IP adresses is handled by the **Domain Name System** (DNS) protocol.
+If you type `google.com` into your browser address bar, DNS will translate it to the correct IP under the hood.
 
 > The reality is much more complicated.
 > A single domain usually corresponds to many IP addresses for load balancing reasons etc.

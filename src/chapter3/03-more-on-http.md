@@ -44,10 +44,10 @@ app.post('/', (req, res) => {
 
 ### Cookies
 
-HTTP **cookies** are data that is created by the server, sent to the browser and then saved on the browser.
+HTTP **cookies** are pieces of data that are created by the server, sent to the browser and then saved on the browser.
 Cookies can be used for things like authentication.
 
-For example, the server might generate a cookie for a logged in user, send it to the browser and then the browser could send the cookie with each request (avoiding the need for the user to logged in on every request).
+For example, the server might generate a cookie for a logged in user, send it to the browser and then the browser could send the cookie with each request (avoiding the need for the user to log in on every request).
 
 Note that cookies are simply set as part of the headers.
 For example, a request might contain a "Cookie" header containing the cookies it has currently stored.
