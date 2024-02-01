@@ -212,7 +212,7 @@ Here is what happens:
 The component renders for the first time.
 Because the initial value of `count` is set to `0`, it will render with `count` being equal to `0`.
 
-You click the button and `setCount` is called with `count + 1` (which will be `0+1`, i.e. `1`).
+You click the button and `setCount` is called with `count + 1` (which will be `0 + 1`, i.e. `1`).
 React rerenders the component while remembering that the new `count` should be `1`.
 
 The component renders for the second time.
