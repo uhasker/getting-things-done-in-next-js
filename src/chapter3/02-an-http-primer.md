@@ -1,11 +1,24 @@
 ## An HTTP Primer
 
-### HTTP and Express
+### Servers and Clients
 
-When writing a web application, the most common way to get data from a server to a client is via the HTTP procotol (usually augmented by SSL resulting in the HTTPS procotol).
+**Servers** and **clients** are nothing more than regular programs (like the ones you saw in the first chapter).
+For example, a server might be a JavaScript program that waits for HTTP requests and sends back responses.
+A client might be a browser on your laptop or your phone - it might even a regular script.
+
+> Often, the term "server" is also used to refer to the actual machine the software is running on.
+
+When writing a web application, the most common way to get data from a server to a client and vice versa is by using the HTTP procotol.
 HTTP is a **request/response protocol**, i.e. HTTP clients send requests to an HTTP server and receive a response in return.
+
 You have in fact already used the HTTP protocol.
 Every time you browse the internet, HTTP requests are sent under the hood.
+
+Although nowadays developers rarely use plain HTTP in production.
+Instead, they use HTTPS, which is encrypted HTTP.
+However, we won't cover HTTPS in detail, since that will automatically be handled for us by our deployment process.
+
+### HTTP and Express
 
 We could use the built-in HTTP module of Node.js, but this is not terribly convenient.
 Instead we will use an extremely popular framework called **Express**.
@@ -14,13 +27,13 @@ While Express builds on top of the HTTP module, it provides a lot of additional 
 Create a new Node.js project inside some directory:
 
 ```shell
-npm init -y
+pnpm init
 ```
 
 Install Express:
 
 ```shell
-npm install express
+pnpm add express
 ```
 
 Now create a file named `app.js` inside the directory.
@@ -46,6 +59,12 @@ Add this above the call to `listen`:
 app.get('/', (req, res) => {
   res.send('Hello, world!');
 });
+```
+
+Start the application:
+
+```sh
+node app.js
 ```
 
 If you open a browser and navigate to `http://localhost:3000` you will see
@@ -103,7 +122,6 @@ In the above Google URL the scheme is clearly `https`.
 You already learned about the **host** and the **port** - the host identifies the device you wish to connect to and the port is the communication endpoint on that device.
 Note that the host could be a domain name (like `www.google.com`) or an IP address (like `142.251.36.238`).
 Usually we will work with domain names since they are stable (unlike a lot of IP addresses).
-Together the host and the port make up the **authority**.
 
 > At the time of this writing 142.251.36.238 is one of Google's IP addresses.
 > This may of course change by the time you are reading this book.
@@ -142,13 +160,17 @@ This indicates that if a GET request is sent to the path '/', we would like to r
 The `req` variable represents the **request object** and `res` represents the **respose object**.
 If we want to send a HTTP response to the client we therefore use `res.send`.
 
-POST requests are generally used to send information to the server that tell it to update some information.
+POST requests are generally used to send information to the server that tell it to create a new resource or update a resource.
 For example a login request will generally be a POST request since it tells the server that a user has logged in to the application.
 Similarly, if you submit a web form, there will usually be a POST request attached to that, since form submissions carry new information.
 
 With POST requests, we are more interested in telling the server that something happened than in the data the server returns to us.
 
-Note that we need to enable some middleware (we will return to the concept of middleware in a second):
+POST requests usually need to send much more information to the server than GET requests.
+Therefore, POST requests can have a **request body** which simply refers to this additional data.
+
+Let's have a look at an example.
+Note that we need to enable some middleware (we will return to the concept of middleware later):
 
 ```javascript
 app.use(express.text());
