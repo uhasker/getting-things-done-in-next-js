@@ -120,7 +120,7 @@ export default function Counter() {
 ```
 
 If you go to `http://localhost:3000/counter`, you will see that the message is output both on the server as well as the client.
-If you click the button, you will see that message is output only on the client (since the component only rerenders there).
+If you click the button, you will see that the message is output only on the client (since the component only rerenders there).
 However, if you refresh the page, you will observe that the message is again logged both to the server as well as the client.
 
 ### When to use what?
@@ -132,7 +132,7 @@ Use server components if:
 - you need to keep sensitive information on the server
 - you want to keep large dependencies on the server
 
-Use client components if:
+Use client components only if:
 
 - you need event listeners (like `onClick`)
 - you need to use `useState`, `useEffect` or `useReducer`

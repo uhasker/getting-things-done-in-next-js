@@ -117,7 +117,7 @@ export async function GET(request: NextRequest) {
 }
 ```
 
-Try acessing the route again:
+Try accessing the route again:
 
 ```
 $ curl localhost:3000/api/task

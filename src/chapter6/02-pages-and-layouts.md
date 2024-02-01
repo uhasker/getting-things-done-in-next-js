@@ -90,7 +90,7 @@ export const metadata: Metadata = {
 You can add navigation between routes by using the `<Link>` component.
 
 This is a component built on top of the HTML `<a>` tag that you already know.
-However this component does some additional things, like prefetching (i.e. preloading routes in the background).
+However, this component does some additional things, like prefetching (i.e. preloading routes in the background).
 It also changes the way navigation works (we will talk more about this in the next sections).
 
 Here is how you could link the About page from the home page:

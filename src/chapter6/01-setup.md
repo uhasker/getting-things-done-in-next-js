@@ -17,7 +17,7 @@ Give your project a name (like `easy-opus`) and select the following options:
 - we want to use the App Router
 - we don't want to customize the defalt import alias
 
-Next navigate to the `easy-opus` directory and run:
+Next, navigate to the `easy-opus` directory and run:
 
 ```sh
 pnpm dev
