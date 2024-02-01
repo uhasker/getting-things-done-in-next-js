@@ -278,7 +278,7 @@ Again we use the `useState` hook:
 const [tasks, setTasks] = React.useState<Task[]>([]);
 ```
 
-We now want add the task to the end when the form is submitted:
+We now want to add the task to the end when the form is submitted:
 
 ```js
 function handleSubmit(event) {
