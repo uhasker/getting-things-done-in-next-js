@@ -183,7 +183,7 @@ The main problem is that the data it represents is hardcoded into the component.
 Let us fix that by passing properties (`props`) into the component.
 This is simply a JavaScript object containing the data the component should render.
 In our case we will simply pass an array of strings named `tasks` containing our - well - tasks.
-We can then use `map` to create an `ul` list from that array:
+We can then use `map` to create a list item `li` for each element of that array:
 
 ```jsx
 type TaskListProps = {
@@ -193,8 +193,8 @@ type TaskListProps = {
 function TaskList(props: TaskListProps) {
   return (
     <ul>
-      {props.tasks.map((item) => (
-        <li>{item}</li>
+      {props.tasks.map((task) => (
+        <li>{task}</li>
       ))}
     </ul>
   );
