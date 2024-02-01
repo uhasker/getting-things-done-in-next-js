@@ -349,7 +349,7 @@ Try clicking the button - a new task should appear.
 There is a common theme regarding state in React - a lot of beginners _heavily overuse_ it.
 This is usually because they misunderstand the purpose of state and what it actually does.
 
-Before we give specific examples of when to use and when not to use state, we want to reiterate two things we already discussed:
+Before we give specific examples of when to and when not to use state, we want to reiterate two things we already discussed:
 
 First, state should only be used if your component needs to remember something.
 
@@ -409,7 +409,7 @@ export default function GoodTaskList() {
 ```
 
 > Of course, in this particular example, the `tasks` variable should really be passed as a prop to the component.
-> We just want to show you when to use and when not to use state here.
+> We just want to show you when to and when not to use state here.
 
 Second, you should never store data in state that you can derive from other state (or props).
 For example, this is a bad idea:
