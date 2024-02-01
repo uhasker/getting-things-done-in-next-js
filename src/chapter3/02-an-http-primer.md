@@ -4,7 +4,7 @@
 
 **Servers** and **clients** are nothing more than regular programs (like the ones you saw in the first chapter).
 For example, a server might be a JavaScript program that waits for HTTP requests and sends back responses.
-A client might be a browser on your laptop or your phone - it might even a regular script.
+A client might be a browser on your laptop or your phone - it might even be a regular script.
 
 > Often, the term "server" is also used to refer to the actual machine the software is running on.
 
@@ -14,7 +14,7 @@ HTTP is a **request/response protocol**, i.e. HTTP clients send requests to an H
 You have in fact already used the HTTP protocol.
 Every time you browse the internet, HTTP requests are sent under the hood.
 
-Although nowadays developers rarely use plain HTTP in production.
+We should mention that nowadays developers rarely use plain HTTP in production.
 Instead, they use HTTPS, which is encrypted HTTP.
 However, we won't cover HTTPS in detail, since that will automatically be handled for us by our deployment process.
 
@@ -160,14 +160,14 @@ This indicates that if a GET request is sent to the path '/', we would like to r
 The `req` variable represents the **request object** and `res` represents the **respose object**.
 If we want to send a HTTP response to the client we therefore use `res.send`.
 
-POST requests are generally used to send information to the server that tell it to create a new resource or update a resource.
+POST requests are generally used to send information to the server that tell it to create a new resource or update an existing resource.
 For example a login request will generally be a POST request since it tells the server that a user has logged in to the application.
 Similarly, if you submit a web form, there will usually be a POST request attached to that, since form submissions carry new information.
 
 With POST requests, we are more interested in telling the server that something happened than in the data the server returns to us.
 
 POST requests usually need to send much more information to the server than GET requests.
-Therefore, POST requests can have a **request body** which simply refers to this additional data.
+Therefore, POST requests can have a **request body** which allows us to carry this additional data when sending a request.
 
 Let's have a look at an example.
 Note that we need to enable some middleware (we will return to the concept of middleware later):
