@@ -237,7 +237,7 @@ function App() {
 Quite nice.
 Note that there is a problem with the current implementation of our component.
 You can see this by opening your browser console.
-An error "Warning: Each child in a list should have a unique "key" prop." will appear.
+An error "Warning: Each child in a list should have a unique 'key' prop." will appear.
 
 The reason for that is that React needs a way to identify which items in a list have changed or have been added or removed.
 It does that by looking at the keys of the items.
