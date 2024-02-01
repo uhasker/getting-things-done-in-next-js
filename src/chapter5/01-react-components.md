@@ -219,7 +219,7 @@ function TaskList({ tasks }: TaskListProps) {
 }
 ```
 
-> You can hopefully see how the concepts from chapters 1 and 2 all come together quite nicely.
+> You can hopefully see how all the concepts from chapters 1 and 2 are coming together quite nicely.
 
 Excellent! We can use the new component like this:
 
