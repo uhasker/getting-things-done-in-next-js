@@ -291,7 +291,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(&lt;App /&gt;);
 <blockquote>
 <p>While possible, it's much more complicated (and relatively rare) to add your own custom tags in HTML.</p>
 </blockquote>
-<p>Additionally, you can include JavaScript expressions in JSX by writing them between curly braces <code>{}</code>:</p>
+<p>Additionally, you can include JavaScript expressions in JSX by wrapping them in curly braces <code>{}</code>:</p>
 <pre><code class="language-jsx">const x = 2;
 const y = 2;
 
@@ -305,7 +305,7 @@ The main problem is that the data it represents is hardcoded into the component.
 <p>Let us fix that by passing properties (<code>props</code>) into the component.
 This is simply a JavaScript object containing the data the component should render.
 In our case we will simply pass an array of strings named <code>tasks</code> containing our - well - tasks.
-We can then use <code>map</code> to create an <code>ul</code> list from that array:</p>
+We can then use <code>map</code> to create a list item <code>li</code> for each element of that array:</p>
 <pre><code class="language-jsx">type TaskListProps = {
   tasks: string[],
 };
@@ -313,8 +313,8 @@ We can then use <code>map</code> to create an <code>ul</code> list from that arr
 function TaskList(props: TaskListProps) {
   return (
     &lt;ul&gt;
-      {props.tasks.map((item) =&gt; (
-        &lt;li&gt;{item}&lt;/li&gt;
+      {props.tasks.map((task) =&gt; (
+        &lt;li&gt;{task}&lt;/li&gt;
       ))}
     &lt;/ul&gt;
   );
@@ -335,7 +335,7 @@ This will become even more annoying when we have a lot of props.</p>
 }
 </code></pre>
 <blockquote>
-<p>You can hopefully see how the concepts from chapters 1 and 2 all come together quite nicely.</p>
+<p>You can hopefully see how all the concepts from chapters 1 and 2 are coming together quite nicely.</p>
 </blockquote>
 <p>Excellent! We can use the new component like this:</p>
 <pre><code class="language-jsx">function App() {
@@ -350,7 +350,7 @@ This will become even more annoying when we have a lot of props.</p>
 <p>Quite nice.
 Note that there is a problem with the current implementation of our component.
 You can see this by opening your browser console.
-An error &quot;Warning: Each child in a list should have a unique &quot;key&quot; prop.&quot; will appear.</p>
+An error &quot;Warning: Each child in a list should have a unique 'key' prop.&quot; will appear.</p>
 <p>The reason for that is that React needs a way to identify which items in a list have changed or have been added or removed.
 It does that by looking at the keys of the items.
 These basically give the elements a stable identity.</p>

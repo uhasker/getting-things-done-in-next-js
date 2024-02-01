@@ -231,7 +231,7 @@ Effect runs (currently count=2)
 Effect runs (currently count=3)
 Effect runs (currently count=4)
 </code></pre>
-<p>Additionally we can return a cleanup function, which will run when the component is destroyed (<em>unmounted</em>).
+<p>Additionally we can return a cleanup function, which will run when the component is destroyed (<em>unmounted</em>), and before every <em>rerun</em> of the useEffect. We will examine when exactly an useEffect reruns in the <a href="#the-dependency-array">next section</a>.
 Consider this example:</p>
 <pre><code class="language-jsx">import * as React from 'react';
 
@@ -338,7 +338,7 @@ In fact this can result in catastrophic behaviour, like in the following example
 }
 </code></pre>
 <p>If you run this, you will see that the counter just keeps incrementing in an infinite loop.
-This is because, the effect calls <code>useState</code>, which will trigger a rerender, which will trigger the effect again, which will call <code>useState</code> etc.</p>
+This is because, the effect calls <code>setCount</code>, which will trigger a rerender, which will trigger the effect again, which will call <code>setCount</code> etc.</p>
 <p>React is actually smart enough to realize the problem and will log the following warning to the console:</p>
 <pre><code>Maximum update depth exceeded.
 This can happen when a component calls setState inside useEffect,
@@ -392,7 +392,7 @@ export default function TaskList() {
   const [numTasks, setNumTasks] = React.useState(0);
 
   // This is a really bad idea
-  useEffect(() =&gt; {
+  React.useEffect(() =&gt; {
     setNumTasks(tasks + 1);
   }, [tasks])
 

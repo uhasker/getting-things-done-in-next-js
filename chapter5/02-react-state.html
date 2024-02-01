@@ -337,7 +337,7 @@ Rendered counter component with count=1
 Here is what happens:</p>
 <p>The component renders for the first time.
 Because the initial value of <code>count</code> is set to <code>0</code>, it will render with <code>count</code> being equal to <code>0</code>.</p>
-<p>You click the button and <code>setCount</code> is called with <code>count + 1</code> (which will be <code>0+1</code>, i.e. <code>1</code>).
+<p>You click the button and <code>setCount</code> is called with <code>count + 1</code> (which will be <code>0 + 1</code>, i.e. <code>1</code>).
 React rerenders the component while remembering that the new <code>count</code> should be <code>1</code>.</p>
 <p>The component renders for the second time.
 Because React remembered that <code>count</code> was set to <code>1</code>, the component will render with <code>count</code> set to <code>1</code>.</p>
@@ -368,7 +368,7 @@ Enter the <code>task-list.tsx</code> file and import React at the top:</p>
 }
 </code></pre>
 <p>Now we need to create a <code>handleSubmit</code> function, which will just log something to the console for now.
-Remember from chapter 3 that we need to call the <code>preventDefault</code> function to prevent the default behaviour of a form submission (which includes a page refresh):</p>
+Remember from chapter 4 that we need to call the <code>preventDefault</code> function to prevent the default behaviour of a form submission (which includes a page refresh):</p>
 <pre><code class="language-js">function handleSubmit(event) {
   event.preventDefault();
   const taskId = event.currentTarget.taskId.value.trim();
@@ -384,7 +384,7 @@ To accomplish that, we set the <code>onSubmit</code> property of the form to the
 <p>Again we use the <code>useState</code> hook:</p>
 <pre><code class="language-js">const [tasks, setTasks] = React.useState&lt;Task[]&gt;([]);
 </code></pre>
-<p>We now want add the task to the end when the form is submitted:</p>
+<p>We now want to add the task to the end when the form is submitted:</p>
 <pre><code class="language-js">function handleSubmit(event) {
   event.preventDefault();
   const taskId = event.currentTarget.taskId.value.trim();
@@ -398,7 +398,7 @@ To accomplish that, we set the <code>onSubmit</code> property of the form to the
   ]);
 }
 </code></pre>
-<p>This is how the full code looks like:</p>
+<p>This is what the full code looks like:</p>
 <pre><code class="language-jsx">import * as React from &quot;react&quot;;
 
 type Task = {
@@ -446,7 +446,7 @@ export default function TaskList() {
 <h3 id="when-to-use-state"><a class="header" href="#when-to-use-state">When to use State</a></h3>
 <p>There is a common theme regarding state in React - a lot of beginners <em>heavily overuse</em> it.
 This is usually because they misunderstand the purpose of state and what it actually does.</p>
-<p>Before we give specific examples of when to use and when not to use state, we want to reiterate two things we already discussed:</p>
+<p>Before we give specific examples of when to and when not to use state, we want to reiterate two things we already discussed:</p>
 <p>First, state should only be used if your component needs to remember something.</p>
 <p>Second, state updates are expensive, because a state update will rerender your component.</p>
 <p>The corollary to these two things is that <strong>you should only use state when you absolutely need it</strong>, i.e. <strong>you should keep state to a minimum</strong>.</p>
@@ -497,7 +497,7 @@ For example, this is completely unnecessary:</p>
 </code></pre>
 <blockquote>
 <p>Of course, in this particular example, the <code>tasks</code> variable should really be passed as a prop to the component.
-We just want to show you when to use and when not to use state here.</p>
+We just want to show you when to and when not to use state here.</p>
 </blockquote>
 <p>Second, you should never store data in state that you can derive from other state (or props).
 For example, this is a bad idea:</p>
