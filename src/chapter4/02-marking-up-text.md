@@ -35,7 +35,7 @@ Often the `<hr />` element is used to introduce thematic breaks between paragrap
 
 ### Heading Elements
 
-There are six heading elements `<h1>` to `<h6>`.
+There are six heading elements, `<h1>` to `<h6>`.
 The different heading elements represent different "heading levels", e.g. `<h1>` is the main heading, `<h2>` a subheading and so on:
 
 ```html

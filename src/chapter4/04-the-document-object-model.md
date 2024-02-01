@@ -21,7 +21,7 @@ The elements form a (very small) _tree_:
 
 ![](images/small_tree.png)
 
-Let's take a bigger document:
+Let's take a look at a bigger document:
 
 ```html
 <div id="app">
@@ -46,7 +46,7 @@ To simplify, _you_ write HTML, the browser parses that and then _the browser_ di
 ## Manipulating the DOM using JavaScript
 
 Whenever you write applications which have a lot of logic in the client, you will need to manipulate the DOM (i.e. add, remove, change or retrieve elements).
-This can be done by using JavaScript functions that exist on the `document` object, which is is a global variable that refers to currently rendered DOM tree.
+This can be done by using JavaScript functions that exist on the `document` object, which is is a global variable that refers to the currently rendered DOM tree.
 
 For the rest of this section, we will consider the following document:
 
@@ -144,7 +144,7 @@ element.classList.add('task');
 element.innerHTML = 'New task';
 ```
 
-You can append an element a last child of a parent element using `parentElement.appendChild(childElement)`.
+You can append an element as a last child of a parent element using `parentElement.appendChild(childElement)`.
 For example to append the newly created `element` to another element `taskList` you would write this:
 
 ```js
@@ -195,5 +195,5 @@ We would now have to add a `button` element and execute this code whenever the b
 </html>
 ```
 
-> Note that if we want this code to work correctly, if we click the button multiple times, we should change the ID on each button click.
+> Note that if we want this code to work correctly when clicking the button multiple times, we should change the ID on each button click.
 > Try doing this by yourself.

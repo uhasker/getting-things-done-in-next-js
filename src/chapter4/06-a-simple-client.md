@@ -56,7 +56,7 @@ const taskForm = document.querySelector('#taskForm');
 
 Next, we need to add an event listener to `taskForm`.
 
-The `event.currentTarget` will have the proeprty `elements` which contains `taskInput` whose property `value` contains our input:
+The `event.currentTarget` will have the property `elements` which contains `taskInput` whose property `value` contains our input:
 
 ```js
 taskForm.addEventListener('submit', function (event) {
@@ -69,7 +69,7 @@ taskForm.addEventListener('submit', function (event) {
 
 This should log the input.
 
-Lets now store it in a variable and use `trim` to remove whitespace:
+Lets now store it in a variable and use `trim` to remove whitespace from both ends:
 
 ```js
 taskForm.addEventListener('submit', function (event) {
@@ -98,7 +98,7 @@ taskForm.addEventListener('submit', function (event) {
 });
 ```
 
-Now you click the button, you will see that a task will be added.
+When you now click the button, you will see that a new task will be added.
 
 ### Adding a Delete Button
 
