@@ -291,7 +291,7 @@ export default function TaskList() {
   const [numTasks, setNumTasks] = React.useState(0);
 
   // This is a really bad idea
-  useEffect(() => {
+  React.useEffect(() => {
     setNumTasks(tasks + 1);
   }, [tasks])
 
