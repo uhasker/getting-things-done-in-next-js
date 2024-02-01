@@ -295,7 +295,7 @@ function handleSubmit(event) {
 }
 ```
 
-This is how the full code looks like:
+This is what the full code looks like:
 
 ```jsx
 import * as React from "react";
