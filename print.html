@@ -3787,8 +3787,8 @@ It is not intended to be a complete primer - we will only touch the concepts tha
 For example, your wireless network interface might have an IP address that it can use to communicate with other computers on the same wireless network.</p>
 <p>Such an address consists of 4 numbers between 0 and 255, separated by dots.
 Examples addresses might be <code>123.56.1.17</code> or <code>192.168.178.47</code>.</p>
-<p>A particularly important address is <code>127.0.0.1</code> which always identifies the IP of the network interface itself.
-For example, if you run a web server on your computer, its IP address would usually be <code>127.0.0.1</code>.</p>
+<p>A particularly important IP address is <code>127.0.0.1</code> which can be used to identify the machine you're currently on.
+For example, if you run a web server on your computer, you could access it at <code>127.0.0.1</code>.</p>
 <p>Note that instead of saying that a network interface has a particular IP, we will often say that a computer has some IP.
 This is because often we only really care about a particular interface (usually your wireless interface).
 However, it is important to understand that diffent network interfaces can have different IP addresses even if they are located on the same machine.</p>
@@ -3808,25 +3808,37 @@ Indeed, in real life, we never tell someone to go to <code>142.251.37.14</code>,
 A domain (or <em>domain name</em>) is a string that identifies some network resource and usually has a corresponding IP address.</p>
 <p>For example, the domain <code>google.com</code> might correspond to the IP address <code>142.251.37.14</code>.
 That is, you can identify the resource either via <code>google.com</code> or via <code>142.251.37.14</code>.</p>
+<p>The translation of domains to IP adresses is handled by the <strong>Domain Name System</strong> (DNS) protocol.
+If you type <code>google.com</code> into your browser address bar, DNS will translate it to the correct IP under the hood.</p>
 <blockquote>
 <p>The reality is much more complicated.
 A single domain usually corresponds to many IP addresses for load balancing reasons etc.
 Nevertheless, this is a useful mental model to have.</p>
 </blockquote>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="an-http-primer"><a class="header" href="#an-http-primer">An HTTP Primer</a></h2>
-<h3 id="http-and-express"><a class="header" href="#http-and-express">HTTP and Express</a></h3>
-<p>When writing a web application, the most common way to get data from a server to a client is via the HTTP procotol (usually augmented by SSL resulting in the HTTPS procotol).
-HTTP is a <strong>request/response protocol</strong>, i.e. HTTP clients send requests to an HTTP server and receive a response in return.
-You have in fact already used the HTTP protocol.
+<h3 id="servers-and-clients"><a class="header" href="#servers-and-clients">Servers and Clients</a></h3>
+<p><strong>Servers</strong> and <strong>clients</strong> are nothing more than regular programs (like the ones you saw in the first chapter).
+For example, a server might be a JavaScript program that waits for HTTP requests and sends back responses.
+A client might be a browser on your laptop or your phone - it might even be a regular script.</p>
+<blockquote>
+<p>Often, the term &quot;server&quot; is also used to refer to the actual machine the software is running on.</p>
+</blockquote>
+<p>When writing a web application, the most common way to get data from a server to a client and vice versa is by using the HTTP procotol.
+HTTP is a <strong>request/response protocol</strong>, i.e. HTTP clients send requests to an HTTP server and receive a response in return.</p>
+<p>You have in fact already used the HTTP protocol.
 Every time you browse the internet, HTTP requests are sent under the hood.</p>
+<p>We should mention that nowadays developers rarely use plain HTTP in production.
+Instead, they use HTTPS, which is encrypted HTTP.
+However, we won't cover HTTPS in detail, since that will automatically be handled for us by our deployment process.</p>
+<h3 id="http-and-express"><a class="header" href="#http-and-express">HTTP and Express</a></h3>
 <p>We could use the built-in HTTP module of Node.js, but this is not terribly convenient.
 Instead we will use an extremely popular framework called <strong>Express</strong>.
 While Express builds on top of the HTTP module, it provides a lot of additional useful functionality.</p>
 <p>Create a new Node.js project inside some directory:</p>
-<pre><code class="language-shell">npm init -y
+<pre><code class="language-shell">pnpm init
 </code></pre>
 <p>Install Express:</p>
-<pre><code class="language-shell">npm install express
+<pre><code class="language-shell">pnpm add express
 </code></pre>
 <p>Now create a file named <code>app.js</code> inside the directory.
 As usual the name of the file is up to you, but it should be something meaningful.
@@ -3845,6 +3857,9 @@ Add this above the call to <code>listen</code>:</p>
 <pre><code class="language-javascript">app.get('/', (req, res) =&gt; {
   res.send('Hello, world!');
 });
+</code></pre>
+<p>Start the application:</p>
+<pre><code class="language-sh">node app.js
 </code></pre>
 <p>If you open a browser and navigate to <code>http://localhost:3000</code> you will see</p>
 <pre><code>Hello, world!
@@ -3881,8 +3896,7 @@ Therefore the scheme will almost always be either <code>http</code> or <code>htt
 In the above Google URL the scheme is clearly <code>https</code>.</p>
 <p>You already learned about the <strong>host</strong> and the <strong>port</strong> - the host identifies the device you wish to connect to and the port is the communication endpoint on that device.
 Note that the host could be a domain name (like <code>www.google.com</code>) or an IP address (like <code>142.251.36.238</code>).
-Usually we will work with domain names since they are stable (unlike a lot of IP addresses).
-Together the host and the port make up the <strong>authority</strong>.</p>
+Usually we will work with domain names since they are stable (unlike a lot of IP addresses).</p>
 <blockquote>
 <p>At the time of this writing 142.251.36.238 is one of Google's IP addresses.
 This may of course change by the time you are reading this book.</p>
@@ -3912,11 +3926,14 @@ GET requests are generally used to retrieve data.</p>
 <p>This indicates that if a GET request is sent to the path '/', we would like to return 'Hello, world!' to the client.
 The <code>req</code> variable represents the <strong>request object</strong> and <code>res</code> represents the <strong>respose object</strong>.
 If we want to send a HTTP response to the client we therefore use <code>res.send</code>.</p>
-<p>POST requests are generally used to send information to the server that tell it to update some information.
+<p>POST requests are generally used to send information to the server that tell it to create a new resource or update an existing resource.
 For example a login request will generally be a POST request since it tells the server that a user has logged in to the application.
 Similarly, if you submit a web form, there will usually be a POST request attached to that, since form submissions carry new information.</p>
 <p>With POST requests, we are more interested in telling the server that something happened than in the data the server returns to us.</p>
-<p>Note that we need to enable some middleware (we will return to the concept of middleware in a second):</p>
+<p>POST requests usually need to send much more information to the server than GET requests.
+Therefore, POST requests can have a <strong>request body</strong> which allows us to carry this additional data when sending a request.</p>
+<p>Let's have a look at an example.
+Note that we need to enable some middleware (we will return to the concept of middleware later):</p>
 <pre><code class="language-javascript">app.use(express.text());
 </code></pre>
 <p>Consider the following route which simply returns the request body back to the client:</p>

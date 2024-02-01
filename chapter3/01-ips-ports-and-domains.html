@@ -179,8 +179,8 @@
 For example, your wireless network interface might have an IP address that it can use to communicate with other computers on the same wireless network.</p>
 <p>Such an address consists of 4 numbers between 0 and 255, separated by dots.
 Examples addresses might be <code>123.56.1.17</code> or <code>192.168.178.47</code>.</p>
-<p>A particularly important address is <code>127.0.0.1</code> which always identifies the IP of the network interface itself.
-For example, if you run a web server on your computer, its IP address would usually be <code>127.0.0.1</code>.</p>
+<p>A particularly important IP address is <code>127.0.0.1</code> which can be used to identify the machine you're currently on.
+For example, if you run a web server on your computer, you could access it at <code>127.0.0.1</code>.</p>
 <p>Note that instead of saying that a network interface has a particular IP, we will often say that a computer has some IP.
 This is because often we only really care about a particular interface (usually your wireless interface).
 However, it is important to understand that diffent network interfaces can have different IP addresses even if they are located on the same machine.</p>
@@ -200,6 +200,8 @@ Indeed, in real life, we never tell someone to go to <code>142.251.37.14</code>,
 A domain (or <em>domain name</em>) is a string that identifies some network resource and usually has a corresponding IP address.</p>
 <p>For example, the domain <code>google.com</code> might correspond to the IP address <code>142.251.37.14</code>.
 That is, you can identify the resource either via <code>google.com</code> or via <code>142.251.37.14</code>.</p>
+<p>The translation of domains to IP adresses is handled by the <strong>Domain Name System</strong> (DNS) protocol.
+If you type <code>google.com</code> into your browser address bar, DNS will translate it to the correct IP under the hood.</p>
 <blockquote>
 <p>The reality is much more complicated.
 A single domain usually corresponds to many IP addresses for load balancing reasons etc.
