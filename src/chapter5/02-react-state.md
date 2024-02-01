@@ -212,7 +212,7 @@ Here is what happens:
 The component renders for the first time.
 Because the initial value of `count` is set to `0`, it will render with `count` being equal to `0`.
 
-You click the button and `setCount` is called with `count + 1` (which will be `0+1`, i.e. `1`).
+You click the button and `setCount` is called with `count + 1` (which will be `0 + 1`, i.e. `1`).
 React rerenders the component while remembering that the new `count` should be `1`.
 
 The component renders for the second time.
@@ -252,7 +252,7 @@ export function TaskList({ tasks }: TaskListProps) {
 ```
 
 Now we need to create a `handleSubmit` function, which will just log something to the console for now.
-Remember from chapter 3 that we need to call the `preventDefault` function to prevent the default behaviour of a form submission (which includes a page refresh):
+Remember from chapter 4 that we need to call the `preventDefault` function to prevent the default behaviour of a form submission (which includes a page refresh):
 
 ```js
 function handleSubmit(event) {
@@ -278,7 +278,7 @@ Again we use the `useState` hook:
 const [tasks, setTasks] = React.useState<Task[]>([]);
 ```
 
-We now want add the task to the end when the form is submitted:
+We now want to add the task to the end when the form is submitted:
 
 ```js
 function handleSubmit(event) {
@@ -295,7 +295,7 @@ function handleSubmit(event) {
 }
 ```
 
-This is how the full code looks like:
+This is what the full code looks like:
 
 ```jsx
 import * as React from "react";
@@ -349,7 +349,7 @@ Try clicking the button - a new task should appear.
 There is a common theme regarding state in React - a lot of beginners _heavily overuse_ it.
 This is usually because they misunderstand the purpose of state and what it actually does.
 
-Before we give specific examples of when to use and when not to use state, we want to reiterate two things we already discussed:
+Before we give specific examples of when to and when not to use state, we want to reiterate two things we already discussed:
 
 First, state should only be used if your component needs to remember something.
 
@@ -409,7 +409,7 @@ export default function GoodTaskList() {
 ```
 
 > Of course, in this particular example, the `tasks` variable should really be passed as a prop to the component.
-> We just want to show you when to use and when not to use state here.
+> We just want to show you when to and when not to use state here.
 
 Second, you should never store data in state that you can derive from other state (or props).
 For example, this is a bad idea:

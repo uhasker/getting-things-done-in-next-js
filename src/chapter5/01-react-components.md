@@ -164,7 +164,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(<App />);
 
 > While possible, it's much more complicated (and relatively rare) to add your own custom tags in HTML.
 
-Additionally, you can include JavaScript expressions in JSX by writing them between curly braces `{}`:
+Additionally, you can include JavaScript expressions in JSX by wrapping them in curly braces `{}`:
 
 ```jsx
 const x = 2;
@@ -183,7 +183,7 @@ The main problem is that the data it represents is hardcoded into the component.
 Let us fix that by passing properties (`props`) into the component.
 This is simply a JavaScript object containing the data the component should render.
 In our case we will simply pass an array of strings named `tasks` containing our - well - tasks.
-We can then use `map` to create an `ul` list from that array:
+We can then use `map` to create a list item `li` for each element of that array:
 
 ```jsx
 type TaskListProps = {
@@ -193,8 +193,8 @@ type TaskListProps = {
 function TaskList(props: TaskListProps) {
   return (
     <ul>
-      {props.tasks.map((item) => (
-        <li>{item}</li>
+      {props.tasks.map((task) => (
+        <li>{task}</li>
       ))}
     </ul>
   );
@@ -219,7 +219,7 @@ function TaskList({ tasks }: TaskListProps) {
 }
 ```
 
-> You can hopefully see how the concepts from chapters 1 and 2 all come together quite nicely.
+> You can hopefully see how all the concepts from chapters 1 and 2 are coming together quite nicely.
 
 Excellent! We can use the new component like this:
 
@@ -237,7 +237,7 @@ function App() {
 Quite nice.
 Note that there is a problem with the current implementation of our component.
 You can see this by opening your browser console.
-An error "Warning: Each child in a list should have a unique "key" prop." will appear.
+An error "Warning: Each child in a list should have a unique 'key' prop." will appear.
 
 The reason for that is that React needs a way to identify which items in a list have changed or have been added or removed.
 It does that by looking at the keys of the items.
