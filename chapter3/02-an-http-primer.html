@@ -237,7 +237,7 @@ For example - at some point Android Chrome would <a href="https://news.ycombinat
 </blockquote>
 <p>The <strong>scheme</strong> usually indicates the protocol which describes how information should be transmitted.
 We will almost exclusively use HTTP or HTTPS (which is just secure HTTP) in this book.
-Therefore the scheme will almost always either be <code>http</code> or <code>https</code>.
+Therefore the scheme will almost always be either <code>http</code> or <code>https</code>.
 In the above Google URL the scheme is clearly <code>https</code>.</p>
 <p>You already learned about the <strong>host</strong> and the <strong>port</strong> - the host identifies the device you wish to connect to and the port is the communication endpoint on that device.
 Note that the host could be a domain name (like <code>www.google.com</code>) or an IP address (like <code>142.251.36.238</code>).
@@ -254,7 +254,7 @@ Often paths will be hierarchical.
 In this case the different components of the hierarchy are generally separated by slashes - for example &quot;/path/to/resource&quot;.</p>
 <p>The path can be followed by a <strong>query</strong>.
 The query begins with a question mark and is followed by key-value pairs.
-In the Google URL this is &quot;?q=mern+stack&quot;.
+In the Google URL this is &quot;?q=nextjs&quot;.
 Here the query provides information about your search.
 If there are multiple key-value pairs, they are separated by ampersands (&quot;&amp;&quot;).
 For example the query could be &quot;?key1=value1&amp;key2=value2&quot;.</p>
@@ -274,8 +274,8 @@ The <code>req</code> variable represents the <strong>request object</strong> and
 If we want to send a HTTP response to the client we therefore use <code>res.send</code>.</p>
 <p>POST requests are generally used to send information to the server that tell it to update some information.
 For example a login request will generally be a POST request since it tells the server that a user has logged in to the application.
-Similary, if you submit a web form, there will usually be a POST request attached to that, since form submissions carry new information.</p>
-<p>With POST requests we are less interested in the data the server returns us and more in telling the server that something happened.</p>
+Similarly, if you submit a web form, there will usually be a POST request attached to that, since form submissions carry new information.</p>
+<p>With POST requests, we are more interested in telling the server that something happened than in the data the server returns to us.</p>
 <p>Note that we need to enable some middleware (we will return to the concept of middleware in a second):</p>
 <pre><code class="language-javascript">app.use(express.text());
 </code></pre>
@@ -298,7 +298,7 @@ This indicates that the data we want to send is plain text.</p>
 <p>Note that we will rarely send plain text in the request.
 Instead we will use a special format called JSON.
 This is a file format that supports a bunch of primitive values, arrays and dictionaries.
-A typical JSON could look like this:</p>
+A typical JSON object could look like this:</p>
 <pre><code class="language-json">{
   &quot;tasks&quot;: [&quot;Task 1&quot;, &quot;Task 2&quot;, &quot;Task 3&quot;],
   &quot;date&quot;: {
