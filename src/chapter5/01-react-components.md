@@ -164,7 +164,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(<App />);
 
 > While possible, it's much more complicated (and relatively rare) to add your own custom tags in HTML.
 
-Additionally, you can include JavaScript expressions in JSX by writing them between curly braces `{}`:
+Additionally, you can include JavaScript expressions in JSX by wrapping them in curly braces `{}`:
 
 ```jsx
 const x = 2;
