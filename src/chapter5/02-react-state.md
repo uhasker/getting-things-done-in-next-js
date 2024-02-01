@@ -252,7 +252,7 @@ export function TaskList({ tasks }: TaskListProps) {
 ```
 
 Now we need to create a `handleSubmit` function, which will just log something to the console for now.
-Remember from chapter 3 that we need to call the `preventDefault` function to prevent the default behaviour of a form submission (which includes a page refresh):
+Remember from chapter 4 that we need to call the `preventDefault` function to prevent the default behaviour of a form submission (which includes a page refresh):
 
 ```js
 function handleSubmit(event) {
