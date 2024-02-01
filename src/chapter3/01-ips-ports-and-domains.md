@@ -23,7 +23,7 @@ This is enabled by ports.
 A **port** is simply a number assigned to uniquely identify a connection endpoint on a machine.
 For example, I might have a web service running on port `443` and an ssh service on port `22`.
 
-> The `ssh` protocol allows you to remotely login on a computer.
+> The `ssh` protocol allows you to remotely log in to a computer and execute commands on it.
 
 These two services might run on the same computer with the same IP, because they can be distinguished by their port numbers.
 

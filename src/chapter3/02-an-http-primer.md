@@ -97,7 +97,7 @@ scheme://host:port/path?key1=value1&key2=value2#fragment
 
 The **scheme** usually indicates the protocol which describes how information should be transmitted.
 We will almost exclusively use HTTP or HTTPS (which is just secure HTTP) in this book.
-Therefore the scheme will almost always either be `http` or `https`.
+Therefore the scheme will almost always be either `http` or `https`.
 In the above Google URL the scheme is clearly `https`.
 
 You already learned about the **host** and the **port** - the host identifies the device you wish to connect to and the port is the communication endpoint on that device.
@@ -116,7 +116,7 @@ In this case the different components of the hierarchy are generally separated b
 
 The path can be followed by a **query**.
 The query begins with a question mark and is followed by key-value pairs.
-In the Google URL this is "?q=mern+stack".
+In the Google URL this is "?q=nextjs".
 Here the query provides information about your search.
 If there are multiple key-value pairs, they are separated by ampersands ("&").
 For example the query could be "?key1=value1&key2=value2".
@@ -144,9 +144,9 @@ If we want to send a HTTP response to the client we therefore use `res.send`.
 
 POST requests are generally used to send information to the server that tell it to update some information.
 For example a login request will generally be a POST request since it tells the server that a user has logged in to the application.
-Similary, if you submit a web form, there will usually be a POST request attached to that, since form submissions carry new information.
+Similarly, if you submit a web form, there will usually be a POST request attached to that, since form submissions carry new information.
 
-With POST requests we are less interested in the data the server returns us and more in telling the server that something happened.
+With POST requests, we are more interested in telling the server that something happened than in the data the server returns to us.
 
 Note that we need to enable some middleware (we will return to the concept of middleware in a second):
 
@@ -181,7 +181,7 @@ Generally speaking GET requests transmit information using the querystring, whil
 Note that we will rarely send plain text in the request.
 Instead we will use a special format called JSON.
 This is a file format that supports a bunch of primitive values, arrays and dictionaries.
-A typical JSON could look like this:
+A typical JSON object could look like this:
 
 ```json
 {
