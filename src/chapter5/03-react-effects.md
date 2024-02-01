@@ -78,7 +78,7 @@ Effect runs (currently count=3)
 Effect runs (currently count=4)
 ```
 
-Additionally we can return a cleanup function, which will run when the component is destroyed (_unmounted_).
+Additionally we can return a cleanup function, which will run when the component is destroyed (_unmounted_), and before every _rerun_ of the useEffect. We will examine when exactly an useEffect reruns in the [next section](#the-dependency-array).
 Consider this example:
 
 ```jsx
@@ -220,7 +220,7 @@ export default function ExampleComponent() {
 ```
 
 If you run this, you will see that the counter just keeps incrementing in an infinite loop.
-This is because, the effect calls `useState`, which will trigger a rerender, which will trigger the effect again, which will call `useState` etc.
+This is because, the effect calls `setCount`, which will trigger a rerender, which will trigger the effect again, which will call `setCount` etc.
 
 React is actually smart enough to realize the problem and will log the following warning to the console:
 
