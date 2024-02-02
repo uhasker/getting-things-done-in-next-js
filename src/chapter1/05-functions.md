@@ -90,6 +90,7 @@ function add(x, y = 1) {
 
 console.log(add(1)); // 2
 console.log(add(1, undefined)); // 2
+console.log(add(1, 4)); // 5
 ```
 
 ### Rest Parameters

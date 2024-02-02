@@ -9,7 +9,7 @@ We also learned that they can be concatenated using the `+` operator and that yo
 However this is rarely enough to efficiently work with strings.
 Luckily, strings offer a wide range of additional functionality for pretty much every use case you will ever need - in this subsection we will briefly look at some of it.
 
-First, you can access individual characters using the `charAt` functionm or array brackets:
+First, you can access individual characters using the `charAt` function or array brackets:
 
 ```js
 const str = 'Hello';
@@ -132,7 +132,7 @@ const nestedArray = [
 ];
 console.log(nestedArray[1]); // [ 4, 5, 6 ]
 console.log(nestedArray[1][2]); // 6
-console.log(nestedArray.flat()); // [ [ 1, 2, 3 ], [ 4, 5, 6 ], [ 7, 8, 9 ] ]
+console.log(nestedArray.flat()); // [ 1, 2, 3, 4, 5, 6 , 7, 8, 9 ]
 ```
 
 ### The `for...of` Loop
@@ -221,7 +221,7 @@ console.log(Object.entries(task));
 
 This will log:
 
-```
+```js
 [
   [ 'id', 1 ],
   [ 'title', 'Read the Next.js book' ],

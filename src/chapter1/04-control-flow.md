@@ -285,7 +285,7 @@ Now the result will be `undefined` instead of giving you a TypeError.
 
 ### The `switch` Statement
 
-The `switch` statement evaluates and expression and then attempts to match the result against a number of `case` clauses.
+The `switch` statement evaluates an expression and then attempts to match the result against a number of `case` clauses.
 As soon as `case` clause is matched all following statements are executed until a `break` statement is encountered.
 If no case matches and a `default` statement is present, execution will jump to the code after the `default` statement:
 
