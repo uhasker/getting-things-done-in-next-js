@@ -212,7 +212,8 @@ const person = {
 };
 ```
 
-This has the _potential_ problem that someone referring to `person.task` will have no idea whether it is `undefined` because the property is not suppos...
+This has the _potential_ problem that someone referring to `person.task` will have no idea whether it is `undefined`,
+because the property is not supposed to exist at all or because it is explicitly undefined.
 There is nothing that prevents you from using `undefined` to denote absence all the time and in fact we will do so in this very book.
 Just keep in mind that `null` exists and that some developers use it to indicate absence (and that it's totally fine to do so).
 
