@@ -133,7 +133,7 @@ const greeter = (name: string) => `Hello ${name}`;
 console.log(getGreeting(myName, greeter));
 ```
 
-One interesting consequence of the way TypeScript inference works, is that parameters of anonymous functions can often be inferred.
+One interesting consequence of the way TypeScript inference works, is that parameters of functions can often be inferred.
 Let's change this example and make an anonymous function out of `greeter`:
 
 ```ts
@@ -146,4 +146,4 @@ const myName = 'John Doe';
 console.log(getGreeting(myName, (name) => `Hello ${name}`));
 ```
 
-Note how we no longer need to type `name` in the anonymous function - TypeScript has automatically inferred it to be of type `string`.
+Note how we no longer need to type-annotate `name` in the anonymous function - TypeScript has automatically inferred it to be of type `string`.

@@ -22,7 +22,7 @@ Well, you can't really tell because maybe the `showTask` function expects an obj
 The only way to find out if your `task` object is a valid input for `showTask` is to - well - actually pass it and find out.
 This is obviously not the ideal workflow (especially if you happen to find out that your object lacked some important properties _in production_).
 
-Additionally, if the author of the `showTask` function changes his function to expect additional properties on the `task` object, he would now have to check all the invocations of `showTask` to verify that he didn't accidentally break something.
+Additionally, if the author of the `showTask` function changes his function to expect additional properties on the `task` object, they would now have to check all the invocations of `showTask` to verify that they didn't accidentally break something.
 
 This is where TypeScript comes in.
 With TypeScript we would be able to _statically type_ the function by adding _type annotations_ like so:
@@ -74,10 +74,10 @@ To summarize, using TypeScript massively enhances your developer workflow which 
 You can install the TypeScript compiler by running the following command:
 
 ```sh
-npm install -g typescript
+npm install --location global typescript
 ```
 
-> The `-g` flag tells `npm` to install the package globally and not just for a particular project.
+> The `--location global` flag tells `npm` to install the package globally and not just for a particular project.
 
 Let's see how we can use the TypeScript compiler.
 First, create a file `index.ts`:

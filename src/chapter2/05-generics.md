@@ -111,6 +111,7 @@ Now we can use the `Box` type with any type:
 const box = {
   content: 0,
 };
+// TODO: yeah but you won't see it
 
 // box2 has the type Box<string>
 const box2 = {
@@ -146,6 +147,7 @@ const ScoreRecord: Record<string, number> = {
 Two other generic data structures that you know about are sets and maps:
 
 ```ts
+// TODO: yes, but annotating the constructor directly is preferred
 const mySet: Set<number> = new Set([1, 2, 3]);
 const myMap: Map<string, number> = new Map([
   ['Item 1', 1],
@@ -153,7 +155,7 @@ const myMap: Map<string, number> = new Map([
 ]);
 ```
 
-One other very important generic type is the `Promise<Type>` type which can be used to annotate asynchronous functions.
+One other very important generic type is the `Promise<Type>` type which is most commonly used to annotate asynchronous functions.
 For example, if we have an asynchronous function `f` that returns a promise with a string, we would annotate it like this:
 
 ```ts
