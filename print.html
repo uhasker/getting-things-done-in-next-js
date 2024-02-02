@@ -679,29 +679,27 @@ You can declare an array using an <strong>array literal</strong> (also called an
 This works by writing the name of the array, followed by the position of the element you want to retrieve inside square brackets.
 Note that when we count the indices (positions), we start at <code>0</code>, <em>not</em> at <code>1</code>:</p>
 <pre><code class="language-js">console.log(tasks[0]); // First task
-console.log(tasks[1]); // Second taskhttps://uhasker.github.io/getting-things-done-in-next-js/chapter1/03-arrays-and-objects.html
-
-If the array index is too big, trying to access the element at that index will return `undefined`:
-
-```js
-console.log(tasks[3]); // undefined
+console.log(tasks[1]); // Second task
+</code></pre>
+<p>If the array index is too big, trying to access the element at that index will return <code>undefined</code>:</p>
+<pre><code class="language-js">console.log(tasks[3]); // undefined
 </code></pre>
 <p>You can get the length of an array by using <code>.length</code>:</p>
-<pre><code class="language-js">console.log(tasks.length); // 3https://uhasker.github.io/getting-things-done-in-next-js/chapter1/03-arrays-and-objects.html
-
-&gt; Note that even despite the fact the `tasks` array is declared as a constant here, you can still change the _contents_ of the array.
-&gt; However you can't _reassign_ `tasks` to something else, i.e. you can't write something like `tasks = [1]`.
-
-JavaScript has some elegant syntax for working with arrays. If you want to assign variables based on values of an array, you would normally have to do something like this:
-
-```js
-const firstTask = tasks[0];
+<pre><code class="language-js">console.log(tasks.length); // 3
+</code></pre>
+<blockquote>
+<p>Note that even despite the fact the <code>tasks</code> array is declared as a constant here, you can still change the <em>contents</em> of the array.
+However you can't <em>reassign</em> <code>tasks</code> to something else, i.e. you can't write something like <code>tasks = [1]</code>.</p>
+</blockquote>
+<p>JavaScript has some elegant syntax for working with arrays. If you want to assign variables based on values of an array, you would normally have to do something like this:</p>
+<pre><code class="language-js">const firstTask = tasks[0];
 const secondTask = tasks[1];
 const thirdTask = tasks[2];
 </code></pre>
 <p>This is (you guessed it) <em>tedious</em>.
 Instead you can use the <strong>array destructuring assignment</strong>:</p>
 <pre><code class="language-js">const [firstTask, secondTask, thirdTask] = tasks;
+console.log(secondTask); // Second task
 </code></pre>
 <p>If you only care about some of the elements, you can use the <strong>spread</strong> (<code>...</code>) syntax:</p>
 <pre><code class="language-js">const [firstTask, ...otherTasks] = tasks;
@@ -802,7 +800,8 @@ You could do something like this:</p>
   task: undefined,
 };
 </code></pre>
-<p>This has the <em>potential</em> problem that someone referring to <code>person.task</code> will have no idea whether it is <code>undefined</code> because the property is not supposhttps://uhasker.github.io/getting-things-done-in-next-js/chapter1/03-arrays-and-objects.html
+<p>This has the <em>potential</em> problem that someone referring to <code>person.task</code> will have no idea whether it is <code>undefined</code>,
+because the property is not supposed to exist at all or because it is explicitly undefined.
 There is nothing that prevents you from using <code>undefined</code> to denote absence all the time and in fact we will do so in this very book.
 Just keep in mind that <code>null</code> exists and that some developers use it to indicate absence (and that it's totally fine to do so).</p>
 <p>Remember how we said that there is one more primitive data type left?
@@ -1041,7 +1040,7 @@ The above line would then become:</p>
 </code></pre>
 <p>Now the result will be <code>undefined</code> instead of giving you a TypeError.</p>
 <h3 id="the-switch-statement"><a class="header" href="#the-switch-statement">The <code>switch</code> Statement</a></h3>
-<p>The <code>switch</code> statement evaluates and expression and then attempts to match the result against a number of <code>case</code> clauses.
+<p>The <code>switch</code> statement evaluates an expression and then attempts to match the result against a number of <code>case</code> clauses.
 As soon as <code>case</code> clause is matched all following statements are executed until a <code>break</code> statement is encountered.
 If no case matches and a <code>default</code> statement is present, execution will jump to the code after the <code>default</code> statement:</p>
 <pre><code class="language-js">switch (tasks.length) {
@@ -1225,6 +1224,7 @@ console.log(squaredNum); // 9
 
 console.log(add(1)); // 2
 console.log(add(1, undefined)); // 2
+console.log(add(1, 4)); // 5
 </code></pre>
 <h3 id="rest-parameters"><a class="header" href="#rest-parameters">Rest Parameters</a></h3>
 <p>Sometimes it can be useful to pass an arbitrary number of arguments to a function.
@@ -1498,7 +1498,7 @@ Division by 0 is a bad idea
 We also learned that they can be concatenated using the <code>+</code> operator and that you can get their length using the <code>length</code> property.
 However this is rarely enough to efficiently work with strings.
 Luckily, strings offer a wide range of additional functionality for pretty much every use case you will ever need - in this subsection we will briefly look at some of it.</p>
-<p>First, you can access individual characters using the <code>charAt</code> functionm or array brackets:</p>
+<p>First, you can access individual characters using the <code>charAt</code> function or array brackets:</p>
 <pre><code class="language-js">const str = 'Hello';
 console.log(str[1]); // e
 console.log(str.charAt(1)); // e
@@ -1576,7 +1576,7 @@ Nested arrays can be flattened with the <code>flat</code> method:</p>
 ];
 console.log(nestedArray[1]); // [ 4, 5, 6 ]
 console.log(nestedArray[1][2]); // 6
-console.log(nestedArray.flat()); // [ [ 1, 2, 3 ], [ 4, 5, 6 ], [ 7, 8, 9 ] ]
+console.log(nestedArray.flat()); // [ 1, 2, 3, 4, 5, 6 , 7, 8, 9 ]
 </code></pre>
 <h3 id="the-forof-loop"><a class="header" href="#the-forof-loop">The <code>for...of</code> Loop</a></h3>
 <p><code>For..of</code> loops allow you to <em>iterate over arrays and strings</em> (and some other things that we will cover later on) and perform a task for each element / character.
@@ -1637,7 +1637,7 @@ console.log(Object.values(task)); // [ 1, 'Read the Next.js book', 'Read and und
 console.log(Object.entries(task));
 </code></pre>
 <p>This will log:</p>
-<pre><code>[
+<pre><code class="language-js">[
   [ 'id', 1 ],
   [ 'title', 'Read the Next.js book' ],
   [ 'description', 'Read and understand the Next.js book.' ]

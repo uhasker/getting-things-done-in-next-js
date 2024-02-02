@@ -199,29 +199,27 @@ You can declare an array using an <strong>array literal</strong> (also called an
 This works by writing the name of the array, followed by the position of the element you want to retrieve inside square brackets.
 Note that when we count the indices (positions), we start at <code>0</code>, <em>not</em> at <code>1</code>:</p>
 <pre><code class="language-js">console.log(tasks[0]); // First task
-console.log(tasks[1]); // Second taskhttps://uhasker.github.io/getting-things-done-in-next-js/chapter1/03-arrays-and-objects.html
-
-If the array index is too big, trying to access the element at that index will return `undefined`:
-
-```js
-console.log(tasks[3]); // undefined
+console.log(tasks[1]); // Second task
+</code></pre>
+<p>If the array index is too big, trying to access the element at that index will return <code>undefined</code>:</p>
+<pre><code class="language-js">console.log(tasks[3]); // undefined
 </code></pre>
 <p>You can get the length of an array by using <code>.length</code>:</p>
-<pre><code class="language-js">console.log(tasks.length); // 3https://uhasker.github.io/getting-things-done-in-next-js/chapter1/03-arrays-and-objects.html
-
-&gt; Note that even despite the fact the `tasks` array is declared as a constant here, you can still change the _contents_ of the array.
-&gt; However you can't _reassign_ `tasks` to something else, i.e. you can't write something like `tasks = [1]`.
-
-JavaScript has some elegant syntax for working with arrays. If you want to assign variables based on values of an array, you would normally have to do something like this:
-
-```js
-const firstTask = tasks[0];
+<pre><code class="language-js">console.log(tasks.length); // 3
+</code></pre>
+<blockquote>
+<p>Note that even despite the fact the <code>tasks</code> array is declared as a constant here, you can still change the <em>contents</em> of the array.
+However you can't <em>reassign</em> <code>tasks</code> to something else, i.e. you can't write something like <code>tasks = [1]</code>.</p>
+</blockquote>
+<p>JavaScript has some elegant syntax for working with arrays. If you want to assign variables based on values of an array, you would normally have to do something like this:</p>
+<pre><code class="language-js">const firstTask = tasks[0];
 const secondTask = tasks[1];
 const thirdTask = tasks[2];
 </code></pre>
 <p>This is (you guessed it) <em>tedious</em>.
 Instead you can use the <strong>array destructuring assignment</strong>:</p>
 <pre><code class="language-js">const [firstTask, secondTask, thirdTask] = tasks;
+console.log(secondTask); // Second task
 </code></pre>
 <p>If you only care about some of the elements, you can use the <strong>spread</strong> (<code>...</code>) syntax:</p>
 <pre><code class="language-js">const [firstTask, ...otherTasks] = tasks;
@@ -322,7 +320,8 @@ You could do something like this:</p>
   task: undefined,
 };
 </code></pre>
-<p>This has the <em>potential</em> problem that someone referring to <code>person.task</code> will have no idea whether it is <code>undefined</code> because the property is not supposhttps://uhasker.github.io/getting-things-done-in-next-js/chapter1/03-arrays-and-objects.html
+<p>This has the <em>potential</em> problem that someone referring to <code>person.task</code> will have no idea whether it is <code>undefined</code>,
+because the property is not supposed to exist at all or because it is explicitly undefined.
 There is nothing that prevents you from using <code>undefined</code> to denote absence all the time and in fact we will do so in this very book.
 Just keep in mind that <code>null</code> exists and that some developers use it to indicate absence (and that it's totally fine to do so).</p>
 <p>Remember how we said that there is one more primitive data type left?
