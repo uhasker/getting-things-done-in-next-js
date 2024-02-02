@@ -223,10 +223,10 @@ This will log:
 
 ```js
 [
-  [ 'id', 1 ],
-  [ 'title', 'Read the Next.js book' ],
-  [ 'description', 'Read and understand the Next.js book.' ]
-]
+  ['id', 1],
+  ['title', 'Read the Next.js book'],
+  ['description', 'Read and understand the Next.js book.'],
+];
 ```
 
 ### The `for...in` Loop
