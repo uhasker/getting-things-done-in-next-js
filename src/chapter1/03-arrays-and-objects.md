@@ -37,20 +37,22 @@ You can access individual elements of an array using the index notation.
 This works by writing the name of the array, followed by the position of the element you want to retrieve inside square brackets.
 Note that when we count the indices (positions), we start at `0`, _not_ at `1`:
 
-````js
+```js
 console.log(tasks[0]); // First task
-console.log(tasks[1]); // Second taskhttps://uhasker.github.io/getting-things-done-in-next-js/chapter1/03-arrays-and-objects.html
+console.log(tasks[1]); // Second task
+```
 
 If the array index is too big, trying to access the element at that index will return `undefined`:
 
 ```js
 console.log(tasks[3]); // undefined
-````
+```
 
 You can get the length of an array by using `.length`:
 
-````js
-console.log(tasks.length); // 3https://uhasker.github.io/getting-things-done-in-next-js/chapter1/03-arrays-and-objects.html
+```js
+console.log(tasks.length); // 3
+```
 
 > Note that even despite the fact the `tasks` array is declared as a constant here, you can still change the _contents_ of the array.
 > However you can't _reassign_ `tasks` to something else, i.e. you can't write something like `tasks = [1]`.
@@ -61,13 +63,14 @@ JavaScript has some elegant syntax for working with arrays. If you want to assig
 const firstTask = tasks[0];
 const secondTask = tasks[1];
 const thirdTask = tasks[2];
-````
+```
 
 This is (you guessed it) _tedious_.
 Instead you can use the **array destructuring assignment**:
 
 ```js
 const [firstTask, secondTask, thirdTask] = tasks;
+console.log(secondTask); // Second task
 ```
 
 If you only care about some of the elements, you can use the **spread** (`...`) syntax:
@@ -209,7 +212,8 @@ const person = {
 };
 ```
 
-This has the _potential_ problem that someone referring to `person.task` will have no idea whether it is `undefined` because the property is not supposhttps://uhasker.github.io/getting-things-done-in-next-js/chapter1/03-arrays-and-objects.html
+This has the _potential_ problem that someone referring to `person.task` will have no idea whether it is `undefined`,
+because the property is not supposed to exist at all or because it is explicitly undefined.
 There is nothing that prevents you from using `undefined` to denote absence all the time and in fact we will do so in this very book.
 Just keep in mind that `null` exists and that some developers use it to indicate absence (and that it's totally fine to do so).
 
