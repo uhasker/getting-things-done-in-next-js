@@ -53,7 +53,7 @@ Additionally search engines will usually look at the `alt` attributes of images 
 You should therefore _always_ include the `alt` attribute for every image you serve.
 
 > The `alt` attribute is a typical example of semantically correct HTML.
-> Sure, you page will usually look right even if you don't use it, but the user experience for some users will be much worse.
+> Sure, your page will usually look right even if you don't use it, but the user experience for some users will be much worse.
 
 ### Image Links
 

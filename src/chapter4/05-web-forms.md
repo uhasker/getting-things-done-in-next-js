@@ -27,7 +27,7 @@ Forms can be created using the `<form>` element:
 ```
 
 > Note that usually `<form>` elements contain an `action` attribute which defines the URL where the form's data should be submitted.
-> However in this book we will handle form submissions manually, so we won't go in detail on the `action` attribute.
+> However, in this book we will handle form submissions manually, so we won't go into detail on the `action` attribute.
 
 Let's now add the form control for the username along with a label (note that the elements should go in between the `<form></form>` tags):
 
@@ -53,7 +53,7 @@ In this case the ID of the `<input>` element is `name` and therefore the `for` a
 
 Now let's add the form control for the email.
 We could theoretically use the `text` type again, however HTML provides us a custom email type called `email`.
-This field looks a like a regular text input, but has a few additional nice properties - for example the email is validated on submission:
+This field looks like a regular text input, but has a few additional nice properties - for example the email is validated on submission:
 
 ```html
 <!-- The label -->
@@ -62,7 +62,7 @@ This field looks a like a regular text input, but has a few additional nice prop
 <input type="email" id="email" name="email" />
 ```
 
-Finally for the multiline text we will use the `<textarea>` element:
+Finally, for the multiline text, we will use the `<textarea>` element:
 
 ```html
 <!-- The label -->
@@ -83,7 +83,7 @@ Here is how the final form will look like:
 <form id="contact">
   <label for="name">Name:</label>
   <input type="text" id="name" name="name" />
-  <label for="email">Name:</label>
+  <label for="email">Email:</label>
   <input type="email" id="email" name="email" />
   <label for="message">Message:</label>
   <textarea id="message" name="message"></textarea>
@@ -101,7 +101,7 @@ We can use the `<fieldset>` and `<legend>` attrributes to further improve our fo
     <legend>Message Form</legend>
     <label for="name">Name:</label>
     <input type="text" id="name" name="name" />
-    <label for="email">Name:</label>
+    <label for="email">Email:</label>
     <input type="email" id="email" name="email" />
     <label for="message">Message:</label>
     <textarea id="message" name="message"></textarea>

@@ -8,7 +8,7 @@ Create a project directory (_easy-opus_ for example).
 From here on, all work will be done within the _easy-opus_ directory.
 
 Now, let's create a webpage using **HTML**, a markup language designed for defining documents to be displayed in a browser.
-We briefly touched on HTML in section 1.1, but now we will look at HTML a bit more detail.
+We briefly touched on HTML in section 1.1, but now we will look at HTML a bit more in detail.
 
 > Markup languages provide rules for defining the type of information contained in a document.
 > Markup languages differ from programming languages - while markup languages enable the creation of displayable documents, programming languages offer much more powerful capabilities.
