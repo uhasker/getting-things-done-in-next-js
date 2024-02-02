@@ -111,7 +111,6 @@ Now we can use the `Box` type with any type:
 const box = {
   content: 0,
 };
-// TODO: yeah but you won't see it
 
 // box2 has the type Box<string>
 const box2 = {
@@ -147,7 +146,6 @@ const ScoreRecord: Record<string, number> = {
 Two other generic data structures that you know about are sets and maps:
 
 ```ts
-// TODO: yes, but annotating the constructor directly is preferred
 const mySet: Set<number> = new Set([1, 2, 3]);
 const myMap: Map<string, number> = new Map([
   ['Item 1', 1],

@@ -19,7 +19,6 @@ cd example
 Next we need to create the `package.json` file to indicate that this directory should be a JavaScript project:
 
 ```sh
-# TODO: we used npm previously
 pnpm init
 ```
 

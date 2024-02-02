@@ -58,7 +58,6 @@ Remember that in a real codebase we would let TypeScript infer the variables:
 
 ```ts
 const id = 1;
-// TODO: this will not be inferred as `string`
 const task = 'Read the Next.js book';
 const inProgress = true;
 const undefinedTask = undefined;
