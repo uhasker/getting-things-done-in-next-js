@@ -261,7 +261,7 @@ export default function Counter() {
 }
 </code></pre>
 <p>If you go to <code>http://localhost:3000/counter</code>, you will see that the message is output both on the server as well as the client.
-If you click the button, you will see that message is output only on the client (since the component only rerenders there).
+If you click the button, you will see that the message is output only on the client (since the component only rerenders there).
 However, if you refresh the page, you will observe that the message is again logged both to the server as well as the client.</p>
 <h3 id="when-to-use-what"><a class="header" href="#when-to-use-what">When to use what?</a></h3>
 <p>Use server components if:</p>
@@ -271,7 +271,7 @@ However, if you refresh the page, you will observe that the message is again log
 <li>you need to keep sensitive information on the server</li>
 <li>you want to keep large dependencies on the server</li>
 </ul>
-<p>Use client components if:</p>
+<p>Use client components only if:</p>
 <ul>
 <li>you need event listeners (like <code>onClick</code>)</li>
 <li>you need to use <code>useState</code>, <code>useEffect</code> or <code>useReducer</code></li>
