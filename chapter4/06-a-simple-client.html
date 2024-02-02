@@ -216,7 +216,7 @@ const taskForm = document.querySelector('#taskForm');
 </code></pre>
 <h3 id="adding-an-event-listener"><a class="header" href="#adding-an-event-listener">Adding an Event Listener</a></h3>
 <p>Next, we need to add an event listener to <code>taskForm</code>.</p>
-<p>The <code>event.currentTarget</code> will have the proeprty <code>elements</code> which contains <code>taskInput</code> whose property <code>value</code> contains our input:</p>
+<p>The <code>event.currentTarget</code> will have the property <code>elements</code> which contains <code>taskInput</code> whose property <code>value</code> contains our input:</p>
 <pre><code class="language-js">taskForm.addEventListener('submit', function (event) {
   // Prevent default form submission
   event.preventDefault();
@@ -225,7 +225,7 @@ const taskForm = document.querySelector('#taskForm');
 });
 </code></pre>
 <p>This should log the input.</p>
-<p>Lets now store it in a variable and use <code>trim</code> to remove whitespace:</p>
+<p>Lets now store it in a variable and use <code>trim</code> to remove whitespace from both ends:</p>
 <pre><code class="language-js">taskForm.addEventListener('submit', function (event) {
   // Prevent default form submission
   event.preventDefault();
@@ -248,7 +248,7 @@ const taskForm = document.querySelector('#taskForm');
   event.currentTarget.taskInput.value = '';
 });
 </code></pre>
-<p>Now you click the button, you will see that a task will be added.</p>
+<p>When you now click the button, you will see that a new task will be added.</p>
 <h3 id="adding-a-delete-button"><a class="header" href="#adding-a-delete-button">Adding a Delete Button</a></h3>
 <p>As you complete the project, the <em>Project Manager</em> once again walks up to you and remembers that it might be a good idea to allow the user to delete tasks.
 So now you need to add a delete button.</p>

@@ -194,7 +194,7 @@ For example a textual form control for providing a message might be paired with 
 </code></pre>
 <blockquote>
 <p>Note that usually <code>&lt;form&gt;</code> elements contain an <code>action</code> attribute which defines the URL where the form's data should be submitted.
-However in this book we will handle form submissions manually, so we won't go in detail on the <code>action</code> attribute.</p>
+However, in this book we will handle form submissions manually, so we won't go into detail on the <code>action</code> attribute.</p>
 </blockquote>
 <p>Let's now add the form control for the username along with a label (note that the elements should go in between the <code>&lt;form&gt;&lt;/form&gt;</code> tags):</p>
 <pre><code class="language-html">&lt;!-- The label --&gt;
@@ -214,13 +214,13 @@ The <code>for</code> attribute of the label must be an ID for a form control.
 In this case the ID of the <code>&lt;input&gt;</code> element is <code>name</code> and therefore the <code>for</code> attribute of the <code>&lt;label&gt;</code> element has <code>name</code> as its value.</p>
 <p>Now let's add the form control for the email.
 We could theoretically use the <code>text</code> type again, however HTML provides us a custom email type called <code>email</code>.
-This field looks a like a regular text input, but has a few additional nice properties - for example the email is validated on submission:</p>
+This field looks like a regular text input, but has a few additional nice properties - for example the email is validated on submission:</p>
 <pre><code class="language-html">&lt;!-- The label --&gt;
 &lt;label for=&quot;email&quot;&gt;Email:&lt;/label&gt;
 &lt;!-- The form control--&gt;
 &lt;input type=&quot;email&quot; id=&quot;email&quot; name=&quot;email&quot; /&gt;
 </code></pre>
-<p>Finally for the multiline text we will use the <code>&lt;textarea&gt;</code> element:</p>
+<p>Finally, for the multiline text, we will use the <code>&lt;textarea&gt;</code> element:</p>
 <pre><code class="language-html">&lt;!-- The label --&gt;
 &lt;label for=&quot;message&quot;&gt;Message:&lt;/label&gt;
 &lt;!-- The form control--&gt;
@@ -233,7 +233,7 @@ This field looks a like a regular text input, but has a few additional nice prop
 <pre><code class="language-html">&lt;form id=&quot;contact&quot;&gt;
   &lt;label for=&quot;name&quot;&gt;Name:&lt;/label&gt;
   &lt;input type=&quot;text&quot; id=&quot;name&quot; name=&quot;name&quot; /&gt;
-  &lt;label for=&quot;email&quot;&gt;Name:&lt;/label&gt;
+  &lt;label for=&quot;email&quot;&gt;Email:&lt;/label&gt;
   &lt;input type=&quot;email&quot; id=&quot;email&quot; name=&quot;email&quot; /&gt;
   &lt;label for=&quot;message&quot;&gt;Message:&lt;/label&gt;
   &lt;textarea id=&quot;message&quot; name=&quot;message&quot;&gt;&lt;/textarea&gt;
@@ -247,7 +247,7 @@ This field looks a like a regular text input, but has a few additional nice prop
     &lt;legend&gt;Message Form&lt;/legend&gt;
     &lt;label for=&quot;name&quot;&gt;Name:&lt;/label&gt;
     &lt;input type=&quot;text&quot; id=&quot;name&quot; name=&quot;name&quot; /&gt;
-    &lt;label for=&quot;email&quot;&gt;Name:&lt;/label&gt;
+    &lt;label for=&quot;email&quot;&gt;Email:&lt;/label&gt;
     &lt;input type=&quot;email&quot; id=&quot;email&quot; name=&quot;email&quot; /&gt;
     &lt;label for=&quot;message&quot;&gt;Message:&lt;/label&gt;
     &lt;textarea id=&quot;message&quot; name=&quot;message&quot;&gt;&lt;/textarea&gt;

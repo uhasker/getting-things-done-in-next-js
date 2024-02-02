@@ -188,7 +188,7 @@ This sounds <em>way</em> scarier than it really is, so let's consider the follow
 The <code>&lt;div&gt;</code> element is the <em>parent</em> of the <code>&lt;p&gt;</code> elements and the <code>&lt;p&gt;</code> elements are the <em>children</em> of the <code>&lt;div&gt;</code> element.
 The elements form a (very small) <em>tree</em>:</p>
 <p><img src="images/small_tree.png" alt="" /></p>
-<p>Let's take a bigger document:</p>
+<p>Let's take a look at a bigger document:</p>
 <pre><code class="language-html">&lt;div id=&quot;app&quot;&gt;
   &lt;h1&gt;My tasks&lt;/h1&gt;
   &lt;div id=&quot;taskList&quot;&gt;
@@ -205,7 +205,7 @@ On the other hand, HTML is a <em>specific language</em> that encodes a particula
 <p>To simplify, <em>you</em> write HTML, the browser parses that and then <em>the browser</em> displays a DOM tree.</p>
 <h2 id="manipulating-the-dom-using-javascript"><a class="header" href="#manipulating-the-dom-using-javascript">Manipulating the DOM using JavaScript</a></h2>
 <p>Whenever you write applications which have a lot of logic in the client, you will need to manipulate the DOM (i.e. add, remove, change or retrieve elements).
-This can be done by using JavaScript functions that exist on the <code>document</code> object, which is is a global variable that refers to currently rendered DOM tree.</p>
+This can be done by using JavaScript functions that exist on the <code>document</code> object, which is is a global variable that refers to the currently rendered DOM tree.</p>
 <p>For the rest of this section, we will consider the following document:</p>
 <pre><code class="language-html">&lt;!doctype html&gt;
 &lt;html lang=&quot;en&quot;&gt;
@@ -274,7 +274,7 @@ element.id = 'thirdParagraph';
 element.classList.add('task');
 element.innerHTML = 'New task';
 </code></pre>
-<p>You can append an element a last child of a parent element using <code>parentElement.appendChild(childElement)</code>.
+<p>You can append an element as a last child of a parent element using <code>parentElement.appendChild(childElement)</code>.
 For example to append the newly created <code>element</code> to another element <code>taskList</code> you would write this:</p>
 <pre><code class="language-js">// Retrieve the taskList element
 const taskList = document.querySelector('#taskList');
@@ -316,7 +316,7 @@ taskList.appendChild(paragraph);
 &lt;/html&gt;
 </code></pre>
 <blockquote>
-<p>Note that if we want this code to work correctly, if we click the button multiple times, we should change the ID on each button click.
+<p>Note that if we want this code to work correctly when clicking the button multiple times, we should change the ID on each button click.
 Try doing this by yourself.</p>
 </blockquote>
 

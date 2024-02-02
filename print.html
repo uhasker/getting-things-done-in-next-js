@@ -4024,7 +4024,7 @@ For example, a request might contain a &quot;Cookie&quot; header containing the 
 A response might contain a &quot;Set-Cookie&quot; header which contains the cookies that the browser should set (or clear).</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="chapter-4-a-vanilla-client"><a class="header" href="#chapter-4-a-vanilla-client">Chapter 4: A Vanilla Client</a></h1>
 <div style="text-align: right"> <i> Whenever you write a web app in vanilla JavaScript, you end up creating your own framework. <br> And who in their right mind wants another JavaScript framework? <br> - Common programmer idiom </i> </div>
-<p>In this chapter we will write a client a in <em>vanilla</em> HTML and JavaScript (i.e. without using any frameworks).
+<p>In this chapter we will write a client in <em>vanilla</em> HTML and JavaScript (i.e. without using any frameworks).
 Then we will realize why this is not such a great idea and why we might want to consider using a library (spoiler: it's going to be React) to help us out.</p>
 <p>If this sounds like a pointless exercise - it's not.
 You need to know the basics of HTML anyway (even if you will use React for everything later).
@@ -4037,7 +4037,7 @@ In order to accomplish this, you will need a solid foundation to build on.</p>
 <p>Create a project directory (<em>easy-opus</em> for example).
 From here on, all work will be done within the <em>easy-opus</em> directory.</p>
 <p>Now, let's create a webpage using <strong>HTML</strong>, a markup language designed for defining documents to be displayed in a browser.
-We briefly touched on HTML in section 1.1, but now we will look at HTML a bit more detail.</p>
+We briefly touched on HTML in section 1.1, but now we will look at HTML a bit more in detail.</p>
 <blockquote>
 <p>Markup languages provide rules for defining the type of information contained in a document.
 Markup languages differ from programming languages - while markup languages enable the creation of displayable documents, programming languages offer much more powerful capabilities.
@@ -4175,7 +4175,7 @@ It will usually be visually presented as a horizontal line.</p>
 </code></pre>
 <p>Often the <code>&lt;hr /&gt;</code> element is used to introduce thematic breaks between paragraphs.</p>
 <h3 id="heading-elements"><a class="header" href="#heading-elements">Heading Elements</a></h3>
-<p>There are six heading elements <code>&lt;h1&gt;</code> to <code>&lt;h6&gt;</code>.
+<p>There are six heading elements, <code>&lt;h1&gt;</code> to <code>&lt;h6&gt;</code>.
 The different heading elements represent different &quot;heading levels&quot;, e.g. <code>&lt;h1&gt;</code> is the main heading, <code>&lt;h2&gt;</code> a subheading and so on:</p>
 <pre><code class="language-html">&lt;h1&gt;Main heading&lt;/h1&gt;
 
@@ -4286,7 +4286,7 @@ Try misspelling the filename on purpose and you will see the textual replacement
 <p>You should therefore <em>always</em> include the <code>alt</code> attribute for every image you serve.</p>
 <blockquote>
 <p>The <code>alt</code> attribute is a typical example of semantically correct HTML.
-Sure, you page will usually look right even if you don't use it, but the user experience for some users will be much worse.</p>
+Sure, your page will usually look right even if you don't use it, but the user experience for some users will be much worse.</p>
 </blockquote>
 <h3 id="image-links"><a class="header" href="#image-links">Image Links</a></h3>
 <p>You can use the fact that HTML elements can be made into links to create image links:</p>
@@ -4310,7 +4310,7 @@ This sounds <em>way</em> scarier than it really is, so let's consider the follow
 The <code>&lt;div&gt;</code> element is the <em>parent</em> of the <code>&lt;p&gt;</code> elements and the <code>&lt;p&gt;</code> elements are the <em>children</em> of the <code>&lt;div&gt;</code> element.
 The elements form a (very small) <em>tree</em>:</p>
 <p><img src="chapter4/images/small_tree.png" alt="" /></p>
-<p>Let's take a bigger document:</p>
+<p>Let's take a look at a bigger document:</p>
 <pre><code class="language-html">&lt;div id=&quot;app&quot;&gt;
   &lt;h1&gt;My tasks&lt;/h1&gt;
   &lt;div id=&quot;taskList&quot;&gt;
@@ -4327,7 +4327,7 @@ On the other hand, HTML is a <em>specific language</em> that encodes a particula
 <p>To simplify, <em>you</em> write HTML, the browser parses that and then <em>the browser</em> displays a DOM tree.</p>
 <h2 id="manipulating-the-dom-using-javascript"><a class="header" href="#manipulating-the-dom-using-javascript">Manipulating the DOM using JavaScript</a></h2>
 <p>Whenever you write applications which have a lot of logic in the client, you will need to manipulate the DOM (i.e. add, remove, change or retrieve elements).
-This can be done by using JavaScript functions that exist on the <code>document</code> object, which is is a global variable that refers to currently rendered DOM tree.</p>
+This can be done by using JavaScript functions that exist on the <code>document</code> object, which is is a global variable that refers to the currently rendered DOM tree.</p>
 <p>For the rest of this section, we will consider the following document:</p>
 <pre><code class="language-html">&lt;!doctype html&gt;
 &lt;html lang=&quot;en&quot;&gt;
@@ -4396,7 +4396,7 @@ element.id = 'thirdParagraph';
 element.classList.add('task');
 element.innerHTML = 'New task';
 </code></pre>
-<p>You can append an element a last child of a parent element using <code>parentElement.appendChild(childElement)</code>.
+<p>You can append an element as a last child of a parent element using <code>parentElement.appendChild(childElement)</code>.
 For example to append the newly created <code>element</code> to another element <code>taskList</code> you would write this:</p>
 <pre><code class="language-js">// Retrieve the taskList element
 const taskList = document.querySelector('#taskList');
@@ -4438,7 +4438,7 @@ taskList.appendChild(paragraph);
 &lt;/html&gt;
 </code></pre>
 <blockquote>
-<p>Note that if we want this code to work correctly, if we click the button multiple times, we should change the ID on each button click.
+<p>Note that if we want this code to work correctly when clicking the button multiple times, we should change the ID on each button click.
 Try doing this by yourself.</p>
 </blockquote>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="web-forms"><a class="header" href="#web-forms">Web Forms</a></h2>
@@ -4462,7 +4462,7 @@ For example a textual form control for providing a message might be paired with 
 </code></pre>
 <blockquote>
 <p>Note that usually <code>&lt;form&gt;</code> elements contain an <code>action</code> attribute which defines the URL where the form's data should be submitted.
-However in this book we will handle form submissions manually, so we won't go in detail on the <code>action</code> attribute.</p>
+However, in this book we will handle form submissions manually, so we won't go into detail on the <code>action</code> attribute.</p>
 </blockquote>
 <p>Let's now add the form control for the username along with a label (note that the elements should go in between the <code>&lt;form&gt;&lt;/form&gt;</code> tags):</p>
 <pre><code class="language-html">&lt;!-- The label --&gt;
@@ -4482,13 +4482,13 @@ The <code>for</code> attribute of the label must be an ID for a form control.
 In this case the ID of the <code>&lt;input&gt;</code> element is <code>name</code> and therefore the <code>for</code> attribute of the <code>&lt;label&gt;</code> element has <code>name</code> as its value.</p>
 <p>Now let's add the form control for the email.
 We could theoretically use the <code>text</code> type again, however HTML provides us a custom email type called <code>email</code>.
-This field looks a like a regular text input, but has a few additional nice properties - for example the email is validated on submission:</p>
+This field looks like a regular text input, but has a few additional nice properties - for example the email is validated on submission:</p>
 <pre><code class="language-html">&lt;!-- The label --&gt;
 &lt;label for=&quot;email&quot;&gt;Email:&lt;/label&gt;
 &lt;!-- The form control--&gt;
 &lt;input type=&quot;email&quot; id=&quot;email&quot; name=&quot;email&quot; /&gt;
 </code></pre>
-<p>Finally for the multiline text we will use the <code>&lt;textarea&gt;</code> element:</p>
+<p>Finally, for the multiline text, we will use the <code>&lt;textarea&gt;</code> element:</p>
 <pre><code class="language-html">&lt;!-- The label --&gt;
 &lt;label for=&quot;message&quot;&gt;Message:&lt;/label&gt;
 &lt;!-- The form control--&gt;
@@ -4501,7 +4501,7 @@ This field looks a like a regular text input, but has a few additional nice prop
 <pre><code class="language-html">&lt;form id=&quot;contact&quot;&gt;
   &lt;label for=&quot;name&quot;&gt;Name:&lt;/label&gt;
   &lt;input type=&quot;text&quot; id=&quot;name&quot; name=&quot;name&quot; /&gt;
-  &lt;label for=&quot;email&quot;&gt;Name:&lt;/label&gt;
+  &lt;label for=&quot;email&quot;&gt;Email:&lt;/label&gt;
   &lt;input type=&quot;email&quot; id=&quot;email&quot; name=&quot;email&quot; /&gt;
   &lt;label for=&quot;message&quot;&gt;Message:&lt;/label&gt;
   &lt;textarea id=&quot;message&quot; name=&quot;message&quot;&gt;&lt;/textarea&gt;
@@ -4515,7 +4515,7 @@ This field looks a like a regular text input, but has a few additional nice prop
     &lt;legend&gt;Message Form&lt;/legend&gt;
     &lt;label for=&quot;name&quot;&gt;Name:&lt;/label&gt;
     &lt;input type=&quot;text&quot; id=&quot;name&quot; name=&quot;name&quot; /&gt;
-    &lt;label for=&quot;email&quot;&gt;Name:&lt;/label&gt;
+    &lt;label for=&quot;email&quot;&gt;Email:&lt;/label&gt;
     &lt;input type=&quot;email&quot; id=&quot;email&quot; name=&quot;email&quot; /&gt;
     &lt;label for=&quot;message&quot;&gt;Message:&lt;/label&gt;
     &lt;textarea id=&quot;message&quot; name=&quot;message&quot;&gt;&lt;/textarea&gt;
@@ -4587,7 +4587,7 @@ const taskForm = document.querySelector('#taskForm');
 </code></pre>
 <h3 id="adding-an-event-listener"><a class="header" href="#adding-an-event-listener">Adding an Event Listener</a></h3>
 <p>Next, we need to add an event listener to <code>taskForm</code>.</p>
-<p>The <code>event.currentTarget</code> will have the proeprty <code>elements</code> which contains <code>taskInput</code> whose property <code>value</code> contains our input:</p>
+<p>The <code>event.currentTarget</code> will have the property <code>elements</code> which contains <code>taskInput</code> whose property <code>value</code> contains our input:</p>
 <pre><code class="language-js">taskForm.addEventListener('submit', function (event) {
   // Prevent default form submission
   event.preventDefault();
@@ -4596,7 +4596,7 @@ const taskForm = document.querySelector('#taskForm');
 });
 </code></pre>
 <p>This should log the input.</p>
-<p>Lets now store it in a variable and use <code>trim</code> to remove whitespace:</p>
+<p>Lets now store it in a variable and use <code>trim</code> to remove whitespace from both ends:</p>
 <pre><code class="language-js">taskForm.addEventListener('submit', function (event) {
   // Prevent default form submission
   event.preventDefault();
@@ -4619,7 +4619,7 @@ const taskForm = document.querySelector('#taskForm');
   event.currentTarget.taskInput.value = '';
 });
 </code></pre>
-<p>Now you click the button, you will see that a task will be added.</p>
+<p>When you now click the button, you will see that a new task will be added.</p>
 <h3 id="adding-a-delete-button"><a class="header" href="#adding-a-delete-button">Adding a Delete Button</a></h3>
 <p>As you complete the project, the <em>Project Manager</em> once again walks up to you and remembers that it might be a good idea to allow the user to delete tasks.
 So now you need to add a delete button.</p>
