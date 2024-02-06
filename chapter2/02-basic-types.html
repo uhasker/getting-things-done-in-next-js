@@ -246,7 +246,7 @@ In this example <code>evenNumbers</code> would have the type <code>number[]</cod
 const tasks: string[] = ['First task', 'Second task', 'Third task'];
 </code></pre>
 <h3 id="typing-objects"><a class="header" href="#typing-objects">Typing Objects</a></h3>
-<p>You can type an object by writing the property names and types of its properties inside curly braces <code>{}</code>.
+<p>You can type an object by writing the property keys and types of its properties inside curly braces <code>{}</code>.
 For example here is how you could declare an object that has the properties <code>id</code> of type <code>number</code>, <code>title</code> of type <code>string</code> and <code>description</code> of type <code>string</code>:</p>
 <pre><code class="language-ts">const task: { id: number; title: string; description: string } = {
   id: 1,
@@ -255,11 +255,17 @@ For example here is how you could declare an object that has the properties <cod
 };
 </code></pre>
 <p>You can mark properties as <em>optional</em> by using the question mark <code>?</code>.
-If a property is marked as optional, you don't need to specify it.
+If a property is marked as optional, you can either assign <code>undefined</code> to it or not specify it altogether.
 For example this is valid:</p>
 <pre><code class="language-ts">const task: { id: number; title: string; description?: string } = {
   id: 1,
   title: 'Read the Next.js book',
+};
+
+const task2: { id: number; title: string; description?: string } = {
+  id: 1,
+  title: 'Read the Next.js book',
+  description: undefined
 };
 </code></pre>
 <h3 id="type-alias"><a class="header" href="#type-alias">Type Alias</a></h3>
@@ -285,7 +291,7 @@ function getMyString(): MyString {
 
 const s: string = getMyString();
 </code></pre>
-<p>This is because TypeScript uses a <em>structural type system</em> - it doesn't matter what the types are named (except for the primitive types of course), it only matters how their <em>structure</em> looks like.</p>
+<p>This is because TypeScript uses a <em>structural type system</em> - it doesn't matter what the types are named (except for the primitive types of course), it only matters what their <em>structure</em> looks like.</p>
 <h2 id="type-assertions"><a class="header" href="#type-assertions">Type Assertions</a></h2>
 <p>Sometimes you know more about the type of a variable than TypeScript.
 For example, let's say that you have a function that returns an <code>any</code> value, but for some reason you know that in fact that value is definitely going to be a <code>string</code> in your case.
@@ -296,6 +302,9 @@ const strLength = (str as string).length;
 </code></pre>
 <p>You should use type assertions <em>extremely sparingly</em> since you give up some of the benefits of using TypeScript.
 Usually there are better ways.</p>
+<blockquote>
+<p>Type Assertions are often also referred to Type Casts.</p>
+</blockquote>
 
                     </main>
 

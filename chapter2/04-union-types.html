@@ -176,7 +176,7 @@
                         <h2 id="union-types"><a class="header" href="#union-types">Union Types</a></h2>
 <h3 id="literal-types"><a class="header" href="#literal-types">Literal Types</a></h3>
 <p>A literal type is a type whose only value is a literal.
-Here is how we could define a literal type <code>&quot;Todo&quot;</code>:</p>
+Here is how we could define a literal type <code>'Todo'</code>:</p>
 <pre><code class="language-ts">type TodoType = 'Todo';
 </code></pre>
 <p>Here is how we can use it:</p>
@@ -250,7 +250,7 @@ Consider the following function:</p>
 Found 1 error in index.ts:4
 </code></pre>
 <p>TypeScript will only allow to do something with the value of a union type if that something is valid for every member of the union.
-Since <code>taskName</code> can be either a <code>string</code> or <code>undefined</code>, we can't call <code>.length</code> on it, because <code>.length</code> is not a valid property of <code>undefined</code>!</p>
+Since <code>taskName</code> can be either a <code>string</code> or <code>undefined</code>, we can't access <code>.length</code> on it, because <code>.length</code> is not a valid property of <code>undefined</code>!</p>
 <p>Instead we need to <em>narrow</em> the type with code.
 Basically, TypeScript can look at our code and try to understand that in certain code parts a value of a union type can only have the type of a particular member of the union.</p>
 <p>The simplest way of narrowing a type is <strong>equality narrowing</strong>.
@@ -321,7 +321,7 @@ TypeScript knows how the <code>typeof</code> operator works and you can use it t
 <pre><code class="language-ts">let input: string | undefined = 'Some string';
 let trimmedInput: string = input!.trim();
 </code></pre>
-<p>Just as with type assertions, you should use this extremely sparingly and usually there is a better way.</p>
+<p>Just as with type assertions, you should use this <em>extremely sparingly</em> and usually there is a better way.</p>
 <h3 id="type-predicates"><a class="header" href="#type-predicates">Type Predicates</a></h3>
 <p>We can write user-defined type guards by utilizing <strong>type predicates</strong>.
 Consider the following example:</p>
@@ -334,16 +334,16 @@ However the inferred type of <code>filteredArray</code> would still be <code>(st
 <pre><code class="language-ts">const array = ['Hello', undefined, 'World', undefined];
 const filteredArray = array.filter((val) =&gt; val !== undefined) as string[];
 </code></pre>
-<p>However instead of yelling at the TypeScript compiler to shut up, we can choose a better way and write a user-defined type guard:</p>
-<pre><code class="language-ts">function isDefined(val: string | undefined): val is string {
-  return val !== undefined;
+<p>However instead of yelling at the TypeScript compiler that we know better, we can choose a better way and write a user-defined type guard:</p>
+<pre><code class="language-ts">function isString(val: string | undefined): val is string {
+  return typeof val === 'string';
 }
 </code></pre>
-<p>The <code>isDefined</code> function is a type guard, because it's return type is the type predicate <code>val is string</code>.
+<p>The <code>isString</code> function is a type guard, because it's return type is the type predicate <code>val is string</code>.
 Generally, a type predicate must have the form <code>parameter is Type</code> where <code>parameter</code> is the name of a parameter from the function signature.</p>
 <p>We can use the type guard like this:</p>
 <pre><code class="language-ts">const array = ['Hello', undefined, 'World', undefined];
-const filteredArray = array.filter(isDefined);
+const filteredArray = array.filter(isString);
 </code></pre>
 <p>Now the inferred type of <code>filteredArray</code> will be <code>string[]</code> - and all that without using a single type assertion.
 Hooray!</p>
