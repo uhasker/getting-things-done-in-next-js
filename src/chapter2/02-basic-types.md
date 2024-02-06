@@ -145,7 +145,7 @@ const task: { id: number; title: string; description?: string } = {
 const task2: { id: number; title: string; description?: string } = {
   id: 1,
   title: 'Read the Next.js book',
-  description: undefined
+  description: undefined,
 };
 ```
 
