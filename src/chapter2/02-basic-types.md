@@ -121,7 +121,7 @@ const tasks: string[] = ['First task', 'Second task', 'Third task'];
 
 ### Typing Objects
 
-You can type an object by writing the property names and types of its properties inside curly braces `{}`.
+You can type an object by writing the property keys and types of its properties inside curly braces `{}`.
 For example here is how you could declare an object that has the properties `id` of type `number`, `title` of type `string` and `description` of type `string`:
 
 ```ts
@@ -133,13 +133,19 @@ const task: { id: number; title: string; description: string } = {
 ```
 
 You can mark properties as _optional_ by using the question mark `?`.
-If a property is marked as optional, you don't need to specify it.
+If a property is marked as optional, you can either assign `undefined` to it or not specify it altogether.
 For example this is valid:
 
 ```ts
 const task: { id: number; title: string; description?: string } = {
   id: 1,
   title: 'Read the Next.js book',
+};
+
+const task2: { id: number; title: string; description?: string } = {
+  id: 1,
+  title: 'Read the Next.js book',
+  description: undefined
 };
 ```
 
@@ -176,7 +182,7 @@ function getMyString(): MyString {
 const s: string = getMyString();
 ```
 
-This is because TypeScript uses a _structural type system_ - it doesn't matter what the types are named (except for the primitive types of course), it only matters how their _structure_ looks like.
+This is because TypeScript uses a _structural type system_ - it doesn't matter what the types are named (except for the primitive types of course), it only matters what their _structure_ looks like.
 
 ## Type Assertions
 
@@ -193,3 +199,5 @@ const strLength = (str as string).length;
 
 You should use type assertions _extremely sparingly_ since you give up some of the benefits of using TypeScript.
 Usually there are better ways.
+
+> Type Assertions are often also referred to Type Casts.

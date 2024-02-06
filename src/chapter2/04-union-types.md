@@ -3,7 +3,7 @@
 ### Literal Types
 
 A literal type is a type whose only value is a literal.
-Here is how we could define a literal type `"Todo"`:
+Here is how we could define a literal type `'Todo'`:
 
 ```ts
 type TodoType = 'Todo';
@@ -119,7 +119,7 @@ Found 1 error in index.ts:4
 ```
 
 TypeScript will only allow to do something with the value of a union type if that something is valid for every member of the union.
-Since `taskName` can be either a `string` or `undefined`, we can't call `.length` on it, because `.length` is not a valid property of `undefined`!
+Since `taskName` can be either a `string` or `undefined`, we can't access `.length` on it, because `.length` is not a valid property of `undefined`!
 
 Instead we need to _narrow_ the type with code.
 Basically, TypeScript can look at our code and try to understand that in certain code parts a value of a union type can only have the type of a particular member of the union.
@@ -214,7 +214,7 @@ let input: string | undefined = 'Some string';
 let trimmedInput: string = input!.trim();
 ```
 
-Just as with type assertions, you should use this extremely sparingly and usually there is a better way.
+Just as with type assertions, you should use this _extremely sparingly_ and usually there is a better way.
 
 ### Type Predicates
 
@@ -236,22 +236,22 @@ const array = ['Hello', undefined, 'World', undefined];
 const filteredArray = array.filter((val) => val !== undefined) as string[];
 ```
 
-However instead of yelling at the TypeScript compiler to shut up, we can choose a better way and write a user-defined type guard:
+However instead of yelling at the TypeScript compiler that we know better, we can choose a better way and write a user-defined type guard:
 
 ```ts
-function isDefined(val: string | undefined): val is string {
-  return val !== undefined;
+function isString(val: string | undefined): val is string {
+  return typeof val === 'string';
 }
 ```
 
-The `isDefined` function is a type guard, because it's return type is the type predicate `val is string`.
+The `isString` function is a type guard, because it's return type is the type predicate `val is string`.
 Generally, a type predicate must have the form `parameter is Type` where `parameter` is the name of a parameter from the function signature.
 
 We can use the type guard like this:
 
 ```ts
 const array = ['Hello', undefined, 'World', undefined];
-const filteredArray = array.filter(isDefined);
+const filteredArray = array.filter(isString);
 ```
 
 Now the inferred type of `filteredArray` will be `string[]` - and all that without using a single type assertion.
