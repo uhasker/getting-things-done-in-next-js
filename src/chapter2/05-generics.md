@@ -153,6 +153,16 @@ const myMap: Map<string, number> = new Map([
 ]);
 ```
 
+This example can also be written like this:
+
+```ts
+const mySet = new Set<number>([1, 2, 3]);
+const myMap = new Map<string, number>([
+  ['Item 1', 1],
+  ['Item 2', 2],
+]);
+```
+
 One other very important generic type is the `Promise<Type>` type which is most commonly used to annotate asynchronous functions.
 For example, if we have an asynchronous function `f` that returns a promise with a string, we would annotate it like this:
 
