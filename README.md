@@ -18,7 +18,7 @@ Chapters on the following topics are currently planned:
 - [x] HTML
 - [x] React
 - [x] Next.js
-- [ ] Tailwind CSS
+- [x] Tailwind CSS
 - [ ] SQL
 - [ ] Drizzle
 - [ ] The Project
