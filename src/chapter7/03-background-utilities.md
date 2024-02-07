@@ -1,4 +1,4 @@
-## Background Utility Classes
+## Background Utilities
 
 ### Background Color
 

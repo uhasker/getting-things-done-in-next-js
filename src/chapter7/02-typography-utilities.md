@@ -1,4 +1,4 @@
-## Typography Utility Classes
+## Typography Utilities
 
 Consider the following component:
 
