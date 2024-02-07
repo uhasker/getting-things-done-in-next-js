@@ -54,3 +54,14 @@
   - [Pages and Layouts](chapter6/02-pages-and-layouts.md)
   - [More on Routes](chapter6/03-more-on-routes.md)
   - [Server and Client Components](chapter6/04-server-and-client-components.md)
+
+- [Becoming Pretty with Tailwind CSS](chapter7/README.md)
+
+  - [Setup](chapter7/01-setup.md)
+  - [Typography Utilities](chapter7/02-typography-utilities.md)
+  - [Background Utilities](chapter7/03-background-utilities.md)
+  - [Size Utilities](chapter7/04-size-utilities.md)
+  - [Border Utilities](chapter7/05-border-utilities.md)
+  - [Spacing Utilities](chapter7/06-spacing-utilities.md)
+  - [Flexbox](chapter7/07-flexbox.md)
+  - [Grid](chapter7/08-grid.md)
