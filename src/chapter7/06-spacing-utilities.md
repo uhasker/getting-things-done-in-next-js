@@ -61,35 +61,3 @@ export default function Home() {
   );
 }
 ```
-
-### Space Between
-
-You can control horizontal space between elements using `space-x-{amount}` utilities:
-
-```jsx
-export default function Home() {
-  return (
-    <div className="flex space-x-8">
-      <div className="size-32 bg-blue-500">First element</div>
-      <div className="size-32 bg-blue-500">Second element</div>
-      <div className="size-32 bg-blue-500">Third element</div>
-    </div>
-  );
-}
-```
-
-You can control vertical space between elements using `space-y-{amount}` utilities:
-
-```jsx
-export default function Home() {
-  return (
-    <div className="flex flex-col space-y-8">
-      <div className="size-32 bg-blue-500">First element</div>
-      <div className="size-32 bg-blue-500">Second element</div>
-      <div className="size-32 bg-blue-500">Third element</div>
-    </div>
-  );
-}
-```
-
-> We will cover the meaning of `flex` and `flex-col` in the next section.
