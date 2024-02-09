@@ -65,3 +65,12 @@
   - [Spacing Utilities](chapter7/06-spacing-utilities.md)
   - [Flexbox](chapter7/07-flexbox.md)
   - [Grid](chapter7/08-grid.md)
+
+- [Persistence with SQL](chapter8/README.md)
+
+  - [Setup](chapter8/01-setup.md)
+  - [Inserting Rows](chapter8/02-inserting-rows.md)
+  - [Selecting Rows](chapter8/03-selecting-rows.md)
+  - [Updating Rows](chapter8/04-updating-rows.md)
+  - [Deleting Rows](chapter8/05-deleting-rows.md)
+  - [Multiple Tables](chapter8/06-multiple-tables.md)
