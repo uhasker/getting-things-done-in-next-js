@@ -80,3 +80,10 @@
   - [Selecting Data](chapter9/03-selecting-rows.md)
   - [Multiple Tables](chapter9/04-multiple-tables.md)
   - [Migrations](chapter9/05-migrations.md)
+
+- [The Project](chapter10/README.md)
+
+  - [Setup](chapter10/01-setup.md)
+  - [Task Page](chapter10/02-task-page.md)
+  - [Styling the Task Page](chapter10/03-styling-the-task-page.md)
+  - [Project Page](chapter10/04-project-page.md)
