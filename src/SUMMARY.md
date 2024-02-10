@@ -69,8 +69,14 @@
 - [Persistence with SQL](chapter8/README.md)
 
   - [Setup](chapter8/01-setup.md)
-  - [Inserting Rows](chapter8/02-inserting-rows.md)
-  - [Selecting Rows](chapter8/03-selecting-rows.md)
-  - [Updating Rows](chapter8/04-updating-rows.md)
-  - [Deleting Rows](chapter8/05-deleting-rows.md)
-  - [Multiple Tables](chapter8/06-multiple-tables.md)
+  - [Inserting, Updating and Deleting Data](chapter8/02-inserting-updating-and-deleting-data.md)
+  - [Selecting Data](chapter8/03-selecting-rows.md)
+  - [Multiple Tables](chapter8/04-multiple-tables.md)
+
+- [Type-safe SQL with Drizzle](chapter9/README.md)
+
+  - [Setup](chapter9/01-setup.md)
+  - [Inserting, Updating and Deleting Data](chapter9/02-inserting-updating-and-deleting-data.md)
+  - [Selecting Data](chapter9/03-selecting-rows.md)
+  - [Multiple Tables](chapter9/04-multiple-tables.md)
+  - [Migrations](chapter9/05-migrations.md)

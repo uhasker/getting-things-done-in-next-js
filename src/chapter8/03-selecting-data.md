@@ -1,4 +1,4 @@
-## Selecting Rows
+## Selecting Data
 
 You can you the `select` statement to select rows.
 
