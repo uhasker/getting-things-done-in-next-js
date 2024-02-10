@@ -178,3 +178,50 @@ To simplify future migrations, we will add the following to the `package.json`:
 ```
 
 Now all we have to do is to run `pnpm db:generate` to generate a migration and `pnpm db:migrate` to execute a migration.
+
+Create the `db/index.ts` file:
+
+```ts
+import { drizzle } from 'drizzle-orm/postgres-js';
+import postgres from 'postgres';
+
+const databaseURL = process.env.DATABASE_URL!;
+
+const client = postgres(databaseURL);
+export const db = drizzle(client);
+```
+
+### File Structure
+
+This is the file structure you should have right now:
+
+```
+├── next.config.mjs
+├── next-env.d.ts
+├── node_modules
+├── package.json
+├── pnpm-lock.yaml
+├── postcss.config.js
+├── public
+│   ├── next.svg
+│   └── vercel.svg
+├── README.md
+├── src
+│   ├── app
+│   │   ├── favicon.ico
+│   │   ├── globals.css
+│   │   ├── layout.tsx
+│   │   └── page.tsx
+│   └── db
+│       ├── drizzle.config.ts
+│       ├── index.ts
+│       ├── migrate.ts
+│       ├── migrations
+│       │   ├── 0000_moaning_doctor_doom.sql
+│       │   └── meta
+│       │       ├── 0000_snapshot.json
+│       │       └── _journal.json
+│       └── schema.ts
+├── tailwind.config.ts
+└── tsconfig.json
+```
