@@ -10,11 +10,11 @@ const projectTable = pgTable('project', {
   name: text('name').notNull(),
 });
 
-const taskTable = pgTable('task', {
-  id: serial('id').primaryKey(),
-  title: text('name').notNull(),
-  description: text('description').notNull(),
-  status: text('name').notNull(),
+export const taskTable = pgTable("task", {
+  id: serial("id").primaryKey(),
+  title: text("title").notNull(),
+  description: text("description").notNull(),
+  status: text("status").notNull(),
   projectId: integer('projectId').notNull().references(() => projectTable.id);
 });
 ```
