@@ -6,22 +6,8 @@ This is the repository for the book "Getting Things Done in Next.js", a book abo
 
 You can find the book itself at https://uhasker.github.io/getting-things-done-in-next-js/.
 
-Do note that the book is currently still very much **work in progress**.
-
-## Progress
-
-Chapters on the following topics are currently planned:
-
-- [x] JavaScript
-- [x] Networking Fundamentals
-- [x] TypeScript
-- [x] HTML
-- [x] React
-- [x] Next.js
-- [x] Tailwind CSS
-- [x] SQL
-- [x] Drizzle
-- [x] The Project
+The book is in **alpha stage**.
+This means that the "happy path" content has been completed, but there are a lot of TODOs for the individual chapters and you should definitely expect mistakes.
 
 ## Contributing
 
@@ -29,8 +15,6 @@ We welcome issues & contributions.
 If you want to contribute, you can either create an issue or a pull request.
 If you create a pull request, **read the `CONTRIBUTING.md` first**.
 We will reject PRs that fail to adhere to the `CONTRIBUTING.md` without further review.
-
-**Please do not try to contribute to chapters that are not marked as finished in the progress section.**
 
 We are specifically interested if you find one of the following:
 
