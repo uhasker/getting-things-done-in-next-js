@@ -1,6 +1,6 @@
 ## Selecting Data
 
-You can you the `db.select` function to select data.
+You can you the `select` function to select data.
 
 You can select all columns:
 
@@ -17,7 +17,7 @@ await db.select({ name: projectTable.name }).from(projectTable);
 You can use the `where` function to filter results.
 This function takes one or multiple conditions.
 
-The conditions can contain function like `eq`, `ne`, `lt`, `lte`, `gt`, `gte`.
+The conditions can contain functions like `eq`, `ne`, `lt`, `lte`, `gt`, `gte`.
 
 For example, here is how you could select all tasks that are in progress:
 

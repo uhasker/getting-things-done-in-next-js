@@ -2,9 +2,14 @@
 
 ### Why Migrations?
 
-TODO
+Quite often, during the course of development an application will have to change.
+This will sometimes include the underlying tables in the database.
+
+To manage these changes, Drizzle allows you to create **migrations**, i.e. files that can help you update the table schemas.
 
 ### Creating Your First Migration
+
+Let's consider the task table without the project IDs.
 
 Create a `schema.ts` file:
 
@@ -19,7 +24,7 @@ export const taskTable = pgTable('task', {
 });
 ```
 
-Create the `drizzle.config.ts` file:
+Create a `drizzle.config.ts` file:
 
 ```ts
 import type { Config } from 'drizzle-kit';
@@ -29,7 +34,7 @@ export default {
   out: '.',
   driver: 'pg',
   dbCredentials: {
-    connectionString: '...',
+    connectionString: '$YOUR_DATABASE_URL_HERE',
   },
 } satisfies Config;
 ```
@@ -40,7 +45,7 @@ Now run:
 pnpm drizzle-kit generate:pg
 ```
 
-This will create a `meta` directory and an `sql` file:
+This will create a `meta` directory and an SQL file:
 
 ```sql
 CREATE TABLE IF NOT EXISTS "task" (
@@ -51,6 +56,9 @@ CREATE TABLE IF NOT EXISTS "task" (
 );
 ```
 
+This SQL file contains the migration.
+In this example, running the migration will create a new task table with the columns we would expect.
+
 ### Run Migrations
 
 Create the `migration.ts` script:
@@ -60,7 +68,7 @@ import { drizzle } from 'drizzle-orm/postgres-js';
 import postgres from 'postgres';
 import { migrate } from 'drizzle-orm/postgres-js/migrator';
 
-const databaseURI = '...';
+const databaseURI = '$YOUR_DATABASE_URL_HERE';
 
 const client = postgres(databaseURI, { max: 1 });
 const db = drizzle(client);
@@ -79,32 +87,53 @@ Run the script:
 pnpm tsx migrate.ts
 ```
 
+You will see that the table now appears in Supabase.
+
 ### Read the Database Password from Environment
 
-Install:
+Of course, in real life, we want to avoid hardcoding the database password in our scripts.
+Instead, we will read it from an environment variable.
 
-```sh
-pnpm add --save-dev @types/node
-```
-
-Now change the script:
+Change the `migrations.ts` to read the password from `process.env.DATABASE_URL`:
 
 ```ts
-const databaseURI = process.env.DATABASE_URL;
+const databaseURL = process.env.DATABASE_URL;
 
-if (databaseURI === undefined) {
+if (databaseURL === undefined) {
   console.log('You need to provide the database URI');
   process.exit(1);
 }
 ```
 
-Now do:
+Do the same thing with `drizzle.config.ts`:
 
-```sh
-export DATABASE_URL=...
+```ts
+import type { Config } from 'drizzle-kit';
+
+export default {
+  schema: './schema.ts',
+  out: '.',
+  driver: 'pg',
+  dbCredentials: {
+    connectionString: process.env.DATABASE_URL,
+  },
+} satisfies Config;
 ```
 
-Alternatively you can read the environment variables from the `.env` file.
+Now you can run the script again:
+
+```sh
+export DATABASE_URL=$YOUR_DATABASE_URL_HERE
+pnpm tsx migrate.ts
+```
+
+If you want to get typechecking for `process.env`, you can install `@types/node`:
+
+```sh
+pnpm add --save-dev @types/node
+```
+
+Alternatively you can read the environment variables from a `.env` file.
 Install `dotenv`:
 
 ```sh
@@ -114,7 +143,7 @@ pnpm add dotenv
 Create a `.env` file:
 
 ```
-DATABASE_URL=...
+DATABASE_URL=$YOUR_DATABASE_URL_HERE
 ```
 
 Add this to the `migrate.ts` script:
@@ -124,7 +153,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 ```
 
-This is the final migration script:
+The final migration script now looks like this:
 
 ```ts
 import { drizzle } from 'drizzle-orm/postgres-js';
@@ -152,17 +181,11 @@ async function runMigrations() {
 runMigrations().then(console.log).catch(console.error);
 ```
 
-Finally, you need to change `drizzle.config.ts`:
+You can now run:
 
 ```ts
-import type { Config } from 'drizzle-kit';
-
-export default {
-  schema: './schema.ts',
-  out: '.',
-  driver: 'pg',
-  dbCredentials: {
-    connectionString: process.env.DATABASE_URL!,
-  },
-} satisfies Config;
+pnpm tsx migrate.ts
 ```
+
+Note that you no longer need to export `DATABASE_URL` manually.
+Thanks to `dotenv` the script will simply pick the URL up from the `.env` file.
