@@ -73,7 +73,7 @@
   - [Selecting Data](chapter8/03-selecting-rows.md)
   - [Multiple Tables](chapter8/04-multiple-tables.md)
 
-- [Type-safe SQL with Drizzle](chapter9/README.md)
+- [Typesafe SQL with Drizzle](chapter9/README.md)
 
   - [Setup](chapter9/01-setup.md)
   - [Inserting, Updating and Deleting Data](chapter9/02-inserting-updating-and-deleting-data.md)

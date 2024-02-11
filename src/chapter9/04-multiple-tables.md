@@ -2,7 +2,7 @@
 
 ### Foreign Keys
 
-Let's recreate the project and task table from chapter 8:
+Let's recreate the project and task table from the SQL chapter in Drizzle:
 
 ```ts
 const projectTable = pgTable('project', {
