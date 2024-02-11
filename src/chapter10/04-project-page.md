@@ -2,7 +2,9 @@
 
 ### Creating the Table
 
-Let's add projects.
+Let's add projects to our application.
+The idea is simple - tasks belong to projects now and each project might contain multiple tasks.
+
 First, we need to make a change to the schema:
 
 ```ts
@@ -32,15 +34,15 @@ pnpm db:generate
 
 This will create a new migration in `db/migrations`.
 
-If you would try to run the migrations right now, you would the following error:
+If you would try to run the migrations right now, you would see the following error:
 
 ```
 PostgresError: column "projectId" of relation "task" contains null values
 ```
 
 This is because we already have tasks and the migration doesn't know what to do with them.
-In the real world, we would need to manually change the migration (or make the projectId column nullable).
-However, for now we will simply delete the tasks.
+In the real world, we would need to manually change the migration (or make the `projectId` column nullable).
+However, for now we will simply delete the tasks, because we have no real users yet anyway.
 
 Now run the migrations:
 
@@ -53,9 +55,9 @@ pnpm db:migrate
 Let's move the tasks page to `app/project/[id]/page.tsx`.
 Also let's move the task form to `app/project/[id]/task-form.tsx`.
 
-We will also get the ID and only show and add tasks for the current project:
+We will also retrieve the project ID and only show and add tasks for the current project:
 
-```tsx
+```jsx
 import { db } from '@/db';
 import { taskTable } from '@/db/schema';
 import { TaskForm } from './task-form';
@@ -115,7 +117,7 @@ export async function insertProject(name: string) {
 
 Finally, let's create a `ProjectForm` in `app/project-form.tsx`:
 
-```tsx
+```jsx
 'use client';
 
 import { insertProject } from '@/db/actions';
@@ -146,7 +148,9 @@ export function ProjectForm() {
 }
 ```
 
-Then we will create `app/page.tsx` which will contain the projects:
+This duplicates the `TaskForm` a bit - a good exercise would be to try and use a single component for the project and for the task form.
+
+Then we will create a new `app/page.tsx` which will contain the projects:
 
 ```ts
 import { db } from '@/db';
@@ -169,11 +173,11 @@ export default async function Home() {
 }
 ```
 
-We can add projects now.
+Now we can add projects.
 
 ### Adding Navigation
 
-Let's make all projects into links:
+Let's make all projects into links, so that we can navigate to the individual project pages:
 
 ```tsx
 <div className="flex flex-col">
