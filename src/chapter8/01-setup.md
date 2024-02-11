@@ -1,6 +1,17 @@
 ## Setup
 
-Create a new database (for example on Supabase).
+## Create a Database
+
+First, we need to create a new database.
+For this book, we will use Supabase.
+
+Go to [Supabase](https://supabase.com).
+Create a new project, give it a name and select a database password (which you should write down somewhere).
+
+Once you create the new project, go to "Project Settings > Database" and copy past the URI connection string.
+Replace `[YOUR-PASSWORD]` with the password you gave the database in the previous step.
+
+Save the connection string, we will need it in a second.
 
 ## Table Creation
 
