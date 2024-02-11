@@ -179,7 +179,7 @@ Now we can add projects.
 
 Let's make all projects into links, so that we can navigate to the individual project pages:
 
-```tsx
+```jsx
 <div className="flex flex-col">
   {projects.map((project) => (
     <Link
