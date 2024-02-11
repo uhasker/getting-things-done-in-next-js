@@ -52,7 +52,7 @@ We will automatically set the status of the task to "In progress" and the task I
 
 Let's add the form and write the function that we will pass to `onSubmit`:
 
-```tsx
+```jsx
 import { db } from '@/db';
 import { taskTable } from '@/db/schema';
 
@@ -130,7 +130,7 @@ Then we need to extract the task insertion into a server action and call it from
 Let's first extract the form.
 Create a new file `app/task-form.tsx`:
 
-```tsx
+```jsx
 'use client';
 
 import { insertTask } from '@/db/actions';
@@ -200,7 +200,7 @@ The error no longer appears.
 The only problem that is left is that you currently need to manually refresh the page after the task is submitted.
 Let's use the Next.js router the refresh the page upon task submission:
 
-```tsx
+```jsx
 // ...
 import { useRouter } from 'next/navigation';
 
