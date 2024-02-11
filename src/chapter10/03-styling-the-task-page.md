@@ -1,8 +1,25 @@
 ## Styling the Task Page
 
-We will go for a standard blue look.
+### Thinking about the Style
+
+Before we style anything, we should establish how the page should look like.
+This normally involves thinking about typography, color, spacing as well as establishing a design system and much more.
+
+Since this is only a small example project to tie together the things you've learned we will no go full "UI Design" on you.
+However, we will set a few rules:
+
+- we will go for a standard "blue" look
+- we will use borders (especially for input fields)
+- we will use relatively aggressive spacing to separate elements
+- we will use font size to indicate importance of elements
+
+Note that right now we mostly care about UI design in so far as it will make the page _usable_.
+Making it _pretty_ is the subject of other books.
 
 ### Styling the Form
+
+The default styling of the form is so bad, that it's borderline unusable.
+Right now, it's not even clear, where we should be typing the title and description.
 
 Here is how the form looks like right now:
 
@@ -28,7 +45,7 @@ First, let's give all the input fields some borders:
 </form>
 ```
 
-Now at least we can see where to type.
+Now we can at least see where to type.
 
 Next, we really need to fix the layout and the spacing of the form.
 We want all elements to be below each other:
@@ -39,32 +56,24 @@ We want all elements to be below each other:
 </form>
 ```
 
-Now we have the problem that the form is too wide:
+Now we fix the problem that the form is too wide:
 
 ```jsx
-<form onSubmit={handleSubmit} className="flex flex-col w-64">
+<form onSubmit={handleSubmit} className="... w-64">
   {/*...*/}
 </form>
 ```
 
-Next we align the button left:
-
-```jsx
-<button type="submit" className="text-left">
-  Send
-</button>
-```
-
-This already looks much better, but the spacing is still really bad as it's way too little.
+This already looks much better, but there is too little spacing.
 Let's fix that:
 
 ```jsx
-<form onSubmit={handleSubmit} className="flex flex-col w-64 space-y-4">
+<form onSubmit={handleSubmit} className="... space-y-4">
   {/*...*/}
 </form>
 ```
 
-Let's fix the button:
+Let's also make the button, give it rounded corners and improve the general look & feel a bit:
 
 ```jsx
 <button type="submit" className="text-center bg-blue-500 w-24 text-white p-2 font-bold rounded-md">
@@ -88,7 +97,10 @@ Let's also add some margin above and below the form:
 </form>
 ```
 
-This is still not perfect, but let's style the tasks first.
+Does this look great?
+No.
+
+But at least it's usable and the user knows where to enter things.
 
 ### Styling the Tasks
 
@@ -102,7 +114,7 @@ Currently each task looks like this:
 </div>
 ```
 
-First let's create a border around each task for better separation:
+First, let's create a border around each task for better separation:
 
 ```jsx
 <div className="border border-gray-400">{/*...*/}</div>
@@ -111,19 +123,19 @@ First let's create a border around each task for better separation:
 Just like the form, the tasks shouldn't take up the entire width:
 
 ```jsx
-<div className="border border-gray-400 w-96">{/*...*/}</div>
+<div className="... w-96">{/*...*/}</div>
 ```
 
 Let's center everything:
 
 ```jsx
-<div className="border border-gray-400 w-96 mx-auto">{/*...*/}</div>
+<div className="... mx-auto">{/*...*/}</div>
 ```
 
 Finally, let's add some padding:
 
 ```jsx
-<div className="border border-gray-400 w-96 mx-auto p-4">{/*...*/}</div>
+<div className="... p-4">{/*...*/}</div>
 ```
 
 Let's also style the task content a bit:
@@ -135,3 +147,5 @@ Let's also style the task content a bit:
   <p className="text-sm">{task.status}</p>
 </div>
 ```
+
+Again, it doesn't look pretty, but at least it's functional.
