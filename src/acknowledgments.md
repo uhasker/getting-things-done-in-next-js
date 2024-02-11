@@ -1,6 +1,3 @@
 ## Acknowledgments
 
-I sincerely thank the following people for **major** contributions to this book:
-
-- Jannis Morgenstern
-- Alexander Berkov
+I sincerely thank **Jannis Morgenstern**, **Alexander Berkov**, **Jakob Stechow** and **Julian Wasmeier** for proofreading chapter drafts and giving valuable feedback on missing parts.
