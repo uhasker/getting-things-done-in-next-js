@@ -30,11 +30,13 @@ function divide(x, y) {
   if (y === 0) {
     throw new Error('Division by 0 is a bad idea');
   }
+
+  return x / y;
 }
 
 try {
   console.log('try block');
-  divide(3, 0);
+  console.log(divide(3, 0));
 } catch (e) {
   console.log('catch block');
 }
@@ -46,6 +48,67 @@ This will log:
 try block
 catch block
 ```
+
+Note that if the `try` block doesn't throw an exception, the `catch` block is never executed.
+
+Consider this example:
+
+```js
+function divide(x, y) {
+  if (y === 0) {
+    throw new Error('Division by 0 is a bad idea');
+  }
+
+  return x / y;
+}
+
+try {
+  console.log('try block');
+  console.log(divide(3, 1));
+} catch (e) {
+  console.log('catch block');
+}
+```
+
+This will log:
+
+```
+try block
+3
+```
+
+### The `finally` Block
+
+The `finally` block is an optional block that can be used after `catch` if some cleanup code should always run after the `try` block:
+
+```js
+function divide(x, y) {
+  if (y === 0) {
+    throw new Error('Division by 0 is a bad idea');
+  }
+
+  return x / y;
+}
+
+try {
+  console.log('try block');
+  console.log(divide(3, 0));
+} catch (e) {
+  console.log('catch block');
+} finally {
+  console.log('finally block');
+}
+```
+
+This will output:
+
+```
+try block
+catch block
+finally block
+```
+
+The `finally` block will become useful once we write more complex code that performs resource management and we need to perform cleanup of a resource regardless of whether an exception is thrown or not.
 
 ### Error Objects
 
