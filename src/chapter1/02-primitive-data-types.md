@@ -10,8 +10,8 @@ We also need to deal with the fact that when we execute a program, the values we
 For example we don't know which tasks a user might create (that is kind of the point of writing our application).
 Nevertheless, we must be able to access created tasks through a predictable name like `tasks` or `createdTasks`.
 
-Therefore we need a way to put an _unpredictable_ value in a "box" somewhere and refer to it using a _predictable_ name.
-In programming, this box is referred to as _storage_ and the predictable name as a _symbolic name_.
+Therefore we need a way to put an _unpredictable_ value somewhere and refer to it using a _predictable_ name.
+In programming, that "somewhere" is referred to as _storage_ and the predictable name as a _symbolic name_.
 
 A **variable** is just that - a storage location containing a value which is referred to by a symbolic name.
 This _sounds_ really fancy, but it just means that there is a value somewhere in your storage and you can refer to that value using a symbolic name that doesn't change (even if the value itself changes).
@@ -173,8 +173,7 @@ For example the result of `0 / 0` is `NaN`:
 console.log(0 / 0); // NaN
 ```
 
-Hilariously enough, `NaN` itself is a number.
-This is despite the fact that its name literally says that it isn't:
+Hilariously, `NaN` itself is a number (despite the name):
 
 ```js
 console.log(typeof NaN); // number
@@ -189,7 +188,7 @@ For example if you add `0.1` and `0.2` you get a weird result:
 console.log(0.1 + 0.2); // 0.30000000000000004
 ```
 
-This is not the fault of JavaScript, but instead has to do with the limitations of trying to represent real numbers in binary on a finite hardware.
+This is not the fault of JavaScript, but instead has to do with the limitations of trying to represent numbers with a potentially infinite amount of digits on a finite hardware.
 
 > We will not go into great detail in this book about this problem.
 > If you're interested in more details we encourage you to have a look at the IEEE754 standard.
@@ -208,7 +207,8 @@ console.log(typeof thisBookSucks); // boolean
 
 You can do simple logic using the logical operators `&&` (which denotes **and**), `||` (which denotes **or**) and `!` (which denotes **not**).
 
-The `&&` (_and_) operator takes two values and evaluates to `true` only if both values are `true` and to `false` otherwise:
+The `&&` (_and_) operator takes two values and evaluates to `true` only if both values are `true`.
+Otherwise it evaluates to `false`:
 
 ```js
 console.log(true && true); // true
@@ -217,7 +217,8 @@ console.log(true && false); // false
 console.log(false && false); // false
 ```
 
-The `||` (_or_) operator takes two values and evaluates to `true` if _at least one_ of the values is `true` (and to `false` otherwise):
+The `||` (_or_) operator takes two values and evaluates to `true` if _at least one_ of the values is `true`.
+Otherwise it evaluates to `false`:
 
 ```js
 console.log(true || true); // true
@@ -245,18 +246,7 @@ console.log(!b1); // false
 
 > Note that technically all the logical operators can take _any_ value (not just boolean values).
 > The result of the logical operator application is then dependent on whether the values are _truthy_ or _falsy_.
-> We will discuss this a bit later.
-
-A slightly less well known operator is the nullish coalescing operator `??`.
-This operator takes two values and check if the left-hand side is `undefined` (or `null` - a value that will be discussed later).
-If the left value is `undefined` or `null` it returns the right-hand side, otherwise it returns the left-hand side:
-
-```js
-console.log(undefined ?? 1); // 1
-console.log(0 ?? 1); // 0
-```
-
-The `??` operator is commonly used to provide useful default values.
+> We will discuss this later.
 
 A boolean variable usually occurs as the result of an expression.
 Often it is the result of an expression containing the **strict equality operator** (`===`) which allows us to compare the values of variables:
@@ -308,9 +298,9 @@ console.log(typeof s); // string
 The `+` operator works on strings and does concatenation:
 
 ```js
-const s1 = 'MERN ';
+const s1 = 'Next.js ';
 const s2 = 'book';
-console.log(s1 + s2); // MERN book
+console.log(s1 + s2); // Next.js book
 ```
 
 Note that instead of doing concatenation all the time you can also use **template strings** (also called template literals).
@@ -342,7 +332,7 @@ console.log(s.length); // 9
 > Note that JavaScript does not have a special "character" data type (unlike Java for example).
 > Instead, characters are simply strings of length 1.
 
-There is much more to strings and we will revise them in a later section.
+There is much more to strings and we will return to them later.
 
 ### Undefined
 
@@ -357,6 +347,24 @@ console.log(someVariable); // undefined
 console.log(typeof someVariable); // undefined
 ```
 
+You can also manually assign the `undefined` value to a variable:
+
+```js
+let someVariable = undefined;
+console.log(someVariable); // undefined
+console.log(typeof someVariable); // undefined
+```
+
+An important operator to know is the nullish coalescing operator `??`.
+This operator takes two values and check if the left-hand side is `undefined` (or `null` - a value that we will not pay much attention to).
+If the left value is `undefined` or `null` the nullish coalescing operator evaluates the expression to the right-hand side, otherwise it returns the left-hand side:
+
+```js
+console.log(undefined ?? 1); // 1
+console.log(0 ?? 1); // 0
+```
+
+The `??` operator is commonly used to provide useful default values.
+
 > Note that `string`, `number`, `boolean` and `undefined` are not the only primitive data types.
-> Two other primitive data types are `symbol` and `bigint`.
-> And there is one more primitive data type that we will encounter soon.
+> However the other primitive data types will not be relevant for this book.
