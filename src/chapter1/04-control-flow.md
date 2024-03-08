@@ -49,8 +49,7 @@ if (tasks.length === 0) {
 ```
 
 Sometimes you need to do something in one case and something else in another case.
-The (also conveniently named) `else` keyword allows you to accomplish exactly that.
-Let's say that if all the tasks haven't been completed yet, we want to display a different message:
+The (also conveniently named) `else` keyword allows you to accomplish exactly that:
 
 ```js
 if (tasks.length === 0) {
@@ -64,14 +63,14 @@ The general form of an `if...else` statement looks like this:
 
 ```js
 if (condition) {
-  block1;
+  statements1;
 } else {
-  block2;
+  statements2;
 }
 ```
 
-If `condition` is true, the statements corresponding to `block1` will be executed (i.e. the statements inside the curly braces after the `if`).
-If `condition` is false, the statements corresponding to `block2` will be executed (i.e. the statements inside the curly braces after the `else`).
+If `condition` is true, the statements corresponding to `statements1` will be executed (i.e. the statements inside the curly braces after the `if`).
+If `condition` is false, the statements corresponding to `statements2` will be executed (i.e. the statements inside the curly braces after the `else`).
 
 Note that there may be multiple statements between the curly braces.
 This is totally valid:
@@ -112,13 +111,13 @@ The general form of an `if...else if...else` statement looks like this:
 
 ```js
 if (condition1) {
-  block1;
+  statements1;
 } else if (condition2) {
-  block2;
+  statements2;
 } /*possibly more else ifs*/ else if (conditionN) {
-  blockN;
+  statementsN;
 } else {
-  blockElse;
+  statementsElse;
 }
 ```
 
@@ -148,7 +147,7 @@ If it's missing and none of the conditions are true, nothing will happen.
 
 ### Truthiness and falsiness
 
-Note that the condition does not necessary have to be boolean as JavaScript will automatically evaluate non-boolean values as "truthy" or "falsy" in boolean contexts.
+Note that the condition does not necessary have to be a boolean as JavaScript will automatically evaluate non-boolean values as "truthy" or "falsy" in boolean contexts.
 For example you could write something like this:
 
 ```js
@@ -186,8 +185,8 @@ The general form is:
 condition ? expression1 : expression2;
 ```
 
-You can think of the ternary operator as a short, compact way to write an `if ... else` statement.
-It evaluates a condition, and if that condition is `true` (truthy), the result will have the value of the first expression.
+You can think of the ternary operator as a short, compact way to write a conditional expression.
+The ternary operator evaluates a condition, and if that condition is `true` (truthy), the result will have the value of the first expression.
 If the condition is `false` (falsy), the result will have the value of the second expression.
 
 There is a very common thing beginning programmers do with ternary operators which looks like this:
@@ -286,7 +285,7 @@ Now the result will be `undefined` instead of giving you a TypeError.
 ### The `switch` Statement
 
 The `switch` statement evaluates an expression and then attempts to match the result against a number of `case` clauses.
-As soon as `case` clause is matched all following statements are executed until a `break` statement is encountered.
+As soon as a `case` clause is matched all following statements are executed until a `break` statement is encountered.
 If no case matches and a `default` statement is present, execution will jump to the code after the `default` statement:
 
 ```js
@@ -375,7 +374,7 @@ The second expression is the _condition expression_ and typically checks for som
 If the condition is true the statement(s) in the loop body execute, otherwise the loop terminates.
 Finally the third expression (sometimes called _afterthough expression_) is evaluated at the end of each loop iteration and typically advances the counter.
 
-Since a code sample says more than a thousand words here is an example:
+As usual a code example says more than a thousand words:
 
 ```js
 for (let i = 0; i < 3; i++) {
