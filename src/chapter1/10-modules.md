@@ -49,7 +49,7 @@ This is the basic setup, but in order to execute this in the browser or in Node.
 Let's create a file named `index.html` in which we use `main.js` as a JavaScript module:
 
 ```html
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -110,6 +110,8 @@ You can then execute `main.js` by running:
 ```sh
 node main.js
 ```
+
+> We will return to the concept of `package.json` later.
 
 ### Named Exports and Imports
 
