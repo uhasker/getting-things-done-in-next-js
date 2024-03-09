@@ -10,7 +10,7 @@ In the first case, we need to wait for all the network packets to arrive, which 
 In the second case, we need to wait for the user to grant us access to the resource we require.
 
 We want do be able to do this without "blocking".
-To accomplish this, we need to break with the "synchronous" programming model where statements are executed one after another.
+To accomplish this, we need to break up with our current "synchronous" programming model where statements are executed one after another.
 
 Consider the following example:
 
@@ -45,7 +45,7 @@ This means that the user will not be able to select text, click buttons or do an
 
 Of course we want to avoid such a nuisance since this will result in the much dreaded _negative user experience_.
 
-> If you ever clicked a button on a website and everything just freezes for three seconds, this often means that some developer wrote a synchronous function that handles a long-running task.
+> If you ever clicked a button on a website and everything just freezes for three seconds, this is probably the result of synchronous function being used to handle a long-running task.
 
 We need a mechanism to start a (potentially) long-running task and still be able to do other things (like respond to user events) instead of blocking until the task is finished.
 Once the task is completed, our program needs to be notified with result.
@@ -57,7 +57,7 @@ Here is a step-by-step breakdown of what we want to accomplish:
 3. Once the long-running operation is completed, the "main" program should be notified.
 
 > In case you think to yourself right now "this all sounds very complicated and when do I need long-running tasks anyway, maybe I'll skip this section" - don't.
-> Almost every project you'll write (essentially when doing web development) will contain asynchronous code.
+> Practically every project you'll write (essentially when doing web development) will contain asynchronous code.
 
 ### Promises
 
@@ -68,12 +68,12 @@ Now that you are sufficiently confused by this opaque definition, we can move on
 Basically a promise is a like an IOU document - it "promises" you that it is currently working on some long-running operation and that it will eventually get back to you with the result of that long-running operation.
 
 To give another metaphor, consider the process of ordering a hamburger at SyncMcBurgers.
-For simplicity (and improved metaphormaking) we will pretend that SyncMcBurgers only has one counter.
+For simplicity (and improved metaphormaking) we will pretend that SyncMcBurgers only has a single counter.
 
-In a perfect “synchronous” world, you would walk up, tell your order to the hardworking employee of the restaurant and then he would immediately create the hamburger right then and there.
+In a perfect “synchronous” world, you would walk up to the counter, tell your order to the hardworking employee of the restaurant and then he would immediately create the hamburger right then and there.
 However, unless SyncMcBurgers has rediscovered the ancient secret art of instant burgermaking using dark magic, the preparation of a hamburger does not happen immediately (it's a "long-running operation").
 
-Therefore, in reality the following process happen when you try to order something at SyncMcBurgers.
+Therefore, in reality the following process happens when you try to order something at SyncMcBurgers.
 You walk up to the counter and the employee takes your order (a hamburger) and starts preparing the hamburger right there at the counter in front of you.
 In the meantime, you have to wait at the counter until the hamburger is finished.
 
@@ -81,11 +81,11 @@ This process has an obvious problem - both you and the employee now block the en
 No other customer can try to order anything (because you are standing at the counter) and no other employee can take an order anyway (because the employee serving you is blocking the counter with his hamburger preparation).
 This doesn't sound like a recipe for success.
 
-Luckily, there is a change in management and SyncMcBurgers rebrands as AsyncMcBurgers.
+After a while the restaurant owners realize this, there is a change in management and SyncMcBurgers rebrands as AsyncMcBurgers.
 The important difference between SyncMcBurgers and the new and improved AsyncMcBurgers is a change in the burger ordering process.
 
 > There is still only one counter though.
-> After all the managers at AsyncMcBurgers want to respect our metaphor.
+> After all, the managers at AsyncMcBurgers want to respect our metaphor.
 
 The new process looks as follows.
 You walk up to the counter, an employee takes your order and hands it to the kitchen.
@@ -96,13 +96,13 @@ Instead you take your receipt, leave the counter and the next customer may order
 In case you missed it, this is how every normal fast food restaurant in the world operates - and for good reason (except that normal fast food restaurants usually have more than a single counter).
 
 Armed with these examples, we can now actually understand the definition of a promise.
-Remember, that a promise represents the eventual completion (or failure) of an asynchronous operation.
+Again, a promise _represents the eventual completion (or failure) of an asynchronous operation_.
 
 In this example, the asynchronous operation is the preparation of the hamburger.
 This asynchronous operation will eventually complete (the hamburger will be prepared) or fail (there will a problem during the hamburger preparation).
 The order receipt that you get represents the eventual (i.e. probably not immediate) completion of the burger prepartion.
 
-Now that we made sense of the definition, we can introduce the three states of a promise:
+Now that we made some sense of the definition, we can introduce the three states of a promise:
 
 We say that a promise is **pending** when it has been created, but the asynchronous operation it represents has not been completed yet.
 This would be the case when you already received the order receipt but you're still waiting for the hamburger.
@@ -221,14 +221,16 @@ Here is what happens, when we call this code:
 2. The `then` method of `fetchPromise` attaches the handler function `(response) => response.json()` to the `fetchPromise` and also immediately returns.
    This time the return value is the pending promise `jsonPromise`.
 3. The `then` method of `jsonPromise` attaches the handler function `(json) => console.log(json)` and also immediately returns another pending promise (which we ignore here).
-4. The network request initiated by `fetch` finishes and `fetchPromise` is fulfilled (with a `Response` object as its fulfillment value).
+4. After a while the network request initiated by `fetch` finishes and `fetchPromise` is fulfilled (with a `Response` object as its fulfillment value).
 5. Now that `fetchPromise` is fulfilled the handler function `(response) => response.json()` is kicked off and attempts to parse the response as a JSON object.
 6. At some point the JSON parsing is finished and `jsonPromise` is fulfilled.
 7. Now that `jsonPromise` is fulfilled the handler function `(json) => console.log(json)` is kicked off and the JSON object is logged to the console.
 
-You can basically think of a chain as being executed in two stages.
+A promise chain is basically executed in two stages.
+
 In the first stage the promises are set up and the handler functions are attached using the `then` method.
 This stage happens immediately.
+
 In the second stage the promises are settled and the attached handler functions are actually executed.
 This stage can take quite some time, depending on how long the tasks we want to accomplish take.
 
@@ -303,10 +305,11 @@ Turn off your network and try running the `fetch` again.
 You will now see an appropriately logged error.
 Instead of just crashing, you program can now do something else (like showing an error modal to the user and informing him that something went wrong).
 
-### Async and Await
+### The `async` and `await` Keywords
 
 Promises are great, but as discussed, the are not completely intuitive.
 We can use `async` and `await` keywords to simplify asynchronous code and make it look more like synchronous code.
+
 To this end, we can declare an `async` function and then use the `await` keyword to wait for a promise and get its fulfillment value:
 
 ```js
@@ -333,7 +336,7 @@ This is why we use `then` with `fetchTask` instead of `await`ing the promise ret
 ## The `void` Operator
 
 The `void` operator evaluates an expression and returns `undefined`.
-This can used with promises if you simply want to start an asynchronous operation, but you don't care about the result, for example:
+This can used with promises if you simply want to start an asynchronous operation, but you don't care about the result:
 
 ```js
 void fetchTask(url);

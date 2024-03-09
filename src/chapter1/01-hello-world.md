@@ -32,15 +32,15 @@ Then we will print "Hello, world!" to both the browser console and the Node.js c
 Open a browser, and open its console.
 How you do this will depend on the browser.
 
-If you are using _Firefox_ the shortcut for opening the console is <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>K</kbd> on Ubuntu/Debian and <kbd>Cmd</kbd> + <kbd>Option</kbd> + <kbd>K</kbd> on a Mac.
-If you are using _Chrome_ or _Microsoft Edge_ the shortcut is <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>J</kbd> on Ubuntu/Debian and <kbd>Cmd</kbd> + <kbd>Option</kbd> + <kbd>J</kbd> on a Mac.
-If you are using _Safari_ on a Mac, you will need to enable the develop menu first by going to `Settings > Advanced` and ticking the box `Show Develop menu in menu bar`. Then you can open the console using <kbd>Cmd</kbd> + <kbd>Option</kbd> + <kbd>K</kbd>.
+If you are using _Firefox_ the shortcut for opening the console is <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>K</kbd> on Ubuntu/Debian and <kbd>Cmd</kbd> + <kbd>Option</kbd> + <kbd>K</kbd> on macOS.
+If you are using _Chrome_ or _Microsoft Edge_ the shortcut is <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>J</kbd> on Ubuntu/Debian and <kbd>Cmd</kbd> + <kbd>Option</kbd> + <kbd>J</kbd> on macOS.
+If you are using _Safari_ on macOS, you will need to enable the develop menu first by going to `Settings > Advanced` and ticking the box `Show Develop menu in menu bar`. Then you can open the console using <kbd>Cmd</kbd> + <kbd>Option</kbd> + <kbd>K</kbd>.
 
 > If you are using Internet Explorer, please navigate to `google.com` and search for "Firefox" to install a _real_ browser.
 > This line was originally intended to be a funny joke, but on June 15, 2022 Microsoft ended support for Internet Explorer, so it's not even a joke anymore.
 > We personally recommend Firefox, but Chrome, Microsoft Edge or Safari are also fine choices.
 
-This is approximately how the browser console will look on Firefox:
+This is approximately how the browser console will look like in Firefox:
 
 ![](images/browser-console.png)
 
@@ -61,25 +61,25 @@ You will see the output "Hello, world!" in the console:
 
 > Ignore the "undefined" for now.
 
-Hooray, we printed something to the browser console!
+Hooray, you printed something to the browser console!
 This is the point at which you go tell everyone that you are now a *programmer*™.
 
-### Executing JavaScript from an HTML File
+### Executing JavaScript in the Browser
 
-As we already mentioned, instead of executing JavaScript in the browser console directly, we can (and often will) execute it from a JavaScript file.
+As we already mentioned, instead of executing JavaScript in the browser console directly, we can (and often will) execute it from a JavaScript _file_.
 Since we're on the browser, we will need to create two files - an HTML file and a JavaScript file.
 
 HTML is short for _HyperText Markup Language_ and is the standard markup language for documents that should be displayed in a browser.
-We will cover HTML in chapter 2, for now we just want to get a quick glimpse at it.
+We will cover HTML in detail in a later chapter, for now we just need to be able to create a very simple HTML document.
 
 Create a new HTML file.
 We will call it _hello.html_; however you can name it whatever you want.
 The filename should have an _html_ extension though.
 
-Open the HTML file in any text editor (we recommend you use [Visual Studio Code](https://code.visualstudio.com)) and add the following text to the file:
+Open the HTML file in any text editor (see below for text editors that are good choices for coding) and add the following text to the file:
 
 ```html
-<!doctype html>
+<!DOCTYPE html>
 <html>
   <head></head>
   <body>
@@ -98,12 +98,12 @@ console.log('Hello, world');
 
 > Note the semicolon after the `console.log`.
 > It terminates the `console.log` statement.
-> The semicolon is not technically required here.
-> Indeed there are many JavaScript programmers who don't write semicolons.
-> However, to avoid a bunch of pitfalls, we will use semicolons throughout this book and therefore we want you to get used to them as soon as possible.
+> The semicolon is technically not required here and there are many JavaScript programmers who don't use semicolons.
+> However, to avoid a bunch of pitfalls, we will use semicolons throughout this book and therefore we want you to get accustomed to them as soon as possible.
 
 Now open this file in your browser by simply double-clicking the file.
-After opening this file in your browser, open the console again. You should see `Hello, world!` printed there.
+After opening this file in your browser, open the console.
+You should the output `Hello, world!`.
 
 Congratulations, you wrote your first script!
 
@@ -115,7 +115,7 @@ A command line allows you to execute various tasks called commands.
 
 If you're on Ubuntu, you can open the command line by pressing <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>T</kbd>.
 
-On a Mac, you can open the command line by pressing <kbd>Cmd</kbd> + <kbd>Space</kbd> to open _search_, typing _terminal_ and then hitting <kbd>Return</kbd>.
+If you're on macOS, you can open the command line by pressing <kbd>Cmd</kbd> + <kbd>Space</kbd> to open _search_, typing _terminal_ and then hitting <kbd>Return</kbd>.
 
 Now that you've opened a CLI, you can type a command and hit <kbd>Return</kbd> to execute it.
 Try executing this command for starters:
@@ -134,14 +134,14 @@ However in 2009 Node.js came along and changed that by allowing programmers to e
 Node.js will probably not be installed on your machine, so let's fix that.
 First, we will install the **Fast Node Manager** (**fnm** for short) which will allow us to manage Node.js versions in a simple and straightforward manner.
 
-On Ubuntu/Debian you will need to run the following:
+If you're on Ubuntu/Debian you will need to run the following:
 
 ```sh
 curl -fsSL https://fnm.vercel.app/install | bash
 source ~/.bashrc
 ```
 
-On Mac you will need to run the following:
+If you're on macOS you will need to run the following:
 
 ```sh
 curl -fsSL https://fnm.vercel.app/install | zsh
@@ -160,20 +160,20 @@ Finally we will install Node.js (version 18):
 fnm install 18
 ```
 
-And again verify that Node.js was successfully installed:
+Verify that Node.js was successfully installed:
 
 ```sh
 node --version
 ```
 
 The installation script also automatically installed the **node package manager** (_npm_ for short) which is a tool for managing dependencies in our projects.
-Verify that npm was installed as well:
+Verify that `npm` was installed as well:
 
 ```sh
 npm --version
 ```
 
-Instead of `npm` we will usually use `pnpm`, so let's install this too:
+Throughout this book we will use the `pnpm` package manager, so let's install that too:
 
 ```sh
 npm install -g pnpm
@@ -185,19 +185,21 @@ Verify that `pnpm` was installed:
 pnpm --version
 ```
 
-Now that Node.js is installed, you can open a Node.js console by typing node in the command line.
-Now let's again print "Hello, world!" using the `console.log` method.
-Type the following into the Node.js console and hit <kbd>Return</kbd>:
+Now that Node.js is installed, you can open a Node.js console by typing `node` in the command line.
+
+We can now print "Hello, world!" in the Node.js console using the `console.log` method.
+Type the following into the console and hit <kbd>Return</kbd>:
 
 ```js
 console.log('Hello, world!');
 ```
 
-You should see `"Hello, world!"` printed to the console.
+You should see the output `"Hello, world!"`.
 
-### Executing a File
+### Executing a JavaScript File
 
-Before moving on, let's execute a JavaScript file in Node.js as well.
+We can also use Node.js to execute a JavaScript file.
+
 Create a file named `hello.js`.
 Open the file in any text editor and add the following content to the file:
 
@@ -205,8 +207,9 @@ Open the file in any text editor and add the following content to the file:
 console.log('Hello, world!');
 ```
 
-Again open a command line and _change the current directory location to the directory containing the JavaScript file_.
-You can do so using the _cd_ command. For example if `hello.js` is located at `/home/users/user` you would execute the following:
+Open a command line again and _change the current directory location to the directory containing the JavaScript file_.
+You can do so using the _cd_ command.
+For example if `hello.js` is located at `/home/users/user` you would execute the following:
 
 ```sh
 cd /home/users/user
@@ -220,22 +223,32 @@ node hello.js
 
 This should again print `"Hello, world!"`.
 
-Note that for the remainder of chapter 1 you should follow along using the Node.js console as we will be discussing the language itself.
-Nevertheless, as we begin writing the project in chapter 2, we will have to write JavaScript for the browser runtime environment on a regular basis.
+Note that for the remainder of this chapter you should follow along using the Node.js console.
+Nevertheless, as we dive further into the Next.js stack, we will have to write JavaScript for the browser runtime environment on a regular basis.
 
 ### The Browser vs Node.js
 
-We now managed to execute some JavaScript on the browser and some JavaScript in Node.js.
-Right now, these two runtime environment don't look to different because we only logged something to the console.
-However, in later section you will learn that it is in fact extremely important which runtime you're on.
+We managed to execute some JavaScript on the browser and some JavaScript in Node.js.
+Right now, these two runtime environments don't look too different because we only logged something to the console.
+However, in later sections you will learn that it is in fact extremely important which runtime you're on.
 
-For example in Node.js you cannot access your browser window (which makes sense since there is no browser window).
+For example in Node.js you cannot access your browser window (which makes sense since there _is no browser window_).
 On the other hand, if you are in the browser you cannot write files to the computer (to protect users from malicious websites).
 Often people say that JavaScript code can be run _on the client_ (in the browser) or _on the server_ (usually using Node.js).
 
 Remember this point, since it will become extremely important later.
 
-### Statements And Expressions
+## Editors
+
+In the previous paragraphs you had to create a few files containing code.
+It will not come as a surprise that this be necessary _a lot_ during your programming journey.
+You should therefore select a good editor that has features such as syntax highlighting, autocompletion etc.
+
+> Coding in Notepad is in fact _not_ a good idea.
+
+If you're a complete beginner, the [Visual Studio Code](https://code.visualstudio.com) editor is often an excellent first choice.
+
+### Statements and Expressions
 
 Before we dive into JavaScript, you should know that programs are made of statements and expressions.
 
@@ -245,17 +258,16 @@ For example `console.log('Hello, world!')` is a statement which executes the act
 
 An **expression** is a syntactic unit that may be evaluated to get its value.
 For example `2 + 2` would be an expression which would evaluate to `4`.
-Note that since any expression also executes some action, any expression is therefore a statement.
 
-You could put it this way: Statements in general are executed to make something happen, while expressions in specific are evaluated to produce a value.
+You could put it this way: Statements are executed to make something happen, while expressions are evaluated to produce a value.
 
 > Note that other authors might define statements and expressions in a slightly different manner.
-> However we will stick to these definitions throughout the book.
+> However we will stick to these definitions throughout this book.
 
 ### Comments
 
-Everything that is after a double slash on a line in JavaScript is a **comment**.
-Comments are ignored by the runtime and therefore have no effect for the execution of your program:
+Everything that comes after a double slash on a line is a **comment** in JavaScript.
+Comments are ignored by the runtime and therefore have no effect on the execution of your program:
 
 ```js
 // This is just a comment
@@ -267,17 +279,19 @@ console.log('Hello, world!');
 
 We will heavily utilize comments throughout this book inside the code blocks to highlight important ideas.
 
-> There is a lot of discussion on how much you should comment your programs.
+> There is a lot of discussion in the programming community on how much you should comment your programs.
 > We will return to this when discussing functions.
 > However one rule is that if your code is so terrible that it requires _extensive commentary_ to explain its behavior or purpose, you should fix the code.
 > Just like a work of art, your code should stand on it's own merits.
 > Imagine _commenting_ a work of art (oh, wait)...
 > However it is better to have terrible code and comments than have terrible code and no comments.
+> And of course if your code does something particularly complicated, throwing in a comment might be a good idea.
 
-We will also adopt the convention that if a comment is next to a line with a `console.log` statement, that comment shows the output that would be logged to the console if the code was run. For example:
+We will also adopt the convention that if a comment is next to a line with a `console.log` statement, that comment shows the output that would be logged to the console if the code was executed.
+For example:
 
 ```js
-console.log('Hello, world!'); // Hello, world!
+console.log('Hellave the file!o, world!'); // Hello, world!
 ```
 
 This is the point where we tell you that while you are reading this book you should _absolutely follow along in some runtime_ (probably Node.js, but a browser is fine too).

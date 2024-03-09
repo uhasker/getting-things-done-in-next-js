@@ -6,7 +6,8 @@
 
 We already learned about strings (which represent sequences of characters).
 We also learned that they can be concatenated using the `+` operator and that you can get their length using the `length` property.
-However this is rarely enough to efficiently work with strings.
+However this is not enough to efficiently work with strings.
+
 Luckily, strings offer a wide range of additional functionality for pretty much every use case you will ever need - in this subsection we will briefly look at some of it.
 
 First, you can access individual characters using the `charAt` function or array brackets:
@@ -29,13 +30,23 @@ console.log(str.startsWith('He')); // true
 console.log(str.endsWith('llo')); // true
 console.log(str.indexOf('l')); // 2
 console.log(str.lastIndexOf('l')); // 3
-console.log(str.substring(1, 3)); // el
 console.log(str.toLowerCase()); // hello
 console.log(str.toUpperCase()); // HELLO
 ```
 
+The `substring` method allows you to return a part of a string.
+You need to pass a start index and and end index:
+
+```js
+console.log(str.substring(1, 3)); // el
+```
+
+Note that the start index will be _included_ and the end index will be _excluded_ when creating the substring.
+
+> There is also the `substr` method which is deprecated so don't use it.
+
 The `trim` method allows you to remove whitespace from the start and the end of a string.
-This is especially useful when processing user input where usually accidental whitespace at the start and the end of a string is irrelevant:
+This is especially useful when you need to process user input and need to remove accidental whitespace at the start and the end of a string:
 
 ```js
 console.log(' Hello '.trim()); // Hello
@@ -61,17 +72,26 @@ Note that the whitespace is not removed by the `split` method, you would need to
 We already learned how to construct arrays and how to work with individual array elements.
 However just like strings, arrays have a few additional methods that will often come in handy.
 
-You can check if an object is an array using the `Array.isArray` method:
+You can check whether an object is an array using the `Array.isArray` method:
 
 ```js
 console.log(Array.isArray([1, 2, 3])); // true
 console.log(Array.isArray('123')); // false
 ```
 
-You can create an array from an object that is convertible to an array by using `Array.from`:
+You can create an array from an object with `Array.from`.
+To successfully use `Array.from` the object must be _convertible to an array_.
+
+For example, a string is convertible to an array:
 
 ```js
 console.log(Array.from('123')); // [ '1', '2', '3' ]
+```
+
+If you try to use `Array.from` on an object that is not convertible to an array you will get an empty array:
+
+```js
+console.log(Array.from(2)); // []
 ```
 
 You can create an array from a variable number of arguments by using `Array.of`:
@@ -112,7 +132,7 @@ arr.pop();
 console.log(arr); // [ 1, 2 ]
 ```
 
-The `reverse` method allows you to reverse the element of an array:
+The `reverse` method allows you to reverse an array:
 
 ```js
 const arr = [1, 2, 3];
@@ -121,7 +141,7 @@ console.log(arr); // [ 3, 2, 1 ]
 ```
 
 Arrays can be nested, resulting in multidimensional arrays.
-Accessing an element of such a nested array results in an array (of a lower dimension).
+Accessing an element of such a nested array results in another array (of a lower dimension).
 Nested arrays can be flattened with the `flat` method:
 
 ```js
@@ -139,7 +159,16 @@ console.log(nestedArray.flat()); // [ 1, 2, 3, 4, 5, 6 , 7, 8, 9 ]
 
 `For..of` loops allow you to _iterate over arrays and strings_ (and some other things that we will cover later on) and perform a task for each element / character.
 Let's say you want to print all tasks from a list named `tasks`.
-You could do it like this:
+Previously we would have used a regular `for` loop:
+
+```js
+const tasks = ['Task 1', 'Task 2', 'Task 3'];
+for (let i = 0; i < tasks.length; i++) {
+  console.log(tasks[i]);
+}
+```
+
+Instead you can use the `for...of` loop:
 
 ```js
 const tasks = ['Task 1', 'Task 2', 'Task 3'];
@@ -148,7 +177,7 @@ for (let task of tasks) {
 }
 ```
 
-This would print
+Both versions will output:
 
 ```
 Task 1
@@ -156,7 +185,7 @@ Task 2
 Task 3
 ```
 
-As we already mentioned, you can use a `for..of` loop to iterate over a string:
+As we already mentioned, you can use a `for..of` loop to iterate over a string as well:
 
 ```js
 const str = 'Task';
@@ -165,7 +194,7 @@ for (let char of str) {
 }
 ```
 
-This would print each character of the string, i.e.:
+This would output each character of the string, i.e.:
 
 ```
 T
@@ -183,7 +212,7 @@ for (let variable of arrayOrString) {
 ```
 
 It should be noted that if you don't change the variable inside the loop, you can and should also declare it as `const`.
-Our first example could therefore be rewritten to
+Our first `for...of` example could therefore be rewritten to
 
 ```js
 const tasks = ['Task 1', 'Task 2', 'Task 3'];
@@ -192,9 +221,12 @@ for (const task of tasks) {
 }
 ```
 
+> Just to reiterate, a `for...of` loop can iterate over more objects than just arrays and strings.
+> However this is out of scope for this book.
+
 ### More on Objects
 
-Objects have methods to retrieve their keys and their values:
+You can use the static methods `Object.keys` and `Object.values` to retrieve the keys and values of an object respectively:
 
 ```js
 const task = {
@@ -207,7 +239,7 @@ console.log(Object.keys(task)); // [ 'id', 'title', 'description' ]
 console.log(Object.values(task)); // [ 1, 'Read the Next.js book', 'Read and understand the Next.js book.' ]
 ```
 
-You can also use the `entries` method to retrieve the key-value pairs:
+You can also use the static method `Object.entries` to retrieve the key-value pairs of an object:
 
 ```js
 const task = {
@@ -219,7 +251,7 @@ const task = {
 console.log(Object.entries(task));
 ```
 
-This will log:
+This will output:
 
 ```js
 [
@@ -245,7 +277,7 @@ for (const prop in task) {
 }
 ```
 
-This will log:
+This will output:
 
 ```
 id
@@ -270,10 +302,12 @@ console.log(capitals.has('France')); // false
 ```
 
 At first glance maps appear to be very similar to objects, however there are a few imporant differences.
+
 First, it is very easy to get the size of a map (using the `size` property), whereas with objects you would need to keep track of the size manually.
+
 Second, the keys of an object are usually strings, whereas with maps they can have any data type.
 
-It is usually recommended to use maps if the key-value pairs are unknown until run time (for example because they are determined by user input), all keys have the same type and all values have the same type.
+It is recommended to use maps if the key-value pairs are unknown until run time (for example because they are determined by user input), all keys have the same type and all values have the same type.
 
 ### Sets
 
@@ -297,7 +331,23 @@ console.log(values); // Set(3) { 1, 2, 3 }
 
 ### JSON
 
-JSON is a data format for data exchange (e.g. on a network) and can basically store arbitrary JavaScript objects.
+JSON is a data format for data exchange (e.g. on a network) and can basically store nested JavaScript objects and arrays.
+While it was heavily inspired by JavaScript, it is a language-independent data format and is in fact used by many other programming languages to exchange data.
+
+Here is an example JSON file:
+
+```json
+{
+  "user": {
+    "name": "John Doe",
+    "age": 24,
+    "hobbies": ["running", "swimming"]
+  },
+  "group": "Example group"
+}
+```
+
+> Yes, this is exactly the same syntax that you would use in JavaScript to define objects and arrays.
 
 You can convert a JavaScript value to a JSON string using `JSON.stringify`:
 
@@ -312,10 +362,11 @@ console.log(result2); // [1,2,3]
 ```
 
 Note that `JSON.stringify` has some unintuitive behaviours.
-For example, running `JSON.stringify` on a map will always return `{}`:
+For example, running `JSON.stringify` on a map or a set will always return `{}`:
 
 ```js
 console.log(JSON.stringify(new Map([[1, 2]]))); // {}
+console.log(JSON.stringify(new Set([1, 2]))); // {}
 ```
 
 The reverse operation to `JSON.stringify` is `JSON.parse` which takes a JSON string and constructs a JavaScript value from it:

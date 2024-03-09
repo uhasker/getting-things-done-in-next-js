@@ -4,7 +4,7 @@
 
 ### Arrays
 
-Let's say you are writing a task application (_just how did I come up with that example?_) and you need to store a bunch of tasks.
+Let's say you are writing a task application (_how did I come up with that example?_) and you need to store a bunch of tasks.
 You could of course declare a separate variable for every task like this:
 
 ```js
@@ -18,6 +18,7 @@ In addition you may want to add or delete tasks.
 Adding and deleting variables will become even more _tedious_.
 It would become almost as _tedious_ as repeating the word _tedious_ over and over.
 Did we mention that this is really _tedious_?
+
 As you can see, we need a way to store multiple values in a single variable.
 
 A JavaScript **array** is an ordered collection of multiple values.
@@ -54,10 +55,11 @@ You can get the length of an array by using `.length`:
 console.log(tasks.length); // 3
 ```
 
-> Note that even despite the fact the `tasks` array is declared as a constant here, you can still change the _contents_ of the array.
+> Note that even though the `tasks` array is declared as a constant here, you can still change the _contents_ of the array.
 > However you can't _reassign_ `tasks` to something else, i.e. you can't write something like `tasks = [1]`.
 
-JavaScript has some elegant syntax for working with arrays. If you want to assign variables based on values of an array, you would normally have to do something like this:
+JavaScript has some elegant syntax for working with arrays.
+If you want to assign variables based on values of an array, you would normally have to do something like this:
 
 ```js
 const firstTask = tasks[0];
@@ -79,7 +81,8 @@ If you only care about some of the elements, you can use the **spread** (`...`) 
 const [firstTask, ...otherTasks] = tasks;
 ```
 
-Something that commonly trips up beginners is trying to _copy_ an array. Let's say you have an array of numbers called `arr` and you want to create a copy called `arr2`.
+Something that commonly trips up beginners is trying to _copy_ an array.
+Let's say you have an array of numbers called `arr` and you want to create a copy called `arr2`.
 You would probably try something like
 
 ```js
@@ -87,7 +90,8 @@ const arr = [1, 2, 3, 4];
 const arr2 = arr;
 ```
 
-This is _wrong_. Let's try changing the first element of `arr` and look at `arr[0]` and `arr2[0]`:
+This is _wrong_.
+Let's try changing the first element of `arr` and look at `arr[0]` and `arr2[0]`:
 
 ```js
 arr[0] = 5;
@@ -109,13 +113,13 @@ We also have two symbolic names `arr` and `arr2`.
 While the symbolic names are different, they point to the same storage location.
 Therefore if we change the storage location, we will observe a change via both symbolic names.
 
-In order to actually copy the values, we can in fact use the spread syntax as this will _copy_ the values:
+In order to actually copy the values, we can use the spread syntax as this will _copy_ the values:
 
 ```js
 const copied = [...arr];
 ```
 
-Let's check that this indeed an actual copy:
+Let's check that this is indeed an actual copy:
 
 ```js
 arr[0] = 5;
@@ -133,7 +137,7 @@ Here is the mental picture you should have in your head for copying an array:
 
 ### Objects
 
-Let's return to our (yet) imaginary task application.
+Let's return to our imaginary (as of now) task application.
 A task will probably be something more than just a string.
 For example it might contain an ID, a title and a description.
 We could again store these in constants:
@@ -173,13 +177,17 @@ console.log(task['description']); // Read and understand the Next.js book.
 
 > Note that we will practically always use the dot notation.
 
+Remember how you accessed the length of an array using `arr.length`?
+You can do that because every array has a property called `length` that indicates the length of that array.
+
 Properties don't have to be primitive values.
 They can also be other objects.
+
 Generally speaking, you can arbitrarily nest objects and arrays.
 For example, here is how you can nest an object inside an object:
 
 ```js
-const person = {
+const user = {
   name: 'John Doe',
   task: {
     id: 1,
@@ -189,13 +197,13 @@ const person = {
 };
 ```
 
-You can access the `title` property of the `person.task` object like this:
+You can access the `title` property of the `user.task` object like this:
 
 ```js
-console.log(person.task.title); // Read the Next.js book
+console.log(user.task.title); // Read the Next.js book
 ```
 
-If you try to access a property that doesn't exist, the result will be `undefined` (there it is again):
+If you try to access a property that doesn't exist, the result will be `undefined`:
 
 ```js
 console.log(task.date); // undefined
@@ -203,7 +211,7 @@ console.log(task.date); // undefined
 
 Sometimes you want to explicitly indicate that a property may be absent.
 For example a person may not have a task assigned to them.
-You could do something like this:
+You can write something like this:
 
 ```js
 const person = {
@@ -212,19 +220,19 @@ const person = {
 };
 ```
 
-This has the _potential_ problem that someone referring to `person.task` will have no idea whether it is `undefined`,
-because the property is not supposed to exist at all or because it is explicitly undefined.
-There is nothing that prevents you from using `undefined` to denote absence all the time and in fact we will do so in this very book.
-Just keep in mind that `null` exists and that some developers use it to indicate absence (and that it's totally fine to do so).
+You could also use the `null` value:
 
-Remember how we said that there is one more primitive data type left?
-Well - there it is.
-The final primitive data type is `null`.
-This is something a lot of people are really confused about, because `typeof null` returns `object` (and not e.g. `null`).
-However this is primarily a technical detail.
-Despite the fact that `null` is a separate data type it doesn't hurt to think of it as an object (namely an absent one).
+```js
+const person = {
+  name: 'John Doe',
+  task: null,
+};
+```
 
-Just as with arrays, you can use **destructuring assignment** when working with objects:
+Whether to use `undefined` or `null` in this situation is largely convention.
+Throughout this book we will always use `undefined`.
+
+Just as with arrays, you can use the **destructuring assignment** when working with objects:
 
 ```js
 const task = {
@@ -235,21 +243,21 @@ const task = {
 const { id, title, description } = task;
 ```
 
-And just like with arrays, you can use the spread syntax:
+And just as with arrays, you can use the spread syntax:
 
 ```js
 const taskWithAssignee = {
-  assignee: 'Max',
+  assignee: 'John Doe',
   ...task,
 };
 console.log(taskWithAssignee);
 ```
 
-This will print:
+This will output:
 
 ```json
 {
-  "assignee": "Max",
+  "assignee": "John Doe",
   "id": 1,
   "title": "Read the Next.js book",
   "description": "Read and understand the Next.js book."
@@ -257,4 +265,4 @@ This will print:
 ```
 
 > Note that objects are more than just containers for values.
-> We will talk about this in the section on functions.
+> We will return to this later.

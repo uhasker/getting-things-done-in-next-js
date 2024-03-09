@@ -4,14 +4,15 @@
 
 ### Declaring and Calling Functions
 
-When programming we often have to perform some common actions over and over again.
-For example we might want to get the list of tasks assigned to a user at multiple parts within our software.
-Instead of writing code that (essentially) does the same thing multiple times we could use a **function**.
+In our programs we often need to perform multiple common actions over and over again.
+For example we might want to get the list of tasks assigned to a user at various parts of our task application.
+Instead of writing code that (essentially) does the same thing again and again we could use a **function**.
 
 Within the **function definition** we would specify what statements should be executed.
 Then we can write a **function call** (also called **function invocation**).
 This would then actually execute the statements specified in the definition.
-We can simply group common actions into a function and then just call the function whenever we need to execute those actions.
+
+We can use this mechanism to group common actions into a function and then just call the function whenever we need to execute those actions.
 
 Here is a very simple function definition:
 
@@ -24,15 +25,15 @@ function printGreeting() {
 Function definitions begin with the `function` keyword followed by the function name (in this case `printGreeting`).
 We will cover the meaning of the parentheses in a second, but the curly braces contain the _body_ of the function.
 These are all the statements that will be executed when the function is called.
-In this case we have one statement, which will simply print `Hello world!` to the console.
+In this case we have one statement, which will simply output `Hello world!` to the console.
 
-You can call / invoke the `printGreeting` function by writing `printGreeting()`:
+You can call / invoke the `printGreeting` function like this:
 
 ```js
 printGreeting(); // Hello world!
 ```
 
-You can of course have as many statements as you want inside the function body:
+You have as many statements as you want inside the function body:
 
 ```js
 function printGreetings() {
@@ -43,10 +44,11 @@ function printGreetings() {
 
 These functions are not particularly interesting since they do the exact same thing for every function call.
 In this case, we print the exact same greeting(s) every time.
-But what if we wanted to print a different greeting depending on the user (containing e.g. the user name)?
+But what if we wanted to (for example) output a different greeting depending on the user?
 
-We can solve this by defining **function parameters**.
-This allows us to pass values into the function, so that the function can adjust its behaviour.
+We can do this by defining **function parameters**.
+These allow us to pass values into the function, so that the function can adjust its behaviour _depending on those values_.
+
 The function parameters go between the parentheses:
 
 ```js
@@ -64,7 +66,7 @@ Within the function call we then pass the user (in this case `Jane`) as an **arg
 We can also **return** values from functions using the `return` keyword.
 This keyword is used to specify the result that the function should produce, which can then be used in other parts of your code.
 
-Here is a function that takes a number and returns the square of it:
+Here is a function that takes a number and returns the square of that number:
 
 ```js
 function square(num) {
@@ -115,7 +117,7 @@ console.log(sum(1, 2, 3)); // 6
 
 ### Functions are Objects
 
-Despite the fact that you get "function" when you use `typeof` with a function, functions are really just objects.
+Despite the fact that using `typeof` on function will result in `function`, functions are really just objects.
 
 This means that we can assign functions as variables, pass them to other functions as arguments and do all the other neat things we can do with primitives and objects.
 For example we could assign the `square` function to a variable:
@@ -129,8 +131,7 @@ const square = function square(num) {
 We could then call this like a regular function by doing e.g. `square(3)`.
 
 This is called a **function expression**.
-Note that the function may be **anonymous** here (i.e. it doesn't have a name).
-We could write this:
+Note that the function may be **anonymous** (i.e. nameless):
 
 ```js
 const square = function (num) {
@@ -138,7 +139,7 @@ const square = function (num) {
 };
 ```
 
-The syntax for calling such a function is still the same, e.g. we could write `square(3)`.
+The syntax for calling such a function is still the same, e.g. we would still write `square(3)` to call the function.
 
 ### Arrow Functions
 
@@ -171,14 +172,14 @@ const printAndGreet = (user) => {
 
 As you can see this is not too different from a regular function declaration or expression (unlike the `square` function, where the arrow notation was much shorter).
 It is therefore common practice to only use arrow functions for short functions like `square`.
-However this is again just convention.
+However this is again just a convention.
 
-One thing you might have noticed, is that we only showed you **arrow function expressions**.
-This is not an oversight but stems from the fact that there is no way to write a **function declaration** with the **arrow function notation**.
+One thing you might have noticed is that we only showed you **arrow function expressions**.
+This is not an oversight but stems from the fact that there is no way to write a function declaration with the arrow function notation.
 
 ### Instance Methods
 
-An **instance method** (sometimes methods for short) is a function which is a property of an object.
+An **instance method** (often just **method** for short) is a function which is a property of an object.
 
 ```js
 const greeter = {
@@ -199,19 +200,19 @@ Methods can refer to the properties of an object using the `this` keyword which 
 ```js
 const task = {
   id: 1,
-  title: 'Read the MERN book',
-  description: 'Read and understand the MERN book.',
+  title: 'Read the Next.js book',
+  description: 'Read and understand the Next.js book.',
   longDescription: function () {
     return `${this.title}(ID = ${this.id}): ${this.description}`;
   },
 };
 ```
 
-You can call the method by doing `task.longDescription()`.
-This would print:
+You can call the method by writing `task.longDescription()`.
+This would output:
 
 ```
-Read the MERN book(ID = 1): Read and understand the MERN book.
+Read the Next.js book(ID = 1): Read and understand the MERN book.
 ```
 
 Methods can also change properties of objects.
@@ -235,7 +236,7 @@ console.log(Number.parseInt('123')); // 123
 
 Static methods will become important in a few sections, when we introduce a few useful static methods that deal with arrays and objects.
 
-> Our definition of static methods is a bit ugly because the technically correct definition would require the concept of a class, which we don't have yet.
+> Our definition of static methods is a bit ugly because the technically correct definition would require the concept of a class, which we're not going to introduce in this book.
 
 ### Scope
 
@@ -372,4 +373,5 @@ function sum(a, b) {
 }
 ```
 
-This is quite useful if you have complex functions with lots of parameters, because it allows other developers to quickly understand the purpose of your function.
+This is useful if you have complex functions with lots of parameters.
+Documenting your functions allows other developers to quickly understand their purpose without needing to read the function bodies.

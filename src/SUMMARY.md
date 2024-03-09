@@ -16,7 +16,8 @@
   - [Functional Thinking](chapter1/08-functional-thinking.md)
   - [Asynchronous Programming](chapter1/09-asynchronous-programming.md)
   - [Modules](chapter1/10-modules.md)
-  - [Writing Decent Code](chapter1/11-writing-decent-code.md)
+  - [Packages](chapter1/11-packages.md)
+  - [Writing Decent Code](chapter1/12-writing-decent-code.md)
 
 - [Leveling Up with TypeScript](chapter2/README.md)
 
