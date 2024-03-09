@@ -5,11 +5,12 @@
 ### It Just Works
 
 A common misunderstanding among beginner programmers is that if the program runs correctly, then the code must automatically be fine.
-While a correctly running program is indeed better than a crashing program (a truly shocking insight for some developers), code should not only work, but also be maintainable.
+A correctly running program is indeed better than a crashing program (a truly shocking insight for some developers).
+However code should not only work, but also be maintainable _in the future_.
 
 This **maintainability** has two aspects:
 
-1. Code should be maintainable by future you in (let's say) six months.
+1. Code should be maintainable by future _you_ in (let's say) six months.
 2. Code should be maintanable by other people that are not you.
 
 > We wish to reiterate that there are indeed people that are not you in the world, some of which might even end up on your team.
@@ -62,12 +63,17 @@ And we know that, because it is literally in the name of the function!
 
 Not only does the function have a good name (which is important when trying to use this function), but so do the variables (which is important when we need to fix possible mistakes in this function).
 
-Of course, this is a very extreme example (on purpose), but it's really incredible how often programmers give terrible names to functions and variables.
-This happens even to developers that should know better.
+Of course, this is a very extreme example (that's on purpose), but it's really incredible how often programmers give terrible names to functions and variables.
 
-We will note, that naming things is usually not as easy as in this example.
-There are many legitime cases where giving something a good name is not trivial, but you should at least always try to have sensible names.
-The poor soul that will have to fix your bugs, will really thank you for that.
+> This is the case even for developers that should know better.
+
+Of course, naming things is usually not as easy as in this example.
+There are many legitimate cases where giving something a good name is not trivial, but you should at least always _try hard_ to have sensible names.
+The poor soul that will have to fix your bugs six months from now will really thank you for that.
+
+> Note how we wrote _try hard_ and not just _try_.
+> The worst code is code containing bad naming.
+> You should therefore absolutely invest time into thinking about good names for your variables and functions.
 
 ### Write Small Helper Functions
 
@@ -79,7 +85,7 @@ A common practice for such cases is this:
 Consider a function that takes an array of tasks and returns an array of generated notifications to be shown to the user.
 
 The notifications are generated for urgent tasks (i.e. tasks where the deadline is in the next two days).
-Additionally, generate a notification with the number of uncompleted tasks.
+Additionally, we generate a notification with the number of uncompleted tasks.
 
 You might write the function like this:
 
@@ -117,8 +123,7 @@ function generateNotifications(tasks) {
 }
 ```
 
-Try to read this function and understand it.
-This probably takes some time, especially if you are a beginner who is not used to digesting large chunks of code quickly.
+Try to read this function and understand it - this will probably take up quite some time.
 
 We can massively improve this code by splitting the function into small helper functions:
 
@@ -216,7 +221,7 @@ function getTaskTitlesByStatus(tasks) {
 ```
 
 Same goes for `findUrgentTasks` and `countUncompletedTasks`.
-You should in fact try it.
+You should in fact try to do that yourself.
 
 Generally, the takeaway from the section is this:
 
@@ -385,9 +390,14 @@ function reportCompletedTasks(tasks) {
 }
 ```
 
+Again, this is a very simple example, but the general principle holds for more complex situations as well.
+If you find yourself repeating very similar code over and over, you should probably extract it into a function.
+
+Remember, that's why we introduced functions in the first place.
+
 ### Think About Edge Cases
 
-One of the big differences between junior programmers and more senior developers is that juniors tend to ignore edge cases and just focus on the happy path.
+One of the big differences between junior programmers and more senior developers is that juniors tend to ignore edge cases and just focus on the "happy path".
 
 Consider this piece of code:
 
@@ -417,11 +427,13 @@ Example operations which can lead to problems if you don't consider edge cases a
 - division (because you could divide by zero)
 - processing strings (because strings could be empty or have whitespace at the beginning or the end)
 - extracting elements from arrays by a condition (because there might be no elements present that match the condition)
-- processing user input (because user can and will type arbitrary garbage into your application)
+- processing user input (because users can and will type arbitrary garbage into your application)
+
+And of course every time you work with an external resource (like `fetch`ing something), you need to handle potential errors.
 
 The main takeaway from this sections is:
 
-**Don't be satisfied by just writing the happy path. Take edge cases into consideration.**
+**Don't be satisfied by just writing the happy path. Think about the edge cases.**
 
 ### Additional Tips for Large Projects
 
@@ -443,13 +455,16 @@ This means that if you write code as smart as you can, you are not going to be a
 ### Final Remarks
 
 Well, now that you made it through this section, are you a great programmer?
-Unfortunately, the answer is a hard no.
+Unfortunately, the answer is a hard **no**.
 
-If you could become a great programmer by just reading a list, then there wouldn't be entire book shelves devoted to becoming a better programmer.
-You need to actually go out and write projects.
-There is no way around it.
+If you could become a great programmer by just reading a couple of pages, then there wouldn't be entire book shelves devoted to that topic.
 
-In the end, experience is king.
+There is only one way to become a good programmer:
+
+**You need to actually go out and write projects.**
+
+There is no way around it and in the end, experience is king.
+
 But there is one important caveat - you have to actually _learn_ from that experience and reflect on your mistakes.
 
-So go out there and write a feature!
+So go out there, write features, make mistakes and learn something!
