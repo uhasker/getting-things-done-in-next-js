@@ -17,13 +17,13 @@ Here is the minimal `package.json`:
 ```
 
 The `version` field follows a convention called SemVer (short for Semantic Versioning).
-This defines that any version of a package (or library) should have the format `MAJOR.MINOR.PATCH`.
-Whenever you update a package, you should increment one of these.
+This defines that any version of a package (or library) should have the format `MAJOR.MINOR.PATCH` where `MAJOR`, `MINOR` and `PATCH` are non-negative integers.
+Whenever you update a package, you should make a change to the package version.
 
-If you make backward incompatible API changes, you should increment the `MAJOR` number.
+If you make backward incompatible API changes, you should increment the `MAJOR` number and reset the other numbers.
 For example if you release a big update of a package with the version `1.32.2` where you change a lot of function signatures you should update the version to `2.0.0`.
 
-If you add functionality in a backward compatible manner, you should increment the `MINOR` number.
+If you add functionality in a backward compatible manner, you should increment the `MINOR` number and reset the `PATCH` number.
 For example if you release an update of a package with the version `1.32.2` and you add a couple of new functions you should update the version to `1.33.0`.
 
 If you just make backward compatible bug fixes, you should increment the `PATCH` number.
@@ -44,7 +44,7 @@ For example, if we want `index.js` to be the entry point of our package, we woul
 }
 ```
 
-Next let's create an ESM module:
+Next let's create an ESM module `index.js`:
 
 ```js
 export function greet(name) {
@@ -59,10 +59,10 @@ You can now use the `greet` function of your package in other packages that impo
 ### Installing Dependencies
 
 To install dependencies you will need a package manager like `npm` or `pnpm`.
-The main difference between these is that `pnpm` stores packages globally meaning that if multiple projects use the same package, `pnpm` will only store it once and the link as needed.
+The main difference between these is that `pnpm` stores packages globally meaning that if multiple projects use the same package, `pnpm` will only store it once and then link to it as needed.
 
 There is also a difference between dependencies and "dev" dependencies.
-Regular dependencies are package that your project needs to run.
+Regular dependencies are packages that your project needs to run.
 "Dev" dependencies are packages that are only needed during development or testing.
 These will not be included in a production build.
 
@@ -75,7 +75,7 @@ Let's install the `lodash` dependency which is a widely used utility library:
 pnpm add lodash
 ```
 
-The dependency will appear in your `package.json`:
+The dependency now will appear in your `package.json`:
 
 ```json
 {
@@ -112,12 +112,13 @@ packages:
     dev: false
 ```
 
-The actual package will be located in the `node_modules` directory (namely `node_modules/lodash`).
+The actual package will be located in the `node_modules` directory (namely at `node_modules/lodash`).
 
 > Don't be afraid of the `node_modules` directory.
-> There is no secret sauce - it simply contains the code of the packages you've installed.
+> There is no black magic there - `node_modules` simply contains the code of the dependencies you've installed.
+> In fact, we encourage you to browser through the `node_modules/lodash` directory and realize that it's just regular JavaScript code.
 
-Let's now use a function of `lodash` in our `index.js`:
+Let's now use `lodash` in our `index.js`:
 
 ```js
 import _ from 'lodash';
@@ -158,3 +159,55 @@ pnpm run greet
 ```
 
 This will again output `Hello, world`.
+
+The `scripts` mechanism becomes especially useful if you need to execute a long chain of commands.
+Instead of repeating the chain of commands over and over again, you can specify a script and then just run that script.
+
+### Publishing Packages
+
+Let's return to our package from the beginning of this section.
+
+We had this `package.json` file:
+
+```json
+{
+  "name": "example-package",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "index.js"
+}
+```
+
+And we had this ESM module `index.js`:
+
+```js
+export function greet(name) {
+  console.log(`Hello ${name}`);
+}
+```
+
+What if we want to make this package available to other people?
+We could **publish** our package to the npm repository.
+This is in fact where we pulled the `lodash` package from earlier.
+
+> Please don't actually publish this silly example package to the npm repository.
+> It is already plenty polluted as it is.
+> However the steps outlined below will be useful to you, if you plan to actually publish something interesting.
+
+The publishing process is pretty simple:
+
+First, you need to create an account at `npmjs.com`.
+
+Second, you need to log in to your account in your terminal by running:
+
+```sh
+npm login
+```
+
+Third, you will need to publish the package by running:
+
+```sh
+pnpm publish --access public
+```
+
+After you're done, you can verify that the package was published successfully by going to `https://www.npmjs.com/package/$YOUR_PACKAGE_NAME`.
