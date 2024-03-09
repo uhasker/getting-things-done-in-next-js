@@ -17,7 +17,7 @@ Luckily, JavaScript provides us with a mechanism to use code from one file in an
 > Note that we will only discuss ECMAScript modules.
 > There are other module systems, but we won't cover them right now.
 
-### The Import and Export Keywords
+### The `import` and `export` Keywords
 
 Let's start our module discussion with a very simple example.
 We will create a file containing a function and then try to use that function in another file.
@@ -42,7 +42,7 @@ import { greet } from './greeter.js';
 console.log(greet('John Doe'));
 ```
 
-This is the basic setup, but in order to execute this in the browser or in Node.js we need to make some more adjustments.
+This is the basic setup, but in order to actually execute this in the browser or in Node.js we need to make some more adjustments.
 
 ### ESM in the Browser
 
@@ -70,13 +70,13 @@ CORS policy: Cross origin requests are only supported for protocol schemes:
 http, data, isolated-app, chrome-extension, chrome, https, chrome-untrusted.
 ```
 
-We will dive into CORS later, but basically this error happens because ECMAScript modules are subject to the same-origin policy.
+We won't go into the details of CORS, but basically this error happens because ECMAScript modules are subject to the same-origin policy.
 We therefore need to serve our files over a server instead of just trying to open them in our browser.
 
 Let's install the `http-server` package:
 
 ```sh
-npm install -g http-server
+pnpm add -g http-server
 ```
 
 Now enter the directory where you stored `index.html`, `main.js` and `greeter.js` and execute the following command:
@@ -89,7 +89,8 @@ Go to `http://localhost:8080`, open the console and you should see `Hello, John 
 
 ### ESM in Node.js
 
-To use `main.js` and `greeter.js` in Node.js create the following `package.json` file in the same directory as `main.js` and `greeter.js`:
+To use `main.js` and `greeter.js` in Node.js, we will need to create a **project**.
+Therefore you need to create the following `package.json` file in the same directory as `main.js` and `greeter.js`:
 
 ```
 {
@@ -101,9 +102,7 @@ To use `main.js` and `greeter.js` in Node.js create the following `package.json`
 ```
 
 > Note that it is very important that you specify `type` as `module`.
-> This tells node to interpret JavaScript files as using ES module syntax (which is what we use in this section).
-
-This `package.json` file specifies that the directory is now a **node project**.
+> This tells node to interpret JavaScript files as using ESM syntax (which is what we use in this section).
 
 You can then execute `main.js` by running:
 
@@ -111,7 +110,7 @@ You can then execute `main.js` by running:
 node main.js
 ```
 
-> We will return to the concept of `package.json` later.
+> We will return to the concept of `package.json` in more detail later.
 
 ### Named Exports and Imports
 
@@ -145,7 +144,7 @@ function greet(name) {
 export { getGreeting, greet };
 ```
 
-> You should use named exports if you need to export several values.
+> You should use named exports if you need to export several values/functions.
 
 Note that you can rename exports in an export list:
 
@@ -189,27 +188,59 @@ import { greet as otherGreet } from './other-greet.js';
 If you want to have a default function provided by your module, you can use a **default export**:
 
 ```js
-export default getGreeting;
+function getGreeting(name) {
+  return `Hello ${name}`;
+}
+
+export default function greet(name) {
+  console.log(getGreeting(name));
+}
 ```
 
-This is equivalent to:
+Alternatively you could write:
 
 ```js
-export { getGreeting as default };
+function getGreeting(name) {
+  return `Hello ${name}`;
+}
+
+function greet(name) {
+  console.log(getGreeting(name));
+}
+
+export default greet;
 ```
 
-Note that you can't have more than one default export.
+Or:
+
+```js
+function getGreeting(name) {
+  return `Hello ${name}`;
+}
+
+function greet(name) {
+  console.log(getGreeting(name));
+}
+
+export { greet as default };
+```
+
+Note that you _can't have more than one default export_.
 
 You import the default export like this:
 
 ```js
-import getGreeting from './greet.js';
+import greet from './greet.js';
+
+console.log(greet('John Doe'));
 ```
 
 Alternatively you could use `default as`:
 
 ```js
-import { default as getGreeting } from './greet.js';
+import { default as greet } from './greet.js';
+
+console.log(greet('John Doe'));
 ```
 
 Note that you can import the default export using any name you like:
@@ -218,9 +249,11 @@ Note that you can import the default export using any name you like:
 import thingy from './greet.js';
 ```
 
+> You should use default exports if you need to export one particularly import value/function.
+
 ### Namespace Imports
 
-If you wish to avoid name conflicts (like the `greet` situation presented above) you can do even better with namespace imports:
+If you wish to avoid name conflicts (like the `greet` situation presented previously) you can do even better with namespace imports:
 
 ```js
 import * as greet from './greet.js';
