@@ -271,3 +271,43 @@ import * as otherGreetModule from './other-greet.js';
 greetModule.greet('John');
 otherGreeetModule.greet('John');
 ```
+
+### Module Scope
+
+We already know the global scope, function scope and block scope.
+Now that we've introduced modules, there is one more scope you should know about - the **module scope**.
+
+Each module has it's own scope.
+This means that variables and functions declared in a module are _not visible to code outside the module_ unless they are explicitly exported.
+Even if a variable or a function is explicitly exported it can't be used in outside code unless they are explicitly imported first.
+
+This ensures that modules don't accidentally interfere with each other.
+
+Consider this example:
+
+```js
+function getGreeting(name) {
+  return `Hello ${name}`;
+}
+
+export function greet(name) {
+  console.log(getGreeting(name));
+}
+```
+
+Here the `getGreeting` function is not exported, meaning that it will remain _completely private_ to the module.
+Only the `greet` function can be used (since it is `default` exported).
+
+Let's try importing `getGreeting`:
+
+```js
+import { greet, getGreeting } from './greet.js';
+```
+
+You will get the following error:
+
+```
+import { greet, getGreeting } from './greet.js';
+                ^^^^^^^^^^^
+SyntaxError: The requested module './greet.js' does not provide an export named 'getGreeting'
+```
