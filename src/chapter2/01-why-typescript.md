@@ -7,7 +7,7 @@
 Consider the following scenario.
 You have a JavaScript function `showTask(task)` which takes a `task` object and displays the task in a UI (or in the console).
 
-Let's say you have the following task object:
+Let's say your `task` object looks like this:
 
 ```js
 const task = {
@@ -18,14 +18,16 @@ const task = {
 ```
 
 Can you pass this object to `showTask`?
-Well, you can't really tell because maybe the `showTask` function expects an object that has `id`, `title`, `description` _and_ `status` fields.
+Well, you can't really tell.
+
+_Maybe_ the `showTask` function expects an object that has `id`, `title`, `description` _and_ `status` fields.
 The only way to find out if your `task` object is a valid input for `showTask` is to - well - actually pass it and find out.
 This is obviously not the ideal workflow (especially if you happen to find out that your object lacked some important properties _in production_).
 
 Additionally, if the author of the `showTask` function changes his function to expect additional properties on the `task` object, they would now have to check all the invocations of `showTask` to verify that they didn't accidentally break something.
 
 This is where TypeScript comes in.
-With TypeScript we would be able to _statically type_ the function by adding _type annotations_ like so:
+With TypeScript we would be able to _statically type_ the function by adding _type annotations_ like this:
 
 ```ts
 type Task = {
@@ -52,7 +54,7 @@ showTask({
 });
 ```
 
-If we pass an object that lacks some of the expected properties and run _type checks_ (more on that later) we will get an error long before the bad code can make it anywhere near production.
+If we would pass an object that lacks some of the expected properties and run _type checks_ (more on that later) we will get an error long before the bad code can make it anywhere near production.
 Even better - your editor will be able to show you that you might have a problem during development:
 
 ```ts
@@ -64,20 +66,20 @@ showTask({
 // politely scream at you that the object is missing the description property.
 ```
 
-Better still (TypeScript just keeps giving), you now get _autocompletion_ - editors will show possible suggestions for the property names your object should have while you type.
+Better still (TypeScript just keeps giving), you now get _autocompletion_ - editors will show possible suggestions for the property names your object should have _while you are typing_.
 This saves an enormous amount of time and effort when writing code.
 
-To summarize, using TypeScript massively enhances your developer workflow which is why nowadays most large projects no longer use vanilla JavaScript, but TypeScript instead.
+To summarize, using TypeScript massively enhances your developer workflow which is why nowadays most large projects use TypeScript instead of vanilla JavaScript.
 
 ### Installing TypeScript
 
 You can install the TypeScript compiler by running the following command:
 
 ```sh
-npm install --location global typescript
+pnpm add -g typescript
 ```
 
-> The `--location global` flag tells `npm` to install the package globally and not just for a particular project.
+> The `-g` flag tells `pnpm` to install the package globally and not just for a particular project.
 
 Let's see how we can use the TypeScript compiler.
 First, create a file `index.ts`:
@@ -182,3 +184,20 @@ Found 1 error in index.ts:13
 
 The compiler correctly informed us that if we were to run this code it would probably result in bad things happening due to the missing `description` property.
 We now know that the code is probably wrong long before it made it anywhere near production and can fix it accordingly.
+
+### Executing TypeScript Directly with `tsx`
+
+Sometimes you want to execute a TypeScript file directly (especially during development) and not go throught the "compile and run" cycle manually.
+There a couple of tools that allow you to do that - here we will introduce `tsx` (short for "TypeScript Execute").
+
+Install `tsx`:
+
+```sh
+pnpm add -g tsx
+```
+
+You can execute a TypeScript file `index.ts` by running:
+
+```sh
+tsx index.ts
+```

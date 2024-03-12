@@ -5,6 +5,7 @@
 ### Why Generics?
 
 Generics allow us to write code that is type-safe, yet independent of specific types.
+
 Consider the example of retrieving the first element of an array:
 
 ```js
@@ -30,6 +31,15 @@ const num = getFirstElement([1, 2, 3]);
 const str = getFirstElement(['a', 'b', 'c']);
 ```
 
+We also can't use the `unknown` type since it doesn't permit any operations:
+
+```ts
+function getFirstElement(arr: unknown) {
+  return arr[0];
+  // This will result in a type error
+}
+```
+
 We could also make use of _function overloads_ and write something like this:
 
 ```ts
@@ -39,13 +49,15 @@ function getFirstElement(arr: undefined[]): undefined;
 // More overloads and implementation here
 ```
 
+> We will not discuss function overloads in more detail as it's out of scope for this book.
+
 But this obviously gets very tedious and error-prone for most cases.
 Instead TypeScript allows us to use **generics** to specify that some code does not depend on the concrete types and only cares about the relation between certain types.
 
 ### Generic Functions
 
 Consider the identity function that simply takes an argument `arg` and returns it unchanged.
-We can use a type variable `Type` and type it like this:
+We can use a **type variable** `Type` and type it like this:
 
 ```ts
 function identity<Type>(arg: Type): Type {
@@ -61,7 +73,7 @@ let val = 'Hello, world!';
 let val2 = identity<string>(val); // val2 is of type string
 ```
 
-We dont actually have to manually specify the type `string` when calling the function and can instead rely on TypeScripts inference:
+We dont actually have to manually specify the type `string` when calling the function and can instead rely the inference capabilities of TypeScript once again:
 
 ```ts
 let val = 'Hello, world!';
@@ -69,12 +81,13 @@ let val2 = identity(val); // val2 is of type string
 ```
 
 > There is no single convention for naming type parameters.
-> Common names includew `T`, `Type` and `TType`.
+> Common names include `T`, `Type` and `TType`.
+> We will stick to the `Type` convention throughout this book.
 
-Similarly, we can type the `getFirstElement` function:
+Similarly, we can type the `getFirstElement` function using type parameters:
 
 ```ts
-function getFirstElement<Type>(arr: Type): Type {
+function getFirstElement<Type>(arr: Type[]): Type {
   return arr[0];
 }
 
@@ -82,7 +95,7 @@ const num = getFirstElement([1, 2, 3]);
 const str = getFirstElement(['a', 'b', 'c']);
 ```
 
-Unlike in the `getFirstElement` that was typed using `any`, we now get meaningful type inference.
+Unlike in the `getFirstElement` example that was typed using `any`, we now get meaningful type inference.
 For example `num` will have the type `number` (instead of `any`) and `str` will have the type `string`.
 
 You can use any number of type parameters you want.
@@ -93,6 +106,21 @@ function map<In, Out>(array: In[], f: (value: In) => Out): Out[] {
   return array.map(f);
 }
 ```
+
+Here, we have two type parameters `In` and `Out`.
+The type parameter `In` indicates the types of the elements of the original array.
+The type parameter `Out` indicates the types of the elements of the result array.
+
+Note how the type of the parameter `f` makes uses of both the `In` and `Out` parameter types.
+This makes sense since `f` transforms an element of the original array (`In`) into an element of the result array (`Out`).
+
+Again, we will get proper type inference:
+
+```ts
+const arr = map([1, 2, 3, 4], (x) => x % 2 === 0);
+```
+
+Here `arr` will have the type `boolean[]`.
 
 ### Generic Object Types
 
@@ -129,7 +157,7 @@ function extractContent<Type>(box: Box<Type>): Type {
 ### Important Builtin Generics
 
 Generic object types are often useful for collections (and containers), since collection logic is often independent of the specific item types.
-For example, retrieving the first element of an array or finding an element of a set by value using the `===` operator will be the same regardless of the types of the array or set elements.
+For example, retrieving the first element of an array or finding an element of a set by value using the `===` operator will work the same way regardless of the types of the array or set elements.
 
 You already learned about generic arrays (note that you can use `Array<T>` in place of `T[]`).
 
@@ -143,7 +171,7 @@ const ScoreRecord: Record<string, number> = {
 };
 ```
 
-Two other generic data structures that you know about are sets and maps:
+Two other generic data structures that you already know about are sets and maps:
 
 ```ts
 const mySet: Set<number> = new Set([1, 2, 3]);
@@ -164,7 +192,7 @@ const myMap = new Map<string, number>([
 ```
 
 One other very important generic type is the `Promise<Type>` type which is most commonly used to annotate asynchronous functions.
-For example, if we have an asynchronous function `f` that returns a promise with a string, we would annotate it like this:
+For example, if we have an asynchronous function `f` that returns a promise that will eventuell fulfill with a `string`, we would annotate it like this:
 
 ```ts
 async function f(): Promise<string> {
@@ -179,7 +207,7 @@ Often, we don't want to pass _completely arbitrary_ type parameters.
 Consider this example:
 
 ```ts
-function printLength<Type>(arg: Type): number {
+function getLength<Type>(arg: Type): number {
   return arg.length;
 }
 ```
@@ -197,7 +225,7 @@ This makes sense since `arg` can be of literally any type and there is no guaran
 To change this, we need to constrain the type `Type` and make sure that `arg` must have the `length` property:
 
 ```ts
-function printLength<Type extends { length: number }>(arg: Type): number {
+function getLength<Type extends { length: number }>(arg: Type): number {
   return arg.length;
 }
 ```

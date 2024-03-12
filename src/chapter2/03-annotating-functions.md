@@ -5,7 +5,7 @@
 ### Annotating Parameters
 
 We can annotate functions in TypeScript by annotating their parameters.
-Consider a function `greet` that takes a parameter `name` of type `string` and simply logs a greeting to the console.
+Consider a function `greet` that takes a parameter `name` of type `string` and simply outputs a greeting to the console.
 Here is how we would annotate the function:
 
 ```ts
@@ -18,10 +18,10 @@ Now arguments to the function are checked:
 
 ```ts
 greet(false);
-// This will result in an error
+// This will result in a type error
 ```
 
-You can also annotate functions if they take arrays and objects by simply using the syntax you learned in the previous section:
+You can annotate functions that expect arrays and/or objects by simply using the syntax you learned in the previous section:
 
 ```ts
 function showTask(task: { id: number; summary: string; description: string }) {
@@ -31,7 +31,8 @@ function showTask(task: { id: number; summary: string; description: string }) {
 }
 ```
 
-This is not particularly readable, so normally we would use a type alias:
+This is not particularly readable.
+Luckily, this is where type aliases come in really handy:
 
 ```ts
 type Task = {
@@ -47,8 +48,8 @@ function showTask(task: Task) {
 }
 ```
 
-Note that TypeScript will not just check that the passed arguments have the correct types, but also check that the correct number of argument was passed.
-This has an interesting side effect - namely that introducing the TypeScript compiler in a JavaScript codebase can already find potential bugs:
+Note that TypeScript will not just check that the passed arguments have the correct types, but also check that the correct number of arguments was passed.
+This has an interesting side effect - introducing the TypeScript compiler in a JavaScript codebase can reveal bugs without any further work:
 
 ```js
 function showTask(task) {
@@ -73,7 +74,7 @@ TypeScript is quite useful indeed!
 
 ### Return Type Annotations
 
-We can also type the return types of our functions:
+We can also annotate the return types of our functions:
 
 ```ts
 function getGreeting(name: string): string {
@@ -94,7 +95,8 @@ Nevertheless, return types are often typed explicitly to avoid accidentally retu
 ### Optional Parameters
 
 Similar to object properties, function parameters can be marked as _optional_.
-In this case we can, but don't need to pass the corresponding argument to the function:
+In this case we can, but don't need to pass the corresponding argument to the function.
+If a parameter is marked as optional, the corresponding argument might also be `undefined`:
 
 ```ts
 function getGreeting(name: string, message?: string): string {
@@ -146,4 +148,4 @@ const myName = 'John Doe';
 console.log(getGreeting(myName, (name) => `Hello ${name}`));
 ```
 
-Note how we no longer need to type-annotate `name` in the anonymous function - TypeScript has automatically inferred it to be of type `string`.
+Note how we no longer need to explicitly specify the type of `name` in the anonymous function - TypeScript has automatically inferred it to be of type `string`.

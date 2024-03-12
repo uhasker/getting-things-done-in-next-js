@@ -368,10 +368,10 @@ This makes room for another tool to convert the TypeScript files to something th
 
 This is often done when we only want to use TypeScript as a type checker (as is common in projects) or to provide suggestions in your coding editor.
 
-## An Example `tsconfig.json`
+### An Example `tsconfig.json`
 
-You know learned about some of the most important `tsconfig.json` settings!
-Here is an example `tsconfig.json` to summarize what we learned:
+You now learned about some of the most important `tsconfig.json` settings!
+Here is an example `tsconfig.json` to summarize your newfound knowledge:
 
 ```json
 {
