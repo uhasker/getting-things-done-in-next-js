@@ -175,7 +175,7 @@
                     <main>
                         <h2 id="union-types"><a class="header" href="#union-types">Union Types</a></h2>
 <h3 id="literal-types"><a class="header" href="#literal-types">Literal Types</a></h3>
-<p>A literal type is a type whose only value is a literal.
+<p>A <strong>literal type</strong> is a type whose only value is a literal.
 Here is how we could define a literal type <code>'Todo'</code>:</p>
 <pre><code class="language-ts">type TodoType = 'Todo';
 </code></pre>
@@ -185,6 +185,7 @@ Here is how we could define a literal type <code>'Todo'</code>:</p>
 <p>Note that we can't assign any other value to <code>todo</code> including other strings.
 For example this is not possible:</p>
 <pre><code class="language-ts">let todo: TodoType = 'Done';
+// This will result in a type error
 </code></pre>
 <p>We could also skip declaring the type alias and just use the literal type directly:</p>
 <pre><code class="language-ts">let todo: 'Todo' = 'Todo';
@@ -202,14 +203,14 @@ This also makes sense since we can't change the constant later:</p>
 </code></pre>
 <p>While literal types by themselves are not very helpful, they are extremely useful in the context of union types.</p>
 <h3 id="unions-of-literal-types"><a class="header" href="#unions-of-literal-types">Unions of Literal Types</a></h3>
-<p>A union type is a type that represents a value which may be one of multiple values.
-Consider the type <code>TaskState</code> which represents one of the following states:</p>
+<p>A <strong>union type</strong> is a type that represents a value which may be one of multiple values.
+Consider a type <code>TaskState</code> which represents one of the following states:</p>
 <ul>
 <li>Todo</li>
 <li>InProgress</li>
 <li>Done</li>
 </ul>
-<p>Here is how we would defined the <code>TaskState</code> type:</p>
+<p>Here is how we would define the <code>TaskState</code> type:</p>
 <pre><code class="language-ts">type TaskState = 'Todo' | 'InProgress' | 'Done';
 </code></pre>
 <p>The <code>TaskState</code> type is a union type and each of the literal types <code>'Todo'</code>, <code>'InProgress'</code> and <code>'Done'</code> is a member of the union.
@@ -224,15 +225,15 @@ const state3: TaskState = 'Done';
 </code></pre>
 <h3 id="other-union-types"><a class="header" href="#other-union-types">Other Union Types</a></h3>
 <p>We can also declare unions of arbitrary types.
-The general syntax for declaring a union type is <code>Type1 | Type2 | Type3 | ...</code> and such a value that has this union type can have the type <code>Type1</code> or <code>Type2</code> or <code>Type3</code> etc.
+The general syntax for declaring a union type is <code>Type1 | Type2 | Type3 | ...</code> and a value of this union type can have the type <code>Type1</code> or <code>Type2</code> or <code>Type3</code> etc.
 The various types <code>Type1</code>, <code>Type2</code>, <code>Type3</code> etc are called members of the union.</p>
-<p>One particulary useful union type is <code>T | undefined</code>, for example:</p>
+<p>One particularly common union type is <code>T | undefined</code>, for example:</p>
 <pre><code class="language-ts">function getTaskId(taskName: string): string | undefined {
   // Implementation here
 }
 </code></pre>
 <p>This function takes a <code>taskName</code> and returns the corresponding ID.
-However since it might be the case that no task with the given name is present, we return either a <code>string</code> or <code>undefined</code>.</p>
+Because we might discover that no task with the given name is present, we return either a <code>string</code> or <code>undefined</code>.</p>
 <h3 id="working-with-a-union-type"><a class="header" href="#working-with-a-union-type">Working with a Union Type</a></h3>
 <p>It should be clear by now how we can define a union type, but how can we work with a union type?
 Consider the following function:</p>
@@ -251,8 +252,8 @@ Found 1 error in index.ts:4
 </code></pre>
 <p>TypeScript will only allow to do something with the value of a union type if that something is valid for every member of the union.
 Since <code>taskName</code> can be either a <code>string</code> or <code>undefined</code>, we can't access <code>.length</code> on it, because <code>.length</code> is not a valid property of <code>undefined</code>!</p>
-<p>Instead we need to <em>narrow</em> the type with code.
-Basically, TypeScript can look at our code and try to understand that in certain code parts a value of a union type can only have the type of a particular member of the union.</p>
+<p>Instead we need to perform <strong>type narrowing</strong> where we <em>narrow</em> the type of a variable with code.</p>
+<p>Basically, TypeScript can look at our code and try to understand that in certain code parts a value of a union type can only have the type of a particular member of the union.</p>
 <p>The simplest way of narrowing a type is <strong>equality narrowing</strong>.
 Here we can use the <code>===</code> or <code>!==</code> operators to narrow a type.</p>
 <p>Consider this example:</p>
@@ -304,6 +305,20 @@ We could fix the function like this:</p>
   }
 }
 </code></pre>
+<p>You should generally be careful when relying on truthiness or falsiness.
+The way these concepts work in JavaScript can be a bit confusing and it's easy to miss and edge case.</p>
+<p>Some people prefer to avoid these concepts altogether and instead provide explicit checks, for example:</p>
+<pre><code class="language-ts">function logTaskName(taskName: string | undefined | null) {
+  if (taskName !== undefined &amp;&amp; taskName !== null) {
+    console.log({
+      taskName,
+      taskNameLength: taskName.length,
+    });
+  } else {
+    console.log('the task is not defined');
+  }
+}
+</code></pre>
 <p>The last way of narrowing a type that we will discuss here is <code>typeof</code> narrowing.
 TypeScript knows how the <code>typeof</code> operator works and you can use it to narrow a type as you would expect:</p>
 <pre><code class="language-ts">function processInput(value: string | number): number {
@@ -323,7 +338,7 @@ let trimmedInput: string = input!.trim();
 </code></pre>
 <p>Just as with type assertions, you should use this <em>extremely sparingly</em> and usually there is a better way.</p>
 <h3 id="type-predicates"><a class="header" href="#type-predicates">Type Predicates</a></h3>
-<p>We can write user-defined type guards by utilizing <strong>type predicates</strong>.
+<p>We can write user-defined <strong>type guards</strong> by utilizing <strong>type predicates</strong>.
 Consider the following example:</p>
 <pre><code class="language-ts">const array = ['Hello', undefined, 'World', undefined];
 const filteredArray = array.filter((val) =&gt; val !== undefined);

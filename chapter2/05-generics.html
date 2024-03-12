@@ -176,8 +176,8 @@
                         <h2 id="generics"><a class="header" href="#generics">Generics</a></h2>
 <div style="text-align: right"> <i> Generics are the invisible hat of the TypeScript sage, fitting the heads of both the giant and the dwarf. <br> - Ancient Chinese proverb </i> </div>
 <h3 id="why-generics"><a class="header" href="#why-generics">Why Generics?</a></h3>
-<p>Generics allow us to write code that is type-safe, yet independent of specific types.
-Consider the example of retrieving the first element of an array:</p>
+<p>Generics allow us to write code that is type-safe, yet independent of specific types.</p>
+<p>Consider the example of retrieving the first element of an array:</p>
 <pre><code class="language-js">function getFirstElement(arr) {
   return arr[0];
 }
@@ -193,17 +193,26 @@ For example all these constants would be inferred to have type <code>any</code>:
 <pre><code class="language-ts">const num = getFirstElement([1, 2, 3]);
 const str = getFirstElement(['a', 'b', 'c']);
 </code></pre>
+<p>We also can't use the <code>unknown</code> type since it doesn't permit any operations:</p>
+<pre><code class="language-ts">function getFirstElement(arr: unknown) {
+  return arr[0];
+  // This will result in a type error
+}
+</code></pre>
 <p>We could also make use of <em>function overloads</em> and write something like this:</p>
 <pre><code class="language-ts">function getFirstElement(arr: number[]): number;
 function getFirstElement(arr: string[]): string;
 function getFirstElement(arr: undefined[]): undefined;
 // More overloads and implementation here
 </code></pre>
+<blockquote>
+<p>We will not discuss function overloads in more detail as it's out of scope for this book.</p>
+</blockquote>
 <p>But this obviously gets very tedious and error-prone for most cases.
 Instead TypeScript allows us to use <strong>generics</strong> to specify that some code does not depend on the concrete types and only cares about the relation between certain types.</p>
 <h3 id="generic-functions"><a class="header" href="#generic-functions">Generic Functions</a></h3>
 <p>Consider the identity function that simply takes an argument <code>arg</code> and returns it unchanged.
-We can use a type variable <code>Type</code> and type it like this:</p>
+We can use a <strong>type variable</strong> <code>Type</code> and type it like this:</p>
 <pre><code class="language-ts">function identity&lt;Type&gt;(arg: Type): Type {
   return arg;
 }
@@ -213,23 +222,24 @@ Now we get proper type inference:</p>
 <pre><code class="language-ts">let val = 'Hello, world!';
 let val2 = identity&lt;string&gt;(val); // val2 is of type string
 </code></pre>
-<p>We dont actually have to manually specify the type <code>string</code> when calling the function and can instead rely on TypeScripts inference:</p>
+<p>We dont actually have to manually specify the type <code>string</code> when calling the function and can instead rely the inference capabilities of TypeScript once again:</p>
 <pre><code class="language-ts">let val = 'Hello, world!';
 let val2 = identity(val); // val2 is of type string
 </code></pre>
 <blockquote>
 <p>There is no single convention for naming type parameters.
-Common names includew <code>T</code>, <code>Type</code> and <code>TType</code>.</p>
+Common names include <code>T</code>, <code>Type</code> and <code>TType</code>.
+We will stick to the <code>Type</code> convention throughout this book.</p>
 </blockquote>
-<p>Similarly, we can type the <code>getFirstElement</code> function:</p>
-<pre><code class="language-ts">function getFirstElement&lt;Type&gt;(arr: Type): Type {
+<p>Similarly, we can type the <code>getFirstElement</code> function using type parameters:</p>
+<pre><code class="language-ts">function getFirstElement&lt;Type&gt;(arr: Type[]): Type {
   return arr[0];
 }
 
 const num = getFirstElement([1, 2, 3]);
 const str = getFirstElement(['a', 'b', 'c']);
 </code></pre>
-<p>Unlike in the <code>getFirstElement</code> that was typed using <code>any</code>, we now get meaningful type inference.
+<p>Unlike in the <code>getFirstElement</code> example that was typed using <code>any</code>, we now get meaningful type inference.
 For example <code>num</code> will have the type <code>number</code> (instead of <code>any</code>) and <code>str</code> will have the type <code>string</code>.</p>
 <p>You can use any number of type parameters you want.
 For example here is how we could write a correctly annotated <code>map</code> function:</p>
@@ -237,6 +247,15 @@ For example here is how we could write a correctly annotated <code>map</code> fu
   return array.map(f);
 }
 </code></pre>
+<p>Here, we have two type parameters <code>In</code> and <code>Out</code>.
+The type parameter <code>In</code> indicates the types of the elements of the original array.
+The type parameter <code>Out</code> indicates the types of the elements of the result array.</p>
+<p>Note how the type of the parameter <code>f</code> makes uses of both the <code>In</code> and <code>Out</code> parameter types.
+This makes sense since <code>f</code> transforms an element of the original array (<code>In</code>) into an element of the result array (<code>Out</code>).</p>
+<p>Again, we will get proper type inference:</p>
+<pre><code class="language-ts">const arr = map([1, 2, 3, 4], (x) =&gt; x % 2 === 0);
+</code></pre>
+<p>Here <code>arr</code> will have the type <code>boolean[]</code>.</p>
 <h3 id="generic-object-types"><a class="header" href="#generic-object-types">Generic Object Types</a></h3>
 <p>Just like with functions, we can use type parameters with objects:</p>
 <pre><code class="language-ts">type Box&lt;Type&gt; = {
@@ -261,7 +280,7 @@ const box2 = {
 </code></pre>
 <h3 id="important-builtin-generics"><a class="header" href="#important-builtin-generics">Important Builtin Generics</a></h3>
 <p>Generic object types are often useful for collections (and containers), since collection logic is often independent of the specific item types.
-For example, retrieving the first element of an array or finding an element of a set by value using the <code>===</code> operator will be the same regardless of the types of the array or set elements.</p>
+For example, retrieving the first element of an array or finding an element of a set by value using the <code>===</code> operator will work the same way regardless of the types of the array or set elements.</p>
 <p>You already learned about generic arrays (note that you can use <code>Array&lt;T&gt;</code> in place of <code>T[]</code>).</p>
 <p>If you have an object type where the property keys have a certain known type and the property values have a certain known type, you can use the generic type <code>Record&lt;Key, Value&gt;</code></p>
 <pre><code class="language-ts">const ScoreRecord: Record&lt;string, number&gt; = {
@@ -270,7 +289,7 @@ For example, retrieving the first element of an array or finding an element of a
   Charlie: 70,
 };
 </code></pre>
-<p>Two other generic data structures that you know about are sets and maps:</p>
+<p>Two other generic data structures that you already know about are sets and maps:</p>
 <pre><code class="language-ts">const mySet: Set&lt;number&gt; = new Set([1, 2, 3]);
 const myMap: Map&lt;string, number&gt; = new Map([
   ['Item 1', 1],
@@ -285,7 +304,7 @@ const myMap = new Map&lt;string, number&gt;([
 ]);
 </code></pre>
 <p>One other very important generic type is the <code>Promise&lt;Type&gt;</code> type which is most commonly used to annotate asynchronous functions.
-For example, if we have an asynchronous function <code>f</code> that returns a promise with a string, we would annotate it like this:</p>
+For example, if we have an asynchronous function <code>f</code> that returns a promise that will eventuell fulfill with a <code>string</code>, we would annotate it like this:</p>
 <pre><code class="language-ts">async function f(): Promise&lt;string&gt; {
   // Implementation here
 }
@@ -293,7 +312,7 @@ For example, if we have an asynchronous function <code>f</code> that returns a p
 <h3 id="generic-constraints"><a class="header" href="#generic-constraints">Generic Constraints</a></h3>
 <p>Often, we don't want to pass <em>completely arbitrary</em> type parameters.</p>
 <p>Consider this example:</p>
-<pre><code class="language-ts">function printLength&lt;Type&gt;(arg: Type): number {
+<pre><code class="language-ts">function getLength&lt;Type&gt;(arg: Type): number {
   return arg.length;
 }
 </code></pre>
@@ -305,7 +324,7 @@ Found 1 error in index.ts:2
 </code></pre>
 <p>This makes sense since <code>arg</code> can be of literally any type and there is no guarantee that <code>arg</code> will actually have the property <code>length</code>.
 To change this, we need to constrain the type <code>Type</code> and make sure that <code>arg</code> must have the <code>length</code> property:</p>
-<pre><code class="language-ts">function printLength&lt;Type extends { length: number }&gt;(arg: Type): number {
+<pre><code class="language-ts">function getLength&lt;Type extends { length: number }&gt;(arg: Type): number {
   return arg.length;
 }
 </code></pre>

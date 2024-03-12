@@ -178,7 +178,7 @@
 <h3 id="a-little-story"><a class="header" href="#a-little-story">A Little Story</a></h3>
 <p>Consider the following scenario.
 You have a JavaScript function <code>showTask(task)</code> which takes a <code>task</code> object and displays the task in a UI (or in the console).</p>
-<p>Let's say you have the following task object:</p>
+<p>Let's say your <code>task</code> object looks like this:</p>
 <pre><code class="language-js">const task = {
   id: 1,
   title: 'Read the Next.js book',
@@ -186,12 +186,13 @@ You have a JavaScript function <code>showTask(task)</code> which takes a <code>t
 };
 </code></pre>
 <p>Can you pass this object to <code>showTask</code>?
-Well, you can't really tell because maybe the <code>showTask</code> function expects an object that has <code>id</code>, <code>title</code>, <code>description</code> <em>and</em> <code>status</code> fields.
+Well, you can't really tell.</p>
+<p><em>Maybe</em> the <code>showTask</code> function expects an object that has <code>id</code>, <code>title</code>, <code>description</code> <em>and</em> <code>status</code> fields.
 The only way to find out if your <code>task</code> object is a valid input for <code>showTask</code> is to - well - actually pass it and find out.
 This is obviously not the ideal workflow (especially if you happen to find out that your object lacked some important properties <em>in production</em>).</p>
 <p>Additionally, if the author of the <code>showTask</code> function changes his function to expect additional properties on the <code>task</code> object, they would now have to check all the invocations of <code>showTask</code> to verify that they didn't accidentally break something.</p>
 <p>This is where TypeScript comes in.
-With TypeScript we would be able to <em>statically type</em> the function by adding <em>type annotations</em> like so:</p>
+With TypeScript we would be able to <em>statically type</em> the function by adding <em>type annotations</em> like this:</p>
 <pre><code class="language-ts">type Task = {
   id: number;
   title: string;
@@ -211,7 +212,7 @@ An object that is passed to the function must have an <code>id</code> property w
   description: 'Read and understand the Next.js book.',
 });
 </code></pre>
-<p>If we pass an object that lacks some of the expected properties and run <em>type checks</em> (more on that later) we will get an error long before the bad code can make it anywhere near production.
+<p>If we would pass an object that lacks some of the expected properties and run <em>type checks</em> (more on that later) we will get an error long before the bad code can make it anywhere near production.
 Even better - your editor will be able to show you that you might have a problem during development:</p>
 <pre><code class="language-ts">showTask({
   id: 1,
@@ -220,15 +221,15 @@ Even better - your editor will be able to show you that you might have a problem
 // Most editors will now show a squiggly red line somewhere around here and
 // politely scream at you that the object is missing the description property.
 </code></pre>
-<p>Better still (TypeScript just keeps giving), you now get <em>autocompletion</em> - editors will show possible suggestions for the property names your object should have while you type.
+<p>Better still (TypeScript just keeps giving), you now get <em>autocompletion</em> - editors will show possible suggestions for the property names your object should have <em>while you are typing</em>.
 This saves an enormous amount of time and effort when writing code.</p>
-<p>To summarize, using TypeScript massively enhances your developer workflow which is why nowadays most large projects no longer use vanilla JavaScript, but TypeScript instead.</p>
+<p>To summarize, using TypeScript massively enhances your developer workflow which is why nowadays most large projects use TypeScript instead of vanilla JavaScript.</p>
 <h3 id="installing-typescript"><a class="header" href="#installing-typescript">Installing TypeScript</a></h3>
 <p>You can install the TypeScript compiler by running the following command:</p>
-<pre><code class="language-sh">npm install --location global typescript
+<pre><code class="language-sh">pnpm add -g typescript
 </code></pre>
 <blockquote>
-<p>The <code>--location global</code> flag tells <code>npm</code> to install the package globally and not just for a particular project.</p>
+<p>The <code>-g</code> flag tells <code>pnpm</code> to install the package globally and not just for a particular project.</p>
 </blockquote>
 <p>Let's see how we can use the TypeScript compiler.
 First, create a file <code>index.ts</code>:</p>
@@ -318,6 +319,15 @@ Found 1 error in index.ts:13
 </code></pre>
 <p>The compiler correctly informed us that if we were to run this code it would probably result in bad things happening due to the missing <code>description</code> property.
 We now know that the code is probably wrong long before it made it anywhere near production and can fix it accordingly.</p>
+<h3 id="executing-typescript-directly-with-tsx"><a class="header" href="#executing-typescript-directly-with-tsx">Executing TypeScript Directly with <code>tsx</code></a></h3>
+<p>Sometimes you want to execute a TypeScript file directly (especially during development) and not go throught the "compile and run" cycle manually.
+There a couple of tools that allow you to do that - here we will introduce <code>tsx</code> (short for "TypeScript Execute").</p>
+<p>Install <code>tsx</code>:</p>
+<pre><code class="language-sh">pnpm add -g tsx
+</code></pre>
+<p>You can execute a TypeScript file <code>index.ts</code> by running:</p>
+<pre><code class="language-sh">tsx index.ts
+</code></pre>
 
                     </main>
 

@@ -3114,7 +3114,7 @@ The goal of TypeScript is to provide static type checking for JavaScript program
 <h3 id="a-little-story"><a class="header" href="#a-little-story">A Little Story</a></h3>
 <p>Consider the following scenario.
 You have a JavaScript function <code>showTask(task)</code> which takes a <code>task</code> object and displays the task in a UI (or in the console).</p>
-<p>Let's say you have the following task object:</p>
+<p>Let's say your <code>task</code> object looks like this:</p>
 <pre><code class="language-js">const task = {
   id: 1,
   title: 'Read the Next.js book',
@@ -3122,12 +3122,13 @@ You have a JavaScript function <code>showTask(task)</code> which takes a <code>t
 };
 </code></pre>
 <p>Can you pass this object to <code>showTask</code>?
-Well, you can't really tell because maybe the <code>showTask</code> function expects an object that has <code>id</code>, <code>title</code>, <code>description</code> <em>and</em> <code>status</code> fields.
+Well, you can't really tell.</p>
+<p><em>Maybe</em> the <code>showTask</code> function expects an object that has <code>id</code>, <code>title</code>, <code>description</code> <em>and</em> <code>status</code> fields.
 The only way to find out if your <code>task</code> object is a valid input for <code>showTask</code> is to - well - actually pass it and find out.
 This is obviously not the ideal workflow (especially if you happen to find out that your object lacked some important properties <em>in production</em>).</p>
 <p>Additionally, if the author of the <code>showTask</code> function changes his function to expect additional properties on the <code>task</code> object, they would now have to check all the invocations of <code>showTask</code> to verify that they didn't accidentally break something.</p>
 <p>This is where TypeScript comes in.
-With TypeScript we would be able to <em>statically type</em> the function by adding <em>type annotations</em> like so:</p>
+With TypeScript we would be able to <em>statically type</em> the function by adding <em>type annotations</em> like this:</p>
 <pre><code class="language-ts">type Task = {
   id: number;
   title: string;
@@ -3147,7 +3148,7 @@ An object that is passed to the function must have an <code>id</code> property w
   description: 'Read and understand the Next.js book.',
 });
 </code></pre>
-<p>If we pass an object that lacks some of the expected properties and run <em>type checks</em> (more on that later) we will get an error long before the bad code can make it anywhere near production.
+<p>If we would pass an object that lacks some of the expected properties and run <em>type checks</em> (more on that later) we will get an error long before the bad code can make it anywhere near production.
 Even better - your editor will be able to show you that you might have a problem during development:</p>
 <pre><code class="language-ts">showTask({
   id: 1,
@@ -3156,15 +3157,15 @@ Even better - your editor will be able to show you that you might have a problem
 // Most editors will now show a squiggly red line somewhere around here and
 // politely scream at you that the object is missing the description property.
 </code></pre>
-<p>Better still (TypeScript just keeps giving), you now get <em>autocompletion</em> - editors will show possible suggestions for the property names your object should have while you type.
+<p>Better still (TypeScript just keeps giving), you now get <em>autocompletion</em> - editors will show possible suggestions for the property names your object should have <em>while you are typing</em>.
 This saves an enormous amount of time and effort when writing code.</p>
-<p>To summarize, using TypeScript massively enhances your developer workflow which is why nowadays most large projects no longer use vanilla JavaScript, but TypeScript instead.</p>
+<p>To summarize, using TypeScript massively enhances your developer workflow which is why nowadays most large projects use TypeScript instead of vanilla JavaScript.</p>
 <h3 id="installing-typescript"><a class="header" href="#installing-typescript">Installing TypeScript</a></h3>
 <p>You can install the TypeScript compiler by running the following command:</p>
-<pre><code class="language-sh">npm install --location global typescript
+<pre><code class="language-sh">pnpm add -g typescript
 </code></pre>
 <blockquote>
-<p>The <code>--location global</code> flag tells <code>npm</code> to install the package globally and not just for a particular project.</p>
+<p>The <code>-g</code> flag tells <code>pnpm</code> to install the package globally and not just for a particular project.</p>
 </blockquote>
 <p>Let's see how we can use the TypeScript compiler.
 First, create a file <code>index.ts</code>:</p>
@@ -3254,17 +3255,26 @@ Found 1 error in index.ts:13
 </code></pre>
 <p>The compiler correctly informed us that if we were to run this code it would probably result in bad things happening due to the missing <code>description</code> property.
 We now know that the code is probably wrong long before it made it anywhere near production and can fix it accordingly.</p>
+<h3 id="executing-typescript-directly-with-tsx"><a class="header" href="#executing-typescript-directly-with-tsx">Executing TypeScript Directly with <code>tsx</code></a></h3>
+<p>Sometimes you want to execute a TypeScript file directly (especially during development) and not go throught the "compile and run" cycle manually.
+There a couple of tools that allow you to do that - here we will introduce <code>tsx</code> (short for "TypeScript Execute").</p>
+<p>Install <code>tsx</code>:</p>
+<pre><code class="language-sh">pnpm add -g tsx
+</code></pre>
+<p>You can execute a TypeScript file <code>index.ts</code> by running:</p>
+<pre><code class="language-sh">tsx index.ts
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="basic-types"><a class="header" href="#basic-types">Basic Types</a></h2>
 <div style="text-align: right"> <i> Use TypeScript, find enlightenment. Ignore TypeScript, trip over undefined. <br> - Ancient Chinese proverb </i> </div>
 <h3 id="annotating-variables"><a class="header" href="#annotating-variables">Annotating Variables</a></h3>
-<p>You can annotate variables by adding a type annotation:</p>
+<p>You can annotate variables by adding a <strong>type annotation</strong>:</p>
 <pre><code class="language-ts">let task: string = 'Read the Next.js book';
 </code></pre>
 <p>You can annotate constants in a similar fashion:</p>
 <pre><code class="language-ts">const name: string = 'Read the Next.js book';
 </code></pre>
-<p>Note that this usually is not needed, since TypeScript can automatically perform <em>type inference</em> and infer the type of a variable or a constant.
-For example, here <code>name</code> will automatically be inferred to have the type <code>string</code>:</p>
+<p>Note that explicit type annotations are usually is not needed, since TypeScript can perform <strong>type inference</strong> tp <em>automatically</em> infer the type of a variable or a constant.</p>
+<p>In this example, the variable <code>name</code> will <em>automatically</em> be inferred to have the type <code>string</code>:</p>
 <pre><code class="language-ts">let name = 'Read the Next.js book';
 </code></pre>
 <p>We will very rarely write explicit type annotations (only if we really need them) and instead let TypeScript infer as much as it can.
@@ -3291,6 +3301,7 @@ const inProgress = true;
 const undefinedTask = undefined;
 const nullTask = null;
 </code></pre>
+<p>In this example, TypeScript will infer that <code>id</code> has the type <code>number</code>, <code>task</code> has the type <code>string</code>, <code>inProgress</code> has the type <code>boolean</code>, <code>undefinedTask</code> has the type <code>undefined</code> and that <code>nullTask</code> has the type <code>null</code>.</p>
 <h3 id="the-any-and-unknown-types"><a class="header" href="#the-any-and-unknown-types">The <code>any</code> and <code>unknown</code> Types</a></h3>
 <p>TypeScript also has the <code>any</code> type.
 When a value is of the type <code>any</code>, you can access its properties, call it, or assign it freely, and basically do <em>any</em>thing (get it?) that's syntactically correct.
@@ -3302,11 +3313,12 @@ console.log(task.title);
 task();
 task.thingy();
 </code></pre>
-<p>Basically <code>any</code> is way to tell the compiler to "shut up" and skip type checking altogether.
+<p>Basically using <code>any</code> is a way to tell the compiler to "shut up" and skip type checking altogether.
 This is also the reason why using <code>any</code> is generally a terrible idea since it defeats the purpose of using TypeScript in the first place!</p>
 <p>However sometimes you do find yourself in a situation where you really don't know much or don't particularly care about a variable type.
 In this case it's better to use the <code>unknown</code> type.</p>
-<p>If you have a <code>task</code> variable of type <code>unknown</code>, then these are all no longer legal:</p>
+<p>Anything is assignable to <code>unknown</code> (just as with <code>any</code>), however no operations are allowed on an <code>unknown</code> variable without further assurances about the type of the variable.</p>
+<p>For example, if you have a <code>task</code> variable of type <code>unknown</code>, then these are all no longer legal:</p>
 <pre><code class="language-ts">let task: unknown;
 
 console.log(task.title);
@@ -3315,7 +3327,7 @@ task.thingy();
 </code></pre>
 <h3 id="typing-arrays"><a class="header" href="#typing-arrays">Typing Arrays</a></h3>
 <p>You can type arrays as <code>T[]</code> where <code>T</code> is the type of the elements of the array.
-For example here is how you could type an array of numbers:</p>
+For example here is how you would type an array of numbers:</p>
 <pre><code class="language-ts">const evenNumbers: number[] = [1, 2, 3, 4];
 </code></pre>
 <p>Here is how you would an array of strings:</p>
@@ -3323,8 +3335,8 @@ For example here is how you could type an array of numbers:</p>
 </code></pre>
 <p>Note that for these simple examples we could again have TypeScript infer the types for use.
 In this example <code>evenNumbers</code> would have the type <code>number[]</code> and <code>tasks</code> would have the type <code>string[]</code>:</p>
-<pre><code class="language-ts">const evenNumbers: number[] = [1, 2, 3, 4];
-const tasks: string[] = ['First task', 'Second task', 'Third task'];
+<pre><code class="language-ts">const evenNumbers = [1, 2, 3, 4];
+const tasks = ['First task', 'Second task', 'Third task'];
 </code></pre>
 <h3 id="typing-objects"><a class="header" href="#typing-objects">Typing Objects</a></h3>
 <p>You can type an object by writing the property keys and types of its properties inside curly braces <code>{}</code>.
@@ -3335,9 +3347,17 @@ For example here is how you could declare an object that has the properties <cod
   description: 'Read and understand the Next.js book.',
 };
 </code></pre>
+<p>As usual, you don't need to manually specify object types.
+In this example, <code>task</code> will be inferred to have the type <code>{ id: number; title: string; description: string }</code>:</p>
+<pre><code class="language-ts">const task = {
+  id: 1,
+  title: 'Read the Next.js book',
+  description: 'Read and understand the Next.js book.',
+};
+</code></pre>
 <p>You can mark properties as <em>optional</em> by using the question mark <code>?</code>.
-If a property is marked as optional, you can either assign <code>undefined</code> to it or not specify it altogether.
-For example this is valid:</p>
+If a property is marked as optional, you can assign <code>undefined</code> to it or even not specify it altogether.
+For example, this is valid:</p>
 <pre><code class="language-ts">const task: { id: number; title: string; description?: string } = {
   id: 1,
   title: 'Read the Next.js book',
@@ -3349,7 +3369,7 @@ const task2: { id: number; title: string; description?: string } = {
   description: undefined,
 };
 </code></pre>
-<h3 id="type-alias"><a class="header" href="#type-alias">Type Alias</a></h3>
+<h3 id="type-aliases"><a class="header" href="#type-aliases">Type Aliases</a></h3>
 <p>The object type syntax we just introduced is often quite verbose.
 This is why TypeScript gives you the possibility to specify a <strong>type alias</strong> (i.e. another name) for an object type:</p>
 <pre><code class="language-ts">type Task = {
@@ -3359,7 +3379,7 @@ This is why TypeScript gives you the possibility to specify a <strong>type alias
 };
 </code></pre>
 <p>Note that you can specify type aliases for more than just object types since type aliases are basically just different names for types.
-For example we could specify a type alias for the primitive type <code>string</code>:</p>
+For example, we could specify a type alias for the primitive type <code>string</code>:</p>
 <pre><code class="language-ts">type ID = string;
 </code></pre>
 <p>Another important point to make about type aliases is that two type aliases are exactly the same as long as the underlying types are the same.
@@ -3373,24 +3393,34 @@ function getMyString(): MyString {
 const s: string = getMyString();
 </code></pre>
 <p>This is because TypeScript uses a <em>structural type system</em> - it doesn't matter what the types are named (except for the primitive types of course), it only matters what their <em>structure</em> looks like.</p>
+<p>Note that you can also use the <code>interface</code> keyword to achieve a similar effect:</p>
+<pre><code class="language-ts">interface Task {
+  id: number;
+  title: string;
+  description: string;
+}
+</code></pre>
+<p>We will stick to always using <code>type</code>.
+The <code>interface</code> keyword is out of scope for this book and will not be discussed further.</p>
+<blockquote>
+<p>We briefly note that <code>type</code> and <code>interface</code> are not exactly the same and have a few subtle, but important differences.
+Again, we will not discuss this further.</p>
+</blockquote>
 <h2 id="type-assertions"><a class="header" href="#type-assertions">Type Assertions</a></h2>
 <p>Sometimes you know more about the type of a variable than TypeScript.
 For example, let's say that you have a function that returns an <code>any</code> value, but for some reason you know that in fact that value is definitely going to be a <code>string</code> in your case.
-Then you can use a <strong>type assertion</strong> to force TypeScript to treat that value as a <code>string</code>.</p>
+Then you can use a <strong>type assertion</strong> (also called a type cast) to force TypeScript to treat that value as a <code>string</code>.</p>
 <p>Here is a (slightly contrived) example:</p>
 <pre><code class="language-ts">const str: any = 'This is a string';
 const strLength = (str as string).length;
 </code></pre>
 <p>You should use type assertions <em>extremely sparingly</em> since you give up some of the benefits of using TypeScript.
 Usually there are better ways.</p>
-<blockquote>
-<p>Type Assertions are often also referred to Type Casts.</p>
-</blockquote>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="annotating-functions"><a class="header" href="#annotating-functions">Annotating Functions</a></h2>
 <div style="text-align: right"> <i> The function without types is like a river without banks: boundless, yet directionless. <br> - Ancient Chinese proverb </i> </div>
 <h3 id="annotating-parameters"><a class="header" href="#annotating-parameters">Annotating Parameters</a></h3>
 <p>We can annotate functions in TypeScript by annotating their parameters.
-Consider a function <code>greet</code> that takes a parameter <code>name</code> of type <code>string</code> and simply logs a greeting to the console.
+Consider a function <code>greet</code> that takes a parameter <code>name</code> of type <code>string</code> and simply outputs a greeting to the console.
 Here is how we would annotate the function:</p>
 <pre><code class="language-ts">function greet(name: string) {
   console.log(`Hello, ${name}`);
@@ -3398,16 +3428,17 @@ Here is how we would annotate the function:</p>
 </code></pre>
 <p>Now arguments to the function are checked:</p>
 <pre><code class="language-ts">greet(false);
-// This will result in an error
+// This will result in a type error
 </code></pre>
-<p>You can also annotate functions if they take arrays and objects by simply using the syntax you learned in the previous section:</p>
+<p>You can annotate functions that expect arrays and/or objects by simply using the syntax you learned in the previous section:</p>
 <pre><code class="language-ts">function showTask(task: { id: number; summary: string; description: string }) {
   console.log(
     `Task with ID=${task.id} has the summary ${task.summary} and description ${task.description}`,
   );
 }
 </code></pre>
-<p>This is not particularly readable, so normally we would use a type alias:</p>
+<p>This is not particularly readable.
+Luckily, this is where type aliases come in really handy:</p>
 <pre><code class="language-ts">type Task = {
   id: number;
   summary: string;
@@ -3420,8 +3451,8 @@ function showTask(task: Task) {
   );
 }
 </code></pre>
-<p>Note that TypeScript will not just check that the passed arguments have the correct types, but also check that the correct number of argument was passed.
-This has an interesting side effect - namely that introducing the TypeScript compiler in a JavaScript codebase can already find potential bugs:</p>
+<p>Note that TypeScript will not just check that the passed arguments have the correct types, but also check that the correct number of arguments was passed.
+This has an interesting side effect - introducing the TypeScript compiler in a JavaScript codebase can reveal bugs without any further work:</p>
 <pre><code class="language-js">function showTask(task) {
   console.log(
     `Task with ID=${task.id} has the summary ${task.summary} and description ${task.description}`,
@@ -3438,7 +3469,7 @@ showTask(1, 'Read the Next.js book', 'Read and understand the Next.js book.');
 </code></pre>
 <p>TypeScript is quite useful indeed!</p>
 <h3 id="return-type-annotations"><a class="header" href="#return-type-annotations">Return Type Annotations</a></h3>
-<p>We can also type the return types of our functions:</p>
+<p>We can also annotate the return types of our functions:</p>
 <pre><code class="language-ts">function getGreeting(name: string): string {
   return `Hello, ${name}`;
 }
@@ -3451,7 +3482,8 @@ showTask(1, 'Read the Next.js book', 'Read and understand the Next.js book.');
 <p>Nevertheless, return types are often typed explicitly to avoid accidentally returning a type you didn't want to return or to prevent accidental changes to the return type.</p>
 <h3 id="optional-parameters"><a class="header" href="#optional-parameters">Optional Parameters</a></h3>
 <p>Similar to object properties, function parameters can be marked as <em>optional</em>.
-In this case we can, but don't need to pass the corresponding argument to the function:</p>
+In this case we can, but don't need to pass the corresponding argument to the function.
+If a parameter is marked as optional, the corresponding argument might also be <code>undefined</code>:</p>
 <pre><code class="language-ts">function getGreeting(name: string, message?: string): string {
   return `${message !== undefined ? message : 'Hello'}, ${name}`;
 }
@@ -3488,10 +3520,10 @@ const myName = 'John Doe';
 
 console.log(getGreeting(myName, (name) =&gt; `Hello ${name}`));
 </code></pre>
-<p>Note how we no longer need to type-annotate <code>name</code> in the anonymous function - TypeScript has automatically inferred it to be of type <code>string</code>.</p>
+<p>Note how we no longer need to explicitly specify the type of <code>name</code> in the anonymous function - TypeScript has automatically inferred it to be of type <code>string</code>.</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="union-types"><a class="header" href="#union-types">Union Types</a></h2>
 <h3 id="literal-types"><a class="header" href="#literal-types">Literal Types</a></h3>
-<p>A literal type is a type whose only value is a literal.
+<p>A <strong>literal type</strong> is a type whose only value is a literal.
 Here is how we could define a literal type <code>'Todo'</code>:</p>
 <pre><code class="language-ts">type TodoType = 'Todo';
 </code></pre>
@@ -3501,6 +3533,7 @@ Here is how we could define a literal type <code>'Todo'</code>:</p>
 <p>Note that we can't assign any other value to <code>todo</code> including other strings.
 For example this is not possible:</p>
 <pre><code class="language-ts">let todo: TodoType = 'Done';
+// This will result in a type error
 </code></pre>
 <p>We could also skip declaring the type alias and just use the literal type directly:</p>
 <pre><code class="language-ts">let todo: 'Todo' = 'Todo';
@@ -3518,14 +3551,14 @@ This also makes sense since we can't change the constant later:</p>
 </code></pre>
 <p>While literal types by themselves are not very helpful, they are extremely useful in the context of union types.</p>
 <h3 id="unions-of-literal-types"><a class="header" href="#unions-of-literal-types">Unions of Literal Types</a></h3>
-<p>A union type is a type that represents a value which may be one of multiple values.
-Consider the type <code>TaskState</code> which represents one of the following states:</p>
+<p>A <strong>union type</strong> is a type that represents a value which may be one of multiple values.
+Consider a type <code>TaskState</code> which represents one of the following states:</p>
 <ul>
 <li>Todo</li>
 <li>InProgress</li>
 <li>Done</li>
 </ul>
-<p>Here is how we would defined the <code>TaskState</code> type:</p>
+<p>Here is how we would define the <code>TaskState</code> type:</p>
 <pre><code class="language-ts">type TaskState = 'Todo' | 'InProgress' | 'Done';
 </code></pre>
 <p>The <code>TaskState</code> type is a union type and each of the literal types <code>'Todo'</code>, <code>'InProgress'</code> and <code>'Done'</code> is a member of the union.
@@ -3540,15 +3573,15 @@ const state3: TaskState = 'Done';
 </code></pre>
 <h3 id="other-union-types"><a class="header" href="#other-union-types">Other Union Types</a></h3>
 <p>We can also declare unions of arbitrary types.
-The general syntax for declaring a union type is <code>Type1 | Type2 | Type3 | ...</code> and such a value that has this union type can have the type <code>Type1</code> or <code>Type2</code> or <code>Type3</code> etc.
+The general syntax for declaring a union type is <code>Type1 | Type2 | Type3 | ...</code> and a value of this union type can have the type <code>Type1</code> or <code>Type2</code> or <code>Type3</code> etc.
 The various types <code>Type1</code>, <code>Type2</code>, <code>Type3</code> etc are called members of the union.</p>
-<p>One particulary useful union type is <code>T | undefined</code>, for example:</p>
+<p>One particularly common union type is <code>T | undefined</code>, for example:</p>
 <pre><code class="language-ts">function getTaskId(taskName: string): string | undefined {
   // Implementation here
 }
 </code></pre>
 <p>This function takes a <code>taskName</code> and returns the corresponding ID.
-However since it might be the case that no task with the given name is present, we return either a <code>string</code> or <code>undefined</code>.</p>
+Because we might discover that no task with the given name is present, we return either a <code>string</code> or <code>undefined</code>.</p>
 <h3 id="working-with-a-union-type"><a class="header" href="#working-with-a-union-type">Working with a Union Type</a></h3>
 <p>It should be clear by now how we can define a union type, but how can we work with a union type?
 Consider the following function:</p>
@@ -3567,8 +3600,8 @@ Found 1 error in index.ts:4
 </code></pre>
 <p>TypeScript will only allow to do something with the value of a union type if that something is valid for every member of the union.
 Since <code>taskName</code> can be either a <code>string</code> or <code>undefined</code>, we can't access <code>.length</code> on it, because <code>.length</code> is not a valid property of <code>undefined</code>!</p>
-<p>Instead we need to <em>narrow</em> the type with code.
-Basically, TypeScript can look at our code and try to understand that in certain code parts a value of a union type can only have the type of a particular member of the union.</p>
+<p>Instead we need to perform <strong>type narrowing</strong> where we <em>narrow</em> the type of a variable with code.</p>
+<p>Basically, TypeScript can look at our code and try to understand that in certain code parts a value of a union type can only have the type of a particular member of the union.</p>
 <p>The simplest way of narrowing a type is <strong>equality narrowing</strong>.
 Here we can use the <code>===</code> or <code>!==</code> operators to narrow a type.</p>
 <p>Consider this example:</p>
@@ -3620,6 +3653,20 @@ We could fix the function like this:</p>
   }
 }
 </code></pre>
+<p>You should generally be careful when relying on truthiness or falsiness.
+The way these concepts work in JavaScript can be a bit confusing and it's easy to miss and edge case.</p>
+<p>Some people prefer to avoid these concepts altogether and instead provide explicit checks, for example:</p>
+<pre><code class="language-ts">function logTaskName(taskName: string | undefined | null) {
+  if (taskName !== undefined &amp;&amp; taskName !== null) {
+    console.log({
+      taskName,
+      taskNameLength: taskName.length,
+    });
+  } else {
+    console.log('the task is not defined');
+  }
+}
+</code></pre>
 <p>The last way of narrowing a type that we will discuss here is <code>typeof</code> narrowing.
 TypeScript knows how the <code>typeof</code> operator works and you can use it to narrow a type as you would expect:</p>
 <pre><code class="language-ts">function processInput(value: string | number): number {
@@ -3639,7 +3686,7 @@ let trimmedInput: string = input!.trim();
 </code></pre>
 <p>Just as with type assertions, you should use this <em>extremely sparingly</em> and usually there is a better way.</p>
 <h3 id="type-predicates"><a class="header" href="#type-predicates">Type Predicates</a></h3>
-<p>We can write user-defined type guards by utilizing <strong>type predicates</strong>.
+<p>We can write user-defined <strong>type guards</strong> by utilizing <strong>type predicates</strong>.
 Consider the following example:</p>
 <pre><code class="language-ts">const array = ['Hello', undefined, 'World', undefined];
 const filteredArray = array.filter((val) =&gt; val !== undefined);
@@ -3694,8 +3741,8 @@ type Shape = Square | Rectangle;
 <div style="break-before: page; page-break-before: always;"></div><h2 id="generics"><a class="header" href="#generics">Generics</a></h2>
 <div style="text-align: right"> <i> Generics are the invisible hat of the TypeScript sage, fitting the heads of both the giant and the dwarf. <br> - Ancient Chinese proverb </i> </div>
 <h3 id="why-generics"><a class="header" href="#why-generics">Why Generics?</a></h3>
-<p>Generics allow us to write code that is type-safe, yet independent of specific types.
-Consider the example of retrieving the first element of an array:</p>
+<p>Generics allow us to write code that is type-safe, yet independent of specific types.</p>
+<p>Consider the example of retrieving the first element of an array:</p>
 <pre><code class="language-js">function getFirstElement(arr) {
   return arr[0];
 }
@@ -3711,17 +3758,26 @@ For example all these constants would be inferred to have type <code>any</code>:
 <pre><code class="language-ts">const num = getFirstElement([1, 2, 3]);
 const str = getFirstElement(['a', 'b', 'c']);
 </code></pre>
+<p>We also can't use the <code>unknown</code> type since it doesn't permit any operations:</p>
+<pre><code class="language-ts">function getFirstElement(arr: unknown) {
+  return arr[0];
+  // This will result in a type error
+}
+</code></pre>
 <p>We could also make use of <em>function overloads</em> and write something like this:</p>
 <pre><code class="language-ts">function getFirstElement(arr: number[]): number;
 function getFirstElement(arr: string[]): string;
 function getFirstElement(arr: undefined[]): undefined;
 // More overloads and implementation here
 </code></pre>
+<blockquote>
+<p>We will not discuss function overloads in more detail as it's out of scope for this book.</p>
+</blockquote>
 <p>But this obviously gets very tedious and error-prone for most cases.
 Instead TypeScript allows us to use <strong>generics</strong> to specify that some code does not depend on the concrete types and only cares about the relation between certain types.</p>
 <h3 id="generic-functions"><a class="header" href="#generic-functions">Generic Functions</a></h3>
 <p>Consider the identity function that simply takes an argument <code>arg</code> and returns it unchanged.
-We can use a type variable <code>Type</code> and type it like this:</p>
+We can use a <strong>type variable</strong> <code>Type</code> and type it like this:</p>
 <pre><code class="language-ts">function identity&lt;Type&gt;(arg: Type): Type {
   return arg;
 }
@@ -3731,23 +3787,24 @@ Now we get proper type inference:</p>
 <pre><code class="language-ts">let val = 'Hello, world!';
 let val2 = identity&lt;string&gt;(val); // val2 is of type string
 </code></pre>
-<p>We dont actually have to manually specify the type <code>string</code> when calling the function and can instead rely on TypeScripts inference:</p>
+<p>We dont actually have to manually specify the type <code>string</code> when calling the function and can instead rely the inference capabilities of TypeScript once again:</p>
 <pre><code class="language-ts">let val = 'Hello, world!';
 let val2 = identity(val); // val2 is of type string
 </code></pre>
 <blockquote>
 <p>There is no single convention for naming type parameters.
-Common names includew <code>T</code>, <code>Type</code> and <code>TType</code>.</p>
+Common names include <code>T</code>, <code>Type</code> and <code>TType</code>.
+We will stick to the <code>Type</code> convention throughout this book.</p>
 </blockquote>
-<p>Similarly, we can type the <code>getFirstElement</code> function:</p>
-<pre><code class="language-ts">function getFirstElement&lt;Type&gt;(arr: Type): Type {
+<p>Similarly, we can type the <code>getFirstElement</code> function using type parameters:</p>
+<pre><code class="language-ts">function getFirstElement&lt;Type&gt;(arr: Type[]): Type {
   return arr[0];
 }
 
 const num = getFirstElement([1, 2, 3]);
 const str = getFirstElement(['a', 'b', 'c']);
 </code></pre>
-<p>Unlike in the <code>getFirstElement</code> that was typed using <code>any</code>, we now get meaningful type inference.
+<p>Unlike in the <code>getFirstElement</code> example that was typed using <code>any</code>, we now get meaningful type inference.
 For example <code>num</code> will have the type <code>number</code> (instead of <code>any</code>) and <code>str</code> will have the type <code>string</code>.</p>
 <p>You can use any number of type parameters you want.
 For example here is how we could write a correctly annotated <code>map</code> function:</p>
@@ -3755,6 +3812,15 @@ For example here is how we could write a correctly annotated <code>map</code> fu
   return array.map(f);
 }
 </code></pre>
+<p>Here, we have two type parameters <code>In</code> and <code>Out</code>.
+The type parameter <code>In</code> indicates the types of the elements of the original array.
+The type parameter <code>Out</code> indicates the types of the elements of the result array.</p>
+<p>Note how the type of the parameter <code>f</code> makes uses of both the <code>In</code> and <code>Out</code> parameter types.
+This makes sense since <code>f</code> transforms an element of the original array (<code>In</code>) into an element of the result array (<code>Out</code>).</p>
+<p>Again, we will get proper type inference:</p>
+<pre><code class="language-ts">const arr = map([1, 2, 3, 4], (x) =&gt; x % 2 === 0);
+</code></pre>
+<p>Here <code>arr</code> will have the type <code>boolean[]</code>.</p>
 <h3 id="generic-object-types"><a class="header" href="#generic-object-types">Generic Object Types</a></h3>
 <p>Just like with functions, we can use type parameters with objects:</p>
 <pre><code class="language-ts">type Box&lt;Type&gt; = {
@@ -3779,7 +3845,7 @@ const box2 = {
 </code></pre>
 <h3 id="important-builtin-generics"><a class="header" href="#important-builtin-generics">Important Builtin Generics</a></h3>
 <p>Generic object types are often useful for collections (and containers), since collection logic is often independent of the specific item types.
-For example, retrieving the first element of an array or finding an element of a set by value using the <code>===</code> operator will be the same regardless of the types of the array or set elements.</p>
+For example, retrieving the first element of an array or finding an element of a set by value using the <code>===</code> operator will work the same way regardless of the types of the array or set elements.</p>
 <p>You already learned about generic arrays (note that you can use <code>Array&lt;T&gt;</code> in place of <code>T[]</code>).</p>
 <p>If you have an object type where the property keys have a certain known type and the property values have a certain known type, you can use the generic type <code>Record&lt;Key, Value&gt;</code></p>
 <pre><code class="language-ts">const ScoreRecord: Record&lt;string, number&gt; = {
@@ -3788,7 +3854,7 @@ For example, retrieving the first element of an array or finding an element of a
   Charlie: 70,
 };
 </code></pre>
-<p>Two other generic data structures that you know about are sets and maps:</p>
+<p>Two other generic data structures that you already know about are sets and maps:</p>
 <pre><code class="language-ts">const mySet: Set&lt;number&gt; = new Set([1, 2, 3]);
 const myMap: Map&lt;string, number&gt; = new Map([
   ['Item 1', 1],
@@ -3803,7 +3869,7 @@ const myMap = new Map&lt;string, number&gt;([
 ]);
 </code></pre>
 <p>One other very important generic type is the <code>Promise&lt;Type&gt;</code> type which is most commonly used to annotate asynchronous functions.
-For example, if we have an asynchronous function <code>f</code> that returns a promise with a string, we would annotate it like this:</p>
+For example, if we have an asynchronous function <code>f</code> that returns a promise that will eventuell fulfill with a <code>string</code>, we would annotate it like this:</p>
 <pre><code class="language-ts">async function f(): Promise&lt;string&gt; {
   // Implementation here
 }
@@ -3811,7 +3877,7 @@ For example, if we have an asynchronous function <code>f</code> that returns a p
 <h3 id="generic-constraints"><a class="header" href="#generic-constraints">Generic Constraints</a></h3>
 <p>Often, we don't want to pass <em>completely arbitrary</em> type parameters.</p>
 <p>Consider this example:</p>
-<pre><code class="language-ts">function printLength&lt;Type&gt;(arg: Type): number {
+<pre><code class="language-ts">function getLength&lt;Type&gt;(arg: Type): number {
   return arg.length;
 }
 </code></pre>
@@ -3823,7 +3889,7 @@ Found 1 error in index.ts:2
 </code></pre>
 <p>This makes sense since <code>arg</code> can be of literally any type and there is no guarantee that <code>arg</code> will actually have the property <code>length</code>.
 To change this, we need to constrain the type <code>Type</code> and make sure that <code>arg</code> must have the <code>length</code> property:</p>
-<pre><code class="language-ts">function printLength&lt;Type extends { length: number }&gt;(arg: Type): number {
+<pre><code class="language-ts">function getLength&lt;Type extends { length: number }&gt;(arg: Type): number {
   return arg.length;
 }
 </code></pre>
@@ -4096,9 +4162,9 @@ Found 2 errors in the same file, starting at: src/index.ts:1
 <p>The <code>noEmit</code> option can be set to <code>true</code> to not produce JavaScript output.
 This makes room for another tool to convert the TypeScript files to something that can be run inside a JavaScript environment.</p>
 <p>This is often done when we only want to use TypeScript as a type checker (as is common in projects) or to provide suggestions in your coding editor.</p>
-<h2 id="an-example-tsconfigjson"><a class="header" href="#an-example-tsconfigjson">An Example <code>tsconfig.json</code></a></h2>
-<p>You know learned about some of the most important <code>tsconfig.json</code> settings!
-Here is an example <code>tsconfig.json</code> to summarize what we learned:</p>
+<h3 id="an-example-tsconfigjson"><a class="header" href="#an-example-tsconfigjson">An Example <code>tsconfig.json</code></a></h3>
+<p>You now learned about some of the most important <code>tsconfig.json</code> settings!
+Here is an example <code>tsconfig.json</code> to summarize your newfound knowledge:</p>
 <pre><code class="language-json">{
   "include": ["src/**/*"],
   "exclude": ["src/**/*.test.ts"],
