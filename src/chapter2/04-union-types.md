@@ -2,7 +2,7 @@
 
 ### Literal Types
 
-A literal type is a type whose only value is a literal.
+A **literal type** is a type whose only value is a literal.
 Here is how we could define a literal type `'Todo'`:
 
 ```ts
@@ -20,6 +20,7 @@ For example this is not possible:
 
 ```ts
 let todo: TodoType = 'Done';
+// This will result in a type error
 ```
 
 We could also skip declaring the type alias and just use the literal type directly:
@@ -49,14 +50,14 @@ While literal types by themselves are not very helpful, they are extremely usefu
 
 ### Unions of Literal Types
 
-A union type is a type that represents a value which may be one of multiple values.
-Consider the type `TaskState` which represents one of the following states:
+A **union type** is a type that represents a value which may be one of multiple values.
+Consider a type `TaskState` which represents one of the following states:
 
 - Todo
 - InProgress
 - Done
 
-Here is how we would defined the `TaskState` type:
+Here is how we would define the `TaskState` type:
 
 ```ts
 type TaskState = 'Todo' | 'InProgress' | 'Done';
@@ -81,10 +82,10 @@ const invalidState: TaskState = 'Dropped';
 ### Other Union Types
 
 We can also declare unions of arbitrary types.
-The general syntax for declaring a union type is `Type1 | Type2 | Type3 | ...` and such a value that has this union type can have the type `Type1` or `Type2` or `Type3` etc.
+The general syntax for declaring a union type is `Type1 | Type2 | Type3 | ...` and a value of this union type can have the type `Type1` or `Type2` or `Type3` etc.
 The various types `Type1`, `Type2`, `Type3` etc are called members of the union.
 
-One particulary useful union type is `T | undefined`, for example:
+One particularly common union type is `T | undefined`, for example:
 
 ```ts
 function getTaskId(taskName: string): string | undefined {
@@ -93,7 +94,7 @@ function getTaskId(taskName: string): string | undefined {
 ```
 
 This function takes a `taskName` and returns the corresponding ID.
-However since it might be the case that no task with the given name is present, we return either a `string` or `undefined`.
+Because we might discover that no task with the given name is present, we return either a `string` or `undefined`.
 
 ### Working with a Union Type
 
@@ -121,7 +122,8 @@ Found 1 error in index.ts:4
 TypeScript will only allow to do something with the value of a union type if that something is valid for every member of the union.
 Since `taskName` can be either a `string` or `undefined`, we can't access `.length` on it, because `.length` is not a valid property of `undefined`!
 
-Instead we need to _narrow_ the type with code.
+Instead we need to perform **type narrowing** where we _narrow_ the type of a variable with code.
+
 Basically, TypeScript can look at our code and try to understand that in certain code parts a value of a union type can only have the type of a particular member of the union.
 
 The simplest way of narrowing a type is **equality narrowing**.
@@ -190,6 +192,24 @@ function logTaskName(taskName: string | undefined | null) {
 }
 ```
 
+You should generally be careful when relying on truthiness or falsiness.
+The way these concepts work in JavaScript can be a bit confusing and it's easy to miss and edge case.
+
+Some people prefer to avoid these concepts altogether and instead provide explicit checks, for example:
+
+```ts
+function logTaskName(taskName: string | undefined | null) {
+  if (taskName !== undefined && taskName !== null) {
+    console.log({
+      taskName,
+      taskNameLength: taskName.length,
+    });
+  } else {
+    console.log('the task is not defined');
+  }
+}
+```
+
 The last way of narrowing a type that we will discuss here is `typeof` narrowing.
 TypeScript knows how the `typeof` operator works and you can use it to narrow a type as you would expect:
 
@@ -218,7 +238,7 @@ Just as with type assertions, you should use this _extremely sparingly_ and usua
 
 ### Type Predicates
 
-We can write user-defined type guards by utilizing **type predicates**.
+We can write user-defined **type guards** by utilizing **type predicates**.
 Consider the following example:
 
 ```ts

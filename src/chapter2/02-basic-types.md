@@ -4,7 +4,7 @@
 
 ### Annotating Variables
 
-You can annotate variables by adding a type annotation:
+You can annotate variables by adding a **type annotation**:
 
 ```ts
 let task: string = 'Read the Next.js book';
@@ -16,8 +16,9 @@ You can annotate constants in a similar fashion:
 const name: string = 'Read the Next.js book';
 ```
 
-Note that this usually is not needed, since TypeScript can automatically perform _type inference_ and infer the type of a variable or a constant.
-For example, here `name` will automatically be inferred to have the type `string`:
+Note that explicit type annotations are usually is not needed, since TypeScript can perform **type inference** tp _automatically_ infer the type of a variable or a constant.
+
+In this example, the variable `name` will _automatically_ be inferred to have the type `string`:
 
 ```ts
 let name = 'Read the Next.js book';
@@ -64,6 +65,8 @@ const undefinedTask = undefined;
 const nullTask = null;
 ```
 
+In this example, TypeScript will infer that `id` has the type `number`, `task` has the type `string`, `inProgress` has the type `boolean`, `undefinedTask` has the type `undefined` and that `nullTask` has the type `null`.
+
 ### The `any` and `unknown` Types
 
 TypeScript also has the `any` type.
@@ -80,13 +83,15 @@ task();
 task.thingy();
 ```
 
-Basically `any` is way to tell the compiler to "shut up" and skip type checking altogether.
+Basically using `any` is a way to tell the compiler to "shut up" and skip type checking altogether.
 This is also the reason why using `any` is generally a terrible idea since it defeats the purpose of using TypeScript in the first place!
 
 However sometimes you do find yourself in a situation where you really don't know much or don't particularly care about a variable type.
 In this case it's better to use the `unknown` type.
 
-If you have a `task` variable of type `unknown`, then these are all no longer legal:
+Anything is assignable to `unknown` (just as with `any`), however no operations are allowed on an `unknown` variable without further assurances about the type of the variable.
+
+For example, if you have a `task` variable of type `unknown`, then these are all no longer legal:
 
 ```ts
 let task: unknown;
@@ -99,7 +104,7 @@ task.thingy();
 ### Typing Arrays
 
 You can type arrays as `T[]` where `T` is the type of the elements of the array.
-For example here is how you could type an array of numbers:
+For example here is how you would type an array of numbers:
 
 ```ts
 const evenNumbers: number[] = [1, 2, 3, 4];
@@ -115,8 +120,8 @@ Note that for these simple examples we could again have TypeScript infer the typ
 In this example `evenNumbers` would have the type `number[]` and `tasks` would have the type `string[]`:
 
 ```ts
-const evenNumbers: number[] = [1, 2, 3, 4];
-const tasks: string[] = ['First task', 'Second task', 'Third task'];
+const evenNumbers = [1, 2, 3, 4];
+const tasks = ['First task', 'Second task', 'Third task'];
 ```
 
 ### Typing Objects
@@ -132,9 +137,20 @@ const task: { id: number; title: string; description: string } = {
 };
 ```
 
+As usual, you don't need to manually specify object types.
+In this example, `task` will be inferred to have the type `{ id: number; title: string; description: string }`:
+
+```ts
+const task = {
+  id: 1,
+  title: 'Read the Next.js book',
+  description: 'Read and understand the Next.js book.',
+};
+```
+
 You can mark properties as _optional_ by using the question mark `?`.
-If a property is marked as optional, you can either assign `undefined` to it or not specify it altogether.
-For example this is valid:
+If a property is marked as optional, you can assign `undefined` to it or even not specify it altogether.
+For example, this is valid:
 
 ```ts
 const task: { id: number; title: string; description?: string } = {
@@ -149,7 +165,7 @@ const task2: { id: number; title: string; description?: string } = {
 };
 ```
 
-### Type Alias
+### Type Aliases
 
 The object type syntax we just introduced is often quite verbose.
 This is why TypeScript gives you the possibility to specify a **type alias** (i.e. another name) for an object type:
@@ -163,7 +179,7 @@ type Task = {
 ```
 
 Note that you can specify type aliases for more than just object types since type aliases are basically just different names for types.
-For example we could specify a type alias for the primitive type `string`:
+For example, we could specify a type alias for the primitive type `string`:
 
 ```ts
 type ID = string;
@@ -184,11 +200,27 @@ const s: string = getMyString();
 
 This is because TypeScript uses a _structural type system_ - it doesn't matter what the types are named (except for the primitive types of course), it only matters what their _structure_ looks like.
 
+Note that you can also use the `interface` keyword to achieve a similar effect:
+
+```ts
+interface Task {
+  id: number;
+  title: string;
+  description: string;
+}
+```
+
+We will stick to always using `type`.
+The `interface` keyword is out of scope for this book and will not be discussed further.
+
+> We briefly note that `type` and `interface` are not exactly the same and have a few subtle, but important differences.
+> Again, we will not discuss this further.
+
 ## Type Assertions
 
 Sometimes you know more about the type of a variable than TypeScript.
 For example, let's say that you have a function that returns an `any` value, but for some reason you know that in fact that value is definitely going to be a `string` in your case.
-Then you can use a **type assertion** to force TypeScript to treat that value as a `string`.
+Then you can use a **type assertion** (also called a type cast) to force TypeScript to treat that value as a `string`.
 
 Here is a (slightly contrived) example:
 
@@ -199,5 +231,3 @@ const strLength = (str as string).length;
 
 You should use type assertions _extremely sparingly_ since you give up some of the benefits of using TypeScript.
 Usually there are better ways.
-
-> Type Assertions are often also referred to Type Casts.
