@@ -49,7 +49,7 @@ This is the basic setup, but in order to actually execute this in the browser or
 Let's create a file named `index.html` in which we use `main.js` as a JavaScript module:
 
 ```html
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
