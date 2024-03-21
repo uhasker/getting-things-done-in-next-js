@@ -23,7 +23,7 @@ set status = 'Completed'
 where id = 1;
 ```
 
-## Deleting Data
+### Deleting Data
 
 You can delete rows using the `delete` statement.
 Here you need to specify which table to use and which rows to remove:
