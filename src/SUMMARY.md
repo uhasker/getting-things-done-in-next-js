@@ -72,14 +72,14 @@
 
   - [Setup](chapter8/01-setup.md)
   - [Inserting, Updating and Deleting Data](chapter8/02-inserting-updating-and-deleting-data.md)
-  - [Selecting Data](chapter8/03-selecting-rows.md)
+  - [Selecting Data](chapter8/03-selecting-data.md)
   - [Multiple Tables](chapter8/04-multiple-tables.md)
 
 - [Typesafe SQL with Drizzle](chapter9/README.md)
 
   - [Setup](chapter9/01-setup.md)
   - [Inserting, Updating and Deleting Data](chapter9/02-inserting-updating-and-deleting-data.md)
-  - [Selecting Data](chapter9/03-selecting-rows.md)
+  - [Selecting Data](chapter9/03-selecting-data.md)
   - [Multiple Tables](chapter9/04-multiple-tables.md)
   - [Migrations](chapter9/05-migrations.md)
 

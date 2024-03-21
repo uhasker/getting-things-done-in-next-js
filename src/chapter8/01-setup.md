@@ -1,6 +1,6 @@
 ## Setup
 
-## Create a Database
+### Create a Database
 
 First, we need to create a new database.
 For this book, we will use Supabase.
@@ -13,7 +13,7 @@ Replace `[YOUR-PASSWORD]` with the password you gave the database in the previou
 
 Save the connection string, we will need it in a second.
 
-## Table Creation
+### Table Creation
 
 Let's also create a table:
 
@@ -30,7 +30,7 @@ create table task (
 This table schema defines the columns of the table.
 Each column has a name, a data type, an optional constraints.
 
-## Data Types
+### Data Types
 
 The **integer** data type allows you to store integers.
 
@@ -39,7 +39,7 @@ The **float** and **double** data types allow you to store floats and doubles.
 The **varchar(num_chat)** data type allows you to store strings with a maximum number of characters.
 The **text** data type allows you to store strings of arbitrary length.
 
-## Constraints
+### Constraints
 
 The **primary key** constraint means that the column should be used to identify the rows of the table.
 
