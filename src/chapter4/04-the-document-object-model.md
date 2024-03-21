@@ -6,10 +6,10 @@
 
 When you open an HTML document in a browser, it is represented by the **Document Object Model** (DOM for short).
 Essentially, the DOM is a model for documents which represent _editable logical trees_.
-This sounds _way_ scarier than it really is, so let's consider the following example:
+This sounds _way_ scarier than it really is, so let's consider an example:
 
 ```html
-<div id="taskList">
+<div id="task-list">
   <p> Read the Next.js book: Read and understand the Next.js book. </p>
   <p> Write a website: Create a new and cool website. </p>
 </div>
@@ -26,7 +26,7 @@ Let's take a look at a bigger document:
 ```html
 <div id="app">
   <h1>My tasks</h1>
-  <div id="taskList">
+  <div id="task-list">
     <p> Read the Next.js book: Read and understand the Next.js book. </p>
     <p> Write a website: Create a new and cool website. </p>
   </div>
@@ -51,7 +51,7 @@ This can be done by using JavaScript functions that exist on the `document` obje
 For the rest of this section, we will consider the following document:
 
 ```html
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
@@ -130,7 +130,7 @@ const paragraphs = document.querySelectorAll('p');
 ```
 
 Note that this time `tasks` will be a `NodeList` (instead of an `HTMLCollection`).
-However it is still an array-like object that you can index with `[]`.
+However, a `NodeList` is still an array-like object that you can index with `[]`.
 
 JavaScript also allows us to create elements and append them to other elements.
 You can create elements using `document.createElement(tagName)`.
@@ -149,7 +149,7 @@ For example to append the newly created `element` to another element `taskList` 
 
 ```js
 // Retrieve the taskList element
-const taskList = document.querySelector('#taskList');
+const taskList = document.querySelector('#task-list');
 
 // Append element to taskList
 taskList.appendChild(element);
@@ -164,36 +164,6 @@ const paragraph = document.createElement('p');
 paragraph.id = 'thirdParagraph';
 paragraph.classList.add('task');
 paragraph.innerHTML = 'New task';
-const taskList = document.querySelector('#taskList');
+const taskList = document.querySelector('#task-list');
 taskList.appendChild(paragraph);
 ```
-
-We would now have to add a `button` element and execute this code whenever the button is clicked by registering a `click` event listener on the button:
-
-```html
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <title>Easy Opus</title>
-    <script>
-      function addTask() {
-        const paragraph = document.createElement('p');
-        paragraph.id = 'thirdParagraph';
-        paragraph.classList.add('task');
-        paragraph.innerHTML = 'New task';
-        const taskList = document.querySelector('#taskList');
-        taskList.appendChild(paragraph);
-      }
-    </script>
-  </head>
-  <body>
-    <div id="taskList">
-      <button id="addTask" onclick="addTask()">Add a task</button>
-    </div>
-  </body>
-</html>
-```
-
-> Note that if we want this code to work correctly when clicking the button multiple times, we should change the ID on each button click.
-> Try doing this by yourself.

@@ -4,7 +4,7 @@
 
 ### The Requirements
 
-One day you sit around and dream about some sunshine as suddently the dreaded _Project Manager_ approaches you and asks you to build a small task application.
+One day you sit around and dream about sunshine as suddently the dreaded _Project Manager_ approaches you and asks you to build a small task application.
 The application should consist of a list showing the current tasks.
 Additionally, a web form should allow the user to create a new task (which should then be displayed in the list of current tasks).
 
@@ -13,27 +13,28 @@ Additionally, a web form should allow the user to create a new task (which shoul
 You get to work and quickly come up with the initial document:
 
 ```html
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <title>Task List App</title>
-    <!-- JavaScript will go here -->
-    <script></script>
   </head>
   <body>
     <h1>Task List</h1>
 
     <!-- Task List -->
-    <ul id="taskList"> </ul>
+    <ul id="task-list"> </ul>
 
     <!-- Form to Add Tasks -->
     <h2>Add a Task</h2>
-    <form id="taskForm">
-      <label for="taskInput">Task:</label>
-      <input type="text" id="taskInput" placeholder="Enter your task" />
+    <form id="task-form">
+      <label for="task-input">Task:</label>
+      <input type="text" id="task-input" placeholder="Enter your task" />
       <button type="submit">Add Task</button>
     </form>
+
+    <!-- JavaScript will go here -->
+    <script></script>
   </body>
 </html>
 ```

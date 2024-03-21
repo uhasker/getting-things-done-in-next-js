@@ -40,8 +40,9 @@
   - [Marking Up Text](chapter4/02-marking-up-text.md)
   - [Hyperlinks and Images](chapter4/03-hyperlinks-and-images.md)
   - [The Document Object Model](chapter4/04-the-document-object-model.md)
-  - [Web Forms](chapter4/05-web-forms.md)
-  - [A Simple Client](chapter4/06-a-simple-client.md)
+  - [Events](chapter4/05-events.md)
+  - [Web Forms](chapter4/06-web-forms.md)
+  - [A Simple Client](chapter4/07-a-simple-client.md)
 
 - [Adding Spice with React](chapter5/README.md)
 
