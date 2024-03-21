@@ -1,6 +1,6 @@
 ## Hyperlinks and Images
 
-<div style="text-align: right"> <i> Who uses `alt` tags on images? They're just decorations, right? <br> - Seconds before disaster </i> </div>
+<div style="text-align: right"> <i> Who uses alt tags on images? They're just decorations, right? <br> - Seconds before disaster </i> </div>
 
 ### Hyperlinks
 
@@ -15,10 +15,11 @@ Here is how you can create a hyperlink:
 ```
 
 This creates a link with the text "Example" that links the resource mentioned in the `href` attribute (which in this case is `"https://example.com"`).
-By default the text becomes blue and is underlined.
+By default the text becomes blue and underlined.
 If you click the text, the web browser opens the page located at `https://example.com`.
 
-Note that HTML elements can also be made into links, for example:
+Note that HTML elements can also be made into links by simply nesting them.
+For example:
 
 ```html
 <a href="https://example.com">

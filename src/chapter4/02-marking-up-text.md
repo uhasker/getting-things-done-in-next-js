@@ -12,7 +12,7 @@ The most basic element for marking up text is the paragraph element `<p>`:
 <p>This is the third paragraph of many, many paragraphs.</p>
 ```
 
-Visually paragraphs are represented as text blocks separated from surrounding content by blank lines.
+Visually speaking, paragraphs are represented as text blocks separated from surrounding content by blank lines.
 Paragraphs are commonly used to group related text.
 
 ### Breaking Up Text
@@ -24,14 +24,14 @@ There is a line break here. <br />
 This is some text after the line break.
 ```
 
-Additionally you can use the `<hr>` element for a thematic break of some text.
+Additionally, you can use the `<hr>` element for a thematic break of some text.
 It will usually be visually presented as a horizontal line.
 
 ```html
 Here is some text. <hr /> Here some text about something totally different.
 ```
 
-Often the `<hr />` element is used to introduce thematic breaks between paragraphs.
+The `<hr />` element is often used to introduce thematic breaks between paragraphs.
 
 ### Heading Elements
 
@@ -106,28 +106,28 @@ You can add quotes - both blockquotes (with `<blockquote>`) and inline quotes (w
 </p>
 ```
 
-The point here is not to learn everything single HTML element for marking up text (you can look these up with a simple Google search anyway), but to be aware that when it comes to marking up text there might be an HTML element for your use case.
+Trying to learn every single HTML element for marking up text would be a pointless endeavour (you can look them up with a simple Google search anyway).
+Just be aware that when it comes to marking up text there might be an HTML element for your use case.
 
 ### Semantic HTML
 
 In a few chapters, we will introduce you to CSS, which will allow you to style your HTML elements however you like.
-At this point most people forget that there are any elements besides the generic containers `<div>` and `<span>` since they can now just _style_ a `<span>` to look like an `<h1>`.
+At this point most people forget that there are any elements besides the generic `<div>` container since they can now just _style_ the `<div>` to look however they want.
 
 This is a _really bad idea_.
 
-The reason this is bad is that _looking_ at a page is not the only way to browse the web.
+The problem is that _looking_ at a page is not the only way to browse the web.
 
 First of all, there are a lot of visually impaired people in the world who use screen readers to navigate the internet.
 Screen readers tend to focus on the HTML elements and not the styles (which makes sense, since reading out styles is not really something you want to do).
 
-If you write a heading as a styled `<span>` instead of an `<h1>` you are not only doing more (unneccessary) work, you also give visually impaired people a worse experience.
+If you write a heading as a styled `<div>` instead of an `<h1>` you are not only doing more (unneccessary) work, you also give visually impaired people a worse experience.
 Screen readers often interpret headings in a special way - for example you can ask most screen readers to read all headings on a page out loud and then jump to some heading you care about.
-This is of course not possible with `<span>`s.
+This is of course not possible with `<div>`s.
 
 Second, your page will also be consumed by programs responsible for indexing and ranking.
-If your website contains generic containers only, it will usually be downgraded resulting in (shock and horror) _bad Search Engine Optimization_.
+If your website contains generic containers only, it will usually be downgraded resulting in the much dreaded _bad Search Engine Optimization_.
 
-Therefore you should _absolutely not_ forget about the _semantically correct_ HTML element we presented in this section.
+Therefore you should _absolutely not_ forget about the _semantically correct_ HTML elements we presented in this section.
 
-> Also, if you don't use semantically correct HTML, your fellow developers will let you know about this in the _smuggest_ way possible which will feel bad for you.
-> After all, _you_ want to be one smuggly telling your collegue - "you know, I don't think that this is semantically correct".
+> Also, if you don't use semantically correct HTML, your fellow developers will let you know about this in the _smuggest_ way possible.

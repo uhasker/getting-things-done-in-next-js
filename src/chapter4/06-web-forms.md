@@ -7,7 +7,7 @@
 **Web forms** (or just **forms** for short) provide a tool for accepting user input.
 They are one of the key components that make your pages interactive.
 A web form contains one or more **form controls** which are usually paired with text labels that describe the purpose of the control.
-For example a textual form control for providing a message might be paired with a label explaining that the textual form control represents a message.
+For example, a textual form control for providing a message might be paired with a label explaining that the textual form control represents a message.
 
 Consider a very common example - the contact form.
 
@@ -41,14 +41,16 @@ Let's now add the form control for the username along with a label (note that th
 There are two HTML elements at play here - `<input>` and `<label>`.
 
 The form control is represented by the `<input>` element.
-It has a lot of various attributes, but the two most important ones (apart from the `id` attribute) are the `type` and `name` attribute.
+It has a lot of possible attributes, but the two most important ones (apart from the `id` attribute) are the `type` and `name` attribute.
+
 The `type` attribute represents the type of the form control.
-For example a plaintext input field would have the type `text` while a checkbox would have the type `checkbox` (big surprise).
+For example, a plaintext input field would have the type `text` while a checkbox would have the type `checkbox` (big surprise).
+
 The `name` attribute specifies a name for the form control.
 This attribute is important when submitting the form (usually by clicking the submit button) as it will identify the submitted value.
 
 The label is represented by the `<label>` element.
-The `for` attribute of the label must be an ID for a form control.
+The `for` attribute of the label must be an ID of a form control.
 In this case the ID of the `<input>` element is `name` and therefore the `for` attribute of the `<label>` element has `name` as its value.
 
 Now let's add the form control for the email.
@@ -115,16 +117,7 @@ We can use the `<fieldset>` and `<legend>` attrributes to further improve our fo
 If you click the button right now, the page will refresh, the URL will change and your inputs will be cleared.
 This is the default behaviour of a form submission, however we often want to intercept and modify this.
 
-To achieve this, let's add an event listener to the form that will listen for submit events.
-
-This can be done via the `addEventListener` function which takes two arguments.
-The first argument is the event to listen to (which is `'submit'` in this case).
-The second argument is a function that takes the specific event and handles it.
-
-> The `addEventListener` is a typical example of a higher-order function since it takes a function as one of its arguments.
-
-We will just log the `currentTarget` of the event for now.
-This property identifies the element to which the event handler has been attached (in this case it's the form).
+To achieve this, let's add an event listener to the form that will listen for `submit` events:
 
 ```js
 const contactForm = document.getElementById('contact');

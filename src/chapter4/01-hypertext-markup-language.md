@@ -8,7 +8,7 @@ Create a project directory (_easy-opus_ for example).
 From here on, all work will be done within the _easy-opus_ directory.
 
 Now, let's create a webpage using **HTML**, a markup language designed for defining documents to be displayed in a browser.
-We briefly touched on HTML in section 1.1, but now we will look at HTML a bit more in detail.
+We briefly touched on HTML in the first section of the JavaScript chapter, but now we will dive deeper.
 
 > Markup languages provide rules for defining the type of information contained in a document.
 > Markup languages differ from programming languages - while markup languages enable the creation of displayable documents, programming languages offer much more powerful capabilities.
@@ -18,7 +18,7 @@ Create a file named `index.html` in the project directory.
 Now write some minimal useful HTML to display two hardcoded tasks:
 
 ```html
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
@@ -90,7 +90,7 @@ For example, we could use the `<em>` element to emphasize some of the words in t
 </div>
 ```
 
-Note that to do nesting correctly, the tags of the element being nested must be inside the tags of the element it is being nested in.
+Note that the tags of the element being nested must be inside the tags of the element it is being nested in.
 For example the tags of the element `<em>Next.js</em>` are inside the element `<p>Read the <em>Next.js</em> book</p>`.
 
 ### HTML Attributes
@@ -106,7 +106,7 @@ This allows us to reference that element using JavaScript or CSS.
 Here is how we can create an element with an `id` attribute:
 
 ```html
-<p id="readBook">Read the Next.js book</p>
+<p id="read-book">Read the Next.js book</p>
 ```
 
 Generally speaking, you can specify attributes by writing the attribute name, followed by an equal sign, followed by the attribute value wrapped inside double quotes.
@@ -121,16 +121,17 @@ Here is how we can create an element with a `class` attribute:
 <p class="blue-text">Read the Next.js book</p>
 ```
 
-There are many more attributes and different HTML elements often have different attributes.
+A common naming convention for IDs and classes is `dashed-lowercase`.
 
-We will cover some of the most important elements together with their attributes in the next section.
+There are many more attributes and different HTML elements often have different attributes.
+We will cover some of the most important elements together with their attributes in the next sections.
 
 ### Structure of an HTML Document
 
 Let's have a look at `index.html` again and examine its structure in more detail:
 
 ```html
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
@@ -152,7 +153,7 @@ Let's have a look at `index.html` again and examine its structure in more detail
 
 The document begins with `<!doctype html>` which is a _document type declaration_.
 It is there mainly for historical reasons - in the _olden days_ of HTML the doctype specified which rules the HTML page followed.
-Nowadays, we just use the shortest valid doctype which happens to be `<!doctype html>`.
+Now the olden days are no longer and we just use the shortest valid doctype which happens to be `<!doctype html>`.
 
 The doctype is followed by an `<html>` element which contains all the content of the document.
 This element is usually called the **root element**.
