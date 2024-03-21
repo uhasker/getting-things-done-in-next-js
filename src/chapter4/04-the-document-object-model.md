@@ -51,7 +51,7 @@ This can be done by using JavaScript functions that exist on the `document` obje
 For the rest of this section, we will consider the following document:
 
 ```html
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />

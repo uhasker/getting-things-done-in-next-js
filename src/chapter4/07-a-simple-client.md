@@ -13,7 +13,7 @@ Additionally, a web form should allow the user to create a new task (which shoul
 You get to work and quickly come up with the initial document:
 
 ```html
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
