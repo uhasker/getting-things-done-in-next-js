@@ -10,7 +10,7 @@ For example, you might want to do something if the user clicks a button, presses
 Cosnider the following simple HTML example:
 
 ```html
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
@@ -105,7 +105,7 @@ However, the `parent` div is the element to which we attached the event handler.
 Here is how we could create a button that dynamically adds a new task every time we click it:
 
 ```html
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
