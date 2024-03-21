@@ -174,6 +174,7 @@
                 <div id="content" class="content">
                     <main>
                         <h2 id="more-on-http"><a class="header" href="#more-on-http">More on HTTP</a></h2>
+<div style="text-align: right"> <i> Just return a 200 here, it will be fine. <br> — Seconds before disaster </i> </div>
 <h3 id="status-codes"><a class="header" href="#status-codes">Status Codes</a></h3>
 <p>Responses can have status codes attached to them.
 These indicate the status of a request.</p>
@@ -190,12 +191,45 @@ These indicate the status of a request.</p>
   }
 });
 </code></pre>
+<p>Try to <code>curl</code> the endpoint both with an empty and a non-empty object.
+For example, you can <code>curl</code> the endpoint with an empty object like this:</p>
+<pre><code class="language-sh">curl -X POST -H "Content-Type: application/json" -d '{}' -w '\nStatus: %{http_code}' http://localhost:3000
+</code></pre>
+<p>The output would be:</p>
+<pre><code>Bad Request: No data provided
+Status: 400
+</code></pre>
+<p>You can <code>curl</code> the endpoint with a non-empty object like this:</p>
+<pre><code class="language-sh">curl -X POST -H "Content-Type: application/json" -d '{"key": "value"}' -w '\nStatus: %{http_code}' http://localhost:3000
+</code></pre>
+<p>The output would be:</p>
+<pre><code>Received data: {"key":"value"}
+Status: 201
+</code></pre>
 <h3 id="headers"><a class="header" href="#headers">Headers</a></h3>
 <p>Both requests and responses can have <strong>headers</strong> which provide important information that is not part of the main request or response content.
 For example, request headers might contain the version of the browser that is making the request, what languages are accepted, what encodings are accepted etc.</p>
+<p>Here is how you can read request headers in Express:</p>
+<pre><code class="language-js">app.get('/request-header-example', (req, res) =&gt; {
+  const customHeaderValue = req.get('Custom-Header');
+
+  if (customHeaderValue) {
+    const responseData = { 'Received-Custom-Header': customHeaderValue };
+    res.send(`Received data: ${JSON.stringify(responseData)}`);
+  } else {
+    res.status(400).send('No Custom-Header provided');
+  }
+});
+</code></pre>
+<p>You can set a header in <code>curl</code> like this:</p>
+<pre><code class="language-sh">curl -H "Custom-Header: ExampleValue" http://localhost:3000/request-header-example
+</code></pre>
+<p>You will receive the following response:</p>
+<pre><code>Received data: {"Received-Custom-Header":"ExampleValue"}
+</code></pre>
 <p>Similarly, response headers might contain the type of the content, the date of the response etc.</p>
 <p>Here is how you can set response headers in Express:</p>
-<pre><code class="language-js">app.post('/', (req, res) =&gt; {
+<pre><code class="language-js">app.get('/response-header-example', (req, res) =&gt; {
   const data = req.body;
 
   // Add a custom header
@@ -204,6 +238,26 @@ For example, request headers might contain the version of the browser that is ma
   res.status(201).send(`Received data: ${JSON.stringify(data)}`);
 });
 </code></pre>
+<p>You can see the response headers in <code>curl</code> by using the <code>-i</code> flag:</p>
+<pre><code>curl -i http://localhost:3000/response-header-example
+</code></pre>
+<p>This will output:</p>
+<pre><code>HTTP/1.1 201 Created
+X-Powered-By: Express
+X-Custom-Header: MyHeaderValue
+Content-Type: text/html; charset=utf-8
+Content-Length: 17
+ETag: W/"11-10nwzUtYNUZcrMxeVU7fTdmCYaI"
+Date: Thu, 14 Mar 2024 11:23:03 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+
+Received data: {}
+</code></pre>
+<p>Note that express already sets quite a few response headers by default.</p>
+<blockquote>
+<p>You can also see the response headers in the network tab of your browser if you click on an individual request.</p>
+</blockquote>
 <h3 id="cookies"><a class="header" href="#cookies">Cookies</a></h3>
 <p>HTTP <strong>cookies</strong> are pieces of data that are created by the server, sent to the browser and then saved on the browser.
 Cookies can be used for things like authentication.</p>

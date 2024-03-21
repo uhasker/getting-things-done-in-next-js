@@ -174,29 +174,54 @@
                 <div id="content" class="content">
                     <main>
                         <h2 id="ips-ports-and-domains"><a class="header" href="#ips-ports-and-domains">IPs, Ports and Domains</a></h2>
+<div style="text-align: right"> <i> Well, it works on localhost. <br> — Seconds before disaster </i> </div>
+<h3 id="network-interfaces"><a class="header" href="#network-interfaces">Network Interfaces</a></h3>
+<p><strong>Network interfaces</strong> are the mechanism your computer uses to connect to a network.
+Network interfaces can correspond to physical objects like a network interface controller (the hardware component that allows a computer to connect to a network via a cable or wireless connection).
+They can also be virtual, i.e. only exist in software.</p>
+<h3 id="protocols"><a class="header" href="#protocols">Protocols</a></h3>
+<p>A <strong>protocol</strong> defines the rules by which computers communicate.
+Protocols allow computer to "speak the same language".</p>
+<p>The internet knows a lot of different protocols - from really common ones like IP, HTTP or DNS to really exotic ones that are only relevant for a select group of specialists.</p>
+<p>If you go to <code>www.google.com</code>, you will see that your browser actually navigates you to <code>https://www.google.com/</code>.
+In this case the underlying protocol is HTTPS.</p>
 <h3 id="the-ip-protocol"><a class="header" href="#the-ip-protocol">The IP Protocol</a></h3>
-<p>An IP address is a label that is assigned to a network interface on your computer.
+<p>An IP address is an identifier that is assigned to a network interface on your computer.
 For example, your wireless network interface might have an IP address that it can use to communicate with other computers on the same wireless network.</p>
+<blockquote>
+<p>Note that we will only talk about the IPv4 protocol and ignore the IPv6 protocol.</p>
+</blockquote>
 <p>Such an address consists of 4 numbers between 0 and 255, separated by dots.
-Examples addresses might be <code>123.56.1.17</code> or <code>192.168.178.47</code>.</p>
-<p>A particularly important IP address is <code>127.0.0.1</code> which can be used to identify the machine you're currently on.
+Example addresses might be <code>123.56.1.17</code> or <code>192.168.178.47</code>.</p>
+<p>A special IP address is <code>127.0.0.1</code> which can be used to identify the machine you're currently on.
 For example, if you run a web server on your computer, you could access it at <code>127.0.0.1</code>.</p>
 <p>Note that instead of saying that a network interface has a particular IP, we will often say that a computer has some IP.
 This is because often we only really care about a particular interface (usually your wireless interface).
-However, it is important to understand that diffent network interfaces can have different IP addresses even if they are located on the same machine.</p>
+However, it is important to understand that diffent network interfaces will usually have different IP addresses even if they are located on the same machine.</p>
 <h3 id="ports"><a class="header" href="#ports">Ports</a></h3>
 <p>Usually you want to be able to run multiple networking services on your machine.
 This is enabled by ports.</p>
 <p>A <strong>port</strong> is simply a number assigned to uniquely identify a connection endpoint on a machine.
-For example, I might have a web service running on port <code>443</code> and an ssh service on port <code>22</code>.</p>
+For example, you might have a web service running on port <code>443</code> and an ssh service on port <code>22</code>.</p>
 <blockquote>
 <p>The <code>ssh</code> protocol allows you to remotely log in to a computer and execute commands on it.</p>
 </blockquote>
 <p>These two services might run on the same computer with the same IP, because they can be distinguished by their port numbers.</p>
+<p>If you want to specify the IP and port together, you use the colon <code>:</code> notation.
+For example, if you have an HTTPS web server running on IP <code>123.56.1.17</code> and port <code>443</code>, you would say that it's located at <code>123.56.1.17:443</code> (more specifically on <code>https://123.56.1.17:443</code>).</p>
+<p>Similarly, if you start an HTTP web server locally (i.e. on <code>127.0.0.1</code>) on port <code>3000</code>, you could access it at <code>127.0.0.1:3000</code> (more specifically on <code>http://127.0.0.1:3000</code>).</p>
+<p>There is a list of "well-known ports".
+For example, an <code>http</code> application typically runs on port <code>80</code> while an <code>https</code> application typically runs on port <code>443</code>.
+This is why you don't need to explicitly tell your browser that <code>google.com</code> can be found at port <code>443</code> - it will figure that out automatically.</p>
+<blockquote>
+<p>During development we will not follow this convention and mostly run our applications on port <code>3000</code>.
+This is because you don't need special "root" permissions to run something on port <code>3000</code>.
+Typically, ports below <code>1024</code> are considered "privileged" and require these special permissions.</p>
+</blockquote>
 <h3 id="domains"><a class="header" href="#domains">Domains</a></h3>
 <p>While IP addresses are great, they are very unwieldy and hard to remember for humans.
-Indeed, in real life, we never tell someone to go to <code>142.251.37.14</code>, instead we tell them to "go to Google".</p>
-<p>This is possible because of <strong>domains</strong>.
+Imagine that instead of "just google it" or "go to <code>google.com</code>" you would have to tell someone to go to <code>142.251.37.14</code>.</p>
+<p>This why the concept of a <strong>domain</strong> was introduced.
 A domain (or <em>domain name</em>) is a string that identifies some network resource and usually has a corresponding IP address.</p>
 <p>For example, the domain <code>google.com</code> might correspond to the IP address <code>142.251.37.14</code>.
 That is, you can identify the resource either via <code>google.com</code> or via <code>142.251.37.14</code>.</p>
@@ -204,9 +229,11 @@ That is, you can identify the resource either via <code>google.com</code> or via
 If you type <code>google.com</code> into your browser address bar, DNS will translate it to the correct IP under the hood.</p>
 <blockquote>
 <p>The reality is much more complicated.
-A single domain usually corresponds to many IP addresses for load balancing reasons etc.
+A single domain can correspond to many IP addresses for load balancing reasons etc.
 Nevertheless, this is a useful mental model to have.</p>
 </blockquote>
+<p>A special domain is <code>localhost</code> which resolves to <code>127.0.0.1</code>.</p>
+<p>This means that if you want to access a locally running HTTP web server on port <code>3000</code>, you would need to go to <code>localhost:3000</code> (more specifically <code>http://localhost:3000</code>).</p>
 
                     </main>
 

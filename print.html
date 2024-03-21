@@ -4200,32 +4200,60 @@ We only look at the files in <code>src</code> and its subdirectories, ignoring t
 <p>The resulting configuration would be strict and not emit JavaScript files.</p>
 <p>This feature is particularly useful because it allows someone to write a TypeScript configuration file that specifies the settings that should be applied to TypeScript codebases in a company/project and then everyone can simply extend this configuration file.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="chapter-3-networking-fundamentals"><a class="header" href="#chapter-3-networking-fundamentals">Chapter 3: Networking Fundamentals</a></h1>
-<p>This chapter explains the networking fundamentals that we will need for the later sections.
-It is not intended to be a complete primer - we will only touch the concepts that are absolutely necessary to understand the later sections.</p>
+<div style="text-align: right"> <i> I don't need to know how networks operate. <br> — Seconds before disaster </i> </div>
+<p>Now that you've learned a bit of programming, we're almost ready to start diving into writing web applications.
+However, before we can do so, we need to introduce a couple of networking concepts.
+If you don't know what an IP address is or how an HTTP request works, it will be very hard to understand the concepts in the later chapters.</p>
+<p>Don't worry, this won't be a university course - we will only touch the concepts that are absolutely necessary to understand the later chapters.</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="ips-ports-and-domains"><a class="header" href="#ips-ports-and-domains">IPs, Ports and Domains</a></h2>
+<div style="text-align: right"> <i> Well, it works on localhost. <br> — Seconds before disaster </i> </div>
+<h3 id="network-interfaces"><a class="header" href="#network-interfaces">Network Interfaces</a></h3>
+<p><strong>Network interfaces</strong> are the mechanism your computer uses to connect to a network.
+Network interfaces can correspond to physical objects like a network interface controller (the hardware component that allows a computer to connect to a network via a cable or wireless connection).
+They can also be virtual, i.e. only exist in software.</p>
+<h3 id="protocols"><a class="header" href="#protocols">Protocols</a></h3>
+<p>A <strong>protocol</strong> defines the rules by which computers communicate.
+Protocols allow computer to "speak the same language".</p>
+<p>The internet knows a lot of different protocols - from really common ones like IP, HTTP or DNS to really exotic ones that are only relevant for a select group of specialists.</p>
+<p>If you go to <code>www.google.com</code>, you will see that your browser actually navigates you to <code>https://www.google.com/</code>.
+In this case the underlying protocol is HTTPS.</p>
 <h3 id="the-ip-protocol"><a class="header" href="#the-ip-protocol">The IP Protocol</a></h3>
-<p>An IP address is a label that is assigned to a network interface on your computer.
+<p>An IP address is an identifier that is assigned to a network interface on your computer.
 For example, your wireless network interface might have an IP address that it can use to communicate with other computers on the same wireless network.</p>
+<blockquote>
+<p>Note that we will only talk about the IPv4 protocol and ignore the IPv6 protocol.</p>
+</blockquote>
 <p>Such an address consists of 4 numbers between 0 and 255, separated by dots.
-Examples addresses might be <code>123.56.1.17</code> or <code>192.168.178.47</code>.</p>
-<p>A particularly important IP address is <code>127.0.0.1</code> which can be used to identify the machine you're currently on.
+Example addresses might be <code>123.56.1.17</code> or <code>192.168.178.47</code>.</p>
+<p>A special IP address is <code>127.0.0.1</code> which can be used to identify the machine you're currently on.
 For example, if you run a web server on your computer, you could access it at <code>127.0.0.1</code>.</p>
 <p>Note that instead of saying that a network interface has a particular IP, we will often say that a computer has some IP.
 This is because often we only really care about a particular interface (usually your wireless interface).
-However, it is important to understand that diffent network interfaces can have different IP addresses even if they are located on the same machine.</p>
+However, it is important to understand that diffent network interfaces will usually have different IP addresses even if they are located on the same machine.</p>
 <h3 id="ports"><a class="header" href="#ports">Ports</a></h3>
 <p>Usually you want to be able to run multiple networking services on your machine.
 This is enabled by ports.</p>
 <p>A <strong>port</strong> is simply a number assigned to uniquely identify a connection endpoint on a machine.
-For example, I might have a web service running on port <code>443</code> and an ssh service on port <code>22</code>.</p>
+For example, you might have a web service running on port <code>443</code> and an ssh service on port <code>22</code>.</p>
 <blockquote>
 <p>The <code>ssh</code> protocol allows you to remotely log in to a computer and execute commands on it.</p>
 </blockquote>
 <p>These two services might run on the same computer with the same IP, because they can be distinguished by their port numbers.</p>
+<p>If you want to specify the IP and port together, you use the colon <code>:</code> notation.
+For example, if you have an HTTPS web server running on IP <code>123.56.1.17</code> and port <code>443</code>, you would say that it's located at <code>123.56.1.17:443</code> (more specifically on <code>https://123.56.1.17:443</code>).</p>
+<p>Similarly, if you start an HTTP web server locally (i.e. on <code>127.0.0.1</code>) on port <code>3000</code>, you could access it at <code>127.0.0.1:3000</code> (more specifically on <code>http://127.0.0.1:3000</code>).</p>
+<p>There is a list of "well-known ports".
+For example, an <code>http</code> application typically runs on port <code>80</code> while an <code>https</code> application typically runs on port <code>443</code>.
+This is why you don't need to explicitly tell your browser that <code>google.com</code> can be found at port <code>443</code> - it will figure that out automatically.</p>
+<blockquote>
+<p>During development we will not follow this convention and mostly run our applications on port <code>3000</code>.
+This is because you don't need special "root" permissions to run something on port <code>3000</code>.
+Typically, ports below <code>1024</code> are considered "privileged" and require these special permissions.</p>
+</blockquote>
 <h3 id="domains"><a class="header" href="#domains">Domains</a></h3>
 <p>While IP addresses are great, they are very unwieldy and hard to remember for humans.
-Indeed, in real life, we never tell someone to go to <code>142.251.37.14</code>, instead we tell them to "go to Google".</p>
-<p>This is possible because of <strong>domains</strong>.
+Imagine that instead of "just google it" or "go to <code>google.com</code>" you would have to tell someone to go to <code>142.251.37.14</code>.</p>
+<p>This why the concept of a <strong>domain</strong> was introduced.
 A domain (or <em>domain name</em>) is a string that identifies some network resource and usually has a corresponding IP address.</p>
 <p>For example, the domain <code>google.com</code> might correspond to the IP address <code>142.251.37.14</code>.
 That is, you can identify the resource either via <code>google.com</code> or via <code>142.251.37.14</code>.</p>
@@ -4233,10 +4261,13 @@ That is, you can identify the resource either via <code>google.com</code> or via
 If you type <code>google.com</code> into your browser address bar, DNS will translate it to the correct IP under the hood.</p>
 <blockquote>
 <p>The reality is much more complicated.
-A single domain usually corresponds to many IP addresses for load balancing reasons etc.
+A single domain can correspond to many IP addresses for load balancing reasons etc.
 Nevertheless, this is a useful mental model to have.</p>
 </blockquote>
+<p>A special domain is <code>localhost</code> which resolves to <code>127.0.0.1</code>.</p>
+<p>This means that if you want to access a locally running HTTP web server on port <code>3000</code>, you would need to go to <code>localhost:3000</code> (more specifically <code>http://localhost:3000</code>).</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="an-http-primer"><a class="header" href="#an-http-primer">An HTTP Primer</a></h2>
+<div style="text-align: right"> <i> Meh, who needs HTTPS. <br> — Seconds before disaster </i> </div>
 <h3 id="servers-and-clients"><a class="header" href="#servers-and-clients">Servers and Clients</a></h3>
 <p><strong>Servers</strong> and <strong>clients</strong> are nothing more than regular programs (like the ones you saw in the first chapter).
 For example, a server might be a JavaScript program that waits for HTTP requests and sends back responses.
@@ -4244,10 +4275,26 @@ A client might be a browser on your laptop or your phone - it might even be a re
 <blockquote>
 <p>Often, the term "server" is also used to refer to the actual machine the software is running on.</p>
 </blockquote>
-<p>When writing a web application, the most common way to get data from a server to a client and vice versa is by using the HTTP procotol.
-HTTP is a <strong>request/response protocol</strong>, i.e. HTTP clients send requests to an HTTP server and receive a response in return.</p>
+<p>The distinction between a client and a server is extremely important, because the location of our code (i.e. whether it's on the client or the server) will determine <em>what features we can use</em>.
+We alredy mentioned this in the JavaScript chapter.</p>
+<p>For example, if your code runs on the client, you don't have access to the filesystem etc.
+But you do have access to the browser features.
+For example, you could add a new element, get the size of the browser windows etc.</p>
+<p>If your code runs on the server, you do have access to the filesystem, but you no longer have access to the browser features.
+You quite logically can't get the size of the browser window on the server.</p>
+<p>This also means that we will often need to transmit data from the client to the server (and the other way around).
+When writing a web application, the most common way to do so is by using the HTTP procotol.
+HTTP is a <strong>request/response protocol</strong>, i.e. HTTP clients send requests to an HTTP server and receive responses in return.</p>
+<blockquote>
 <p>You have in fact already used the HTTP protocol.
-Every time you browse the internet, HTTP requests are sent under the hood.</p>
+Pretty much every time you browse the internet, HTTP requests are sent under the hood.</p>
+</blockquote>
+<p>The usual request-response lifecycle looks like this:</p>
+<p>The user interacts with your web application, e.g. by submitting a form, clicking a button etc.</p>
+<p>The client then send an HTTP request to the server that contains information about resources to retrieve, data to send etc.</p>
+<p>The server receives the request, reads its data and then performs appropriate calculations, database queries and so on.
+Afterwards, the server creates a response and sends it back to the client.</p>
+<p>Finally, the client looks at the response and determines how to update the UI (user interface).</p>
 <p>We should mention that nowadays developers rarely use plain HTTP in production.
 Instead, they use HTTPS, which is encrypted HTTP.
 However, we won't cover HTTPS in detail, since that will automatically be handled for us by our deployment process.</p>
@@ -4261,9 +4308,8 @@ While Express builds on top of the HTTP module, it provides a lot of additional 
 <p>Install Express:</p>
 <pre><code class="language-shell">pnpm add express
 </code></pre>
-<p>Now create a file named <code>app.js</code> inside the directory.
-As usual the name of the file is up to you, but it should be something meaningful.
-In the file we will create an Express application and then make that application listen for connections on a specified host and port.</p>
+<p>Create a file named <code>app.js</code> inside the directory.
+In that file we will create an Express application and then make that application listen for connections on a specified host and port.</p>
 <p>This is how you can create an Express application and make it listen on port <code>3000</code>:</p>
 <pre><code class="language-javascript">const express = require('express');
 const app = express();
@@ -4286,8 +4332,8 @@ Add this above the call to <code>listen</code>:</p>
 <pre><code>Hello, world!
 </code></pre>
 <p>You can also use cURL, which includes a command-line tool for transferring data on a network.
-Among other things it supports HTTP and is available on both Windows and most Linux distributions.
-Open a command line and run:</p>
+Among other things it supports HTTP and is available on pretty much every mainstream operating system out there.</p>
+<p>Open a command line and run:</p>
 <pre><code class="language-shell">curl http://localhost:3000/
 </code></pre>
 <p>The will output the following:</p>
@@ -4295,8 +4341,8 @@ Open a command line and run:</p>
 </code></pre>
 <h3 id="http-urls"><a class="header" href="#http-urls">HTTP URLs</a></h3>
 <p>The string <code>http://localhost:3000/</code> is a so called URL.
-You have probably seen URLs before.
-Navigate to Google and search for "Next.js" - you will notice that the URL in your browser looks like this:</p>
+You have already seen URLs in the previous section.</p>
+<p>Navigate to Google and search for "Next.js" - you will notice that the URL in your browser looks like this:</p>
 <pre><code>https://www.google.com/search?q=nextjs
 </code></pre>
 <p>For didactic reasons we will include the port:</p>
@@ -4323,30 +4369,30 @@ Usually we will work with domain names since they are stable (unlike a lot of IP
 This may of course change by the time you are reading this book.</p>
 </blockquote>
 <p>The next part is the <strong>path</strong>.
-Assuming it is not empty, the path begins with a forward slash ("/") and uniquely identifies the resource we want to query.
-In the Google URL the path is "/search".
+Assuming it is not empty, the path begins with a forward slash <code>/</code> and uniquely identifies the resource we want to query.
+In the Google URL the path is <code>/search</code>.
 Often paths will be hierarchical.
-In this case the different components of the hierarchy are generally separated by slashes - for example "/path/to/resource".</p>
+In this case the different components of the hierarchy are generally separated by slashes - for example <code>/path/to/resource</code>.</p>
 <p>The path can be followed by a <strong>query</strong>.
 The query begins with a question mark and is followed by key-value pairs.
-In the Google URL this is "?q=nextjs".
+In the Google URL this is <code>?q=nextjs</code>.
 Here the query provides information about your search.
-If there are multiple key-value pairs, they are separated by ampersands ("&amp;").
-For example the query could be "?key1=value1&amp;key2=value2".</p>
+If there are multiple key-value pairs, they are separated by ampersands <code>&amp;</code>.
+For example the query could be <code>?key1=value1&amp;key2=value2</code>.</p>
 <p>The query can be followed by a <strong>fragment</strong>.
 This is used for navigation by the client and is not sent to server.</p>
 <h3 id="get-and-post-requests"><a class="header" href="#get-and-post-requests">GET and POST requests</a></h3>
 <p>HTTP knows multiple <strong>request methods</strong>.
-We primarily care about two request methods for now - namely <strong>GET</strong> and <strong>POST</strong>.
-GET requests are generally used to retrieve data.</p>
-<p>Recall out route from above:</p>
+We primarily care about two request methods for now - namely <strong>GET</strong> and <strong>POST</strong>.</p>
+<p>GET requests are generally used to retrieve data.</p>
+<p>Recall our route from above:</p>
 <pre><code class="language-javascript">app.get('/', (req, res) =&gt; {
   res.send('Hello world!');
 });
 </code></pre>
 <p>This indicates that if a GET request is sent to the path '/', we would like to return 'Hello, world!' to the client.
 The <code>req</code> variable represents the <strong>request object</strong> and <code>res</code> represents the <strong>respose object</strong>.
-If we want to send a HTTP response to the client we therefore use <code>res.send</code>.</p>
+If we want to send a HTTP response to the client we use the <code>res.send</code> method.</p>
 <p>POST requests are generally used to send information to the server that tell it to create a new resource or update an existing resource.
 For example a login request will generally be a POST request since it tells the server that a user has logged in to the application.
 Similarly, if you submit a web form, there will usually be a POST request attached to that, since form submissions carry new information.</p>
@@ -4362,9 +4408,7 @@ Note that we need to enable some middleware (we will return to the concept of mi
   res.send(req.body);
 });
 </code></pre>
-<p>How do we test this?
-You cannot simply send a POST request in a browser the way you would send a GET request.
-This is where <code>curl</code> comes in really handy.
+<p>We can send a POST request via <code>curl</code>.
 We need to specify that we want to send a POST request using the <code>-X</code> flag.
 In addition we specify the data that we want to send in the <em>body</em> of the POST request using the <code>-d</code> flag.
 Finally we specify a header called <code>Content-Type</code> and set it to <code>text/plain</code>.
@@ -4374,18 +4418,7 @@ This indicates that the data we want to send is plain text.</p>
 </code></pre>
 <p>Generally speaking GET requests transmit information using the querystring, while POST requests transmit information in the request body.</p>
 <p>Note that we will rarely send plain text in the request.
-Instead we will use a special format called JSON.
-This is a file format that supports a bunch of primitive values, arrays and dictionaries.
-A typical JSON object could look like this:</p>
-<pre><code class="language-json">{
-  "tasks": ["Task 1", "Task 2", "Task 3"],
-  "date": {
-    "year": 2022,
-    "month": 06,
-    "date": 18
-  }
-}
-</code></pre>
+Instead we the JSON format that we introduced in the JavaScript chapter.</p>
 <p>In order to accept JSON requests, we need to replace the <code>express.text</code> middleware with the <code>express.json</code> middleware:</p>
 <pre><code class="language-json">app.use(express.json());
 </code></pre>
@@ -4393,19 +4426,8 @@ A typical JSON object could look like this:</p>
 <pre><code>curl -X POST -H "Content-Type: application/json" -d '{ "key": "value" }' http://localhost:3000/post-example
 </code></pre>
 <p>Note that here we specify the <code>application/json</code> content type.</p>
-<blockquote>
-<p>This is all fine and dandy, but how do client and server know how to interpret all these things?
-The answer to that question is the IETF (short for Internet Engineering Task Force).
-This is an organization that sets standards for the Internet (hence the name).
-Among other things it is responsible for creating the various RFCs (Request for Comments) that outline the workings of HTTP.
-For example HTTP 1.1 (which is the most common HTTP version you will encounter at the time of this writing) is outlined in RFCs 7230-7235.
-URIs on the other hand are outlined in RFC 3986.
-We encourage you to have a quick look at the respective RFCs.
-You should <em>definitely not</em> read them all at this stage, but just understand the sheer complexity of the things we are discussing here.
-We are really just scratching a very tiny part of the surface of it all.
-Lucky for you, most of the RFCs will probably not be terribly relevant in your day-to-day life.</p>
-</blockquote>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="more-on-http"><a class="header" href="#more-on-http">More on HTTP</a></h2>
+<div style="text-align: right"> <i> Just return a 200 here, it will be fine. <br> — Seconds before disaster </i> </div>
 <h3 id="status-codes"><a class="header" href="#status-codes">Status Codes</a></h3>
 <p>Responses can have status codes attached to them.
 These indicate the status of a request.</p>
@@ -4422,12 +4444,45 @@ These indicate the status of a request.</p>
   }
 });
 </code></pre>
+<p>Try to <code>curl</code> the endpoint both with an empty and a non-empty object.
+For example, you can <code>curl</code> the endpoint with an empty object like this:</p>
+<pre><code class="language-sh">curl -X POST -H "Content-Type: application/json" -d '{}' -w '\nStatus: %{http_code}' http://localhost:3000
+</code></pre>
+<p>The output would be:</p>
+<pre><code>Bad Request: No data provided
+Status: 400
+</code></pre>
+<p>You can <code>curl</code> the endpoint with a non-empty object like this:</p>
+<pre><code class="language-sh">curl -X POST -H "Content-Type: application/json" -d '{"key": "value"}' -w '\nStatus: %{http_code}' http://localhost:3000
+</code></pre>
+<p>The output would be:</p>
+<pre><code>Received data: {"key":"value"}
+Status: 201
+</code></pre>
 <h3 id="headers"><a class="header" href="#headers">Headers</a></h3>
 <p>Both requests and responses can have <strong>headers</strong> which provide important information that is not part of the main request or response content.
 For example, request headers might contain the version of the browser that is making the request, what languages are accepted, what encodings are accepted etc.</p>
+<p>Here is how you can read request headers in Express:</p>
+<pre><code class="language-js">app.get('/request-header-example', (req, res) =&gt; {
+  const customHeaderValue = req.get('Custom-Header');
+
+  if (customHeaderValue) {
+    const responseData = { 'Received-Custom-Header': customHeaderValue };
+    res.send(`Received data: ${JSON.stringify(responseData)}`);
+  } else {
+    res.status(400).send('No Custom-Header provided');
+  }
+});
+</code></pre>
+<p>You can set a header in <code>curl</code> like this:</p>
+<pre><code class="language-sh">curl -H "Custom-Header: ExampleValue" http://localhost:3000/request-header-example
+</code></pre>
+<p>You will receive the following response:</p>
+<pre><code>Received data: {"Received-Custom-Header":"ExampleValue"}
+</code></pre>
 <p>Similarly, response headers might contain the type of the content, the date of the response etc.</p>
 <p>Here is how you can set response headers in Express:</p>
-<pre><code class="language-js">app.post('/', (req, res) =&gt; {
+<pre><code class="language-js">app.get('/response-header-example', (req, res) =&gt; {
   const data = req.body;
 
   // Add a custom header
@@ -4436,6 +4491,26 @@ For example, request headers might contain the version of the browser that is ma
   res.status(201).send(`Received data: ${JSON.stringify(data)}`);
 });
 </code></pre>
+<p>You can see the response headers in <code>curl</code> by using the <code>-i</code> flag:</p>
+<pre><code>curl -i http://localhost:3000/response-header-example
+</code></pre>
+<p>This will output:</p>
+<pre><code>HTTP/1.1 201 Created
+X-Powered-By: Express
+X-Custom-Header: MyHeaderValue
+Content-Type: text/html; charset=utf-8
+Content-Length: 17
+ETag: W/"11-10nwzUtYNUZcrMxeVU7fTdmCYaI"
+Date: Thu, 14 Mar 2024 11:23:03 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+
+Received data: {}
+</code></pre>
+<p>Note that express already sets quite a few response headers by default.</p>
+<blockquote>
+<p>You can also see the response headers in the network tab of your browser if you click on an individual request.</p>
+</blockquote>
 <h3 id="cookies"><a class="header" href="#cookies">Cookies</a></h3>
 <p>HTTP <strong>cookies</strong> are pieces of data that are created by the server, sent to the browser and then saved on the browser.
 Cookies can be used for things like authentication.</p>
