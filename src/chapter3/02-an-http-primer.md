@@ -1,5 +1,7 @@
 ## An HTTP Primer
 
+<div style="text-align: right"> <i> Meh, who needs HTTPS. <br> — Seconds before disaster </i> </div>
+
 ### Servers and Clients
 
 **Servers** and **clients** are nothing more than regular programs (like the ones you saw in the first chapter).
@@ -8,11 +10,33 @@ A client might be a browser on your laptop or your phone - it might even be a re
 
 > Often, the term "server" is also used to refer to the actual machine the software is running on.
 
-When writing a web application, the most common way to get data from a server to a client and vice versa is by using the HTTP procotol.
-HTTP is a **request/response protocol**, i.e. HTTP clients send requests to an HTTP server and receive a response in return.
+The distinction between a client and a server is extremely important, because the location of our code (i.e. whether it's on the client or the server) will determine _what features we can use_.
+We alredy mentioned this in the JavaScript chapter.
 
-You have in fact already used the HTTP protocol.
-Every time you browse the internet, HTTP requests are sent under the hood.
+For example, if your code runs on the client, you don't have access to the filesystem etc.
+But you do have access to the browser features.
+For example, you could add a new element, get the size of the browser windows etc.
+
+If your code runs on the server, you do have access to the filesystem, but you no longer have access to the browser features.
+You quite logically can't get the size of the browser window on the server.
+
+This also means that we will often need to transmit data from the client to the server (and the other way around).
+When writing a web application, the most common way to do so is by using the HTTP procotol.
+HTTP is a **request/response protocol**, i.e. HTTP clients send requests to an HTTP server and receive responses in return.
+
+> You have in fact already used the HTTP protocol.
+> Pretty much every time you browse the internet, HTTP requests are sent under the hood.
+
+The usual request-response lifecycle looks like this:
+
+The user interacts with your web application, e.g. by submitting a form, clicking a button etc.
+
+The client then send an HTTP request to the server that contains information about resources to retrieve, data to send etc.
+
+The server receives the request, reads its data and then performs appropriate calculations, database queries and so on.
+Afterwards, the server creates a response and sends it back to the client.
+
+Finally, the client looks at the response and determines how to update the UI (user interface).
 
 We should mention that nowadays developers rarely use plain HTTP in production.
 Instead, they use HTTPS, which is encrypted HTTP.
@@ -36,9 +60,8 @@ Install Express:
 pnpm add express
 ```
 
-Now create a file named `app.js` inside the directory.
-As usual the name of the file is up to you, but it should be something meaningful.
-In the file we will create an Express application and then make that application listen for connections on a specified host and port.
+Create a file named `app.js` inside the directory.
+In that file we will create an Express application and then make that application listen for connections on a specified host and port.
 
 This is how you can create an Express application and make it listen on port `3000`:
 
@@ -74,7 +97,8 @@ Hello, world!
 ```
 
 You can also use cURL, which includes a command-line tool for transferring data on a network.
-Among other things it supports HTTP and is available on both Windows and most Linux distributions.
+Among other things it supports HTTP and is available on pretty much every mainstream operating system out there.
+
 Open a command line and run:
 
 ```shell
@@ -90,7 +114,8 @@ Hello, world!
 ### HTTP URLs
 
 The string `http://localhost:3000/` is a so called URL.
-You have probably seen URLs before.
+You have already seen URLs in the previous section.
+
 Navigate to Google and search for "Next.js" - you will notice that the URL in your browser looks like this:
 
 ```
@@ -127,17 +152,17 @@ Usually we will work with domain names since they are stable (unlike a lot of IP
 > This may of course change by the time you are reading this book.
 
 The next part is the **path**.
-Assuming it is not empty, the path begins with a forward slash ("/") and uniquely identifies the resource we want to query.
-In the Google URL the path is "/search".
+Assuming it is not empty, the path begins with a forward slash `/` and uniquely identifies the resource we want to query.
+In the Google URL the path is `/search`.
 Often paths will be hierarchical.
-In this case the different components of the hierarchy are generally separated by slashes - for example "/path/to/resource".
+In this case the different components of the hierarchy are generally separated by slashes - for example `/path/to/resource`.
 
 The path can be followed by a **query**.
 The query begins with a question mark and is followed by key-value pairs.
-In the Google URL this is "?q=nextjs".
+In the Google URL this is `?q=nextjs`.
 Here the query provides information about your search.
-If there are multiple key-value pairs, they are separated by ampersands ("&").
-For example the query could be "?key1=value1&key2=value2".
+If there are multiple key-value pairs, they are separated by ampersands `&`.
+For example the query could be `?key1=value1&key2=value2`.
 
 The query can be followed by a **fragment**.
 This is used for navigation by the client and is not sent to server.
@@ -146,9 +171,10 @@ This is used for navigation by the client and is not sent to server.
 
 HTTP knows multiple **request methods**.
 We primarily care about two request methods for now - namely **GET** and **POST**.
+
 GET requests are generally used to retrieve data.
 
-Recall out route from above:
+Recall our route from above:
 
 ```javascript
 app.get('/', (req, res) => {
@@ -158,7 +184,7 @@ app.get('/', (req, res) => {
 
 This indicates that if a GET request is sent to the path '/', we would like to return 'Hello, world!' to the client.
 The `req` variable represents the **request object** and `res` represents the **respose object**.
-If we want to send a HTTP response to the client we therefore use `res.send`.
+If we want to send a HTTP response to the client we use the `res.send` method.
 
 POST requests are generally used to send information to the server that tell it to create a new resource or update an existing resource.
 For example a login request will generally be a POST request since it tells the server that a user has logged in to the application.
@@ -184,9 +210,7 @@ app.post('/post-example', (req, res) => {
 });
 ```
 
-How do we test this?
-You cannot simply send a POST request in a browser the way you would send a GET request.
-This is where `curl` comes in really handy.
+We can send a POST request via `curl`.
 We need to specify that we want to send a POST request using the `-X` flag.
 In addition we specify the data that we want to send in the _body_ of the POST request using the `-d` flag.
 Finally we specify a header called `Content-Type` and set it to `text/plain`.
@@ -201,20 +225,7 @@ curl -X POST -H "Content-Type: text/plain" -d 'haha' http://localhost:3000/post-
 Generally speaking GET requests transmit information using the querystring, while POST requests transmit information in the request body.
 
 Note that we will rarely send plain text in the request.
-Instead we will use a special format called JSON.
-This is a file format that supports a bunch of primitive values, arrays and dictionaries.
-A typical JSON object could look like this:
-
-```json
-{
-  "tasks": ["Task 1", "Task 2", "Task 3"],
-  "date": {
-    "year": 2022,
-    "month": 06,
-    "date": 18
-  }
-}
-```
+Instead we the JSON format that we introduced in the JavaScript chapter.
 
 In order to accept JSON requests, we need to replace the `express.text` middleware with the `express.json` middleware:
 
@@ -229,14 +240,3 @@ curl -X POST -H "Content-Type: application/json" -d '{ "key": "value" }' http://
 ```
 
 Note that here we specify the `application/json` content type.
-
-> This is all fine and dandy, but how do client and server know how to interpret all these things?
-> The answer to that question is the IETF (short for Internet Engineering Task Force).
-> This is an organization that sets standards for the Internet (hence the name).
-> Among other things it is responsible for creating the various RFCs (Request for Comments) that outline the workings of HTTP.
-> For example HTTP 1.1 (which is the most common HTTP version you will encounter at the time of this writing) is outlined in RFCs 7230-7235.
-> URIs on the other hand are outlined in RFC 3986.
-> We encourage you to have a quick look at the respective RFCs.
-> You should _definitely not_ read them all at this stage, but just understand the sheer complexity of the things we are discussing here.
-> We are really just scratching a very tiny part of the surface of it all.
-> Lucky for you, most of the RFCs will probably not be terribly relevant in your day-to-day life.
