@@ -1,11 +1,13 @@
 ## Setup
 
+<div style="text-align: right"> <i> Astro DB is powered by Drizzle! <br> ... and we regret everything omg this thing sucks <br> - From Drizzles official page </i> </div>
+
 ### A Simple Example
 
 Let's create a simple Drizzle script that will declare a task table and read all the tasks from the table.
 
 Create a new supabase database and recreate the task table from the SQL chapter.
-Don't add the project IDs yet, that will follow later.
+Don't add the project IDs and table yet, that will follow later.
 
 Create a new TypeScript project:
 
@@ -25,7 +27,7 @@ pnpm add drizzle-kit --save-dev
 Create the following file `demo.ts`:
 
 ```ts
-import { pgTable, serial, text, integer } from 'drizzle-orm/pg-core';
+import { pgTable, serial, text, integer, timestamp, varchar } from 'drizzle-orm/pg-core';
 import { drizzle } from 'drizzle-orm/postgres-js';
 import postgres from 'postgres';
 
@@ -35,10 +37,11 @@ const databaseURI = '...';
 // Declare the task table
 export const taskTable = pgTable('task', {
   id: serial('id').primaryKey(),
-  title: text('title').notNull(),
+  title: varchar('title', { length: 255 }).notNull(),
   description: text('description').notNull(),
-  status: text('status').notNull(),
-  duration: integer('duration').notNull(),
+  status: varchar('status', { length: 255 }).notNull(),
+  duration: integer('duration'),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
 });
 
 const client = postgres(databaseURI);
@@ -50,6 +53,8 @@ async function getTasks() {
 
 getTasks().then(console.log);
 ```
+
+> Note that the `check` constraint is not yet implemented in Drizzle at the time of this writing.
 
 Execute the file:
 

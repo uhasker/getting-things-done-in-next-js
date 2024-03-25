@@ -1,5 +1,7 @@
 ## Multiple Tables
 
+<div style="text-align: right"> <i> Y'all should just copy everything Eloquent has <br> - From Drizzles official page </i> </div>
+
 ### Foreign Keys
 
 Let's recreate the project and task table from the SQL chapter in Drizzle:
@@ -10,12 +12,14 @@ const projectTable = pgTable('project', {
   name: text('name').notNull(),
 });
 
-export const taskTable = pgTable("task", {
-  id: serial("id").primaryKey(),
-  title: text("title").notNull(),
-  description: text("description").notNull(),
-  status: text("status").notNull(),
-  projectId: integer('projectId').notNull().references(() => projectTable.id);
+export const taskTable = pgTable('task', {
+  id: serial('id').primaryKey(),
+  title: varchar('title', { length: 255 }).notNull(),
+  description: text('description').notNull(),
+  status: varchar('status', { length: 255 }).notNull(),
+  duration: integer('duration'),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  projectId: integer('project_id').notNull().references(() => projectTable.id);
 });
 ```
 

@@ -1,6 +1,9 @@
 ## Selecting Data
 
-You can you the `select` function to select data.
+<div style="text-align: right"> <i> I hate @DrizzleOrm
+ so much that I wrote the Auth.js adapter for it. <br> - From Drizzles official page </i> </div>
+
+You can use the `select` function to select data.
 
 You can select all columns:
 
@@ -22,7 +25,7 @@ The conditions can contain functions like `eq`, `ne`, `lt`, `lte`, `gt`, `gte`.
 For example, here is how you could select all tasks that are in progress:
 
 ```ts
-await db.select().from(taskTable).where(eq(taskTable.status, 'In progress'));
+await db.select().from(taskTable).where(eq(taskTable.status, 'inprogress'));
 ```
 
 Here is how you can select all tasks that will take longer than 30 minutes:
@@ -38,7 +41,7 @@ For example, you could select all tasks that are in progress _and_ will take lon
 await db
   .select()
   .from(taskTable)
-  .where(and(eq(taskTable.status, 'In progress'), gt(taskTable.duration, 30)));
+  .where(and(eq(taskTable.status, 'inprogress'), gt(taskTable.duration, 30)));
 ```
 
 You could also select all tasks that are in progress _or_ will take longer than 30 minutes:
@@ -47,7 +50,7 @@ You could also select all tasks that are in progress _or_ will take longer than 
 await db
   .select()
   .from(taskTable)
-  .where(or(eq(taskTable.status, 'In progress'), gt(taskTable.duration, 30)));
+  .where(or(eq(taskTable.status, 'inprogress'), gt(taskTable.duration, 30)));
 ```
 
 You can order the results using `orderBy`.
@@ -68,3 +71,5 @@ You can limit results using `limit`:
 ```ts
 await db.select().from(taskTable).orderBy(asc(taskTable.duration)).limit(10);
 ```
+
+Again note how similar all these statements are to the statements from the SQL chapter.

@@ -1,5 +1,8 @@
 ## Migrations
 
+<div style="text-align: right"> <i> DrizzleOrm
+ is not an “ORM”, it’s merely a overrated typesafe sql wrapper not even a query builder.  <br> - From Drizzles official page </i> </div>
+
 ### Why Migrations?
 
 Quite often, during the course of development an application will have to change.
@@ -18,9 +21,11 @@ import { pgTable, serial, text } from 'drizzle-orm/pg-core';
 
 export const taskTable = pgTable('task', {
   id: serial('id').primaryKey(),
-  title: text('name').notNull(),
+  title: varchar('title', { length: 255 }).notNull(),
   description: text('description').notNull(),
-  status: text('name').notNull(),
+  status: varchar('status', { length: 255 }).notNull(),
+  duration: integer('duration'),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
 });
 ```
 
@@ -45,18 +50,8 @@ Now run:
 pnpm drizzle-kit generate:pg
 ```
 
-This will create a `meta` directory and an SQL file:
+This will create a `meta` directory and an SQL file containing the migration.
 
-```sql
-CREATE TABLE IF NOT EXISTS "task" (
-	"id" serial PRIMARY KEY NOT NULL,
-	"title" text NOT NULL,
-	"description" text NOT NULL,
-	"status" text NOT NULL
-);
-```
-
-This SQL file contains the migration.
 In this example, running the migration will create a new task table with the columns we would expect.
 
 ### Run Migrations
@@ -189,3 +184,8 @@ pnpm tsx migrate.ts
 
 Note that you no longer need to export `DATABASE_URL` manually.
 Thanks to `dotenv` the script will simply pick the URL up from the `.env` file.
+
+### More Migrations
+
+Now, add the project ID and table to the schema and generate another migration.
+You will see that the migration will contain the "diff" between the current schema and the old schema.
