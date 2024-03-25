@@ -212,7 +212,7 @@ export default function Counter() {
 The state variable (<code>count</code> in this case) will be the value that you want to remember.
 The state setter function (<code>setCount</code> in this case) can be used to update the state variable.
 The <code>useState</code> hook takes a single argument - the initial value of the state variable (which is <code>0</code> in this case).</p>
-<p>Note that we make use of array destructuring here (which you should remember from chapter 1):</p>
+<p>Note that we make use of array destructuring here (which you should remember from the JavaScript chapter):</p>
 <pre><code class="language-ts">const [count, setCount] = React.useState(0);
 </code></pre>
 <p>Alternatively we could have written:</p>
@@ -342,7 +342,7 @@ React rerenders the component while remembering that the new <code>count</code> 
 <p>The component renders for the second time.
 Because React remembered that <code>count</code> was set to <code>1</code>, the component will render with <code>count</code> set to <code>1</code>.</p>
 <h3 id="using-state-with-a-form"><a class="header" href="#using-state-with-a-form">Using State with a Form</a></h3>
-<p>Let us return to our task management application and add the form for creating a new task.
+<p>Let us return to our example application and add the form for creating a new task.
 Enter the <code>task-list.tsx</code> file and import React at the top:</p>
 <pre><code class="language-js">import * as React from 'react';
 </code></pre>
@@ -368,7 +368,7 @@ Enter the <code>task-list.tsx</code> file and import React at the top:</p>
 }
 </code></pre>
 <p>Now we need to create a <code>handleSubmit</code> function, which will just log something to the console for now.
-Remember from chapter 4 that we need to call the <code>preventDefault</code> function to prevent the default behaviour of a form submission (which includes a page refresh):</p>
+Remember from the HTML chapter that we need to call the <code>preventDefault</code> function to prevent the default behaviour of a form submission (which includes a page refresh):</p>
 <pre><code class="language-js">function handleSubmit(event) {
   event.preventDefault();
   const taskId = event.currentTarget.taskId.value.trim();
@@ -398,7 +398,7 @@ To accomplish that, we set the <code>onSubmit</code> property of the form to the
   ]);
 }
 </code></pre>
-<p>This is what the full code looks like:</p>
+<p>This is how the full code looks like:</p>
 <pre><code class="language-jsx">import * as React from "react";
 
 type Task = {
@@ -443,6 +443,10 @@ export default function TaskList() {
 
 </code></pre>
 <p>Try clicking the button - a new task should appear.</p>
+<blockquote>
+<p>Just like with the HTML client the changes will go away if you refresh the page or close the browser.
+We will talk about how to persist data in later chapters.</p>
+</blockquote>
 <h3 id="when-to-use-state"><a class="header" href="#when-to-use-state">When to use State</a></h3>
 <p>There is a common theme regarding state in React - a lot of beginners <em>heavily overuse</em> it.
 This is usually because they misunderstand the purpose of state and what it actually does.</p>

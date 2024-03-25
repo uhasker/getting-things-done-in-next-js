@@ -174,11 +174,12 @@
                 <div id="content" class="content">
                     <main>
                         <h2 id="setup"><a class="header" href="#setup">Setup</a></h2>
+<div style="text-align: right"> <i> What's a Next.js developer's favorite part of setting up a new project? <br> Installing dependencies. It's like Christmas, but every package is a surprise! <br> - From "1000 programming dad-jokes" </i> </div>
 <h3 id="creating-a-nextjs-project"><a class="header" href="#creating-a-nextjs-project">Creating a Next.js Project</a></h3>
 <p>Run the following command to create a new Next.js project:</p>
 <pre><code class="language-sh">pnpm create next-app
 </code></pre>
-<p>Give your project a name (like <code>easy-opus</code>) and select the following options:</p>
+<p>Give your project a name and select the following options:</p>
 <ul>
 <li>we want to use TypeScript</li>
 <li>we want to use ESLint</li>
@@ -187,7 +188,7 @@
 <li>we want to use the App Router</li>
 <li>we don't want to customize the defalt import alias</li>
 </ul>
-<p>Next, navigate to the <code>easy-opus</code> directory and run:</p>
+<p>Next, navigate to the newly created directory and run:</p>
 <pre><code class="language-sh">pnpm dev
 </code></pre>
 <blockquote>
@@ -196,15 +197,15 @@
 <p>If you go to <code>http://localhost:3000</code>, you will see the default home page.
 Let's simplify it a bit for the following sections.</p>
 <h3 id="simplifying-the-default-project"><a class="header" href="#simplifying-the-default-project">Simplifying the Default Project</a></h3>
-<p>Enter the <code>src</code> directory (<code>easy-opus/src</code>).</p>
+<p>Enter the <code>src</code> directory.</p>
 <p>First, remove the <code>globals.css</code> file (styles will be the topic of the next chapter).</p>
 <p>Next, replace the code in <code>page.tsx</code> with this:</p>
-<pre><code class="language-tsx">export default function Home() {
+<pre><code class="language-jsx">export default function Home() {
   return &lt;h1&gt;Welcome&lt;/h1&gt;;
 }
 </code></pre>
 <p>Finally, replace the code in <code>layout.tsx</code> with this:</p>
-<pre><code class="language-tsx">export default function RootLayout({ children }: { children: React.ReactNode }) {
+<pre><code class="language-jsx">export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     &lt;html lang="en"&gt;
       &lt;body&gt;{children}&lt;/body&gt;
