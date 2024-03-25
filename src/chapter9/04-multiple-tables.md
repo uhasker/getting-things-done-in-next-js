@@ -12,12 +12,14 @@ const projectTable = pgTable('project', {
   name: text('name').notNull(),
 });
 
-export const taskTable = pgTable("task", {
-  id: serial("id").primaryKey(),
-  title: text("title").notNull(),
-  description: text("description").notNull(),
-  status: text("status").notNull(),
-  projectId: integer('projectId').notNull().references(() => projectTable.id);
+export const taskTable = pgTable('task', {
+  id: serial('id').primaryKey(),
+  title: varchar('title', { length: 255 }).notNull(),
+  description: text('description').notNull(),
+  status: varchar('status', { length: 255 }).notNull(),
+  duration: integer('duration'),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  projectId: integer('project_id').notNull().references(() => projectTable.id);
 });
 ```
 

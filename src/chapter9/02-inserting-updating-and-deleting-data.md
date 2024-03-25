@@ -16,7 +16,7 @@ Here is how you would insert a row into `taskTable`:
 await db.insert(taskTable).values({
   title: 'Read the Next.js book',
   description: 'Read and understand the Next.js book.',
-  status: 'In progress',
+  status: 'inprogress',
   duration: 60,
 });
 ```
@@ -47,19 +47,19 @@ await db.insert(taskTable).values([
   {
     title: 'Read the Next.js book',
     description: 'Read and understand the Next.js book.',
-    status: 'In progress',
+    status: 'inprogress',
     duration: 5000,
   },
   {
     title: 'Write a task app',
     description: 'Write an awesome task app.',
-    status: 'Todo',
+    status: 'todo',
     duration: 120,
   },
   {
     title: 'Think of a funny joke',
     description: 'Come up with a funny joke to lighten the mood.',
-    status: 'In progress',
+    status: 'inprogress',
     duration: 5,
   },
 ]);
@@ -73,10 +73,10 @@ Updating data generally looks like this:
 await db.update(table).set(object).where(condition);
 ```
 
-For example, let's say that wanted to set status of the task with the ID `1` to `'Completed'`:
+For example, let's say that wanted to set status of the task with the ID `1` to `'done'`:
 
 ```ts
-await db.update(taskTable).set({ status: 'Completed' }).where(eq(taskTable.id, 1));
+await db.update(taskTable).set({ status: 'done' }).where(eq(taskTable.id, 1));
 ```
 
 ### Deleting Data
@@ -90,5 +90,5 @@ await db.delete(table).where(condition);
 For example, here is how you could delete all the completed tasks:
 
 ```ts
-await db.delete(taskTable).where(eq(taskTable.status, 'Completed'));
+await db.delete(taskTable).where(eq(taskTable.status, 'done'));
 ```
