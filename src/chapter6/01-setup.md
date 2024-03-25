@@ -8,7 +8,7 @@ Run the following command to create a new Next.js project:
 pnpm create next-app
 ```
 
-Give your project a name (like `easy-opus`) and select the following options:
+Give your project a name and select the following options:
 
 - we want to use TypeScript
 - we want to use ESLint
@@ -17,7 +17,7 @@ Give your project a name (like `easy-opus`) and select the following options:
 - we want to use the App Router
 - we don't want to customize the defalt import alias
 
-Next, navigate to the `easy-opus` directory and run:
+Next, navigate to the newly created directory and run:
 
 ```sh
 pnpm dev
@@ -30,13 +30,13 @@ Let's simplify it a bit for the following sections.
 
 ### Simplifying the Default Project
 
-Enter the `src` directory (`easy-opus/src`).
+Enter the `src` directory.
 
 First, remove the `globals.css` file (styles will be the topic of the next chapter).
 
 Next, replace the code in `page.tsx` with this:
 
-```tsx
+```jsx
 export default function Home() {
   return <h1>Welcome</h1>;
 }
@@ -44,7 +44,7 @@ export default function Home() {
 
 Finally, replace the code in `layout.tsx` with this:
 
-```tsx
+```jsx
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">

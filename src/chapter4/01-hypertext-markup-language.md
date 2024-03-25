@@ -4,8 +4,8 @@
 
 ### A Minimal HTML File
 
-Create a project directory (_easy-opus_ for example).
-From here on, all work will be done within the _easy-opus_ directory.
+Create a project directory.
+From here on, all work will be done within that directory.
 
 Now, let's create a webpage using **HTML**, a markup language designed for defining documents to be displayed in a browser.
 We briefly touched on HTML in the first section of the JavaScript chapter, but now we will dive deeper.
@@ -18,7 +18,7 @@ Create a file named `index.html` in the project directory.
 Now write some minimal useful HTML to display two hardcoded tasks:
 
 ```html
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
@@ -131,7 +131,7 @@ We will cover some of the most important elements together with their attributes
 Let's have a look at `index.html` again and examine its structure in more detail:
 
 ```html
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />

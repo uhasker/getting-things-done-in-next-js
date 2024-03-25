@@ -6,10 +6,12 @@
 
 The idea behind React is that you can think about a page in terms of isolated **components**, where every component is an _independent and reusable piece of the UI_.
 
-Consider a potential first version of our easy-opus app, which would need to display a bunch of tasks.
+Consider a potential first version of our _easy-opus_ app, which would need to display a bunch of tasks.
 
-Every task could be its own component containing the task title, description and a button to delete the task (which are again components).
-These tasks might then be grouped in a task list component, which in addition to the tasks, should have a button to add a new task.
+Every task could be its own component containing the task title, description and a button to delete the task.
+The title, description and the button could in turn be components themselves.
+
+The tasks might then be grouped in a task list component, which in addition to the tasks, should have a button to add a new task.
 
 Here is a simple mockup of the website structure:
 
@@ -18,7 +20,7 @@ Here is a simple mockup of the website structure:
 Now comes the interesting part about React.
 In terms of implementation, a component is just a _regular JavaScript function_ that takes the _data it should render as input_ and returns the _UI representation of the data as output_.
 
-Here is an example of how the first Task component could look like:
+Here is an example of how the a `Task` component could look like:
 
 ```jsx
 function Task({ title, description }: { title: string, description: string }) {
@@ -32,7 +34,13 @@ function Task({ title, description }: { title: string, description: string }) {
 }
 ```
 
-This component takes a `title` and a `description` as input, and produces a `div` containing the `title`, `description` and a button as output.
+Let's have a look at this function.
+
+It takes an object containing the data it should render as input.
+Here the data to be rendered are the `title` and the `description`.
+
+It returns the UI representation of the data as output.
+Here the UI representation is a `div` containing the `title`, `description` and a button.
 
 > Note that the button currently doesn't do much.
 > We will change this later.
@@ -54,10 +62,10 @@ For the framework select `React` and for the variant you will select `TypeScript
 
 After you've created the new project, the tool will even output the commands you should execute afterwards (quite helpful).
 
-First, navigate to the newly created directory, where your project resides:
+Now navigate to the newly created directory, where your project resides:
 
 ```sh
-cd easy-opus
+cd example
 ```
 
 You will see a couple of familiar files, including a `package.json` which - among other things - includes the dependencies of the project.
@@ -79,7 +87,7 @@ Let's replace this demo content with our own components!
 First, you can remove `App.tsx`, `App.css`, `index.css` and the `assets/` folder.
 We will not need these right now.
 
-Now replace the code in `main.tsx` with the following very simple task list:
+Replace the code in `main.tsx` with the following very simple task list:
 
 ```jsx
 import ReactDOM from 'react-dom/client';
@@ -125,8 +133,8 @@ function App() {
 }
 ```
 
-While this might look like HTML, it is important to emphasize that this is _emphatically not_ HTML.
-Instead this syntax is JSX, which is a _syntax extension_ to JavaScript that can be transpiled to _normal_ JavaScript.
+While this might look like HTML, it is important to emphasize that this is _absolutely not_ HTML.
+Instead this syntax is JSX, which is a _syntax extension_ to _JavaScript_ that can be transpiled to _normal_ JavaScript.
 
 To be precise, the JSX will be transpiled to calls to the `React.createElement` function which will return regular JavaScript objects.
 The root object will be dynamically added to the DOM using this line of code:
@@ -164,25 +172,26 @@ ReactDOM.createRoot(document.getElementById('root')!).render(<App />);
 
 > While possible, it's much more complicated (and relatively rare) to add your own custom tags in HTML.
 
-Additionally, you can include JavaScript expressions in JSX by wrapping them in curly braces `{}`:
+Additionally, you can include JavaScript expressions in JSX by wrapping them in curly braces `{}`.
+For example, this is a totally valid React component:
 
 ```jsx
-const x = 2;
-const y = 2;
-
 function Example() {
+  const x = 2;
+  const y = 2;
   return <p>{x + y}</p>;
 }
 ```
 
 ### Add Props to a React Component
 
-JSX is great, but our current `TaskList` function is not.
+JSX is great, but our current `TaskList` component is not.
 The main problem is that the data it represents is hardcoded into the component.
 
-Let us fix that by passing properties (`props`) into the component.
+We fix that by passing properties (`props`) to the component.
 This is simply a JavaScript object containing the data the component should render.
-In our case we will simply pass an array of strings named `tasks` containing our - well - tasks.
+
+In the case of the `TaskList` we simply want to pass an array of strings named `tasks` containing our - well - tasks.
 We can then use `map` to create a list item `li` for each element of that array:
 
 ```jsx
@@ -219,7 +228,7 @@ function TaskList({ tasks }: TaskListProps) {
 }
 ```
 
-> You can hopefully see how all the concepts from chapters 1 and 2 are coming together quite nicely.
+> You can hopefully see how all the concepts from the JavaScript and TypeScript chapters are coming together quite nicely.
 
 Excellent! We can use the new component like this:
 
@@ -234,16 +243,15 @@ function App() {
 }
 ```
 
-Quite nice.
+Great.
 Note that there is a problem with the current implementation of our component.
-You can see this by opening your browser console.
-An error "Warning: Each child in a list should have a unique 'key' prop." will appear.
+If you open your browser console, you will see an error "Warning: Each child in a list should have a unique 'key' prop.".
 
 The reason for that is that React needs a way to identify which items in a list have changed or have been added or removed.
 It does that by looking at the keys of the items.
 These basically give the elements a stable identity.
 
-Let's add IDs to the tasks (we will need them anyway later) and use the task IDs as keys for the component:
+Let's add IDs to the tasks and use the task IDs as keys for the component:
 
 ```jsx
 function App() {

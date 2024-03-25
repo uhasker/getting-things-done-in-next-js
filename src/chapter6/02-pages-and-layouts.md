@@ -4,9 +4,9 @@
 
 Next.js uses **file-based routing**.
 Folders are used to define routes and each folder represents a route segment (which maps to a URL segment).
-You can define nested routes by nesting folder inside each other.
+You can define nested routes by nesting folders inside each other.
 
-For example the folder `about` would represents the route `/about` (which would be mapped to the URL `/about`).
+For example the folder `about` would represent the route `/about` (which would be mapped to the URL `/about`).
 If you would have a folder `about` inside a folder `company` this would represent the route `/company/about` (which would be mapped to the URL `/company/about`).
 
 Note that all of this is relative to our root directory (which in our application is `src/app`).
@@ -29,7 +29,7 @@ export default function About() {
 
 Go to `http://localhost:3000/about` and you will see the new page.
 
-> From now on we will stop prefixing everything with `src/app` and simply talk assume that you are always in `src/app`.
+> From now on we will stop prefixing everything with `src/app` and simply assume that you are always in `src/app`.
 > For example, if we tell you to create a file `task/route.ts` you should actually create the file at `src/app/task/route.ts`.
 
 ### Layouts
@@ -38,10 +38,10 @@ A page is a UI that is unique to a route.
 You can also define a UI that is shared between multiple pages.
 This is called a **layout**.
 
-You define a layout be `default` exporting a React component from a `layout` file (e.g. `layout.tsx`).
+You define a layout by `default` exporting a React component from a `layout` file (e.g. `layout.tsx`).
 The component should accept a `children` prop that will be populated with a child layout or a child page.
 
-Let's go to `layout.ts` in the root directory, which currently looks like this:
+Let's go to the `layout.tsx` file in the root directory, which currently looks like this:
 
 ```jsx
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -80,8 +80,8 @@ This can be done by exporting a `metadata` object:
 
 ```ts
 export const metadata: Metadata = {
-  title: 'Easy Opus',
-  description: 'A task management application',
+  title: 'Example Application',
+  description: 'My example application',
 };
 ```
 

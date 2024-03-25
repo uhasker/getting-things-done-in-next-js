@@ -51,7 +51,7 @@ The state variable (`count` in this case) will be the value that you want to rem
 The state setter function (`setCount` in this case) can be used to update the state variable.
 The `useState` hook takes a single argument - the initial value of the state variable (which is `0` in this case).
 
-Note that we make use of array destructuring here (which you should remember from chapter 1):
+Note that we make use of array destructuring here (which you should remember from the JavaScript chapter):
 
 ```ts
 const [count, setCount] = React.useState(0);
@@ -220,7 +220,7 @@ Because React remembered that `count` was set to `1`, the component will render 
 
 ### Using State with a Form
 
-Let us return to our task management application and add the form for creating a new task.
+Let us return to our example application and add the form for creating a new task.
 Enter the `task-list.tsx` file and import React at the top:
 
 ```js
@@ -252,7 +252,7 @@ export function TaskList({ tasks }: TaskListProps) {
 ```
 
 Now we need to create a `handleSubmit` function, which will just log something to the console for now.
-Remember from chapter 4 that we need to call the `preventDefault` function to prevent the default behaviour of a form submission (which includes a page refresh):
+Remember from the HTML chapter that we need to call the `preventDefault` function to prevent the default behaviour of a form submission (which includes a page refresh):
 
 ```js
 function handleSubmit(event) {
@@ -295,7 +295,7 @@ function handleSubmit(event) {
 }
 ```
 
-This is what the full code looks like:
+This is how the full code looks like:
 
 ```jsx
 import * as React from "react";
@@ -343,6 +343,9 @@ export default function TaskList() {
 ```
 
 Try clicking the button - a new task should appear.
+
+> Just like with the HTML client the changes will go away if you refresh the page or close the browser.
+> We will talk about how to persist data in later chapters.
 
 ### When to use State
 
