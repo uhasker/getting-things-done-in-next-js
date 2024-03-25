@@ -7140,7 +7140,16 @@ The same caveats as with columns apply:</p>
 </code></pre>
 <p>You can use the <code>gap-x-{size}</code> and <code>gap-y-{size}</code> utilities if you need to change the gaps between rows or columns.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="chapter-8-persistence-with-sql"><a class="header" href="#chapter-8-persistence-with-sql">Chapter 8: Persistence with SQL</a></h1>
+<p>So far, we have only stored user-inserted data on the client.
+This meant that if we refreshed the page or closed the browser, our data was lost which is obviously unacceptable in a real-world application.</p>
+<p>To address this problem, we need a way to store data <em>persistenly</em> which is where databases come into play.</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="setup-2"><a class="header" href="#setup-2">Setup</a></h2>
+<h3 id="persisting-data"><a class="header" href="#persisting-data">Persisting Data</a></h3>
+<p>A database is nothing more than a collection of data that supports persistent storage and updates.
+If you store a value, it will be available to you regardless of whether you refresh the page, close your browser or even move to a different country altogether.</p>
+<p>In this book, we will restrict ourselves to <strong>relational databases</strong> only.
+These consist of multiple tables with optional relations between the tables.</p>
+<p>We will use <strong>SQL</strong>, specifically <strong>PostgreSQL</strong> to perform the actual data manipulation.</p>
 <h3 id="create-a-database"><a class="header" href="#create-a-database">Create a Database</a></h3>
 <p>First, we need to create a new database.
 For this book, we will use Supabase.</p>
@@ -7148,62 +7157,128 @@ For this book, we will use Supabase.</p>
 Create a new project, give it a name and select a database password (which you should write down somewhere).</p>
 <p>Once you create the new project, go to "Project Settings &gt; Database" and copy past the URI connection string.
 Replace <code>[YOUR-PASSWORD]</code> with the password you gave the database in the previous step.</p>
-<p>Save the connection string, we will need it in a second.</p>
+<p>Save the connection string, we will need it later.</p>
+<p>Next, you should navigate to the SQL editor of your project to be able to execute queries.</p>
 <h3 id="table-creation"><a class="header" href="#table-creation">Table Creation</a></h3>
-<p>Let's also create a table:</p>
+<p>Consider a simple <code>task</code> table whose purpose is to persistently store informations about created tasks.</p>
+<p>Let's think about the columns we might need for the table.</p>
+<p>First, we have the <code>id</code> column which would store a unique identifier for every task.</p>
+<p>Second, we would have the <code>title</code> and <code>description</code> columns which would store the title and description of the tasks respectively.</p>
+<p>Finally, we will add two more columns for learning purposes.
+The <code>status</code> column will hold the status of the task.
+Additionally, the <code>duration</code> column will store the estimated duration of the task in minutes.</p>
+<p>Let's create the <code>task</code> table.
+We can use the <code>create table</code> SQL statement to accomplish this.</p>
 <pre><code class="language-sql">create table task (
     id serial primary key,
     title varchar(255) not null,
     description text not null,
-    status varchar(255) not null,
-    duration integer not null
+    status varchar(255) not null check (status in ('todo', 'inprogress', 'done')),
+    duration integer,
+    created_at timestamp default current_timestamp not null
 )
 </code></pre>
-<p>This table schema defines the columns of the table.
-Each column has a name, a data type, an optional constraints.</p>
+<p>Note that each column has a name, a data type, an optional constraints.
+Let's talk about data types and optional constraints in more detail.</p>
 <h3 id="data-types"><a class="header" href="#data-types">Data Types</a></h3>
-<p>The <strong>integer</strong> data type allows you to store integers.</p>
-<p>The <strong>float</strong> and <strong>double</strong> data types allow you to store floats and doubles.</p>
-<p>The <strong>varchar(num_chat)</strong> data type allows you to store strings with a maximum number of characters.
-The <strong>text</strong> data type allows you to store strings of arbitrary length.</p>
+<p>The <code>integer</code> data type allows you to store integers.
+You usually use this data type for counts, identifiers etc.</p>
+<p>Note that there are actually multiple integer data types in PostgreSQL.
+The <code>smallint</code> data type allows you to store "small-range integers" and the <code>bigint</code> data type allows you to store "large-range integers".</p>
+<p>The difference between <code>smallint</code>, <code>integer</code> and <code>bigint</code> is basically the minimum and maximum integers that can be stored.</p>
+<p>A <code>smallint</code> value has 2 bytes, i.e. it can store values from <code>-32768</code> up to <code>32767</code>.</p>
+<p>An <code>integer</code> value has 4 bytes, i.e. it can store values from <code>-2147483648</code> up to <code>2147483647</code>.</p>
+<p>An <code>bigint</code> value has 8 bytes, i.e. it can store values from <code>-9223372036854775808</code> up to <code>9223372036854775807</code>.</p>
+<p>For most regular web applications, <code>integer</code> values are more than enough.</p>
+<p>In our example, we use <code>integer</code> for the <code>duration</code> column.</p>
+<p>The <code>serial</code> data type allows you to represent <em>autoincrementing</em> integers (along with <code>smallserial</code> and <code>bigserial</code>).
+This makes <code>serial</code> very useful for unique identifiers since you don't need to handle the incrementing logic yourself.</p>
+<p>This is why we store the <code>id</code> as a <code>serial</code>.</p>
+<p>The <code>real</code> and <code>double precision</code> data types allow you to store floating-point numbers.
+These two data types differ with respect to the number of digits that can be represented after the decimal.</p>
+<p>The <code>real</code> data type has 4 bytes and allows you to represent 6 decimal digits.</p>
+<p>The <code>double precision</code> data type has 8 bytes and allows you to represent 15 decimal digits.</p>
+<p>The <code>varchar(n)</code> data type allows you to store strings with a maximum number of characters.
+The <code>text</code> data type allows you to store strings of arbitrary length.</p>
+<p>We want to limit the number of characters in a task title and status to <code>255</code>, so we use <code>varchar(255)</code> for both.</p>
+<p>However we want to allow an <em>arbitrary</em> amount of characters for the description, so we use the <code>text</code> data type here.</p>
+<p>Finally, the <code>timestamp</code> data type allows us to store a date and a time.</p>
+<p>The <code>created_at</code> column will store the time at which a task has been created and therefore has the <code>timestamp</code> data type.</p>
 <h3 id="constraints"><a class="header" href="#constraints">Constraints</a></h3>
-<p>The <strong>primary key</strong> constraint means that the column should be used to identify the rows of the table.</p>
-<p>The <strong>not null</strong> means that the inserted value can't be null.</p>
+<p>The <code>primary key</code> constraint means that the column should be used to identify the rows of the table.
+If a column is marked as <code>primary key</code>, its values must be unique and they can't be <code>null</code> (more about this in a second).</p>
+<p>Since we want the <code>id</code> to uniquely identify each task, we apply the <code>primary key</code> constraint to the <code>id</code> column.</p>
+<p>The <code>not null</code> constraint means that the inserted value can't be null.
+Basically, we apply this constraint if we want to ensure that a value is always present in this column.</p>
+<p>In our example, we want every task to have a <code>title</code>, a <code>description</code> and a <code>status</code> so we mark these columns as <code>not null</code>.
+However, we allow a task to not have a <code>duration</code> and don't mark that column as <code>not null</code>.</p>
+<p>The <code>check</code> constraint is used to specify a condition that each row must satisfy for the value to be accepted into a column.</p>
+<p>In our example, we want the <code>status</code> column to only have the values <code>todo</code>, <code>inprogress</code> or <code>done</code> and use the <code>check</code> constraint to accomplish that.</p>
+<p>The <code>default</code> constraint allows us to specify a default value for a column.
+If an insert operation does not provide a value for a column, PostgreSQL will automatically insert the specified value.</p>
+<p>In our example, we want the <code>created_at</code> value to simply be the current time and use the <code>default</code> constraint together with <code>current_timestamp</code> to accomplish that.</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="inserting-updating-and-deleting-data"><a class="header" href="#inserting-updating-and-deleting-data">Inserting, Updating and Deleting Data</a></h2>
 <h3 id="inserting-data"><a class="header" href="#inserting-data">Inserting Data</a></h3>
 <p>To insert rows into a table, you use the <code>insert</code> statement.
 Here you need to declare the table to write to, the columns to fill and one or more rows of data to insert:</p>
-<pre><code class="language-sql">insert into task (id, title, description, duration, status) VALUES
-(1, 'Read the Next.js book', 'Read and understand the Next.js book.', 60, 'In progress'),
-(2, 'Write a task app', 'Write an awesome task app.', 0, 'Todo'),
-(3, 'Think of a funny joke', 'Come up with a funny joke to lighten the mood.', 120, 'In progress');
+<pre><code class="language-sql">insert into task (title, description, duration, status) values
+('Read the Next.js book', 'Read and understand the Next.js book.', 60, 'inprogress'),
+('Write a task app', 'Write an awesome task app.', 0, 'todo'),
+('Think of a funny joke', 'Come up with a funny joke to lighten the mood.', 120, 'inprogress');
+</code></pre>
+<p>Note that do not need to include the <code>id</code> and <code>created_at</code> column values.</p>
+<p>After all, the <code>id</code> value has the <code>serial</code> data type, so PostgreSQL will automatically create new values for this column.
+Additionally, the <code>created_at</code> column has a <code>default</code> constraint, so PostgreSQL will automatically create new values for this column too.</p>
+<p>It's crucial to ensure that the inserted data respects the constraints we defined earlier.</p>
+<p>For example, we need to respect the <code>check</code> constraint on the <code>status</code> column:</p>
+<pre><code class="language-sql">insert into task (title, description, duration, status) values
+('Read the Next.js book', 'Read and understand the Next.js book', 60, 'invalid');
+</code></pre>
+<p>The given statement would result in the following error:</p>
+<pre><code>ERROR:  23514: new row for relation "task" violates check constraint "task_status_check"
+</code></pre>
+<p>We would get a similar error if we would try to insert a <code>null</code> value into a column that declares a <code>not null</code> constraint:</p>
+<pre><code class="language-sql">insert into task (title, description, duration, status) values
+('Read the Next.js book', null, 60, 'todo');
+</code></pre>
+<p>Now we would get the following error:</p>
+<pre><code>ERROR:  23502: null value in column "description" of relation "task" violates not-null constraint
 </code></pre>
 <h3 id="updating-data"><a class="header" href="#updating-data">Updating Data</a></h3>
 <p>You can update rows using the <code>update</code> statement.
 Here you need to specify which table, which columns and which rows to update:</p>
 <pre><code class="language-sql">update task
-set status = 'Completed'
+set status = 'done'
 where id = 1;
 </code></pre>
+<p>You can also update more than one column at the same time:</p>
+<pre><code class="language-sql">update task
+set status = 'done', duration = 0
+where id = 1;
+</code></pre>
+<p>You should be very careful when updating data.
+If you make a mistake in the <code>where</code> clause you can update rows that you never intended to change.</p>
 <h3 id="deleting-data"><a class="header" href="#deleting-data">Deleting Data</a></h3>
 <p>You can delete rows using the <code>delete</code> statement.
 Here you need to specify which table to use and which rows to remove:</p>
 <pre><code class="language-sql">delete from task
-where status = 'Completed';
+where status = 'done';
 </code></pre>
+<p>Again, you should be very careful when deleting data.
+If you make a mistake in the <code>where</code> clause you can delete rows that you never intended to remove.</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="selecting-data"><a class="header" href="#selecting-data">Selecting Data</a></h2>
-<p>You can you the <code>select</code> statement to select rows.</p>
+<p>You can use the <code>select</code> statement to select rows from your table.</p>
 <p>Here is how you can specify the columns to select:</p>
 <pre><code class="language-sql">select title, status from task;
 </code></pre>
-<p>You can also select all columns:</p>
+<p>You can also select all columns using the <code>*</code> notation:</p>
 <pre><code class="language-sql">select * from task;
 </code></pre>
 <p>You can use the <code>where</code> clause to filter results.
 This clause takes one or multiple conditions.</p>
 <p>The conditions can contain operators like <code>=</code>, <code>!=</code>, <code>&lt;</code>, <code>&lt;=</code>, <code>&gt;</code>, <code>&gt;=</code>.</p>
 <p>For example, here is how you could select all tasks that are in progress:</p>
-<pre><code class="language-sql">select * from task where status = 'In progress';
+<pre><code class="language-sql">select * from task where status = 'inprogress';
 </code></pre>
 <p>Here is how you can select all tasks that will take longer than 30 minutes:</p>
 <pre><code class="language-sql">select * from task where duration &gt; 30;
@@ -7211,21 +7286,21 @@ This clause takes one or multiple conditions.</p>
 <p>You can use the <code>like</code> operator for more complex string comparison.
 Here you can use the <code>%</code> character to match a sequence of zero or more characters.
 You can also use the <code>_</code> character to match a single character.</p>
-<p>For example you could match all tasks that contain the sequence "book" somewhere in the description like this:</p>
+<p>For example, you could match all tasks that contain the sequence "book" somewhere in the description like this:</p>
 <pre><code class="language-sql">select * from task where description like '%book%';
 </code></pre>
 <p>You could match all tasks that have any character, followed by the sequence "book" in the title like this:</p>
 <pre><code class="language-sql">select * from task where title like '_book';
 </code></pre>
 <p>You can check if a value exists in the list using the <code>in</code> operator:</p>
-<pre><code class="language-sql">select * from task where status in ('Todo', 'In progress');
+<pre><code class="language-sql">select * from task where status in ('todo', 'inprogress');
 </code></pre>
 <p>You can use the <code>and</code> and <code>or</code> keywords to combine conditions.
 For example, you could select all tasks that are in progress <em>and</em> will take longer than 30 minutes:</p>
-<pre><code class="language-sql">select * from task where status = 'In progress' and duration &gt; 30;
+<pre><code class="language-sql">select * from task where status = 'inprogress' and duration &gt; 30;
 </code></pre>
 <p>You could also select all tasks that are in progress <em>or</em> will take longer than 30 minutes:</p>
-<pre><code class="language-sql">select * from task where status = 'In progress' or duration &gt; 30;
+<pre><code class="language-sql">select * from task where status = 'inprogress' or duration &gt; 30;
 </code></pre>
 <p>You can order the results using <code>order by</code>.
 To specify the ordering, you can use <code>asc</code> (ascending) or <code>desc</code> (descending):</p>
@@ -7238,9 +7313,19 @@ To specify the ordering, you can use <code>asc</code> (ascending) or <code>desc<
 <pre><code class="language-sql">select * from task order by duration desc limit 3;
 </code></pre>
 <p>Of course, you can use these together with the <code>where</code> clause:</p>
-<pre><code class="language-sql">select * from task where status = 'In progress' order by duration desc limit 3;
+<pre><code class="language-sql">select * from task where status = 'inprogress' order by duration desc limit 3;
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="multiple-tables"><a class="header" href="#multiple-tables">Multiple Tables</a></h2>
+<h3 id="adding-projects"><a class="header" href="#adding-projects">Adding Projects</a></h3>
+<p>Let's add projects to our application.
+Each project can contain multiple tasks and each task should belong to exactly one project.</p>
+<p>Now it might tempting to simply add a project ID and name to each task row, however that would lead to a lot of redundant data.
+This is bad primarily because it means that if we update tasks or project we might make a mistake somewhere resulting in malformed data.</p>
+<p>For example, we might forget to change a project name in some row.
+Suddenly we would have a project with one ID and two names.</p>
+<p>Therefore it is good practice to split data into multiple tables to reduce redundancy and improve data integrity.
+Each table should contain data about a specific entity (like "task" or "project").</p>
+<p>The entities can then be linked together using <strong>foreign keys</strong>.</p>
 <h3 id="foreign-keys"><a class="header" href="#foreign-keys">Foreign Keys</a></h3>
 <p>Let's create a project table:</p>
 <pre><code class="language-sql">create table project (
@@ -7252,26 +7337,31 @@ To specify the ordering, you can use <code>asc</code> (ascending) or <code>desc<
 <pre><code class="language-sql">alter table task
 add COLUMN project_id integer;
 </code></pre>
-<p>Finally, we will establish a foreign key relationship:</p>
+<p>Finally, we will establish a foreign key relationship.
+A foreign key is a column in one table that <em>links</em> to the <em>primary key in another table</em>.</p>
+<p>Here the <code>project_id</code> should reference the <code>id</code> column in the <code>project</code> table:</p>
 <pre><code class="language-sql">alter table task
 add constraint fk_project
 foreign key (project_id)
 references project(ID);
 </code></pre>
 <h3 id="inner-joins"><a class="header" href="#inner-joins">Inner Joins</a></h3>
-<p>We can use inner joins to combine data from multiple columns:</p>
+<p>If we want to select data from multiple tables, we can use <strong>join operations</strong>.
+The most common and important join operation is the <code>inner join</code> which combines rows from tables based on a related column between them:</p>
 <pre><code class="language-sql">select task.id as task_id, task.title, task.status, project.name as project_name
 from task
 inner join project on task.project_id = project.id;
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="chapter-9-typesafe-sql-with-drizzle"><a class="header" href="#chapter-9-typesafe-sql-with-drizzle">Chapter 9: Typesafe SQL with Drizzle</a></h1>
+<div style="text-align: right"> <i> I hate Drizzle <br> - From Drizzles official page </i> </div>
 <p>Drizzle is a TypeScript ORM (object relational mapping).
 It allows you to write TypeScript functions that perform database operations in a very similar manner to SQL.</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="setup-3"><a class="header" href="#setup-3">Setup</a></h2>
+<div style="text-align: right"> <i> Astro DB is powered by Drizzle! <br> ... and we regret everything omg this thing sucks <br> - From Drizzles official page </i> </div>
 <h3 id="a-simple-example-2"><a class="header" href="#a-simple-example-2">A Simple Example</a></h3>
 <p>Let's create a simple Drizzle script that will declare a task table and read all the tasks from the table.</p>
 <p>Create a new supabase database and recreate the task table from the SQL chapter.
-Don't add the project IDs yet, that will follow later.</p>
+Don't add the project IDs and table yet, that will follow later.</p>
 <p>Create a new TypeScript project:</p>
 <pre><code class="language-sh">pnpm init
 pnpm add typescript tsx --save-dev
@@ -7282,7 +7372,7 @@ pnpm tsc --init
 pnpm add drizzle-kit --save-dev
 </code></pre>
 <p>Create the following file <code>demo.ts</code>:</p>
-<pre><code class="language-ts">import { pgTable, serial, text, integer } from 'drizzle-orm/pg-core';
+<pre><code class="language-ts">import { pgTable, serial, text, integer, timestamp, varchar } from 'drizzle-orm/pg-core';
 import { drizzle } from 'drizzle-orm/postgres-js';
 import postgres from 'postgres';
 
@@ -7292,10 +7382,11 @@ const databaseURI = '...';
 // Declare the task table
 export const taskTable = pgTable('task', {
   id: serial('id').primaryKey(),
-  title: text('title').notNull(),
+  title: varchar('title', { length: 255 }).notNull(),
   description: text('description').notNull(),
-  status: text('status').notNull(),
-  duration: integer('duration').notNull(),
+  status: varchar('status', { length: 255 }).notNull(),
+  duration: integer('duration'),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
 });
 
 const client = postgres(databaseURI);
@@ -7307,6 +7398,9 @@ async function getTasks() {
 
 getTasks().then(console.log);
 </code></pre>
+<blockquote>
+<p>Note that the <code>check</code> constraint is not yet implemented in Drizzle at the time of this writing.</p>
+</blockquote>
 <p>Execute the file:</p>
 <pre><code class="language-sh">pnpm tsx demo.ts
 </code></pre>
@@ -7323,6 +7417,7 @@ The Drizzle function is:</p>
 Unlike many other frameworks which try to "abstract" SQL away, Drizzle embraces SQL and only adds a bit of type safety on top of it.</p>
 <p>If you know SQL, learning Drizzle is a very fast process.</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="inserting-updating-and-deleting-data-1"><a class="header" href="#inserting-updating-and-deleting-data-1">Inserting, Updating and Deleting Data</a></h2>
+<div style="text-align: right"> <i> Django had it in 2008 <br> - From Drizzles official page </i> </div>
 <h3 id="inserting-data-1"><a class="header" href="#inserting-data-1">Inserting Data</a></h3>
 <p>Inserting data generally looks like this:</p>
 <pre><code class="language-ts">await db.insert(table).values(values);
@@ -7331,7 +7426,7 @@ Unlike many other frameworks which try to "abstract" SQL away, Drizzle embraces 
 <pre><code class="language-ts">await db.insert(taskTable).values({
   title: 'Read the Next.js book',
   description: 'Read and understand the Next.js book.',
-  status: 'In progress',
+  status: 'inprogress',
   duration: 60,
 });
 </code></pre>
@@ -7352,19 +7447,19 @@ Unlike many other frameworks which try to "abstract" SQL away, Drizzle embraces 
   {
     title: 'Read the Next.js book',
     description: 'Read and understand the Next.js book.',
-    status: 'In progress',
+    status: 'inprogress',
     duration: 5000,
   },
   {
     title: 'Write a task app',
     description: 'Write an awesome task app.',
-    status: 'Todo',
+    status: 'todo',
     duration: 120,
   },
   {
     title: 'Think of a funny joke',
     description: 'Come up with a funny joke to lighten the mood.',
-    status: 'In progress',
+    status: 'inprogress',
     duration: 5,
   },
 ]);
@@ -7373,18 +7468,20 @@ Unlike many other frameworks which try to "abstract" SQL away, Drizzle embraces 
 <p>Updating data generally looks like this:</p>
 <pre><code class="language-ts">await db.update(table).set(object).where(condition);
 </code></pre>
-<p>For example, let's say that wanted to set status of the task with the ID <code>1</code> to <code>'Completed'</code>:</p>
-<pre><code class="language-ts">await db.update(taskTable).set({ status: 'Completed' }).where(eq(taskTable.id, 1));
+<p>For example, let's say that wanted to set status of the task with the ID <code>1</code> to <code>'done'</code>:</p>
+<pre><code class="language-ts">await db.update(taskTable).set({ status: 'done' }).where(eq(taskTable.id, 1));
 </code></pre>
 <h3 id="deleting-data-1"><a class="header" href="#deleting-data-1">Deleting Data</a></h3>
 <p>Updating data generally looks like this:</p>
 <pre><code class="language-ts">await db.delete(table).where(condition);
 </code></pre>
 <p>For example, here is how you could delete all the completed tasks:</p>
-<pre><code class="language-ts">await db.delete(taskTable).where(eq(taskTable.status, 'Completed'));
+<pre><code class="language-ts">await db.delete(taskTable).where(eq(taskTable.status, 'done'));
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="selecting-data-1"><a class="header" href="#selecting-data-1">Selecting Data</a></h2>
-<p>You can you the <code>select</code> function to select data.</p>
+<div style="text-align: right"> <i> I hate @DrizzleOrm
+ so much that I wrote the Auth.js adapter for it. <br> - From Drizzles official page </i> </div>
+<p>You can use the <code>select</code> function to select data.</p>
 <p>You can select all columns:</p>
 <pre><code class="language-ts">await db.select().from(projectTable);
 </code></pre>
@@ -7395,7 +7492,7 @@ Unlike many other frameworks which try to "abstract" SQL away, Drizzle embraces 
 This function takes one or multiple conditions.</p>
 <p>The conditions can contain functions like <code>eq</code>, <code>ne</code>, <code>lt</code>, <code>lte</code>, <code>gt</code>, <code>gte</code>.</p>
 <p>For example, here is how you could select all tasks that are in progress:</p>
-<pre><code class="language-ts">await db.select().from(taskTable).where(eq(taskTable.status, 'In progress'));
+<pre><code class="language-ts">await db.select().from(taskTable).where(eq(taskTable.status, 'inprogress'));
 </code></pre>
 <p>Here is how you can select all tasks that will take longer than 30 minutes:</p>
 <pre><code class="language-ts">await db.select().from(taskTable).where(gt(taskTable.duration, 30));
@@ -7405,13 +7502,13 @@ For example, you could select all tasks that are in progress <em>and</em> will t
 <pre><code class="language-ts">await db
   .select()
   .from(taskTable)
-  .where(and(eq(taskTable.status, 'In progress'), gt(taskTable.duration, 30)));
+  .where(and(eq(taskTable.status, 'inprogress'), gt(taskTable.duration, 30)));
 </code></pre>
 <p>You could also select all tasks that are in progress <em>or</em> will take longer than 30 minutes:</p>
 <pre><code class="language-ts">await db
   .select()
   .from(taskTable)
-  .where(or(eq(taskTable.status, 'In progress'), gt(taskTable.duration, 30)));
+  .where(or(eq(taskTable.status, 'inprogress'), gt(taskTable.duration, 30)));
 </code></pre>
 <p>You can order the results using <code>orderBy</code>.
 To specify the ordering, you can use <code>asc</code> (ascending) or <code>desc</code> (descending):</p>
@@ -7423,7 +7520,9 @@ To specify the ordering, you can use <code>asc</code> (ascending) or <code>desc<
 <p>You can limit results using <code>limit</code>:</p>
 <pre><code class="language-ts">await db.select().from(taskTable).orderBy(asc(taskTable.duration)).limit(10);
 </code></pre>
+<p>Again note how similar all these statements are to the statements from the SQL chapter.</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="multiple-tables-1"><a class="header" href="#multiple-tables-1">Multiple Tables</a></h2>
+<div style="text-align: right"> <i> Y'all should just copy everything Eloquent has <br> - From Drizzles official page </i> </div>
 <h3 id="foreign-keys-1"><a class="header" href="#foreign-keys-1">Foreign Keys</a></h3>
 <p>Let's recreate the project and task table from the SQL chapter in Drizzle:</p>
 <pre><code class="language-ts">const projectTable = pgTable('project', {
@@ -7431,12 +7530,14 @@ To specify the ordering, you can use <code>asc</code> (ascending) or <code>desc<
   name: text('name').notNull(),
 });
 
-export const taskTable = pgTable("task", {
-  id: serial("id").primaryKey(),
-  title: text("title").notNull(),
-  description: text("description").notNull(),
-  status: text("status").notNull(),
-  projectId: integer('projectId').notNull().references(() =&gt; projectTable.id);
+export const taskTable = pgTable('task', {
+  id: serial('id').primaryKey(),
+  title: varchar('title', { length: 255 }).notNull(),
+  description: text('description').notNull(),
+  status: varchar('status', { length: 255 }).notNull(),
+  duration: integer('duration'),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  projectId: integer('project_id').notNull().references(() =&gt; projectTable.id);
 });
 </code></pre>
 <h3 id="inner-join"><a class="header" href="#inner-join">Inner Join</a></h3>
@@ -7444,6 +7545,8 @@ export const taskTable = pgTable("task", {
 <pre><code class="language-ts">await db.select().from(projectTable).innerJoin(taskTable, eq(projectTable.id, taskTable.projectId));
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="migrations"><a class="header" href="#migrations">Migrations</a></h2>
+<div style="text-align: right"> <i> DrizzleOrm
+ is not an “ORM”, it’s merely a overrated typesafe sql wrapper not even a query builder.  <br> - From Drizzles official page </i> </div>
 <h3 id="why-migrations"><a class="header" href="#why-migrations">Why Migrations?</a></h3>
 <p>Quite often, during the course of development an application will have to change.
 This will sometimes include the underlying tables in the database.</p>
@@ -7455,9 +7558,11 @@ This will sometimes include the underlying tables in the database.</p>
 
 export const taskTable = pgTable('task', {
   id: serial('id').primaryKey(),
-  title: text('name').notNull(),
+  title: varchar('title', { length: 255 }).notNull(),
   description: text('description').notNull(),
-  status: text('name').notNull(),
+  status: varchar('status', { length: 255 }).notNull(),
+  duration: integer('duration'),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
 });
 </code></pre>
 <p>Create a <code>drizzle.config.ts</code> file:</p>
@@ -7475,16 +7580,8 @@ export default {
 <p>Now run:</p>
 <pre><code class="language-sh">pnpm drizzle-kit generate:pg
 </code></pre>
-<p>This will create a <code>meta</code> directory and an SQL file:</p>
-<pre><code class="language-sql">CREATE TABLE IF NOT EXISTS "task" (
-	"id" serial PRIMARY KEY NOT NULL,
-	"title" text NOT NULL,
-	"description" text NOT NULL,
-	"status" text NOT NULL
-);
-</code></pre>
-<p>This SQL file contains the migration.
-In this example, running the migration will create a new task table with the columns we would expect.</p>
+<p>This will create a <code>meta</code> directory and an SQL file containing the migration.</p>
+<p>In this example, running the migration will create a new task table with the columns we would expect.</p>
 <h3 id="run-migrations"><a class="header" href="#run-migrations">Run Migrations</a></h3>
 <p>Create the <code>migration.ts</code> script:</p>
 <pre><code class="language-ts">import { drizzle } from 'drizzle-orm/postgres-js';
@@ -7578,6 +7675,9 @@ runMigrations().then(console.log).catch(console.error);
 </code></pre>
 <p>Note that you no longer need to export <code>DATABASE_URL</code> manually.
 Thanks to <code>dotenv</code> the script will simply pick the URL up from the <code>.env</code> file.</p>
+<h3 id="more-migrations"><a class="header" href="#more-migrations">More Migrations</a></h3>
+<p>Now, add the project ID and table to the schema and generate another migration.
+You will see that the migration will contain the "diff" between the current schema and the old schema.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="chapter-10---the-project"><a class="header" href="#chapter-10---the-project">Chapter 10 - The Project</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="setup-4"><a class="header" href="#setup-4">Setup</a></h2>
 <h3 id="creating-a-nextjs-project-1"><a class="header" href="#creating-a-nextjs-project-1">Creating a Next.js Project</a></h3>

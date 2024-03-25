@@ -174,6 +174,7 @@
                 <div id="content" class="content">
                     <main>
                         <h2 id="inserting-updating-and-deleting-data"><a class="header" href="#inserting-updating-and-deleting-data">Inserting, Updating and Deleting Data</a></h2>
+<div style="text-align: right"> <i> Django had it in 2008 <br> - From Drizzles official page </i> </div>
 <h3 id="inserting-data"><a class="header" href="#inserting-data">Inserting Data</a></h3>
 <p>Inserting data generally looks like this:</p>
 <pre><code class="language-ts">await db.insert(table).values(values);
@@ -182,7 +183,7 @@
 <pre><code class="language-ts">await db.insert(taskTable).values({
   title: 'Read the Next.js book',
   description: 'Read and understand the Next.js book.',
-  status: 'In progress',
+  status: 'inprogress',
   duration: 60,
 });
 </code></pre>
@@ -203,19 +204,19 @@
   {
     title: 'Read the Next.js book',
     description: 'Read and understand the Next.js book.',
-    status: 'In progress',
+    status: 'inprogress',
     duration: 5000,
   },
   {
     title: 'Write a task app',
     description: 'Write an awesome task app.',
-    status: 'Todo',
+    status: 'todo',
     duration: 120,
   },
   {
     title: 'Think of a funny joke',
     description: 'Come up with a funny joke to lighten the mood.',
-    status: 'In progress',
+    status: 'inprogress',
     duration: 5,
   },
 ]);
@@ -224,15 +225,15 @@
 <p>Updating data generally looks like this:</p>
 <pre><code class="language-ts">await db.update(table).set(object).where(condition);
 </code></pre>
-<p>For example, let's say that wanted to set status of the task with the ID <code>1</code> to <code>'Completed'</code>:</p>
-<pre><code class="language-ts">await db.update(taskTable).set({ status: 'Completed' }).where(eq(taskTable.id, 1));
+<p>For example, let's say that wanted to set status of the task with the ID <code>1</code> to <code>'done'</code>:</p>
+<pre><code class="language-ts">await db.update(taskTable).set({ status: 'done' }).where(eq(taskTable.id, 1));
 </code></pre>
 <h3 id="deleting-data"><a class="header" href="#deleting-data">Deleting Data</a></h3>
 <p>Updating data generally looks like this:</p>
 <pre><code class="language-ts">await db.delete(table).where(condition);
 </code></pre>
 <p>For example, here is how you could delete all the completed tasks:</p>
-<pre><code class="language-ts">await db.delete(taskTable).where(eq(taskTable.status, 'Completed'));
+<pre><code class="language-ts">await db.delete(taskTable).where(eq(taskTable.status, 'done'));
 </code></pre>
 
                     </main>

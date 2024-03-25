@@ -174,10 +174,11 @@
                 <div id="content" class="content">
                     <main>
                         <h2 id="setup"><a class="header" href="#setup">Setup</a></h2>
+<div style="text-align: right"> <i> Astro DB is powered by Drizzle! <br> ... and we regret everything omg this thing sucks <br> - From Drizzles official page </i> </div>
 <h3 id="a-simple-example"><a class="header" href="#a-simple-example">A Simple Example</a></h3>
 <p>Let's create a simple Drizzle script that will declare a task table and read all the tasks from the table.</p>
 <p>Create a new supabase database and recreate the task table from the SQL chapter.
-Don't add the project IDs yet, that will follow later.</p>
+Don't add the project IDs and table yet, that will follow later.</p>
 <p>Create a new TypeScript project:</p>
 <pre><code class="language-sh">pnpm init
 pnpm add typescript tsx --save-dev
@@ -188,7 +189,7 @@ pnpm tsc --init
 pnpm add drizzle-kit --save-dev
 </code></pre>
 <p>Create the following file <code>demo.ts</code>:</p>
-<pre><code class="language-ts">import { pgTable, serial, text, integer } from 'drizzle-orm/pg-core';
+<pre><code class="language-ts">import { pgTable, serial, text, integer, timestamp, varchar } from 'drizzle-orm/pg-core';
 import { drizzle } from 'drizzle-orm/postgres-js';
 import postgres from 'postgres';
 
@@ -198,10 +199,11 @@ const databaseURI = '...';
 // Declare the task table
 export const taskTable = pgTable('task', {
   id: serial('id').primaryKey(),
-  title: text('title').notNull(),
+  title: varchar('title', { length: 255 }).notNull(),
   description: text('description').notNull(),
-  status: text('status').notNull(),
-  duration: integer('duration').notNull(),
+  status: varchar('status', { length: 255 }).notNull(),
+  duration: integer('duration'),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
 });
 
 const client = postgres(databaseURI);
@@ -213,6 +215,9 @@ async function getTasks() {
 
 getTasks().then(console.log);
 </code></pre>
+<blockquote>
+<p>Note that the <code>check</code> constraint is not yet implemented in Drizzle at the time of this writing.</p>
+</blockquote>
 <p>Execute the file:</p>
 <pre><code class="language-sh">pnpm tsx demo.ts
 </code></pre>

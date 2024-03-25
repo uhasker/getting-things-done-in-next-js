@@ -174,6 +174,12 @@
                 <div id="content" class="content">
                     <main>
                         <h2 id="setup"><a class="header" href="#setup">Setup</a></h2>
+<h3 id="persisting-data"><a class="header" href="#persisting-data">Persisting Data</a></h3>
+<p>A database is nothing more than a collection of data that supports persistent storage and updates.
+If you store a value, it will be available to you regardless of whether you refresh the page, close your browser or even move to a different country altogether.</p>
+<p>In this book, we will restrict ourselves to <strong>relational databases</strong> only.
+These consist of multiple tables with optional relations between the tables.</p>
+<p>We will use <strong>SQL</strong>, specifically <strong>PostgreSQL</strong> to perform the actual data manipulation.</p>
 <h3 id="create-a-database"><a class="header" href="#create-a-database">Create a Database</a></h3>
 <p>First, we need to create a new database.
 For this book, we will use Supabase.</p>
@@ -181,27 +187,66 @@ For this book, we will use Supabase.</p>
 Create a new project, give it a name and select a database password (which you should write down somewhere).</p>
 <p>Once you create the new project, go to "Project Settings &gt; Database" and copy past the URI connection string.
 Replace <code>[YOUR-PASSWORD]</code> with the password you gave the database in the previous step.</p>
-<p>Save the connection string, we will need it in a second.</p>
+<p>Save the connection string, we will need it later.</p>
+<p>Next, you should navigate to the SQL editor of your project to be able to execute queries.</p>
 <h3 id="table-creation"><a class="header" href="#table-creation">Table Creation</a></h3>
-<p>Let's also create a table:</p>
+<p>Consider a simple <code>task</code> table whose purpose is to persistently store informations about created tasks.</p>
+<p>Let's think about the columns we might need for the table.</p>
+<p>First, we have the <code>id</code> column which would store a unique identifier for every task.</p>
+<p>Second, we would have the <code>title</code> and <code>description</code> columns which would store the title and description of the tasks respectively.</p>
+<p>Finally, we will add two more columns for learning purposes.
+The <code>status</code> column will hold the status of the task.
+Additionally, the <code>duration</code> column will store the estimated duration of the task in minutes.</p>
+<p>Let's create the <code>task</code> table.
+We can use the <code>create table</code> SQL statement to accomplish this.</p>
 <pre><code class="language-sql">create table task (
     id serial primary key,
     title varchar(255) not null,
     description text not null,
-    status varchar(255) not null,
-    duration integer not null
+    status varchar(255) not null check (status in ('todo', 'inprogress', 'done')),
+    duration integer,
+    created_at timestamp default current_timestamp not null
 )
 </code></pre>
-<p>This table schema defines the columns of the table.
-Each column has a name, a data type, an optional constraints.</p>
+<p>Note that each column has a name, a data type, an optional constraints.
+Let's talk about data types and optional constraints in more detail.</p>
 <h3 id="data-types"><a class="header" href="#data-types">Data Types</a></h3>
-<p>The <strong>integer</strong> data type allows you to store integers.</p>
-<p>The <strong>float</strong> and <strong>double</strong> data types allow you to store floats and doubles.</p>
-<p>The <strong>varchar(num_chat)</strong> data type allows you to store strings with a maximum number of characters.
-The <strong>text</strong> data type allows you to store strings of arbitrary length.</p>
+<p>The <code>integer</code> data type allows you to store integers.
+You usually use this data type for counts, identifiers etc.</p>
+<p>Note that there are actually multiple integer data types in PostgreSQL.
+The <code>smallint</code> data type allows you to store "small-range integers" and the <code>bigint</code> data type allows you to store "large-range integers".</p>
+<p>The difference between <code>smallint</code>, <code>integer</code> and <code>bigint</code> is basically the minimum and maximum integers that can be stored.</p>
+<p>A <code>smallint</code> value has 2 bytes, i.e. it can store values from <code>-32768</code> up to <code>32767</code>.</p>
+<p>An <code>integer</code> value has 4 bytes, i.e. it can store values from <code>-2147483648</code> up to <code>2147483647</code>.</p>
+<p>An <code>bigint</code> value has 8 bytes, i.e. it can store values from <code>-9223372036854775808</code> up to <code>9223372036854775807</code>.</p>
+<p>For most regular web applications, <code>integer</code> values are more than enough.</p>
+<p>In our example, we use <code>integer</code> for the <code>duration</code> column.</p>
+<p>The <code>serial</code> data type allows you to represent <em>autoincrementing</em> integers (along with <code>smallserial</code> and <code>bigserial</code>).
+This makes <code>serial</code> very useful for unique identifiers since you don't need to handle the incrementing logic yourself.</p>
+<p>This is why we store the <code>id</code> as a <code>serial</code>.</p>
+<p>The <code>real</code> and <code>double precision</code> data types allow you to store floating-point numbers.
+These two data types differ with respect to the number of digits that can be represented after the decimal.</p>
+<p>The <code>real</code> data type has 4 bytes and allows you to represent 6 decimal digits.</p>
+<p>The <code>double precision</code> data type has 8 bytes and allows you to represent 15 decimal digits.</p>
+<p>The <code>varchar(n)</code> data type allows you to store strings with a maximum number of characters.
+The <code>text</code> data type allows you to store strings of arbitrary length.</p>
+<p>We want to limit the number of characters in a task title and status to <code>255</code>, so we use <code>varchar(255)</code> for both.</p>
+<p>However we want to allow an <em>arbitrary</em> amount of characters for the description, so we use the <code>text</code> data type here.</p>
+<p>Finally, the <code>timestamp</code> data type allows us to store a date and a time.</p>
+<p>The <code>created_at</code> column will store the time at which a task has been created and therefore has the <code>timestamp</code> data type.</p>
 <h3 id="constraints"><a class="header" href="#constraints">Constraints</a></h3>
-<p>The <strong>primary key</strong> constraint means that the column should be used to identify the rows of the table.</p>
-<p>The <strong>not null</strong> means that the inserted value can't be null.</p>
+<p>The <code>primary key</code> constraint means that the column should be used to identify the rows of the table.
+If a column is marked as <code>primary key</code>, its values must be unique and they can't be <code>null</code> (more about this in a second).</p>
+<p>Since we want the <code>id</code> to uniquely identify each task, we apply the <code>primary key</code> constraint to the <code>id</code> column.</p>
+<p>The <code>not null</code> constraint means that the inserted value can't be null.
+Basically, we apply this constraint if we want to ensure that a value is always present in this column.</p>
+<p>In our example, we want every task to have a <code>title</code>, a <code>description</code> and a <code>status</code> so we mark these columns as <code>not null</code>.
+However, we allow a task to not have a <code>duration</code> and don't mark that column as <code>not null</code>.</p>
+<p>The <code>check</code> constraint is used to specify a condition that each row must satisfy for the value to be accepted into a column.</p>
+<p>In our example, we want the <code>status</code> column to only have the values <code>todo</code>, <code>inprogress</code> or <code>done</code> and use the <code>check</code> constraint to accomplish that.</p>
+<p>The <code>default</code> constraint allows us to specify a default value for a column.
+If an insert operation does not provide a value for a column, PostgreSQL will automatically insert the specified value.</p>
+<p>In our example, we want the <code>created_at</code> value to simply be the current time and use the <code>default</code> constraint together with <code>current_timestamp</code> to accomplish that.</p>
 
                     </main>
 

@@ -174,7 +174,9 @@
                 <div id="content" class="content">
                     <main>
                         <h2 id="selecting-data"><a class="header" href="#selecting-data">Selecting Data</a></h2>
-<p>You can you the <code>select</code> function to select data.</p>
+<div style="text-align: right"> <i> I hate @DrizzleOrm
+ so much that I wrote the Auth.js adapter for it. <br> - From Drizzles official page </i> </div>
+<p>You can use the <code>select</code> function to select data.</p>
 <p>You can select all columns:</p>
 <pre><code class="language-ts">await db.select().from(projectTable);
 </code></pre>
@@ -185,7 +187,7 @@
 This function takes one or multiple conditions.</p>
 <p>The conditions can contain functions like <code>eq</code>, <code>ne</code>, <code>lt</code>, <code>lte</code>, <code>gt</code>, <code>gte</code>.</p>
 <p>For example, here is how you could select all tasks that are in progress:</p>
-<pre><code class="language-ts">await db.select().from(taskTable).where(eq(taskTable.status, 'In progress'));
+<pre><code class="language-ts">await db.select().from(taskTable).where(eq(taskTable.status, 'inprogress'));
 </code></pre>
 <p>Here is how you can select all tasks that will take longer than 30 minutes:</p>
 <pre><code class="language-ts">await db.select().from(taskTable).where(gt(taskTable.duration, 30));
@@ -195,13 +197,13 @@ For example, you could select all tasks that are in progress <em>and</em> will t
 <pre><code class="language-ts">await db
   .select()
   .from(taskTable)
-  .where(and(eq(taskTable.status, 'In progress'), gt(taskTable.duration, 30)));
+  .where(and(eq(taskTable.status, 'inprogress'), gt(taskTable.duration, 30)));
 </code></pre>
 <p>You could also select all tasks that are in progress <em>or</em> will take longer than 30 minutes:</p>
 <pre><code class="language-ts">await db
   .select()
   .from(taskTable)
-  .where(or(eq(taskTable.status, 'In progress'), gt(taskTable.duration, 30)));
+  .where(or(eq(taskTable.status, 'inprogress'), gt(taskTable.duration, 30)));
 </code></pre>
 <p>You can order the results using <code>orderBy</code>.
 To specify the ordering, you can use <code>asc</code> (ascending) or <code>desc</code> (descending):</p>
@@ -213,6 +215,7 @@ To specify the ordering, you can use <code>asc</code> (ascending) or <code>desc<
 <p>You can limit results using <code>limit</code>:</p>
 <pre><code class="language-ts">await db.select().from(taskTable).orderBy(asc(taskTable.duration)).limit(10);
 </code></pre>
+<p>Again note how similar all these statements are to the statements from the SQL chapter.</p>
 
                     </main>
 
