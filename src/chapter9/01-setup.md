@@ -1,5 +1,7 @@
 ## Setup
 
+<div style="text-align: right"> <i> Astro DB is powered by Drizzle! <br> ... and we regret everything omg this thing sucks <br> - From Drizzles official page </i> </div>
+
 ### A Simple Example
 
 Let's create a simple Drizzle script that will declare a task table and read all the tasks from the table.

@@ -1,5 +1,8 @@
 ## Migrations
 
+<div style="text-align: right"> <i> DrizzleOrm
+ is not an “ORM”, it’s merely a overrated typesafe sql wrapper not even a query builder.  <br> - From Drizzles official page </i> </div>
+
 ### Why Migrations?
 
 Quite often, during the course of development an application will have to change.

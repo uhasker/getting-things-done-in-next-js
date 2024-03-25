@@ -2,11 +2,6 @@
 
 ### Persisting Data
 
-So far, we have only stored user-inserted data on the client.
-This meant that if we refreshed the page or closed the browser, our data was lost which is obviously unacceptable in a real-world application.
-
-To address this problem, we need a way to store data _persistenly_ which is where databases come into play.
-
 A database is nothing more than a collection of data that supports persistent storage and updates.
 If you store a value, it will be available to you regardless of whether you refresh the page, close your browser or even move to a different country altogether.
 
@@ -42,7 +37,7 @@ Second, we would have the `title` and `description` columns which would store th
 
 Finally, we will add two more columns for learning purposes.
 The `status` column will hold the status of the task.
-Additionally, the `duration` column will store the estimated duration of the task in seconds.
+Additionally, the `duration` column will store the estimated duration of the task in minutes.
 
 Let's create the `task` table.
 We can use the `create table` SQL statement to accomplish this.

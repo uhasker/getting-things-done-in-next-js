@@ -1,5 +1,8 @@
 ## Selecting Data
 
+<div style="text-align: right"> <i> I hate @DrizzleOrm
+ so much that I wrote the Auth.js adapter for it. <br> - From Drizzles official page </i> </div>
+
 You can you the `select` function to select data.
 
 You can select all columns:

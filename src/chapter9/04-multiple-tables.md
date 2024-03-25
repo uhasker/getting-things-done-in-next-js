@@ -1,5 +1,7 @@
 ## Multiple Tables
 
+<div style="text-align: right"> <i> Y'all should just copy everything Eloquent has <br> - From Drizzles official page </i> </div>
+
 ### Foreign Keys
 
 Let's recreate the project and task table from the SQL chapter in Drizzle:

@@ -1,5 +1,7 @@
 ## Inserting, Updating and Deleting Data
 
+<div style="text-align: right"> <i> Django had it in 2008 <br> - From Drizzles official page </i> </div>
+
 ### Inserting Data
 
 Inserting data generally looks like this:
