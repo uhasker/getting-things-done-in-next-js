@@ -1,5 +1,7 @@
 ## Server and Client Components
 
+<div style="text-align: right"> <i> Why did the Next.js component get anxiety during drinking? <br> Because it was afraid of hydration errors. <br> - From "1000 programming dad-jokes" </i> </div>
+
 ### Rendering
 
 Next.js renders as much as it can on the server.
