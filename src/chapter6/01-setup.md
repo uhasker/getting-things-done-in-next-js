@@ -1,5 +1,7 @@
 ## Setup
 
+<div style="text-align: right"> <i> What's a Next.js developer's favorite part of setting up a new project? <br> Installing dependencies. It's like Christmas, but every package is a surprise! <br> - From "1000 programming dad-jokes" </i> </div>
+
 ### Creating a Next.js Project
 
 Run the following command to create a new Next.js project:

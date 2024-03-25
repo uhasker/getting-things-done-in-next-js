@@ -1,5 +1,7 @@
 ## Pages and Layouts
 
+<div style="text-align: right"> <i> Why do Next.js pages make lousy customs officers? <br> Because they keep exporting everything. <br> - From "1000 programming dad-jokes" </i> </div>
+
 ### Pages
 
 Next.js uses **file-based routing**.

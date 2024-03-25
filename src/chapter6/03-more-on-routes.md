@@ -1,5 +1,7 @@
 ## More on Routes
 
+<div style="text-align: right"> <i> Why do Next.js routes make terrible secret agents? <br> Because they keep exposing endpoints. <br> - From "1000 programming dad-jokes" </i> </div>
+
 ### Dynamic Routes
 
 You can use **dynamic routes** when you don't know segment names ahead of time.
