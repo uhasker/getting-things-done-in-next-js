@@ -19,7 +19,7 @@ Here you need to specify which table, which columns and which rows to update:
 
 ```sql
 update task
-set status = 'Completed'
+set status = 'Done'
 where id = 1;
 ```
 
@@ -30,5 +30,5 @@ Here you need to specify which table to use and which rows to remove:
 
 ```sql
 delete from task
-where status = 'Completed';
+where status = 'Done';
 ```
