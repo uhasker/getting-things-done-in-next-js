@@ -77,9 +77,12 @@ DATABASE_URL=$YOUR_DATABASE_URL_HERE
 
 > Of course, you need to specify the actual database URL you copied from Supabase instead of `$YOUR_DATABASE_URL_HERE`.
 
+Don't forget to add `.env` to `.gitignore`, you don't want to leak your environment variables!
+
 ### Setup Drizzle
 
 Next, we need to set up Drizzle.
+You already know this from the Drizzle chapter.
 
 Install Drizzle and `dotenv`:
 
@@ -93,11 +96,7 @@ This is where our database-related files will go.
 
 > Remember that we specify all paths relative to `src`, i.e. you need to create the `db` directory in `src`.
 
-Now create a directory `db/migrations`.
-This is where we will store our migrations.
-
-Next, we need to create the files needed by Drizzle.
-This is very similar to the setup from the Drizzle chapter.
+Now create a directory `db/migrations` to store the migrations.
 
 Create a file `db/drizzle.config.ts`:
 
@@ -113,13 +112,6 @@ export default {
   },
 } satisfies Config;
 ```
-
-Here you need to be _careful_.
-The properties `schema` and `out` both have to specify the path _relative to the root directory of our application_.
-This is because we will run the migrations from our root directory.
-
-If you set `schema` to just `./schema.ts` (or even `./db/schema.ts`), you will get errors.
-Setting the wrong file paths is the most common problem when performing the Drizzle setup, so watch out for that.
 
 Next we create a file `db/migrate.ts`:
 
@@ -149,55 +141,29 @@ async function runMigrations() {
 runMigrations().then(console.log).catch(console.error);
 ```
 
-Again, pay careful attention to the paths.
-The migrations folder is path `./src/db/migrations`, _not_ `./migrations` or `./db/migrations`.
-
-Finally, let's create the schema at `db/schema.ts`:
+Finally, let's create the initial schema at `db/schema.ts`:
 
 ```ts
-import { pgTable, serial, text } from 'drizzle-orm/pg-core';
+import { integer, pgTable, serial, text, timestamp } from 'drizzle-orm/pg-core';
 
-export const taskTable = pgTable('task', {
+export const projectTable = pgTable('project', {
   id: serial('id').primaryKey(),
-  title: text('title').notNull(),
-  description: text('description').notNull(),
-  status: text('status').notNull(),
+  userId: text('user_id').notNull(),
+  name: text('name').notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
 });
 ```
 
-If you to run `pnpm drizzle-kit generate:pg` from the root directory right now, you will get the following error:
-
-```
-No config path provided [...]
-```
-
-This is because the `drizzle.config.ts` file is no longer in the root directory.
-Therefore we need to manually specify the location of the config file using the `--config` option:
-
-```sh
-pnpm drizzle-kit generate:pg --config=src/db/drizzle.config.ts
-```
-
-The migration file will now appear in `db/migrations`.
-
-We can now execute the migration:
-
-```sh
-pnpm tsx src/db/migrate.ts
-```
-
-To simplify future migrations, we will add the following script to `package.json`:
+To simplify migrations, we will add the following scripts to `package.json`:
 
 ```json
 {
-  "scripts": {
-    "db:generate": "pnpm drizzle-kit generate:pg --config=src/db/drizzle.config.ts",
-    "db:migrate": "pnpm tsx src/db/migrate.ts"
-  }
+  "db:generate": "pnpm drizzle-kit generate:pg --config=src/db/drizzle.config.ts",
+  "db:migrate": "pnpm tsx src/db/migrate.ts"
 }
 ```
 
-Now all we have to do is to run `pnpm db:generate` to generate a migration and `pnpm db:migrate` to execute a migration.
+Now run `pnpm db:generate` to generate the migration and `pnpm db:migrate` to execute the migration.
 
 Finally, we create the `db/index.ts` file which exports the `db` object.
 This allows other files to call database functions:
@@ -217,9 +183,11 @@ export const db = drizzle(client);
 This is the file structure you should have right now:
 
 ```
+├── .env
+├── .eslintrc.json
+├── .gitignore
 ├── next.config.mjs
 ├── next-env.d.ts
-├── node_modules
 ├── package.json
 ├── pnpm-lock.yaml
 ├── postcss.config.js
@@ -234,7 +202,7 @@ This is the file structure you should have right now:
 │       ├── index.ts
 │       ├── migrate.ts
 │       ├── migrations
-│       │   ├── 0000_moaning_doctor_doom.sql
+│       │   ├── 0000_nervous_proudstar.sql
 │       │   └── meta
 │       │       ├── 0000_snapshot.json
 │       │       └── _journal.json
@@ -243,7 +211,7 @@ This is the file structure you should have right now:
 └── tsconfig.json
 ```
 
-You _should absolutely understand each and every one of these files_ if you read the book carefully.
+You _should absolutely understand each and every one of these files_ if you've read the book carefully.
 
 Just to recap:
 
@@ -266,3 +234,9 @@ The file `src/app/page.tsx` specifies the root page and `src/app/layout.tsx` spe
 The `globals.css` file specifies global styles - right now it's needed for the Tailwind directives.
 
 The `src/db` directory contains everything that is related to the database (including the migrations).
+
+The `.eslintrc.json` contain the `eslint` configuration.
+
+The `.env` file contains our enviroment variables.
+
+The `.gitignore` file contains the files that should be ignored by git.
