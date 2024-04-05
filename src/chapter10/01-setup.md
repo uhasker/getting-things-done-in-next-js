@@ -74,7 +74,7 @@ You should see the underlined text `Welcome to easy-opus`.
 Next we need to setup our database.
 To accomplish this, we will simply follow the steps from the SQL chapter.
 
-Create a new Supabase project, copy the database URL and create the following `.env` file:
+Create a new Supabase project, copy the database URL and create the following `.env.local` file:
 
 ```
 DATABASE_URL=$YOUR_DATABASE_URL_HERE
@@ -229,9 +229,8 @@ Currently, ESLint has nothing to tell us.
 This is the file structure you should have right now:
 
 ```
-├── .env
+├── .env.local
 ├── .eslintrc.json
-├── .gitignore
 ├── next.config.mjs
 ├── next-env.d.ts
 ├── package.json
@@ -283,6 +282,4 @@ The `src/db` directory contains everything that is related to the database (incl
 
 The `.eslintrc.json` contain the `eslint` configuration.
 
-The `.env` file contains our enviroment variables.
-
-The `.gitignore` file contains the files that should be ignored by git.
+The `.env.local` file contains our enviroment variables.
