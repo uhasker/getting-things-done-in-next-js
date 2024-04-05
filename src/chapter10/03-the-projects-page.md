@@ -1,56 +1,95 @@
-# Project Page
+# The Projects Page
 
 ## Project List
 
-Let's create a file `project-list.tsx`:
+Let's create a component `ProjectList` in `app/project-list.tsx` that will show a nicely styled list of projects:
 
 ```jsx
-export function ProjectList({
-  userId,
-  projects,
-}: {
-  userId: string,
-  projects: { id: number, name: string }[],
-}) {
+export function ProjectList({ projects }: { projects: { id: number, name: string }[] }) {
   return (
     <div className="my-8 mx-auto w-full max-w-2xl">
       {projects.map((project) => (
-        <a href={`/project/${project.id}`}>
-          <div
-            key={project.id}
-            className="flex items-center justify-between bg-white p-4 rounded-lg shadow-md mb-4 hover:shadow-lg transition-shadow duration-200 ease-in-out"
-          >
-            <span className="text-lg font-semibold text-gray-800 hover:text-blue-500 transition-colors duration-150 ease-in-out">
-              {project.name}
-            </span>
-          </div>
-        </a>
+        <div className="flex items-center justify-between bg-white p-4 rounded-lg shadow-md mb-4 hover:shadow-lg transition-shadow duration-200 ease-in-out">
+          <span className="text-lg font-semibold text-gray-800 hover:text-blue-500 transition-colors duration-150 ease-in-out">
+            {project.name}
+          </span>
+        </div>
       ))}
     </div>
   );
 }
 ```
 
-Update the `page.tsx` file to show the project list:
+Update the `app/page.tsx` file to retrieve the projects show the project list:
 
 ```jsx
+import { db } from '@/db';
+import { projectTable } from '@/db/schema';
+import { SignIn, auth } from '@clerk/nextjs';
+import { ProjectList } from './project-list';
+import { eq } from 'drizzle-orm';
+
 export default async function Home() {
-  // ...
+  const { userId } = auth();
+
+  if (userId === null) {
+    // ...
+  }
+
+  const projects = await db.select().from(projectTable).where(eq(projectTable.userId, userId));
 
   return <ProjectList userId={userId} projects={projects} />;
 }
 ```
 
-Add a few projects to the database and play around with them.
+Add a few projects with the correct user ID to the database and go to `localhost:3000`.
+You should see a project list containing the added projects.
+
+## Fixing a Lint
+
+While has no syntax errors, no type errors and generally works correctly, there is one issue.
+
+If you read this book carefully so far, you should theoretically be able to figure it out, but it might take a while.
+Let's use our awesome ESLint tool instead:
+
+```sh
+pnpm lint
+```
+
+You should see:
+
+```
+./src/app/project-list.tsx
+9:9  Error: Missing "key" prop for element in iterator  react/jsx-key
+```
+
+Remember that if you want to render a list in React, you should give the individual elements a `key` prop.
+In this case, a good key prop would be the primary key from the database, so let's use that.
+
+Add the `key` property to the project `div` in `app/project-list.tsx` like this:
+
+```jsx
+// ...
+<div
+  key={project.id}
+  className="flex items-center justify-between bg-white p-4 rounded-lg shadow-md mb-4 hover:shadow-lg transition-shadow duration-200 ease-in-out"
+>
+  <span className="text-lg font-semibold text-gray-800 hover:text-blue-500 transition-colors duration-150 ease-in-out">
+    {project.name}
+  </span>
+</div>
+// ...
+```
+
+If you rerun `pnpm lint`, you should see no more errors.
 
 ## New Project Modal
 
-Let's create a modal that will allow us to add new projects at `new-project-modal.tsx`:
+Let's create a modal that will allow us to add new projects at `app/new-project-modal.tsx`:
 
 ```jsx
 "use client";
 
-import { useRouter } from "next/navigation";
 import * as React from "react";
 
 interface FormElements extends HTMLFormControlsCollection {
@@ -109,7 +148,20 @@ export function NewProjectModal({
 }
 ```
 
-We need to show the modal in the project list by modifying the `project-list.tsx` file:
+Let's create a file `db/actions.ts` containing the `insertProject` function:
+
+```ts
+'use server';
+
+import { db } from '.';
+import { projectTable } from './schema';
+
+export async function insertProject(userId: string, name: string) {
+  await db.insert(projectTable).values({ userId, name });
+}
+```
+
+We need to show the modal in the project list by modifying the `app/project-list.tsx` file:
 
 ```jsx
 'use client';
@@ -155,3 +207,15 @@ export function ProjectList({
   );
 }
 ```
+
+Finally, we need to update the `app/page.tsx` file since the `ProjectList` component now takes a user ID:
+
+```jsx
+export default async function Home() {
+  // ...
+
+  return <ProjectList userId={userId} projects={projects} />;
+}
+```
+
+Go to `localhost:3000` and try adding a few projects using the "Add new project" button and the project modal.

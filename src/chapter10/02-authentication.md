@@ -1,9 +1,11 @@
 # Authentication
 
 The tasks and projects should be "owned" by individual users of our application.
+
+Of course, users should not be able to access or look at projects of other users.
 This means that we need to implement authentication.
 
-This used to be very hard, however nowadays there are prebuilt libraries to help us out (at least for the common cases).
+That used to be very hard - luckily, nowadays there are prebuilt libraries to help us out (at least for the common use cases).
 We will use a library called Clerk.
 
 Go to `dashboard.clerk.com` and create a new application.
@@ -12,8 +14,15 @@ Let's give the application the name `easy-opus`.
 You will get a bunch of sign in options, we will select "Email" and "Google".
 Click "Create application".
 
-You will see two API keys now, namely `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` and `CLERK_SECRET_KEY`.
-You should copy them to the `.env` file.
+![](images/new-auth-app.png)
+
+After you've created an application, you will be redirected to a page that shows the values of two API keys, namely `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` and `CLERK_SECRET_KEY`.
+You should copy these values to your `.env` file:
+
+```
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=$YOUR_NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
+CLERK_SECRET_KEY=$YOUR_CLERK_SECRET_KEY
+```
 
 Next install `@clerk/nextjs`:
 
@@ -39,7 +48,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 }
 ```
 
-Now add a `middleware.ts` file (in `src`, not `app/src`):
+Now we need to add a `middleware.ts` file that will specify what routes we want to protect:
 
 ```jsx
 import { authMiddleware } from '@clerk/nextjs';
@@ -59,20 +68,20 @@ export const config = {
 };
 ```
 
-Next let's create the first version of the homepage `page.tsx`.
+> Note that `middleware.ts` should be directly in `src`, not in `app/src`.
+
+Next, let's create the first version of the homepage `app/page.tsx`.
+
+We will keep it simple for now.
 If the user is not logged in, we will show the `SignIn` button.
 Otherwise we will show a placeholder text:
 
 ```jsx
-import { db } from '@/db';
-import { projectTable } from '@/db/schema';
 import { SignIn, auth } from '@clerk/nextjs';
 import * as React from 'react';
 
 export default async function Home() {
   const { userId } = auth();
-
-  const projects = await db.select().from(projectTable);
 
   if (userId === null) {
     return (
@@ -87,7 +96,7 @@ export default async function Home() {
 ```
 
 Finally, let's add a navbar to every page that will show a `UserButton`.
-Modify `layout.tsx`:
+Modify `app/layout.tsx`:
 
 ```jsx
 import { ClerkProvider, UserButton } from '@clerk/nextjs';
@@ -121,3 +130,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   );
 }
 ```
+
+If you try accessing `localhost:3000` now you will see a sign-in form provided by Clerk.js.
+You can use this to sign in with your Google account or create a new account with an email and password and sign in using that.
+
+Once you are signed in, you will see a page with a navbar, a user button in the top right corner and the placeholder text `Projects will be here`.

@@ -87,6 +87,5 @@
 
   - [Setup](chapter10/01-setup.md)
   - [Authentication](chapter10/02-authentication.md)
-  - [Task Page](chapter10/03-task-page.md)
-  - [Styling the Task Page](chapter10/04-styling-the-task-page.md)
-  - [Project Page](chapter10/05-project-page.md)
+  - [The Projects Page](chapter10/03-the-projects-page.md)
+  - [Task Page](chapter10/04-task-page.md)
