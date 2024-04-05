@@ -20,11 +20,15 @@ Give your project the name `easy-opus` and select the following options:
 - we want to use the App Router
 - we don't want to customize the defalt import alias
 
-Next, remove all the unneeded code from the generated files.
-Note that we specify all paths relative to the `src` directory.
-If you are unsure about where a file should go, you can look at the end of this section, which contains the file tree you should have after the setup is completed.
+Note that from now on we specify all paths relative to the `src` directory.
+For example if we refer to a file `thingy/example.ts` that file will actually be in `src/thingy/example.ts`.
+If you're unsure about the location of a file, you can also look at the end of this section, which contains the file tree you should have after the setup is completed.
 
-The file `app/layout.tsx` should look like this:
+### Removing Unneccessary Code
+
+Let's remove all the unneccessary code from the generated files.
+
+Change the file `app/layout.tsx` to look like this:
 
 ```jsx
 import type { Metadata } from 'next';
@@ -44,15 +48,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 }
 ```
 
-The file `app/page.tsx` should look like this:
+Change the file `app/page.tsx` to look like this:
 
 ```jsx
 export default function Home() {
-  return <h1 className="underline">Welcome to Easy Opus</h1>;
+  return <h1 className="underline">Welcome to easy-opus</h1>;
 }
 ```
 
-The file `app/globals.css` should look like this:
+Change the file `app/globals.css` to look like this:
 
 ```css
 @tailwind base;
@@ -60,16 +64,17 @@ The file `app/globals.css` should look like this:
 @tailwind utilities;
 ```
 
-Run `pnpm dev` and check out the page at `http://localhost:3000`.
+Additionally, feel free to delete the SVG files in the `public` directory and to change (or delete) the `favicon`.
 
-Also feel free to delete the SVG files in the `public` directory.
-You should also change (or delete) the `favicon`.
+Run `pnpm dev` and check out the page at `http://localhost:3000`.
+You should see the underlined text `Welcome to easy-opus`.
 
 ### Setup a Database
 
-Just follow the steps from the SQL chapter.
+Next we need to setup our database.
+To accomplish this, we will simply follow the steps from the SQL chapter.
 
-Create a new Supabase project, copy the database URL and create the following `.env` file:
+Create a new Supabase project, copy the database URL and create the following `.env.local` file:
 
 ```
 DATABASE_URL=$YOUR_DATABASE_URL_HERE
@@ -80,6 +85,7 @@ DATABASE_URL=$YOUR_DATABASE_URL_HERE
 ### Setup Drizzle
 
 Next, we need to set up Drizzle.
+Here we will simply follow the steps from the Drizzle chapter.
 
 Install Drizzle and `dotenv`:
 
@@ -93,11 +99,7 @@ This is where our database-related files will go.
 
 > Remember that we specify all paths relative to `src`, i.e. you need to create the `db` directory in `src`.
 
-Now create a directory `db/migrations`.
-This is where we will store our migrations.
-
-Next, we need to create the files needed by Drizzle.
-This is very similar to the setup from the Drizzle chapter.
+Now create a directory `db/migrations` to store the migrations.
 
 Create a file `db/drizzle.config.ts`:
 
@@ -113,13 +115,6 @@ export default {
   },
 } satisfies Config;
 ```
-
-Here you need to be _careful_.
-The properties `schema` and `out` both have to specify the path _relative to the root directory of our application_.
-This is because we will run the migrations from our root directory.
-
-If you set `schema` to just `./schema.ts` (or even `./db/schema.ts`), you will get errors.
-Setting the wrong file paths is the most common problem when performing the Drizzle setup, so watch out for that.
 
 Next we create a file `db/migrate.ts`:
 
@@ -149,58 +144,48 @@ async function runMigrations() {
 runMigrations().then(console.log).catch(console.error);
 ```
 
-Again, pay careful attention to the paths.
-The migrations folder is path `./src/db/migrations`, _not_ `./migrations` or `./db/migrations`.
-
-Finally, let's create the schema at `db/schema.ts`:
+Finally, let's create the initial schema at `db/schema.ts`:
 
 ```ts
-import { pgTable, serial, text } from 'drizzle-orm/pg-core';
+import { pgTable, serial, text, timestamp } from 'drizzle-orm/pg-core';
 
-export const taskTable = pgTable('task', {
+export const projectTable = pgTable('project', {
   id: serial('id').primaryKey(),
-  title: text('title').notNull(),
-  description: text('description').notNull(),
-  status: text('status').notNull(),
+  userId: text('user_id').notNull(),
+  name: text('name').notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
 });
 ```
 
-If you to run `pnpm drizzle-kit generate:pg` from the root directory right now, you will get the following error:
-
-```
-No config path provided [...]
-```
-
-This is because the `drizzle.config.ts` file is no longer in the root directory.
-Therefore we need to manually specify the location of the config file using the `--config` option:
-
-```sh
-pnpm drizzle-kit generate:pg --config=src/db/drizzle.config.ts
-```
-
-The migration file will now appear in `db/migrations`.
-
-We can now execute the migration:
-
-```sh
-pnpm tsx src/db/migrate.ts
-```
-
-To simplify future migrations, we will add the following script to `package.json`:
+To simplify migrations, we will add the following scripts to `package.json`:
 
 ```json
 {
   "scripts": {
+    // other scripts
     "db:generate": "pnpm drizzle-kit generate:pg --config=src/db/drizzle.config.ts",
     "db:migrate": "pnpm tsx src/db/migrate.ts"
   }
 }
 ```
 
-Now all we have to do is to run `pnpm db:generate` to generate a migration and `pnpm db:migrate` to execute a migration.
+Now run `pnpm db:generate` to generate the migration.
 
-Finally, we create the `db/index.ts` file which exports the `db` object.
-This allows other files to call database functions:
+Inspect the migration (which would be something like `db/migrations/0000_curious_vanisher-sql`) and make sure that it contains the right content:
+
+```sql
+CREATE TABLE IF NOT EXISTS "project" (
+	"id" serial PRIMARY KEY NOT NULL,
+	"user_id" text NOT NULL,
+	"name" text NOT NULL,
+	"created_at" timestamp DEFAULT now() NOT NULL
+);
+```
+
+Run `pnpm db:migrate` to apply the migration to the database.
+Verify that your database contains a `project` table with the right columns.
+
+Finally, we create the `db/index.ts` file which exports the `db` object to allow other files to call database functions:
 
 ```ts
 import { drizzle } from 'drizzle-orm/postgres-js';
@@ -212,14 +197,42 @@ const client = postgres(databaseURL);
 export const db = drizzle(client);
 ```
 
+> Yes, this subsection was essentially a repeat of things you already learned in the Drzzle chapter.
+
+### Linting
+
+If you look through the scripts in `package.json`, you will see a curious little script called `lint` that executes `next lint`.
+
+This scripts provides an integrated ESLint experience.
+ESLint is an awesome tool that statically analyzes your code to quickly find problems.
+
+Note that ESLint is not for finding syntax or type errors (your TypeScript compiler already takes care of that).
+Instead it has a lot of rules for good code and bad code and attempts to help you with writing high-quality code.
+
+Let's run it:
+
+```sh
+pnpm lint
+```
+
+Unless you messed something up, this should output:
+
+```
+✔ No ESLint warnings or errors
+```
+
+Great!
+Currently, ESLint has nothing to tell us.
+
 ### File Structure
 
 This is the file structure you should have right now:
 
 ```
+├── .env.local
+├── .eslintrc.json
 ├── next.config.mjs
 ├── next-env.d.ts
-├── node_modules
 ├── package.json
 ├── pnpm-lock.yaml
 ├── postcss.config.js
@@ -234,7 +247,7 @@ This is the file structure you should have right now:
 │       ├── index.ts
 │       ├── migrate.ts
 │       ├── migrations
-│       │   ├── 0000_moaning_doctor_doom.sql
+│       │   ├── 0000_curious_vanisher.sql
 │       │   └── meta
 │       │       ├── 0000_snapshot.json
 │       │       └── _journal.json
@@ -243,7 +256,7 @@ This is the file structure you should have right now:
 └── tsconfig.json
 ```
 
-You _should absolutely understand each and every one of these files_ if you read the book carefully.
+You _should absolutely understand each and every one of these files_ if you've read the book carefully.
 
 Just to recap:
 
@@ -263,6 +276,10 @@ The `postcss.config.js` file contains the configuration relevant for PostCSS (wh
 
 The file `src/app/page.tsx` specifies the root page and `src/app/layout.tsx` specifies the root layout.
 
-The `globals.css` file specifies global styles - right now it's needed for the Tailwind directives.
+The `globals.css` file specifies global styles - right we only really need it for the Tailwind directives.
 
 The `src/db` directory contains everything that is related to the database (including the migrations).
+
+The `.eslintrc.json` contain the `eslint` configuration.
+
+The `.env.local` file contains our enviroment variables.
