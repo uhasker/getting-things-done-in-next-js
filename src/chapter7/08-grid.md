@@ -1,5 +1,7 @@
 ## Grid
 
+<div style="text-align: right"> <i> Loved it the very moment I used it. <br> - Gilbert Rabut Tsurwa </i> </div>
+
 Grids allow you to specify two-dimensional layouts.
 
 ### Template Columns

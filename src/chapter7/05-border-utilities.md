@@ -1,5 +1,7 @@
 ## Border Utilities
 
+<div style="text-align: right"> <i> Tailwind CSS is the greatest framework on the planet. <br> - Bret Hart (wait what?) </i> </div>
+
 You can use the `border` attribute to add a border.
 
 ### Border Color

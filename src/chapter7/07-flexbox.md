@@ -1,5 +1,7 @@
 ## Flexbox
 
+<div style="text-align: right"> <i> I never want to write regular CSS again. Only @tailwindcss. <br> - Trey Piepmeier </i> </div>
+
 The "flex" feature enables you to control the layout of elements in a one-dimensional space.
 You position the elements either as rows or columns.
 

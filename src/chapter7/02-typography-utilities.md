@@ -1,5 +1,7 @@
 ## Typography Utilities
 
+<div style="text-align: right"> <i> I don't use it but if I would use something I'd use Tailwind! <br> - Pieter Levels </i> </div>
+
 Consider the following component:
 
 ```jsx
@@ -64,7 +66,8 @@ export default function Home() {
 ### Line Height
 
 You can also set the line height.
-This can be used to control the distance between the lines:
+
+This can be used to control the distance between text lines:
 
 ```jsx
 export default function Home() {

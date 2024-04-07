@@ -1,14 +1,21 @@
 ## Setup
 
-Once you've created an app with `pnpm create next-app` you are already using Tailwind CSS.
+<div style="text-align: right"> <i> Skip to the end. Use @tailwindcss. <br> - Kent C. Dodds </i> </div>
 
-The `package.json` contains these dependencies:
+Once you've created an app with `pnpm create next-app`, you are already using Tailwind CSS by default.
+
+If you look at the `package.json` file, you will notice these dependencies:
 
 - `tailwindcss`
 - `postcss`
 - `autoprefixer`
 
-You also have a `tailwind.config.ts` file:
+PostCSS is a special tool for transforming CSS with JavaScript.
+Autoprefixer is a PostCSS plugin for parsing CSS and adding vendor prefixes to CSS rules.
+
+Both TailwindCSS and PostCSS require configuration - luckily, `pnpm create next-app` has already supplied this configuration for us.
+
+You will find the TailwindCSS configuration in the `tailwind.config.ts` file:
 
 ```ts
 import type { Config } from 'tailwindcss';
@@ -32,7 +39,7 @@ const config: Config = {
 export default config;
 ```
 
-You also have a `postcss.config.js`:
+You will find the PostCSS configuration in the `postcss.config.js` file:
 
 ```js
 module.exports = {
@@ -43,7 +50,8 @@ module.exports = {
 };
 ```
 
-Add the following content to the `globals.css` file:
+One last important file is the `globals.css` file.
+If you've created your app with `pnpm create next-app`, this will contain a bunch of unneeded fluff, so let's replace the content of `globals.css` with these lines:
 
 ```css
 @tailwind base;
@@ -51,9 +59,16 @@ Add the following content to the `globals.css` file:
 @tailwind utilities;
 ```
 
-Let's try and use Tailwind.
-Recreate the setup we used in chapter 6.1.
-Then add a few utility classes to `page.tsx`:
+These lines are so called **Tailwind directives**.
+
+The `@tailwind base` directive injects Tailwind's base styles in your CSS.
+
+The `@tailwind components` injects Tailwind's component classes in your CSS.
+
+Finally, the `@tailwind utilities` injects Tailwind's utility classes in your CSS.
+
+Let's try and use Tailwind now.
+We will add a component with a few Tailwind utility classes to `page.tsx`:
 
 ```jsx
 export default function Home() {
@@ -62,3 +77,8 @@ export default function Home() {
 ```
 
 You should see how the styles are applied to the text.
+
+This components highlights Tailwinds **utility-first** approach to styling.
+Insteads of writing a lot of custom CSS, you style elements by applying pre-existing classes directly in your HTML.
+
+Next, we will introduce some of the most important utility classes.
