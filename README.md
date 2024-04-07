@@ -6,8 +6,7 @@ This is the repository for the book "Getting Things Done in Next.js", a book abo
 
 You can find the book itself at https://uhasker.github.io/getting-things-done-in-next-js/.
 
-The book is in **alpha stage**.
-This means that the "happy path" content has been completed, but there are a lot of TODOs for the individual chapters and you should definitely expect mistakes.
+The book is in **beta stage**.
 
 ## Contributing
 
