@@ -1,6 +1,8 @@
-# Chapter 8: Persistence with SQL
+# Chapter 6: Moving to the Server with Next.js
 
-So far, we have only stored user-inserted data on the client.
-This meant that if we refreshed the page or closed the browser, our data was lost which is obviously unacceptable in a real-world application.
+<div style="text-align: right"> <i> Why did the Next.js developer order the steak? <br> Because he wanted a full-steak experience. <br> - From "1000 programming dad-jokes" </i> </div>
 
-To address this problem, we need a way to store data _persistenly_ which is where databases come into play.
+Now that you have a rough overview of React, we want to move to the server.
+Next.js is a React-based framework for building full-stack applications.
+
+You will need to use at least version 13 of Next.js, because that introduced the App Router which is built on top of React Server Components.

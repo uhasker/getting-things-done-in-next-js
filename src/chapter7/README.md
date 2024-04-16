@@ -1,8 +1,7 @@
-# Chapter 7: Becoming Pretty with Tailwind CSS
+# Chapter 5: Adding Spice with React
 
-<div style="text-align: right"> <i> I feel like an idiot for not using Tailwind CSS until now. <br> - Ryan Florence </i> </div>
+<div style="text-align: right"> <i> What's a React developer's favorite place to hang out? <br> The State Park. <br> - From "1000 programming dad-jokes" </i> </div>
 
-So far, our pages are functional, but they're not pretty to look.
+In this chapter we will create a simple (website) client using React. This client will allow us to add and delete tasks. Each task will have a title and a description.
 
-CSS (short for Cascading Style Sheets) is a special language that is used for specifying the styling of an HTML document.
-We won't use CSS directly, but rather Tailwind CSS - a utility-first CSS framework that greatly simplifies the styling process.
+Let's begin.

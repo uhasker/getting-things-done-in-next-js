@@ -1,85 +1,84 @@
 ## Setup
 
-<div style="text-align: right"> <i> Astro DB is powered by Drizzle! <br> ... and we regret everything omg this thing sucks <br> - From Drizzles official page </i> </div>
+<div style="text-align: right"> <i> Skip to the end. Use @tailwindcss. <br> - Kent C. Dodds </i> </div>
 
-### A Simple Example
+Once you've created an app with `pnpm create next-app`, you are already using Tailwind CSS by default.
 
-Let's create a simple Drizzle script that will declare a task table and read all the tasks from the table.
+If you look at the `package.json` file, you will notice these dependencies:
 
-Create a new supabase database and recreate the task table from the SQL chapter.
-Don't add the project IDs and table yet, that will follow later.
+- `tailwindcss`
+- `postcss`
+- `autoprefixer`
 
-Create a new TypeScript project:
+PostCSS is a special tool for transforming CSS with JavaScript.
+Autoprefixer is a PostCSS plugin for parsing CSS and adding vendor prefixes to CSS rules.
 
-```sh
-pnpm init
-pnpm add typescript tsx --save-dev
-pnpm tsc --init
-```
+Both TailwindCSS and PostCSS require configuration - luckily, `pnpm create next-app` has already supplied this configuration for us.
 
-Install Drizzle:
-
-```sh
-pnpm add drizzle-orm postgres
-pnpm add drizzle-kit --save-dev
-```
-
-Create the following file `demo.ts`:
+You will find the TailwindCSS configuration in the `tailwind.config.ts` file:
 
 ```ts
-import { pgTable, serial, text, integer, timestamp, varchar } from 'drizzle-orm/pg-core';
-import { drizzle } from 'drizzle-orm/postgres-js';
-import postgres from 'postgres';
+import type { Config } from 'tailwindcss';
 
-// Paste the supabase URI here
-const databaseURI = '...';
+const config: Config = {
+  content: [
+    './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/components/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/app/**/*.{js,ts,jsx,tsx,mdx}',
+  ],
+  theme: {
+    extend: {
+      backgroundImage: {
+        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+        'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+      },
+    },
+  },
+  plugins: [],
+};
+export default config;
+```
 
-// Declare the task table
-export const taskTable = pgTable('task', {
-  id: serial('id').primaryKey(),
-  title: varchar('title', { length: 255 }).notNull(),
-  description: text('description').notNull(),
-  status: varchar('status', { length: 255 }).notNull(),
-  duration: integer('duration'),
-  createdAt: timestamp('created_at').defaultNow().notNull(),
-});
+You will find the PostCSS configuration in the `postcss.config.js` file:
 
-const client = postgres(databaseURI);
-const db = drizzle(client);
+```js
+module.exports = {
+  plugins: {
+    tailwindcss: {},
+    autoprefixer: {},
+  },
+};
+```
 
-async function getTasks() {
-  return await db.select().from(taskTable);
+One last important file is the `globals.css` file.
+If you've created your app with `pnpm create next-app`, this will contain a bunch of unneeded fluff, so let's replace the content of `globals.css` with these lines:
+
+```css
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+```
+
+These lines are so called **Tailwind directives**.
+
+The `@tailwind base` directive injects Tailwind's base styles in your CSS.
+
+The `@tailwind components` injects Tailwind's component classes in your CSS.
+
+Finally, the `@tailwind utilities` injects Tailwind's utility classes in your CSS.
+
+Let's try and use Tailwind now.
+We will add a component with a few Tailwind utility classes to `page.tsx`:
+
+```jsx
+export default function Home() {
+  return <h1 className="text-3xl font-bold underline">Welcome</h1>;
 }
-
-getTasks().then(console.log);
 ```
 
-> Note that the `check` constraint is not yet implemented in Drizzle at the time of this writing.
+You should see how the styles are applied to the text.
 
-Execute the file:
+This components highlights Tailwinds **utility-first** approach to styling.
+Insteads of writing a lot of custom CSS, you style elements by applying pre-existing classes directly in your HTML.
 
-```sh
-pnpm tsx demo.ts
-```
-
-You will see a list of all the tasks that are currently present in the table.
-
-### Drizzle as Typesafe SQL
-
-Did you notice how similar the Drizzle function and the SQL statement are?
-The Drizzle function is:
-
-```ts
-db.select().from(taskTable);
-```
-
-The SQL function was:
-
-```sql
-select * from task;
-```
-
-This similarity is _intentional_ and will be a major theme in this chapter.
-Unlike many other frameworks which try to "abstract" SQL away, Drizzle embraces SQL and only adds a bit of type safety on top of it.
-
-If you know SQL, learning Drizzle is a very fast process.
+Next, we will introduce some of the most important utility classes.
