@@ -1,4 +1,4 @@
-# Chapter 7: Becoming Pretty with Tailwind CSS
+# Chapter 9: Becoming Pretty with Tailwind CSS
 
 <div style="text-align: right"> <i> I feel like an idiot for not using Tailwind CSS until now. <br> - Ryan Florence </i> </div>
 

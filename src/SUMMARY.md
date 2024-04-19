@@ -37,9 +37,11 @@
 - [Persistence with SQL](chapter4/README.md)
 
   - [Setup](chapter4/01-setup.md)
-  - [Inserting, Updating and Deleting Data](chapter4/02-inserting-updating-and-deleting-data.md)
-  - [Selecting Data](chapter4/03-selecting-data.md)
-  - [Multiple Tables](chapter4/04-multiple-tables.md)
+  - [Data Types and Constraints](chapter4/02-data-types-and-constraints.md)
+  - [Inserting, Updating and Deleting Data](chapter4/03-inserting-updating-and-deleting-data.md)
+  - [Selecting Data](chapter4/04-selecting-data.md)
+  - [Modifying Tables](chapter4/05-modifying-tables.md)
+  - [Working with Multiple Tables](chapter4/06-working-with-multiple-tables.md)
 
 - [Typesafe SQL with Drizzle](chapter5/README.md)
 

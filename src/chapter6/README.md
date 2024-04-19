@@ -1,4 +1,4 @@
-# Chapter 4: A Vanilla Client
+# Chapter 6: A Vanilla Client
 
 <div style="text-align: right"> <i> Whenever you write a web app in vanilla JavaScript, you end up creating your own framework. <br> And who in their right mind wants another JavaScript framework? <br> - Common programmer idiom </i> </div>
 

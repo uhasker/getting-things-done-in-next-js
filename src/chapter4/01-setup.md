@@ -8,115 +8,96 @@ If you store a value, it will be available to you regardless of whether you refr
 In this book, we will restrict ourselves to **relational databases** only.
 These consist of multiple tables with optional relations between the tables.
 
-We will use **SQL**, specifically **PostgreSQL** to perform the actual data manipulation.
+The **SQL** language allows us to interact with a relational database.
+
+There are many different relational databases that support different dialects of SQL.
+In this book, we will stick to a relational database called **PostgreSQL**.
+
+> We will use the PostgreSQL term to refer both to the database and to the specific SQL dialect supported by the database.
 
 ### Create a Database
 
 First, we need to create a new database.
-For this book, we will use Supabase.
+For this book, we will use **Supabase**, a service that will manage our relational databases for us.
 
 Go to [Supabase](https://supabase.com).
 Create a new project, give it a name and select a database password (which you should write down somewhere).
 
-Once you create the new project, go to "Project Settings > Database" and copy past the URI connection string.
+Once you create the new project, go to "Project Settings > Database" and copy and paste the URI connection string.
 Replace `[YOUR-PASSWORD]` with the password you gave the database in the previous step.
 
-Save the connection string, we will need it later.
+Save the connection string somewhere, you will need it to - well - connect to the database.
 
-Next, you should navigate to the SQL editor of your project to be able to execute queries.
+Next, you should navigate to the Supabase SQL editor of your project to be able to execute queries.
 
 ### Table Creation
 
-Consider a simple `task` table whose purpose is to persistently store informations about created tasks.
+Consider a simple `task` table whose purpose is to persistently store created tasks.
 
-Let's think about the columns we might need for the table.
+Let's think about the columns we might need for that table.
 
-First, we have the `id` column which would store a unique identifier for every task.
+First, we should have an `id` column which would store a unique identifier for every task.
 
-Second, we would have the `title` and `description` columns which would store the title and description of the tasks respectively.
+Second, we will probably need a `title` and `description` column which would store the title and description of the tasks respectively.
 
-Finally, we will add two more columns for learning purposes.
+We will also add two more columns for educational purposes.
 The `status` column will hold the status of the task.
 Additionally, the `duration` column will store the estimated duration of the task in minutes.
+
+Finally, it is good practice to always create a `created_at` column in every table, where we will stored the time at which the row was created.
 
 Let's create the `task` table.
 We can use the `create table` SQL statement to accomplish this.
 
 ```sql
+create type status as enum ('todo', 'inprogress', 'done');
+
 create table task (
     id serial primary key,
-    title varchar(255) not null,
+    title text not null unique,
     description text not null,
-    status varchar(255) not null check (status in ('todo', 'inprogress', 'done')),
-    duration integer,
+    status status,
+    duration integer check (duration > 0),
     created_at timestamp default current_timestamp not null
-)
+);
 ```
 
-Note that each column has a name, a data type, an optional constraints.
-Let's talk about data types and optional constraints in more detail.
+Note that each column has a name, a data type and optional constraints.
+Let's talk about data types and optional constraints in more detail in the next section.
 
-### Data Types
+### Inserting and Selecting Data
 
-The `integer` data type allows you to store integers.
-You usually use this data type for counts, identifiers etc.
+Now that we have created the table, we can use SQL statements to create, read, update or delete data.
 
-Note that there are actually multiple integer data types in PostgreSQL.
-The `smallint` data type allows you to store "small-range integers" and the `bigint` data type allows you to store "large-range integers".
+For example, we can insert some data using the `insert` statement:
 
-The difference between `smallint`, `integer` and `bigint` is basically the minimum and maximum integers that can be stored.
+```sql
+insert into task (title, description, duration, status) values
+('Read the Next.js book', 'Read and understand the Next.js book.', 60, 'inprogress');
+```
 
-A `smallint` value has 2 bytes, i.e. it can store values from `-32768` up to `32767`.
+We can select that data using the `select` statement:
 
-An `integer` value has 4 bytes, i.e. it can store values from `-2147483648` up to `2147483647`.
+```sql
+select * from task;
+```
 
-An `bigint` value has 8 bytes, i.e. it can store values from `-9223372036854775808` up to `9223372036854775807`.
+This will return:
 
-For most regular web applications, `integer` values are more than enough.
+```
+| id | title                 | description                           | status     | duration | created_at                 |
+| -- | --------------------- | ------------------------------------- | ---------- | -------- | -------------------------- |
+| 1  | Read the Next.js book | Read and understand the Next.js book. | inprogress | 60       | 2024-04-17 11:34:06.502155 |
+```
 
-In our example, we use `integer` for the `duration` column.
+We can also delete data using the `delete` statement.
+Let's delete the data we have inserted so far to have a clean setup for the next section:
 
-The `serial` data type allows you to represent _autoincrementing_ integers (along with `smallserial` and `bigserial`).
-This makes `serial` very useful for unique identifiers since you don't need to handle the incrementing logic yourself.
+```sql
+delete from task;
+```
 
-This is why we store the `id` as a `serial`.
+We will discuss these statement in more detail in later sections.
 
-The `real` and `double precision` data types allow you to store floating-point numbers.
-These two data types differ with respect to the number of digits that can be represented after the decimal.
-
-The `real` data type has 4 bytes and allows you to represent 6 decimal digits.
-
-The `double precision` data type has 8 bytes and allows you to represent 15 decimal digits.
-
-The `varchar(n)` data type allows you to store strings with a maximum number of characters.
-The `text` data type allows you to store strings of arbitrary length.
-
-We want to limit the number of characters in a task title and status to `255`, so we use `varchar(255)` for both.
-
-However we want to allow an _arbitrary_ amount of characters for the description, so we use the `text` data type here.
-
-Finally, the `timestamp` data type allows us to store a date and a time.
-
-The `created_at` column will store the time at which a task has been created and therefore has the `timestamp` data type.
-
-### Constraints
-
-The `primary key` constraint means that the column should be used to identify the rows of the table.
-If a column is marked as `primary key`, its values must be unique and they can't be `null` (more about this in a second).
-
-Since we want the `id` to uniquely identify each task, we apply the `primary key` constraint to the `id` column.
-
-The `not null` constraint means that the inserted value can't be null.
-Basically, we apply this constraint if we want to ensure that a value is always present in this column.
-
-In our example, we want every task to have a `title`, a `description` and a `status` so we mark these columns as `not null`.
-However, we allow a task to not have a `duration` and don't mark that column as `not null`.
-
-The `check` constraint is used to specify a condition that each row must satisfy for the value to be accepted into a column.
-
-In our example, we want the `status` column to only have the values `todo`, `inprogress` or `done` and use the `check` constraint to accomplish that.
-
-The `default` constraint allows us to specify a default value for a column.
-If an insert operation does not provide a value for a column, PostgreSQL will automatically insert the specified value.
-
-In our example, we want the `created_at` value to simply be the current time and use the `default` constraint together with `current_timestamp` to accomplish that.
+> Note that when executing an SQL statement in Supabase, you don't necessarily need to provide the semilicon.
+> However in other SQL clients you will need to semicolon and so we will always write it for consistency.

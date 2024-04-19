@@ -1,4 +1,4 @@
-# Chapter 6: Moving to the Server with Next.js
+# Chapter 8: Moving to the Server with Next.js
 
 <div style="text-align: right"> <i> Why did the Next.js developer order the steak? <br> Because he wanted a full-steak experience. <br> - From "1000 programming dad-jokes" </i> </div>
 

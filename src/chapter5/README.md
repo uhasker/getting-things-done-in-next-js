@@ -1,4 +1,4 @@
-# Chapter 9: Typesafe SQL with Drizzle
+# Chapter 5: Typesafe SQL with Drizzle
 
 <div style="text-align: right"> <i> I hate Drizzle <br> - From Drizzles official page </i> </div>
 
