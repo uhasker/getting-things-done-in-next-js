@@ -1,6 +1,8 @@
 ## Size Utilities
 
-To actually see that the size utilities work the way, we expect, we will give our elements backgrounds.
+<div style="text-align: right"> <i> Tailwind makes writing code feel like I'm using a design tool. <br> - Ryan Florence </i> </div>
+
+To actually see that the size utilities work the way we expect, we will give our elements backgrounds.
 Don't be distracted by this.
 
 ### Width

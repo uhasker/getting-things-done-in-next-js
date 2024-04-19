@@ -1,14 +1,12 @@
-# Chapter 4: A Vanilla Client
+# Chapter 4: Persistence with SQL
 
-<div style="text-align: right"> <i> Whenever you write a web app in vanilla JavaScript, you end up creating your own framework. <br> And who in their right mind wants another JavaScript framework? <br> - Common programmer idiom </i> </div>
+<div style="text-align: right"> <i> SQL is the language of the ancestors, spoken to call forth truths hidden deep within data. <br> — Ancient Chinese proverb </i> </div
 
-In this chapter we will write a small example client in _vanilla_ HTML and JavaScript (i.e. without using any frameworks).
-We will realize why using vanilla HTML is (usually) not a great idea and why we might want to consider using a library to help us out.
-Spoiler alert: That library is going to be React.
+So far we've introduced the programming language that will power our project (TypeScript) and some relevant networking theory.
 
-If this sounds like a pointless exercise - it's not.
-You need to know the basics of HTML anyway (even if you end up using React for your application).
-Additionally, web development shouldn't consist of stapling a bunch of magic together and praying that it works.
-In order to accomplish this, you will need a solid foundation to build on.
+But our users don't really care about the code we write nor the theory we know - they care about their _data_.
+After all, the primary purpose of web applications is to ingest and show interesting data to the user.
 
-This chapter presents that solid foundation.
+Of course, it would be really bad if after every page refresh that data would be lost - therefore we need a way to store data _persistenly_ which is where _relational databases_ and the SQL language come into play.
+
+This chapter will introduce these concepts.

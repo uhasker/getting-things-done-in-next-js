@@ -1,7 +1,6 @@
-# Chapter 5: Adding Spice with React
+# Chapter 5: Typesafe SQL with Drizzle
 
-<div style="text-align: right"> <i> What's a React developer's favorite place to hang out? <br> The State Park. <br> - From "1000 programming dad-jokes" </i> </div>
+<div style="text-align: right"> <i> I hate Drizzle <br> - From Drizzles official page </i> </div>
 
-In this chapter we will create a simple (website) client using React. This client will allow us to add and delete tasks. Each task will have a title and a description.
-
-Let's begin.
+Drizzle is a TypeScript ORM (object relational mapping).
+It allows you to write TypeScript functions that perform database operations in a very similar manner to SQL.

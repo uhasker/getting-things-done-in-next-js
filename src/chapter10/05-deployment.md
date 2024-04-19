@@ -1,9 +1,9 @@
-# Deployment
+## Deployment
 
 Now that we're done writing the first version, let's get our application out into the world.
 We will use **GitHub** and **Vercel** to deploy our application.
 
-## Creating a Git Repository
+### Creating a Git Repository
 
 GitHub is a platform that allows developers to upload, store, manage and share their code.
 
@@ -30,7 +30,7 @@ git remote add origin $YOUR_REPOSITORY_URL
 git push --set-upstream origin master
 ```
 
-## Deploying on Vercel
+### Deploying on Vercel
 
 Finally, we will deploy this project on Vercel.
 Simply go to `vercel.com`, create a new project and import the git repository that we just created.

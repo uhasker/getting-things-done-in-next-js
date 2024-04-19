@@ -1,5 +1,7 @@
 ## Spacing Utilities
 
+<div style="text-align: right"> <i> Thanks to @tailwindcss, CSS started to make sense ot me. <br> - Nuno Maduro </i> </div>
+
 ### Padding
 
 You can control the padding on all sides of an element using the `p-{size}` utilities:

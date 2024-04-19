@@ -1,6 +1,6 @@
-# The Projects Page
+## The Projects Page
 
-## Project List
+### Project List
 
 Let's create a component `ProjectList` in `app/project-list.tsx` that will show a nicely styled list of projects:
 
@@ -45,7 +45,7 @@ export default async function Home() {
 Add a few projects with the correct user ID to the database and go to `localhost:3000`.
 You should see a project list containing the added projects.
 
-## Fixing a Lint
+### Fixing a Lint
 
 While has no syntax errors, no type errors and generally works correctly, there is one issue.
 
@@ -83,7 +83,7 @@ Add the `key` property to the project `div` in `app/project-list.tsx` like this:
 
 If you rerun `pnpm lint`, you should see no more errors.
 
-## New Project Modal
+### New Project Modal
 
 Let's create a modal that will allow us to add new projects at `app/new-project-modal.tsx`:
 

@@ -1,5 +1,7 @@
 ## Background Utilities
 
+<div style="text-align: right"> <i> If I had to recommend a way of getting into programming today, it would be HTML + CSS with Tailwind CSS. <br> - Guillermo Rauch </i> </div>
+
 ### Background Color
 
 You can change the background color of an element using the `bg-{color}` utilities:

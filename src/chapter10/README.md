@@ -1,4 +1,4 @@
-# Chapter 10 - The Project
+# Chapter 10: The Project
 
 Finally, the project is upon us.
 

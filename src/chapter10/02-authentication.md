@@ -1,4 +1,4 @@
-# Authentication
+## Authentication
 
 The tasks and projects should be "owned" by individual users of our application.
 
