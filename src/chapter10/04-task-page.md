@@ -1,6 +1,6 @@
-# Task Page
+## Task Page
 
-## Schema Update
+### Schema Update
 
 We now have a page where we can show the created projects.
 However, this is not terribly useful as long as we can't add tasks to the projects.
@@ -58,7 +58,7 @@ pnpm db:migrate
 
 Check that the `task` table is present in the database together with the right columns.
 
-## Task Page
+### Task Page
 
 Now let's create a page containing the tasks of a given project at `app/project/[id]/page.tsx`:
 
@@ -93,7 +93,7 @@ export default async function Project({ params: { id } }: { params: { id: number
 Add a few tasks to the project with the ID `1` and go to `localhost:3000/project/1` - you should see these tasks.
 However, the UX is currently quite ugly, so let's improve it.
 
-## Task List
+### Task List
 
 Create the a `TaskList` component at `app/project/[id]/task-list.tsx`:
 
@@ -133,7 +133,7 @@ export default async function Project({ params: { id } }: { params: { id: number
 }
 ```
 
-## New Task Modal
+### New Task Modal
 
 Finally, let's create a modal that will allow us to add new tasks.
 Create a file `app/project/[id]/new-task-modal.tsx`:
