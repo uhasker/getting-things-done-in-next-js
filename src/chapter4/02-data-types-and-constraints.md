@@ -1,5 +1,7 @@
 ## Data Types and Constraints
 
+<div style="text-align: right"> <i> A primary key is the compass of a table; it guides every row to its unique destiny. <br> — Ancient Chinese proverb </i> </div>
+
 ### Numeric Data Types
 
 The `integer` data type allows you to store integers.

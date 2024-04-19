@@ -1,5 +1,7 @@
 ## Working with Multiple Tables
 
+<div style="text-align: right"> <i> Joins are like bamboo bridges, they connect distant tables as if they were neighbors. <br> — Ancient Chinese proverb </i> </div>
+
 ### Adding Projects
 
 Let's add projects to our application.

@@ -1,5 +1,7 @@
 ## Inserting, Updating and Deleting Data
 
+<div style="text-align: right"> <i> To update is to change the course of a river; done wisely, it nourishes more land, done poorly, it leads to flood. <br> — Ancient Chinese proverb </i> </div>
+
 ### Inserting Data
 
 To insert rows into a table, you use the `insert` statement.

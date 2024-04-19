@@ -1,5 +1,7 @@
 ## Selecting Data
 
+<div style="text-align: right"> <i> A query without limits is like a river without banks — overflowing and uncontrollable. <br> — Ancient Chinese proverb </i> </div>
+
 ### Basics
 
 We will continue working with the inserted data from the last section.

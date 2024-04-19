@@ -1,5 +1,7 @@
 ## Modifying Tables
 
+<div style="text-align: right"> <i> A drop statement is a swift sword; one stroke can sever years of growth. <br> — Ancient Chinese proverb </i> </div>
+
 Remember how our task table looks like right now:
 
 ```sql

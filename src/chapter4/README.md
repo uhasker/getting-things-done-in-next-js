@@ -1,5 +1,7 @@
 # Chapter 4: Persistence with SQL
 
+<div style="text-align: right"> <i> SQL is the language of the ancestors, spoken to call forth truths hidden deep within data. <br> — Ancient Chinese proverb </i> </div
+
 So far we've introduced the programming language that will power our project (TypeScript) and some relevant networking theory.
 
 But our users don't really care about the code we write nor the theory we know - they care about their _data_.

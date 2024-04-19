@@ -1,5 +1,7 @@
 ## Setup
 
+<div style="text-align: right"> <i> Setting up a database without planning is like sailing without a compass; sooner or later, you will lose your way. <br> — Ancient Chinese proverb </i> </div>
+
 ### Persisting Data
 
 A database is nothing more than a collection of data that supports persistent storage and updates.
