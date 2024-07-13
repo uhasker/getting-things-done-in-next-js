@@ -197,7 +197,7 @@ const client = postgres(databaseURL);
 export const db = drizzle(client);
 ```
 
-> Yes, this subsection was essentially a repeat of things you already learned in the Drzzle chapter.
+> Yes, this subsection was essentially a repeat of things you already learned in the Drizzle chapter.
 
 ### Linting
 
