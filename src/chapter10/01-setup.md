@@ -104,16 +104,16 @@ Now create a directory `db/migrations` to store the migrations.
 Create a file `db/drizzle.config.ts`:
 
 ```ts
-import type { Config } from 'drizzle-kit';
+import { defineConfig } from 'drizzle-kit';
 
-export default {
+export default defineConfig({
+  dialect: 'postgresql',
   schema: './src/db/schema.ts',
   out: './src/db/migrations',
-  driver: 'pg',
   dbCredentials: {
-    connectionString: process.env.DATABASE_URL!,
+    url: process.env.DATABASE_URL!,
   },
-} satisfies Config;
+})
 ```
 
 Next we create a file `db/migrate.ts`:
@@ -163,7 +163,7 @@ To simplify migrations, we will add the following scripts to `package.json`:
 {
   "scripts": {
     // other scripts
-    "db:generate": "pnpm drizzle-kit generate:pg --config=src/db/drizzle.config.ts",
+    "db:generate": "pnpm drizzle-kit generate --config=src/db/drizzle.config.ts",
     "db:migrate": "pnpm tsx src/db/migrate.ts"
   }
 }
