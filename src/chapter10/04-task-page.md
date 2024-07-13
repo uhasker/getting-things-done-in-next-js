@@ -120,7 +120,7 @@ export function TaskList({
 }
 ```
 
-Use the `TaskList` in `app/project/[id]/task-list.tsx`:
+Use the `TaskList` in `app/project/[id]/page.tsx`:
 
 ```jsx
 // ...
