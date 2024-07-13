@@ -68,7 +68,7 @@ export const config = {
 };
 ```
 
-> Note that `middleware.ts` should be directly in `src`, not in `app/src`.
+> Note that `middleware.ts` should be directly in `src`, not in `src/app`.
 
 Next, let's create the first version of the homepage `app/page.tsx`.
 
