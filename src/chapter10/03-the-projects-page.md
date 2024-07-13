@@ -25,7 +25,7 @@ Update the `app/page.tsx` file to retrieve the projects show the project list:
 ```jsx
 import { db } from '@/db';
 import { projectTable } from '@/db/schema';
-import { SignIn, auth } from '@clerk/nextjs';
+import { SignIn, auth } from '@clerk/nextjs/server';
 import { ProjectList } from './project-list';
 import { eq } from 'drizzle-orm';
 
