@@ -237,7 +237,7 @@ function App() {
   return (
     <div>
       <h1>Tasks</h1>
-      <TaskList items={['Read the Next.js book', 'Write a website']} />
+      <TaskList tasks={['Read the Next.js book', 'Write a website']} />
     </div>
   );
 }
