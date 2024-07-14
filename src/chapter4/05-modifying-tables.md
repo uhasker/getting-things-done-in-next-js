@@ -48,7 +48,7 @@ add constraint check_duration_max check (duration <= 600);
 You can drop an existing constraint to a column using the `alter table ... drop constraint` statement:
 
 ```sql
-alter atable task
+alter table task
 drop constraint check_duration_max;
 ```
 
