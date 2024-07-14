@@ -64,7 +64,7 @@ rename column description to details;
 You can rename an entire table using the `alter table rename ...` statement:
 
 ```sql
-alter table
+alter table task
 rename to task_list;
 ```
 
