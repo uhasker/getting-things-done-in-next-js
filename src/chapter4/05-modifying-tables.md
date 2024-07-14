@@ -26,7 +26,7 @@ alter table task add column priority text;
 You could add constraints here:
 
 ```sql
-alter table task add column priority text check (priority in 'low', 'medium', 'high');
+alter table task add column priority text check (priority in ('low', 'medium', 'high'));
 ```
 
 You can use the `alter table ... drop column` statement to remove a column:
