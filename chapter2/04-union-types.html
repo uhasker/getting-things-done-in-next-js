@@ -306,7 +306,7 @@ We could fix the function like this:</p>
 }
 </code></pre>
 <p>You should generally be careful when relying on truthiness or falsiness.
-The way these concepts work in JavaScript can be a bit confusing and it's easy to miss and edge case.</p>
+The way these concepts work in JavaScript can be a bit confusing and it's easy to miss an edge case.</p>
 <p>Some people prefer to avoid these concepts altogether and instead provide explicit checks, for example:</p>
 <pre><code class="language-ts">function logTaskName(taskName: string | undefined | null) {
   if (taskName !== undefined &amp;&amp; taskName !== null) {
