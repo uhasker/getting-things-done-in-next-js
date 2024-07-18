@@ -39,7 +39,7 @@ export default async function Home() {
 
   const projects = await db.select().from(projectTable).where(eq(projectTable.userId, userId));
 
-  return <ProjectList userId={userId} projects={projects} />;
+  return <ProjectList projects={projects} />;
 }
 ```
 
