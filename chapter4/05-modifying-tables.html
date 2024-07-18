@@ -190,7 +190,7 @@
 <pre><code class="language-sql">alter table task add column priority text;
 </code></pre>
 <p>You could add constraints here:</p>
-<pre><code class="language-sql">alter table task add column priority text check (priority in 'low', 'medium', 'high');
+<pre><code class="language-sql">alter table task add column priority text check (priority in ('low', 'medium', 'high'));
 </code></pre>
 <p>You can use the <code>alter table ... drop column</code> statement to remove a column:</p>
 <pre><code class="language-sql">alter table task
@@ -202,7 +202,7 @@ drop column priority;
 add constraint check_duration_max check (duration &lt;= 600);
 </code></pre>
 <p>You can drop an existing constraint to a column using the <code>alter table ... drop constraint</code> statement:</p>
-<pre><code class="language-sql">alter atable task
+<pre><code class="language-sql">alter table task
 drop constraint check_duration_max;
 </code></pre>
 <h3 id="renaming-columns-and-tables"><a class="header" href="#renaming-columns-and-tables">Renaming Columns and Tables</a></h3>
@@ -211,7 +211,7 @@ drop constraint check_duration_max;
 rename column description to details;
 </code></pre>
 <p>You can rename an entire table using the <code>alter table rename ...</code> statement:</p>
-<pre><code class="language-sql">alter table
+<pre><code class="language-sql">alter table task
 rename to task_list;
 </code></pre>
 <h3 id="removing-tables"><a class="header" href="#removing-tables">Removing Tables</a></h3>
