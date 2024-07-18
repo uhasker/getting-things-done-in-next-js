@@ -183,7 +183,7 @@ app.get('/', (req, res) => {
 ```
 
 This indicates that if a GET request is sent to the path '/', we would like to return 'Hello, world!' to the client.
-The `req` variable represents the **request object** and `res` represents the **respose object**.
+The `req` variable represents the **request object** and `res` represents the **response object**.
 If we want to send a HTTP response to the client we use the `res.send` method.
 
 POST requests are generally used to send information to the server that tell it to create a new resource or update an existing resource.
