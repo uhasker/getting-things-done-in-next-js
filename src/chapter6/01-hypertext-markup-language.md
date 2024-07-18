@@ -113,7 +113,7 @@ Generally speaking, you can specify attributes by writing the attribute name, fo
 
 The `class` attribute is used to specify a **class** for an HTML element.
 Unlike unique identifiers, multiple HTML elements can share the same class, which is useful for applying consistent styles to multiple elements.
-For example you could color all HTML elements of class `blue-text` blue.
+For example, you could color all HTML elements of class `blue-text` blue by using a CSS class with the same class name.
 
 Here is how we can create an element with a `class` attribute:
 
