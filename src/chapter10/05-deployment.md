@@ -27,7 +27,7 @@ Next, create a new repository on GitHub and push your changes there:
 
 ```sh
 git remote add origin $YOUR_REPOSITORY_URL
-git push --set-upstream origin master
+git push --set-upstream origin main
 ```
 
 ### Deploying on Vercel
