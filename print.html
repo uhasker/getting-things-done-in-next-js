@@ -2909,7 +2909,7 @@ But what if that changes, or even worse, different users can set a different num
 <h3 id="know-and-use-your-language-features"><a class="header" href="#know-and-use-your-language-features">Know and Use Your Language Features</a></h3>
 <p>JavaScript has drastically changed for the better in the past decade - there is no need to write code like it's 2012.
 For example <code>getTaskTitlesByStatus</code> could be rewritten in a functional style:</p>
-<pre><code class="language-js">function getTaskTitlesByStatus(tasks) {
+<pre><code class="language-js">function getTaskTitlesByStatus(tasks, status) {
   return tasks.filter((task) =&gt; task.status === status).map((task) =&gt; task.title);
 }
 </code></pre>
