@@ -8483,7 +8483,8 @@ export const config = {
 <p>We will keep it simple for now.
 If the user is not logged in, we will show the <code>SignIn</code> button.
 Otherwise we will show a placeholder text:</p>
-<pre><code class="language-jsx">import { SignIn, auth } from '@clerk/nextjs';
+<pre><code class="language-jsx">import { SignIn } from '@clerk/nextjs';
+import { auth } from '@clerk/nextjs/server'
 import * as React from 'react';
 
 export default async function Home() {
@@ -8556,7 +8557,8 @@ You can use this to sign in with your Google account or create a new account wit
 <p>Update the <code>app/page.tsx</code> file to retrieve the projects show the project list:</p>
 <pre><code class="language-jsx">import { db } from '@/db';
 import { projectTable } from '@/db/schema';
-import { SignIn, auth } from '@clerk/nextjs';
+import { auth } from '@clerk/nextjs/server';
+import { SignIn } from '@clerk/nextjs';
 import { ProjectList } from './project-list';
 import { eq } from 'drizzle-orm';
 
@@ -8771,7 +8773,7 @@ END $$;
 <pre><code class="language-jsx">import { db } from '@/db';
 import { projectTable, taskTable } from '@/db/schema';
 import { eq } from 'drizzle-orm';
-import { auth } from '@clerk/nextjs';
+import { auth } from '@clerk/nextjs/server';
 
 export default async function Project({ params: { id } }: { params: { id: number } }) {
   const { userId } = auth();
