@@ -8571,7 +8571,7 @@ export default async function Home() {
 
   const projects = await db.select().from(projectTable).where(eq(projectTable.userId, userId));
 
-  return &lt;ProjectList userId={userId} projects={projects} /&gt;;
+  return &lt;ProjectList projects={projects} /&gt;;
 }
 </code></pre>
 <p>Add a few projects with the correct user ID to the database and go to <code>localhost:3000</code>.
