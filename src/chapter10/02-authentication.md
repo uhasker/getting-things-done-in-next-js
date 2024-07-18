@@ -78,7 +78,7 @@ Otherwise we will show a placeholder text:
 
 ```jsx
 import { SignIn } from '@clerk/nextjs';
-import { auth } from '@clerk/nextjs/server'
+import { auth } from '@clerk/nextjs/server';
 import * as React from 'react';
 
 export default async function Home() {

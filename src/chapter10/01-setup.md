@@ -113,7 +113,7 @@ export default defineConfig({
   dbCredentials: {
     url: process.env.DATABASE_URL!,
   },
-})
+});
 ```
 
 Next we create a file `db/migrate.ts`:
