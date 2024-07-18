@@ -8307,7 +8307,7 @@ import postgres from 'postgres';
 import dotenv from 'dotenv';
 import { migrate } from 'drizzle-orm/postgres-js/migrator';
 
-dotenv.config();
+dotenv.config({ path: ['.env.local', '.env'] });
 
 const databaseURI = process.env.DATABASE_URL;
 
