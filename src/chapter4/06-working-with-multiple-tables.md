@@ -7,7 +7,8 @@
 Let's add projects to our application.
 Each project can contain multiple tasks and each task should belong to exactly one project.
 
-Now it might be tempting to simply add a project ID and name to each task row. However, that would lead to a lot of redundant data.
+Now it might be tempting to simply add a project ID and name to each task row.
+However, that would lead to a lot of redundant data.
 This is bad primarily because it means that if we update tasks or project we might make a mistake somewhere resulting in malformed data.
 
 For example, we might forget to change a project name in some row.
