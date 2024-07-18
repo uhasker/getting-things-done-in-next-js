@@ -8289,16 +8289,16 @@ This is where our database-related files will go.</p>
 </blockquote>
 <p>Now create a directory <code>db/migrations</code> to store the migrations.</p>
 <p>Create a file <code>db/drizzle.config.ts</code>:</p>
-<pre><code class="language-ts">import type { Config } from 'drizzle-kit';
+<pre><code class="language-ts">import { defineConfig } from 'drizzle-kit';
 
-export default {
+export default defineConfig({
+  dialect: 'postgresql',
   schema: './src/db/schema.ts',
   out: './src/db/migrations',
-  driver: 'pg',
   dbCredentials: {
-    connectionString: process.env.DATABASE_URL!,
+    url: process.env.DATABASE_URL!,
   },
-} satisfies Config;
+})
 </code></pre>
 <p>Next we create a file <code>db/migrate.ts</code>:</p>
 <pre><code class="language-ts">import { drizzle } from 'drizzle-orm/postgres-js';
@@ -8339,7 +8339,7 @@ export const projectTable = pgTable('project', {
 <pre><code class="language-json">{
   "scripts": {
     // other scripts
-    "db:generate": "pnpm drizzle-kit generate:pg --config=src/db/drizzle.config.ts",
+    "db:generate": "pnpm drizzle-kit generate --config=src/db/drizzle.config.ts",
     "db:migrate": "pnpm tsx src/db/migrate.ts"
   }
 }
