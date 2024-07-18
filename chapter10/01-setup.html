@@ -256,7 +256,7 @@ export default defineConfig({
   dbCredentials: {
     url: process.env.DATABASE_URL!,
   },
-})
+});
 </code></pre>
 <p>Next we create a file <code>db/migrate.ts</code>:</p>
 <pre><code class="language-ts">import { drizzle } from 'drizzle-orm/postgres-js';

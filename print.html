@@ -8299,7 +8299,7 @@ export default defineConfig({
   dbCredentials: {
     url: process.env.DATABASE_URL!,
   },
-})
+});
 </code></pre>
 <p>Next we create a file <code>db/migrate.ts</code>:</p>
 <pre><code class="language-ts">import { drizzle } from 'drizzle-orm/postgres-js';
@@ -8485,7 +8485,7 @@ export const config = {
 If the user is not logged in, we will show the <code>SignIn</code> button.
 Otherwise we will show a placeholder text:</p>
 <pre><code class="language-jsx">import { SignIn } from '@clerk/nextjs';
-import { auth } from '@clerk/nextjs/server'
+import { auth } from '@clerk/nextjs/server';
 import * as React from 'react';
 
 export default async function Home() {
