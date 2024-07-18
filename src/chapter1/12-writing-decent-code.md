@@ -215,7 +215,7 @@ JavaScript has drastically changed for the better in the past decade - there is 
 For example `getTaskTitlesByStatus` could be rewritten in a functional style:
 
 ```js
-function getTaskTitlesByStatus(tasks) {
+function getTaskTitlesByStatus(tasks, status) {
   return tasks.filter((task) => task.status === status).map((task) => task.title);
 }
 ```
