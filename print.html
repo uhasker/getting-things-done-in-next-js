@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html lang="en" class="light" dir="ltr">
+<html lang="en" class="light sidebar-visible" dir="ltr">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
@@ -8,7 +8,7 @@
 
 
         <!-- Custom HTML head -->
-        
+
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
@@ -31,15 +31,17 @@
 
         <!-- Custom theme stylesheets -->
 
-    </head>
-    <body class="sidebar-visible no-js">
-    <div id="body-container">
+
         <!-- Provide site root to javascript -->
         <script>
             var path_to_root = "";
             var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
         </script>
-
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
         <script>
             try {
@@ -61,19 +63,16 @@
             var theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
-            var html = document.querySelector('html');
+            const html = document.documentElement;
             html.classList.remove('light')
             html.classList.add(theme);
-            var body = document.querySelector('body');
-            body.classList.remove('no-js')
-            body.classList.add('js');
+            html.classList.add("js");
         </script>
 
         <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
 
         <!-- Hide / unhide sidebar before it is displayed -->
         <script>
-            var body = document.querySelector('body');
             var sidebar = null;
             var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
             if (document.body.clientWidth >= 1080) {
@@ -83,45 +82,25 @@
                 sidebar = 'hidden';
             }
             sidebar_toggle.checked = sidebar === 'visible';
-            body.classList.remove('sidebar-visible');
-            body.classList.add("sidebar-" + sidebar);
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="title-page.html">Getting Things Done in Next.js</a></li><li class="chapter-item expanded affix "><a href="introduction.html">Introduction</a></li><li class="chapter-item expanded affix "><a href="acknowledgments.html">Acknowledgments</a></li><li class="chapter-item expanded "><a href="chapter1/index.html"><strong aria-hidden="true">1.</strong> A Brief Introduction to JavaScript</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter1/01-hello-world.html"><strong aria-hidden="true">1.1.</strong> Hello World</a></li><li class="chapter-item expanded "><a href="chapter1/02-primitive-data-types.html"><strong aria-hidden="true">1.2.</strong> Primitive Data Types</a></li><li class="chapter-item expanded "><a href="chapter1/03-arrays-and-objects.html"><strong aria-hidden="true">1.3.</strong> Arrays and Objects</a></li><li class="chapter-item expanded "><a href="chapter1/04-control-flow.html"><strong aria-hidden="true">1.4.</strong> Control Flow</a></li><li class="chapter-item expanded "><a href="chapter1/05-functions.html"><strong aria-hidden="true">1.5.</strong> Functions</a></li><li class="chapter-item expanded "><a href="chapter1/06-error-handling.html"><strong aria-hidden="true">1.6.</strong> Error Handling</a></li><li class="chapter-item expanded "><a href="chapter1/07-basic-datastructures.html"><strong aria-hidden="true">1.7.</strong> Basic Data Structures</a></li><li class="chapter-item expanded "><a href="chapter1/08-functional-thinking.html"><strong aria-hidden="true">1.8.</strong> Functional Thinking</a></li><li class="chapter-item expanded "><a href="chapter1/09-asynchronous-programming.html"><strong aria-hidden="true">1.9.</strong> Asynchronous Programming</a></li><li class="chapter-item expanded "><a href="chapter1/10-modules.html"><strong aria-hidden="true">1.10.</strong> Modules</a></li><li class="chapter-item expanded "><a href="chapter1/11-packages.html"><strong aria-hidden="true">1.11.</strong> Packages</a></li><li class="chapter-item expanded "><a href="chapter1/12-writing-decent-code.html"><strong aria-hidden="true">1.12.</strong> Writing Decent Code</a></li></ol></li><li class="chapter-item expanded "><a href="chapter2/index.html"><strong aria-hidden="true">2.</strong> Leveling Up with TypeScript</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter2/01-why-typescript.html"><strong aria-hidden="true">2.1.</strong> Why TypeScript?</a></li><li class="chapter-item expanded "><a href="chapter2/02-basic-types.html"><strong aria-hidden="true">2.2.</strong> Basic Types</a></li><li class="chapter-item expanded "><a href="chapter2/03-annotating-functions.html"><strong aria-hidden="true">2.3.</strong> Annotating Functions</a></li><li class="chapter-item expanded "><a href="chapter2/04-union-types.html"><strong aria-hidden="true">2.4.</strong> Union Types</a></li><li class="chapter-item expanded "><a href="chapter2/05-generics.html"><strong aria-hidden="true">2.5.</strong> Generics</a></li><li class="chapter-item expanded "><a href="chapter2/06-configuring-typescript.html"><strong aria-hidden="true">2.6.</strong> Configuring TypeScript</a></li></ol></li><li class="chapter-item expanded "><a href="chapter3/index.html"><strong aria-hidden="true">3.</strong> Networking Fundamentals</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter3/01-ips-ports-and-domains.html"><strong aria-hidden="true">3.1.</strong> IPs, Ports and Domains</a></li><li class="chapter-item expanded "><a href="chapter3/02-an-http-primer.html"><strong aria-hidden="true">3.2.</strong> An HTTP Primer</a></li><li class="chapter-item expanded "><a href="chapter3/03-more-on-http.html"><strong aria-hidden="true">3.3.</strong> More on HTTP</a></li></ol></li><li class="chapter-item expanded "><a href="chapter4/index.html"><strong aria-hidden="true">4.</strong> Persistence with SQL</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter4/01-setup.html"><strong aria-hidden="true">4.1.</strong> Setup</a></li><li class="chapter-item expanded "><a href="chapter4/02-data-types-and-constraints.html"><strong aria-hidden="true">4.2.</strong> Data Types and Constraints</a></li><li class="chapter-item expanded "><a href="chapter4/03-inserting-updating-and-deleting-data.html"><strong aria-hidden="true">4.3.</strong> Inserting, Updating and Deleting Data</a></li><li class="chapter-item expanded "><a href="chapter4/04-selecting-data.html"><strong aria-hidden="true">4.4.</strong> Selecting Data</a></li><li class="chapter-item expanded "><a href="chapter4/05-modifying-tables.html"><strong aria-hidden="true">4.5.</strong> Modifying Tables</a></li><li class="chapter-item expanded "><a href="chapter4/06-working-with-multiple-tables.html"><strong aria-hidden="true">4.6.</strong> Working with Multiple Tables</a></li></ol></li><li class="chapter-item expanded "><a href="chapter5/index.html"><strong aria-hidden="true">5.</strong> Typesafe SQL with Drizzle</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter5/01-setup.html"><strong aria-hidden="true">5.1.</strong> Setup</a></li><li class="chapter-item expanded "><a href="chapter5/02-inserting-updating-and-deleting-data.html"><strong aria-hidden="true">5.2.</strong> Inserting, Updating and Deleting Data</a></li><li class="chapter-item expanded "><a href="chapter5/03-selecting-data.html"><strong aria-hidden="true">5.3.</strong> Selecting Data</a></li><li class="chapter-item expanded "><a href="chapter5/04-multiple-tables.html"><strong aria-hidden="true">5.4.</strong> Multiple Tables</a></li><li class="chapter-item expanded "><a href="chapter5/05-migrations.html"><strong aria-hidden="true">5.5.</strong> Migrations</a></li></ol></li><li class="chapter-item expanded "><a href="chapter6/index.html"><strong aria-hidden="true">6.</strong> A Vanilla Client</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter6/01-hypertext-markup-language.html"><strong aria-hidden="true">6.1.</strong> Hypertext Markup Language</a></li><li class="chapter-item expanded "><a href="chapter6/02-marking-up-text.html"><strong aria-hidden="true">6.2.</strong> Marking Up Text</a></li><li class="chapter-item expanded "><a href="chapter6/03-hyperlinks-and-images.html"><strong aria-hidden="true">6.3.</strong> Hyperlinks and Images</a></li><li class="chapter-item expanded "><a href="chapter6/04-the-document-object-model.html"><strong aria-hidden="true">6.4.</strong> The Document Object Model</a></li><li class="chapter-item expanded "><a href="chapter6/05-events.html"><strong aria-hidden="true">6.5.</strong> Events</a></li><li class="chapter-item expanded "><a href="chapter6/06-web-forms.html"><strong aria-hidden="true">6.6.</strong> Web Forms</a></li><li class="chapter-item expanded "><a href="chapter6/07-a-simple-client.html"><strong aria-hidden="true">6.7.</strong> A Simple Client</a></li></ol></li><li class="chapter-item expanded "><a href="chapter7/index.html"><strong aria-hidden="true">7.</strong> Adding Spice with React</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter7/01-react-components.html"><strong aria-hidden="true">7.1.</strong> React Components</a></li><li class="chapter-item expanded "><a href="chapter7/02-react-state.html"><strong aria-hidden="true">7.2.</strong> React State</a></li><li class="chapter-item expanded "><a href="chapter7/03-react-effects.html"><strong aria-hidden="true">7.3.</strong> React Effects</a></li></ol></li><li class="chapter-item expanded "><a href="chapter8/index.html"><strong aria-hidden="true">8.</strong> Moving to the Server with Next.js</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter8/01-setup.html"><strong aria-hidden="true">8.1.</strong> Setup</a></li><li class="chapter-item expanded "><a href="chapter8/02-pages-and-layouts.html"><strong aria-hidden="true">8.2.</strong> Pages and Layouts</a></li><li class="chapter-item expanded "><a href="chapter8/03-more-on-routes.html"><strong aria-hidden="true">8.3.</strong> More on Routes</a></li><li class="chapter-item expanded "><a href="chapter8/04-server-and-client-components.html"><strong aria-hidden="true">8.4.</strong> Server and Client Components</a></li></ol></li><li class="chapter-item expanded "><a href="chapter9/index.html"><strong aria-hidden="true">9.</strong> Becoming Pretty with Tailwind CSS</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter9/01-setup.html"><strong aria-hidden="true">9.1.</strong> Setup</a></li><li class="chapter-item expanded "><a href="chapter9/02-typography-utilities.html"><strong aria-hidden="true">9.2.</strong> Typography Utilities</a></li><li class="chapter-item expanded "><a href="chapter9/03-background-utilities.html"><strong aria-hidden="true">9.3.</strong> Background Utilities</a></li><li class="chapter-item expanded "><a href="chapter9/04-size-utilities.html"><strong aria-hidden="true">9.4.</strong> Size Utilities</a></li><li class="chapter-item expanded "><a href="chapter9/05-border-utilities.html"><strong aria-hidden="true">9.5.</strong> Border Utilities</a></li><li class="chapter-item expanded "><a href="chapter9/06-spacing-utilities.html"><strong aria-hidden="true">9.6.</strong> Spacing Utilities</a></li><li class="chapter-item expanded "><a href="chapter9/07-flexbox.html"><strong aria-hidden="true">9.7.</strong> Flexbox</a></li><li class="chapter-item expanded "><a href="chapter9/08-grid.html"><strong aria-hidden="true">9.8.</strong> Grid</a></li></ol></li><li class="chapter-item expanded "><a href="chapter10/index.html"><strong aria-hidden="true">10.</strong> The Project</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter10/01-setup.html"><strong aria-hidden="true">10.1.</strong> Setup</a></li><li class="chapter-item expanded "><a href="chapter10/02-authentication.html"><strong aria-hidden="true">10.2.</strong> Authentication</a></li><li class="chapter-item expanded "><a href="chapter10/03-the-projects-page.html"><strong aria-hidden="true">10.3.</strong> The Projects Page</a></li><li class="chapter-item expanded "><a href="chapter10/04-task-page.html"><strong aria-hidden="true">10.4.</strong> Task Page</a></li><li class="chapter-item expanded "><a href="chapter10/05-deployment.html"><strong aria-hidden="true">10.5.</strong> Deployment</a></li></ol></li></ol>
-            </div>
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
             </div>
         </nav>
 
-        <!-- Track and set sidebar scroll position -->
-        <script>
-            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
-            sidebarScrollbox.addEventListener('click', function(e) {
-                if (e.target.tagName === 'A') {
-                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
-                }
-            }, { passive: true });
-            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
-            sessionStorage.removeItem('sidebar-scroll');
-            if (sidebarScrollTop) {
-                // preserve sidebar scroll position when navigating via links within sidebar
-                sidebarScrollbox.scrollTop = sidebarScrollTop;
-            } else {
-                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
-                var activeSection = document.querySelector('#sidebar .active');
-                if (activeSection) {
-                    activeSection.scrollIntoView({ block: 'center' });
-                }
-            }
-        </script>
-
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky">
                     <div class="left-buttons">
                         <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -4214,58 +4193,97 @@ They can also be virtual, i.e. only exist in software.</p>
 <h3 id="protocols"><a class="header" href="#protocols">Protocols</a></h3>
 <p>A <strong>protocol</strong> defines the rules by which computers communicate.
 Protocols allow computer to "speak the same language".</p>
-<p>The internet knows a lot of different protocols - from really common ones like IP, HTTP or DNS to really exotic ones that are only relevant for a select group of specialists.</p>
-<p>If you go to <code>www.google.com</code>, you will see that your browser actually navigates you to <code>https://www.google.com/</code>.
-In this case the underlying protocol is HTTPS.</p>
+<p>The internet knows a lot of different protocols—from really common ones like IP, HTTP, HTTPS or DNS to really exotic ones that are only relevant for a select group of specialists.</p>
+<p>For example, if you're browsing <code>http://example.com</code>, the underlying protocol is HTTP.
+Similarly, if your browse <code>https://www.google.com/</code>, the underlying protocol is HTTPS.</p>
+<p>Protocols can also use other protocols.
+For example, the HTTP protocol uses the TCP protocol which in turn uses the IP protocol.</p>
 <h3 id="the-ip-protocol"><a class="header" href="#the-ip-protocol">The IP Protocol</a></h3>
-<p>An IP address is an identifier that is assigned to a network interface on your computer.
-For example, your wireless network interface might have an IP address that it can use to communicate with other computers on the same wireless network.</p>
+<p>The <strong>IP protocol</strong> powers a large portion of the modern web.
+Its most important concept is the so-called IP address.</p>
 <blockquote>
-<p>Note that we will only talk about the IPv4 protocol and ignore the IPv6 protocol.</p>
+<p>Note that there are two versions of the IP protocol—the IPv4 protocol and the IPv6 protocol.
+We will only talk about the IPv4 protocol and ignore the IPv6 protocol in this book.</p>
 </blockquote>
+<p>An <strong>IPv4 address</strong> (or simply <strong>IP</strong> for short) is an identifier that is assigned to a network interface on your computer.
+For example, your wireless network interface might have an IPv4 address that it can use to communicate with other computers on the same wireless network.</p>
 <p>Such an address consists of 4 numbers between 0 and 255, separated by dots.
-Example addresses might be <code>123.56.1.17</code> or <code>192.168.178.47</code>.</p>
-<p>A special IP address is <code>127.0.0.1</code> which can be used to identify the machine you're currently on.
-For example, if you run a web server on your computer, you could access it at <code>127.0.0.1</code>.</p>
-<p>Note that instead of saying that a network interface has a particular IP, we will often say that a computer has some IP.
-This is because often we only really care about a particular interface (usually your wireless interface).
-However, it is important to understand that diffent network interfaces will usually have different IP addresses even if they are located on the same machine.</p>
+Therefore, example addresses might be <code>123.56.1.17</code> or <code>192.168.178.47</code>.</p>
+<p>Note that instead of saying that a <em>network interface has a particular IP</em>, we will often say that <em>a computer has some IP</em>.
+This is because often we only really care about a particular interface (usually your Ethernet or your wireless interface).
+However, it is important to understand that diffent network interfaces will usually have different IP addresses even if they're located on the same machine.</p>
+<p>The <strong>loopback address</strong> <code>127.0.0.1</code> is a special IP address which can be used to identify the machine you're currently on.
+You can basically use this to talk to your own computer.
+For example, if you run a local web server, you could access it at <code>127.0.0.1</code>.</p>
+<p>Additionally, some IP addresses are designated as <strong>private addresses</strong>, i.e. they can only appear on local networks and can't be used on the public internet.
+The Internet Assigned Number Authority (IANA) has reserved the following blocks of IP addresses for private networks:</p>
+<ul>
+<li><code>10.0.0.0-10.255.255.255</code></li>
+<li><code>172.16.0.0-172.31.255.255</code></li>
+<li><code>192.168.0.0-192.168.255.255</code></li>
+</ul>
+<p>This has the important consequence that if you're on a local network you usually won't be able to access a machine from another local network using its private address.
+For example, let's say that you're in your home network and you've finally managed to host a web server on your machine which has the IP address <code>172.16.32.155</code>.
+Full of excitement, you send a link to your friend Alice (who is on <em>her</em> home network), only for her to tell you that she can't reach your IP address.
+The problem is that your machine is only reachable at <code>172.16.32.155</code> <em>from your home network</em> and can't be reached under that address from any other network.</p>
+<p>Therefore, if you want your machine to be reachable from anywhere it needs to have a <strong>public address</strong>.
+A public address is basically any address that hasn't been explicitly marked as private.
+For example, <code>142.251.37.14</code> is a public address since it's not in one of the private address blocks.</p>
+<blockquote>
+<p>There are a few other special address blocks like the "link local" block.
+However they won't be important for this book and therefore we'll simply skip over them.</p>
+</blockquote>
 <h3 id="ports"><a class="header" href="#ports">Ports</a></h3>
 <p>Usually you want to be able to run multiple networking services on your machine.
-This is enabled by ports.</p>
-<p>A <strong>port</strong> is simply a number assigned to uniquely identify a connection endpoint on a machine.
+This poses the problem of <em>uniquely identifying</em> those services.
+After all, if the all share the same IP, how can we distinguish them from one another?</p>
+<p>The answer is that we can use <strong>ports</strong>.
+A port is simply a number assigned to uniquely identify a connection endpoint on a machine.
 For example, you might have a web service running on port <code>443</code> and an ssh service on port <code>22</code>.</p>
 <blockquote>
 <p>The <code>ssh</code> protocol allows you to remotely log in to a computer and execute commands on it.</p>
 </blockquote>
-<p>These two services might run on the same computer with the same IP, because they can be distinguished by their port numbers.</p>
-<p>If you want to specify the IP and port together, you use the colon <code>:</code> notation.
-For example, if you have an HTTPS web server running on IP <code>123.56.1.17</code> and port <code>443</code>, you would say that it's located at <code>123.56.1.17:443</code> (more specifically on <code>https://123.56.1.17:443</code>).</p>
-<p>Similarly, if you start an HTTP web server locally (i.e. on <code>127.0.0.1</code>) on port <code>3000</code>, you could access it at <code>127.0.0.1:3000</code> (more specifically on <code>http://127.0.0.1:3000</code>).</p>
-<p>There is a list of "well-known ports".
+<p>These two services might run on the same computer with the same IP, but they can still be distinguished from one another, because they have different port numbers.</p>
+<p>If you want to specify an IP and a port together, you use the colon <code>:</code> notation.
+For example, if you have an HTTPS web server running on a machine with the IP <code>123.56.1.17</code> and the assigned port <code>443</code>, the web server would be reachable at <code>123.56.1.17:443</code>.</p>
+<blockquote>
+<p>If we add the protocol (HTTPS), we would get the correct URL for the web server, which would be <code>https://123.56.1.17:443</code>.
+We will talk about URLs in a second.</p>
+</blockquote>
+<p>Similarly, if you start an HTTP web server locally (i.e. on <code>127.0.0.1</code>) on port <code>80</code>, you could access it at <code>127.0.0.1:80</code>.</p>
+<blockquote>
+<p>If we add the protocol (HTTP), we would get the correct URL for the web server, which would be <code>http://127.0.0.1:80</code>.
+We will talk about URLs in a second.</p>
+</blockquote>
+<p>There is a list of <strong>well-known ports</strong>.
 For example, an <code>http</code> application typically runs on port <code>80</code> while an <code>https</code> application typically runs on port <code>443</code>.
-This is why you don't need to explicitly tell your browser that <code>google.com</code> can be found at port <code>443</code> - it will figure that out automatically.</p>
+This is why you don't need to explicitly tell your browser that <code>google.com</code> can be found at port <code>443</code>—your web browser will figure this out automatically because <code>443</code> is a well-known port.</p>
 <blockquote>
 <p>During development we will not follow this convention and mostly run our applications on port <code>3000</code>.
 This is because you don't need special "root" permissions to run something on port <code>3000</code>.
-Typically, ports below <code>1024</code> are considered "privileged" and require these special permissions.</p>
+Typically, ports below <code>1024</code> are considered "privileged" and require these special permissions.
+However, when we deploy our final application, it will run on the well-known port <code>443</code>.</p>
 </blockquote>
 <h3 id="domains"><a class="header" href="#domains">Domains</a></h3>
 <p>While IP addresses are great, they are very unwieldy and hard to remember for humans.
-Imagine that instead of "just google it" or "go to <code>google.com</code>" you would have to tell someone to go to <code>142.251.37.14</code>.</p>
+Imagine that instead of "just google it" or "go to <code>google.com</code>" you would have to tell someone to "go to <code>142.251.37.14</code>".
+That would suck!</p>
 <p>This why the concept of a <strong>domain</strong> was introduced.
-A domain (or <em>domain name</em>) is a string that identifies some network resource and usually has a corresponding IP address.</p>
+A domain is a string that identifies some network resource.
+In our neat and tidy web development world, a domain usually has a corresponding IP address.</p>
 <p>For example, the domain <code>google.com</code> might correspond to the IP address <code>142.251.37.14</code>.
 That is, you can identify the resource either via <code>google.com</code> or via <code>142.251.37.14</code>.</p>
 <p>The translation of domains to IP adresses is handled by the <strong>Domain Name System</strong> (DNS) protocol.
 If you type <code>google.com</code> into your browser address bar, DNS will translate it to the correct IP under the hood.</p>
 <blockquote>
-<p>The reality is much more complicated.
-A single domain can correspond to many IP addresses for load balancing reasons etc.
-Nevertheless, this is a useful mental model to have.</p>
+<p>The reality is much more complicated and involves something called DNS records.
+This means that domains can have IPv4 addressess, IPv6 addresses, mail addresses etc.
+Domains can also be forwarded to other domains with so called CNAME records.
+The picture becomes even more complicated once we go into load balancing.
+Nevertheless, for our purposes the mental model of "there are domains and they correspond to IP addresses" is enough.</p>
 </blockquote>
 <p>A special domain is <code>localhost</code> which resolves to <code>127.0.0.1</code>.</p>
-<p>This means that if you want to access a locally running HTTP web server on port <code>3000</code>, you would need to go to <code>localhost:3000</code> (more specifically <code>http://localhost:3000</code>).</p>
+<p>This means that if you want to access a locally running HTTP web server on port <code>3000</code>, you would need to go to <code>localhost:3000</code> or, more specifically, <code>http://localhost:3000</code>.</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="an-http-primer"><a class="header" href="#an-http-primer">An HTTP Primer</a></h2>
 <div style="text-align: right"> <i> Meh, who needs HTTPS. <br> — Seconds before disaster </i> </div>
 <h3 id="servers-and-clients"><a class="header" href="#servers-and-clients">Servers and Clients</a></h3>
@@ -4276,33 +4294,38 @@ A client might be a browser on your laptop or your phone - it might even be a re
 <p>Often, the term "server" is also used to refer to the actual machine the software is running on.</p>
 </blockquote>
 <p>The distinction between a client and a server is extremely important, because the location of our code (i.e. whether it's on the client or the server) will determine <em>what features we can use</em>.
-We alredy mentioned this in the JavaScript chapter.</p>
-<p>For example, if your code runs on the client, you don't have access to the filesystem etc.
-But you do have access to the browser features.
-For example, you could add a new element, get the size of the browser windows etc.</p>
-<p>If your code runs on the server, you do have access to the filesystem, but you no longer have access to the browser features.
-You quite logically can't get the size of the browser window on the server.</p>
+We've already mentioned this in the JavaScript chapter.</p>
+<p>For example, if your code runs on the client, you won't (for example) have access to the filesystem.
+However, you will have access to various browser features.
+For instance, you could add a new element, get the size of the browser window and so on.</p>
+<p>If your code runs on the server, you will have access to the filesystem, but you won't have access to the browser features.
+This makes sense since the browser is running on your client and the server (mostly) doesn't have access to it.</p>
 <p>This also means that we will often need to transmit data from the client to the server (and the other way around).
-When writing a web application, the most common way to do so is by using the HTTP procotol.
-HTTP is a <strong>request/response protocol</strong>, i.e. HTTP clients send requests to an HTTP server and receive responses in return.</p>
+When writing a web application, the most common way to do so is by using the HTTP procotol.</p>
+<h2 id="requests-and-responses"><a class="header" href="#requests-and-responses">Requests and Responses</a></h2>
+<p>The <strong>HTTP protocol</strong> is a <strong>request/response protocol</strong>, i.e. HTTP clients send requests to an HTTP server and receive responses in return.</p>
 <blockquote>
 <p>You have in fact already used the HTTP protocol.
 Pretty much every time you browse the internet, HTTP requests are sent under the hood.</p>
 </blockquote>
 <p>The usual request-response lifecycle looks like this:</p>
-<p>The user interacts with your web application, e.g. by submitting a form, clicking a button etc.</p>
-<p>The client then send an HTTP request to the server that contains information about resources to retrieve, data to send etc.</p>
-<p>The server receives the request, reads its data and then performs appropriate calculations, database queries and so on.
+<p>First, the user interacts with your web application, e.g. by submitting a form, clicking a button etc.</p>
+<p>Second, the client sends an HTTP request to the server that contains information about resources to retrieve, data to send etc.</p>
+<p>Third, the server receives the request, reads its data and then performs appropriate calculations, database queries and so on.
 Afterwards, the server creates a response and sends it back to the client.</p>
-<p>Finally, the client looks at the response and determines how to update the UI (user interface).</p>
-<p>We should mention that nowadays developers rarely use plain HTTP in production.
-Instead, they use HTTPS, which is encrypted HTTP.
-However, we won't cover HTTPS in detail, since that will automatically be handled for us by our deployment process.</p>
+<p>And, finally, the client looks at the response and determines how to update the UI (user interface).</p>
+<h2 id="https"><a class="header" href="#https">HTTPS</a></h2>
+<p>We should mention that nowadays developers never use plain HTTP in production.
+Instead, they use the <strong>HTTPS protocol</strong>, which is encrypted HTTP.</p>
+<p>HTTPS basically wraps HTTP in a layer of <em>encryption</em> using a method called <strong>TLS (Transport Layer Security)</strong>.
+This allows <em>encrypting</em> your traffic such that an adversary spying on your network won't be able to read the content you're sending over the network.
+This is a really good thing especially if we're talking something like your bank passwords—you certainly want to keep that information protected!</p>
+<p>We won't cover HTTPS in more detail, since that will automatically be handled for us by our web hosting provider that we will use later on.</p>
 <h3 id="http-and-express"><a class="header" href="#http-and-express">HTTP and Express</a></h3>
 <p>We could use the built-in HTTP module of Node.js, but this is not terribly convenient.
 Instead we will use an extremely popular framework called <strong>Express</strong>.
 While Express builds on top of the HTTP module, it provides a lot of additional useful functionality.</p>
-<p>Create a new Node.js project inside some directory:</p>
+<p>Create a new Node.js project inside a directory on your computer:</p>
 <pre><code class="language-shell">pnpm init
 </code></pre>
 <p>Install Express:</p>
@@ -4320,7 +4343,7 @@ app.listen(PORT, () =&gt; {
 });
 </code></pre>
 <p>This application is not very useful, so let's add a <strong>route</strong> to it.
-Add this above the call to <code>listen</code>:</p>
+Add the following code above the call to <code>listen</code>:</p>
 <pre><code class="language-javascript">app.get('/', (req, res) =&gt; {
   res.send('Hello, world!');
 });
@@ -4336,11 +4359,11 @@ Among other things it supports HTTP and is available on pretty much every mainst
 <p>Open a command line and run:</p>
 <pre><code class="language-shell">curl http://localhost:3000/
 </code></pre>
-<p>The will output the following:</p>
+<p>This will output the following:</p>
 <pre><code>Hello, world!
 </code></pre>
 <h3 id="http-urls"><a class="header" href="#http-urls">HTTP URLs</a></h3>
-<p>The string <code>http://localhost:3000/</code> is a so called URL.
+<p>The string <code>http://localhost:3000/</code> is a so-called URL.
 You have already seen URLs in the previous section.</p>
 <p>Navigate to Google and search for "Next.js" - you will notice that the URL in your browser looks like this:</p>
 <pre><code>https://www.google.com/search?q=nextjs
@@ -4357,33 +4380,35 @@ HTTP URLs (and especially more general URLs) can become <em>much more</em> compl
 In fact the complexity of URLs is often a source of subtle bugs and browser crashes.
 For example - at some point Android Chrome would <a href="https://news.ycombinator.com/item?id=28639708">crash</a> when trying to open <code>http://../foo</code>.</p>
 </blockquote>
+<p>Let's go over the individual component of a typical URL one by one.</p>
 <p>The <strong>scheme</strong> usually indicates the protocol which describes how information should be transmitted.
-We will almost exclusively use HTTP or HTTPS (which is just secure HTTP) in this book.
-Therefore the scheme will almost always be either <code>http</code> or <code>https</code>.
+We will almost exclusively use HTTP or HTTPS in this book.
+Therefore, the scheme will almost always be either <code>http</code> or <code>https</code>.
 In the above Google URL the scheme is clearly <code>https</code>.</p>
-<p>You already learned about the <strong>host</strong> and the <strong>port</strong> - the host identifies the device you wish to connect to and the port is the communication endpoint on that device.
-Note that the host could be a domain name (like <code>www.google.com</code>) or an IP address (like <code>142.251.36.238</code>).
-Usually we will work with domain names since they are stable (unlike a lot of IP addresses).</p>
+<p>You already learned about the <strong>host</strong> and the <strong>port</strong>—the host identifies the device you wish to connect to and the port is the communication endpoint on that device.
+Note that the host could be a domain (like <code>www.google.com</code>) or an IP address (like <code>142.251.36.238</code>).
+Usually we will work with domains since they're stable and rarely change (unlike IP addresses).</p>
 <blockquote>
-<p>At the time of this writing 142.251.36.238 is one of Google's IP addresses.
+<p>At the time of this writing <code>142.251.36.238</code> is one of Google's IP addresses.
 This may of course change by the time you are reading this book.</p>
 </blockquote>
 <p>The next part is the <strong>path</strong>.
-Assuming it is not empty, the path begins with a forward slash <code>/</code> and uniquely identifies the resource we want to query.
-In the Google URL the path is <code>/search</code>.
-Often paths will be hierarchical.
-In this case the different components of the hierarchy are generally separated by slashes - for example <code>/path/to/resource</code>.</p>
+Assuming it's not empty, the path begins with a forward slash <code>/</code> and uniquely identifies the resource we want to query.
+In the Google URL the path is <code>/search</code>.</p>
+<p>Often, paths will be hierarchical.
+In this case the different components of the hierarchy are generally separated by slashes—for example, <code>/path/to/resource</code>.</p>
 <p>The path can be followed by a <strong>query</strong>.
 The query begins with a question mark and is followed by key-value pairs.
 In the Google URL this is <code>?q=nextjs</code>.
-Here the query provides information about your search.
-If there are multiple key-value pairs, they are separated by ampersands <code>&amp;</code>.
-For example the query could be <code>?key1=value1&amp;key2=value2</code>.</p>
+Here the query provides information about your search.</p>
+<p>If there are multiple key-value pairs, they're separated by ampersands <code>&amp;</code>.
+For example, a query might look like <code>?key1=value1&amp;key2=value2</code>.</p>
 <p>The query can be followed by a <strong>fragment</strong>.
-This is used for navigation by the client and is not sent to server.</p>
+This is used for navigation by the client and is not sent to the server.
+A fragment begins with the <code>#</code> character, e.g. <code>?key1=value1&amp;key2=value2#fragment</code>.</p>
 <h3 id="get-and-post-requests"><a class="header" href="#get-and-post-requests">GET and POST requests</a></h3>
 <p>HTTP knows multiple <strong>request methods</strong>.
-We primarily care about two request methods for now - namely <strong>GET</strong> and <strong>POST</strong>.</p>
+We primarily care about two request methods for now—namely <strong>GET</strong> and <strong>POST</strong>.</p>
 <p>GET requests are generally used to retrieve data.</p>
 <p>Recall our route from above:</p>
 <pre><code class="language-javascript">app.get('/', (req, res) =&gt; {
@@ -4394,9 +4419,9 @@ We primarily care about two request methods for now - namely <strong>GET</strong
 The <code>req</code> variable represents the <strong>request object</strong> and <code>res</code> represents the <strong>response object</strong>.
 If we want to send a HTTP response to the client we use the <code>res.send</code> method.</p>
 <p>POST requests are generally used to send information to the server that tell it to create a new resource or update an existing resource.
-For example a login request will generally be a POST request since it tells the server that a user has logged in to the application.
+For example, a login request will generally be a POST request since it tells the server that a user has logged in to the application.
 Similarly, if you submit a web form, there will usually be a POST request attached to that, since form submissions carry new information.</p>
-<p>With POST requests, we are more interested in telling the server that something happened than in the data the server returns to us.</p>
+<p>With POST requests, we're more interested in telling the server that something happened than in the data the server returns to us.</p>
 <p>POST requests usually need to send much more information to the server than GET requests.
 Therefore, POST requests can have a <strong>request body</strong> which allows us to carry this additional data when sending a request.</p>
 <p>Let's have a look at an example.
@@ -4414,24 +4439,55 @@ In addition we specify the data that we want to send in the <em>body</em> of the
 Finally we specify a header called <code>Content-Type</code> and set it to <code>text/plain</code>.
 This indicates that the data we want to send is plain text.</p>
 <p>The final command looks like this:</p>
-<pre><code>curl -X POST -H "Content-Type: text/plain" -d 'haha' http://localhost:3000/post-example
+<pre><code class="language-sh">curl -X POST -H "Content-Type: text/plain" -d 'test' http://localhost:3000/post-example
 </code></pre>
-<p>Generally speaking GET requests transmit information using the querystring, while POST requests transmit information in the request body.</p>
+<p>Generally speaking, GET requests transmit information in the URL, while POST requests transmit information in the request body.</p>
 <p>Note that we will rarely send plain text in the request.
-Instead we the JSON format that we introduced in the JavaScript chapter.</p>
+Instead we usually use the JSON format that we introduced in the JavaScript chapter.</p>
 <p>In order to accept JSON requests, we need to replace the <code>express.text</code> middleware with the <code>express.json</code> middleware:</p>
-<pre><code class="language-json">app.use(express.json());
+<pre><code class="language-js">app.use(express.json());
 </code></pre>
-<p>Now we can curl the same path like this:</p>
-<pre><code>curl -X POST -H "Content-Type: application/json" -d '{ "key": "value" }' http://localhost:3000/post-example
+<p>Now we can curl the <code>/post-example</code> path like this:</p>
+<pre><code class="language-sh">curl -X POST -H "Content-Type: application/json" -d '{ "key": "value" }' http://localhost:3000/post-example
 </code></pre>
-<p>Note that here we specify the <code>application/json</code> content type.</p>
+<p>Note that here we need specify the <code>application/json</code> content type instead of the <code>text/plain</code> content type.</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="more-on-http"><a class="header" href="#more-on-http">More on HTTP</a></h2>
 <div style="text-align: right"> <i> Just return a 200 here, it will be fine. <br> — Seconds before disaster </i> </div>
 <h3 id="status-codes"><a class="header" href="#status-codes">Status Codes</a></h3>
-<p>Responses can have status codes attached to them.
+<p>Responses can have <strong>status codes</strong> attached to them.
 These indicate the status of a request.</p>
-<p>For example, a status <code>400</code> means <code>Bad Request</code>, the famous status <code>404</code> means <code>Not Found</code> and <code>500</code> stands for <code>Internal Server Error</code>.</p>
+<p>Each status code is a number that indicates some information about the response.
+For example, a the status code <code>400</code> represents <code>Bad Request</code>.</p>
+<p>There are a lot of status code and they're grouped in five classes:</p>
+<ul>
+<li>the status codes <code>100-199</code> indicate informational responses (and you'll rarely see them)</li>
+<li>the status codes <code>200-299</code> indicate successfull responses</li>
+<li>the status codes <code>300-399</code> indicate redirection responses</li>
+<li>the status codes <code>400-499</code> indicate client errors</li>
+<li>the status codes <code>500-599</code> indicate server errors</li>
+</ul>
+<p>Quoting the famous <a href="https://www.reddit.com/r/ProgrammerHumor/comments/2rttnv/http_status_ranges_in_a_nutshell/">HTTP status ranges in a nutshell</a>, you could also rephrase this as:</p>
+<ul>
+<li><code>100-199</code>: hold on</li>
+<li><code>200-299</code>: here you go</li>
+<li><code>300-399</code>: go away</li>
+<li><code>400-499</code>: you fucked up</li>
+<li><code>500-599</code>: I fucked up</li>
+</ul>
+<p>Let's have a quick look at the most important status codes.</p>
+<p>The status code <code>200</code> (<code>OK</code>) is the standard response for a successful HTTP request.</p>
+<p>The status code <code>400</code> (<code>Bad Request</code>) means that the server can't process the request due to a client error.
+For example, a <code>400</code> should be returned if the client has provided the server with a malformed request.</p>
+<p>The status code <code>401</code> (<code>Unauthorized</code>) usually means that the client couldn't be successfully authenticated.</p>
+<p>The status code <code>403</code> (<code>Forbidden</code>) usually menas that the client doesn't have the necessary right to access the requested content.
+Note that there is an important difference between <code>401</code> and <code>403</code>.
+The code <code>401</code> means that the client couldn't be authenticated <em>at all</em>, the code <code>403</code> means that the client could be authenticated, but doesn't have relevant access rights.</p>
+<p>You've probably heard of the most famous status code <code>404</code> (<code>Not Found</code>).
+As the name already says, this means that the server can't find the requested resource (for example, because the resource doesn't exist).</p>
+<p>The status code <code>405</code> (<code>Method Not Allowed</code>) means that the resource exists, but the client is trying to access it using the wrong method.
+This occurs if, for example, a client is trying to send a <code>GET</code> request to a route that only supports <code>POST</code> requests.</p>
+<p>The most important status codes for server errors are <code>500</code> (<code>Internal Server Error</code>) and <code>503</code> (<code>Service Unavailable</code>).
+The status code <code>500</code> basically indicates a server crash, while <code>503</code> indicates that the server is overloaded.</p>
 <p>Here is how you can manually return a status code in Express:</p>
 <pre><code class="language-js">app.post('/', (req, res) =&gt; {
   const data = req.body;
@@ -4452,7 +4508,7 @@ For example, you can <code>curl</code> the endpoint with an empty object like th
 <pre><code>Bad Request: No data provided
 Status: 400
 </code></pre>
-<p>You can <code>curl</code> the endpoint with a non-empty object like this:</p>
+<p>Let's also <code>curl</code> the endpoint with a non-empty object like this:</p>
 <pre><code class="language-sh">curl -X POST -H "Content-Type: application/json" -d '{"key": "value"}' -w '\nStatus: %{http_code}' http://localhost:3000
 </code></pre>
 <p>The output would be:</p>
@@ -4507,17 +4563,105 @@ Keep-Alive: timeout=5
 
 Received data: {}
 </code></pre>
-<p>Note that express already sets quite a few response headers by default.</p>
+<p>Note that <code>express</code> (and other web framework) already sets quite a few response headers by default.</p>
 <blockquote>
 <p>You can also see the response headers in the network tab of your browser if you click on an individual request.</p>
 </blockquote>
 <h3 id="cookies"><a class="header" href="#cookies">Cookies</a></h3>
 <p>HTTP <strong>cookies</strong> are pieces of data that are created by the server, sent to the browser and then saved on the browser.
-Cookies can be used for things like authentication.</p>
+Cookies can be used for things like authentication, personalization and tracking.</p>
 <p>For example, the server might generate a cookie for a logged in user, send it to the browser and then the browser could send the cookie with each request (avoiding the need for the user to log in on every request).</p>
 <p>Note that cookies are simply set as part of the headers.
-For example, a request might contain a "Cookie" header containing the cookies it has currently stored.
-A response might contain a "Set-Cookie" header which contains the cookies that the browser should set (or clear).</p>
+For example, a request might contain a <code>Cookie</code> header containing the cookies it has currently stored.
+A response might contain a <code>Set-Cookie</code> header which contains the cookies that the browser should set (or clear).</p>
+<p>Let's have a look at a small example.
+First, we'll need to install the <code>cookie-parser</code> package in addition to the <code>express</code> package:</p>
+<pre><code class="language-sh">pnpm install -g cookie-parser
+</code></pre>
+<p>Next, we will create an <code>express</code> application with three routes.
+The first route will be a <code>/set-cookie</code> route that will allow us to set a cookie.
+The second route will be a <code>/read-cookie</code> route that will allow us to read the cookie.
+Finally, we will add a third route <code>/clear-cookie</code> which will allows us to clear the cookie.</p>
+<pre><code class="language-js">const express = require('express');
+const cookieParser = require('cookie-parser');
+
+const app = express();
+const PORT = 3000;
+
+app.use(cookieParser());
+
+// Route to set a cookie
+app.get('/set-cookie', (req, res) =&gt; {
+  res.cookie('myCookie', 'test', { httpOnly: true });
+  res.send('Cookie has been set!');
+});
+
+// Route to read the cookie
+app.get('/read-cookie', (req, res) =&gt; {
+  const myCookie = req.cookies.myCookie;
+  if (myCookie) {
+    res.send(`myCookie: ${myCookie}`);
+  } else {
+    res.status(404).send('No cookie found');
+  }
+});
+
+// Route to clear the cookie
+app.get('/clear-cookie', (req, res) =&gt; {
+  res.clearCookie('myCookie');
+  res.send('Cookie has been cleared');
+});
+
+app.listen(PORT, () =&gt; {
+  console.log(`Server listening on port ${PORT}...`);
+});
+</code></pre>
+<p>Let's now open a browser and go to <code>http://localhost:3000/set-cookie</code>.
+You should see a message "Cookie has been set!" and a new key-value pair appearing in your "cookies" tab.</p>
+<p>If you now go to <code>http://localhost:3000/read-cookie</code>, you will see <code>myCookie: test</code> on the page.</p>
+<p>Finally, if you go to <code>http://localhost:3000/clear-cookie</code>, you will see that the cookie has been cleared.</p>
+<h2 id="redirects"><a class="header" href="#redirects">Redirects</a></h2>
+<p>The <code>301</code> (<code>Moved Permanently</code>) is used for URL redirection.
+This basically informs a client that the resource has been <em>permanently</em> moved.
+A response with a <code>301</code> status code should contain the URL where the resource has been moved to.</p>
+<p>The <code>302</code> (<code>Found</code>) is also used for URL redirection, but it indicates to the client that the resource has been <em>temporarily</em> moved.
+Again, a response with a <code>302</code> status code should contain the URL where the resource has been moved to.</p>
+<p>Let's have a look at an <code>express</code> example:</p>
+<pre><code class="language-js">const express = require('express');
+const cookieParser = require('cookie-parser');
+
+const app = express();
+const PORT = 3000;
+
+// 301 Redirect (Permanent)
+app.get('/redirect-permanent', (req, res) =&gt; {
+  res.redirect(301, '/permanent-target');
+});
+
+// 302 Redirect (Temporary)
+app.get('/redirect-temporary', (req, res) =&gt; {
+  res.redirect(302, '/temporary-target');
+});
+
+// Target Route for 301 Redirect
+app.get('/permanent-target', (req, res) =&gt; {
+  res.send('This is the permanent target route');
+});
+
+// Target Route for 302 Redirect
+app.get('/temporary-target', (req, res) =&gt; {
+  res.send('This is the temporary target route');
+});
+
+app.listen(PORT, () =&gt; {
+  console.log(`Server listening on port ${PORT}...`);
+});
+</code></pre>
+<p>If you open <code>http://localhost:3000/redirect-permanent</code> in your browser, you will see that the address in the browser address bar suddenly changes to <code>http://localhost:3000/permanent-target</code> and you see the content <code>'This is the permanent target route'</code>.
+If you open the network tab, you will see that two requests are sent to accomplish this.</p>
+<p>First, your browser sends a request to <code>http://localhost:3000/redirect-permanent</code> and receives a response with status code <code>301</code> and the response header <code>Location</code> set to <code>/permanent-target</code>.
+Your browser now sends another request to the URL that indicated in the <code>Location</code> header and receives the actual content.</p>
+<p>You will see similar behaviour with the <code>/redirect-temporary</code> and <code>temporary-target</code> routes.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="chapter-4-persistence-with-sql"><a class="header" href="#chapter-4-persistence-with-sql">Chapter 4: Persistence with SQL</a></h1>
 <div style="text-align: right"> <i> SQL is the language of the ancestors, spoken to call forth truths hidden deep within data. <br> — Ancient Chinese proverb </i> </div
 <p>So far we've introduced the programming language that will power our project (TypeScript) and some relevant networking theory.</p>
