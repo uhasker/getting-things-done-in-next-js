@@ -193,7 +193,7 @@ function logTaskName(taskName: string | undefined | null) {
 ```
 
 You should generally be careful when relying on truthiness or falsiness.
-The way these concepts work in JavaScript can be a bit confusing and it's easy to miss and edge case.
+The way these concepts work in JavaScript can be a bit confusing and it's easy to miss an edge case.
 
 Some people prefer to avoid these concepts altogether and instead provide explicit checks, for example:
 

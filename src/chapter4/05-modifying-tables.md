@@ -26,7 +26,7 @@ alter table task add column priority text;
 You could add constraints here:
 
 ```sql
-alter table task add column priority text check (priority in 'low', 'medium', 'high');
+alter table task add column priority text check (priority in ('low', 'medium', 'high'));
 ```
 
 You can use the `alter table ... drop column` statement to remove a column:
@@ -48,7 +48,7 @@ add constraint check_duration_max check (duration <= 600);
 You can drop an existing constraint to a column using the `alter table ... drop constraint` statement:
 
 ```sql
-alter atable task
+alter table task
 drop constraint check_duration_max;
 ```
 
@@ -64,7 +64,7 @@ rename column description to details;
 You can rename an entire table using the `alter table rename ...` statement:
 
 ```sql
-alter table
+alter table task
 rename to task_list;
 ```
 

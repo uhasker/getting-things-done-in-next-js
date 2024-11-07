@@ -104,16 +104,16 @@ Now create a directory `db/migrations` to store the migrations.
 Create a file `db/drizzle.config.ts`:
 
 ```ts
-import type { Config } from 'drizzle-kit';
+import { defineConfig } from 'drizzle-kit';
 
-export default {
+export default defineConfig({
+  dialect: 'postgresql',
   schema: './src/db/schema.ts',
   out: './src/db/migrations',
-  driver: 'pg',
   dbCredentials: {
-    connectionString: process.env.DATABASE_URL!,
+    url: process.env.DATABASE_URL!,
   },
-} satisfies Config;
+});
 ```
 
 Next we create a file `db/migrate.ts`:
@@ -124,7 +124,7 @@ import postgres from 'postgres';
 import dotenv from 'dotenv';
 import { migrate } from 'drizzle-orm/postgres-js/migrator';
 
-dotenv.config();
+dotenv.config({ path: ['.env.local', '.env'] });
 
 const databaseURI = process.env.DATABASE_URL;
 
@@ -163,7 +163,7 @@ To simplify migrations, we will add the following scripts to `package.json`:
 {
   "scripts": {
     // other scripts
-    "db:generate": "pnpm drizzle-kit generate:pg --config=src/db/drizzle.config.ts",
+    "db:generate": "pnpm drizzle-kit generate --config=src/db/drizzle.config.ts",
     "db:migrate": "pnpm tsx src/db/migrate.ts"
   }
 }
@@ -197,7 +197,7 @@ const client = postgres(databaseURL);
 export const db = drizzle(client);
 ```
 
-> Yes, this subsection was essentially a repeat of things you already learned in the Drzzle chapter.
+> Yes, this subsection was essentially a repeat of things you already learned in the Drizzle chapter.
 
 ### Linting
 

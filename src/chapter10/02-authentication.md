@@ -68,7 +68,7 @@ export const config = {
 };
 ```
 
-> Note that `middleware.ts` should be directly in `src`, not in `app/src`.
+> Note that `middleware.ts` should be directly in `src`, not in `src/app`.
 
 Next, let's create the first version of the homepage `app/page.tsx`.
 
@@ -77,7 +77,8 @@ If the user is not logged in, we will show the `SignIn` button.
 Otherwise we will show a placeholder text:
 
 ```jsx
-import { SignIn, auth } from '@clerk/nextjs';
+import { SignIn } from '@clerk/nextjs';
+import { auth } from '@clerk/nextjs/server';
 import * as React from 'react';
 
 export default async function Home() {

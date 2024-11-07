@@ -66,7 +66,7 @@ Now let's create a page containing the tasks of a given project at `app/project/
 import { db } from '@/db';
 import { projectTable, taskTable } from '@/db/schema';
 import { eq } from 'drizzle-orm';
-import { auth } from '@clerk/nextjs';
+import { auth } from '@clerk/nextjs/server';
 
 export default async function Project({ params: { id } }: { params: { id: number } }) {
   const { userId } = auth();
@@ -120,7 +120,7 @@ export function TaskList({
 }
 ```
 
-Use the `TaskList` in `app/project/[id]/task-list.tsx`:
+Use the `TaskList` in `app/project/[id]/page.tsx`:
 
 ```jsx
 // ...
