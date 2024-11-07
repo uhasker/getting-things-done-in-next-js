@@ -80,7 +80,7 @@ Create a new Supabase project, copy the database URL and create the following `.
 DATABASE_URL=$YOUR_DATABASE_URL_HERE
 ```
 
-> Of course, you need to specify the actual database URL you copied from Supabase instead of `$YOUR_DATABASE_URL_HERE`.
+> Of course, you need to specify the actual database URL you copied from Supabase instead of `$YOUR_DATABASE_URL_HERE`. Don't forget to replace any special charecters in your password from the final URL: https://developer.mozilla.org/en-US/docs/Glossary/Percent-encoding.
 
 ### Setup Drizzle
 
