@@ -49,7 +49,7 @@ This is the basic setup, but in order to actually execute this in the browser or
 Let's create a file named `index.html` in which we use `main.js` as a JavaScript module:
 
 ```html
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -269,7 +269,7 @@ import * as greetModule from './greet.js';
 import * as otherGreetModule from './other-greet.js';
 
 greetModule.greet('John');
-otherGreeetModule.greet('John');
+otherGreetModule.greet('John');
 ```
 
 ### Module Scope
@@ -296,7 +296,7 @@ export function greet(name) {
 ```
 
 Here the `getGreeting` function is not exported, meaning that it will remain _completely private_ to the module.
-Only the `greet` function can be used (since it is `default` exported).
+Only the `greet` function can be used (since it's exported).
 
 Let's try importing `getGreeting`:
 

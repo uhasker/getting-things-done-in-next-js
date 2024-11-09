@@ -47,7 +47,7 @@ It doesn't matter what the rest of the program is doing - the function will alwa
 
 All of the above is not true for the `addImpure` function.
 This function can produce _different_ outputs for identical inputs.
-This makes it hard very hard to troubleshoot it in case of an error.
+This makes it very hard to troubleshoot it in case of an error.
 After all, you may not know what the (global) state of the program was when the error occured.
 
 Closely related is another very nice property of pure functions - they are _easily testable_.

@@ -218,7 +218,7 @@ Read the Next.js book(ID = 1): Read and understand the MERN book.
 Methods can also change properties of objects.
 
 We will not dwell on methods for too long, since we will not use them all that often as this would lead to a _ghastly_ thing called _Object-Oriented Programming_ (OOP for short).
-Instead we want you to think _functionally_, which is what the next section will be about.
+Instead we want you to think _functionally_, which is what we will talk about in a few sections.
 
 > Inevitable disclaimer for _certain_ Java/C#/... people:
 > The sentence about OOP was a joke and used correctly, OOP has its merits.
@@ -351,6 +351,31 @@ file.js:12
               ^
 
 ReferenceError: inBlockScope is not defined
+```
+
+### Function Signature
+
+The **function signature** describes the arguments that a function takes and the value(s) it returns.
+
+Consider the following `sum` function:
+
+```js
+function sum(a, b) {
+  return a + b;
+}
+```
+
+The function signature of the `sum` function can be described by saying that this function takes two numbers and returns another number.
+
+Programmers often talk about _changing the function signature_.
+This just means that the function now takes different arguments (or arguments of different data types) and/or returns different arguments (or arguments of different data types).
+
+For example, if the `sum` function would take an additional argument, it would have a different function signature:
+
+```js
+function sum(a, b, c) {
+  return a + b + c;
+}
 ```
 
 ### JSDoc

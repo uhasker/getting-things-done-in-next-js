@@ -124,6 +124,9 @@ arr.push(4);
 console.log(arr); // [ 1, 2, 3, 4 ]
 ```
 
+Of course, you could also do this with `concat`.
+However, when you just want to add a single element, it's more common to use `push`.
+
 The `pop` element removes the last element of an array:
 
 ```js
@@ -157,7 +160,7 @@ console.log(nestedArray.flat()); // [ 1, 2, 3, 4, 5, 6 , 7, 8, 9 ]
 
 ### The `for...of` Loop
 
-`For..of` loops allow you to _iterate over arrays and strings_ (and some other things that we will cover later on) and perform a task for each element / character.
+`For...of` loops allow you to _iterate over arrays and strings_ (and some other things that we will cover later on) and perform a task for each element / character.
 Let's say you want to print all tasks from a list named `tasks`.
 Previously we would have used a regular `for` loop:
 

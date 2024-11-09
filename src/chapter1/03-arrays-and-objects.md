@@ -266,3 +266,82 @@ This will output:
 
 > Note that objects are more than just containers for values.
 > We will return to this later.
+
+### Using `const` with Arrays and Objects
+
+There is often confusion regarding the use of `const` with arrays and objects.
+
+For example, it seems strange that you can change the elements of a `const` array:
+
+```js
+const arr = [1];
+arr[0] = 2; // Totally valid
+arr.push(3); // Totally valid
+```
+
+It seems equally strange that you can change the properties of a `const` object:
+
+```js
+const obj = { prop: 1 };
+obj.prop = 2; // Totally valid
+```
+
+Such assignments are possible because `const` only applies to the constant itself, not to the contents of the constant.
+This means that the only thing you _can't_ do is to change what the constant is pointing to altogether.
+
+For instance, this is not possible:
+
+```js
+const arr = [1];
+arr = [2, 3]; // Not valid
+```
+
+Similarly, this is also not possible:
+
+```js
+const obj = { prop: 1 };
+obj = { prop: 2 }; // Not valid
+```
+
+This means that `const` is a pretty weak guarantee when working with arrays and objects.
+After all, you often change elements of arrays and objects, but rarely change what the array and/or object is pointing to in its entirety.
+
+Nevertheless, you should use `const` even when working with arrays and objects.
+A weak guarantee is better than no guarantee at all.
+At least you won't accidentally change the entire `const` array/object.
+
+### Classes
+
+Instead of manually constructing objects, you can also use classes.
+
+**Classes** are templates for creating objects.
+For example, you could define a `Task` class that would serve as a template for creating task objects:
+
+```js
+class Task {
+  constructor(id, title, description) {
+    this.id = id;
+    this.title = title;
+    this.description = description;
+  }
+}
+```
+
+Note the presence of the special `constructor` method.
+This method allows you to create an object from the class.
+Specifically, you can construct a task object from the `Task` class using the `new` operator:
+
+```js
+const task = new Task(1, 'Read the Next.js book', 'Read and understand the Next.js book.');
+```
+
+You can then access the instance properties as you normally would:
+
+```js
+console.log(task.id); // 1
+console.log(task.title); // Read the Next.js book
+console.log(task.description); // Read and understand the Next.js book.
+```
+
+If an object is constructed from a class `X`, we often say that the object is an `X` object.
+For example, the `task` variable is a `Task` object.

@@ -145,7 +145,7 @@ if (tasks.length === 0) {
 Note that the `else` block is not required.
 If it's missing and none of the conditions are true, nothing will happen.
 
-### Truthiness and falsiness
+### Truthiness and Falsiness
 
 Note that the condition does not necessary have to be a boolean as JavaScript will automatically evaluate non-boolean values as "truthy" or "falsy" in boolean contexts.
 For example you could write something like this:
@@ -174,6 +174,7 @@ The **ternary operator** takes a _condition_, an _expression to execute if the c
 It looks like this:
 
 ```js
+const done = false;
 const doneMsg = 'All tasks are done';
 const notDoneMsg = 'There are tasks left';
 const msg = done ? doneMsg : notDoneMsg;
@@ -224,7 +225,7 @@ const nextTask = {
 Let's say we want to access the day of the task.
 We can do this by using `nextTask.date.day`.
 But what if the day does not have to be present, i.e. is _optional_?
-This could happen, for example, because the user didn't enter a task.
+This could happen, for example, because the user didn't enter a date.
 
 The object could look like this:
 

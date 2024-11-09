@@ -125,16 +125,9 @@ The HTTP protocol will be discussed in more detail later, but basically it enabl
 Since network packets don't arrive immediately, this can take a while, so we are dealing with a "long-running operation".
 
 Both the browser as well as Node.js allow us to retrieve a resource from the network via the asynchronous `fetch` function.
-Consider this example:
+The `fetch` function returns a promise and we can then schedule a callback to be executed when the promise has succeeded by using the `then` method.
 
-```js
-const url = 'https://jsonplaceholder.typicode.com/todos/1';
-fetch(url).then((response) => console.log(response));
-```
-
-This will log the response object we get from `https://jsonplaceholder.typicode.com/todos/1` to the console (we will learn how to deal with this response object in a second).
-
-We can rewrite the above example in a more explicit manner:
+Here is how this looks in code:
 
 ```js
 const url = 'https://jsonplaceholder.typicode.com/todos/1';
@@ -143,6 +136,9 @@ fetchPromise.then((response) => console.log(response));
 console.log(fetchPromise);
 ```
 
+> This code is unnecessarily verbose right now, we will fix this in a second.
+> Also, we wouldn't normally log the `fetchPromise` object, we're just doing this for illustration purposes right now.
+
 This is what happens:
 
 1. We call `fetch` which _immediately_ returns a _pending_ promise.
@@ -150,10 +146,10 @@ This is what happens:
    The handler function will be called when the `fetch` succeeds (i.e. the promise returned by `fetch` is fulfilled).
 3. After a while the `fetch` succeeds, `fetchPromise` is fulfilled and the `response` object is logged.
 
-It is important to note `fetch` returns immediately.
+It is important to note that `fetch` returns _immediately_.
 The return value of `fetch` is a pending promise (that will eventually settle with either a response value or some kind of error).
 
-This is why `console.log(fetchPromise)` is executed before `console.log(response)` and you see the following output in the console:
+This is why `console.log(fetchPromise)` is executed _before_ `console.log(response)` and you see the following output in the console:
 
 ```
 Promise { <pending> }
@@ -162,14 +158,21 @@ Response {
 }
 ```
 
-Additionally the `then` method _also_ returns immediately, after it has attached the handler function to the `fetchPromise`.
-However the execution of the _handler function_ happens only after the promise returned by fetch is fulfilled.
+Additionally, the `then` method _also_ returns immediately, after it has attached the handler function to the `fetchPromise`.
+However, the execution of the _handler function_ happens only after the promise returned by fetch is fulfilled.
 
-On one hand this is what we want - while we are waiting for the network request to complete, we can do other stuff (like logging `fetchPromise`).
+On one hand, this is what we want - while we are waiting for the network request to complete, we can do other stuff (like logging `fetchPromise`).
 
-On the other hand this is the reason why asynchronous programming is often so confusing to beginners - it "breaks" the regular programming model.
+On the other hand, this is the reason why asynchronous programming is often so confusing to beginners - it "breaks" the regular programming model.
 When we write synchronous code, we just execute statements one after another.
 With asynchronous code this is no longer the case - here we "register" a function to be executed later, do something else, and then at some point the registered function is executed.
+
+Finally, we note that our code can be rewritten in a simpler way:
+
+```js
+const url = 'https://jsonplaceholder.typicode.com/todos/1';
+fetch(url).then((response) => console.log(response));
+```
 
 ### Chaining Promises
 

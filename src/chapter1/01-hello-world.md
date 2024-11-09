@@ -51,15 +51,15 @@ This is approximately how the browser console will look like in Firefox:
 Let us print something using the `console.log` method. Type the following into the browser console:
 
 ```js
-console.log('Hello, world!');
+console.log('Hello, World!');
 ```
 
 Now hit <kbd>Return</kbd> (you may also know this as <kbd>Enter</kbd> or simply <kbd>⏎</kbd>).
-You will see the output "Hello, world!" in the console:
+You will see the output `Hello, World!` in the console:
 
 ![](images/browser-console-log.png)
 
-> Ignore the "undefined" for now.
+> Ignore the `undefined` for now.
 
 Hooray, you printed something to the browser console!
 This is the point at which you go tell everyone that you are now a *programmer*™.
@@ -79,7 +79,7 @@ The filename should have an _html_ extension though.
 Open the HTML file in any text editor (see below for text editors that are good choices for coding) and add the following text to the file:
 
 ```html
-<!doctype html>
+<!DOCTYPE html>
 <html>
   <head></head>
   <body>
@@ -93,7 +93,7 @@ Don't forget to save the file!
 Now create another file called _hello.js_ in the same directory as _hello.html_ with the following content:
 
 ```js
-console.log('Hello, world');
+console.log('Hello, World!');
 ```
 
 > Note the semicolon after the `console.log`.
@@ -103,7 +103,7 @@ console.log('Hello, world');
 
 Now open this file in your browser by simply double-clicking the file.
 After opening this file in your browser, open the console.
-You should the output `Hello, world!`.
+You should the output `Hello, World!`.
 
 Congratulations, you wrote your first script!
 
@@ -191,20 +191,22 @@ We can now print "Hello, world!" in the Node.js console using the `console.log` 
 Type the following into the console and hit <kbd>Return</kbd>:
 
 ```js
-console.log('Hello, world!');
+console.log('Hello, World!');
 ```
 
-You should see the output `"Hello, world!"`.
+You should see the output `Hello, World!`.
+
+To exit the Node.js console, simply type `.exit` and hit <kbd>Return</kbd>.
 
 ### Executing a JavaScript File
 
 We can also use Node.js to execute a JavaScript file.
 
-Create a file named `hello.js`.
-Open the file in any text editor and add the following content to the file:
+Let's execute the `hello.js` file as an example.
+As a reminder, this file has the following content:
 
 ```js
-console.log('Hello, world!');
+console.log('Hello, World!');
 ```
 
 Open a command line again and _change the current directory location to the directory containing the JavaScript file_.
@@ -291,7 +293,7 @@ We will also adopt the convention that if a comment is next to a line with a `co
 For example:
 
 ```js
-console.log('Hellave the file!o, world!'); // Hello, world!
+console.log('Hello, World!'); // Hello, World!
 ```
 
 This is the point where we tell you that while you are reading this book you should _absolutely follow along in some runtime_ (probably Node.js, but a browser is fine too).
