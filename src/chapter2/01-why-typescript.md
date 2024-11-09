@@ -73,13 +73,11 @@ To summarize, using TypeScript massively enhances your developer workflow which 
 
 ### Installing TypeScript
 
-You can install the TypeScript compiler by running the following command:
+You can install the TypeScript compiler globally by running the following command:
 
 ```sh
 pnpm add -g typescript
 ```
-
-> The `-g` flag tells `pnpm` to install the package globally and not just for a particular project.
 
 Let's see how we can use the TypeScript compiler.
 First, create a file `index.ts`:
@@ -136,7 +134,7 @@ showTask({
 ```
 
 Note that all the type annotations are gone and all we get is vanilla JavaScript that we can execute.
-Additionally the TypeScript compiler _downleved_ our code so that it can be executed by older platforms.
+Additionally the TypeScript compiler _downleveled_ our code so that it can be executed by older platforms.
 Here the template string syntax (which is not supported by very old browsers) was replaced by a series of `concat` calls.
 
 > Note that by the time you're reading this the default target settings might be different and you might not see this particular downleveling anymore.

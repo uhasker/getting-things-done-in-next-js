@@ -79,6 +79,9 @@ Let's install the `http-server` package:
 pnpm add -g http-server
 ```
 
+> The `-g` flag tells `pnpm` to install the package globally and not just for a particular project.
+> This is similar to the `-g` flag for `npm`.
+
 Now enter the directory where you stored `index.html`, `main.js` and `greeter.js` and execute the following command:
 
 ```sh

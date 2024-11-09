@@ -187,6 +187,8 @@ Throughout this book we will use another package manager called `pnpm`, so let's
 npm install -g pnpm
 ```
 
+> The `-g` flag tells `npm` to install the package globally and not just for a particular project.
+
 Verify that `pnpm` was installed:
 
 ```sh
