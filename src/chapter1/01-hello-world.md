@@ -27,7 +27,7 @@ This isn't a retro gaming console; rather, it's a special part of the runtime wh
 Think of it as a conversation between you and the program—you tell it what to do (input commands) and it responds by executing those commands and showing you what happened (output).
 
 In this section, we will set up the browser and Node.js runtimes.
-Then we will log "Hello, World!" both to the browser console and the Node.js console to test that our setup functions as intended.
+Then we will output (alternatively, "log" or "print") "Hello, World!" both to the browser console and the Node.js console to test that our setup functions as intended.
 
 ### The Browser Environment
 
@@ -52,7 +52,7 @@ This is approximately how the browser console will look like in Firefox:
 > Most of these will probably come from various extensions you might have installed or the web page you are currently viewing.
 > You can simply delete these messages, as we don't care about them.
 
-Let's output something using the `console.log` method.
+Let's print something using the `console.log` method.
 Type the following into the browser console:
 
 ```js
@@ -197,7 +197,7 @@ pnpm --version
 
 Now that Node.js is installed, you can open a Node.js console by typing `node` in the command line.
 
-We can now log `Hello, World!` in the Node.js console using the `console.log` method.
+We can now output `Hello, World!` to the Node.js console using the `console.log` method.
 Type the following into the console and hit <kbd>Return</kbd>:
 
 ```js
@@ -233,7 +233,7 @@ Now execute the JavaScript file by running:
 node hello.js
 ```
 
-This should again log `Hello, World!`.
+This should again print `Hello, World!`.
 
 Note that for the remainder of this chapter you should follow along using the Node.js console.
 Nevertheless, as we dive further into the Next.js stack, we will have to write JavaScript for the browser runtime environment on a regular basis.
