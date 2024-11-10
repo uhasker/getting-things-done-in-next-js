@@ -46,7 +46,7 @@ console.log(x); // 10
 
 > If you follow along in the Node.js (or browser) console, you don't actually need to use the `console.log` method to print the value of a variable.
 > Instead, you can simply type the variable (or any expression for that matter) and the console will display its value.
-> For eaxmple, you can simply type `x` instead of `console.log(x)` and you will see the value of `x`.
+> For example, you can simply type `x` instead of `console.log(x)` and you will see the value of `x`.
 
 You can also have a declaration and an assignment on a single line.
 In fact, this is usually the way to go:
@@ -138,7 +138,7 @@ console.log(a % b); // 3
 console.log(a ** b); // 81
 ```
 
-You can also use the **shorthand assignment operators** to combine asssignment and arithmetic operators:
+You can also use the **shorthand assignment operators** to combine assignment and arithmetic operators:
 
 ```js
 let a = 3;
@@ -199,7 +199,7 @@ Don't let that confuse you.
 
 > We will not debate whether decisions like `1/0` being equal to `Infinity`, `0/0` being equal to `NaN` or `NaN` having type `number` are good decisions.
 > We simply note that this is the way JavaScript works and move on.
-> Don't worry, there is in fact a lof of hot debate around some of JavaScripts more—shall we say—controversial features.
+> Don't worry, there is in fact a lot of hot debate around some of JavaScripts more—shall we say—controversial features.
 > If you wish to do so, you can go on any programming forum of your choice and start a local holy war by making fun of the way JavaScript's primitive data types work.
 > Deciding whether that's a good use of time is up to you.
 
@@ -249,7 +249,7 @@ console.log(true || false); // true
 console.log(false || false); // false
 ```
 
-The `!` (_not_) operator takes a single value and simply negates it, i.e. "switches" a value to it's opposite:
+The `!` (_not_) operator takes a single value and simply negates it, i.e. "switches" a value to its opposite:
 
 ```js
 console.log(!true); // false
@@ -337,7 +337,7 @@ console.log(greeting); // Hello, World!
 ```
 
 Template strings are written using backticks (_not_ single quotes).
-They may contain so called _placeholders_ which are expressions embedded inside `${...}`:
+They may contain so-called _placeholders_ which are expressions embedded inside `${...}`:
 
 ```js
 console.log(`2 + 2 = ${2 + 2}`); // 2 + 2 = 4
