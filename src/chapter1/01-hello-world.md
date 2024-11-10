@@ -87,7 +87,7 @@ The filename should have an _html_ extension though.
 Open the HTML file in any text editor (see below for text editors that are good choices for coding) and add the following text to the file:
 
 ```html
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head></head>
   <body>
