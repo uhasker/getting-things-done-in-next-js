@@ -10,20 +10,20 @@ The `throw` statement allows you to throw an exception:
 throw 'Something bad happened';
 ```
 
-Usually error objects are thrown:
+You can theoretically `throw` any value.
+However, you will usually throw `Error` objects:
 
 ```js
 throw new Error('Something bad happened');
 ```
 
-> The `new` operator creates a new object (of some class).
-> We will revisit this operator in more detail later.
+> Remember that the `new` operator creates a new object (of some class).
 
 ### The `try...catch` Statement
 
 The `try...catch` statement specifies a block of statements to execute "normally" and a block to execute if the "normal" block throws an exception.
 The normal block is contained in a `try` block while the "exception" block is contained in a `catch` block.
-If any statement in the `try` throws an exception, code execution jumps to the `catch` block immediately - the rest of the `try` block is ignored:
+If any statement in the `try` block throws an exception, code execution jumps to the `catch` block immediately—the rest of the `try` block is ignored:
 
 ```js
 function divide(x, y) {
