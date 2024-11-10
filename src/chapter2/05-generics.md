@@ -192,7 +192,7 @@ const myMap = new Map<string, number>([
 ```
 
 One other very important generic type is the `Promise<Type>` type which is most commonly used to annotate asynchronous functions.
-For example, if we have an asynchronous function `f` that returns a promise that will eventuell fulfill with a `string`, we would annotate it like this:
+For example, if we have an asynchronous function `f` that returns a promise that will eventually fulfill with a `string`, we would annotate it like this:
 
 ```ts
 async function f(): Promise<string> {

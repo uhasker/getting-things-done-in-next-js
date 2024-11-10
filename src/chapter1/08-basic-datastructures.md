@@ -4,11 +4,11 @@
 
 ### More on Strings
 
-We already learned about strings (which represent sequences of characters).
+We already learned that strings represent sequences of characters.
 We also learned that they can be concatenated using the `+` operator and that you can get their length using the `length` property.
-However this is not enough to efficiently work with strings.
+However, this is not enough to efficiently work with strings.
 
-Luckily, strings offer a wide range of additional functionality for pretty much every use case you will ever need - in this subsection we will briefly look at some of it.
+Luckily, strings offer a wide range of additional functionality for pretty much every use case you will ever need—in this subsection we will briefly look at some of it.
 
 First, you can access individual characters using the `charAt` function or array brackets:
 
@@ -18,13 +18,13 @@ console.log(str[1]); // e
 console.log(str.charAt(1)); // e
 ```
 
-Remember that there is no special character data type in JavaScript, i.e. `typeof str[1]` is simply `'string'`.
+Remember, there is no special character data type in JavaScript, i.e. `typeof str[1]` is simply `'string'`.
 
 Strings also offer a wide range of methods, most of which are self-explanatory:
 
 ```js
 const str = 'Hello';
-console.log(str.concat(' world')); // Hello world
+console.log(str.concat(', World!')); // Hello, World!
 console.log(str.includes('el')); // true
 console.log(str.startsWith('He')); // true
 console.log(str.endsWith('llo')); // true
@@ -35,7 +35,7 @@ console.log(str.toUpperCase()); // HELLO
 ```
 
 The `substring` method allows you to return a part of a string.
-You need to pass a start index and and end index:
+You need to pass a start index and an end index:
 
 ```js
 console.log(str.substring(1, 3)); // el
@@ -43,17 +43,18 @@ console.log(str.substring(1, 3)); // el
 
 Note that the start index will be _included_ and the end index will be _excluded_ when creating the substring.
 
-> There is also the `substr` method which is deprecated so don't use it.
+> There is also the `substr` method which is similar.
+> However, `substr` is deprecated and, therefore, you shouldn't use it.
 
 The `trim` method allows you to remove whitespace from the start and the end of a string.
-This is especially useful when you need to process user input and need to remove accidental whitespace at the start and the end of a string:
+This is especially useful when you need to process user input and remove accidental whitespace at the start and the end of a string:
 
 ```js
 console.log(' Hello '.trim()); // Hello
 ```
 
-The `split` method splits the string into substring by a delimiter.
-For example here is how you might split a comma-separated list into its items:
+The `split` method splits the string into substrings by a delimiter.
+For example, here is how you might split a comma-separated list into its items:
 
 ```js
 console.log('Task 1, Task 2, Task 3, Task 4'.split(','));
@@ -65,12 +66,13 @@ This will result in the following array:
 [ 'Task 1', ' Task 2', ' Task 3', ' Task 4' ]
 ```
 
-Note that the whitespace is not removed by the `split` method, you would need to iterate over the resulting array and use the `trim` method on each string to accomplish that.
+Note that the whitespace is not removed by the `split` method.
+You would need to iterate over the resulting array and use the `trim` method on each string to accomplish that.
 
 ### More on Arrays
 
 We already learned how to construct arrays and how to work with individual array elements.
-However just like strings, arrays have a few additional methods that will often come in handy.
+However, just like strings, arrays have a few additional methods that will often come in handy.
 
 You can check whether an object is an array using the `Array.isArray` method:
 
@@ -78,6 +80,9 @@ You can check whether an object is an array using the `Array.isArray` method:
 console.log(Array.isArray([1, 2, 3])); // true
 console.log(Array.isArray('123')); // false
 ```
+
+> `Array.isArray` is a static method.
+> We talked about static methods in the section on classes.
 
 You can create an array from an object with `Array.from`.
 To successfully use `Array.from` the object must be _convertible to an array_.
@@ -124,6 +129,9 @@ arr.push(4);
 console.log(arr); // [ 1, 2, 3, 4 ]
 ```
 
+Of course, you could also do this with `concat`.
+However, when you just want to add a single element, it's more common to use `push`.
+
 The `pop` element removes the last element of an array:
 
 ```js
@@ -152,14 +160,15 @@ const nestedArray = [
 ];
 console.log(nestedArray[1]); // [ 4, 5, 6 ]
 console.log(nestedArray[1][2]); // 6
-console.log(nestedArray.flat()); // [ 1, 2, 3, 4, 5, 6 , 7, 8, 9 ]
+console.log(nestedArray.flat()); // [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
 ```
 
 ### The `for...of` Loop
 
-`For..of` loops allow you to _iterate over arrays and strings_ (and some other things that we will cover later on) and perform a task for each element / character.
+`For...of` loops allow you to _iterate over arrays and strings_ (and a few other things) and perform a task for each element/character.
+
 Let's say you want to print all tasks from a list named `tasks`.
-Previously we would have used a regular `for` loop:
+Previously, we would have used a regular `for` loop:
 
 ```js
 const tasks = ['Task 1', 'Task 2', 'Task 3'];
@@ -168,7 +177,7 @@ for (let i = 0; i < tasks.length; i++) {
 }
 ```
 
-Instead you can use the `for...of` loop:
+Instead you can use the `for...of` loop to accomplish the same thing:
 
 ```js
 const tasks = ['Task 1', 'Task 2', 'Task 3'];
@@ -222,7 +231,7 @@ for (const task of tasks) {
 ```
 
 > Just to reiterate, a `for...of` loop can iterate over more objects than just arrays and strings.
-> However this is out of scope for this book.
+> However, this is out of scope for this book.
 
 ### More on Objects
 
@@ -263,7 +272,8 @@ This will output:
 
 ### The `for...in` Loop
 
-The `for...in` loop allows you to iterate over the properties of an object:
+The `for...in` loop allows you to iterate over the properties of an object.
+For example:
 
 ```js
 const task = {
@@ -301,13 +311,14 @@ capitals.delete('France');
 console.log(capitals.has('France')); // false
 ```
 
-At first glance maps appear to be very similar to objects, however there are a few imporant differences.
+At first glance maps appear to be very similar to objects.
+However, there are a few important differences.
 
-First, it is very easy to get the size of a map (using the `size` property), whereas with objects you would need to keep track of the size manually.
+First, it's very easy to get the size of a map (using the `size` property), whereas with objects you would need to keep track of the size manually.
 
 Second, the keys of an object are usually strings, whereas with maps they can have any data type.
 
-It is recommended to use maps if the key-value pairs are unknown until run time (for example because they are determined by user input), all keys have the same type and all values have the same type.
+It's recommended to use maps if the key-value pairs are unknown until run time (for example, because they are determined by user input), all keys have the same type and all values have the same type.
 
 ### Sets
 
@@ -319,6 +330,7 @@ values.add(4);
 console.log(values.has(2)); // true
 console.log(values.size); // 4
 values.delete(3);
+console.log(values.has(3)); // false
 ```
 
 Note that all values in a set must be unique, i.e. duplicates are not allowed:
@@ -331,8 +343,8 @@ console.log(values); // Set(3) { 1, 2, 3 }
 
 ### JSON
 
-JSON is a data format for data exchange (e.g. on a network) and can basically store nested JavaScript objects and arrays.
-While it was heavily inspired by JavaScript, it is a language-independent data format and is in fact used by many other programming languages to exchange data.
+**JSON** is a data format for data exchange (e.g. on a network) and can basically store nested JavaScript objects and arrays.
+While it was heavily inspired by JavaScript, it has become a language-independent data format and is in fact used by many other programming languages to exchange data.
 
 Here is an example JSON file:
 
@@ -361,7 +373,7 @@ console.log(typeof result2); // 'string'
 console.log(result2); // [1,2,3]
 ```
 
-Note that `JSON.stringify` has some unintuitive behaviours.
+Note that `JSON.stringify` has some unintuitive behaviors.
 For example, running `JSON.stringify` on a map or a set will always return `{}`:
 
 ```js
@@ -380,3 +392,5 @@ const arr = JSON.parse('[1, 2, 3]');
 console.log(typeof arr); // 'object'
 console.log(arr); // [ 1, 2, 3 ]
 ```
+
+We will revisit the JSON data format when we start sending data over a network.

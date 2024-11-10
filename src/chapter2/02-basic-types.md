@@ -190,12 +190,8 @@ For example this is valid even though it doesn't look like it:
 
 ```ts
 type MyString = string;
-
-function getMyString(): MyString {
-  return 'My string';
-}
-
-const s: string = getMyString();
+const s1: MyString = 'My string';
+const s2: string = s1;
 ```
 
 This is because TypeScript uses a _structural type system_ - it doesn't matter what the types are named (except for the primitive types of course), it only matters what their _structure_ looks like.

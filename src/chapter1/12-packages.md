@@ -20,7 +20,18 @@ The `version` field follows a convention called SemVer (short for Semantic Versi
 This defines that any version of a package (or library) should have the format `MAJOR.MINOR.PATCH` where `MAJOR`, `MINOR` and `PATCH` are non-negative integers.
 Whenever you update a package, you should make a change to the package version.
 
-If you make backward incompatible API changes, you should increment the `MAJOR` number and reset the other numbers.
+This might be a change to either `MAJOR`, `MINOR` and/or `PATCH`, depending on the kind of change you make.
+Most importantly, you should ask yourself if the change is _backwards compatible_ with the old version of the package.
+
+A change is backwards compatible if a user of the old package can switch to your new package without any issues.
+For example, if you simply add a new function to your package, then that change is backwards compatible.
+This is also true if you change some code in a function without changing the _functionality_ of the function.
+
+However, if you change the way an existing package function works, the change is no longer backwards compatible.
+If a user of your package now tries to switch from the old version to the new version all the calls of that function will no longer work.
+Programmers call this "breaking the package".
+
+If you make such a backwards incompatible change, you should increment the `MAJOR` number and reset the other numbers.
 For example if you release a big update of a package with the version `1.32.2` where you change a lot of function signatures you should update the version to `2.0.0`.
 
 If you add functionality in a backward compatible manner, you should increment the `MINOR` number and reset the `PATCH` number.
@@ -66,7 +77,7 @@ Regular dependencies are packages that your project needs to run.
 "Dev" dependencies are packages that are only needed during development or testing.
 These will not be included in a production build.
 
-You can install a dependency by running `pnpm add $PACKAGE_NAME`.
+You can install a dependency by running `pnpm add $PACKAGE_NAME` in the project directory.
 You can install a "dev" dependency by running `pnpm add --save-dev $PACKAGE_NAME`.
 
 Let's install the `lodash` dependency which is a widely used utility library:

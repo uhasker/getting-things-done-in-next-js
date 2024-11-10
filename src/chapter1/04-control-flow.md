@@ -7,7 +7,7 @@
 Quite often, we need to make _decisions_ in our programs.
 Let's say we want to display a fancy message when a bunch of tasks are completed.
 This is a decision: _If_ all the tasks are completed, _then_ we want to display a message.
-Put generally: _If_ a condition holds (is true), _then_ we want to do something.
+More generally: _If_ a condition holds (is `true`), _then_ we want to do something.
 
 Conveniently, the language keyword that allows us to accomplish this is called `if`:
 
@@ -35,7 +35,8 @@ if (condition) {
 If `condition` is true, then the `statements` inside the curly braces will be executed.
 If `condition` is false, nothing will happen.
 
-> Note that technically it suffices if the condition is _truthy_ or _falsy_. We will ignore this detail for now and return to it in a second.
+> Note that technically it suffices if the condition is _truthy_ or _falsy_.
+> We will ignore this detail for now and return to it later.
 
 The simplest condition is a boolean variable.
 However, nothing prevents us from writing more complex conditions.
@@ -73,7 +74,7 @@ If `condition` is true, the statements corresponding to `statements1` will be ex
 If `condition` is false, the statements corresponding to `statements2` will be executed (i.e. the statements inside the curly braces after the `else`).
 
 Note that there may be multiple statements between the curly braces.
-This is totally valid:
+For example, this is totally valid:
 
 ```js
 if (tasks.length === 0) {
@@ -82,7 +83,7 @@ if (tasks.length === 0) {
   console.log('No really, you are amazing!');
 } else {
   console.log('You still have some tasks to complete.');
-  console.log('Do not despair!');
+  console.log("Don't despair!");
 }
 ```
 
@@ -145,23 +146,24 @@ if (tasks.length === 0) {
 Note that the `else` block is not required.
 If it's missing and none of the conditions are true, nothing will happen.
 
-### Truthiness and falsiness
+### Truthiness and Falsiness
 
-Note that the condition does not necessary have to be a boolean as JavaScript will automatically evaluate non-boolean values as "truthy" or "falsy" in boolean contexts.
-For example you could write something like this:
+The condition doesn't necessarily have to be a boolean as JavaScript will automatically evaluate non-boolean values as "truthy" or "falsy" in boolean contexts.
+For example, you could write something like this:
 
 ```js
 if (1) {
-  console.log('1 is truthy.');
+  console.log('1 is truthy');
 } else {
-  console.log('1 is falsy.');
+  console.log('1 is falsy');
 }
 ```
 
-This will print "1 is truthy." because JavaScript will consider `1` to be `true` in this context since `1` is a _truthy_ value.
+This will print `1 is truthy` because JavaScript will consider `1` to be `true` in this context since `1` is a _truthy_ value.
 
 Generally speaking, a **truthy** value is considered to be true when encountered in a boolean context (like a condition).
 A **falsy** value is considered to be false when encountered in a boolean context.
+
 The most important falsy values are `false`, `0`, `''` (empty string), `null` and `undefined`.
 Most other values (like `1`, `[]` (empty array), `[3]`, `{ example: 'hello' }` etc) are truthy.
 
@@ -174,6 +176,7 @@ The **ternary operator** takes a _condition_, an _expression to execute if the c
 It looks like this:
 
 ```js
+const done = false;
 const doneMsg = 'All tasks are done';
 const notDoneMsg = 'There are tasks left';
 const msg = done ? doneMsg : notDoneMsg;
@@ -197,9 +200,8 @@ const finished = tasks.length === 0 ? true : false;
 
 You should stop for a second and think about why this is unnecessary.
 
-_Thought_ about it?
-That's right - the expression `tasks.length === 0` already evaluates to a boolean value.
-You can just write
+That's right—the expression `tasks.length === 0` already evaluates to a boolean value.
+You can just write this instead:
 
 ```js
 const finished = tasks.length === 0;
@@ -222,23 +224,16 @@ const nextTask = {
 ```
 
 Let's say we want to access the day of the task.
-We can do this by using `nextTask.date.day`.
+We can do this by writing `nextTask.date.day`.
 But what if the day does not have to be present, i.e. is _optional_?
-This could happen, for example, because the user didn't enter a task.
+This could happen, for example, because the user didn't enter a date.
 
-The object could look like this:
+This means that the object could look like this:
 
 ```js
 const nextTask = {
   title: 'Read the Next.js book',
   description: 'Read and understand the Next.js book',
-};
-
-// or like this if you were to use `null`
-const nextTask = {
-  title: 'Read the Next.js book',
-  description: 'Read and understand the Next.js book',
-  date: null,
 };
 ```
 
@@ -258,7 +253,7 @@ const day = nextTask.date !== undefined ? nextTask.date.day : undefined;
 
 Here is what this line does:
 If `nextTask.date` is defined, then `nextTask.date.day` is assigned to `day`.
-If `nextTask.date` is not defined, the `undefined` is assigned to `day`.
+If `nextTask.date` isn't defined, then `undefined` is assigned to `day`.
 
 Alternatively we could make use of `&&` and write:
 
@@ -266,27 +261,30 @@ Alternatively we could make use of `&&` and write:
 const day = nextTask.date && nextTask.date.day;
 ```
 
-> This is correct because of the way the `&&` works.
+> This is correct because of the way the `&&` operator works.
 > If the first expression is `false` (or falsy) then `&&` doesn't look at the second expression and immediately returns the value of the first expression.
 > If the first expression is `true` (or truthy) then `&&` returns the second expression.
 
-Generally consider an object that has a bunch of values that may be absent (i.e. `null` or `undefined`).
+We can generally consider an object that has a bunch of values that may be absent (i.e. `null` or `undefined`).
 Working with such values will be annoying and only grow more cumbersome with deeper nesting.
+
 To avoid all this JavaScript allows you to do **optional chaining**.
-This works by writing `?.` instead of `.` when trying to work on something that may be `undefined`.
+This works by writing `?.` instead of `.` when trying to work on something that may be absent.
 The above line would then become:
 
 ```js
 const day = nextTask.date?.day;
 ```
 
-Now the result will be `undefined` instead of giving you a TypeError.
+Now the result will be `undefined` instead of a `TypeError`.
 
 ### The `switch` Statement
 
 The `switch` statement evaluates an expression and then attempts to match the result against a number of `case` clauses.
 As soon as a `case` clause is matched all following statements are executed until a `break` statement is encountered.
-If no case matches and a `default` statement is present, execution will jump to the code after the `default` statement:
+If no case matches and a `default` statement is present, execution will jump to the code after the `default` statement.
+
+Here is an example:
 
 ```js
 switch (tasks.length) {
@@ -332,6 +330,16 @@ This will log the following lines to the console:
 2
 ```
 
+The general form of the `while` loop looks like this:
+
+```js
+while (condition) {
+  statements;
+}
+```
+
+The `statements` inside the curly braces will be executed as long as `condition` is true (or, rather, truthy).
+
 The `do...while` loop is similar to the `while` loop with one subtle difference.
 The `while` loop evaluates the condition _before_ executing the statement.
 The `do...while` loop on the other hand evaluates the condition _after_ executing the statement.
@@ -356,6 +364,14 @@ This will log the following lines to the console:
 3
 ```
 
+The general form of the `do...while` loop looks like this:
+
+```js
+do {
+  statements;
+} while (condition);
+```
+
 Because of the way the `do...while` loop works the statement(s) inside the loop body will always be executed at least once.
 The following example will log `Hello` to the console once despite the condition being `false`:
 
@@ -365,16 +381,19 @@ do {
 } while (false);
 ```
 
+We recommend that you avoid using `do...while` loops whenever possible.
+Regular `while` loops are easier to understand in most cases.
+
 ### For Loops
 
 The regular `for` loop consists of three expressions.
 
 The first expression is the _initialization expression_ and typically initializes some kind of counter.
 The second expression is the _condition expression_ and typically checks for some condition.
-If the condition is true the statement(s) in the loop body execute, otherwise the loop terminates.
-Finally the third expression (sometimes called _afterthough expression_) is evaluated at the end of each loop iteration and typically advances the counter.
+If the condition is true, the statement(s) in the loop body execute, otherwise the loop terminates.
+Finally, the third expression (sometimes called _afterthought expression_) is evaluated at the end of each loop iteration and typically advances the counter.
 
-As usual a code example says more than a thousand words:
+As usual, a code example says more than a thousand words:
 
 ```js
 for (let i = 0; i < 3; i++) {
@@ -390,7 +409,7 @@ This will log the following lines to the console:
 2
 ```
 
-You can use regular `for` loops to iterate over arrays:
+You can, among other things, use regular `for` loops to iterate over arrays:
 
 ```js
 const tasks = ['Task 1', 'Task 2', 'Task 3'];
@@ -408,7 +427,7 @@ Task 2
 Task 3
 ```
 
-However we will soon learn better ways to perform array iteration.
+However, we will soon learn better ways to perform array iteration.
 
 ### The `break` and `continue` Statements
 
@@ -427,14 +446,15 @@ while (counter < 4) {
 }
 ```
 
-This will log the following lines to the console:
+Here we will immediately exit the loop as soon as `counter === 2`.
+Therefore, the following lines will be logged to the console:
 
 ```
 0
 1
 ```
 
-The `continue` statement terminates the rest of the current iteration and continues with the next iteration:
+The `continue` statement terminates the rest of the _current iteration_ and continues with the next iteration of a loop:
 
 ```js
 let counter = 0;
@@ -456,3 +476,7 @@ This will log the following lines to the console:
 3
 4
 ```
+
+Note that the loop still continues even after `counter` becomes `2`.
+However, the rest of the iteration is skipped when `counter === 2`.
+Therefore, you won't see the `2` logged to the console.

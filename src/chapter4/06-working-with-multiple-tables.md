@@ -141,7 +141,7 @@ This would return:
 Note that the 'Have fun' project doesn't appear in the table since there are no corresponding tasks.
 The same goes for the 'Think of a funny joke' task.
 
-## Outer Joins
+### Outer Joins
 
 If we wanted tasks/project that don't have corresponding projects/tasks to appear as well, we would need to use an **outer join** - either a **left outer join** or a **right outer join**.
 
