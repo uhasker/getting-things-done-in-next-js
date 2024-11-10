@@ -185,7 +185,7 @@ console.log(greet('John Doe'));
 <p>This is the basic setup, but in order to actually execute this in the browser or in Node.js we need to make some more adjustments.</p>
 <h3 id="esm-in-the-browser"><a class="header" href="#esm-in-the-browser">ESM in the Browser</a></h3>
 <p>Let's create a file named <code>index.html</code> in which we use <code>main.js</code> as a JavaScript module:</p>
-<pre><code class="language-html">&lt;!doctype html&gt;
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
 &lt;html lang="en"&gt;
   &lt;head&gt;
     &lt;meta charset="UTF-8" /&gt;
@@ -207,6 +207,10 @@ We therefore need to serve our files over a server instead of just trying to ope
 <p>Let's install the <code>http-server</code> package:</p>
 <pre><code class="language-sh">pnpm add -g http-server
 </code></pre>
+<blockquote>
+<p>The <code>-g</code> flag tells <code>pnpm</code> to install the package globally and not just for a particular project.
+This is similar to the <code>-g</code> flag for <code>npm</code>.</p>
+</blockquote>
 <p>Now enter the directory where you stored <code>index.html</code>, <code>main.js</code> and <code>greeter.js</code> and execute the following command:</p>
 <pre><code class="language-sh">http-server .
 </code></pre>
@@ -341,7 +345,7 @@ This means that the <code>greet</code> conflict can be resolved like this:</p>
 import * as otherGreetModule from './other-greet.js';
 
 greetModule.greet('John');
-otherGreeetModule.greet('John');
+otherGreetModule.greet('John');
 </code></pre>
 <h3 id="module-scope"><a class="header" href="#module-scope">Module Scope</a></h3>
 <p>We already know the global scope, function scope and block scope.
@@ -360,7 +364,7 @@ export function greet(name) {
 }
 </code></pre>
 <p>Here the <code>getGreeting</code> function is not exported, meaning that it will remain <em>completely private</em> to the module.
-Only the <code>greet</code> function can be used (since it is <code>default</code> exported).</p>
+Only the <code>greet</code> function can be used (since it's exported).</p>
 <p>Let's try importing <code>getGreeting</code>:</p>
 <pre><code class="language-js">import { greet, getGreeting } from './greet.js';
 </code></pre>
@@ -374,11 +378,11 @@ SyntaxError: The requested module './greet.js' does not provide an export named 
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../chapter1/09-asynchronous-programming.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../chapter1/10-asynchronous-programming.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../chapter1/11-packages.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../chapter1/12-packages.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -388,11 +392,11 @@ SyntaxError: The requested module './greet.js' does not provide an export named 
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../chapter1/09-asynchronous-programming.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../chapter1/10-asynchronous-programming.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../chapter1/11-packages.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../chapter1/12-packages.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

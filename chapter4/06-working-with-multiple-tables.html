@@ -241,7 +241,7 @@ inner join project on task.project_id = project.id;
 </code></pre>
 <p>Note that the 'Have fun' project doesn't appear in the table since there are no corresponding tasks.
 The same goes for the 'Think of a funny joke' task.</p>
-<h2 id="outer-joins"><a class="header" href="#outer-joins">Outer Joins</a></h2>
+<h3 id="outer-joins"><a class="header" href="#outer-joins">Outer Joins</a></h3>
 <p>If we wanted tasks/project that don't have corresponding projects/tasks to appear as well, we would need to use an <strong>outer join</strong> - either a <strong>left outer join</strong> or a <strong>right outer join</strong>.</p>
 <p>For example, if we wanted to get all tasks that don't have any associated project, we would need to use a left join:</p>
 <pre><code class="language-sql">select task.id as task_id, task.title as task_title, task.status as task_status, project.id as project_id, project.name as project_name

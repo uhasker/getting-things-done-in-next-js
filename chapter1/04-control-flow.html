@@ -158,7 +158,7 @@
 <p>Quite often, we need to make <em>decisions</em> in our programs.
 Let's say we want to display a fancy message when a bunch of tasks are completed.
 This is a decision: <em>If</em> all the tasks are completed, <em>then</em> we want to display a message.
-Put generally: <em>If</em> a condition holds (is true), <em>then</em> we want to do something.</p>
+More generally: <em>If</em> a condition holds (is <code>true</code>), <em>then</em> we want to do something.</p>
 <p>Conveniently, the language keyword that allows us to accomplish this is called <code>if</code>:</p>
 <pre><code class="language-js">const completed = true;
 if (completed) {
@@ -176,7 +176,8 @@ if (completed) {
 <p>If <code>condition</code> is true, then the <code>statements</code> inside the curly braces will be executed.
 If <code>condition</code> is false, nothing will happen.</p>
 <blockquote>
-<p>Note that technically it suffices if the condition is <em>truthy</em> or <em>falsy</em>. We will ignore this detail for now and return to it in a second.</p>
+<p>Note that technically it suffices if the condition is <em>truthy</em> or <em>falsy</em>.
+We will ignore this detail for now and return to it later.</p>
 </blockquote>
 <p>The simplest condition is a boolean variable.
 However, nothing prevents us from writing more complex conditions.
@@ -204,14 +205,14 @@ The (also conveniently named) <code>else</code> keyword allows you to accomplish
 <p>If <code>condition</code> is true, the statements corresponding to <code>statements1</code> will be executed (i.e. the statements inside the curly braces after the <code>if</code>).
 If <code>condition</code> is false, the statements corresponding to <code>statements2</code> will be executed (i.e. the statements inside the curly braces after the <code>else</code>).</p>
 <p>Note that there may be multiple statements between the curly braces.
-This is totally valid:</p>
+For example, this is totally valid:</p>
 <pre><code class="language-js">if (tasks.length === 0) {
   console.log('Hooray, you completed all your tasks!');
   console.log('Congratulations!');
   console.log('No really, you are amazing!');
 } else {
   console.log('You still have some tasks to complete.');
-  console.log('Do not despair!');
+  console.log("Don't despair!");
 }
 </code></pre>
 <p>Assuming <code>tasks</code> has a <code>length</code> of <code>0</code> this will print:</p>
@@ -259,26 +260,27 @@ For example, this is valid:</p>
 </code></pre>
 <p>Note that the <code>else</code> block is not required.
 If it's missing and none of the conditions are true, nothing will happen.</p>
-<h3 id="truthiness-and-falsiness"><a class="header" href="#truthiness-and-falsiness">Truthiness and falsiness</a></h3>
-<p>Note that the condition does not necessary have to be a boolean as JavaScript will automatically evaluate non-boolean values as "truthy" or "falsy" in boolean contexts.
-For example you could write something like this:</p>
+<h3 id="truthiness-and-falsiness"><a class="header" href="#truthiness-and-falsiness">Truthiness and Falsiness</a></h3>
+<p>The condition doesn't necessarily have to be a boolean as JavaScript will automatically evaluate non-boolean values as "truthy" or "falsy" in boolean contexts.
+For example, you could write something like this:</p>
 <pre><code class="language-js">if (1) {
-  console.log('1 is truthy.');
+  console.log('1 is truthy');
 } else {
-  console.log('1 is falsy.');
+  console.log('1 is falsy');
 }
 </code></pre>
-<p>This will print "1 is truthy." because JavaScript will consider <code>1</code> to be <code>true</code> in this context since <code>1</code> is a <em>truthy</em> value.</p>
+<p>This will print <code>1 is truthy</code> because JavaScript will consider <code>1</code> to be <code>true</code> in this context since <code>1</code> is a <em>truthy</em> value.</p>
 <p>Generally speaking, a <strong>truthy</strong> value is considered to be true when encountered in a boolean context (like a condition).
-A <strong>falsy</strong> value is considered to be false when encountered in a boolean context.
-The most important falsy values are <code>false</code>, <code>0</code>, <code>''</code> (empty string), <code>null</code> and <code>undefined</code>.
+A <strong>falsy</strong> value is considered to be false when encountered in a boolean context.</p>
+<p>The most important falsy values are <code>false</code>, <code>0</code>, <code>''</code> (empty string), <code>null</code> and <code>undefined</code>.
 Most other values (like <code>1</code>, <code>[]</code> (empty array), <code>[3]</code>, <code>{ example: 'hello' }</code> etc) are truthy.</p>
 <p>Try to <em>avoid using non-boolean values in boolean contexts</em> as it can lead to surprising behaviour.
 Nevertheless it's still useful to know about truthiness and falsiness, as it will otherwise trip you up in certain cases.</p>
 <h3 id="ternary-operator"><a class="header" href="#ternary-operator">Ternary operator</a></h3>
 <p>The <strong>ternary operator</strong> takes a <em>condition</em>, an <em>expression to execute if the condition is truthy</em> and an <em>expression to execute if the condition is falsy</em>.
 It looks like this:</p>
-<pre><code class="language-js">const doneMsg = 'All tasks are done';
+<pre><code class="language-js">const done = false;
+const doneMsg = 'All tasks are done';
 const notDoneMsg = 'There are tasks left';
 const msg = done ? doneMsg : notDoneMsg;
 </code></pre>
@@ -292,9 +294,8 @@ If the condition is <code>false</code> (falsy), the result will have the value o
 <pre><code class="language-js">const finished = tasks.length === 0 ? true : false;
 </code></pre>
 <p>You should stop for a second and think about why this is unnecessary.</p>
-<p><em>Thought</em> about it?
-That's right - the expression <code>tasks.length === 0</code> already evaluates to a boolean value.
-You can just write</p>
+<p>That's right—the expression <code>tasks.length === 0</code> already evaluates to a boolean value.
+You can just write this instead:</p>
 <pre><code class="language-js">const finished = tasks.length === 0;
 </code></pre>
 <h3 id="optional-chaining"><a class="header" href="#optional-chaining">Optional chaining</a></h3>
@@ -310,20 +311,13 @@ You can just write</p>
 };
 </code></pre>
 <p>Let's say we want to access the day of the task.
-We can do this by using <code>nextTask.date.day</code>.
+We can do this by writing <code>nextTask.date.day</code>.
 But what if the day does not have to be present, i.e. is <em>optional</em>?
-This could happen, for example, because the user didn't enter a task.</p>
-<p>The object could look like this:</p>
+This could happen, for example, because the user didn't enter a date.</p>
+<p>This means that the object could look like this:</p>
 <pre><code class="language-js">const nextTask = {
   title: 'Read the Next.js book',
   description: 'Read and understand the Next.js book',
-};
-
-// or like this if you were to use `null`
-const nextTask = {
-  title: 'Read the Next.js book',
-  description: 'Read and understand the Next.js book',
-  date: null,
 };
 </code></pre>
 <p>Then <code>nextTask.date.day</code> will fail with</p>
@@ -336,27 +330,28 @@ Then we would need to do something like the following:</p>
 </code></pre>
 <p>Here is what this line does:
 If <code>nextTask.date</code> is defined, then <code>nextTask.date.day</code> is assigned to <code>day</code>.
-If <code>nextTask.date</code> is not defined, the <code>undefined</code> is assigned to <code>day</code>.</p>
+If <code>nextTask.date</code> isn't defined, then <code>undefined</code> is assigned to <code>day</code>.</p>
 <p>Alternatively we could make use of <code>&amp;&amp;</code> and write:</p>
 <pre><code class="language-js">const day = nextTask.date &amp;&amp; nextTask.date.day;
 </code></pre>
 <blockquote>
-<p>This is correct because of the way the <code>&amp;&amp;</code> works.
+<p>This is correct because of the way the <code>&amp;&amp;</code> operator works.
 If the first expression is <code>false</code> (or falsy) then <code>&amp;&amp;</code> doesn't look at the second expression and immediately returns the value of the first expression.
 If the first expression is <code>true</code> (or truthy) then <code>&amp;&amp;</code> returns the second expression.</p>
 </blockquote>
-<p>Generally consider an object that has a bunch of values that may be absent (i.e. <code>null</code> or <code>undefined</code>).
-Working with such values will be annoying and only grow more cumbersome with deeper nesting.
-To avoid all this JavaScript allows you to do <strong>optional chaining</strong>.
-This works by writing <code>?.</code> instead of <code>.</code> when trying to work on something that may be <code>undefined</code>.
+<p>We can generally consider an object that has a bunch of values that may be absent (i.e. <code>null</code> or <code>undefined</code>).
+Working with such values will be annoying and only grow more cumbersome with deeper nesting.</p>
+<p>To avoid all this JavaScript allows you to do <strong>optional chaining</strong>.
+This works by writing <code>?.</code> instead of <code>.</code> when trying to work on something that may be absent.
 The above line would then become:</p>
 <pre><code class="language-js">const day = nextTask.date?.day;
 </code></pre>
-<p>Now the result will be <code>undefined</code> instead of giving you a TypeError.</p>
+<p>Now the result will be <code>undefined</code> instead of a <code>TypeError</code>.</p>
 <h3 id="the-switch-statement"><a class="header" href="#the-switch-statement">The <code>switch</code> Statement</a></h3>
 <p>The <code>switch</code> statement evaluates an expression and then attempts to match the result against a number of <code>case</code> clauses.
 As soon as a <code>case</code> clause is matched all following statements are executed until a <code>break</code> statement is encountered.
-If no case matches and a <code>default</code> statement is present, execution will jump to the code after the <code>default</code> statement:</p>
+If no case matches and a <code>default</code> statement is present, execution will jump to the code after the <code>default</code> statement.</p>
+<p>Here is an example:</p>
 <pre><code class="language-js">switch (tasks.length) {
   case 0:
     console.log('Hooray, you completed all your tasks!');
@@ -390,6 +385,12 @@ while (counter &lt; 3) {
 1
 2
 </code></pre>
+<p>The general form of the <code>while</code> loop looks like this:</p>
+<pre><code class="language-js">while (condition) {
+  statements;
+}
+</code></pre>
+<p>The <code>statements</code> inside the curly braces will be executed as long as <code>condition</code> is true (or, rather, truthy).</p>
 <p>The <code>do...while</code> loop is similar to the <code>while</code> loop with one subtle difference.
 The <code>while</code> loop evaluates the condition <em>before</em> executing the statement.
 The <code>do...while</code> loop on the other hand evaluates the condition <em>after</em> executing the statement.</p>
@@ -407,19 +408,26 @@ do {
 2
 3
 </code></pre>
+<p>The general form of the <code>do...while</code> loop looks like this:</p>
+<pre><code class="language-js">do {
+  statements;
+} while (condition);
+</code></pre>
 <p>Because of the way the <code>do...while</code> loop works the statement(s) inside the loop body will always be executed at least once.
 The following example will log <code>Hello</code> to the console once despite the condition being <code>false</code>:</p>
 <pre><code class="language-js">do {
   console.log('Hello');
 } while (false);
 </code></pre>
+<p>We recommend that you avoid using <code>do...while</code> loops whenever possible.
+Regular <code>while</code> loops are easier to understand in most cases.</p>
 <h3 id="for-loops"><a class="header" href="#for-loops">For Loops</a></h3>
 <p>The regular <code>for</code> loop consists of three expressions.</p>
 <p>The first expression is the <em>initialization expression</em> and typically initializes some kind of counter.
 The second expression is the <em>condition expression</em> and typically checks for some condition.
-If the condition is true the statement(s) in the loop body execute, otherwise the loop terminates.
-Finally the third expression (sometimes called <em>afterthough expression</em>) is evaluated at the end of each loop iteration and typically advances the counter.</p>
-<p>As usual a code example says more than a thousand words:</p>
+If the condition is true, the statement(s) in the loop body execute, otherwise the loop terminates.
+Finally, the third expression (sometimes called <em>afterthought expression</em>) is evaluated at the end of each loop iteration and typically advances the counter.</p>
+<p>As usual, a code example says more than a thousand words:</p>
 <pre><code class="language-js">for (let i = 0; i &lt; 3; i++) {
   console.log(i);
 }
@@ -429,7 +437,7 @@ Finally the third expression (sometimes called <em>afterthough expression</em>) 
 1
 2
 </code></pre>
-<p>You can use regular <code>for</code> loops to iterate over arrays:</p>
+<p>You can, among other things, use regular <code>for</code> loops to iterate over arrays:</p>
 <pre><code class="language-js">const tasks = ['Task 1', 'Task 2', 'Task 3'];
 
 for (let i = 0; i &lt; tasks.length; i++) {
@@ -441,7 +449,7 @@ for (let i = 0; i &lt; tasks.length; i++) {
 Task 2
 Task 3
 </code></pre>
-<p>However we will soon learn better ways to perform array iteration.</p>
+<p>However, we will soon learn better ways to perform array iteration.</p>
 <h3 id="the-break-and-continue-statements"><a class="header" href="#the-break-and-continue-statements">The <code>break</code> and <code>continue</code> Statements</a></h3>
 <p>The <code>break</code> statement gives you a tool to prematurely terminate a loop:</p>
 <pre><code class="language-js">let counter = 0;
@@ -455,11 +463,12 @@ while (counter &lt; 4) {
   }
 }
 </code></pre>
-<p>This will log the following lines to the console:</p>
+<p>Here we will immediately exit the loop as soon as <code>counter === 2</code>.
+Therefore, the following lines will be logged to the console:</p>
 <pre><code>0
 1
 </code></pre>
-<p>The <code>continue</code> statement terminates the rest of the current iteration and continues with the next iteration:</p>
+<p>The <code>continue</code> statement terminates the rest of the <em>current iteration</em> and continues with the next iteration of a loop:</p>
 <pre><code class="language-js">let counter = 0;
 
 while (counter &lt; 4) {
@@ -476,6 +485,9 @@ while (counter &lt; 4) {
 3
 4
 </code></pre>
+<p>Note that the loop still continues even after <code>counter</code> becomes <code>2</code>.
+However, the rest of the iteration is skipped when <code>counter === 2</code>.
+Therefore, you won't see the <code>2</code> logged to the console.</p>
 
                     </main>
 

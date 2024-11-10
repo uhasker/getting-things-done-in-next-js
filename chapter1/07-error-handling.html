@@ -158,17 +158,17 @@
 <p>The <code>throw</code> statement allows you to throw an exception:</p>
 <pre><code class="language-js">throw 'Something bad happened';
 </code></pre>
-<p>Usually error objects are thrown:</p>
+<p>You can theoretically <code>throw</code> any value.
+However, you will usually throw <code>Error</code> objects:</p>
 <pre><code class="language-js">throw new Error('Something bad happened');
 </code></pre>
 <blockquote>
-<p>The <code>new</code> operator creates a new object (of some class).
-We will revisit this operator in more detail later.</p>
+<p>Remember that the <code>new</code> operator creates a new object (of some class).</p>
 </blockquote>
 <h3 id="the-trycatch-statement"><a class="header" href="#the-trycatch-statement">The <code>try...catch</code> Statement</a></h3>
 <p>The <code>try...catch</code> statement specifies a block of statements to execute "normally" and a block to execute if the "normal" block throws an exception.
 The normal block is contained in a <code>try</code> block while the "exception" block is contained in a <code>catch</code> block.
-If any statement in the <code>try</code> throws an exception, code execution jumps to the <code>catch</code> block immediately - the rest of the <code>try</code> block is ignored:</p>
+If any statement in the <code>try</code> block throws an exception, code execution jumps to the <code>catch</code> block immediately—the rest of the <code>try</code> block is ignored:</p>
 <pre><code class="language-js">function divide(x, y) {
   if (y === 0) {
     throw new Error('Division by 0 is a bad idea');
@@ -262,11 +262,11 @@ Division by 0 is a bad idea
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../chapter1/05-functions.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../chapter1/06-classes.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../chapter1/07-basic-datastructures.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../chapter1/08-basic-datastructures.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -276,11 +276,11 @@ Division by 0 is a bad idea
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../chapter1/05-functions.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../chapter1/06-classes.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../chapter1/07-basic-datastructures.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../chapter1/08-basic-datastructures.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

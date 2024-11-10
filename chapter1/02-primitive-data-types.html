@@ -153,24 +153,25 @@
                 <div id="content" class="content">
                     <main>
                         <h2 id="primitive-data-types"><a class="header" href="#primitive-data-types">Primitive Data Types</a></h2>
-<div style="text-align: right"> <i> == is the equality operator <br> === is the one and true equality operator <br> ==== is the equality operator which transcends time and space <br> ===== is the equality operator which transcends all other equality operators <br> ====== is the equality operator which summons the UNSPEAKABLE DOOM h̷̳͓͝ě̵̞͂ ̵̮͍͊͋i̴͎͂s̵̗͒ ̷̘̤̓̅h̸͜͝ḙ̵̀r̶͈̆ȇ̶̗̱̍ ̸͕̾h̴̲̗̾̅e̷̟̋ả̶̬v̶̯́̐͜ẽ̸̛͔n̶̩̒͊ ̴̢̯̍ḣ̵̳̻e̴̙̒̓l̵͇̟̃p̶̘̑ ̷̠͛͝ŭ̴͇̯̕s̶̮͕̒ <br> — from "The Book of the Equality Operators and their Virtue" by Laozi </i> </div>
+<div style="text-align: right"> <i> == is the equality operator <br> === is the one and true equality operator <br> ==== is the equality operator which transcends time and space <br> ===== is the equality operator which transcends all other equality operators <br> ====== is the equality operator which summons the UNSPEAKABLE DOOM (all is lost) <br> — from "The Book of the Equality Operators and their Virtue" by Laozi </i> </div>
 <h3 id="variables"><a class="header" href="#variables">Variables</a></h3>
 <p>Whenever we write programs, we need to manipulate data.
-This data needs to be stored somewhere and we need to be able to access it somehow.
-We also need to deal with the fact that when we execute a program, the values we deal with are not predictable in advance.
-For example we don't know which tasks a user might create (that is kind of the point of writing our application).
-Nevertheless, we must be able to access created tasks through a predictable name like <code>tasks</code> or <code>createdTasks</code>.</p>
-<p>Therefore we need a way to put an <em>unpredictable</em> value somewhere and refer to it using a <em>predictable</em> name.
+This data needs to be stored somewhere and we need to be able to access it somehow.</p>
+<p>We also need to deal with the fact that when we execute a program, the values we deal with are <em>not predictable</em> in advance.
+For example, we don't know which tasks a user might create (that's kind of the point of writing our application after all).
+Nevertheless, we must be able to access created tasks through a <em>predictable</em> name like <code>tasks</code> or <code>createdTasks</code>.</p>
+<p>Therefore, we need a way to put an <em>unpredictable</em> value somewhere and refer to it using a <em>predictable</em> name.
 In programming, that "somewhere" is referred to as <em>storage</em> and the predictable name as a <em>symbolic name</em>.</p>
-<p>A <strong>variable</strong> is just that - a storage location containing a value which is referred to by a symbolic name.
+<p>A <strong>variable</strong> is just that—a storage location containing a value which is referred to by a symbolic name.
 This <em>sounds</em> really fancy, but it just means that there is a value somewhere in your storage and you can refer to that value using a symbolic name that doesn't change (even if the value itself changes).</p>
-<p>For example you could have a variable <code>age</code> which has the value <code>20</code> (we say that <code>age</code> is equal to <code>20</code>):</p>
+<p>For example, you could have a variable <code>age</code> which has the value <code>20</code> (we say that <code>age</code> is equal to <code>20</code>):</p>
 <p><img src="images/variable.png" alt="" /></p>
 <p>Now even if the value of <code>age</code> changes (e.g. to <code>21</code> because a birthday happened), the variable name doesn't change, only the value does.
-The variable name will still be <code>age</code>, however now <code>age</code> will have the value <code>21</code> (i.e. <code>age</code> will be equal to <code>21</code>):</p>
+The variable name will still be <code>age</code>.
+However, <code>age</code> will now have the value <code>21</code> (i.e. <code>age</code> will be equal to <code>21</code>):</p>
 <p><img src="images/variable-changed.png" alt="" /></p>
-<p>JavaScript lets you declare variables with the <code>let</code> keyword.
-You can assign values to variables using the <strong>assignment operator</strong> (<code>=</code>):</p>
+<p>JavaScript lets you declare variables using the <code>let</code> keyword.
+You can assign values to variables with the <strong>assignment operator</strong> (<code>=</code>):</p>
 <pre><code class="language-js">// Declare a variable
 let x;
 
@@ -182,9 +183,11 @@ x = 10;
 </code></pre>
 <blockquote>
 <p>If you follow along in the Node.js (or browser) console, you don't actually need to use the <code>console.log</code> method to print the value of a variable.
-Instead you can simply type the variable (or any expression for that matter) and the console will display its value.</p>
+Instead, you can simply type the variable (or any expression for that matter) and the console will display its value.
+For example, you can simply type <code>x</code> instead of <code>console.log(x)</code> and you will see the value of <code>x</code>.</p>
 </blockquote>
-<p>You can also have a declaration and an assignment on a single line. In fact, this is usually the way to go:</p>
+<p>You can also have a declaration and an assignment on a single line.
+In fact, this is usually the way to go:</p>
 <pre><code class="language-js">let y = 10;
 </code></pre>
 <p>The value of a variable may change over the course of a program:</p>
@@ -195,35 +198,40 @@ console.log(y); // 10
 y = 20;
 console.log(y); // 20
 </code></pre>
-<p>This will log <code>10</code> and then <code>20</code> to the console.</p>
+<p>This will output <code>10</code>, followed by a <code>20</code>.</p>
+<blockquote>
+<p>Remember that, according to our book conventions, a comment after a <code>console.log</code> indicates the value that will be logged.</p>
+</blockquote>
 <p>If you want to declare a predictable name for a value that never changes, you can declare a <strong>constant</strong>.
 This is done using the <code>const</code> keyword:</p>
 <pre><code class="language-js">const ten = 10;
 </code></pre>
-<p>If you try to reassign a value to a constant, you get an error. For example if you do</p>
+<p>If you try to reassign a value to a constant, you will get an error.
+For example, let's declare a constant and try to assign a new value to it:</p>
 <pre><code class="language-js">const ten = 10;
 ten = 20;
 </code></pre>
-<p>you get</p>
+<p>You will get the following error:</p>
 <pre><code>Uncaught TypeError: Assignment to constant variable.
 </code></pre>
 <p>You will almost exclusively see us using <code>const</code> instead of <code>let</code> from now on.
 Reassignment is not nearly as necessary as you might think right now.</p>
 <blockquote>
 <p>You can also declare variables using the <code>var</code> keyword.
-We will not cover it here and you essentially only need to know one thing about <code>var</code> - you should <em>basically never use it</em>.
-It's mostly a historical artifact of the language at this point.</p>
+We will not cover it here and you essentially only need to know one thing about <code>var</code>—you should <em>basically never use it</em>.
+That's because <code>var</code> has really weird behaviour around scopes (we will talk about scopes later).
+For all practical purposes, you can treat <code>var</code> as a historical artifact of JavaScript.</p>
 </blockquote>
 <p>Any variable has a <strong>data type</strong> which denotes the range of values it can take and which operations can be performed on the variable.
 You can use the <code>typeof</code> operator to obtain the data type of a variable.</p>
 <p>We begin with a few particularly important <strong>primitive data types</strong>.
-Let's talk about numbers, booleans, strings and <code>undefined</code>.</p>
+These are numbers, booleans, strings and <code>undefined</code>.</p>
 <h3 id="numbers"><a class="header" href="#numbers">Numbers</a></h3>
-<p>You've already encountered the <code>Number</code> data type:</p>
+<p>You've already encountered the <code>number</code> data type:</p>
 <pre><code class="language-js">const age = 20;
 console.log(typeof age); // number
 </code></pre>
-<p>Any integer or real number is a <code>Number</code>:</p>
+<p>Any integer or real number is a <code>number</code>:</p>
 <pre><code class="language-js">console.log(typeof 42); // number
 console.log(typeof -20); // number
 console.log(typeof 3.4); // number
@@ -241,7 +249,7 @@ console.log(a / b); // 0.75
 console.log(a % b); // 3
 console.log(a ** b); // 81
 </code></pre>
-<p>You can also use the <strong>shorthand assignment operators</strong> to combine asssignment and arithmetic operators:</p>
+<p>You can also use the <strong>shorthand assignment operators</strong> to combine assignment and arithmetic operators:</p>
 <pre><code class="language-js">let a = 3;
 a += 4;
 console.log(a); // 7
@@ -264,20 +272,31 @@ a--;
 console.log(a); // 4
 </code></pre>
 <p>So far, so obvious.
-However there are also some other things which have type <code>Number</code> like <code>Infinity</code>.
-<code>Infinity</code> is a special value that represents mathematical infinity:</p>
+However, there are also some other things which have the <code>number</code> type.</p>
+<p>One of them is <code>Infinity</code>.
+<code>Infinity</code> is a special value that represents—well—mathematical infinity:</p>
 <pre><code class="language-js">console.log(typeof Infinity); // number
 </code></pre>
-<p>Additionally there is a special value called <code>NaN</code> (short for "not a number").
-For example the result of <code>0 / 0</code> is <code>NaN</code>:</p>
+<p>One way to arrive at <code>Infinity</code> in JavaScript is to divide something positive by <code>0</code>:</p>
+<pre><code class="language-js">console.log(1 / 0); // Infinity
+</code></pre>
+<p>Additionally, there is a special value called <code>NaN</code> (short for "not a number").
+For example, the result of <code>0 / 0</code> is <code>NaN</code>:</p>
 <pre><code class="language-js">console.log(0 / 0); // NaN
 </code></pre>
-<p>Hilariously, <code>NaN</code> itself is a number (despite the name):</p>
+<p>Hilariously, <code>NaN</code> itself is a number (despite its name explicitly stating that it's <em>not</em> a number):</p>
 <pre><code class="language-js">console.log(typeof NaN); // number
 </code></pre>
 <p>Don't let that confuse you.</p>
+<blockquote>
+<p>We will not debate whether decisions like <code>1/0</code> being equal to <code>Infinity</code>, <code>0/0</code> being equal to <code>NaN</code> or <code>NaN</code> having type <code>number</code> are good decisions.
+We simply note that this is the way JavaScript works and move on.
+Don't worry, there is in fact a lot of hot debate around some of JavaScripts more—shall we say—controversial features.
+If you wish to do so, you can go on any programming forum of your choice and start a local holy war by making fun of the way JavaScript's primitive data types work.
+Deciding whether that's a good use of time is up to you.</p>
+</blockquote>
 <p>Another important thing about numbers is that you need to be careful when you are trying to perform operations with real numbers.
-For example if you add <code>0.1</code> and <code>0.2</code> you get a weird result:</p>
+For example, if you add <code>0.1</code> and <code>0.2</code> you get a weird result:</p>
 <pre><code class="language-js">console.log(0.1 + 0.2); // 0.30000000000000004
 </code></pre>
 <p>This is not the fault of JavaScript, but instead has to do with the limitations of trying to represent numbers with a potentially infinite amount of digits on a finite hardware.</p>
@@ -286,7 +305,7 @@ For example if you add <code>0.1</code> and <code>0.2</code> you get a weird res
 If you're interested in more details we encourage you to have a look at the IEEE754 standard.</p>
 </blockquote>
 <h3 id="booleans"><a class="header" href="#booleans">Booleans</a></h3>
-<p>Another primitive type is the <code>Boolean</code> type.
+<p>Another primitive type is the <code>boolean</code> type.
 This allows you to represent values which are either <code>true</code> or <code>false</code>:</p>
 <pre><code class="language-js">const thisBookIsAwesome = true;
 const thisBookSucks = false;
@@ -295,20 +314,20 @@ console.log(typeof thisBookSucks); // boolean
 </code></pre>
 <p>You can do simple logic using the logical operators <code>&amp;&amp;</code> (which denotes <strong>and</strong>), <code>||</code> (which denotes <strong>or</strong>) and <code>!</code> (which denotes <strong>not</strong>).</p>
 <p>The <code>&amp;&amp;</code> (<em>and</em>) operator takes two values and evaluates to <code>true</code> only if both values are <code>true</code>.
-Otherwise it evaluates to <code>false</code>:</p>
+Otherwise, it evaluates to <code>false</code>:</p>
 <pre><code class="language-js">console.log(true &amp;&amp; true); // true
 console.log(false &amp;&amp; true); // false
 console.log(true &amp;&amp; false); // false
 console.log(false &amp;&amp; false); // false
 </code></pre>
 <p>The <code>||</code> (<em>or</em>) operator takes two values and evaluates to <code>true</code> if <em>at least one</em> of the values is <code>true</code>.
-Otherwise it evaluates to <code>false</code>:</p>
+Otherwise, it evaluates to <code>false</code>:</p>
 <pre><code class="language-js">console.log(true || true); // true
 console.log(false || true); // true
 console.log(true || false); // true
 console.log(false || false); // false
 </code></pre>
-<p>The <code>!</code> (<em>not</em>) operator takes a single value and simply negates it, i.e. "switches" a value to it's opposite:</p>
+<p>The <code>!</code> (<em>not</em>) operator takes a single value and simply negates it, i.e. "switches" a value to its opposite:</p>
 <pre><code class="language-js">console.log(!true); // false
 console.log(!false); // true
 </code></pre>
@@ -320,12 +339,12 @@ console.log(b1 || b2); // true
 console.log(!b1); // false
 </code></pre>
 <blockquote>
-<p>Note that technically all the logical operators can take <em>any</em> value (not just boolean values).
+<p>Note that, technically, the logical operators can work with <em>any</em> values (not just boolean values).
 The result of the logical operator application is then dependent on whether the values are <em>truthy</em> or <em>falsy</em>.
 We will discuss this later.</p>
 </blockquote>
 <p>A boolean variable usually occurs as the result of an expression.
-Often it is the result of an expression containing the <strong>strict equality operator</strong> (<code>===</code>) which allows us to compare the values of variables:</p>
+Often it's the result of an expression containing the <strong>strict equality operator</strong> (<code>===</code>) which allows us to compare the values of variables:</p>
 <pre><code class="language-js">const x1 = 5;
 const x2 = 10;
 const x3 = 5;
@@ -334,31 +353,32 @@ console.log(x1 === x2); // false
 console.log(x1 === x3); // true
 </code></pre>
 <blockquote>
-<p>There is also another equality operator (<code>==</code>) which performs various type coercions before doing the equality comparison.
+<p>There is also another equality operator (<code>==</code>) which performs various type coercions before doing the equality comparison (for example, <code>0 == "0"</code> will be <code>true</code>).
 This operator can be best described as an April Fools' joke that somehow made it into the language.
 <em>Never use it</em>.</p>
 </blockquote>
-<p>If you want to write <em>not equals</em> you can use <code>!==</code>:</p>
+<p>If you want to write <em>not equals</em>, you can use <code>!==</code>:</p>
 <pre><code class="language-js">console.log(5 !== 10); // true
 console.log(5 !== 5); // false
 </code></pre>
-<p>Additionally you can also check if one value is less than or greater than another value.
-This is most commonly done with numbers:</p>
+<p>Additionally, you can check if one value is less than or greater than another value using <code>&lt;</code>, <code>&lt;=</code>, <code>&gt;</code> and <code>&gt;=</code>.
+These operators are most commonly used with numbers:</p>
 <pre><code class="language-js">console.log(2 &lt; 3); // true
 console.log(2 &lt;= 3); // true
 console.log(2 &gt; 3); // false
 console.log(2 &gt;= 3); // false
 </code></pre>
 <h3 id="strings"><a class="header" href="#strings">Strings</a></h3>
-<p>Another primitive data type is the <code>String</code> type.
+<p>Another primitive data type is the <code>string</code> type.
 A string is simply a sequence of characters and is used to represent text.
 Strings are usually written using single quotes in JavaScript:</p>
 <pre><code class="language-js">const s = 'Some text';
 console.log(typeof s); // string
 </code></pre>
 <blockquote>
-<p>Note that it's also possible to write strings using double quotes, however in most projects strings are written using single quotes.
-We will stick to this convention.</p>
+<p>Note that it's also possible to write strings using double quotes, however in most projects strings are written using single quotes and we will stick to this convention.
+Nevertheless, we want to stress that there is absolutely nothing wrong to use double quotes.
+However, you should be consistent throughout your project—pick one style and stick to it.</p>
 </blockquote>
 <p>The <code>+</code> operator works on strings and does concatenation:</p>
 <pre><code class="language-js">const s1 = 'Next.js ';
@@ -368,29 +388,37 @@ console.log(s1 + s2); // Next.js book
 <p>Note that instead of doing concatenation all the time you can also use <strong>template strings</strong> (also called template literals).
 This allows writing JavaScript expressions directly inside strings.
 Consider the following example:</p>
-<pre><code class="language-js">const s = 'world';
-const greeting = `Hello ${s}!`;
-console.log(greeting); // Hello world!
+<pre><code class="language-js">const s = 'World';
+const greeting = `Hello, ${s}!`;
+console.log(greeting); // Hello, World!
 </code></pre>
 <p>Template strings are written using backticks (<em>not</em> single quotes).
-They may contain so called <em>placeholders</em> which are expressions embedded inside <code>${...}</code>.
-These expressions can be any valid JavaScript expression that evaluates to a value implicitly convertible to a string.
-JavaScript will then try to convert any value inside the placeholder to a string:</p>
+They may contain so-called <em>placeholders</em> which are expressions embedded inside <code>${...}</code>:</p>
 <pre><code class="language-js">console.log(`2 + 2 = ${2 + 2}`); // 2 + 2 = 4
 </code></pre>
+<blockquote>
+<p>Technically, expressions inside template literals have to be "implicitly convertible to a string" because JavaScript has to convert any placeholder value to a string first.
+However, you will find that expressions not "implicitly convertible to a string" are rare indeed.</p>
+</blockquote>
 <p>You can get the length (i.e. the number of characters) of a string like this:</p>
 <pre><code class="language-js">const s = 'MERN book';
 console.log(s.length); // 9
 </code></pre>
-<blockquote>
 <p>Note that JavaScript does not have a special "character" data type (unlike Java for example).
-Instead, characters are simply strings of length 1.</p>
-</blockquote>
+Instead, characters are simply strings of length 1:</p>
+<pre><code class="language-js">const c = 'm';
+console.log(typeof c); // string
+</code></pre>
 <p>There is much more to strings and we will return to them later.</p>
+<blockquote>
+<p>In fact, strings are a really complicated data type.
+We will omit most of these complications since they are not relevant to simple web applications.
+Nevertheless, you should keep in mind that you will not have a perfectly accurate understanding of strings by the end of this book.</p>
+</blockquote>
 <h3 id="undefined"><a class="header" href="#undefined">Undefined</a></h3>
-<p>Finally there is one more primitive type that is of interest to us, namely <code>undefined</code>.
-There is only one value of this type: <code>undefined</code>.
-If a variable has the value <code>undefined</code> this (quite logically) means that it hasn't been defined.
+<p>Finally, there is one more primitive type that's of interest to us, namely <code>undefined</code>.
+There is only one value of this type: <code>undefined</code>.</p>
+<p>If a variable has the value <code>undefined</code>, this (quite logically) means that it hasn't been defined.
 For example, whenever you have a variable that has been initialized, but not assigned to, it will automatically have the value and therefore the type <code>undefined</code>.</p>
 <pre><code class="language-js">let someVariable;
 console.log(someVariable); // undefined
@@ -401,16 +429,16 @@ console.log(typeof someVariable); // undefined
 console.log(someVariable); // undefined
 console.log(typeof someVariable); // undefined
 </code></pre>
-<p>An important operator to know is the nullish coalescing operator <code>??</code>.
-This operator takes two values and check if the left-hand side is <code>undefined</code> (or <code>null</code> - a value that we will not pay much attention to).
-If the left value is <code>undefined</code> or <code>null</code> the nullish coalescing operator evaluates the expression to the right-hand side, otherwise it returns the left-hand side:</p>
+<p>An important operator to know if you plan to work with <code>undefined</code> is the nullish coalescing operator <code>??</code>.
+This operator takes two values and checks if the left-hand side is <code>undefined</code> (or <code>null</code>—a value that we will not pay much attention to).
+If the left value is <code>undefined</code> (or <code>null</code>), the nullish coalescing operator evaluates the expression to the right-hand side, otherwise it returns the left-hand side:</p>
 <pre><code class="language-js">console.log(undefined ?? 1); // 1
 console.log(0 ?? 1); // 0
 </code></pre>
 <p>The <code>??</code> operator is commonly used to provide useful default values.</p>
 <blockquote>
 <p>Note that <code>string</code>, <code>number</code>, <code>boolean</code> and <code>undefined</code> are not the only primitive data types.
-However the other primitive data types will not be relevant for this book.</p>
+However, the other primitive data types will not be relevant for this book.</p>
 </blockquote>
 
                     </main>

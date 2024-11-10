@@ -273,12 +273,8 @@ For example, we could specify a type alias for the primitive type <code>string</
 <p>Another important point to make about type aliases is that two type aliases are exactly the same as long as the underlying types are the same.
 For example this is valid even though it doesn't look like it:</p>
 <pre><code class="language-ts">type MyString = string;
-
-function getMyString(): MyString {
-  return 'My string';
-}
-
-const s: string = getMyString();
+const s1: MyString = 'My string';
+const s2: string = s1;
 </code></pre>
 <p>This is because TypeScript uses a <em>structural type system</em> - it doesn't matter what the types are named (except for the primitive types of course), it only matters what their <em>structure</em> looks like.</p>
 <p>Note that you can also use the <code>interface</code> keyword to achieve a similar effect:</p>

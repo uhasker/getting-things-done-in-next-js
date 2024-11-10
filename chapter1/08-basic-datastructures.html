@@ -155,19 +155,19 @@
                         <h2 id="basic-data-structures"><a class="header" href="#basic-data-structures">Basic Data Structures</a></h2>
 <div style="text-align: right"> <i> A set is like a wise emperor's court: it welcomes many, but never the same face twice. <br> — Ancient Chinese proverb </i> </div>
 <h3 id="more-on-strings"><a class="header" href="#more-on-strings">More on Strings</a></h3>
-<p>We already learned about strings (which represent sequences of characters).
+<p>We already learned that strings represent sequences of characters.
 We also learned that they can be concatenated using the <code>+</code> operator and that you can get their length using the <code>length</code> property.
-However this is not enough to efficiently work with strings.</p>
-<p>Luckily, strings offer a wide range of additional functionality for pretty much every use case you will ever need - in this subsection we will briefly look at some of it.</p>
+However, this is not enough to efficiently work with strings.</p>
+<p>Luckily, strings offer a wide range of additional functionality for pretty much every use case you will ever need—in this subsection we will briefly look at some of it.</p>
 <p>First, you can access individual characters using the <code>charAt</code> function or array brackets:</p>
 <pre><code class="language-js">const str = 'Hello';
 console.log(str[1]); // e
 console.log(str.charAt(1)); // e
 </code></pre>
-<p>Remember that there is no special character data type in JavaScript, i.e. <code>typeof str[1]</code> is simply <code>'string'</code>.</p>
+<p>Remember, there is no special character data type in JavaScript, i.e. <code>typeof str[1]</code> is simply <code>'string'</code>.</p>
 <p>Strings also offer a wide range of methods, most of which are self-explanatory:</p>
 <pre><code class="language-js">const str = 'Hello';
-console.log(str.concat(' world')); // Hello world
+console.log(str.concat(', World!')); // Hello, World!
 console.log(str.includes('el')); // true
 console.log(str.startsWith('He')); // true
 console.log(str.endsWith('llo')); // true
@@ -177,32 +177,38 @@ console.log(str.toLowerCase()); // hello
 console.log(str.toUpperCase()); // HELLO
 </code></pre>
 <p>The <code>substring</code> method allows you to return a part of a string.
-You need to pass a start index and and end index:</p>
+You need to pass a start index and an end index:</p>
 <pre><code class="language-js">console.log(str.substring(1, 3)); // el
 </code></pre>
 <p>Note that the start index will be <em>included</em> and the end index will be <em>excluded</em> when creating the substring.</p>
 <blockquote>
-<p>There is also the <code>substr</code> method which is deprecated so don't use it.</p>
+<p>There is also the <code>substr</code> method which is similar.
+However, <code>substr</code> is deprecated and, therefore, you shouldn't use it.</p>
 </blockquote>
 <p>The <code>trim</code> method allows you to remove whitespace from the start and the end of a string.
-This is especially useful when you need to process user input and need to remove accidental whitespace at the start and the end of a string:</p>
+This is especially useful when you need to process user input and remove accidental whitespace at the start and the end of a string:</p>
 <pre><code class="language-js">console.log(' Hello '.trim()); // Hello
 </code></pre>
-<p>The <code>split</code> method splits the string into substring by a delimiter.
-For example here is how you might split a comma-separated list into its items:</p>
+<p>The <code>split</code> method splits the string into substrings by a delimiter.
+For example, here is how you might split a comma-separated list into its items:</p>
 <pre><code class="language-js">console.log('Task 1, Task 2, Task 3, Task 4'.split(','));
 </code></pre>
 <p>This will result in the following array:</p>
 <pre><code>[ 'Task 1', ' Task 2', ' Task 3', ' Task 4' ]
 </code></pre>
-<p>Note that the whitespace is not removed by the <code>split</code> method, you would need to iterate over the resulting array and use the <code>trim</code> method on each string to accomplish that.</p>
+<p>Note that the whitespace is not removed by the <code>split</code> method.
+You would need to iterate over the resulting array and use the <code>trim</code> method on each string to accomplish that.</p>
 <h3 id="more-on-arrays"><a class="header" href="#more-on-arrays">More on Arrays</a></h3>
 <p>We already learned how to construct arrays and how to work with individual array elements.
-However just like strings, arrays have a few additional methods that will often come in handy.</p>
+However, just like strings, arrays have a few additional methods that will often come in handy.</p>
 <p>You can check whether an object is an array using the <code>Array.isArray</code> method:</p>
 <pre><code class="language-js">console.log(Array.isArray([1, 2, 3])); // true
 console.log(Array.isArray('123')); // false
 </code></pre>
+<blockquote>
+<p><code>Array.isArray</code> is a static method.
+We talked about static methods in the section on classes.</p>
+</blockquote>
 <p>You can create an array from an object with <code>Array.from</code>.
 To successfully use <code>Array.from</code> the object must be <em>convertible to an array</em>.</p>
 <p>For example, a string is convertible to an array:</p>
@@ -229,6 +235,8 @@ console.log(['H', 'e', 'l', 'l', 'o'].join(',')); // H,e,l,l,o
 arr.push(4);
 console.log(arr); // [ 1, 2, 3, 4 ]
 </code></pre>
+<p>Of course, you could also do this with <code>concat</code>.
+However, when you just want to add a single element, it's more common to use <code>push</code>.</p>
 <p>The <code>pop</code> element removes the last element of an array:</p>
 <pre><code class="language-js">const arr = [1, 2, 3];
 arr.pop();
@@ -249,18 +257,18 @@ Nested arrays can be flattened with the <code>flat</code> method:</p>
 ];
 console.log(nestedArray[1]); // [ 4, 5, 6 ]
 console.log(nestedArray[1][2]); // 6
-console.log(nestedArray.flat()); // [ 1, 2, 3, 4, 5, 6 , 7, 8, 9 ]
+console.log(nestedArray.flat()); // [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
 </code></pre>
 <h3 id="the-forof-loop"><a class="header" href="#the-forof-loop">The <code>for...of</code> Loop</a></h3>
-<p><code>For..of</code> loops allow you to <em>iterate over arrays and strings</em> (and some other things that we will cover later on) and perform a task for each element / character.
-Let's say you want to print all tasks from a list named <code>tasks</code>.
-Previously we would have used a regular <code>for</code> loop:</p>
+<p><code>For...of</code> loops allow you to <em>iterate over arrays and strings</em> (and a few other things) and perform a task for each element/character.</p>
+<p>Let's say you want to print all tasks from a list named <code>tasks</code>.
+Previously, we would have used a regular <code>for</code> loop:</p>
 <pre><code class="language-js">const tasks = ['Task 1', 'Task 2', 'Task 3'];
 for (let i = 0; i &lt; tasks.length; i++) {
   console.log(tasks[i]);
 }
 </code></pre>
-<p>Instead you can use the <code>for...of</code> loop:</p>
+<p>Instead you can use the <code>for...of</code> loop to accomplish the same thing:</p>
 <pre><code class="language-js">const tasks = ['Task 1', 'Task 2', 'Task 3'];
 for (let task of tasks) {
   console.log(task);
@@ -297,7 +305,7 @@ for (const task of tasks) {
 </code></pre>
 <blockquote>
 <p>Just to reiterate, a <code>for...of</code> loop can iterate over more objects than just arrays and strings.
-However this is out of scope for this book.</p>
+However, this is out of scope for this book.</p>
 </blockquote>
 <h3 id="more-on-objects"><a class="header" href="#more-on-objects">More on Objects</a></h3>
 <p>You can use the static methods <code>Object.keys</code> and <code>Object.values</code> to retrieve the keys and values of an object respectively:</p>
@@ -327,7 +335,8 @@ console.log(Object.entries(task));
 ];
 </code></pre>
 <h3 id="the-forin-loop"><a class="header" href="#the-forin-loop">The <code>for...in</code> Loop</a></h3>
-<p>The <code>for...in</code> loop allows you to iterate over the properties of an object:</p>
+<p>The <code>for...in</code> loop allows you to iterate over the properties of an object.
+For example:</p>
 <pre><code class="language-js">const task = {
   id: 1,
   title: 'Read the Next.js book',
@@ -355,10 +364,11 @@ console.log(capitals.size); // 3
 capitals.delete('France');
 console.log(capitals.has('France')); // false
 </code></pre>
-<p>At first glance maps appear to be very similar to objects, however there are a few imporant differences.</p>
-<p>First, it is very easy to get the size of a map (using the <code>size</code> property), whereas with objects you would need to keep track of the size manually.</p>
+<p>At first glance maps appear to be very similar to objects.
+However, there are a few important differences.</p>
+<p>First, it's very easy to get the size of a map (using the <code>size</code> property), whereas with objects you would need to keep track of the size manually.</p>
 <p>Second, the keys of an object are usually strings, whereas with maps they can have any data type.</p>
-<p>It is recommended to use maps if the key-value pairs are unknown until run time (for example because they are determined by user input), all keys have the same type and all values have the same type.</p>
+<p>It's recommended to use maps if the key-value pairs are unknown until run time (for example, because they are determined by user input), all keys have the same type and all values have the same type.</p>
 <h3 id="sets"><a class="header" href="#sets">Sets</a></h3>
 <p>A <code>Set</code> object is a collection of unique values:</p>
 <pre><code class="language-js">const values = new Set([1, 2, 3]);
@@ -366,6 +376,7 @@ values.add(4);
 console.log(values.has(2)); // true
 console.log(values.size); // 4
 values.delete(3);
+console.log(values.has(3)); // false
 </code></pre>
 <p>Note that all values in a set must be unique, i.e. duplicates are not allowed:</p>
 <pre><code class="language-js">const values = new Set([1, 2, 3]);
@@ -373,8 +384,8 @@ values.add(2);
 console.log(values); // Set(3) { 1, 2, 3 }
 </code></pre>
 <h3 id="json"><a class="header" href="#json">JSON</a></h3>
-<p>JSON is a data format for data exchange (e.g. on a network) and can basically store nested JavaScript objects and arrays.
-While it was heavily inspired by JavaScript, it is a language-independent data format and is in fact used by many other programming languages to exchange data.</p>
+<p><strong>JSON</strong> is a data format for data exchange (e.g. on a network) and can basically store nested JavaScript objects and arrays.
+While it was heavily inspired by JavaScript, it has become a language-independent data format and is in fact used by many other programming languages to exchange data.</p>
 <p>Here is an example JSON file:</p>
 <pre><code class="language-json">{
   "user": {
@@ -397,7 +408,7 @@ const result2 = JSON.stringify([1, 2, 3]);
 console.log(typeof result2); // 'string'
 console.log(result2); // [1,2,3]
 </code></pre>
-<p>Note that <code>JSON.stringify</code> has some unintuitive behaviours.
+<p>Note that <code>JSON.stringify</code> has some unintuitive behaviors.
 For example, running <code>JSON.stringify</code> on a map or a set will always return <code>{}</code>:</p>
 <pre><code class="language-js">console.log(JSON.stringify(new Map([[1, 2]]))); // {}
 console.log(JSON.stringify(new Set([1, 2]))); // {}
@@ -411,16 +422,17 @@ const arr = JSON.parse('[1, 2, 3]');
 console.log(typeof arr); // 'object'
 console.log(arr); // [ 1, 2, 3 ]
 </code></pre>
+<p>We will revisit the JSON data format when we start sending data over a network.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../chapter1/06-error-handling.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../chapter1/07-error-handling.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../chapter1/08-functional-thinking.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../chapter1/09-functional-thinking.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -430,11 +442,11 @@ console.log(arr); // [ 1, 2, 3 ]
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../chapter1/06-error-handling.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../chapter1/07-error-handling.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../chapter1/08-functional-thinking.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../chapter1/09-functional-thinking.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

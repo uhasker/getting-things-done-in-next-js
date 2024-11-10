@@ -155,27 +155,29 @@
                         <h2 id="arrays-and-objects"><a class="header" href="#arrays-and-objects">Arrays and Objects</a></h2>
 <div style="text-align: right"> <i> The object of the superior programmer is truthy. <br> — Confucius </i> </div>
 <h3 id="arrays"><a class="header" href="#arrays">Arrays</a></h3>
-<p>Let's say you are writing a task application (<em>how did I come up with that example?</em>) and you need to store a bunch of tasks.
-You could of course declare a separate variable for every task like this:</p>
+<p>Let's say you're writing a task application and you need to store a bunch of tasks.
+You could declare a separate variable for every task like this:</p>
 <pre><code class="language-js">const task1 = 'First task';
 const task2 = 'Second task';
 const task3 = 'Third task';
 </code></pre>
-<p>However this would quickly become very <em>tedious</em>.
-In addition you may want to add or delete tasks.
+<p>However, this would quickly become very <em>tedious</em>.
+Additionally, you probably want to be able to add or delete tasks in your application.
 Adding and deleting variables will become even more <em>tedious</em>.
 It would become almost as <em>tedious</em> as repeating the word <em>tedious</em> over and over.
 Did we mention that this is really <em>tedious</em>?</p>
-<p>As you can see, we need a way to store multiple values in a single variable.</p>
+<p>As you can see, we need a way to store multiple values in a single variable.
+We can do this with arrays.</p>
 <p>A JavaScript <strong>array</strong> is an ordered collection of multiple values.
 You can declare an array using an <strong>array literal</strong> (also called an <em>array initializer</em> in this context):</p>
 <pre><code class="language-js">const tasks = ['First task', 'Second task', 'Third task'];
 </code></pre>
-<p>Note that an array is no longer a primitive type, instead arrays have the type <code>object</code>:</p>
+<p>Note that an array is no longer a primitive type.
+Instead, arrays have the type <code>object</code>:</p>
 <pre><code class="language-js">console.log(typeof tasks); // object
 </code></pre>
 <p>You can access individual elements of an array using the index notation.
-This works by writing the name of the array, followed by the position of the element you want to retrieve inside square brackets.
+This works by writing the name of the array, followed by the position of the element you want to retrieve inside square brackets <code>[]</code>.
 Note that when we count the indices (positions), we start at <code>0</code>, <em>not</em> at <code>1</code>:</p>
 <pre><code class="language-js">console.log(tasks[0]); // First task
 console.log(tasks[1]); // Second task
@@ -183,21 +185,17 @@ console.log(tasks[1]); // Second task
 <p>If the array index is too big, trying to access the element at that index will return <code>undefined</code>:</p>
 <pre><code class="language-js">console.log(tasks[3]); // undefined
 </code></pre>
-<p>You can get the length of an array by using <code>.length</code>:</p>
+<p>You can get the length of an array using <code>.length</code>:</p>
 <pre><code class="language-js">console.log(tasks.length); // 3
 </code></pre>
-<blockquote>
-<p>Note that even though the <code>tasks</code> array is declared as a constant here, you can still change the <em>contents</em> of the array.
-However you can't <em>reassign</em> <code>tasks</code> to something else, i.e. you can't write something like <code>tasks = [1]</code>.</p>
-</blockquote>
-<p>JavaScript has some elegant syntax for working with arrays.
-If you want to assign variables based on values of an array, you would normally have to do something like this:</p>
+<p>JavaScript has elegant syntax for working with arrays.
+For example, if you want to assign variables based on values of an array, you would normally have to do something like this:</p>
 <pre><code class="language-js">const firstTask = tasks[0];
 const secondTask = tasks[1];
 const thirdTask = tasks[2];
 </code></pre>
-<p>This is (you guessed it) <em>tedious</em>.
-Instead you can use the <strong>array destructuring assignment</strong>:</p>
+<p>This is (you guessed it) <em>tedious</em>.</p>
+<p>Instead, you can use the <strong>array destructuring assignment</strong>:</p>
 <pre><code class="language-js">const [firstTask, secondTask, thirdTask] = tasks;
 console.log(secondTask); // Second task
 </code></pre>
@@ -206,12 +204,12 @@ console.log(secondTask); // Second task
 </code></pre>
 <p>Something that commonly trips up beginners is trying to <em>copy</em> an array.
 Let's say you have an array of numbers called <code>arr</code> and you want to create a copy called <code>arr2</code>.
-You would probably try something like</p>
+You would probably try something like this:</p>
 <pre><code class="language-js">const arr = [1, 2, 3, 4];
 const arr2 = arr;
 </code></pre>
 <p>This is <em>wrong</em>.
-Let's try changing the first element of <code>arr</code> and look at <code>arr[0]</code> and <code>arr2[0]</code>:</p>
+We can see that this is wrong if we try to change the first element of <code>arr</code> and then have a look at <code>arr[0]</code> and <code>arr2[0]</code>:</p>
 <pre><code class="language-js">arr[0] = 5;
 console.log(arr[0]); // 5
 console.log(arr2[0]); // 5
@@ -220,14 +218,14 @@ console.log(arr2[0]); // 5
 That's probably not what we want.
 The reason for this behaviour is that <code>arr</code> and <code>arr2</code> both point to the same array.
 Remember how we were careful to introduce a variable <em>as a storage location together with a symbolic name</em>?
-Well, it turns out that <em>different symbolic names</em> may refer to the <em>exact same storage location</em>.
-You can visualize it like this:</p>
+Well, it turns out that <em>different symbolic names</em> may refer to the <em>exact same storage location</em>.</p>
+<p>You can visualize it like this:</p>
 <p><img src="images/array-copy-incorrect.png" alt="" /></p>
 <p>Here we have a storage location containing the values <code>1</code>, <code>2</code>, <code>3</code> and <code>4</code> somewhere.
 We also have two symbolic names <code>arr</code> and <code>arr2</code>.
 While the symbolic names are different, they point to the same storage location.
-Therefore if we change the storage location, we will observe a change via both symbolic names.</p>
-<p>In order to actually copy the values, we can use the spread syntax as this will <em>copy</em> the values:</p>
+Therefore, if we change the storage location, we will observe a change via <em>both</em> symbolic names.</p>
+<p>In order to actually copy the values, we can use the spread syntax again:</p>
 <pre><code class="language-js">const copied = [...arr];
 </code></pre>
 <p>Let's check that this is indeed an actual copy:</p>
@@ -239,20 +237,20 @@ console.log(copied[0]); // 1
 Here is the mental picture you should have in your head for copying an array:</p>
 <p><img src="images/array-copy-correct.png" alt="" /></p>
 <blockquote>
-<p>If you only briefly skimmed the section on array destructuring and the spread syntax, go right back and read it carefully.
+<p>If you only briefly skimmed the section on array destructuring and the spread syntax, go back again and read it carefully.
 These two concepts will come up <em>a lot</em> in the following chapters (much more often than you think right now).</p>
 </blockquote>
 <h3 id="objects"><a class="header" href="#objects">Objects</a></h3>
 <p>Let's return to our imaginary (as of now) task application.
 A task will probably be something more than just a string.
-For example it might contain an ID, a title and a description.
-We could again store these in constants:</p>
+For example, it might contain an ID, a title and a description.
+We could, again, try to store these values in separate constants:</p>
 <pre><code class="language-js">const taskId = 1;
 const taskTitle = 'Read the Next.js book';
 const taskDescription = 'Read and understand the Next.js book.';
 </code></pre>
-<p>As you can probably guess, this will quickly become <em>tedious</em> (oh no, not this again).
-<strong>Objects</strong> to the rescue!
+<p>As you can probably guess, this will quickly become <em>tedious</em> (oh no, not this again).</p>
+<p><strong>Objects</strong> to the rescue!
 These allow us to store name-value pairs inside a single variable.
 Here is how we might create a <code>task</code> object that contains all the information we want to know about a task:</p>
 <pre><code class="language-js">const task = {
@@ -261,9 +259,9 @@ Here is how we might create a <code>task</code> object that contains all the inf
   description: 'Read and understand the Next.js book.',
 };
 </code></pre>
-<p>Every such value is called a <strong>property</strong>.
-We can access properties using the dot notation or the square bracket notation.
-For example to access the <code>title</code> property of the <code>task</code> object, you would write <code>task.title</code> or <code>task['title']</code>.
+<p>Every such name-value pair is called a <strong>property</strong>.
+We can access properties using the dot notation <code>.</code> or the square bracket notation <code>[]</code>.
+For example, we can access the <code>title</code> property of the <code>task</code> object by writing <code>task.title</code> or <code>task['title']</code>.
 Try it out:</p>
 <pre><code class="language-js">console.log(task.id); // 1
 console.log(task.title); // Read the Next.js book
@@ -297,22 +295,30 @@ For example, here is how you can nest an object inside an object:</p>
 <pre><code class="language-js">console.log(task.date); // undefined
 </code></pre>
 <p>Sometimes you want to explicitly indicate that a property may be absent.
-For example a person may not have a task assigned to them.
+For example, a person may not have a task assigned to them.
 You can write something like this:</p>
 <pre><code class="language-js">const person = {
   name: 'John Doe',
   task: undefined,
 };
 </code></pre>
-<p>You could also use the <code>null</code> value:</p>
+<p>Instead of <code>undefined</code> you can also <code>null</code> which represents the absence of an object value.
+Note that there is no separate <code>null</code> data type.
+Instead, <code>null</code> is just a special object:</p>
+<pre><code class="language-js">console.log(typeof null); // object
+</code></pre>
+<p>Here is how you can use <code>null</code> to represent the absence of a property:</p>
 <pre><code class="language-js">const person = {
   name: 'John Doe',
   task: null,
 };
 </code></pre>
 <p>Whether to use <code>undefined</code> or <code>null</code> in this situation is largely convention.
-Throughout this book we will always use <code>undefined</code>.</p>
-<p>Just as with arrays, you can use the <strong>destructuring assignment</strong> when working with objects:</p>
+Throughout this book we will always use <code>undefined</code>.
+Nevertheless, we want to emphasize that it's totally fine to use <code>null</code> instead of <code>undefined</code> in this situation.
+Just pick a style and be consistent.</p>
+<p>You can use the <strong>destructuring assignment</strong> when working with objects.
+This is similar to arrays:</p>
 <pre><code class="language-js">const task = {
   id: 1,
   title: 'Read the Next.js book',
@@ -320,7 +326,7 @@ Throughout this book we will always use <code>undefined</code>.</p>
 };
 const { id, title, description } = task;
 </code></pre>
-<p>And just as with arrays, you can use the spread syntax:</p>
+<p>And just as with arrays, you can use the spread syntax with objects:</p>
 <pre><code class="language-js">const taskWithAssignee = {
   assignee: 'John Doe',
   ...task,
@@ -328,17 +334,42 @@ const { id, title, description } = task;
 console.log(taskWithAssignee);
 </code></pre>
 <p>This will output:</p>
-<pre><code class="language-json">{
-  "assignee": "John Doe",
-  "id": 1,
-  "title": "Read the Next.js book",
-  "description": "Read and understand the Next.js book."
+<pre><code>{
+  assignee: 'John Doe',
+  id: 1,
+  title: 'Read the Next.js book',
+  description: 'Read and understand the Next.js book.'
 }
 </code></pre>
 <blockquote>
 <p>Note that objects are more than just containers for values.
 We will return to this later.</p>
 </blockquote>
+<h3 id="using-const-with-arrays-and-objects"><a class="header" href="#using-const-with-arrays-and-objects">Using <code>const</code> with Arrays and Objects</a></h3>
+<p>There is often some confusion regarding the use of <code>const</code> with arrays and objects.</p>
+<p>For example, it seems strange that you can change the elements of a <code>const</code> array:</p>
+<pre><code class="language-js">const arr = [1];
+arr[0] = 2; // Totally valid
+arr.push(3); // Totally valid
+</code></pre>
+<p>It seems equally strange that you can change the properties of a <code>const</code> object:</p>
+<pre><code class="language-js">const obj = { prop: 1 };
+obj.prop = 2; // Totally valid
+</code></pre>
+<p>Such assignments are possible because <code>const</code> only applies to the constant itself, not to the contents of the constant.
+This means that the only thing you <em>can't</em> do is to change what the constant is pointing to altogether.</p>
+<p>For instance, this is not possible:</p>
+<pre><code class="language-js">const arr = [1];
+arr = [2, 3]; // Not valid
+</code></pre>
+<p>Similarly, this is also not possible:</p>
+<pre><code class="language-js">const obj = { prop: 1 };
+obj = { prop: 2 }; // Not valid
+</code></pre>
+<p>This means that <code>const</code> is a pretty weak guarantee when working with arrays and objects.
+After all, you often change elements of arrays and objects, but rarely change what the array and/or object is pointing to in its entirety.</p>
+<p>Nevertheless, you should use <code>const</code> even when working with arrays and objects.
+A weak guarantee is better than no guarantee at all.</p>
 
                     </main>
 

@@ -247,17 +247,17 @@ For example, we could say that when the hamburger is prepared, we want to eat it
 The HTTP protocol will be discussed in more detail later, but basically it enables us to send a request to a server and get a response.
 Since network packets don't arrive immediately, this can take a while, so we are dealing with a "long-running operation".</p>
 <p>Both the browser as well as Node.js allow us to retrieve a resource from the network via the asynchronous <code>fetch</code> function.
-Consider this example:</p>
-<pre><code class="language-js">const url = 'https://jsonplaceholder.typicode.com/todos/1';
-fetch(url).then((response) =&gt; console.log(response));
-</code></pre>
-<p>This will log the response object we get from <code>https://jsonplaceholder.typicode.com/todos/1</code> to the console (we will learn how to deal with this response object in a second).</p>
-<p>We can rewrite the above example in a more explicit manner:</p>
+The <code>fetch</code> function returns a promise and we can then schedule a callback to be executed when the promise has succeeded by using the <code>then</code> method.</p>
+<p>Here is how this looks in code:</p>
 <pre><code class="language-js">const url = 'https://jsonplaceholder.typicode.com/todos/1';
 const fetchPromise = fetch(url);
 fetchPromise.then((response) =&gt; console.log(response));
 console.log(fetchPromise);
 </code></pre>
+<blockquote>
+<p>This code is unnecessarily verbose right now, we will fix this in a second.
+Also, we wouldn't normally log the <code>fetchPromise</code> object, we're just doing this for illustration purposes right now.</p>
+</blockquote>
 <p>This is what happens:</p>
 <ol>
 <li>We call <code>fetch</code> which <em>immediately</em> returns a <em>pending</em> promise.</li>
@@ -265,20 +265,24 @@ console.log(fetchPromise);
 The handler function will be called when the <code>fetch</code> succeeds (i.e. the promise returned by <code>fetch</code> is fulfilled).</li>
 <li>After a while the <code>fetch</code> succeeds, <code>fetchPromise</code> is fulfilled and the <code>response</code> object is logged.</li>
 </ol>
-<p>It is important to note <code>fetch</code> returns immediately.
+<p>It is important to note that <code>fetch</code> returns <em>immediately</em>.
 The return value of <code>fetch</code> is a pending promise (that will eventually settle with either a response value or some kind of error).</p>
-<p>This is why <code>console.log(fetchPromise)</code> is executed before <code>console.log(response)</code> and you see the following output in the console:</p>
+<p>This is why <code>console.log(fetchPromise)</code> is executed <em>before</em> <code>console.log(response)</code> and you see the following output in the console:</p>
 <pre><code>Promise { &lt;pending&gt; }
 Response {
     ...
 }
 </code></pre>
-<p>Additionally the <code>then</code> method <em>also</em> returns immediately, after it has attached the handler function to the <code>fetchPromise</code>.
-However the execution of the <em>handler function</em> happens only after the promise returned by fetch is fulfilled.</p>
-<p>On one hand this is what we want - while we are waiting for the network request to complete, we can do other stuff (like logging <code>fetchPromise</code>).</p>
-<p>On the other hand this is the reason why asynchronous programming is often so confusing to beginners - it "breaks" the regular programming model.
+<p>Additionally, the <code>then</code> method <em>also</em> returns immediately, after it has attached the handler function to the <code>fetchPromise</code>.
+However, the execution of the <em>handler function</em> happens only after the promise returned by fetch is fulfilled.</p>
+<p>On one hand, this is what we want - while we are waiting for the network request to complete, we can do other stuff (like logging <code>fetchPromise</code>).</p>
+<p>On the other hand, this is the reason why asynchronous programming is often so confusing to beginners - it "breaks" the regular programming model.
 When we write synchronous code, we just execute statements one after another.
 With asynchronous code this is no longer the case - here we "register" a function to be executed later, do something else, and then at some point the registered function is executed.</p>
+<p>Finally, we note that our code can be rewritten in a simpler way:</p>
+<pre><code class="language-js">const url = 'https://jsonplaceholder.typicode.com/todos/1';
+fetch(url).then((response) =&gt; console.log(response));
+</code></pre>
 <h3 id="chaining-promises"><a class="header" href="#chaining-promises">Chaining Promises</a></h3>
 <p>The <code>response</code> object is not terribly useful by itself.
 Let's retrieve the "actual" response which is a JSON object.
@@ -415,11 +419,11 @@ This can used with promises if you simply want to start an asynchronous operatio
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../chapter1/08-functional-thinking.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../chapter1/09-functional-thinking.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../chapter1/10-modules.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../chapter1/11-modules.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -429,11 +433,11 @@ This can used with promises if you simply want to start an asynchronous operatio
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../chapter1/08-functional-thinking.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../chapter1/09-functional-thinking.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../chapter1/10-modules.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../chapter1/11-modules.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

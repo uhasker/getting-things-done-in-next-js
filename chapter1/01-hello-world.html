@@ -153,38 +153,38 @@
                 <div id="content" class="content">
                     <main>
                         <h2 id="hello-world"><a class="header" href="#hello-world">Hello World</a></h2>
-<div style="text-align: right"> <i> A journey of a thousand miles begins with a single "Hello, world!" program. <br> — Ancient Chinese proverb </i> </div>
+<div style="text-align: right"> <i> A journey of a thousand miles begins with a single "Hello, World!" program. <br> — Ancient Chinese proverb </i> </div>
 <h3 id="runtime-environments"><a class="header" href="#runtime-environments">Runtime Environments</a></h3>
 <p>Contrary to popular belief, code sadly doesn't run on pixie dust, magic spells, and unicorn tears.
 Instead, it runs on something called a <strong>runtime environment</strong> (also referred to as <em>runtime system</em> or just <em>runtime</em>).
 Put simply, a runtime is a program capable of executing code written in some programming language.
 It <em>provides the environment in which programs can run</em>.
-In order to execute all the <em>awesome</em> JavaScript code we are about to write, we therefore need a runtime first.</p>
-<p>There are two runtimes capable of executing JavaScript code, which are relevant to this book - the browser and Node.js.
-The browser as well as the Node.js console have <strong>REPL</strong> (read-eval-print-loop) capabilities.
-This means you can directly type some code into the console and execute it.
-REPLs are very nice, because they allow you to quickly test what you just learned.
-Additionally, both runtimes can execute a file containing JavaScript code.
-This is how we will usually utilize the runtimes - we write a <strong>script</strong> (a file containing JavaScript code) and tell our runtime to execute it.</p>
+In order to execute all the <em>awesome</em> JavaScript code we're about to write, we therefore need a runtime first.</p>
+<p>There are two runtimes capable of executing JavaScript code, which are relevant to this book—the browser and Node.js.</p>
+<p>The browser, as well as the Node.js console, have <strong>REPL</strong> (read-eval-print-loop) capabilities.
+This allows you to type code directly into the console and execute it.
+REPLs are very nice because they allow you to quickly test new concepts.</p>
+<p>Additionally, both runtimes can execute files containing JavaScript code.
+This is how we will usually utilize the runtimes—we write a <strong>script</strong> (a file containing JavaScript code) and tell our runtime to execute it.</p>
 <blockquote>
-<p>As projects grow larger, we will usually be dealing with multiple files at the same time.
+<p>As projects grow larger, we will often be dealing with multiple files at the same time.
 We will talk about this in the "Modules" section of this chapter.</p>
 </blockquote>
 <p>Every runtime environment comes with a <strong>console</strong>.
 This isn't a retro gaming console; rather, it's a special part of the runtime where you can input commands and see the results of your code in real-time.
-Think of it as a conversation between you and the program - you tell it what to do (input commands) and it responds by executing those commands and showing you what happened (output).</p>
-<p>In this section we will set up the browser and Node.js runtimes.
-Then we will print "Hello, world!" to both the browser console and the Node.js console to test that our setup functions as anticipated.</p>
+Think of it as a conversation between you and the program—you tell it what to do (input commands) and it responds by executing those commands and showing you what happened (output).</p>
+<p>In this section, we will set up the browser and Node.js runtimes.
+Then we will output (alternatively, "log" or "print") "Hello, World!" both to the browser console and the Node.js console to test that our setup functions as intended.</p>
 <h3 id="the-browser-environment"><a class="header" href="#the-browser-environment">The Browser Environment</a></h3>
 <p>Open a browser, and open its console.
 How you do this will depend on the browser.</p>
-<p>If you are using <em>Firefox</em> the shortcut for opening the console is <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>K</kbd> on Ubuntu/Debian and <kbd>Cmd</kbd> + <kbd>Option</kbd> + <kbd>K</kbd> on macOS.
-If you are using <em>Chrome</em> or <em>Microsoft Edge</em> the shortcut is <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>J</kbd> on Ubuntu/Debian and <kbd>Cmd</kbd> + <kbd>Option</kbd> + <kbd>J</kbd> on macOS.
-If you are using <em>Safari</em> on macOS, you will need to enable the develop menu first by going to <code>Settings &gt; Advanced</code> and ticking the box <code>Show Develop menu in menu bar</code>. Then you can open the console using <kbd>Cmd</kbd> + <kbd>Option</kbd> + <kbd>K</kbd>.</p>
+<p>If you're using <em>Firefox</em>, the shortcut for opening the console is <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>K</kbd> on Ubuntu/Debian and <kbd>Cmd</kbd> + <kbd>Option</kbd> + <kbd>K</kbd> on macOS.</p>
+<p>If you're using <em>Chrome</em> or <em>Microsoft Edge</em>, the shortcut is <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>J</kbd> on Ubuntu/Debian and <kbd>Cmd</kbd> + <kbd>Option</kbd> + <kbd>J</kbd> on macOS.</p>
+<p>If you're using <em>Safari</em> on macOS, you will need to enable the develop menu first by going to <code>Settings &gt; Advanced</code> and ticking the box <code>Show Develop menu in menu bar</code>.
+Then you can open the console using <kbd>Cmd</kbd> + <kbd>Option</kbd> + <kbd>K</kbd>.</p>
 <blockquote>
-<p>If you are using Internet Explorer, please navigate to <code>google.com</code> and search for "Firefox" to install a <em>real</em> browser.
-This line was originally intended to be a funny joke, but on June 15, 2022 Microsoft ended support for Internet Explorer, so it's not even a joke anymore.
-We personally recommend Firefox, but Chrome, Microsoft Edge or Safari are also fine choices.</p>
+<p>If you're using Internet Explorer, please navigate to <code>google.com</code> and search for "Firefox" or "Chrome" to install a <em>real</em> browser.
+This line was originally intended to be a funny joke, but on June 15, 2022 Microsoft officially ended support for Internet Explorer, so it's not even a joke anymore.</p>
 </blockquote>
 <p>This is approximately how the browser console will look like in Firefox:</p>
 <p><img src="images/browser-console.png" alt="" /></p>
@@ -193,27 +193,31 @@ We personally recommend Firefox, but Chrome, Microsoft Edge or Safari are also f
 Most of these will probably come from various extensions you might have installed or the web page you are currently viewing.
 You can simply delete these messages, as we don't care about them.</p>
 </blockquote>
-<p>Let us print something using the <code>console.log</code> method. Type the following into the browser console:</p>
-<pre><code class="language-js">console.log('Hello, world!');
+<p>Let's print something using the <code>console.log</code> method.
+Type the following into the browser console:</p>
+<pre><code class="language-js">console.log('Hello, World!');
 </code></pre>
 <p>Now hit <kbd>Return</kbd> (you may also know this as <kbd>Enter</kbd> or simply <kbd>⏎</kbd>).
-You will see the output "Hello, world!" in the console:</p>
+You will see the output <code>Hello, World!</code> in the console:</p>
 <p><img src="images/browser-console-log.png" alt="" /></p>
 <blockquote>
-<p>Ignore the "undefined" for now.</p>
+<p>Ignore the <code>undefined</code> for now.</p>
 </blockquote>
-<p>Hooray, you printed something to the browser console!
-This is the point at which you go tell everyone that you are now a <em>programmer</em>™.</p>
+<p>Hooray, you've logged something to the browser console!
+This is the point at which you can go tell everyone that you are now a <em>programmer</em>™.</p>
 <h3 id="executing-javascript-in-the-browser"><a class="header" href="#executing-javascript-in-the-browser">Executing JavaScript in the Browser</a></h3>
 <p>As we already mentioned, instead of executing JavaScript in the browser console directly, we can (and often will) execute it from a JavaScript <em>file</em>.
-Since we're on the browser, we will need to create two files - an HTML file and a JavaScript file.</p>
+Since we're on the browser, we will need to create two files—an HTML file and a JavaScript file.</p>
 <p>HTML is short for <em>HyperText Markup Language</em> and is the standard markup language for documents that should be displayed in a browser.
-We will cover HTML in detail in a later chapter, for now we just need to be able to create a very simple HTML document.</p>
-<p>Create a new HTML file.
-We will call it <em>hello.html</em>; however you can name it whatever you want.
+We will cover HTML in detail in a later chapter.
+For now we just want to create a very simple HTML document.</p>
+<p>Here is how we can do this:
+Create a new file.
+We will call it <em>hello.html</em>.
+However, you can name it whatever you want.
 The filename should have an <em>html</em> extension though.</p>
 <p>Open the HTML file in any text editor (see below for text editors that are good choices for coding) and add the following text to the file:</p>
-<pre><code class="language-html">&lt;!doctype html&gt;
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
 &lt;html&gt;
   &lt;head&gt;&lt;/head&gt;
   &lt;body&gt;
@@ -223,97 +227,101 @@ The filename should have an <em>html</em> extension though.</p>
 </code></pre>
 <p>Don't forget to save the file!</p>
 <p>Now create another file called <em>hello.js</em> in the same directory as <em>hello.html</em> with the following content:</p>
-<pre><code class="language-js">console.log('Hello, world');
+<pre><code class="language-js">console.log('Hello, World!');
 </code></pre>
 <blockquote>
-<p>Note the semicolon after the <code>console.log</code>.
-It terminates the <code>console.log</code> statement.
+<p>Note the semicolon after the <code>console.log</code>—it terminates the <code>console.log</code> statement.
 The semicolon is technically not required here and there are many JavaScript programmers who don't use semicolons.
 However, to avoid a bunch of pitfalls, we will use semicolons throughout this book and therefore we want you to get accustomed to them as soon as possible.</p>
 </blockquote>
 <p>Now open this file in your browser by simply double-clicking the file.
 After opening this file in your browser, open the console.
-You should the output <code>Hello, world!</code>.</p>
+You should see the output <code>Hello, World!</code>.</p>
 <p>Congratulations, you wrote your first script!</p>
 <h3 id="working-with-a-command-line"><a class="header" href="#working-with-a-command-line">Working With a Command Line</a></h3>
 <p>Now that we know how to use the browser runtime, we will move on to Node.js.
-However, before we can do that, we will need to learn how to interact with the <strong>command-line interface</strong> (also called command line, command prompt or CLI).
-A command line allows you to execute various tasks called commands.</p>
+Before we can do that, we will need to learn how to interact with the <strong>command-line interface</strong> (also called command line, command prompt or CLI) on your computer.
+A command line allows you to execute various tasks called <strong>commands</strong>.</p>
 <p>If you're on Ubuntu, you can open the command line by pressing <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>T</kbd>.</p>
 <p>If you're on macOS, you can open the command line by pressing <kbd>Cmd</kbd> + <kbd>Space</kbd> to open <em>search</em>, typing <em>terminal</em> and then hitting <kbd>Return</kbd>.</p>
 <p>Now that you've opened a CLI, you can type a command and hit <kbd>Return</kbd> to execute it.
 Try executing this command for starters:</p>
-<pre><code class="language-sh">echo 'Hello, world!'
+<pre><code class="language-sh">echo 'Hello, World!'
 </code></pre>
 <blockquote>
-<p>Generally whenever we tell you to execute a command you need to type it in the CLI and hit <kbd>Return</kbd>.</p>
+<p>Generally, whenever we tell you to execute a command you need to type it in the CLI and hit <kbd>Return</kbd>.
+Therefore, we will omit saying that you need to hit <kbd>Return</kbd> from now on.</p>
 </blockquote>
 <h3 id="the-nodejs-runtime"><a class="header" href="#the-nodejs-runtime">The Node.js Runtime</a></h3>
 <p>For a long time, JavaScript was mostly used inside the browser runtime environment by programmers.
-However in 2009 Node.js came along and changed that by allowing programmers to easily run JavaScript outside the browser.</p>
+However, in 2009, Node.js came along and changed that by allowing programmers to easily run JavaScript outside the browser.</p>
 <p>Node.js will probably not be installed on your machine, so let's fix that.
-First, we will install the <strong>Fast Node Manager</strong> (<strong>fnm</strong> for short) which will allow us to manage Node.js versions in a simple and straightforward manner.</p>
-<p>If you're on Ubuntu/Debian you will need to run the following:</p>
-<pre><code class="language-sh">curl -fsSL https://fnm.vercel.app/install | bash
+First, we have to install the <strong>Node Version Manager</strong> (<strong>nvm</strong> for short) which will allow us to manage Node.js versions in a simple and straightforward manner.</p>
+<p>If you're on Ubuntu/Debian, you will need to run the following:</p>
+<pre><code class="language-sh">curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
 source ~/.bashrc
 </code></pre>
-<p>If you're on macOS you will need to run the following:</p>
-<pre><code class="language-sh">curl -fsSL https://fnm.vercel.app/install | zsh
+<p>If you're on macOS, you will need to run the following:</p>
+<pre><code class="language-sh">curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | zsh
 source ~/.zshrc
 </code></pre>
-<p>Check that <code>fnm</code> was successfully installed:</p>
-<pre><code class="language-sh">fnm --version
+<p>Check that <code>nvm</code> was successfully installed:</p>
+<pre><code class="language-sh">nvm --version
 </code></pre>
-<p>Finally we will install Node.js (version 18):</p>
-<pre><code class="language-sh">fnm install 18
+<p>Finally, we will install Node.js (version 18):</p>
+<pre><code class="language-sh">nvm install 18
 </code></pre>
 <p>Verify that Node.js was successfully installed:</p>
 <pre><code class="language-sh">node --version
 </code></pre>
-<p>The installation script also automatically installed the <strong>node package manager</strong> (<em>npm</em> for short) which is a tool for managing dependencies in our projects.
+<p>The installation script also automatically installed the <strong>node package manager</strong> (<strong>npm</strong> for short) which is a tool for managing dependencies in our projects.
 Verify that <code>npm</code> was installed as well:</p>
 <pre><code class="language-sh">npm --version
 </code></pre>
-<p>Throughout this book we will use the <code>pnpm</code> package manager, so let's install that too:</p>
+<p>Throughout this book we will use another package manager called <code>pnpm</code>, so let's install that too:</p>
 <pre><code class="language-sh">npm install -g pnpm
 </code></pre>
+<blockquote>
+<p>The <code>-g</code> flag tells <code>npm</code> to install the package globally and not just for a particular project.</p>
+</blockquote>
 <p>Verify that <code>pnpm</code> was installed:</p>
 <pre><code class="language-sh">pnpm --version
 </code></pre>
 <p>Now that Node.js is installed, you can open a Node.js console by typing <code>node</code> in the command line.</p>
-<p>We can now print "Hello, world!" in the Node.js console using the <code>console.log</code> method.
+<p>We can now output <code>Hello, World!</code> to the Node.js console using the <code>console.log</code> method.
 Type the following into the console and hit <kbd>Return</kbd>:</p>
-<pre><code class="language-js">console.log('Hello, world!');
+<pre><code class="language-js">console.log('Hello, World!');
 </code></pre>
-<p>You should see the output <code>"Hello, world!"</code>.</p>
+<p>You should see the output <code>Hello, World!</code>.</p>
+<p>To exit the Node.js console, simply type <code>.exit</code>.</p>
 <h3 id="executing-a-javascript-file"><a class="header" href="#executing-a-javascript-file">Executing a JavaScript File</a></h3>
 <p>We can also use Node.js to execute a JavaScript file.</p>
-<p>Create a file named <code>hello.js</code>.
-Open the file in any text editor and add the following content to the file:</p>
-<pre><code class="language-js">console.log('Hello, world!');
+<p>Let's execute the <code>hello.js</code> we created earlier.
+As a reminder, this file has the following content:</p>
+<pre><code class="language-js">console.log('Hello, World!');
 </code></pre>
 <p>Open a command line again and <em>change the current directory location to the directory containing the JavaScript file</em>.
 You can do so using the <em>cd</em> command.
-For example if <code>hello.js</code> is located at <code>/home/users/user</code> you would execute the following:</p>
+For example, if <code>hello.js</code> is located at <code>/home/users/user</code> you would execute the following:</p>
 <pre><code class="language-sh">cd /home/users/user
 </code></pre>
 <p>Now execute the JavaScript file by running:</p>
 <pre><code class="language-sh">node hello.js
 </code></pre>
-<p>This should again print <code>"Hello, world!"</code>.</p>
+<p>This should again print <code>Hello, World!</code>.</p>
 <p>Note that for the remainder of this chapter you should follow along using the Node.js console.
 Nevertheless, as we dive further into the Next.js stack, we will have to write JavaScript for the browser runtime environment on a regular basis.</p>
 <h3 id="the-browser-vs-nodejs"><a class="header" href="#the-browser-vs-nodejs">The Browser vs Node.js</a></h3>
 <p>We managed to execute some JavaScript on the browser and some JavaScript in Node.js.
-Right now, these two runtime environments don't look too different because we only logged something to the console.
-However, in later sections you will learn that it is in fact extremely important which runtime you're on.</p>
-<p>For example in Node.js you cannot access your browser window (which makes sense since there <em>is no browser window</em>).
-On the other hand, if you are in the browser you cannot write files to the computer (to protect users from malicious websites).
-Often people say that JavaScript code can be run <em>on the client</em> (in the browser) or <em>on the server</em> (usually using Node.js).</p>
+Right now, these two runtime environments don't look too different because we've only logged something to the console.
+However, in later sections you will learn that it's in fact extremely important which runtime you're on.</p>
+<p>For example, in Node.js you can't access your browser window (which makes sense since there is no browser window).
+On the other hand, if you're in the browser you can't write files to the computer (to protect users from malicious websites).
+Often, people say that JavaScript code can be executed <em>on the client</em> (in the browser) or <em>on the server</em> (usually using Node.js).</p>
 <p>Remember this point, since it will become extremely important later.</p>
 <h2 id="editors"><a class="header" href="#editors">Editors</a></h2>
 <p>In the previous paragraphs you had to create a few files containing code.
-It will not come as a surprise that this be necessary <em>a lot</em> during your programming journey.
+It should not come as a surprise that you will have to do this quite often throughout your programming journey.
 You should therefore select a good editor that has features such as syntax highlighting, autocompletion etc.</p>
 <blockquote>
 <p>Coding in Notepad is in fact <em>not</em> a good idea.</p>
@@ -323,44 +331,44 @@ You should therefore select a good editor that has features such as syntax highl
 <p>Before we dive into JavaScript, you should know that programs are made of statements and expressions.</p>
 <p>A <strong>statement</strong> is a syntactic unit responsible for executing some action.
 A <strong>program</strong> is then essentially a sequence of statements which should be executed when running the program.
-For example <code>console.log('Hello, world!')</code> is a statement which executes the action of printing "Hello, world!" to the console.</p>
+For example, <code>console.log('Hello, World!')</code> is a statement which executes the action of logging <code>Hello, World!</code> to the console.</p>
 <p>An <strong>expression</strong> is a syntactic unit that may be evaluated to get its value.
-For example <code>2 + 2</code> would be an expression which would evaluate to <code>4</code>.</p>
+For example, <code>2 + 2</code> would be an expression which would evaluate to <code>4</code>.</p>
 <p>You could put it this way: Statements are executed to make something happen, while expressions are evaluated to produce a value.</p>
 <blockquote>
-<p>Note that other authors might define statements and expressions in a slightly different manner.
-However we will stick to these definitions throughout this book.</p>
+<p>Note that other authors might define statements and expressions in a slightly different manner (which is totally fine).
+However, we will stick to these definitions throughout this book.</p>
 </blockquote>
 <h3 id="comments"><a class="header" href="#comments">Comments</a></h3>
 <p>Everything that comes after a double slash on a line is a <strong>comment</strong> in JavaScript.
 Comments are ignored by the runtime and therefore have no effect on the execution of your program:</p>
 <pre><code class="language-js">// This is just a comment
 // Comments have no effect
-console.log('Hello, world!');
+console.log('Hello, World!');
 // Therefore this program is equivalent to the
 // program from the previous chapter
 </code></pre>
-<p>We will heavily utilize comments throughout this book inside the code blocks to highlight important ideas.</p>
+<p>We will heavily utilize comments throughout this book inside our code blocks to highlight important ideas.</p>
 <blockquote>
 <p>There is a lot of discussion in the programming community on how much you should comment your programs.
 We will return to this when discussing functions.
-However one rule is that if your code is so terrible that it requires <em>extensive commentary</em> to explain its behavior or purpose, you should fix the code.
-Just like a work of art, your code should stand on it's own merits.
+However, one rule is that if your code is so terrible that it requires <em>extensive commentary</em> to explain its behavior or purpose, you should fix the code.
+Just like a work of art, your code should stand on its own merits.
 Imagine <em>commenting</em> a work of art (oh, wait)...
-However it is better to have terrible code and comments than have terrible code and no comments.
-And of course if your code does something particularly complicated, throwing in a comment might be a good idea.</p>
+However, it's better to have terrible code and comments than have terrible code and no comments.
+And, of course, if your code does something particularly complicated, throwing in a comment might be a good idea.</p>
 </blockquote>
 <p>We will also adopt the convention that if a comment is next to a line with a <code>console.log</code> statement, that comment shows the output that would be logged to the console if the code was executed.
 For example:</p>
-<pre><code class="language-js">console.log('Hellave the file!o, world!'); // Hello, world!
+<pre><code class="language-js">console.log('Hello, World!'); // Hello, World!
 </code></pre>
-<p>This is the point where we tell you that while you are reading this book you should <em>absolutely follow along in some runtime</em> (probably Node.js, but a browser is fine too).
+<p>This is the point where we tell you that while you're reading this book you should <em>absolutely follow along in some runtime</em> (probably Node.js, but a browser is fine too).
 This is <em>very important</em>.
 Go ahead and open a Node.js console <em>now</em>.</p>
-<p>Come on, we'll wait...</p>
-<p>...</p>
-<p>...</p>
-<p>...</p>
+<p>Come on, we will wait...</p>
+<p>Waiting...</p>
+<p>Waiting...</p>
+<p>Waiting...</p>
 <p><em>Finally</em>.
 Let's move on.</p>
 

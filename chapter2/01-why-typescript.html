@@ -204,12 +204,9 @@ Even better - your editor will be able to show you that you might have a problem
 This saves an enormous amount of time and effort when writing code.</p>
 <p>To summarize, using TypeScript massively enhances your developer workflow which is why nowadays most large projects use TypeScript instead of vanilla JavaScript.</p>
 <h3 id="installing-typescript"><a class="header" href="#installing-typescript">Installing TypeScript</a></h3>
-<p>You can install the TypeScript compiler by running the following command:</p>
+<p>You can install the TypeScript compiler globally by running the following command:</p>
 <pre><code class="language-sh">pnpm add -g typescript
 </code></pre>
-<blockquote>
-<p>The <code>-g</code> flag tells <code>pnpm</code> to install the package globally and not just for a particular project.</p>
-</blockquote>
 <p>Let's see how we can use the TypeScript compiler.
 First, create a file <code>index.ts</code>:</p>
 <pre><code class="language-ts">type Task = {
@@ -256,7 +253,7 @@ showTask({
 });
 </code></pre>
 <p>Note that all the type annotations are gone and all we get is vanilla JavaScript that we can execute.
-Additionally the TypeScript compiler <em>downleved</em> our code so that it can be executed by older platforms.
+Additionally the TypeScript compiler <em>downleveled</em> our code so that it can be executed by older platforms.
 Here the template string syntax (which is not supported by very old browsers) was replaced by a series of <code>concat</code> calls.</p>
 <blockquote>
 <p>Note that by the time you're reading this the default target settings might be different and you might not see this particular downleveling anymore.</p>
