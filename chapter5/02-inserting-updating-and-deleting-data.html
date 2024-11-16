@@ -173,8 +173,9 @@
     name: 'Example project',
   })
   .returning();
+console.log(row);
 </code></pre>
-<p>This would return something like:</p>
+<p>This would output something like:</p>
 <pre><code>[ { id: 3, name: 'Example project' } ]
 </code></pre>
 <p>The <code>returning</code> function is mostly useful if you want to get the ID of the inserted row.</p>

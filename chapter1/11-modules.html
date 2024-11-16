@@ -163,8 +163,8 @@ First, this would make our scripts even less readable.
 Second, what do we do if the library receives an update?</p>
 <p>Luckily, JavaScript provides us with a mechanism to use code from one file in another file - <strong>modules</strong>.</p>
 <blockquote>
-<p>Note that we will only discuss ECMAScript modules.
-There are other module systems, but we won't cover them right now.</p>
+<p>Note that we will mostly discuss ECMAScript modules (ESM).
+There are other module systems, but we will only cover them very briefly.</p>
 </blockquote>
 <h3 id="the-import-and-export-keywords"><a class="header" href="#the-import-and-export-keywords">The <code>import</code> and <code>export</code> Keywords</a></h3>
 <p>Let's start our module discussion with a very simple example.
@@ -373,6 +373,37 @@ Only the <code>greet</code> function can be used (since it's exported).</p>
                 ^^^^^^^^^^^
 SyntaxError: The requested module './greet.js' does not provide an export named 'getGreeting'
 </code></pre>
+<h3 id="cjs-modules"><a class="header" href="#cjs-modules">CJS Modules</a></h3>
+<p>So far, we've been discussing ECMAScript modules (ESM).
+One alternative to ESM is a module system called CommonJS (CJS for short).</p>
+<p>You can export objects in CJS using <code>module.exports</code> and import objects in CJS using <code>require()</code>.</p>
+<p>Let's rewrite our running example in CJS.
+If you're following along, you should create a separate directory for this example.</p>
+<p>Create a file <code>greet.js</code> and export functions using <code>module.exports</code>:</p>
+<pre><code class="language-js">function getGreeting(name) {
+  return `Hello ${name}`;
+}
+
+function greet(name) {
+  return `Hello ${name}`;
+}
+
+// Exporting the functions
+module.exports = { getGreeting, greet };
+</code></pre>
+<p>And now create a file <code>app.js</code> where you import the functions from <code>greet.js</code> using <code>require()</code>:</p>
+<pre><code class="language-js">// Importing the module
+const { getGreeting, greet } = require('./greet');
+
+console.log(getGreeting('Alice')); // Hello Alice
+console.log(greet('Bob')); // Hello Bob
+</code></pre>
+<p>You can now run the <code>greet.js</code> without any additional configuration (you don't even need a <code>package.json</code>):</p>
+<pre><code class="language-sh">node app.js
+</code></pre>
+<p>We will only use CJS for short Node.js examples where we want to avoid the setup of a new project.
+However, other than that, we will follow the current best practices and only use ESM throughout this book.
+This is mainly because CJS is an older module system that was designed exclusively for Node.js and has been mostly replaced by ESM.</p>
 
                     </main>
 

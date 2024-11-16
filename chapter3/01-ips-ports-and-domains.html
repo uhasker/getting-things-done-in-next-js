@@ -206,12 +206,15 @@ However they won't be important for this book and therefore we'll simply skip ov
 This poses the problem of <em>uniquely identifying</em> those services.
 After all, if the all share the same IP, how can we distinguish them from one another?</p>
 <p>The answer is that we can use <strong>ports</strong>.
-A port is simply a number assigned to uniquely identify a connection endpoint on a machine.
-For example, you might have a web service running on port <code>443</code> and an ssh service on port <code>22</code>.</p>
+A port is simply a number assigned to uniquely identify a connection endpoint on a machine.</p>
+<p>Let's say that you want to have a web service and an <code>ssh</code> service running on the same machine.</p>
 <blockquote>
 <p>The <code>ssh</code> protocol allows you to remotely log in to a computer and execute commands on it.</p>
 </blockquote>
-<p>These two services might run on the same computer with the same IP, but they can still be distinguished from one another, because they have different port numbers.</p>
+<p>You could assign the web service the port <code>443</code> and the ssh service the port <code>22</code>.
+Even though these services run on the same machine with the same IP, they can be distinguished from each other by their port number.</p>
+<p>If a service is assigned some port, programmers often say that the service is <strong>listening</strong> (for incoming connections) on that port.
+In our example, the web service would be <em>listening</em> on port <code>443</code> and the ssh service would be <em>listening</em> on port <code>22</code>.</p>
 <p>If you want to specify an IP and a port together, you use the colon <code>:</code> notation.
 For example, if you have an HTTPS web server running on a machine with the IP <code>123.56.1.17</code> and the assigned port <code>443</code>, the web server would be reachable at <code>123.56.1.17:443</code>.</p>
 <blockquote>

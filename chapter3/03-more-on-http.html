@@ -158,8 +158,8 @@
 <p>Responses can have <strong>status codes</strong> attached to them.
 These indicate the status of a request.</p>
 <p>Each status code is a number that indicates some information about the response.
-For example, a the status code <code>400</code> represents <code>Bad Request</code>.</p>
-<p>There are a lot of status code and they're grouped in five classes:</p>
+For example, the status code <code>400</code> represents <code>Bad Request</code>.</p>
+<p>There are a lot of status codes and they're grouped in five classes:</p>
 <ul>
 <li>the status codes <code>100-199</code> indicate informational responses (and you'll rarely see them)</li>
 <li>the status codes <code>200-299</code> indicate successfull responses</li>
@@ -180,7 +180,7 @@ For example, a the status code <code>400</code> represents <code>Bad Request</co
 <p>The status code <code>400</code> (<code>Bad Request</code>) means that the server can't process the request due to a client error.
 For example, a <code>400</code> should be returned if the client has provided the server with a malformed request.</p>
 <p>The status code <code>401</code> (<code>Unauthorized</code>) usually means that the client couldn't be successfully authenticated.</p>
-<p>The status code <code>403</code> (<code>Forbidden</code>) usually menas that the client doesn't have the necessary right to access the requested content.
+<p>The status code <code>403</code> (<code>Forbidden</code>) usually means that the client doesn't have the necessary right to access the requested content.
 Note that there is an important difference between <code>401</code> and <code>403</code>.
 The code <code>401</code> means that the client couldn't be authenticated <em>at all</em>, the code <code>403</code> means that the client could be authenticated, but doesn't have relevant access rights.</p>
 <p>You've probably heard of the most famous status code <code>404</code> (<code>Not Found</code>).
@@ -317,7 +317,7 @@ app.listen(PORT, () =&gt; {
   console.log(`Server listening on port ${PORT}...`);
 });
 </code></pre>
-<p>Let's now open a browser and go to <code>http://localhost:3000/set-cookie</code>.
+<p>Let's launch the server, open a browser and go to <code>http://localhost:3000/set-cookie</code>.
 You should see a message "Cookie has been set!" and a new key-value pair appearing in your "cookies" tab.</p>
 <p>If you now go to <code>http://localhost:3000/read-cookie</code>, you will see <code>myCookie: test</code> on the page.</p>
 <p>Finally, if you go to <code>http://localhost:3000/clear-cookie</code>, you will see that the cookie has been cleared.</p>

@@ -2553,8 +2553,8 @@ First, this would make our scripts even less readable.
 Second, what do we do if the library receives an update?</p>
 <p>Luckily, JavaScript provides us with a mechanism to use code from one file in another file - <strong>modules</strong>.</p>
 <blockquote>
-<p>Note that we will only discuss ECMAScript modules.
-There are other module systems, but we won't cover them right now.</p>
+<p>Note that we will mostly discuss ECMAScript modules (ESM).
+There are other module systems, but we will only cover them very briefly.</p>
 </blockquote>
 <h3 id="the-import-and-export-keywords"><a class="header" href="#the-import-and-export-keywords">The <code>import</code> and <code>export</code> Keywords</a></h3>
 <p>Let's start our module discussion with a very simple example.
@@ -2763,6 +2763,37 @@ Only the <code>greet</code> function can be used (since it's exported).</p>
                 ^^^^^^^^^^^
 SyntaxError: The requested module './greet.js' does not provide an export named 'getGreeting'
 </code></pre>
+<h3 id="cjs-modules"><a class="header" href="#cjs-modules">CJS Modules</a></h3>
+<p>So far, we've been discussing ECMAScript modules (ESM).
+One alternative to ESM is a module system called CommonJS (CJS for short).</p>
+<p>You can export objects in CJS using <code>module.exports</code> and import objects in CJS using <code>require()</code>.</p>
+<p>Let's rewrite our running example in CJS.
+If you're following along, you should create a separate directory for this example.</p>
+<p>Create a file <code>greet.js</code> and export functions using <code>module.exports</code>:</p>
+<pre><code class="language-js">function getGreeting(name) {
+  return `Hello ${name}`;
+}
+
+function greet(name) {
+  return `Hello ${name}`;
+}
+
+// Exporting the functions
+module.exports = { getGreeting, greet };
+</code></pre>
+<p>And now create a file <code>app.js</code> where you import the functions from <code>greet.js</code> using <code>require()</code>:</p>
+<pre><code class="language-js">// Importing the module
+const { getGreeting, greet } = require('./greet');
+
+console.log(getGreeting('Alice')); // Hello Alice
+console.log(greet('Bob')); // Hello Bob
+</code></pre>
+<p>You can now run the <code>greet.js</code> without any additional configuration (you don't even need a <code>package.json</code>):</p>
+<pre><code class="language-sh">node app.js
+</code></pre>
+<p>We will only use CJS for short Node.js examples where we want to avoid the setup of a new project.
+However, other than that, we will follow the current best practices and only use ESM throughout this book.
+This is mainly because CJS is an older module system that was designed exclusively for Node.js and has been mostly replaced by ESM.</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="packages"><a class="header" href="#packages">Packages</a></h2>
 <div style="text-align: right"> <i>A prudent developer tends node_modules as a garden, lest it overgrow and obscure the path to enlightenment. <br> — Ancient Chinese proverb </i> </div>
 <h3 id="creating-a-package"><a class="header" href="#creating-a-package">Creating a Package</a></h3>
@@ -4440,12 +4471,15 @@ However they won't be important for this book and therefore we'll simply skip ov
 This poses the problem of <em>uniquely identifying</em> those services.
 After all, if the all share the same IP, how can we distinguish them from one another?</p>
 <p>The answer is that we can use <strong>ports</strong>.
-A port is simply a number assigned to uniquely identify a connection endpoint on a machine.
-For example, you might have a web service running on port <code>443</code> and an ssh service on port <code>22</code>.</p>
+A port is simply a number assigned to uniquely identify a connection endpoint on a machine.</p>
+<p>Let's say that you want to have a web service and an <code>ssh</code> service running on the same machine.</p>
 <blockquote>
 <p>The <code>ssh</code> protocol allows you to remotely log in to a computer and execute commands on it.</p>
 </blockquote>
-<p>These two services might run on the same computer with the same IP, but they can still be distinguished from one another, because they have different port numbers.</p>
+<p>You could assign the web service the port <code>443</code> and the ssh service the port <code>22</code>.
+Even though these services run on the same machine with the same IP, they can be distinguished from each other by their port number.</p>
+<p>If a service is assigned some port, programmers often say that the service is <strong>listening</strong> (for incoming connections) on that port.
+In our example, the web service would be <em>listening</em> on port <code>443</code> and the ssh service would be <em>listening</em> on port <code>22</code>.</p>
 <p>If you want to specify an IP and a port together, you use the colon <code>:</code> notation.
 For example, if you have an HTTPS web server running on a machine with the IP <code>123.56.1.17</code> and the assigned port <code>443</code>, the web server would be reachable at <code>123.56.1.17:443</code>.</p>
 <blockquote>
@@ -4564,6 +4598,7 @@ Among other things it supports HTTP and is available on pretty much every mainst
 <p>This will output the following:</p>
 <pre><code>Hello, world!
 </code></pre>
+<p>Note that you will need to press <kbd>Ctrl</kbd> + <kbd>C</kbd> in your command line to stop the server.</p>
 <h3 id="http-urls"><a class="header" href="#http-urls">HTTP URLs</a></h3>
 <p>The string <code>http://localhost:3000/</code> is a so-called URL.
 You have already seen URLs in the previous section.</p>
@@ -4627,11 +4662,20 @@ Similarly, if you submit a web form, there will usually be a POST request attach
 <p>POST requests usually need to send much more information to the server than GET requests.
 Therefore, POST requests can have a <strong>request body</strong> which allows us to carry this additional data when sending a request.</p>
 <p>Let's have a look at an example.
-Note that we need to enable some middleware (we will return to the concept of middleware later):</p>
-<pre><code class="language-javascript">app.use(express.text());
+Note that we need to enable some <strong>middleware</strong> in our script.
+Middleware functions are functions that do some additional processing on requests or responses.</p>
+<p>Specifically, we will need to use the <code>express.text()</code> middleware function to parse incoming request payloads into a string.
+Add the following line of code to your script right after the initialization of the <code>app variable</code>:</p>
+<pre><code class="language-javascript">// code
+const app = express();
+const PORT = 3000;
+
+app.use(express.text());
+
+// more code
 </code></pre>
 <p>Consider the following route which simply returns the request body back to the client:</p>
-<pre><code class="language-javascript">app.post('/post-example', (req, res) =&gt; {
+<pre><code class="language-javascript">app.post('/echo', (req, res) =&gt; {
   res.send(req.body);
 });
 </code></pre>
@@ -4641,7 +4685,7 @@ In addition we specify the data that we want to send in the <em>body</em> of the
 Finally we specify a header called <code>Content-Type</code> and set it to <code>text/plain</code>.
 This indicates that the data we want to send is plain text.</p>
 <p>The final command looks like this:</p>
-<pre><code class="language-sh">curl -X POST -H "Content-Type: text/plain" -d 'test' http://localhost:3000/post-example
+<pre><code class="language-sh">curl -X POST -H "Content-Type: text/plain" -d 'test' http://localhost:3000/echo
 </code></pre>
 <p>Generally speaking, GET requests transmit information in the URL, while POST requests transmit information in the request body.</p>
 <p>Note that we will rarely send plain text in the request.
@@ -4649,8 +4693,8 @@ Instead we usually use the JSON format that we introduced in the JavaScript chap
 <p>In order to accept JSON requests, we need to replace the <code>express.text</code> middleware with the <code>express.json</code> middleware:</p>
 <pre><code class="language-js">app.use(express.json());
 </code></pre>
-<p>Now we can curl the <code>/post-example</code> path like this:</p>
-<pre><code class="language-sh">curl -X POST -H "Content-Type: application/json" -d '{ "key": "value" }' http://localhost:3000/post-example
+<p>Now we can curl the <code>/echo</code> path like this:</p>
+<pre><code class="language-sh">curl -X POST -H "Content-Type: application/json" -d '{ "key": "value" }' http://localhost:3000/echo
 </code></pre>
 <p>Note that here we need specify the <code>application/json</code> content type instead of the <code>text/plain</code> content type.</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="more-on-http"><a class="header" href="#more-on-http">More on HTTP</a></h2>
@@ -4659,8 +4703,8 @@ Instead we usually use the JSON format that we introduced in the JavaScript chap
 <p>Responses can have <strong>status codes</strong> attached to them.
 These indicate the status of a request.</p>
 <p>Each status code is a number that indicates some information about the response.
-For example, a the status code <code>400</code> represents <code>Bad Request</code>.</p>
-<p>There are a lot of status code and they're grouped in five classes:</p>
+For example, the status code <code>400</code> represents <code>Bad Request</code>.</p>
+<p>There are a lot of status codes and they're grouped in five classes:</p>
 <ul>
 <li>the status codes <code>100-199</code> indicate informational responses (and you'll rarely see them)</li>
 <li>the status codes <code>200-299</code> indicate successfull responses</li>
@@ -4681,7 +4725,7 @@ For example, a the status code <code>400</code> represents <code>Bad Request</co
 <p>The status code <code>400</code> (<code>Bad Request</code>) means that the server can't process the request due to a client error.
 For example, a <code>400</code> should be returned if the client has provided the server with a malformed request.</p>
 <p>The status code <code>401</code> (<code>Unauthorized</code>) usually means that the client couldn't be successfully authenticated.</p>
-<p>The status code <code>403</code> (<code>Forbidden</code>) usually menas that the client doesn't have the necessary right to access the requested content.
+<p>The status code <code>403</code> (<code>Forbidden</code>) usually means that the client doesn't have the necessary right to access the requested content.
 Note that there is an important difference between <code>401</code> and <code>403</code>.
 The code <code>401</code> means that the client couldn't be authenticated <em>at all</em>, the code <code>403</code> means that the client could be authenticated, but doesn't have relevant access rights.</p>
 <p>You've probably heard of the most famous status code <code>404</code> (<code>Not Found</code>).
@@ -4818,7 +4862,7 @@ app.listen(PORT, () =&gt; {
   console.log(`Server listening on port ${PORT}...`);
 });
 </code></pre>
-<p>Let's now open a browser and go to <code>http://localhost:3000/set-cookie</code>.
+<p>Let's launch the server, open a browser and go to <code>http://localhost:3000/set-cookie</code>.
 You should see a message "Cookie has been set!" and a new key-value pair appearing in your "cookies" tab.</p>
 <p>If you now go to <code>http://localhost:3000/read-cookie</code>, you will see <code>myCookie: test</code> on the page.</p>
 <p>Finally, if you go to <code>http://localhost:3000/clear-cookie</code>, you will see that the cookie has been cleared.</p>
@@ -5617,7 +5661,7 @@ import postgres from 'postgres';
 const databaseURI = '...';
 
 // Declare the task table
-export const taskTable = pgTable('task', {
+const taskTable = pgTable('task', {
   id: serial('id').primaryKey(),
   title: varchar('title', { length: 255 }).notNull(),
   description: text('description').notNull(),
@@ -5674,8 +5718,9 @@ Unlike many other frameworks which try to "abstract" SQL away, Drizzle embraces 
     name: 'Example project',
   })
   .returning();
+console.log(row);
 </code></pre>
-<p>This would return something like:</p>
+<p>This would output something like:</p>
 <pre><code>[ { id: 3, name: 'Example project' } ]
 </code></pre>
 <p>The <code>returning</code> function is mostly useful if you want to get the ID of the inserted row.</p>
@@ -5720,10 +5765,10 @@ Unlike many other frameworks which try to "abstract" SQL away, Drizzle embraces 
  so much that I wrote the Auth.js adapter for it. <br> - From Drizzles official page </i> </div>
 <p>You can use the <code>select</code> function to select data.</p>
 <p>You can select all columns:</p>
-<pre><code class="language-ts">await db.select().from(projectTable);
+<pre><code class="language-ts">await db.select().from(taskTable);
 </code></pre>
 <p>Here is how you can specify the columns to select:</p>
-<pre><code class="language-ts">await db.select({ name: projectTable.name }).from(projectTable);
+<pre><code class="language-ts">await db.select({ title: taskTable.title }).from(taskTable);
 </code></pre>
 <p>You can use the <code>where</code> function to filter results.
 This function takes one or multiple conditions.</p>
@@ -5762,7 +5807,7 @@ To specify the ordering, you can use <code>asc</code> (ascending) or <code>desc<
 <div style="text-align: right"> <i> Y'all should just copy everything Eloquent has <br> - From Drizzles official page </i> </div>
 <h3 id="foreign-keys-1"><a class="header" href="#foreign-keys-1">Foreign Keys</a></h3>
 <p>Let's recreate the project and task table from the SQL chapter in Drizzle:</p>
-<pre><code class="language-ts">const projectTable = pgTable('project', {
+<pre><code class="language-ts">export const projectTable = pgTable('project', {
   id: serial('id').primaryKey(),
   name: text('name').notNull(),
 });
@@ -5820,7 +5865,7 @@ export default {
 <p>This will create a <code>meta</code> directory and an SQL file containing the migration.</p>
 <p>In this example, running the migration will create a new task table with the columns we would expect.</p>
 <h3 id="run-migrations"><a class="header" href="#run-migrations">Run Migrations</a></h3>
-<p>Create the <code>migration.ts</code> script:</p>
+<p>Create the <code>migrate.ts</code> script:</p>
 <pre><code class="language-ts">import { drizzle } from 'drizzle-orm/postgres-js';
 import postgres from 'postgres';
 import { migrate } from 'drizzle-orm/postgres-js/migrator';
@@ -5844,7 +5889,7 @@ runMigrations().then(console.log).catch(console.error);
 <h3 id="read-the-database-password-from-environment"><a class="header" href="#read-the-database-password-from-environment">Read the Database Password from Environment</a></h3>
 <p>Of course, in real life, we want to avoid hardcoding the database password in our scripts.
 Instead, we will read it from an environment variable.</p>
-<p>Change the <code>migrations.ts</code> to read the password from <code>process.env.DATABASE_URL</code>:</p>
+<p>Change the <code>migrate.ts</code> to read the password from <code>process.env.DATABASE_URL</code>:</p>
 <pre><code class="language-ts">const databaseURL = process.env.DATABASE_URL;
 
 if (databaseURL === undefined) {

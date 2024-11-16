@@ -157,10 +157,10 @@
  so much that I wrote the Auth.js adapter for it. <br> - From Drizzles official page </i> </div>
 <p>You can use the <code>select</code> function to select data.</p>
 <p>You can select all columns:</p>
-<pre><code class="language-ts">await db.select().from(projectTable);
+<pre><code class="language-ts">await db.select().from(taskTable);
 </code></pre>
 <p>Here is how you can specify the columns to select:</p>
-<pre><code class="language-ts">await db.select({ name: projectTable.name }).from(projectTable);
+<pre><code class="language-ts">await db.select({ title: taskTable.title }).from(taskTable);
 </code></pre>
 <p>You can use the <code>where</code> function to filter results.
 This function takes one or multiple conditions.</p>

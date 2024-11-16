@@ -156,7 +156,7 @@
 <div style="text-align: right"> <i> Y'all should just copy everything Eloquent has <br> - From Drizzles official page </i> </div>
 <h3 id="foreign-keys"><a class="header" href="#foreign-keys">Foreign Keys</a></h3>
 <p>Let's recreate the project and task table from the SQL chapter in Drizzle:</p>
-<pre><code class="language-ts">const projectTable = pgTable('project', {
+<pre><code class="language-ts">export const projectTable = pgTable('project', {
   id: serial('id').primaryKey(),
   name: text('name').notNull(),
 });

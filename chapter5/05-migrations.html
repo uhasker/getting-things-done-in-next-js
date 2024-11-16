@@ -191,7 +191,7 @@ export default {
 <p>This will create a <code>meta</code> directory and an SQL file containing the migration.</p>
 <p>In this example, running the migration will create a new task table with the columns we would expect.</p>
 <h3 id="run-migrations"><a class="header" href="#run-migrations">Run Migrations</a></h3>
-<p>Create the <code>migration.ts</code> script:</p>
+<p>Create the <code>migrate.ts</code> script:</p>
 <pre><code class="language-ts">import { drizzle } from 'drizzle-orm/postgres-js';
 import postgres from 'postgres';
 import { migrate } from 'drizzle-orm/postgres-js/migrator';
@@ -215,7 +215,7 @@ runMigrations().then(console.log).catch(console.error);
 <h3 id="read-the-database-password-from-environment"><a class="header" href="#read-the-database-password-from-environment">Read the Database Password from Environment</a></h3>
 <p>Of course, in real life, we want to avoid hardcoding the database password in our scripts.
 Instead, we will read it from an environment variable.</p>
-<p>Change the <code>migrations.ts</code> to read the password from <code>process.env.DATABASE_URL</code>:</p>
+<p>Change the <code>migrate.ts</code> to read the password from <code>process.env.DATABASE_URL</code>:</p>
 <pre><code class="language-ts">const databaseURL = process.env.DATABASE_URL;
 
 if (databaseURL === undefined) {
