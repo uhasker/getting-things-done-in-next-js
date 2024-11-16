@@ -30,9 +30,10 @@ const row = await db
     name: 'Example project',
   })
   .returning();
+console.log(row);
 ```
 
-This would return something like:
+This would output something like:
 
 ```
 [ { id: 3, name: 'Example project' } ]

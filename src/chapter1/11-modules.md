@@ -14,8 +14,8 @@ Second, what do we do if the library receives an update?
 
 Luckily, JavaScript provides us with a mechanism to use code from one file in another file - **modules**.
 
-> Note that we will only discuss ECMAScript modules.
-> There are other module systems, but we won't cover them right now.
+> Note that we will mostly discuss ECMAScript modules (ESM).
+> There are other module systems, but we will only cover them very briefly.
 
 ### The `import` and `export` Keywords
 
@@ -49,7 +49,7 @@ This is the basic setup, but in order to actually execute this in the browser or
 Let's create a file named `index.html` in which we use `main.js` as a JavaScript module:
 
 ```html
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -314,3 +314,48 @@ import { greet, getGreeting } from './greet.js';
                 ^^^^^^^^^^^
 SyntaxError: The requested module './greet.js' does not provide an export named 'getGreeting'
 ```
+
+### CJS Modules
+
+So far, we've been discussing ECMAScript modules (ESM).
+One alternative to ESM is a module system called CommonJS (CJS for short).
+
+You can export objects in CJS using `module.exports` and import objects in CJS using `require()`.
+
+Let's rewrite our running example in CJS.
+If you're following along, you should create a separate directory for this example.
+
+Create a file `greet.js` and export functions using `module.exports`:
+
+```js
+function getGreeting(name) {
+  return `Hello ${name}`;
+}
+
+function greet(name) {
+  return `Hello ${name}`;
+}
+
+// Exporting the functions
+module.exports = { getGreeting, greet };
+```
+
+And now create a file `app.js` where you import the functions from `greet.js` using `require()`:
+
+```js
+// Importing the module
+const { getGreeting, greet } = require('./greet');
+
+console.log(getGreeting('Alice')); // Hello Alice
+console.log(greet('Bob')); // Hello Bob
+```
+
+You can now run the `greet.js` without any additional configuration (you don't even need a `package.json`):
+
+```sh
+node app.js
+```
+
+We will only use CJS for short Node.js examples where we want to avoid the setup of a new project.
+However, other than that, we will follow the current best practices and only use ESM throughout this book.
+This is mainly because CJS is an older module system that was designed exclusively for Node.js and has been mostly replaced by ESM.

@@ -121,6 +121,8 @@ This will output the following:
 Hello, world!
 ```
 
+Note that you will need to press <kbd>Ctrl</kbd> + <kbd>C</kbd> in your command line to stop the server.
+
 ### HTTP URLs
 
 The string `http://localhost:3000/` is a so-called URL.
@@ -211,16 +213,26 @@ POST requests usually need to send much more information to the server than GET 
 Therefore, POST requests can have a **request body** which allows us to carry this additional data when sending a request.
 
 Let's have a look at an example.
-Note that we need to enable some middleware (we will return to the concept of middleware later):
+Note that we need to enable some **middleware** in our script.
+Middleware functions are functions that do some additional processing on requests or responses.
+
+Specifically, we will need to use the `express.text()` middleware function to parse incoming request payloads into a string.
+Add the following line of code to your script right after the initialization of the `app variable`:
 
 ```javascript
+// code
+const app = express();
+const PORT = 3000;
+
 app.use(express.text());
+
+// more code
 ```
 
 Consider the following route which simply returns the request body back to the client:
 
 ```javascript
-app.post('/post-example', (req, res) => {
+app.post('/echo', (req, res) => {
   res.send(req.body);
 });
 ```
@@ -234,7 +246,7 @@ This indicates that the data we want to send is plain text.
 The final command looks like this:
 
 ```sh
-curl -X POST -H "Content-Type: text/plain" -d 'test' http://localhost:3000/post-example
+curl -X POST -H "Content-Type: text/plain" -d 'test' http://localhost:3000/echo
 ```
 
 Generally speaking, GET requests transmit information in the URL, while POST requests transmit information in the request body.
@@ -248,10 +260,10 @@ In order to accept JSON requests, we need to replace the `express.text` middlewa
 app.use(express.json());
 ```
 
-Now we can curl the `/post-example` path like this:
+Now we can curl the `/echo` path like this:
 
 ```sh
-curl -X POST -H "Content-Type: application/json" -d '{ "key": "value" }' http://localhost:3000/post-example
+curl -X POST -H "Content-Type: application/json" -d '{ "key": "value" }' http://localhost:3000/echo
 ```
 
 Note that here we need specify the `application/json` content type instead of the `text/plain` content type.

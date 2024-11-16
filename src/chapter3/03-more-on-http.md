@@ -8,9 +8,9 @@ Responses can have **status codes** attached to them.
 These indicate the status of a request.
 
 Each status code is a number that indicates some information about the response.
-For example, a the status code `400` represents `Bad Request`.
+For example, the status code `400` represents `Bad Request`.
 
-There are a lot of status code and they're grouped in five classes:
+There are a lot of status codes and they're grouped in five classes:
 
 - the status codes `100-199` indicate informational responses (and you'll rarely see them)
 - the status codes `200-299` indicate successfull responses
@@ -35,7 +35,7 @@ For example, a `400` should be returned if the client has provided the server wi
 
 The status code `401` (`Unauthorized`) usually means that the client couldn't be successfully authenticated.
 
-The status code `403` (`Forbidden`) usually menas that the client doesn't have the necessary right to access the requested content.
+The status code `403` (`Forbidden`) usually means that the client doesn't have the necessary right to access the requested content.
 Note that there is an important difference between `401` and `403`.
 The code `401` means that the client couldn't be authenticated _at all_, the code `403` means that the client could be authenticated, but doesn't have relevant access rights.
 
@@ -222,7 +222,7 @@ app.listen(PORT, () => {
 });
 ```
 
-Let's now open a browser and go to `http://localhost:3000/set-cookie`.
+Let's launch the server, open a browser and go to `http://localhost:3000/set-cookie`.
 You should see a message "Cookie has been set!" and a new key-value pair appearing in your "cookies" tab.
 
 If you now go to `http://localhost:3000/read-cookie`, you will see `myCookie: test` on the page.

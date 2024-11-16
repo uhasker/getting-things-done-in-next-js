@@ -7,7 +7,7 @@
 Let's recreate the project and task table from the SQL chapter in Drizzle:
 
 ```ts
-const projectTable = pgTable('project', {
+export const projectTable = pgTable('project', {
   id: serial('id').primaryKey(),
   name: text('name').notNull(),
 });
