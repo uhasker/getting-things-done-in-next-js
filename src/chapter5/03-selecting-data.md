@@ -8,13 +8,13 @@ You can use the `select` function to select data.
 You can select all columns:
 
 ```ts
-await db.select().from(projectTable);
+await db.select().from(taskTable);
 ```
 
 Here is how you can specify the columns to select:
 
 ```ts
-await db.select({ name: projectTable.name }).from(projectTable);
+await db.select({ title: taskTable.title }).from(taskTable);
 ```
 
 You can use the `where` function to filter results.

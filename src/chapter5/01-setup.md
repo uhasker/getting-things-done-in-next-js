@@ -35,7 +35,7 @@ import postgres from 'postgres';
 const databaseURI = '...';
 
 // Declare the task table
-export const taskTable = pgTable('task', {
+const taskTable = pgTable('task', {
   id: serial('id').primaryKey(),
   title: varchar('title', { length: 255 }).notNull(),
   description: text('description').notNull(),

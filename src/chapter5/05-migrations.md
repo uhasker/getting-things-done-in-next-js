@@ -56,7 +56,7 @@ In this example, running the migration will create a new task table with the col
 
 ### Run Migrations
 
-Create the `migration.ts` script:
+Create the `migrate.ts` script:
 
 ```ts
 import { drizzle } from 'drizzle-orm/postgres-js';
@@ -89,7 +89,7 @@ You will see that the table now appears in Supabase.
 Of course, in real life, we want to avoid hardcoding the database password in our scripts.
 Instead, we will read it from an environment variable.
 
-Change the `migrations.ts` to read the password from `process.env.DATABASE_URL`:
+Change the `migrate.ts` to read the password from `process.env.DATABASE_URL`:
 
 ```ts
 const databaseURL = process.env.DATABASE_URL;

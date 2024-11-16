@@ -70,11 +70,16 @@ After all, if the all share the same IP, how can we distinguish them from one an
 
 The answer is that we can use **ports**.
 A port is simply a number assigned to uniquely identify a connection endpoint on a machine.
-For example, you might have a web service running on port `443` and an ssh service on port `22`.
+
+Let's say that you want to have a web service and an `ssh` service running on the same machine.
 
 > The `ssh` protocol allows you to remotely log in to a computer and execute commands on it.
 
-These two services might run on the same computer with the same IP, but they can still be distinguished from one another, because they have different port numbers.
+You could assign the web service the port `443` and the ssh service the port `22`.
+Even though these services run on the same machine with the same IP, they can be distinguished from each other by their port number.
+
+If a service is assigned some port, programmers often say that the service is **listening** (for incoming connections) on that port.
+In our example, the web service would be _listening_ on port `443` and the ssh service would be _listening_ on port `22`.
 
 If you want to specify an IP and a port together, you use the colon `:` notation.
 For example, if you have an HTTPS web server running on a machine with the IP `123.56.1.17` and the assigned port `443`, the web server would be reachable at `123.56.1.17:443`.
