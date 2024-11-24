@@ -30,64 +30,6 @@ Of course, if you realize that you're writing the same thing for the tenth time,
 Unfortunately, many developers take this _way_ too far.
 Don't be one of them.
 
-### Don't Repeat Yourself
-
-This is probably one of the most well-known idioms in software development:
-
-**Don't repeat yourself.**
-
-For example, if you write a book, you shouldn't repeat the subsection heading in your text—that looks ugly and doesn't make any sense.
-Only a fool would do that.
-
-The same principle goes for writing code.
-Consider the following example:
-
-```js
-function reportOverdueTasks(tasks) {
-  const today = new Date();
-  const overdueTasks = tasks.filter((task) => {
-    return task.deadline < today && task.status !== 'done';
-  });
-  return overdueTasks.map((task) => `Task ID: ${task.id}, Title: ${task.title}`).join('\n');
-}
-
-function reportCompletedTasks(tasks) {
-  const completedTasks = tasks.filter((task) => task.status === 'done');
-  return completedTasks.map((task) => `Task ID: ${task.id}, Title: ${task.title}`).join('\n');
-}
-```
-
-You might notice that the last line of both functions is essentially the same.
-This leads to a problem: If the report format changes, we need to update it multiple times.
-
-Not only does this mean more work, we might even forget to update the report format in some place, leading to inconsistencies in our code.
-
-We can refactor `reportOverdueTasks` and `reportCompletedTasks` like this:
-
-```js
-function formatReport(tasks) {
-  return tasks.map((task) => `Task ID: ${task.id}, Title: ${task.title}`).join('\n');
-}
-
-function reportOverdueTasks(tasks) {
-  const today = new Date();
-  const overdueTasks = tasks.filter((task) => {
-    return task.deadline < today && task.status !== 'done';
-  });
-  return formatReport(overdueTasks);
-}
-
-function reportCompletedTasks(tasks) {
-  const completedTasks = tasks.filter((task) => task.status === 'done');
-  return formatReport(completedTasks);
-}
-```
-
-Again, this is a very simple example, but the general principle holds for more complex situations as well.
-If you find yourself repeating very similar code over and over, you should probably extract it into a function.
-
-Remember, that's why we introduced functions in the first place.
-
 ### Follow the Single Responsibility Principle
 
 Now that we gave you a couple of tips for writing better code, there a few things to consider as your project gets larger.
