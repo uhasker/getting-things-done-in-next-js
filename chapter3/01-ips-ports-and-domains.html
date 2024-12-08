@@ -159,11 +159,11 @@
 Network interfaces can correspond to physical objects like a network interface controller (the hardware component that allows a computer to connect to a network via a cable or wireless connection).
 They can also be virtual, i.e. only exist in software.</p>
 <h3 id="protocols"><a class="header" href="#protocols">Protocols</a></h3>
-<p>A <strong>protocol</strong> defines the rules by which computers communicate.
-Protocols allow computer to "speak the same language".</p>
+<p>A <strong>protocol</strong> defines the rules by which the network interfaces communicate.
+Protocols allow computers to "speak the same language".</p>
 <p>The internet knows a lot of different protocols—from really common ones like IP, HTTP, HTTPS or DNS to really exotic ones that are only relevant for a select group of specialists.</p>
 <p>For example, if you're browsing <code>http://example.com</code>, the underlying protocol is HTTP.
-Similarly, if your browse <code>https://www.google.com/</code>, the underlying protocol is HTTPS.</p>
+Similarly, if you browse <code>https://www.google.com/</code>, the underlying protocol is HTTPS.</p>
 <p>Protocols can also use other protocols.
 For example, the HTTP protocol uses the TCP protocol which in turn uses the IP protocol.</p>
 <h3 id="the-ip-protocol"><a class="header" href="#the-ip-protocol">The IP Protocol</a></h3>
@@ -176,10 +176,10 @@ We will only talk about the IPv4 protocol and ignore the IPv6 protocol in this b
 <p>An <strong>IPv4 address</strong> (or simply <strong>IP</strong> for short) is an identifier that is assigned to a network interface on your computer.
 For example, your wireless network interface might have an IPv4 address that it can use to communicate with other computers on the same wireless network.</p>
 <p>Such an address consists of 4 numbers between 0 and 255, separated by dots.
-Therefore, example addresses might be <code>123.56.1.17</code> or <code>192.168.178.47</code>.</p>
+Therefore, IP addresses look like <code>123.56.1.17</code> or <code>192.168.178.47</code>.</p>
 <p>Note that instead of saying that a <em>network interface has a particular IP</em>, we will often say that <em>a computer has some IP</em>.
 This is because often we only really care about a particular interface (usually your Ethernet or your wireless interface).
-However, it is important to understand that diffent network interfaces will usually have different IP addresses even if they're located on the same machine.</p>
+However, it's important to understand that different network interfaces will usually have different IP addresses even if they're located on the same machine.</p>
 <p>The <strong>loopback address</strong> <code>127.0.0.1</code> is a special IP address which can be used to identify the machine you're currently on.
 You can basically use this to talk to your own computer.
 For example, if you run a local web server, you could access it at <code>127.0.0.1</code>.</p>
@@ -199,15 +199,15 @@ A public address is basically any address that hasn't been explicitly marked as 
 For example, <code>142.251.37.14</code> is a public address since it's not in one of the private address blocks.</p>
 <blockquote>
 <p>There are a few other special address blocks like the "link local" block.
-However they won't be important for this book and therefore we'll simply skip over them.</p>
+However, they won't be important for this book and therefore we'll simply skip over them.</p>
 </blockquote>
 <h3 id="ports"><a class="header" href="#ports">Ports</a></h3>
-<p>Usually you want to be able to run multiple networking services on your machine.
+<p>Usually, you want to be able to run multiple networking services on your machine.
 This poses the problem of <em>uniquely identifying</em> those services.
-After all, if the all share the same IP, how can we distinguish them from one another?</p>
+After all, if they all share the same IP, how can we distinguish them from one another?</p>
 <p>The answer is that we can use <strong>ports</strong>.
 A port is simply a number assigned to uniquely identify a connection endpoint on a machine.</p>
-<p>Let's say that you want to have a web service and an <code>ssh</code> service running on the same machine.</p>
+<p>Let's say you want to have a web service and an <code>ssh</code> service running on the same machine.</p>
 <blockquote>
 <p>The <code>ssh</code> protocol allows you to remotely log in to a computer and execute commands on it.</p>
 </blockquote>
@@ -216,40 +216,39 @@ Even though these services run on the same machine with the same IP, they can be
 <p>If a service is assigned some port, programmers often say that the service is <strong>listening</strong> (for incoming connections) on that port.
 In our example, the web service would be <em>listening</em> on port <code>443</code> and the ssh service would be <em>listening</em> on port <code>22</code>.</p>
 <p>If you want to specify an IP and a port together, you use the colon <code>:</code> notation.
-For example, if you have an HTTPS web server running on a machine with the IP <code>123.56.1.17</code> and the assigned port <code>443</code>, the web server would be reachable at <code>123.56.1.17:443</code>.</p>
+For example, if you have an HTTPS web server running on a machine with the IP <code>123.56.1.17</code> and you have assigned the port <code>443</code> to the web server, it would be reachable at <code>123.56.1.17:443</code>.</p>
 <blockquote>
 <p>If we add the protocol (HTTPS), we would get the correct URL for the web server, which would be <code>https://123.56.1.17:443</code>.
-We will talk about URLs in a second.</p>
+We will talk about URLs in more detail soon.</p>
 </blockquote>
 <p>Similarly, if you start an HTTP web server locally (i.e. on <code>127.0.0.1</code>) on port <code>80</code>, you could access it at <code>127.0.0.1:80</code>.</p>
 <blockquote>
-<p>If we add the protocol (HTTP), we would get the correct URL for the web server, which would be <code>http://127.0.0.1:80</code>.
-We will talk about URLs in a second.</p>
+<p>If we add the protocol (HTTP), we would get the correct URL for the web server, which would be <code>http://127.0.0.1:80</code>.</p>
 </blockquote>
 <p>There is a list of <strong>well-known ports</strong>.
-For example, an <code>http</code> application typically runs on port <code>80</code> while an <code>https</code> application typically runs on port <code>443</code>.
+For example, an HTTP application typically runs on port <code>80</code> while an HTTPS application typically runs on port <code>443</code>.
 This is why you don't need to explicitly tell your browser that <code>google.com</code> can be found at port <code>443</code>—your web browser will figure this out automatically because <code>443</code> is a well-known port.</p>
 <blockquote>
 <p>During development we will not follow this convention and mostly run our applications on port <code>3000</code>.
 This is because you don't need special "root" permissions to run something on port <code>3000</code>.
 Typically, ports below <code>1024</code> are considered "privileged" and require these special permissions.
-However, when we deploy our final application, it will run on the well-known port <code>443</code>.</p>
+However, when we deploy our final application to production, it will run on the well-known port <code>443</code>.</p>
 </blockquote>
 <h3 id="domains"><a class="header" href="#domains">Domains</a></h3>
 <p>While IP addresses are great, they are very unwieldy and hard to remember for humans.
 Imagine that instead of "just google it" or "go to <code>google.com</code>" you would have to tell someone to "go to <code>142.251.37.14</code>".
 That would suck!</p>
-<p>This why the concept of a <strong>domain</strong> was introduced.
+<p>This is why the concept of a <strong>domain</strong> was introduced.
 A domain is a string that identifies some network resource.
 In our neat and tidy web development world, a domain usually has a corresponding IP address.</p>
 <p>For example, the domain <code>google.com</code> might correspond to the IP address <code>142.251.37.14</code>.
 That is, you can identify the resource either via <code>google.com</code> or via <code>142.251.37.14</code>.</p>
-<p>The translation of domains to IP adresses is handled by the <strong>Domain Name System</strong> (DNS) protocol.
+<p>The translation of domains to IP addresses is handled by the <strong>Domain Name System</strong> (DNS) protocol.
 If you type <code>google.com</code> into your browser address bar, DNS will translate it to the correct IP under the hood.</p>
 <blockquote>
 <p>The reality is much more complicated and involves something called DNS records.
-This means that domains can have IPv4 addressess, IPv6 addresses, mail addresses etc.
-Domains can also be forwarded to other domains with so called CNAME records.
+This means that domains can have IPv4 addresses, IPv6 addresses, mail addresses etc.
+Domains can also be forwarded to other domains with so-called CNAME records.
 The picture becomes even more complicated once we go into load balancing.
 Nevertheless, for our purposes the mental model of "there are domains and they correspond to IP addresses" is enough.</p>
 </blockquote>

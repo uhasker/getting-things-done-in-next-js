@@ -158,11 +158,11 @@
 <p>Responses can have <strong>status codes</strong> attached to them.
 These indicate the status of a request.</p>
 <p>Each status code is a number that indicates some information about the response.
-For example, the status code <code>400</code> represents <code>Bad Request</code>.</p>
+For example, the status code <code>400</code> represents a <code>Bad Request</code>.</p>
 <p>There are a lot of status codes and they're grouped in five classes:</p>
 <ul>
 <li>the status codes <code>100-199</code> indicate informational responses (and you'll rarely see them)</li>
-<li>the status codes <code>200-299</code> indicate successfull responses</li>
+<li>the status codes <code>200-299</code> indicate successful responses</li>
 <li>the status codes <code>300-399</code> indicate redirection responses</li>
 <li>the status codes <code>400-499</code> indicate client errors</li>
 <li>the status codes <code>500-599</code> indicate server errors</li>
@@ -177,14 +177,15 @@ For example, the status code <code>400</code> represents <code>Bad Request</code
 </ul>
 <p>Let's have a quick look at the most important status codes.</p>
 <p>The status code <code>200</code> (<code>OK</code>) is the standard response for a successful HTTP request.</p>
+<p>The status code <code>201</code> (<code>Created</code>) is often used for requests where a resource has been successfully created.</p>
 <p>The status code <code>400</code> (<code>Bad Request</code>) means that the server can't process the request due to a client error.
 For example, a <code>400</code> should be returned if the client has provided the server with a malformed request.</p>
 <p>The status code <code>401</code> (<code>Unauthorized</code>) usually means that the client couldn't be successfully authenticated.</p>
-<p>The status code <code>403</code> (<code>Forbidden</code>) usually means that the client doesn't have the necessary right to access the requested content.
+<p>The status code <code>403</code> (<code>Forbidden</code>) usually means that the client doesn't have the necessary rights to access the requested content.
 Note that there is an important difference between <code>401</code> and <code>403</code>.
-The code <code>401</code> means that the client couldn't be authenticated <em>at all</em>, the code <code>403</code> means that the client could be authenticated, but doesn't have relevant access rights.</p>
+The code <code>401</code> means that the client couldn't be authenticated <em>at all</em>, the code <code>403</code> means that the client could be authenticated, but doesn't have the correct access rights.</p>
 <p>You've probably heard of the most famous status code <code>404</code> (<code>Not Found</code>).
-As the name already says, this means that the server can't find the requested resource (for example, because the resource doesn't exist).</p>
+As the name already says, this means that the server can't find the requested resource (usually because the resource doesn't exist).</p>
 <p>The status code <code>405</code> (<code>Method Not Allowed</code>) means that the resource exists, but the client is trying to access it using the wrong method.
 This occurs if, for example, a client is trying to send a <code>GET</code> request to a route that only supports <code>POST</code> requests.</p>
 <p>The most important status codes for server errors are <code>500</code> (<code>Internal Server Error</code>) and <code>503</code> (<code>Service Unavailable</code>).
@@ -264,7 +265,7 @@ Keep-Alive: timeout=5
 
 Received data: {}
 </code></pre>
-<p>Note that <code>express</code> (and other web framework) already sets quite a few response headers by default.</p>
+<p>Note that Express and other web frameworks already set quite a few response headers by default.</p>
 <blockquote>
 <p>You can also see the response headers in the network tab of your browser if you click on an individual request.</p>
 </blockquote>
@@ -279,7 +280,7 @@ A response might contain a <code>Set-Cookie</code> header which contains the coo
 First, we'll need to install the <code>cookie-parser</code> package in addition to the <code>express</code> package:</p>
 <pre><code class="language-sh">pnpm install -g cookie-parser
 </code></pre>
-<p>Next, we will create an <code>express</code> application with three routes.
+<p>Next, we will create an Express application with three routes.
 The first route will be a <code>/set-cookie</code> route that will allow us to set a cookie.
 The second route will be a <code>/read-cookie</code> route that will allow us to read the cookie.
 Finally, we will add a third route <code>/clear-cookie</code> which will allows us to clear the cookie.</p>
@@ -318,16 +319,16 @@ app.listen(PORT, () =&gt; {
 });
 </code></pre>
 <p>Let's launch the server, open a browser and go to <code>http://localhost:3000/set-cookie</code>.
-You should see a message "Cookie has been set!" and a new key-value pair appearing in your "cookies" tab.</p>
+You should see a message <code>Cookie has been set!</code> and a new key-value pair appearing in your "cookies" tab.</p>
 <p>If you now go to <code>http://localhost:3000/read-cookie</code>, you will see <code>myCookie: test</code> on the page.</p>
 <p>Finally, if you go to <code>http://localhost:3000/clear-cookie</code>, you will see that the cookie has been cleared.</p>
-<h2 id="redirects"><a class="header" href="#redirects">Redirects</a></h2>
-<p>The <code>301</code> (<code>Moved Permanently</code>) is used for URL redirection.
+<h3 id="redirects"><a class="header" href="#redirects">Redirects</a></h3>
+<p>The <code>301</code> (<code>Moved Permanently</code>) status code is used for URL redirection.
 This basically informs a client that the resource has been <em>permanently</em> moved.
 A response with a <code>301</code> status code should contain the URL where the resource has been moved to.</p>
-<p>The <code>302</code> (<code>Found</code>) is also used for URL redirection, but it indicates to the client that the resource has been <em>temporarily</em> moved.
+<p>The <code>302</code> (<code>Found</code>) status code is also used for URL redirection, but it indicates to the client that the resource has been <em>temporarily</em> moved.
 Again, a response with a <code>302</code> status code should contain the URL where the resource has been moved to.</p>
-<p>Let's have a look at an <code>express</code> example:</p>
+<p>Let's have a look at an Express example:</p>
 <pre><code class="language-js">const express = require('express');
 const cookieParser = require('cookie-parser');
 
@@ -335,12 +336,12 @@ const app = express();
 const PORT = 3000;
 
 // 301 Redirect (Permanent)
-app.get('/redirect-permanent', (req, res) =&gt; {
+app.get('/permanent-redirect', (req, res) =&gt; {
   res.redirect(301, '/permanent-target');
 });
 
 // 302 Redirect (Temporary)
-app.get('/redirect-temporary', (req, res) =&gt; {
+app.get('/temporary-redirect', (req, res) =&gt; {
   res.redirect(302, '/temporary-target');
 });
 
@@ -358,11 +359,11 @@ app.listen(PORT, () =&gt; {
   console.log(`Server listening on port ${PORT}...`);
 });
 </code></pre>
-<p>If you open <code>http://localhost:3000/redirect-permanent</code> in your browser, you will see that the address in the browser address bar suddenly changes to <code>http://localhost:3000/permanent-target</code> and you see the content <code>'This is the permanent target route'</code>.
+<p>If you open <code>http://localhost:3000/permanent-redirect</code> in your browser, you will see that the address in the browser address bar suddenly changes to <code>http://localhost:3000/permanent-target</code> and you see the content <code>'This is the permanent target route'</code>.
 If you open the network tab, you will see that two requests are sent to accomplish this.</p>
-<p>First, your browser sends a request to <code>http://localhost:3000/redirect-permanent</code> and receives a response with status code <code>301</code> and the response header <code>Location</code> set to <code>/permanent-target</code>.
-Your browser now sends another request to the URL that indicated in the <code>Location</code> header and receives the actual content.</p>
-<p>You will see similar behaviour with the <code>/redirect-temporary</code> and <code>temporary-target</code> routes.</p>
+<p>First, your browser sends a request to <code>http://localhost:3000/permanent-redirect</code> and receives a response with status code <code>301</code> and the response header <code>Location</code> set to <code>/permanent-target</code>.
+Your browser now sends another request to the URL that is indicated in the <code>Location</code> header and receives the actual content.</p>
+<p>You will see similar behaviour with the <code>/temporary-redirect</code> and <code>/temporary-target</code> routes.</p>
 
                     </main>
 

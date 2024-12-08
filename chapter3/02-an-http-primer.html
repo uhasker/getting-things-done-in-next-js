@@ -157,7 +157,7 @@
 <h3 id="servers-and-clients"><a class="header" href="#servers-and-clients">Servers and Clients</a></h3>
 <p><strong>Servers</strong> and <strong>clients</strong> are nothing more than regular programs (like the ones you saw in the first chapter).
 For example, a server might be a JavaScript program that waits for HTTP requests and sends back responses.
-A client might be a browser on your laptop or your phone - it might even be a regular script.</p>
+A client might be a browser on your laptop or your phone—it might even be a regular script.</p>
 <blockquote>
 <p>Often, the term "server" is also used to refer to the actual machine the software is running on.</p>
 </blockquote>
@@ -169,8 +169,8 @@ For instance, you could add a new element, get the size of the browser window an
 <p>If your code runs on the server, you will have access to the filesystem, but you won't have access to the browser features.
 This makes sense since the browser is running on your client and the server (mostly) doesn't have access to it.</p>
 <p>This also means that we will often need to transmit data from the client to the server (and the other way around).
-When writing a web application, the most common way to do so is by using the HTTP procotol.</p>
-<h2 id="requests-and-responses"><a class="header" href="#requests-and-responses">Requests and Responses</a></h2>
+When writing a web application, the most common way to do so is by using the HTTP protocol.</p>
+<h3 id="requests-and-responses"><a class="header" href="#requests-and-responses">Requests and Responses</a></h3>
 <p>The <strong>HTTP protocol</strong> is a <strong>request/response protocol</strong>, i.e. HTTP clients send requests to an HTTP server and receive responses in return.</p>
 <blockquote>
 <p>You have in fact already used the HTTP protocol.
@@ -182,7 +182,7 @@ Pretty much every time you browse the internet, HTTP requests are sent under the
 <p>Third, the server receives the request, reads its data and then performs appropriate calculations, database queries and so on.
 Afterwards, the server creates a response and sends it back to the client.</p>
 <p>And, finally, the client looks at the response and determines how to update the UI (user interface).</p>
-<h2 id="https"><a class="header" href="#https">HTTPS</a></h2>
+<h3 id="https"><a class="header" href="#https">HTTPS</a></h3>
 <p>We should mention that nowadays developers never use plain HTTP in production.
 Instead, they use the <strong>HTTPS protocol</strong>, which is encrypted HTTP.</p>
 <p>HTTPS basically wraps HTTP in a layer of <em>encryption</em> using a method called <strong>TLS (Transport Layer Security)</strong>.
@@ -202,7 +202,7 @@ While Express builds on top of the HTTP module, it provides a lot of additional 
 <p>Create a file named <code>app.js</code> inside the directory.
 In that file we will create an Express application and then make that application listen for connections on a specified host and port.</p>
 <p>This is how you can create an Express application and make it listen on port <code>3000</code>:</p>
-<pre><code class="language-javascript">const express = require('express');
+<pre><code class="language-js">const express = require('express');
 const app = express();
 const PORT = 3000;
 
@@ -212,7 +212,7 @@ app.listen(PORT, () =&gt; {
 </code></pre>
 <p>This application is not very useful, so let's add a <strong>route</strong> to it.
 Add the following code above the call to <code>listen</code>:</p>
-<pre><code class="language-javascript">app.get('/', (req, res) =&gt; {
+<pre><code class="language-js">app.get('/', (req, res) =&gt; {
   res.send('Hello, world!');
 });
 </code></pre>
@@ -234,7 +234,7 @@ Among other things it supports HTTP and is available on pretty much every mainst
 <h3 id="http-urls"><a class="header" href="#http-urls">HTTP URLs</a></h3>
 <p>The string <code>http://localhost:3000/</code> is a so-called URL.
 You have already seen URLs in the previous section.</p>
-<p>Navigate to Google and search for "Next.js" - you will notice that the URL in your browser looks like this:</p>
+<p>Navigate to Google and search for "Next.js"—you will notice that the URL in your browser looks like this:</p>
 <pre><code>https://www.google.com/search?q=nextjs
 </code></pre>
 <p>For didactic reasons we will include the port:</p>
@@ -246,48 +246,51 @@ You have already seen URLs in the previous section.</p>
 <blockquote>
 <p>Note the word <em>typical</em> here.
 HTTP URLs (and especially more general URLs) can become <em>much more</em> complicated, but we will not cover all the little details in this book.
-In fact the complexity of URLs is often a source of subtle bugs and browser crashes.
-For example - at some point Android Chrome would <a href="https://news.ycombinator.com/item?id=28639708">crash</a> when trying to open <code>http://../foo</code>.</p>
+In fact, the complexity of URLs is often a source of subtle bugs and browser crashes.
+For example—at some point Android Chrome would <a href="https://news.ycombinator.com/item?id=28639708">crash</a> when trying to open <code>http://../foo</code>.</p>
 </blockquote>
 <p>Let's go over the individual component of a typical URL one by one.</p>
 <p>The <strong>scheme</strong> usually indicates the protocol which describes how information should be transmitted.
 We will almost exclusively use HTTP or HTTPS in this book.
 Therefore, the scheme will almost always be either <code>http</code> or <code>https</code>.
 In the above Google URL the scheme is clearly <code>https</code>.</p>
-<p>You already learned about the <strong>host</strong> and the <strong>port</strong>—the host identifies the device you wish to connect to and the port is the communication endpoint on that device.
+<p>You've already learned about the <strong>host</strong> and the <strong>port</strong>—the host identifies the device you wish to connect to and the port is the communication endpoint on that device.
 Note that the host could be a domain (like <code>www.google.com</code>) or an IP address (like <code>142.251.36.238</code>).
-Usually we will work with domains since they're stable and rarely change (unlike IP addresses).</p>
+Usually we will work with domains since they're stable and rarely change (unlike some IP addresses).</p>
 <blockquote>
 <p>At the time of this writing <code>142.251.36.238</code> is one of Google's IP addresses.
 This may of course change by the time you are reading this book.</p>
 </blockquote>
 <p>The next part is the <strong>path</strong>.
 Assuming it's not empty, the path begins with a forward slash <code>/</code> and uniquely identifies the resource we want to query.
-In the Google URL the path is <code>/search</code>.</p>
+In the Google URL, the path is <code>/search</code>.</p>
 <p>Often, paths will be hierarchical.
-In this case the different components of the hierarchy are generally separated by slashes—for example, <code>/path/to/resource</code>.</p>
+In this case the different components of the hierarchy are generally separated by slashes, e.g. <code>/path/to/resource</code>.</p>
 <p>The path can be followed by a <strong>query</strong>.
 The query begins with a question mark and is followed by key-value pairs.
-In the Google URL this is <code>?q=nextjs</code>.
-Here the query provides information about your search.</p>
+In the Google URL, the query is given by <code>?q=nextjs</code>.
+Here, the query provides information about your search.</p>
 <p>If there are multiple key-value pairs, they're separated by ampersands <code>&amp;</code>.
 For example, a query might look like <code>?key1=value1&amp;key2=value2</code>.</p>
 <p>The query can be followed by a <strong>fragment</strong>.
 This is used for navigation by the client and is not sent to the server.
 A fragment begins with the <code>#</code> character, e.g. <code>?key1=value1&amp;key2=value2#fragment</code>.</p>
+<blockquote>
+<p>For example, if you go to a Wikipedia article and click a heading in the table of contents, you will be navigated to that heading and a fragment will be appended to the URL in your browser address bar.</p>
+</blockquote>
 <h3 id="get-and-post-requests"><a class="header" href="#get-and-post-requests">GET and POST requests</a></h3>
-<p>HTTP knows multiple <strong>request methods</strong>.
+<p>HTTP knows many <strong>request methods</strong>.
 We primarily care about two request methods for now—namely <strong>GET</strong> and <strong>POST</strong>.</p>
 <p>GET requests are generally used to retrieve data.</p>
 <p>Recall our route from above:</p>
-<pre><code class="language-javascript">app.get('/', (req, res) =&gt; {
-  res.send('Hello world!');
+<pre><code class="language-js">app.get('/', (req, res) =&gt; {
+  res.send('Hello, World!');
 });
 </code></pre>
-<p>This indicates that if a GET request is sent to the path '/', we would like to return 'Hello, world!' to the client.
+<p>This indicates that if a GET request is sent to the path <code>/</code>, we would like to return <code>'Hello, World!'</code> to the client.
 The <code>req</code> variable represents the <strong>request object</strong> and <code>res</code> represents the <strong>response object</strong>.
 If we want to send a HTTP response to the client we use the <code>res.send</code> method.</p>
-<p>POST requests are generally used to send information to the server that tell it to create a new resource or update an existing resource.
+<p>POST requests are generally used to send information to instruct the server to create a new resource or update an existing resource.
 For example, a login request will generally be a POST request since it tells the server that a user has logged in to the application.
 Similarly, if you submit a web form, there will usually be a POST request attached to that, since form submissions carry new information.</p>
 <p>With POST requests, we're more interested in telling the server that something happened than in the data the server returns to us.</p>
@@ -297,8 +300,8 @@ Therefore, POST requests can have a <strong>request body</strong> which allows u
 Note that we need to enable some <strong>middleware</strong> in our script.
 Middleware functions are functions that do some additional processing on requests or responses.</p>
 <p>Specifically, we will need to use the <code>express.text()</code> middleware function to parse incoming request payloads into a string.
-Add the following line of code to your script right after the initialization of the <code>app variable</code>:</p>
-<pre><code class="language-javascript">// code
+Add the following line of code to your script right after the initialization of the <code>app</code> variable:</p>
+<pre><code class="language-js">// code
 const app = express();
 const PORT = 3000;
 
@@ -307,21 +310,21 @@ app.use(express.text());
 // more code
 </code></pre>
 <p>Consider the following route which simply returns the request body back to the client:</p>
-<pre><code class="language-javascript">app.post('/echo', (req, res) =&gt; {
+<pre><code class="language-js">app.post('/echo', (req, res) =&gt; {
   res.send(req.body);
 });
 </code></pre>
 <p>We can send a POST request via <code>curl</code>.
 We need to specify that we want to send a POST request using the <code>-X</code> flag.
-In addition we specify the data that we want to send in the <em>body</em> of the POST request using the <code>-d</code> flag.
-Finally we specify a header called <code>Content-Type</code> and set it to <code>text/plain</code>.
+Additionally, we can specify the data that we want to send in the <em>body</em> of the POST request using the <code>-d</code> flag.
+Finally, we specify a header called <code>Content-Type</code> and set it to <code>text/plain</code>.
 This indicates that the data we want to send is plain text.</p>
 <p>The final command looks like this:</p>
 <pre><code class="language-sh">curl -X POST -H "Content-Type: text/plain" -d 'test' http://localhost:3000/echo
 </code></pre>
 <p>Generally speaking, GET requests transmit information in the URL, while POST requests transmit information in the request body.</p>
 <p>Note that we will rarely send plain text in the request.
-Instead we usually use the JSON format that we introduced in the JavaScript chapter.</p>
+Instead, we will usually use the JSON format that we've already introduced in the JavaScript chapter.</p>
 <p>In order to accept JSON requests, we need to replace the <code>express.text</code> middleware with the <code>express.json</code> middleware:</p>
 <pre><code class="language-js">app.use(express.json());
 </code></pre>
