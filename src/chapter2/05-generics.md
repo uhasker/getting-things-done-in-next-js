@@ -1,6 +1,6 @@
 ## Generics
 
-<div style="text-align: right"> <i> Generics are the invisible hat of the TypeScript sage, fitting the heads of both the giant and the dwarf. <br> - Ancient Chinese proverb </i> </div>
+<div style="text-align: right"> <i> Generics are the invisible hat of the TypeScript sage, fitting the heads of both the giant and the dwarf. <br> — Ancient Chinese proverb </i> </div>
 
 ### Why Generics?
 
@@ -23,8 +23,8 @@ function getFirstElement(arr: any): any {
 }
 ```
 
-However using `any` is - as we already mentioned - a bad idea since we lose all the type information even if we pass in an array of a known type.
-For example all these constants would be inferred to have type `any`:
+However using `any` is—as we already mentioned—a bad idea since we lose all the type information even if we pass in an array of a known type.
+For example, all these constants would be inferred to have type `any`:
 
 ```ts
 const num = getFirstElement([1, 2, 3]);
@@ -35,8 +35,8 @@ We also can't use the `unknown` type since it doesn't permit any operations:
 
 ```ts
 function getFirstElement(arr: unknown) {
-  return arr[0];
   // This will result in a type error
+  return arr[0];
 }
 ```
 
@@ -52,7 +52,7 @@ function getFirstElement(arr: undefined[]): undefined;
 > We will not discuss function overloads in more detail as it's out of scope for this book.
 
 But this obviously gets very tedious and error-prone for most cases.
-Instead TypeScript allows us to use **generics** to specify that some code does not depend on the concrete types and only cares about the relation between certain types.
+Instead, TypeScript allows us to use **generics** to specify that some code doesn't depend on the concrete types and only cares about the relation between certain types.
 
 ### Generic Functions
 
@@ -69,14 +69,14 @@ This basically says that the `identity` function takes an argument of type `Type
 Now we get proper type inference:
 
 ```ts
-let val = 'Hello, world!';
+let val = 'Hello, World!';
 let val2 = identity<string>(val); // val2 is of type string
 ```
 
-We dont actually have to manually specify the type `string` when calling the function and can instead rely the inference capabilities of TypeScript once again:
+We don't actually have to manually specify the type `string` when calling the function and can instead rely on the inference capabilities of TypeScript once again:
 
 ```ts
-let val = 'Hello, world!';
+let val = 'Hello, World!';
 let val2 = identity(val); // val2 is of type string
 ```
 
@@ -96,10 +96,10 @@ const str = getFirstElement(['a', 'b', 'c']);
 ```
 
 Unlike in the `getFirstElement` example that was typed using `any`, we now get meaningful type inference.
-For example `num` will have the type `number` (instead of `any`) and `str` will have the type `string`.
+For example, `num` will have the type `number` (instead of `any`) and `str` will have the type `string`.
 
 You can use any number of type parameters you want.
-For example here is how we could write a correctly annotated `map` function:
+Here is how we could write a correctly annotated `map` function:
 
 ```ts
 function map<In, Out>(array: In[], f: (value: In) => Out): Out[] {
@@ -124,7 +124,7 @@ Here `arr` will have the type `boolean[]`.
 
 ### Generic Object Types
 
-Just like with functions, we can use type parameters with objects:
+Just as with functions, we can use type parameters with objects:
 
 ```ts
 type Box<Type> = {
@@ -135,12 +135,12 @@ type Box<Type> = {
 Now we can use the `Box` type with any type:
 
 ```ts
-// box has the type Box<number>
+// Here, box has the type Box<number>
 const box = {
   content: 0,
 };
 
-// box2 has the type Box<string>
+// Here, box2 has the type Box<string>
 const box2 = {
   content: 'Hello, world!',
 };

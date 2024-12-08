@@ -1,6 +1,6 @@
 ## Configuring TypeScript
 
-<div style="text-align: right"> <i> "Like the ancient master who chooses his brush, the wise coder sets 'strict' with care, for clarity is the first step to wisdom." <br> - Ancient Chinese proverb </i> </div>
+<div style="text-align: right"> <i> Like the ancient master who chooses his brush, the wise coder sets 'strict' with care, for clarity is the first step to wisdom. <br> — Ancient Chinese proverb </i> </div>
 
 ### Creating a TypeScript Project
 
@@ -16,7 +16,7 @@ mkdir example
 cd example
 ```
 
-Next we need to create the `package.json` file to indicate that this directory should be a JavaScript project:
+Next, we need to create the `package.json` file to indicate that this directory should be a JavaScript project:
 
 ```sh
 pnpm init
@@ -39,7 +39,7 @@ This will create a `package.json` file containing the project settings:
 }
 ```
 
-Next let's create a `tsconfig.json` to indicate that this particular project will use TypeScript:
+Next, let's create a `tsconfig.json` to indicate that this particular project will use TypeScript:
 
 ```json
 {
@@ -54,7 +54,7 @@ We will talk about this option in some more detail later.
 
 > We could have also created the `tsconfig.json` file by running `tsc --init`, however this will add a lot of options that we really don't care about at the moment.
 
-Now let us create an `index.ts` file:
+Now, let's create an `index.ts` file:
 
 ```ts
 function getGreeting(name: string): string {
@@ -64,7 +64,7 @@ function getGreeting(name: string): string {
 console.log(getGreeting('World'));
 ```
 
-Finally we can compile the code:
+Finally, we can compile the code:
 
 ```sh
 tsc
@@ -130,7 +130,7 @@ export function getGreeting(name: string): string {
 }
 ```
 
-Now let's use `getGreeting` in `index.ts`:
+Now, let's use `getGreeting` in `index.ts`:
 
 ```ts
 import { getGreeting } from './greet';
@@ -159,7 +159,7 @@ We can now compile again:
 pnpm tsc
 ```
 
-Now the project structure looks like this:
+The project structure looks like this now:
 
 ```
 .
@@ -190,17 +190,17 @@ Sometimes you want to include or exclude certain files from being processed by t
 To accomplish this, you can specify the `include` or `exclude` parameters in the `tsconfig.json`.
 
 The `include` option takes an array of filenames or patterns to include in the program (relative to the directory containing the `tsconfig.json` file).
-For example we could include all files in `src` directory by setting `include` to `["src/**/*"]`.
+For example, we could include all files in `src` directory by setting `include` to `["src/**/*"]`.
 
 The `src/**/*` notation is a so called glob pattern.
-Here `*` matches zero or more characters (excluding directory separators) and `**/` matches any directory (with arbitrary nesting).
-Thefore `src/**/*` means "match any file in the directory `src` and all its subdirectories (no matter how deeply nested)".
+Here, `*` matches zero or more characters (excluding directory separators) and `**/` matches any directory (with arbitrary nesting).
+Thefore, `src/**/*` means "match any file in the directory `src` and all its subdirectories (no matter how deeply nested)".
 
-> Note that by default `include` is set to `["**/*"]` (i.e. match all files including arbitrarily nested subdirectories).
+> Note that by default `include` is set to `["**/*"]` (i.e. it's set to match all files including arbitrarily nested subdirectories).
 
 The `exclude` parameter specifies an array of filenames or patterns that should be skipped when resolving `include`.
-It is important to note that the `exclude` parameter does not necessarily exclude the file from your codebase - a file specified by `exclude` can still become part of your codebase if you import it somewhere.
-The `exclude` parameter only changes which files are found by the `include` option finds.
+It is important to note that the `exclude` parameter does not necessarily exclude the file from your codebase—a file specified by `exclude` can still become part of your codebase if you import it somewhere.
+The `exclude` parameter only changes which files are found by the `include` option.
 
 Consider the following example.
 Let's say that you have a bunch of `*.test.ts` files containing tests, like the following `greet.test.ts`:
@@ -215,7 +215,7 @@ function testGreeting() {
 }
 ```
 
-> This is not how we would really write a test, but that is irrelevant for now.
+> This is not how we would really write a test, but that's irrelevant for now.
 
 If we would run `pnpm tsc` right now, we would see the we have `greet.test.js` in the output which is probably not desirable, since the tests probably shouldn't be part of the final compilation output.
 
@@ -232,7 +232,7 @@ Therefore we could write the following `tsconfig.json`:
 }
 ```
 
-If we delete the `dist` directory and run `pnpm tsc` again, `greet.test.js` is no longer present.
+If we delete the `dist` directory and run `pnpm tsc` again, we will see that `greet.test.js` is no longer present.
 
 ### Compiler Options
 
@@ -241,7 +241,7 @@ Let's discuss some of them.
 
 #### The `strict` Option
 
-The `strict` option enables a wide range of - well - strict type checking.
+The `strict` option enables a wide range of—well—strict type checking.
 
 Here is some example code that contains a few type issues:
 
@@ -265,7 +265,7 @@ logAny(number);
 
 If we set `strict` to `false` (which it is by default), this code will (surprisingly) compile.
 
-However if we turn `strict` on, we get the errors that you would expect from what you learned in the previous sections of the TypeScript chapter:
+However, if we turn `strict` on, we get the errors that you would expect if you remember what you've learned in the previous sections of the TypeScript chapter:
 
 ```ts
 src/index.ts:9:17 - error TS7006: Parameter 'x' implicitly has an 'any' type.
@@ -287,9 +287,9 @@ You should _always_ turn `strict` on, unless you have a really good reason not t
 
 #### The `target` Option
 
-Remember how we talked about downleveling in the first section of this chapter?
-The `target` options changes which JS features are downleveled and which are left as is.
-For example if `target` is `es5` template strings will be downleveled, but if it is `es2015` (equivalent to `es6`) they won't be, because template strings were introduced in ES2015.
+Remember, how we talked about downleveling in the first section of this chapter?
+The `target` option changes which JS features are downleveled and which are left as is.
+For example, if `target` is `es5` template strings will be downleveled, but if it's `es2015` (equivalent to `es6`) they won't be, because template strings were introduced in ES2015.
 
 Take this code:
 
@@ -327,14 +327,14 @@ This target should be used with caution since it means different things between 
 
 Modern browsers support all `es6` features, so `es6` is often a good choice.
 You might choose to set a lower target though if your code is deployed to older environments.
-Alternatively you might choose a higher target if your code is guaranteed to run in newer environments.
+Alternatively, you might choose a higher target if your code is guaranteed to run in newer environments.
 
 #### The `lib` Option
 
 The `lib` option allows you specify libraries to be included in the compilation.
 Basically, you can use this to let TypeScript know which APIs will be available in the runtime environment.
 
-For example let's say we have this code which would only work in the browser since it attaches an event listener to the browser `document`:
+Let's say we have this code which would only work in the browser since it attaches an event listener to the browser `document`:
 
 ```ts
 document.addEventListener('DOMContentLoaded', () => {
@@ -342,7 +342,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 ```
 
-If we only have `lib` equal to `["es2015"]`, we will get a bunch of compilation errors:
+If we set `lib` to `["es2015"]`, we will get a bunch of compilation errors:
 
 ```
 src/index.ts:1:1 - error TS2584: Cannot find name 'document'. Do you need to change your target library? Try changing the 'lib' compiler option to include 'dom'.
@@ -359,14 +359,14 @@ src/index.ts:2:5 - error TS2584: Cannot find name 'console'. Do you need to chan
 Found 2 errors in the same file, starting at: src/index.ts:1
 ```
 
-But if we set `lib` to `["es2015", "dom"]` the compilation errors go away since TypeScript know introduces the DOM types into the compilation process.
+But if we set `lib` to `["es2015", "dom"]` the compilation errors go away since TypeScript now introduces the DOM types into the compilation process.
 
 #### The `noEmit` Option
 
 The `noEmit` option can be set to `true` to not produce JavaScript output.
 This makes room for another tool to convert the TypeScript files to something that can be run inside a JavaScript environment.
 
-This is often done when we only want to use TypeScript as a type checker (as is common in projects) or to provide suggestions in your coding editor.
+This is often done when we only want to use TypeScript as a type checker (as is common in many projects) or to provide suggestions in your coding editor.
 
 ### An Example `tsconfig.json`
 
@@ -395,7 +395,7 @@ Finally, the type checking process is strict (due to `noEmit` being `true`), all
 
 The `extends` option can be used to inherit from another configuration file.
 
-For example we might have a `base.json` configuration file like this:
+For example, we might have a `base.json` configuration file like this:
 
 ```json
 {
@@ -405,7 +405,7 @@ For example we might have a `base.json` configuration file like this:
 }
 ```
 
-Now the `tsconfig.json` could extend this file:
+Now, the `tsconfig.json` could extend this file:
 
 ```json
 {
@@ -419,4 +419,4 @@ Now the `tsconfig.json` could extend this file:
 
 The resulting configuration would be strict and not emit JavaScript files.
 
-This feature is particularly useful because it allows someone to write a TypeScript configuration file that specifies the settings that should be applied to TypeScript codebases in a company/project and then everyone can simply extend this configuration file.
+This feature is particularly useful because it allows someone to write a TypeScript configuration file that specifies the settings that should be applied to TypeScript codebases in a company or a project and then everyone can simply extend this configuration file.
