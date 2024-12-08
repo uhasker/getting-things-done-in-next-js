@@ -6,7 +6,7 @@
 
 **Servers** and **clients** are nothing more than regular programs (like the ones you saw in the first chapter).
 For example, a server might be a JavaScript program that waits for HTTP requests and sends back responses.
-A client might be a browser on your laptop or your phone - it might even be a regular script.
+A client might be a browser on your laptop or your phone—it might even be a regular script.
 
 > Often, the term "server" is also used to refer to the actual machine the software is running on.
 
@@ -21,9 +21,9 @@ If your code runs on the server, you will have access to the filesystem, but you
 This makes sense since the browser is running on your client and the server (mostly) doesn't have access to it.
 
 This also means that we will often need to transmit data from the client to the server (and the other way around).
-When writing a web application, the most common way to do so is by using the HTTP procotol.
+When writing a web application, the most common way to do so is by using the HTTP protocol.
 
-## Requests and Responses
+### Requests and Responses
 
 The **HTTP protocol** is a **request/response protocol**, i.e. HTTP clients send requests to an HTTP server and receive responses in return.
 
@@ -41,7 +41,7 @@ Afterwards, the server creates a response and sends it back to the client.
 
 And, finally, the client looks at the response and determines how to update the UI (user interface).
 
-## HTTPS
+### HTTPS
 
 We should mention that nowadays developers never use plain HTTP in production.
 Instead, they use the **HTTPS protocol**, which is encrypted HTTP.
@@ -75,7 +75,7 @@ In that file we will create an Express application and then make that applicatio
 
 This is how you can create an Express application and make it listen on port `3000`:
 
-```javascript
+```js
 const express = require('express');
 const app = express();
 const PORT = 3000;
@@ -88,7 +88,7 @@ app.listen(PORT, () => {
 This application is not very useful, so let's add a **route** to it.
 Add the following code above the call to `listen`:
 
-```javascript
+```js
 app.get('/', (req, res) => {
   res.send('Hello, world!');
 });
@@ -128,7 +128,7 @@ Note that you will need to press <kbd>Ctrl</kbd> + <kbd>C</kbd> in your command 
 The string `http://localhost:3000/` is a so-called URL.
 You have already seen URLs in the previous section.
 
-Navigate to Google and search for "Next.js" - you will notice that the URL in your browser looks like this:
+Navigate to Google and search for "Next.js"—you will notice that the URL in your browser looks like this:
 
 ```
 https://www.google.com/search?q=nextjs
@@ -148,8 +148,8 @@ scheme://host:port/path?key1=value1&key2=value2#fragment
 
 > Note the word _typical_ here.
 > HTTP URLs (and especially more general URLs) can become _much more_ complicated, but we will not cover all the little details in this book.
-> In fact the complexity of URLs is often a source of subtle bugs and browser crashes.
-> For example - at some point Android Chrome would [crash](https://news.ycombinator.com/item?id=28639708) when trying to open `http://../foo`.
+> In fact, the complexity of URLs is often a source of subtle bugs and browser crashes.
+> For example—at some point Android Chrome would [crash](https://news.ycombinator.com/item?id=28639708) when trying to open `http://../foo`.
 
 Let's go over the individual component of a typical URL one by one.
 
@@ -158,24 +158,24 @@ We will almost exclusively use HTTP or HTTPS in this book.
 Therefore, the scheme will almost always be either `http` or `https`.
 In the above Google URL the scheme is clearly `https`.
 
-You already learned about the **host** and the **port**—the host identifies the device you wish to connect to and the port is the communication endpoint on that device.
+You've already learned about the **host** and the **port**—the host identifies the device you wish to connect to and the port is the communication endpoint on that device.
 Note that the host could be a domain (like `www.google.com`) or an IP address (like `142.251.36.238`).
-Usually we will work with domains since they're stable and rarely change (unlike IP addresses).
+Usually we will work with domains since they're stable and rarely change (unlike some IP addresses).
 
 > At the time of this writing `142.251.36.238` is one of Google's IP addresses.
 > This may of course change by the time you are reading this book.
 
 The next part is the **path**.
 Assuming it's not empty, the path begins with a forward slash `/` and uniquely identifies the resource we want to query.
-In the Google URL the path is `/search`.
+In the Google URL, the path is `/search`.
 
 Often, paths will be hierarchical.
-In this case the different components of the hierarchy are generally separated by slashes—for example, `/path/to/resource`.
+In this case the different components of the hierarchy are generally separated by slashes, e.g. `/path/to/resource`.
 
 The path can be followed by a **query**.
 The query begins with a question mark and is followed by key-value pairs.
-In the Google URL this is `?q=nextjs`.
-Here the query provides information about your search.
+In the Google URL, the query is given by `?q=nextjs`.
+Here, the query provides information about your search.
 
 If there are multiple key-value pairs, they're separated by ampersands `&`.
 For example, a query might look like `?key1=value1&key2=value2`.
@@ -184,26 +184,28 @@ The query can be followed by a **fragment**.
 This is used for navigation by the client and is not sent to the server.
 A fragment begins with the `#` character, e.g. `?key1=value1&key2=value2#fragment`.
 
+> For example, if you go to a Wikipedia article and click a heading in the table of contents, you will be navigated to that heading and a fragment will be appended to the URL in your browser address bar.
+
 ### GET and POST requests
 
-HTTP knows multiple **request methods**.
+HTTP knows many **request methods**.
 We primarily care about two request methods for now—namely **GET** and **POST**.
 
 GET requests are generally used to retrieve data.
 
 Recall our route from above:
 
-```javascript
+```js
 app.get('/', (req, res) => {
-  res.send('Hello world!');
+  res.send('Hello, World!');
 });
 ```
 
-This indicates that if a GET request is sent to the path '/', we would like to return 'Hello, world!' to the client.
+This indicates that if a GET request is sent to the path `/`, we would like to return `'Hello, World!'` to the client.
 The `req` variable represents the **request object** and `res` represents the **response object**.
 If we want to send a HTTP response to the client we use the `res.send` method.
 
-POST requests are generally used to send information to the server that tell it to create a new resource or update an existing resource.
+POST requests are generally used to send information to instruct the server to create a new resource or update an existing resource.
 For example, a login request will generally be a POST request since it tells the server that a user has logged in to the application.
 Similarly, if you submit a web form, there will usually be a POST request attached to that, since form submissions carry new information.
 
@@ -217,9 +219,9 @@ Note that we need to enable some **middleware** in our script.
 Middleware functions are functions that do some additional processing on requests or responses.
 
 Specifically, we will need to use the `express.text()` middleware function to parse incoming request payloads into a string.
-Add the following line of code to your script right after the initialization of the `app variable`:
+Add the following line of code to your script right after the initialization of the `app` variable:
 
-```javascript
+```js
 // code
 const app = express();
 const PORT = 3000;
@@ -231,7 +233,7 @@ app.use(express.text());
 
 Consider the following route which simply returns the request body back to the client:
 
-```javascript
+```js
 app.post('/echo', (req, res) => {
   res.send(req.body);
 });
@@ -239,8 +241,8 @@ app.post('/echo', (req, res) => {
 
 We can send a POST request via `curl`.
 We need to specify that we want to send a POST request using the `-X` flag.
-In addition we specify the data that we want to send in the _body_ of the POST request using the `-d` flag.
-Finally we specify a header called `Content-Type` and set it to `text/plain`.
+Additionally, we can specify the data that we want to send in the _body_ of the POST request using the `-d` flag.
+Finally, we specify a header called `Content-Type` and set it to `text/plain`.
 This indicates that the data we want to send is plain text.
 
 The final command looks like this:
@@ -252,7 +254,7 @@ curl -X POST -H "Content-Type: text/plain" -d 'test' http://localhost:3000/echo
 Generally speaking, GET requests transmit information in the URL, while POST requests transmit information in the request body.
 
 Note that we will rarely send plain text in the request.
-Instead we usually use the JSON format that we introduced in the JavaScript chapter.
+Instead, we will usually use the JSON format that we've already introduced in the JavaScript chapter.
 
 In order to accept JSON requests, we need to replace the `express.text` middleware with the `express.json` middleware:
 
