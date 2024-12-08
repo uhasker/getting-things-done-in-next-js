@@ -5,7 +5,7 @@
 ### Creating a Package
 
 The heart of any JavaScript package is the `package.json` file.
-This should contain a JSON with important information about the package like its name, version, and many other things.
+This should contain JSON with important information about the package like its name, version, and many other things.
 
 Here is the minimal `package.json`:
 
@@ -17,10 +17,10 @@ Here is the minimal `package.json`:
 ```
 
 The `version` field follows a convention called SemVer (short for Semantic Versioning).
-This defines that any version of a package (or library) should have the format `MAJOR.MINOR.PATCH` where `MAJOR`, `MINOR` and `PATCH` are non-negative integers.
+This defines that any version of a package (or library) should have the format `MAJOR.MINOR.PATCH` where `MAJOR`, `MINOR`, and `PATCH` are non-negative integers.
 Whenever you update a package, you should make a change to the package version.
 
-This might be a change to either `MAJOR`, `MINOR` and/or `PATCH`, depending on the kind of change you make.
+This might be a change to either `MAJOR`, `MINOR` or `PATCH`, depending on the kind of change you make.
 Most importantly, you should ask yourself if the change is _backwards compatible_ with the old version of the package.
 
 A change is backwards compatible if a user of the old package can switch to your new package without any issues.
@@ -28,7 +28,7 @@ For example, if you simply add a new function to your package, then that change 
 This is also true if you change some code in a function without changing the _functionality_ of the function.
 
 However, if you change the way an existing package function works, the change is no longer backwards compatible.
-If a user of your package now tries to switch from the old version to the new version all the calls of that function will no longer work.
+If a user of your package now tries to switch from the old version to the new version, all the calls to that function will no longer work.
 Programmers call this "breaking the package".
 
 If you make such a backwards incompatible change, you should increment the `MAJOR` number and reset the other numbers.
@@ -70,14 +70,14 @@ You can now use the `greet` function of your package in other packages that impo
 
 ### Installing Dependencies
 
-To install dependencies you will need a package manager like `npm` or `pnpm`.
+To install dependencies, you will need a package manager like `npm` or `pnpm`.
 The main difference between these is that `pnpm` stores packages globally meaning that if multiple projects use the same package, `pnpm` will only store it once and then link to it as needed.
 We use `pnpm` throughout this book.
 
 There is also a difference between dependencies and "dev" dependencies.
 Regular dependencies are packages that your project needs to run.
 "Dev" dependencies are packages that are only needed during development or testing.
-These will not be included in the final production build of your package (the final production build is the code that will actually be deployed to your users devices).
+These will not be included in the final production build of your package (the final production build is the code that will actually be deployed to your users' devices).
 
 You can install a dependency by running `pnpm add $PACKAGE_NAME` in the project directory.
 You can install a "dev" dependency by running `pnpm add --save-dev $PACKAGE_NAME` instead.
@@ -88,7 +88,7 @@ Let's install the `lodash` dependency which is a widely used utility library:
 pnpm add lodash
 ```
 
-The dependency now will appear in your `package.json`:
+The dependency will now appear in your `package.json`:
 
 ```json
 {
@@ -129,7 +129,7 @@ The actual package will be located in the `node_modules` directory (more specifi
 
 > Don't be afraid of the `node_modules` directory.
 > There is no black magic there—`node_modules` simply contains the code of the dependencies you've installed.
-> In fact, we encourage you to browser through the `node_modules/lodash` directory and realize that it's just regular JavaScript code.
+> In fact, we encourage you to browse through the `node_modules/lodash` directory and realize that it's just regular JavaScript code.
 
 Let's now use `lodash` in our `index.js`:
 

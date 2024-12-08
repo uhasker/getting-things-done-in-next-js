@@ -11,7 +11,7 @@ However, good code should not just work, but also be maintainable _in the future
 This **maintainability** has two aspects:
 
 1. Code should be maintainable by future _you_ in (let's say) six months.
-2. Code should be maintanable by other people that aren't you.
+2. Code should be maintainable by other people that aren't you.
 
 > We wish to reiterate that there are indeed people that aren't you in the world, some of which might even end up on your team.
 > There are programmers that tend to forget that.
@@ -72,7 +72,7 @@ Of course, naming things is usually not as easy as in this example.
 There are many legitimate cases where giving something a good name is not trivial.
 Nevertheless, you should at least always _try hard_ to have sensible names.
 The poor soul that will have to fix your bugs six months from now will really thank you for that.
-And you should always remember, that this poor soul might be _you_.
+And you should always remember that this poor soul might be _you_.
 
 > Note how we wrote _try hard_ and not just _try_.
 > The worst code is code that has lots of bad naming.
@@ -146,7 +146,7 @@ We can massively improve this code by splitting the function into small helper f
 If you look at this function closely, you can see that it really does two different things.
 It prepares the relevant information to generate the notifications and then generates the actual notifications.
 
-Therefore, we can split this function into two smaller functions, whe the first function prepares the information and the second function generates the notifications.
+Therefore, we can split this function into two smaller functions, where the first function prepares the information and the second function generates the notifications.
 
 Additionally, the first function computes two different pieces of information.
 First, it finds all the urgent tasks and second, it finds the number of tasks that haven't been yet completed.

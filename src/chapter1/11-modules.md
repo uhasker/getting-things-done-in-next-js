@@ -63,7 +63,7 @@ Let's create a file named `index.html` in which we use `main.js` as a JavaScript
 </html>
 ```
 
-If you just try to open `index.html` in the browser you will a CORS Error:
+If you just try to open `index.html` in the browser, you will a CORS Error:
 
 ```
 Access to script at 'file:///.../main.js' from origin 'null' has been blocked by
@@ -280,7 +280,7 @@ otherGreetModule.greet('World');
 You already know the global scope, the function scope and the block scope.
 Now that we've introduced modules, there is one more scope you should know about—the **module scope**.
 
-As the name already says this is the scope of a module and each module has it's own scope.
+As the name already says this is the scope of a module and each module has its own scope.
 This means that variables and functions declared in a module are _not visible to code outside the module_ unless they are explicitly exported.
 Even if a variable or a function is explicitly exported it can't be used in outside code unless it has been explicitly imported first.
 

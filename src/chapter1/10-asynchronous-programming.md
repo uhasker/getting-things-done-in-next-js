@@ -10,13 +10,13 @@ For example, we might need to fetch a resource from a server or request camera a
 In the first case, we need to wait for all the network packets to arrive, which might take a long time depending on the quality of your network (especially if you happen to live in Germany).
 In the second case, we need to wait for the user to grant us access to the resource we require.
 
-We want do be able to execute such long-running operations without "blocking".
+We want to be able to execute such long-running operations without "blocking".
 To accomplish this, we need to break up with our current "synchronous" programming model where statements are executed one after another.
 
 Consider the following "synchronous" example:
 
 ```js
-function getUser(user) {
+function getUser(userId) {
   return `User with ID ${userId}`;
 }
 
@@ -32,7 +32,7 @@ But what if `getUser` represents a long-running operation, like retrieving a use
 
 ```js
 function getUser(userId) {
-  return retrieveUserFromServer(taskId);
+  return retrieveUserFromServer(userId);
 }
 
 const user = getUser(0);
@@ -45,9 +45,9 @@ This is potentially a huge problem in the browser environment, given that synchr
 Therefore, as long as `getUser` is executing, no other code will be able to run, including code that handles user events.
 In practical terms, this means that the user will not be able to select text, click buttons or do anything else with the website, i.e. the website will "hang".
 
-Of course, we want to avoid such a nuisance since this will result in the much dreaded _negative user experience_.
+Of course, we want to avoid such a nuisance since this will result in the much-dreaded _negative user experience_.
 
-> If you've ever clicked a button on a website and everything just freezes for three seconds, this is probably the result of synchronous function being used to handle a long-running operation.
+> If you've ever clicked a button on a website and everything just freezes for three seconds, this is probably the result of a synchronous function being used to handle a long-running operation.
 
 We therefore need a mechanism to start a (potentially) long-running operation and still be able to do other things (like respond to user events) instead of blocking until the operation is finished.
 Once the operation is completed, our program also needs to be notified with the result of the long-running operation.
@@ -67,7 +67,7 @@ The central object in asynchronous JavaScript is the **promise**.
 A promise represents the eventual completion (or failure) of an asynchronous operation.
 Now, that you're sufficiently confused by this opaque definition, we can move on to an actually useful explanation.
 
-Basically, a promise is a like an IOU document—it "promises" you that it's currently working on some long-running operation and that it will eventually get back to you with the result of that long-running operation.
+Basically, a promise is like an IOU document—it "promises" you that it's currently working on some long-running operation and that it will eventually get back to you with the result of that long-running operation.
 
 To give another metaphor, consider the process of ordering a hamburger at SyncMcBurgers.
 For simplicity (and improved metaphormaking), we will pretend that SyncMcBurgers only has a single counter.
@@ -102,8 +102,8 @@ Armed with these examples, we can now actually understand the definition of a pr
 Again, a promise _represents the eventual completion (or failure) of an asynchronous operation_.
 
 In this example, the asynchronous operation is the preparation of the hamburger.
-This asynchronous operation will eventually complete (the hamburger will be prepared) or fail (there will a problem during the hamburger preparation).
-The order receipt that you get represents the eventual (i.e. probably not immediate) completion of the burger prepartion.
+This asynchronous operation will eventually complete (the hamburger will be prepared) or fail (there will be a problem during the hamburger preparation).
+The order receipt that you get represents the eventual (i.e. probably not immediate) completion of the burger preparation.
 
 Now, we can also introduce the three states a promise can be in:
 
@@ -117,7 +117,7 @@ We say that a promise is **rejected** when the asynchronous operation it represe
 This would be the case when (for example) the kitchen spontaneously combusts due to the ongoing AsyncMcBurger dark magic experiments in the backroom lab.
 
 Promises also allow us to associate **handlers** (also called handler functions) with the eventual success or failure.
-For example, we could say that when the hamburger is prepared, we want to eat it (or throw it in the trash, which might actually be the preferrable alternative in some cases).
+For example, we could say that when the hamburger is prepared, we want to eat it (or throw it in the trash, which might actually be the preferable alternative in some cases).
 
 ### Working with Promises in JavaScript
 
@@ -159,7 +159,7 @@ Response {
 }
 ```
 
-Additionally, the `then` method _also_ returns immediately, after it has attached the handler function to the `fetchPromise`.
+Additionally, the `then` method _also_ returns immediately after it has attached the handler function to the `fetchPromise`.
 However, the execution of the _handler function_ happens only after the promise returned by fetch is fulfilled.
 
 On one hand, this is what we want—while we are waiting for the network request to complete, we can do other stuff (like logging `fetchPromise`).
@@ -170,7 +170,7 @@ When we write synchronous code, we just execute statements one after another.
 If line A comes before line B in synchronous code, then line A will also be executed before line B in synchronous code.
 
 With asynchronous code this is no longer the case—here we "register" a function to be executed later, do something else, and then at some point the registered function is executed.
-This means that even if line A comes before line B in asynchronous code, it's quite possible that line A will be _executed before_ line B.
+This means that even if line A comes before line B in asynchronous code, it's quite possible that line A will be _executed after_ line B.
 Therefore, you have to be very careful when reading and writing asynchronous code.
 
 Finally, we note that our code can be rewritten in a simpler way:
@@ -312,7 +312,7 @@ fetch(url)
 
 Turn off your network and try running the `fetch` again.
 You will now see an appropriately logged error.
-Instead of just crashing, you program can now do something else (like showing an error modal to the user and informing them that something went wrong).
+Instead of just crashing, your program can now do something else (like showing an error modal to the user and informing them that something went wrong).
 
 ### The `async` and `await` Keywords
 
@@ -330,7 +330,7 @@ Just like `then()`, this will _not_ block the main program.
 Instead, the function containing the `await` will be "paused" until the awaited promise is fulfilled or rejected.
 After that, the function will be "resumed" again.
 
-Functions that contain `await` statements, have to be marked as `async`.
+Functions that contain `await` statements have to be marked as `async`.
 
 Here is how we can rewrite our task fetching code to use `async` and `await`:
 
@@ -357,7 +357,7 @@ fetchTask(url).then((json) => console.log(json));
 ## The `void` Operator
 
 The `void` operator evaluates an expression and returns `undefined`.
-This can used with promises if you simply want to start an asynchronous operation, but you don't care about the result:
+This can be used with promises if you simply want to start an asynchronous operation, but you don't care about the result:
 
 ```js
 void fetchTask(url);
