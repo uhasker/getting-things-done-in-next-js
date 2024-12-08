@@ -1,5 +1,7 @@
 ## Union Types
 
+<div style="text-align: right"> <i> To ignore a union is to marry a string and wake up with a number. <br> — Ancient Chinese proverb </i> </div>
+
 ### Literal Types
 
 A **literal type** is a type whose only value is a literal.
@@ -16,7 +18,7 @@ let todo: TodoType = 'Todo';
 ```
 
 Note that we can't assign any other value to `todo` including other strings.
-For example this is not possible:
+For example, this isn't possible:
 
 ```ts
 let todo: TodoType = 'Done';
@@ -37,7 +39,7 @@ let todo = 'Todo';
 // Without the explicit type annotation, todo is a string
 ```
 
-However if we declare a constant, then by default TypeScript will infer a literal type.
+However, if we declare a constant, then by default TypeScript will infer a literal type.
 This also makes sense since we can't change the constant later:
 
 ```ts
@@ -46,11 +48,11 @@ const todo = 'Todo';
 // todo now has the literal type 'Todo'
 ```
 
-While literal types by themselves are not very helpful, they are extremely useful in the context of union types.
+While literal types by themselves are not very helpful, they become extremely useful in the context of union types.
 
 ### Unions of Literal Types
 
-A **union type** is a type that represents a value which may be one of multiple values.
+A **union type** is a type that represents a value which may be one of multiple types.
 Consider a type `TaskState` which represents one of the following states:
 
 - Todo
@@ -65,7 +67,7 @@ type TaskState = 'Todo' | 'InProgress' | 'Done';
 
 The `TaskState` type is a union type and each of the literal types `'Todo'`, `'InProgress'` and `'Done'` is a member of the union.
 A variable of type `TaskState` can only be of one of these literal types, i.e. it can only have one of the respective values.
-For example these are all valid:
+For example these assignments are all valid:
 
 ```ts
 const state: TaskState = 'Todo';
@@ -73,7 +75,7 @@ const state2: TaskState = 'InProgress';
 const state3: TaskState = 'Done';
 ```
 
-But this is not:
+On the other hand, this assignment isn't valid:
 
 ```ts
 const invalidState: TaskState = 'Dropped';
@@ -83,9 +85,11 @@ const invalidState: TaskState = 'Dropped';
 
 We can also declare unions of arbitrary types.
 The general syntax for declaring a union type is `Type1 | Type2 | Type3 | ...` and a value of this union type can have the type `Type1` or `Type2` or `Type3` etc.
-The various types `Type1`, `Type2`, `Type3` etc are called members of the union.
 
-One particularly common union type is `T | undefined`, for example:
+The various types `Type1`, `Type2`, `Type3` etc are called **members** of the union.
+
+One particularly common union type is `T | undefined`.
+Consider this example:
 
 ```ts
 function getTaskId(taskName: string): string | undefined {
@@ -119,15 +123,15 @@ index.ts:4:21 - error TS18048: 'taskName' is possibly 'undefined'.
 Found 1 error in index.ts:4
 ```
 
-TypeScript will only allow to do something with the value of a union type if that something is valid for every member of the union.
+TypeScript will only allow to do an operation with the value of a union type if that operation is valid _for every member of the union_.
 Since `taskName` can be either a `string` or `undefined`, we can't access `.length` on it, because `.length` is not a valid property of `undefined`!
 
 Instead we need to perform **type narrowing** where we _narrow_ the type of a variable with code.
 
-Basically, TypeScript can look at our code and try to understand that in certain code parts a value of a union type can only have the type of a particular member of the union.
+Basically, TypeScript can look at our code and understand that in certain code parts a value of a union type can only have the type of a particular member of the union.
 
 The simplest way of narrowing a type is **equality narrowing**.
-Here we can use the `===` or `!==` operators to narrow a type.
+Here we use the `===` or `!==` operators to narrow a type.
 
 Consider this example:
 
@@ -139,7 +143,7 @@ function logTaskName(taskName: string | undefined) {
       taskNameLength: taskName.length,
     });
   } else {
-    console.log('the task is not defined');
+    console.log('The task is not defined');
   }
 }
 ```
@@ -148,7 +152,7 @@ We narrow the type of `taskName` in the `taskName !== undefined` branch.
 TypeScript will inspect our code and realize that since `taskName` had the `string | undefined` type and `taskName !== undefined` in the truthy branch of the if statement, `taskName` must be of type `string` inside that branch (there is simply no other way).
 Similarly, in the falsy branch of the if statement (i.e. the `else` branch), TypeScript will know that `taskName` must be `undefined`.
 
-This example also showcases a very important concept: The same variable can have a different type depending on the part of the code we are.
+This example also showcases a very important concept: The same variable can have a different type depending on the part of the code we are in.
 This is not the case in many other programming languages, where a variable will always have the same type once it has been initialized.
 
 Another (similar) way of narrowing a type is **truthiness narrowing**.
@@ -164,36 +168,39 @@ function logTaskName(taskName: string | undefined | null) {
       taskNameLength: taskName.length,
     });
   } else {
-    console.log('the task is not defined');
+    console.log('The task is not defined');
   }
 }
 ```
 
 Since `undefined` and `null` are both falsy, the `taskName` in the truthy branch of the `if` statement can only have the type `string` and we can use the `.length` property.
 
-However truthiness narrowing can lead to bugs and indeed the function `logTaskName` has a subtle error.
-Can you spot it?
+However, truthiness narrowing can lead to subtle bugs due to the way truthy and falsy values work (we covered this in the JavaScript chapter).
+Indeed, the function `logTaskName` has a hard-to-spot error.
+Can you see it?
 
-That's right - it doesn't correctly handle the case of the empty string - after all, the empty string `''` is also falsy, therefore `logTaskName("")` would print that the task not defined, which is probably not what we were going for.
+That's right—it doesn't correctly handle the case of the empty string.
+After all, the empty string `''` is also falsy, therefore `logTaskName("")` would print that the task is not defined, which is probably not what we were going for.
+
 We could fix the function like this:
 
 ```ts
 function logTaskName(taskName: string | undefined | null) {
   if (taskName === '') {
-    console.log('the task is empty');
+    console.log('The task is empty');
   } else if (taskName) {
     console.log({
       taskName,
       taskNameLength: taskName.length,
     });
   } else {
-    console.log('the task is not defined');
+    console.log('The task is not defined');
   }
 }
 ```
 
 You should generally be careful when relying on truthiness or falsiness.
-The way these concepts work in JavaScript can be a bit confusing and it's easy to miss an edge case.
+The way these concepts work in JavaScript can be a bit confusing and it's easy to miss edge cases.
 
 Some people prefer to avoid these concepts altogether and instead provide explicit checks, for example:
 
@@ -205,21 +212,21 @@ function logTaskName(taskName: string | undefined | null) {
       taskNameLength: taskName.length,
     });
   } else {
-    console.log('the task is not defined');
+    console.log('The task is not defined');
   }
 }
 ```
 
-The last way of narrowing a type that we will discuss here is `typeof` narrowing.
+The last way of narrowing a type is `typeof` narrowing.
 TypeScript knows how the `typeof` operator works and you can use it to narrow a type as you would expect:
 
 ```ts
 function processInput(value: string | number): number {
   if (typeof value === 'string') {
-    // value must be a string here
+    // Here, value must be a string
     return value.length;
   } else {
-    // value must be a number here
+    // Here, value must be a number
     return value;
   }
 }
@@ -234,7 +241,7 @@ let input: string | undefined = 'Some string';
 let trimmedInput: string = input!.trim();
 ```
 
-Just as with type assertions, you should use this _extremely sparingly_ and usually there is a better way.
+Just as with type assertions, you should use this _sparingly_ and usually there is a better way.
 
 ### Type Predicates
 
@@ -247,7 +254,7 @@ const filteredArray = array.filter((val) => val !== undefined);
 ```
 
 Here `array` is a `(string | undefined)[]` and `filteredArray` removes the `undefined` elements.
-However the inferred type of `filteredArray` would still be `(string | undefined)[]` because TypeScript can't easily inspect the contents of the filter function to realize that we remove the `undefined` elements.
+However, the inferred type of `filteredArray` would still be `(string | undefined)[]` because TypeScript can't easily inspect the contents of the filter function to realize that we remove the `undefined` elements.
 
 We could theoretically use a type assertion here:
 
@@ -256,7 +263,7 @@ const array = ['Hello', undefined, 'World', undefined];
 const filteredArray = array.filter((val) => val !== undefined) as string[];
 ```
 
-However instead of yelling at the TypeScript compiler that we know better, we can choose a better way and write a user-defined type guard:
+However, instead of yelling at the TypeScript compiler that we know better, it's more productive to write a user-defined type guard:
 
 ```ts
 function isString(val: string | undefined): val is string {
@@ -274,14 +281,13 @@ const array = ['Hello', undefined, 'World', undefined];
 const filteredArray = array.filter(isString);
 ```
 
-Now the inferred type of `filteredArray` will be `string[]` - and all that without using a single type assertion.
-Hooray!
+Now the inferred type of `filteredArray` will be `string[]`—and all that without using a single type assertion.
 
 ### Discriminated Unions
 
 A particularly important union type is the **discriminated union**.
 This is a union where a property is used to discriminate between union members.
-Consider the following classical example:
+Consider the following example:
 
 ```ts
 type Square = {
@@ -303,10 +309,10 @@ We can now narrow values of the discriminated union based on the **discriminant 
 ```ts
 function getArea(shape: Shape) {
   if (shape.kind === 'square') {
-    // Here shape must be of type Square
+    // Here, shape must be of type Square
     return shape.size * shape.size;
   } else {
-    // Here shape must be of type Rectangle
+    // Here, shape must be of type Rectangle
     return shape.width * shape.height;
   }
 }
