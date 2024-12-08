@@ -1,6 +1,6 @@
 ## Annotating Functions
 
-<div style="text-align: right"> <i> The function without types is like a river without banks: boundless, yet directionless. <br> - Ancient Chinese proverb </i> </div>
+<div style="text-align: right"> <i> The function without types is like a river without banks: boundless, yet directionless. <br> — Ancient Chinese proverb </i> </div>
 
 ### Annotating Parameters
 
@@ -14,14 +14,14 @@ function greet(name: string) {
 }
 ```
 
-Now arguments to the function are checked:
+Now arguments to the function will be checked against our annotation:
 
 ```ts
 greet(false);
 // This will result in a type error
 ```
 
-You can annotate functions that expect arrays and/or objects by simply using the syntax you learned in the previous section:
+You can annotate functions that expect arrays or objects by simply using the syntax you learned in the previous section:
 
 ```ts
 function showTask(task: { id: number; summary: string; description: string }) {
@@ -32,7 +32,7 @@ function showTask(task: { id: number; summary: string; description: string }) {
 ```
 
 This is not particularly readable.
-Luckily, this is where type aliases come in really handy:
+Here, type aliases come in handy:
 
 ```ts
 type Task = {
@@ -49,7 +49,7 @@ function showTask(task: Task) {
 ```
 
 Note that TypeScript will not just check that the passed arguments have the correct types, but also check that the correct number of arguments was passed.
-This has an interesting side effect - introducing the TypeScript compiler in a JavaScript codebase can reveal bugs without any further work:
+This has an interesting side effect—introducing the TypeScript compiler in a JavaScript codebase can reveal bugs _without any further work_:
 
 ```js
 function showTask(task) {
@@ -70,7 +70,7 @@ index.ts:8:13 - error TS2554: Expected 1 arguments, but got 3.
 8 showTask(1, 'Read the Next.js book', 'Read and understand the Next.js book.');
 ```
 
-TypeScript is quite useful indeed!
+Quite nifty indeed!
 
 ### Return Type Annotations
 
@@ -82,7 +82,7 @@ function getGreeting(name: string): string {
 }
 ```
 
-Note that you usually don't need a return type annotation because TypeScript can do type inference for them:
+Note that you usually don't need a return type annotation because TypeScript can do type inference for return types:
 
 ```ts
 function getGreeting(name: string) {
@@ -111,7 +111,7 @@ getGreeting('John Doe', 'Welcome');
 
 ### Function Type Expressions
 
-Sometimes you need to create a type that specifies the function itself, instead of just its parameters or its return type.
+Sometimes, you need to create a type that specifies a function itself, instead of just its parameters or its return type.
 For example, you might want to say that `f` is a function that takes two strings and returns a string.
 
 You can achieve this with a **function type expression**:
@@ -148,4 +148,4 @@ const myName = 'John Doe';
 console.log(getGreeting(myName, (name) => `Hello ${name}`));
 ```
 
-Note how we no longer need to explicitly specify the type of `name` in the anonymous function - TypeScript has automatically inferred it to be of type `string`.
+Note how we no longer need to explicitly specify the type of `name` in the anonymous function—TypeScript has automatically inferred it to be of type `string`.
