@@ -25,10 +25,10 @@ For this book, we will use **Supabase**, a service that will manage our relation
 Go to [Supabase](https://supabase.com).
 Create a new project, give it a name and select a database password (which you should write down somewhere).
 
-Once you create the new project, go to "Project Settings > Database" and copy and paste the URI connection string.
+Once you've created the new project, go to "Project Settings > Database" and copy and paste the URI connection string.
 Replace `[YOUR-PASSWORD]` with the password you gave the database in the previous step.
 
-Save the connection string somewhere, you will need it to - well - connect to the database.
+Save the connection string somewhere, you will need it to—well—connect to the database.
 
 Next, you should navigate to the Supabase SQL editor of your project to be able to execute queries.
 
@@ -46,7 +46,7 @@ We will also add two more columns for educational purposes.
 The `status` column will hold the status of the task.
 Additionally, the `duration` column will store the estimated duration of the task in minutes.
 
-Finally, it is good practice to always create a `created_at` column in every table, where we will stored the time at which the row was created.
+Finally, it is good practice to always have a `created_at` column in every table, where we will store the time at which the row was created.
 
 Let's create the `task` table.
 We can use the `create table` SQL statement to accomplish this.
@@ -65,11 +65,11 @@ create table task (
 ```
 
 Note that each column has a name, a data type and optional constraints.
-Let's talk about data types and optional constraints in more detail in the next section.
+We will talk about data types and optional constraints in more detail in the next subsection.
 
 ### Inserting and Selecting Data
 
-Now that we have created the table, we can use SQL statements to create, read, update or delete data.
+Now that we've created the table, we can use SQL statements to create, read, update or delete data.
 
 For example, we can insert some data using the `insert` statement:
 
@@ -99,7 +99,7 @@ Let's delete the data we have inserted so far to have a clean setup for the next
 delete from task;
 ```
 
-We will discuss these statement in more detail in later sections.
+We will discuss these statements in more detail in later sections.
 
-> Note that when executing an SQL statement in Supabase, you don't necessarily need to provide the semilicon.
-> However in other SQL clients you will need to semicolon and so we will always write it for consistency.
+> Note that when executing an SQL statement in Supabase, you don't necessarily need to provide the semicolon.
+> However, in other SQL clients you will need the semicolon and so we will always write it for consistency.
