@@ -153,7 +153,7 @@
                 <div id="content" class="content">
                     <main>
                         <h2 id="annotating-functions"><a class="header" href="#annotating-functions">Annotating Functions</a></h2>
-<div style="text-align: right"> <i> The function without types is like a river without banks: boundless, yet directionless. <br> - Ancient Chinese proverb </i> </div>
+<div style="text-align: right"> <i> The function without types is like a river without banks: boundless, yet directionless. <br> — Ancient Chinese proverb </i> </div>
 <h3 id="annotating-parameters"><a class="header" href="#annotating-parameters">Annotating Parameters</a></h3>
 <p>We can annotate functions in TypeScript by annotating their parameters.
 Consider a function <code>greet</code> that takes a parameter <code>name</code> of type <code>string</code> and simply outputs a greeting to the console.
@@ -162,11 +162,11 @@ Here is how we would annotate the function:</p>
   console.log(`Hello, ${name}`);
 }
 </code></pre>
-<p>Now arguments to the function are checked:</p>
+<p>Now arguments to the function will be checked against our annotation:</p>
 <pre><code class="language-ts">greet(false);
 // This will result in a type error
 </code></pre>
-<p>You can annotate functions that expect arrays and/or objects by simply using the syntax you learned in the previous section:</p>
+<p>You can annotate functions that expect arrays or objects by simply using the syntax you learned in the previous section:</p>
 <pre><code class="language-ts">function showTask(task: { id: number; summary: string; description: string }) {
   console.log(
     `Task with ID=${task.id} has the summary ${task.summary} and description ${task.description}`,
@@ -174,7 +174,7 @@ Here is how we would annotate the function:</p>
 }
 </code></pre>
 <p>This is not particularly readable.
-Luckily, this is where type aliases come in really handy:</p>
+Here, type aliases come in handy:</p>
 <pre><code class="language-ts">type Task = {
   id: number;
   summary: string;
@@ -188,7 +188,7 @@ function showTask(task: Task) {
 }
 </code></pre>
 <p>Note that TypeScript will not just check that the passed arguments have the correct types, but also check that the correct number of arguments was passed.
-This has an interesting side effect - introducing the TypeScript compiler in a JavaScript codebase can reveal bugs without any further work:</p>
+This has an interesting side effect—introducing the TypeScript compiler in a JavaScript codebase can reveal bugs <em>without any further work</em>:</p>
 <pre><code class="language-js">function showTask(task) {
   console.log(
     `Task with ID=${task.id} has the summary ${task.summary} and description ${task.description}`,
@@ -203,14 +203,14 @@ showTask(1, 'Read the Next.js book', 'Read and understand the Next.js book.');
 
 8 showTask(1, 'Read the Next.js book', 'Read and understand the Next.js book.');
 </code></pre>
-<p>TypeScript is quite useful indeed!</p>
+<p>Quite nifty indeed!</p>
 <h3 id="return-type-annotations"><a class="header" href="#return-type-annotations">Return Type Annotations</a></h3>
 <p>We can also annotate the return types of our functions:</p>
 <pre><code class="language-ts">function getGreeting(name: string): string {
   return `Hello, ${name}`;
 }
 </code></pre>
-<p>Note that you usually don't need a return type annotation because TypeScript can do type inference for them:</p>
+<p>Note that you usually don't need a return type annotation because TypeScript can do type inference for return types:</p>
 <pre><code class="language-ts">function getGreeting(name: string) {
   return `Hello, ${name}`;
 }
@@ -230,7 +230,7 @@ getGreeting('John Doe', undefined);
 getGreeting('John Doe', 'Welcome');
 </code></pre>
 <h3 id="function-type-expressions"><a class="header" href="#function-type-expressions">Function Type Expressions</a></h3>
-<p>Sometimes you need to create a type that specifies the function itself, instead of just its parameters or its return type.
+<p>Sometimes, you need to create a type that specifies a function itself, instead of just its parameters or its return type.
 For example, you might want to say that <code>f</code> is a function that takes two strings and returns a string.</p>
 <p>You can achieve this with a <strong>function type expression</strong>:</p>
 <pre><code class="language-ts">let f: (x: string, y: string) =&gt; string;
@@ -256,7 +256,7 @@ const myName = 'John Doe';
 
 console.log(getGreeting(myName, (name) =&gt; `Hello ${name}`));
 </code></pre>
-<p>Note how we no longer need to explicitly specify the type of <code>name</code> in the anonymous function - TypeScript has automatically inferred it to be of type <code>string</code>.</p>
+<p>Note how we no longer need to explicitly specify the type of <code>name</code> in the anonymous function—TypeScript has automatically inferred it to be of type <code>string</code>.</p>
 
                     </main>
 

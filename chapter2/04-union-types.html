@@ -153,6 +153,7 @@
                 <div id="content" class="content">
                     <main>
                         <h2 id="union-types"><a class="header" href="#union-types">Union Types</a></h2>
+<div style="text-align: right"> <i> To ignore a union is to marry a string and wake up with a number. <br> — Ancient Chinese proverb </i> </div>
 <h3 id="literal-types"><a class="header" href="#literal-types">Literal Types</a></h3>
 <p>A <strong>literal type</strong> is a type whose only value is a literal.
 Here is how we could define a literal type <code>'Todo'</code>:</p>
@@ -162,7 +163,7 @@ Here is how we could define a literal type <code>'Todo'</code>:</p>
 <pre><code class="language-ts">let todo: TodoType = 'Todo';
 </code></pre>
 <p>Note that we can't assign any other value to <code>todo</code> including other strings.
-For example this is not possible:</p>
+For example, this isn't possible:</p>
 <pre><code class="language-ts">let todo: TodoType = 'Done';
 // This will result in a type error
 </code></pre>
@@ -174,15 +175,15 @@ This makes sense since we could change the variable later:</p>
 <pre><code class="language-ts">let todo = 'Todo';
 // Without the explicit type annotation, todo is a string
 </code></pre>
-<p>However if we declare a constant, then by default TypeScript will infer a literal type.
+<p>However, if we declare a constant, then by default TypeScript will infer a literal type.
 This also makes sense since we can't change the constant later:</p>
 <pre><code class="language-ts">const todo = 'Todo';
 // Even without the explicit type annotation,
 // todo now has the literal type 'Todo'
 </code></pre>
-<p>While literal types by themselves are not very helpful, they are extremely useful in the context of union types.</p>
+<p>While literal types by themselves are not very helpful, they become extremely useful in the context of union types.</p>
 <h3 id="unions-of-literal-types"><a class="header" href="#unions-of-literal-types">Unions of Literal Types</a></h3>
-<p>A <strong>union type</strong> is a type that represents a value which may be one of multiple values.
+<p>A <strong>union type</strong> is a type that represents a value which may be one of multiple types.
 Consider a type <code>TaskState</code> which represents one of the following states:</p>
 <ul>
 <li>Todo</li>
@@ -194,19 +195,20 @@ Consider a type <code>TaskState</code> which represents one of the following sta
 </code></pre>
 <p>The <code>TaskState</code> type is a union type and each of the literal types <code>'Todo'</code>, <code>'InProgress'</code> and <code>'Done'</code> is a member of the union.
 A variable of type <code>TaskState</code> can only be of one of these literal types, i.e. it can only have one of the respective values.
-For example these are all valid:</p>
+For example these assignments are all valid:</p>
 <pre><code class="language-ts">const state: TaskState = 'Todo';
 const state2: TaskState = 'InProgress';
 const state3: TaskState = 'Done';
 </code></pre>
-<p>But this is not:</p>
+<p>On the other hand, this assignment isn't valid:</p>
 <pre><code class="language-ts">const invalidState: TaskState = 'Dropped';
 </code></pre>
 <h3 id="other-union-types"><a class="header" href="#other-union-types">Other Union Types</a></h3>
 <p>We can also declare unions of arbitrary types.
-The general syntax for declaring a union type is <code>Type1 | Type2 | Type3 | ...</code> and a value of this union type can have the type <code>Type1</code> or <code>Type2</code> or <code>Type3</code> etc.
-The various types <code>Type1</code>, <code>Type2</code>, <code>Type3</code> etc are called members of the union.</p>
-<p>One particularly common union type is <code>T | undefined</code>, for example:</p>
+The general syntax for declaring a union type is <code>Type1 | Type2 | Type3 | ...</code> and a value of this union type can have the type <code>Type1</code> or <code>Type2</code> or <code>Type3</code> etc.</p>
+<p>The various types <code>Type1</code>, <code>Type2</code>, <code>Type3</code> etc are called <strong>members</strong> of the union.</p>
+<p>One particularly common union type is <code>T | undefined</code>.
+Consider this example:</p>
 <pre><code class="language-ts">function getTaskId(taskName: string): string | undefined {
   // Implementation here
 }
@@ -229,12 +231,12 @@ Consider the following function:</p>
                       ~~~~~~~~
 Found 1 error in index.ts:4
 </code></pre>
-<p>TypeScript will only allow to do something with the value of a union type if that something is valid for every member of the union.
+<p>TypeScript will only allow to do an operation with the value of a union type if that operation is valid <em>for every member of the union</em>.
 Since <code>taskName</code> can be either a <code>string</code> or <code>undefined</code>, we can't access <code>.length</code> on it, because <code>.length</code> is not a valid property of <code>undefined</code>!</p>
 <p>Instead we need to perform <strong>type narrowing</strong> where we <em>narrow</em> the type of a variable with code.</p>
-<p>Basically, TypeScript can look at our code and try to understand that in certain code parts a value of a union type can only have the type of a particular member of the union.</p>
+<p>Basically, TypeScript can look at our code and understand that in certain code parts a value of a union type can only have the type of a particular member of the union.</p>
 <p>The simplest way of narrowing a type is <strong>equality narrowing</strong>.
-Here we can use the <code>===</code> or <code>!==</code> operators to narrow a type.</p>
+Here we use the <code>===</code> or <code>!==</code> operators to narrow a type.</p>
 <p>Consider this example:</p>
 <pre><code class="language-ts">function logTaskName(taskName: string | undefined) {
   if (taskName !== undefined) {
@@ -243,14 +245,14 @@ Here we can use the <code>===</code> or <code>!==</code> operators to narrow a t
       taskNameLength: taskName.length,
     });
   } else {
-    console.log('the task is not defined');
+    console.log('The task is not defined');
   }
 }
 </code></pre>
 <p>We narrow the type of <code>taskName</code> in the <code>taskName !== undefined</code> branch.
 TypeScript will inspect our code and realize that since <code>taskName</code> had the <code>string | undefined</code> type and <code>taskName !== undefined</code> in the truthy branch of the if statement, <code>taskName</code> must be of type <code>string</code> inside that branch (there is simply no other way).
 Similarly, in the falsy branch of the if statement (i.e. the <code>else</code> branch), TypeScript will know that <code>taskName</code> must be <code>undefined</code>.</p>
-<p>This example also showcases a very important concept: The same variable can have a different type depending on the part of the code we are.
+<p>This example also showcases a very important concept: The same variable can have a different type depending on the part of the code we are in.
 This is not the case in many other programming languages, where a variable will always have the same type once it has been initialized.</p>
 <p>Another (similar) way of narrowing a type is <strong>truthiness narrowing</strong>.
 Here we use the fact that certain values are truthy or falsy to narrow a type.</p>
@@ -262,30 +264,32 @@ Here we use the fact that certain values are truthy or falsy to narrow a type.</
       taskNameLength: taskName.length,
     });
   } else {
-    console.log('the task is not defined');
+    console.log('The task is not defined');
   }
 }
 </code></pre>
 <p>Since <code>undefined</code> and <code>null</code> are both falsy, the <code>taskName</code> in the truthy branch of the <code>if</code> statement can only have the type <code>string</code> and we can use the <code>.length</code> property.</p>
-<p>However truthiness narrowing can lead to bugs and indeed the function <code>logTaskName</code> has a subtle error.
-Can you spot it?</p>
-<p>That's right - it doesn't correctly handle the case of the empty string - after all, the empty string <code>''</code> is also falsy, therefore <code>logTaskName("")</code> would print that the task not defined, which is probably not what we were going for.
-We could fix the function like this:</p>
+<p>However, truthiness narrowing can lead to subtle bugs due to the way truthy and falsy values work (we covered this in the JavaScript chapter).
+Indeed, the function <code>logTaskName</code> has a hard-to-spot error.
+Can you see it?</p>
+<p>That's right—it doesn't correctly handle the case of the empty string.
+After all, the empty string <code>''</code> is also falsy, therefore <code>logTaskName("")</code> would print that the task is not defined, which is probably not what we were going for.</p>
+<p>We could fix the function like this:</p>
 <pre><code class="language-ts">function logTaskName(taskName: string | undefined | null) {
   if (taskName === '') {
-    console.log('the task is empty');
+    console.log('The task is empty');
   } else if (taskName) {
     console.log({
       taskName,
       taskNameLength: taskName.length,
     });
   } else {
-    console.log('the task is not defined');
+    console.log('The task is not defined');
   }
 }
 </code></pre>
 <p>You should generally be careful when relying on truthiness or falsiness.
-The way these concepts work in JavaScript can be a bit confusing and it's easy to miss an edge case.</p>
+The way these concepts work in JavaScript can be a bit confusing and it's easy to miss edge cases.</p>
 <p>Some people prefer to avoid these concepts altogether and instead provide explicit checks, for example:</p>
 <pre><code class="language-ts">function logTaskName(taskName: string | undefined | null) {
   if (taskName !== undefined &amp;&amp; taskName !== null) {
@@ -294,18 +298,18 @@ The way these concepts work in JavaScript can be a bit confusing and it's easy t
       taskNameLength: taskName.length,
     });
   } else {
-    console.log('the task is not defined');
+    console.log('The task is not defined');
   }
 }
 </code></pre>
-<p>The last way of narrowing a type that we will discuss here is <code>typeof</code> narrowing.
+<p>The last way of narrowing a type is <code>typeof</code> narrowing.
 TypeScript knows how the <code>typeof</code> operator works and you can use it to narrow a type as you would expect:</p>
 <pre><code class="language-ts">function processInput(value: string | number): number {
   if (typeof value === 'string') {
-    // value must be a string here
+    // Here, value must be a string
     return value.length;
   } else {
-    // value must be a number here
+    // Here, value must be a number
     return value;
   }
 }
@@ -315,7 +319,7 @@ TypeScript knows how the <code>typeof</code> operator works and you can use it t
 <pre><code class="language-ts">let input: string | undefined = 'Some string';
 let trimmedInput: string = input!.trim();
 </code></pre>
-<p>Just as with type assertions, you should use this <em>extremely sparingly</em> and usually there is a better way.</p>
+<p>Just as with type assertions, you should use this <em>sparingly</em> and usually there is a better way.</p>
 <h3 id="type-predicates"><a class="header" href="#type-predicates">Type Predicates</a></h3>
 <p>We can write user-defined <strong>type guards</strong> by utilizing <strong>type predicates</strong>.
 Consider the following example:</p>
@@ -323,12 +327,12 @@ Consider the following example:</p>
 const filteredArray = array.filter((val) =&gt; val !== undefined);
 </code></pre>
 <p>Here <code>array</code> is a <code>(string | undefined)[]</code> and <code>filteredArray</code> removes the <code>undefined</code> elements.
-However the inferred type of <code>filteredArray</code> would still be <code>(string | undefined)[]</code> because TypeScript can't easily inspect the contents of the filter function to realize that we remove the <code>undefined</code> elements.</p>
+However, the inferred type of <code>filteredArray</code> would still be <code>(string | undefined)[]</code> because TypeScript can't easily inspect the contents of the filter function to realize that we remove the <code>undefined</code> elements.</p>
 <p>We could theoretically use a type assertion here:</p>
 <pre><code class="language-ts">const array = ['Hello', undefined, 'World', undefined];
 const filteredArray = array.filter((val) =&gt; val !== undefined) as string[];
 </code></pre>
-<p>However instead of yelling at the TypeScript compiler that we know better, we can choose a better way and write a user-defined type guard:</p>
+<p>However, instead of yelling at the TypeScript compiler that we know better, it's more productive to write a user-defined type guard:</p>
 <pre><code class="language-ts">function isString(val: string | undefined): val is string {
   return typeof val === 'string';
 }
@@ -339,12 +343,11 @@ Generally, a type predicate must have the form <code>parameter is Type</code> wh
 <pre><code class="language-ts">const array = ['Hello', undefined, 'World', undefined];
 const filteredArray = array.filter(isString);
 </code></pre>
-<p>Now the inferred type of <code>filteredArray</code> will be <code>string[]</code> - and all that without using a single type assertion.
-Hooray!</p>
+<p>Now the inferred type of <code>filteredArray</code> will be <code>string[]</code>—and all that without using a single type assertion.</p>
 <h3 id="discriminated-unions"><a class="header" href="#discriminated-unions">Discriminated Unions</a></h3>
 <p>A particularly important union type is the <strong>discriminated union</strong>.
 This is a union where a property is used to discriminate between union members.
-Consider the following classical example:</p>
+Consider the following example:</p>
 <pre><code class="language-ts">type Square = {
   kind: 'square';
   size: number;
@@ -361,10 +364,10 @@ type Shape = Square | Rectangle;
 <p>We can now narrow values of the discriminated union based on the <strong>discriminant property</strong> (which in this case is <code>kind</code>):</p>
 <pre><code class="language-ts">function getArea(shape: Shape) {
   if (shape.kind === 'square') {
-    // Here shape must be of type Square
+    // Here, shape must be of type Square
     return shape.size * shape.size;
   } else {
-    // Here shape must be of type Rectangle
+    // Here, shape must be of type Rectangle
     return shape.width * shape.height;
   }
 }

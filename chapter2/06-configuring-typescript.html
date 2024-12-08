@@ -153,7 +153,7 @@
                 <div id="content" class="content">
                     <main>
                         <h2 id="configuring-typescript"><a class="header" href="#configuring-typescript">Configuring TypeScript</a></h2>
-<div style="text-align: right"> <i> "Like the ancient master who chooses his brush, the wise coder sets 'strict' with care, for clarity is the first step to wisdom." <br> - Ancient Chinese proverb </i> </div>
+<div style="text-align: right"> <i> Like the ancient master who chooses his brush, the wise coder sets 'strict' with care, for clarity is the first step to wisdom. <br> — Ancient Chinese proverb </i> </div>
 <h3 id="creating-a-typescript-project"><a class="header" href="#creating-a-typescript-project">Creating a TypeScript Project</a></h3>
 <p>We already learned how to create and run individual TypeScript files.
 However, as with JavaScript, we will usually be working with larger projects.</p>
@@ -162,7 +162,7 @@ However, as with JavaScript, we will usually be working with larger projects.</p
 <pre><code class="language-sh">mkdir example
 cd example
 </code></pre>
-<p>Next we need to create the <code>package.json</code> file to indicate that this directory should be a JavaScript project:</p>
+<p>Next, we need to create the <code>package.json</code> file to indicate that this directory should be a JavaScript project:</p>
 <pre><code class="language-sh">pnpm init
 </code></pre>
 <p>This will create a <code>package.json</code> file containing the project settings:</p>
@@ -179,7 +179,7 @@ cd example
   "license": "ISC"
 }
 </code></pre>
-<p>Next let's create a <code>tsconfig.json</code> to indicate that this particular project will use TypeScript:</p>
+<p>Next, let's create a <code>tsconfig.json</code> to indicate that this particular project will use TypeScript:</p>
 <pre><code class="language-json">{
   "compilerOptions": {
     "strict": true
@@ -191,14 +191,14 @@ We will talk about this option in some more detail later.</p>
 <blockquote>
 <p>We could have also created the <code>tsconfig.json</code> file by running <code>tsc --init</code>, however this will add a lot of options that we really don't care about at the moment.</p>
 </blockquote>
-<p>Now let us create an <code>index.ts</code> file:</p>
+<p>Now, let's create an <code>index.ts</code> file:</p>
 <pre><code class="language-ts">function getGreeting(name: string): string {
   return `Hello, ${name}!`;
 }
 
 console.log(getGreeting('World'));
 </code></pre>
-<p>Finally we can compile the code:</p>
+<p>Finally, we can compile the code:</p>
 <pre><code class="language-sh">tsc
 </code></pre>
 <p>This will create approximately the following <code>index.js</code> file:</p>
@@ -240,7 +240,7 @@ You overall project structure should now look as follows:</p>
   return `Hello, ${name}!`;
 }
 </code></pre>
-<p>Now let's use <code>getGreeting</code> in <code>index.ts</code>:</p>
+<p>Now, let's use <code>getGreeting</code> in <code>index.ts</code>:</p>
 <pre><code class="language-ts">import { getGreeting } from './greet';
 
 console.log(getGreeting('World'));
@@ -259,7 +259,7 @@ To this end, we utilize the <code>outDir</code> option, which specifies the outp
 <p>We can now compile again:</p>
 <pre><code class="language-sh">pnpm tsc
 </code></pre>
-<p>Now the project structure looks like this:</p>
+<p>The project structure looks like this now:</p>
 <pre><code>.
 ├── package.json
 ├── pnpm-lock.yaml
@@ -281,16 +281,16 @@ We can now execute <code>index.js</code> by running:</p>
 <p>Sometimes you want to include or exclude certain files from being processed by the TypeScript compiler.
 To accomplish this, you can specify the <code>include</code> or <code>exclude</code> parameters in the <code>tsconfig.json</code>.</p>
 <p>The <code>include</code> option takes an array of filenames or patterns to include in the program (relative to the directory containing the <code>tsconfig.json</code> file).
-For example we could include all files in <code>src</code> directory by setting <code>include</code> to <code>["src/**/*"]</code>.</p>
+For example, we could include all files in <code>src</code> directory by setting <code>include</code> to <code>["src/**/*"]</code>.</p>
 <p>The <code>src/**/*</code> notation is a so called glob pattern.
-Here <code>*</code> matches zero or more characters (excluding directory separators) and <code>**/</code> matches any directory (with arbitrary nesting).
-Thefore <code>src/**/*</code> means "match any file in the directory <code>src</code> and all its subdirectories (no matter how deeply nested)".</p>
+Here, <code>*</code> matches zero or more characters (excluding directory separators) and <code>**/</code> matches any directory (with arbitrary nesting).
+Therefore, <code>src/**/*</code> means "match any file in the directory <code>src</code> and all its subdirectories (no matter how deeply nested)".</p>
 <blockquote>
-<p>Note that by default <code>include</code> is set to <code>["**/*"]</code> (i.e. match all files including arbitrarily nested subdirectories).</p>
+<p>Note that by default <code>include</code> is set to <code>["**/*"]</code> (i.e. it's set to match all files including arbitrarily nested subdirectories).</p>
 </blockquote>
 <p>The <code>exclude</code> parameter specifies an array of filenames or patterns that should be skipped when resolving <code>include</code>.
-It is important to note that the <code>exclude</code> parameter does not necessarily exclude the file from your codebase - a file specified by <code>exclude</code> can still become part of your codebase if you import it somewhere.
-The <code>exclude</code> parameter only changes which files are found by the <code>include</code> option finds.</p>
+It is important to note that the <code>exclude</code> parameter does not necessarily exclude the file from your codebase—a file specified by <code>exclude</code> can still become part of your codebase if you import it somewhere.
+The <code>exclude</code> parameter only changes which files are found by the <code>include</code> option.</p>
 <p>Consider the following example.
 Let's say that you have a bunch of <code>*.test.ts</code> files containing tests, like the following <code>greet.test.ts</code>:</p>
 <pre><code class="language-ts">import { getGreeting } from './greet';
@@ -302,7 +302,7 @@ function testGreeting() {
 }
 </code></pre>
 <blockquote>
-<p>This is not how we would really write a test, but that is irrelevant for now.</p>
+<p>This is not how we would really write a test, but that's irrelevant for now.</p>
 </blockquote>
 <p>If we would run <code>pnpm tsc</code> right now, we would see the we have <code>greet.test.js</code> in the output which is probably not desirable, since the tests probably shouldn't be part of the final compilation output.</p>
 <p>Therefore we could write the following <code>tsconfig.json</code>:</p>
@@ -315,12 +315,12 @@ function testGreeting() {
   }
 }
 </code></pre>
-<p>If we delete the <code>dist</code> directory and run <code>pnpm tsc</code> again, <code>greet.test.js</code> is no longer present.</p>
+<p>If we delete the <code>dist</code> directory and run <code>pnpm tsc</code> again, we will see that <code>greet.test.js</code> is no longer present.</p>
 <h3 id="compiler-options"><a class="header" href="#compiler-options">Compiler Options</a></h3>
 <p>There a lot of compiler options that we can set in the <code>compilerOptions</code> section of <code>tsconfig.json</code> besides <code>strict</code> and <code>outDir</code>.
 Let's discuss some of them.</p>
 <h4 id="the-strict-option"><a class="header" href="#the-strict-option">The <code>strict</code> Option</a></h4>
-<p>The <code>strict</code> option enables a wide range of - well - strict type checking.</p>
+<p>The <code>strict</code> option enables a wide range of—well—strict type checking.</p>
 <p>Here is some example code that contains a few type issues:</p>
 <pre><code class="language-ts">function getNumber(): number | undefined {
   return Math.random() &gt; 0.5 ? 0 : undefined;
@@ -339,7 +339,7 @@ logNumber(number);
 logAny(number);
 </code></pre>
 <p>If we set <code>strict</code> to <code>false</code> (which it is by default), this code will (surprisingly) compile.</p>
-<p>However if we turn <code>strict</code> on, we get the errors that you would expect from what you learned in the previous sections of the TypeScript chapter:</p>
+<p>However, if we turn <code>strict</code> on, we get the errors that you would expect if you remember what you've learned in the previous sections of the TypeScript chapter:</p>
 <pre><code class="language-ts">src/index.ts:9:17 - error TS7006: Parameter 'x' implicitly has an 'any' type.
 
 9 function logAny(x) {
@@ -356,9 +356,9 @@ Found 2 errors in the same file, starting at: src/index.ts:9
 </code></pre>
 <p>You should <em>always</em> turn <code>strict</code> on, unless you have a really good reason not to (for example because you are migrating from a JavaScript or a very old TypeScript codebase).</p>
 <h4 id="the-target-option"><a class="header" href="#the-target-option">The <code>target</code> Option</a></h4>
-<p>Remember how we talked about downleveling in the first section of this chapter?
-The <code>target</code> options changes which JS features are downleveled and which are left as is.
-For example if <code>target</code> is <code>es5</code> template strings will be downleveled, but if it is <code>es2015</code> (equivalent to <code>es6</code>) they won't be, because template strings were introduced in ES2015.</p>
+<p>Remember, how we talked about downleveling in the first section of this chapter?
+The <code>target</code> option changes which JS features are downleveled and which are left as is.
+For example, if <code>target</code> is <code>es5</code> template strings will be downleveled, but if it's <code>es2015</code> (equivalent to <code>es6</code>) they won't be, because template strings were introduced in ES2015.</p>
 <p>Take this code:</p>
 <pre><code class="language-ts">const world = 'World';
 console.log(`Hello ${world}`);
@@ -384,16 +384,16 @@ console.log(`Hello ${world}`);
 This target should be used with caution since it means different things between different TypeScript versions.</p>
 <p>Modern browsers support all <code>es6</code> features, so <code>es6</code> is often a good choice.
 You might choose to set a lower target though if your code is deployed to older environments.
-Alternatively you might choose a higher target if your code is guaranteed to run in newer environments.</p>
+Alternatively, you might choose a higher target if your code is guaranteed to run in newer environments.</p>
 <h4 id="the-lib-option"><a class="header" href="#the-lib-option">The <code>lib</code> Option</a></h4>
-<p>The <code>lib</code> option allows you specify libraries to be included in the compilation.
+<p>The <code>lib</code> option allows you to specify libraries to be included in the compilation.
 Basically, you can use this to let TypeScript know which APIs will be available in the runtime environment.</p>
-<p>For example let's say we have this code which would only work in the browser since it attaches an event listener to the browser <code>document</code>:</p>
+<p>Let's say we have this code which would only work in the browser since it attaches an event listener to the browser <code>document</code>:</p>
 <pre><code class="language-ts">document.addEventListener('DOMContentLoaded', () =&gt; {
   console.log('DOM has loaded');
 });
 </code></pre>
-<p>If we only have <code>lib</code> equal to <code>["es2015"]</code>, we will get a bunch of compilation errors:</p>
+<p>If we set <code>lib</code> to <code>["es2015"]</code>, we will get a bunch of compilation errors:</p>
 <pre><code>src/index.ts:1:1 - error TS2584: Cannot find name 'document'. Do you need to change your target library? Try changing the 'lib' compiler option to include 'dom'.
 
 1 document.addEventListener('DOMContentLoaded', () =&gt; {
@@ -407,11 +407,11 @@ src/index.ts:2:5 - error TS2584: Cannot find name 'console'. Do you need to chan
 
 Found 2 errors in the same file, starting at: src/index.ts:1
 </code></pre>
-<p>But if we set <code>lib</code> to <code>["es2015", "dom"]</code> the compilation errors go away since TypeScript know introduces the DOM types into the compilation process.</p>
+<p>But if we set <code>lib</code> to <code>["es2015", "dom"]</code> the compilation errors go away since TypeScript now introduces the DOM types into the compilation process.</p>
 <h4 id="the-noemit-option"><a class="header" href="#the-noemit-option">The <code>noEmit</code> Option</a></h4>
 <p>The <code>noEmit</code> option can be set to <code>true</code> to not produce JavaScript output.
 This makes room for another tool to convert the TypeScript files to something that can be run inside a JavaScript environment.</p>
-<p>This is often done when we only want to use TypeScript as a type checker (as is common in projects) or to provide suggestions in your coding editor.</p>
+<p>This is often done when we only want to use TypeScript as a type checker (as is common in many projects) or to provide suggestions in your coding editor.</p>
 <h3 id="an-example-tsconfigjson"><a class="header" href="#an-example-tsconfigjson">An Example <code>tsconfig.json</code></a></h3>
 <p>You now learned about some of the most important <code>tsconfig.json</code> settings!
 Here is an example <code>tsconfig.json</code> to summarize your newfound knowledge:</p>
@@ -431,14 +431,14 @@ We only look at the files in <code>src</code> and its subdirectories, ignoring t
 <p>Finally, the type checking process is strict (due to <code>noEmit</code> being <code>true</code>), all features that are not available before ES2015 will be downleveled (since <code>target</code> is <code>es2015</code>) and we can use the DOM API types.</p>
 <h3 id="reusing-a-tsconfigjson"><a class="header" href="#reusing-a-tsconfigjson">Reusing a <code>tsconfig.json</code></a></h3>
 <p>The <code>extends</code> option can be used to inherit from another configuration file.</p>
-<p>For example we might have a <code>base.json</code> configuration file like this:</p>
+<p>For example, we might have a <code>base.json</code> configuration file like this:</p>
 <pre><code class="language-json">{
   "compilerOptions": {
     "strict": true
   }
 }
 </code></pre>
-<p>Now the <code>tsconfig.json</code> could extend this file:</p>
+<p>Now, the <code>tsconfig.json</code> could extend this file:</p>
 <pre><code class="language-json">{
   "extends": "base.json",
   "include": ["src/**/*.ts"],
@@ -448,7 +448,7 @@ We only look at the files in <code>src</code> and its subdirectories, ignoring t
 }
 </code></pre>
 <p>The resulting configuration would be strict and not emit JavaScript files.</p>
-<p>This feature is particularly useful because it allows someone to write a TypeScript configuration file that specifies the settings that should be applied to TypeScript codebases in a company/project and then everyone can simply extend this configuration file.</p>
+<p>This feature is particularly useful because it allows someone to write a TypeScript configuration file that specifies the settings that should be applied to TypeScript codebases in a company or a project and then everyone can simply extend this configuration file.</p>
 
                     </main>
 
