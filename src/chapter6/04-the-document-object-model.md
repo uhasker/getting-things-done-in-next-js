@@ -51,7 +51,7 @@ This can be done by using JavaScript functions that exist on the `document` obje
 For the rest of this section, we will consider the following document:
 
 ```html
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
@@ -159,7 +159,7 @@ Let's put all of this together and add a button to our page that allows us to ad
 
 This is the JavaScript that we would like to execute if the button is clicked:
 
-```javascript
+```js
 const paragraph = document.createElement('p');
 paragraph.id = 'thirdParagraph';
 paragraph.classList.add('task');
