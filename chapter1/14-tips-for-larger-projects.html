@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Leveling Up with TypeScript</title>
+        <title>Tips for Larger Projects</title>
 
 
         <!-- Custom HTML head -->
@@ -152,24 +152,71 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="chapter-2-leveling-up-with-typescript"><a class="header" href="#chapter-2-leveling-up-with-typescript">Chapter 2: Leveling Up with TypeScript</a></h1>
-<div style="text-align: right"> <i> To employ TypeScript is to light a lantern on the dim path of JavaScript, revealing the stones upon which one may trip. <br> - Ancient Chinese proverb </i> </div>
-<p>Now that we learned the basics of JavaScript, we could theoretically dive right into writing our application.
-However, JavaScript as a language has a central problem - it does not come with type checking.
-For example, there is nothing preventing you from trying to add two objects except the fact that - well - your application will crash and burn.</p>
-<p>In general, one the most common error sources are what can be described as type errors: a certain kind of value was used where a different kind of value was expected.
-This could be due to simple typos, a failure to understand how to use a library correctly, incorrect assumptions about runtime behavior etc.
-The goal of TypeScript is to provide static type checking for JavaScript programs - in other words, TypeScript provides you with tooling that runs before your code is executed (static) and ensures that the types of the program are correct (typechecked).</p>
+                        <h2 id="tips-for-larger-projects"><a class="header" href="#tips-for-larger-projects">Tips for Larger Projects</a></h2>
+<div style="text-align: right"> <i>I would really like to say something wise, but this project is a total trainwreck. <br> — Ancient Chinese proverb </i> </div>
+<h3 id="the-product-drives-the-code"><a class="header" href="#the-product-drives-the-code">The Product Drives the Code</a></h3>
+<p>The most important insight is:</p>
+<p><strong>The product drives the code, not the other way around.</strong></p>
+<p>A lot of software developers think it's their job to write code.
+This is wrong.
+The job of a software developer is to work on products.</p>
+<p>This also means that your code should reflect the product and not some fancy abstraction that you thought would be fun to write.</p>
+<p>If you're not working on a feature or something that supports the feature (like a test), you should think <em>very hard</em> about what you're doing and why.</p>
+<p>Additionally, when you're working on a product, your names should also be as close to the application domain as possible.
+If the client and the project managers talk about tasks and notifications and the UI shows big, fat texts called "Tasks" and "Notifications", then your variable names should probably not be <code>jobs</code> and <code>reports</code>.
+You will just needlessly confuse everyone.</p>
+<h3 id="keep-it-simple-stupid"><a class="header" href="#keep-it-simple-stupid">Keep It Simple, Stupid</a></h3>
+<p>The KISS principle (short for "keep it simple, stupid") states that you should <strong>keep your code as simple as possible, but not simpler</strong>.</p>
+<p>Generally speaking, try to not outsmart yourself and stick to writing actual features instead of fancy abstractions that might or might not come in handy later.
+You should always remember that reading and fixing code is much harder than writing it in the first place.
+This means, that if you write code as smart as you possibly can, you aren't going to be able to fix it later.</p>
+<p>Of course, if you realize that you're writing the same thing for the tenth time, it might be a good idea to take a step back and think if you can abstract that thing in a <em>straightforward</em> way.
+Unfortunately, many developers take this <em>way</em> too far.
+Don't be one of them.</p>
+<p>The complexity of a codebase that doesn't <em>religiously</em> adhere to the KISS principle grows much faster than you think and will quickly overwhelm you completely.</p>
+<h3 id="define-responsibilities-clearly"><a class="header" href="#define-responsibilities-clearly">Define Responsibilities Clearly</a></h3>
+<p>Split your code into well structured functions and modules.
+Generally speaking, <strong>a function should do one thing and do it well</strong>.</p>
+<p>Of course "one thing" can mean different levels of detail.
+"One thing" might be everything from "add two numbers" to "simulate a universe".</p>
+<p>If your function is simulating a universe, then it should probably call smaller, more focused functions internally (we've discussed this already).
+Nevertheless, avoid writing functions that do two completely unrelated things.
+For example, it's poor style to write a function that simulate a universe and then adds two numbers for some reason.</p>
+<p>Similarly, try to follow the <strong>Single Responsibility Principle</strong> for modules.
+Every module should be responsible for a particular part of the application.</p>
+<h3 id="use-docstrings"><a class="header" href="#use-docstrings">Use Docstrings</a></h3>
+<p>Document your most important functions using docstrings.
+This will help both you and your fellow teammates.
+Writing docstrings might seem tedious and unnecessary at first, but clear documentation can save hours of debugging later on.</p>
+<p>Additionally, good documentation can help onboard new team members more quickly.</p>
+<p>A good goal to strive for is that if I read the docstring of your function I should have a good understanding of how and when I can call it without having to read the implementation.</p>
+<p>This is good because not only is it usually harder to read an implementation than a simple text (especially if the implementation is very long), but also because the implementation might change over time.</p>
+<h3 id="perfect-is-the-enemy-of-good"><a class="header" href="#perfect-is-the-enemy-of-good">Perfect is the Enemy of Good</a></h3>
+<p>A lot of beginners think that the main difference between a junior and a senior is that the senior always writes perfect code (for some vague definition of perfect).
+That's not the case.</p>
+<p>In fact, optimizing for perfect code is often a really terrible idea since that means that you will spend a lot of time "optimizing" code that was already good enough.
+This is a problem, because you will throw most of your code away due to ever-changing requirements.</p>
+<p>You should try to follow our tips from the previous section on writing decent code.
+But in the end, your code won't be perfect and that's fine.</p>
+<h3 id="final-remarks"><a class="header" href="#final-remarks">Final Remarks</a></h3>
+<p>Well, now that you made it through the last two sections, are you a great programmer?
+Unfortunately, the answer is a hard <strong>no</strong>.</p>
+<p>If you could become a great programmer just by reading a couple of pages, then there wouldn't be entire bookshelves devoted to that topic.</p>
+<p>There is only one way to become a good programmer:</p>
+<p><strong>You need to actually go out and write projects.</strong></p>
+<p>There is no way around it and in the end, experience is king.</p>
+<p>But there is one important caveat—you have to actually <em>learn</em> from that experience and reflect on your mistakes.</p>
+<p>So go out there, write features, make mistakes and learn something!</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../chapter1/14-tips-for-larger-projects.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../chapter1/13-writing-decent-code.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../chapter2/01-why-typescript.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../chapter2/index.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -179,11 +226,11 @@ The goal of TypeScript is to provide static type checking for JavaScript program
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../chapter1/14-tips-for-larger-projects.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../chapter1/13-writing-decent-code.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../chapter2/01-why-typescript.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../chapter2/index.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
