@@ -194,7 +194,7 @@ For example, we could include all files in `src` directory by setting `include` 
 
 The `src/**/*` notation is a so called glob pattern.
 Here, `*` matches zero or more characters (excluding directory separators) and `**/` matches any directory (with arbitrary nesting).
-Thefore, `src/**/*` means "match any file in the directory `src` and all its subdirectories (no matter how deeply nested)".
+Therefore, `src/**/*` means "match any file in the directory `src` and all its subdirectories (no matter how deeply nested)".
 
 > Note that by default `include` is set to `["**/*"]` (i.e. it's set to match all files including arbitrarily nested subdirectories).
 
@@ -331,7 +331,7 @@ Alternatively, you might choose a higher target if your code is guaranteed to ru
 
 #### The `lib` Option
 
-The `lib` option allows you specify libraries to be included in the compilation.
+The `lib` option allows you to specify libraries to be included in the compilation.
 Basically, you can use this to let TypeScript know which APIs will be available in the runtime environment.
 
 Let's say we have this code which would only work in the browser since it attaches an event listener to the browser `document`:
