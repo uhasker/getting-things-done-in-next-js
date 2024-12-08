@@ -19,6 +19,7 @@
   - [Modules](chapter1/11-modules.md)
   - [Packages](chapter1/12-packages.md)
   - [Writing Decent Code](chapter1/13-writing-decent-code.md)
+  - [Tips for Larger Projects](chapter1/14-tips-for-larger-projects.md)
 
 - [Leveling Up with TypeScript](chapter2/README.md)
 
