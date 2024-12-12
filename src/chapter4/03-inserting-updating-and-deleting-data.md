@@ -5,7 +5,9 @@
 ### Inserting Data
 
 To insert rows into a table, you use the `insert` statement.
-Here you need to declare the table to write to, the columns to fill and one or more rows of data to insert:
+Here, you need to declare the table to write to, the columns to fill and one or more rows of data to insert.
+
+Let's insert some values into our `task` table:
 
 ```sql
 insert into task (title, description, duration, status) values
@@ -21,14 +23,14 @@ Additionally, the `created_at` column has a `default` constraint, so PostgreSQL 
 It's crucial to ensure that the inserted data respects the constraints we defined earlier.
 
 For example, we need to respect the `check` constraint on the `duration` column.
-This statement wouldn't work:
+This statement wouldn't work because it would violate this constraint:
 
 ```sql
 insert into task (title, description, duration, status) values
 ('Read the Next.js book', 'Read and understand the Next.js book', -10, 'todo');
 ```
 
-You would get the following error:
+We would get the following error:
 
 ```
 ERROR:  23514: new row for relation "task" violates check constraint "task_duration_check"
@@ -50,7 +52,9 @@ ERROR:  23502: null value in column "description" of relation "task" violates no
 ### Updating Data
 
 You can update rows using the `update` statement.
-Here you need to specify which table, which columns and which rows to update:
+Here you need to specify the table, the columns and the rows to update.
+
+The following statement would set all tasks with the ID `1` to `done`:
 
 ```sql
 update task
@@ -72,14 +76,16 @@ If you make a mistake in the `where` clause you can update rows that you never i
 ### Deleting Data
 
 You can delete rows using the `delete` statement.
-Here you need to specify which table to use and which rows to remove:
+Here you need to specify which table to use and which rows to remove.
+
+The following statement would delete all `done` tasks from the `task` table:
 
 ```sql
 delete from task
 where status = 'done';
 ```
 
-If you don't specify a filter all data will be deleted:
+If you don't specify a filter _all_ data will be deleted:
 
 ```sql
 delete from task;
