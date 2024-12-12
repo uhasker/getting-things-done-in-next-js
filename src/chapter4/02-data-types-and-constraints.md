@@ -12,15 +12,15 @@ In our example, we use `integer` for the `duration` column of the `task` table.
 Note that there are actually multiple integer data types in PostgreSQL.
 The `smallint` data type allows you to store "small-range integers" and the `bigint` data type allows you to store "large-range integers".
 
-The difference between `smallint`, `integer` and `bigint` is basically the minimum and maximum integers that can be stored.
+The difference between `smallint`, `integer` and `bigint` is basically the number of bytes they contain which impacts the minimum and maximum integers that can be stored.
 
 A `smallint` value has 2 bytes, i.e. it can store values from `-32768` up to `32767`.
 
 An `integer` value has 4 bytes, i.e. it can store values from `-2147483648` up to `2147483647`.
 
-An `bigint` value has 8 bytes, i.e. it can store values from `-9223372036854775808` up to `9223372036854775807`.
+A `bigint` value has 8 bytes, i.e. it can store values from `-9223372036854775808` up to `9223372036854775807`.
 
-For most regular web applications, `integer` values are more than enough and by default, PostgreSQL uses `integer` values for numbers.
+For most regular web applications, `integer` values are more than enough, and by default, PostgreSQL uses `integer` values for numbers.
 Consider this example:
 
 ```sql
@@ -36,9 +36,9 @@ This will return:
 ```
 
 > The `pg_typeof` operator returns the data type of an expression.
-> Additionally you should ignore the column names in this section - only the column values are relevant for now.
+> Additionally, you should ignore the column names in this section—only the column values are relevant for us here.
 
-By default integers have the type `integer` even if they could be `smallint`.
+Note that by default integers have the type `integer` even if they could be `smallint`.
 Consider this example:
 
 ```sql
@@ -59,7 +59,7 @@ You could use the `::` operator to convert a value into a different data type:
 select 42::smallint, pg_typeof(42::smallint);
 ```
 
-> Note that `::` is a PostgreSQL - specific operator and not part of the official SQL standard.
+> Note that `::` is a PostgreSQL-specific operator and not part of the official SQL standard.
 
 This will return:
 
@@ -69,7 +69,7 @@ This will return:
 | 42   | smallint  |
 ```
 
-Of course, if you provide a `bigint` value, PostgreSQL will use the `bigint` data type, since `bigint` would not fit into `integer`:
+Of course, if you provide a `bigint` value, PostgreSQL will use the `bigint` data type, since `bigint` doesn't fit into `integer`:
 
 ```sql
 select 2147483652, pg_typeof(2147483652);
@@ -83,7 +83,7 @@ This will return:
 | 2147483652 | bigint    |
 ```
 
-Note that if you would try to convert this value to an `integer`, you would get an error.
+If you would try to convert this value to an `integer`, you would get an error.
 For example, trying to execute `select 2147483652::integer` would result in the error `ERROR: 22003: integer out of range`.
 
 The `serial` data type allows you to represent _autoincrementing_ integers (along with `smallserial` and `bigserial`).
@@ -92,9 +92,9 @@ This makes `serial` very useful for unique identifiers since you don't need to h
 In the `task` table, the `id` column has the `serial` data type.
 
 > Note that there are many other data types and strategies for automatically handling unique identifiers.
-> _Usually_ it doesn't matter, so in this chapter we will stick to the `serial` data type.
+> For _simple_ applications it doesn't matter, so in this chapter we will stick to the `serial` data type.
 
-PostgreSQL knows four data types for storing real numbers - `decimal`, `numeric`, `real` and `double precision`.
+PostgreSQL knows four data types for storing real numbers—`decimal`, `numeric`, `real` and `double precision`.
 
 The `decimal` and `numeric` types are equivalent and allow you to store numbers with a very large number of digits.
 These data types are recommended for quantities where your floating-point calculations need to be exact (e.g. when working with money).
@@ -153,9 +153,8 @@ Note that you have a precision of `15` digits now (which is more than the `real`
 PostgreSQL supports the `char(n)`, `varchar(n)` and `text` data types for storing characters and strings.
 
 The `char(n)` and `varchar(n)` data types can store strings up to `n` characters in length.
-If you try to store more than `n` characters, the string will be silently truncated.
 
-For example:
+For example, conversions to `char(n)` and `varchar(n)` would silently truncate the string:
 
 ```sql
 select 'Next.js book'::char(3), pg_typeof('Next.js book'::char(3));
@@ -207,11 +206,12 @@ In our `task` table we use `text` both for the `title` and the `description` col
 ### Date/Time Data Types
 
 Dates and times are a famously dreaded topic among programmers, especially in combination with persistent data storage.
-We will only look at the very tip of the iceberg here, however you should keep in mind that there are many complexities that we will skip for now.
+We will only look at the very tip of the iceberg here.
+However, you should keep in mind that there are many complexities that we will skip for now.
 
 The three most important date/time data types are `date`, `time` and `timestamp`.
 
-The `date` data type allows you to store the date part (year, month, day) without time information.
+The `date` data type allows you to store the date part (year, month, day) without the time information.
 Consider this example:
 
 ```sql
@@ -226,7 +226,7 @@ This will return:
 | 2023-07-04 | date      |
 ```
 
-The `time` data type is basically the "complement" to the `date` type and allows you to store the time part (hours, minutes, seconds) without date information.
+The `time` data type is basically the "complement" to the `date` type and allows you to store the time part (hours, minutes, seconds) without the date information.
 Consider this example:
 
 ```sql
@@ -238,7 +238,7 @@ This will return:
 ```
 | time     | pg_typeof |
 | -------- | --------- |
-| 07:05:16 | date      |
+| 07:05:16 | time      |
 ```
 
 Finally, the `timestamp` data type allows us to store a date and a time.
@@ -246,7 +246,7 @@ This is also the most commonly used date/time data type (since you usually care 
 Consider this example:
 
 ```sql
-select '2023-07-04 07:05:16'::timestamp, pg_typeof('2023-07-04 07:05:16'::timestamp)
+select '2023-07-04 07:05:16'::timestamp, pg_typeof('2023-07-04 07:05:16'::timestamp);
 ```
 
 This will return:
@@ -265,7 +265,7 @@ There are additional data types like `timestamp with time zone` (if we want to s
 ### Enums
 
 Enumerated data types are data types which comprise a static (and also ordered) set of values.
-This is a bit similar to the union data type in TypeScript (although enums and union types _are not the same_).
+This is a bit similar to creating a union of literal types in TypeScript (although enums and union types _are not the same_).
 
 You can define an enum using the `create type` statement.
 For example, this is how we defined the `status` enum:
@@ -286,10 +286,10 @@ create table task (
 
 ### Constraints
 
-Often we want to limit the kind of data that can be stored in a table beyond just limiting the data types.
+Often, we want to limit the kind of data that can be stored in a table beyond just limiting the data types.
 This can be accomplished with **constraints**.
 
-The `unique` constraint is used to ensure that the data in column is unique among all the rows in a table.
+The `unique` constraint is used to ensure that the data in a column is unique among all the rows in a table.
 
 For example, we gave the `title` column the `unique` constraint to ensure that there will never be two tasks with the same title:
 
@@ -335,10 +335,11 @@ create table task (
 
 The `check` constraint is used to specify a condition that each row must satisfy for the value to be accepted into a column.
 
-We could have used this for the `status` column (by writing `check in ('todo', 'inprogress', 'done')`), however since we knew the values in advance, we were able to use an enum instead.
+We could have used this for the `status` column by writing `check in ('todo', 'inprogress', 'done')`.
+However, since we knew the values in advance, we were able to use an enum instead.
 Unlike enums though, check constraints allow more flexibility.
 
-For example we gave the `duration` column a constraint that its values must be greater than 0:
+For example, we can give the `duration` column a constraint that its values must be greater than 0:
 
 ```sql
 create table task (
@@ -349,7 +350,7 @@ create table task (
 ```
 
 The `default` constraint allows us to specify a default value for a column.
-If an insert operation does not provide a value for a column, PostgreSQL will automatically insert the specified value.
+If an insert operation doesn't provide a value for a column, PostgreSQL will automatically insert the specified value.
 
 In our example, we want the `created_at` value to simply be the current time and use the `default` constraint together with `current_timestamp` to accomplish that:
 

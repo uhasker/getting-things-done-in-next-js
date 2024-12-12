@@ -7,21 +7,27 @@
 Let's add projects to our application.
 Each project can contain multiple tasks and each task should belong to exactly one project.
 
-Now it might be tempting to simply add a project ID and name to each task row.
+It might be tempting to simply add a project ID and name to each task row.
 However, that would lead to a lot of redundant data.
-This is bad primarily because it means that if we update tasks or project we might make a mistake somewhere resulting in malformed data.
+After all, you would now have to repeat the project name over and over again.
+
+And consider what would happen once you add more project fields like a project description, status, etc.
+You would now have to repeat all these fields as well for every project.
+This will quickly become quite repetitive.
+
+Repeating this information is not just unwieldy, it means that if we update some project fields we might make a mistake somewhere resulting in malformed data.
 
 For example, we might forget to change a project name in some row.
 Suddenly we would have a project with one ID and two names.
 
-Therefore it is good practice to split data into multiple tables to reduce redundancy and improve data integrity.
+Therefore, it is good practice to split data into multiple tables to reduce redundancy and improve data integrity.
 Each table should contain data about a specific entity (like "task" or "project").
 
 The entities can then be linked together using **foreign keys**.
 
 ### Foreign Keys
 
-Let's create a project table:
+Let's create a `project` table:
 
 ```sql
 create table project (
@@ -30,7 +36,7 @@ create table project (
 );
 ```
 
-Let's add a column to the task table that will store the project ID:
+Let's add a column to the `task` table that will store the project ID:
 
 ```sql
 alter table task
@@ -40,26 +46,26 @@ add column project_id integer;
 Finally, we will establish a foreign key relationship.
 A foreign key is a column in one table that _links_ to the _primary key in another table_.
 
-Here the `project_id` should reference the `id` column in the `project` table:
+Here, the `project_id` column in the `task` table should _reference_ the `id` column in the `project` table:
 
 ```sql
 alter table task
 add constraint fk_project
 foreign key (project_id)
-references project(ID);
+references project(id);
 ```
 
-Note that foreign keys are another type of constraint.
-You can't insert a `task` into the task table if the `project_id` column doesn't reference some `task`.
+Note that foreign keys are basically just another type of constraint.
+You can't insert a task into the `task` table if the `project_id` column doesn't reference a valid project.
 
-For example:
+Consider this example:
 
 ```sql
 insert into task (title, description, duration, status, project_id) values
 ('Read the Next.js book', 'Read and understand the Next.js book.', 60, 'inprogress', 1);
 ```
 
-This will result in the following error:
+This statement would result in the following error:
 
 ```
 ERROR: 23503: insert or update on table "task" violates foreign key constraint "fk_project"
@@ -122,6 +128,8 @@ insert into task (title, description, duration, status, project_id) values
 Now let's query some data across both tables.
 For example, we might care about getting every task ID, title and status together with the project ID and name.
 
+To accomplish this, we need to query both the `task` and `project` table at the same time and join them on the project ID:
+
 ```sql
 select task.id as task_id, task.title as task_title, task.status as task_status, project.id as project_id, project.name as project_name
 from task
@@ -138,14 +146,18 @@ This would return:
 | 3       | Write a task app      | todo        | 2          | Gain practical experience |
 ```
 
-Note that the 'Have fun' project doesn't appear in the table since there are no corresponding tasks.
-The same goes for the 'Think of a funny joke' task.
+Pay attention to the way the `inner join` statement looks like.
+Here you join the `task` table with the `project` table on the statement `task.project_id = project.id`.
+This means that every time we have a task whose project ID is equal to _some_ ID of a project, the two records will appear in the same row in the final result.
+
+This is why the `Have fun` project doesn't appear in the table since there are no corresponding tasks.
+The same goes for the `Think of a funny joke` task.
 
 ### Outer Joins
 
-If we wanted tasks/project that don't have corresponding projects/tasks to appear as well, we would need to use an **outer join** - either a **left outer join** or a **right outer join**.
+If we wanted tasks or projects that don't have corresponding projects or tasks to appear as well, we would need to use an **outer join**—either a **left outer join** or a **right outer join**.
 
-For example, if we wanted to get all tasks that don't have any associated project, we would need to use a left join:
+For example, if we wanted to get all tasks that don't have any associated project, we could use a left join:
 
 ```sql
 select task.id as task_id, task.title as task_title, task.status as task_status, project.id as project_id, project.name as project_name
@@ -164,7 +176,7 @@ This would return:
 | 4       | Think of a funny joke | inprogress  |            |                           |
 ```
 
-Similarly, if we wanted to return all projects that don't have any associated tasks, we would need to use a right join:
+Similarly, if we wanted to return all projects that don't have any associated tasks, we could use a right join:
 
 ```sql
 select task.id as task_id, task.title as task_title, task.status as task_status, project.id as project_id, project.name as project_name
@@ -183,6 +195,8 @@ This would return:
 |         |                       |             | 3          | Have fun                  |
 ```
 
+Of course, you can achieve the same effect by using a left join here and just swapping the order of the `task` and `project` table in the statement.
+
 ### Association Tables
 
 So far the relationships we worked with were **one-to-many relationships** (or many-to-one relationships depending on your point of view).
@@ -192,7 +206,7 @@ Let's say that one task could belong to multiple projects at the same time.
 Since one project can have multiple tasks, we now have a many-to-many relationship.
 
 The way to model this in SQL is by using a **junction table** (also called an associative table).
-This table maps the two tables together.
+A junction table is a table whose sole purpose is to create a many-to-many relationship between two other tables.
 
 Consider the following `task` table:
 
@@ -228,7 +242,7 @@ create table project_task (
 );
 ```
 
-Next we could insert some data:
+Let's insert some projects and some tasks:
 
 ```sql
 insert into project (name) values ('Learn web development'), ('Gain practical experience'), ('Have fun');
@@ -239,7 +253,7 @@ insert into task (title, description, duration, status) values
 ('Think of a funny joke', 'Come up with a funny joke to lighten the mood.', 120, 'inprogress');
 ```
 
-Finally we need to link tasks to projects:
+Here is how we could then link tasks and projects:
 
 ```sql
 insert into project_task (project_id, task_id) values
@@ -248,7 +262,7 @@ insert into project_task (project_id, task_id) values
 
 Note that the task `'Write a task app'` is now linked to both the `'Learn web development'` and the `'Gain practical experience'` project.
 
-To query the data, we now need to perform a join over multiple tables:
+To query the data, we would need to perform a join over multiple tables:
 
 ```sql
 select p.name as project_name, t.title as task_title, t.status as task_status

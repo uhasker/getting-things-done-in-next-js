@@ -5,7 +5,7 @@
 ### Basics
 
 We will continue working with the inserted data from the last section.
-As a reminder this was the data that we inserted:
+As a reminder, this was the data that we've inserted:
 
 ```sql
 insert into task (title, description, duration, status) values
@@ -50,12 +50,12 @@ This would return:
 
 ### Filtering Results
 
-You can use the `where` clause to filter results.
-This clause takes one or multiple conditions.
+You can use the `where` clause to filter the results that are returned by the `select` statement.
+The `where` clause takes one or multiple conditions.
 
 The conditions can contain operators like `=`, `!=`, `<`, `<=`, `>`, `>=`.
 
-For example, here is how you could select all tasks that are in progress:
+For example, here is how you can select all tasks that are in progress:
 
 ```sql
 select id, title, status from task where status = 'inprogress';
@@ -87,7 +87,7 @@ This would return:
 
 You can use the `like` operator for more involved (string) comparisons.
 
-When using the `like` operator there are two characters of particular interest.
+When using the `like` operator, there are two characters of particular interest.
 The `%` character matches a sequence of zero or more characters.
 The `_` character matches a single character.
 
@@ -119,7 +119,7 @@ This would return:
 | 2  | Write a task app | Write an awesome task app. |
 ```
 
-You can check if a value exists in the list using the `in` operator:
+You can create a filter that checks if a value exists in a list by using the `in` operator:
 
 ```sql
 select id, title from task where status in ('todo', 'inprogress');
@@ -139,7 +139,9 @@ You can use the `and` and `or` keywords to combine conditions.
 For example, you could select all tasks that are in progress _and_ will take longer than 90 minutes:
 
 ```sql
-select id, title, status, duration from task where status = 'inprogress' and duration > 90;
+select id, title, status, duration
+from task
+where status = 'inprogress' and duration > 90;
 ```
 
 This would return:
@@ -153,7 +155,9 @@ This would return:
 You could also select all tasks that are in progress _or_ will take longer than 90 minutes:
 
 ```sql
-select id, title, status, duration from task where status = 'inprogress' or duration > 90;
+select id, title, status, duration
+from task
+where status = 'inprogress' or duration > 90;
 ```
 
 This would return:
@@ -167,10 +171,10 @@ This would return:
 
 ### Ordering and Limiting Results
 
-You can order the results using `order by`.
-To specify the ordering, you can use `asc` (ascending) or `desc` (descending).
+You can order the results using the `order by` keyword.
+To specify the ordering, you can use the `asc` (ascending) or `desc` (descending) keywords.
 
-Here is how would order the tasks by duration (ascending):
+Here is how you could order the tasks by duration (ascending):
 
 ```sql
 select id, title, duration from task order by duration asc;
@@ -186,7 +190,7 @@ This would return:
 | 3  | Think of a funny joke | 120      |
 ```
 
-Alternatively you could order the tasks by duration (descending):
+Alternatively, you could order the tasks by duration (descending):
 
 ```sql
 select id, title, duration from task order by duration desc;
@@ -202,7 +206,10 @@ This would return:
 | 2  | Write a task app      | 10       |
 ```
 
-You can limit results using `limit`:
+You can limit results using the `limit` clause.
+The `limit` clause allows you to limit the number of records to return.
+
+For example, here is how you could get the two tasks with the highest duration:
 
 ```sql
 select id, title, duration
@@ -220,7 +227,9 @@ This would return:
 | 1  | Read the Next.js book | 60       |
 ```
 
-Of course, you can use the `order by` and `limit` clauses together with the `where` clause:
+Of course, you can use the `order by` and `limit` clauses together with the `where` clause.
+
+For example, here is how you could get the longest task that has the status `inprogress`:
 
 ```sql
 select id, title, duration, status
