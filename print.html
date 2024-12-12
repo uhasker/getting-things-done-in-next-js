@@ -4981,9 +4981,9 @@ Your browser now sends another request to the URL that is indicated in the <code
 <div style="break-before: page; page-break-before: always;"></div><h1 id="chapter-4-persistence-with-sql"><a class="header" href="#chapter-4-persistence-with-sql">Chapter 4: Persistence with SQL</a></h1>
 <div style="text-align: right"> <i> SQL is the language of the ancestors, spoken to call forth truths hidden deep within data. <br> — Ancient Chinese proverb </i> </div
 <p>So far we've introduced the programming language that will power our project (TypeScript) and some relevant networking theory.</p>
-<p>But our users don't really care about the code we write nor the theory we know - they care about their <em>data</em>.
+<p>But our users don't really care about the code we write nor the theory we know—they care about their <em>data</em>.
 After all, the primary purpose of web applications is to ingest and show interesting data to the user.</p>
-<p>Of course, it would be really bad if after every page refresh that data would be lost - therefore we need a way to store data <em>persistenly</em> which is where <em>relational databases</em> and the SQL language come into play.</p>
+<p>Of course, it would be really bad if after every page refresh that data would be lost—therefore we need a way to store data <em>persistenly</em> which is where <em>relational databases</em> and the SQL language come into play.</p>
 <p>This chapter will introduce these concepts.</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="setup"><a class="header" href="#setup">Setup</a></h2>
 <div style="text-align: right"> <i> Setting up a database without planning is like sailing without a compass; sooner or later, you will lose your way. <br> — Ancient Chinese proverb </i> </div>
@@ -5003,9 +5003,9 @@ In this book, we will stick to a relational database called <strong>PostgreSQL</
 For this book, we will use <strong>Supabase</strong>, a service that will manage our relational databases for us.</p>
 <p>Go to <a href="https://supabase.com">Supabase</a>.
 Create a new project, give it a name and select a database password (which you should write down somewhere).</p>
-<p>Once you create the new project, go to "Project Settings &gt; Database" and copy and paste the URI connection string.
+<p>Once you've created the new project, go to "Project Settings &gt; Database" and copy and paste the URI connection string.
 Replace <code>[YOUR-PASSWORD]</code> with the password you gave the database in the previous step.</p>
-<p>Save the connection string somewhere, you will need it to - well - connect to the database.</p>
+<p>Save the connection string somewhere, you will need it to—well—connect to the database.</p>
 <p>Next, you should navigate to the Supabase SQL editor of your project to be able to execute queries.</p>
 <h3 id="table-creation"><a class="header" href="#table-creation">Table Creation</a></h3>
 <p>Consider a simple <code>task</code> table whose purpose is to persistently store created tasks.</p>
@@ -5015,7 +5015,7 @@ Replace <code>[YOUR-PASSWORD]</code> with the password you gave the database in 
 <p>We will also add two more columns for educational purposes.
 The <code>status</code> column will hold the status of the task.
 Additionally, the <code>duration</code> column will store the estimated duration of the task in minutes.</p>
-<p>Finally, it is good practice to always create a <code>created_at</code> column in every table, where we will stored the time at which the row was created.</p>
+<p>Finally, it is good practice to always have a <code>created_at</code> column in every table, where we will store the time at which the row was created.</p>
 <p>Let's create the <code>task</code> table.
 We can use the <code>create table</code> SQL statement to accomplish this.</p>
 <pre><code class="language-sql">create type status as enum ('todo', 'inprogress', 'done');
@@ -5030,9 +5030,9 @@ create table task (
 );
 </code></pre>
 <p>Note that each column has a name, a data type and optional constraints.
-Let's talk about data types and optional constraints in more detail in the next section.</p>
+We will talk about data types and optional constraints in more detail in the next subsection.</p>
 <h3 id="inserting-and-selecting-data"><a class="header" href="#inserting-and-selecting-data">Inserting and Selecting Data</a></h3>
-<p>Now that we have created the table, we can use SQL statements to create, read, update or delete data.</p>
+<p>Now that we've created the table, we can use SQL statements to create, read, update or delete data.</p>
 <p>For example, we can insert some data using the <code>insert</code> statement:</p>
 <pre><code class="language-sql">insert into task (title, description, duration, status) values
 ('Read the Next.js book', 'Read and understand the Next.js book.', 60, 'inprogress');
@@ -5049,10 +5049,10 @@ Let's talk about data types and optional constraints in more detail in the next 
 Let's delete the data we have inserted so far to have a clean setup for the next section:</p>
 <pre><code class="language-sql">delete from task;
 </code></pre>
-<p>We will discuss these statement in more detail in later sections.</p>
+<p>We will discuss these statements in more detail in later sections.</p>
 <blockquote>
-<p>Note that when executing an SQL statement in Supabase, you don't necessarily need to provide the semilicon.
-However in other SQL clients you will need to semicolon and so we will always write it for consistency.</p>
+<p>Note that when executing an SQL statement in Supabase, you don't necessarily need to provide the semicolon.
+However, in other SQL clients you will need the semicolon and so we will always write it for consistency.</p>
 </blockquote>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="data-types-and-constraints"><a class="header" href="#data-types-and-constraints">Data Types and Constraints</a></h2>
 <div style="text-align: right"> <i> A primary key is the compass of a table; it guides every row to its unique destiny. <br> — Ancient Chinese proverb </i> </div>
@@ -5062,11 +5062,11 @@ You usually use this data type for counts, identifiers etc.</p>
 <p>In our example, we use <code>integer</code> for the <code>duration</code> column of the <code>task</code> table.</p>
 <p>Note that there are actually multiple integer data types in PostgreSQL.
 The <code>smallint</code> data type allows you to store "small-range integers" and the <code>bigint</code> data type allows you to store "large-range integers".</p>
-<p>The difference between <code>smallint</code>, <code>integer</code> and <code>bigint</code> is basically the minimum and maximum integers that can be stored.</p>
+<p>The difference between <code>smallint</code>, <code>integer</code> and <code>bigint</code> is basically the number of bytes they contain which impacts the minimum and maximum integers that can be stored.</p>
 <p>A <code>smallint</code> value has 2 bytes, i.e. it can store values from <code>-32768</code> up to <code>32767</code>.</p>
 <p>An <code>integer</code> value has 4 bytes, i.e. it can store values from <code>-2147483648</code> up to <code>2147483647</code>.</p>
-<p>An <code>bigint</code> value has 8 bytes, i.e. it can store values from <code>-9223372036854775808</code> up to <code>9223372036854775807</code>.</p>
-<p>For most regular web applications, <code>integer</code> values are more than enough and by default, PostgreSQL uses <code>integer</code> values for numbers.
+<p>A <code>bigint</code> value has 8 bytes, i.e. it can store values from <code>-9223372036854775808</code> up to <code>9223372036854775807</code>.</p>
+<p>For most regular web applications, <code>integer</code> values are more than enough, and by default, PostgreSQL uses <code>integer</code> values for numbers.
 Consider this example:</p>
 <pre><code class="language-sql">select 41234, pg_typeof(41234);
 </code></pre>
@@ -5077,9 +5077,9 @@ Consider this example:</p>
 </code></pre>
 <blockquote>
 <p>The <code>pg_typeof</code> operator returns the data type of an expression.
-Additionally you should ignore the column names in this section - only the column values are relevant for now.</p>
+Additionally, you should ignore the column names in this section—only the column values are relevant for us here.</p>
 </blockquote>
-<p>By default integers have the type <code>integer</code> even if they could be <code>smallint</code>.
+<p>Note that by default integers have the type <code>integer</code> even if they could be <code>smallint</code>.
 Consider this example:</p>
 <pre><code class="language-sql">select 42, pg_typeof(42);
 </code></pre>
@@ -5092,14 +5092,14 @@ Consider this example:</p>
 <pre><code class="language-sql">select 42::smallint, pg_typeof(42::smallint);
 </code></pre>
 <blockquote>
-<p>Note that <code>::</code> is a PostgreSQL - specific operator and not part of the official SQL standard.</p>
+<p>Note that <code>::</code> is a PostgreSQL-specific operator and not part of the official SQL standard.</p>
 </blockquote>
 <p>This will return:</p>
 <pre><code>| int2 | pg_typeof |
 | ---- | --------- |
 | 42   | smallint  |
 </code></pre>
-<p>Of course, if you provide a <code>bigint</code> value, PostgreSQL will use the <code>bigint</code> data type, since <code>bigint</code> would not fit into <code>integer</code>:</p>
+<p>Of course, if you provide a <code>bigint</code> value, PostgreSQL will use the <code>bigint</code> data type, since <code>bigint</code> doesn't fit into <code>integer</code>:</p>
 <pre><code class="language-sql">select 2147483652, pg_typeof(2147483652);
 </code></pre>
 <p>This will return:</p>
@@ -5107,16 +5107,16 @@ Consider this example:</p>
 | ---------- | --------- |
 | 2147483652 | bigint    |
 </code></pre>
-<p>Note that if you would try to convert this value to an <code>integer</code>, you would get an error.
+<p>If you would try to convert this value to an <code>integer</code>, you would get an error.
 For example, trying to execute <code>select 2147483652::integer</code> would result in the error <code>ERROR: 22003: integer out of range</code>.</p>
 <p>The <code>serial</code> data type allows you to represent <em>autoincrementing</em> integers (along with <code>smallserial</code> and <code>bigserial</code>).
 This makes <code>serial</code> very useful for unique identifiers since you don't need to handle the incrementing logic yourself.</p>
 <p>In the <code>task</code> table, the <code>id</code> column has the <code>serial</code> data type.</p>
 <blockquote>
 <p>Note that there are many other data types and strategies for automatically handling unique identifiers.
-<em>Usually</em> it doesn't matter, so in this chapter we will stick to the <code>serial</code> data type.</p>
+For <em>simple</em> applications it doesn't matter, so in this chapter we will stick to the <code>serial</code> data type.</p>
 </blockquote>
-<p>PostgreSQL knows four data types for storing real numbers - <code>decimal</code>, <code>numeric</code>, <code>real</code> and <code>double precision</code>.</p>
+<p>PostgreSQL knows four data types for storing real numbers—<code>decimal</code>, <code>numeric</code>, <code>real</code> and <code>double precision</code>.</p>
 <p>The <code>decimal</code> and <code>numeric</code> types are equivalent and allow you to store numbers with a very large number of digits.
 These data types are recommended for quantities where your floating-point calculations need to be exact (e.g. when working with money).</p>
 <p>By default, PostgreSQL will use <code>numeric</code> for floating-point numbers:</p>
@@ -5149,9 +5149,8 @@ Consider this example:</p>
 <p>Note that you have a precision of <code>15</code> digits now (which is more than the <code>real</code> data type, but still not enough to represent the number in the given example).</p>
 <h3 id="character-data-types"><a class="header" href="#character-data-types">Character Data Types</a></h3>
 <p>PostgreSQL supports the <code>char(n)</code>, <code>varchar(n)</code> and <code>text</code> data types for storing characters and strings.</p>
-<p>The <code>char(n)</code> and <code>varchar(n)</code> data types can store strings up to <code>n</code> characters in length.
-If you try to store more than <code>n</code> characters, the string will be silently truncated.</p>
-<p>For example:</p>
+<p>The <code>char(n)</code> and <code>varchar(n)</code> data types can store strings up to <code>n</code> characters in length.</p>
+<p>For example, conversions to <code>char(n)</code> and <code>varchar(n)</code> would silently truncate the string:</p>
 <pre><code class="language-sql">select 'Next.js book'::char(3), pg_typeof('Next.js book'::char(3));
 </code></pre>
 <p>This will return:</p>
@@ -5183,9 +5182,10 @@ For example:</p>
 </blockquote>
 <h3 id="datetime-data-types"><a class="header" href="#datetime-data-types">Date/Time Data Types</a></h3>
 <p>Dates and times are a famously dreaded topic among programmers, especially in combination with persistent data storage.
-We will only look at the very tip of the iceberg here, however you should keep in mind that there are many complexities that we will skip for now.</p>
+We will only look at the very tip of the iceberg here.
+However, you should keep in mind that there are many complexities that we will skip for now.</p>
 <p>The three most important date/time data types are <code>date</code>, <code>time</code> and <code>timestamp</code>.</p>
-<p>The <code>date</code> data type allows you to store the date part (year, month, day) without time information.
+<p>The <code>date</code> data type allows you to store the date part (year, month, day) without the time information.
 Consider this example:</p>
 <pre><code class="language-sql">select '2023-07-04'::date, pg_typeof('2023-07-04'::date);
 </code></pre>
@@ -5194,19 +5194,19 @@ Consider this example:</p>
 | ---------- | --------- |
 | 2023-07-04 | date      |
 </code></pre>
-<p>The <code>time</code> data type is basically the "complement" to the <code>date</code> type and allows you to store the time part (hours, minutes, seconds) without date information.
+<p>The <code>time</code> data type is basically the "complement" to the <code>date</code> type and allows you to store the time part (hours, minutes, seconds) without the date information.
 Consider this example:</p>
 <pre><code class="language-sql">select '07:05:16'::time, pg_typeof('07:05:16'::time);
 </code></pre>
 <p>This will return:</p>
 <pre><code>| time     | pg_typeof |
 | -------- | --------- |
-| 07:05:16 | date      |
+| 07:05:16 | time      |
 </code></pre>
 <p>Finally, the <code>timestamp</code> data type allows us to store a date and a time.
 This is also the most commonly used date/time data type (since you usually care about the date <em>and</em> time).
 Consider this example:</p>
-<pre><code class="language-sql">select '2023-07-04 07:05:16'::timestamp, pg_typeof('2023-07-04 07:05:16'::timestamp)
+<pre><code class="language-sql">select '2023-07-04 07:05:16'::timestamp, pg_typeof('2023-07-04 07:05:16'::timestamp);
 </code></pre>
 <p>This will return:</p>
 <pre><code>| timestamp           | pg_typeof                   |
@@ -5218,7 +5218,7 @@ Since we care about the date and the time, we use the <code>timestamp</code> dat
 <p>There are additional data types like <code>timestamp with time zone</code> (if we want to store the time zone with the timestamp), however for now we have enough data types to confidently work with dates and times in <em>simple</em> applications.</p>
 <h3 id="enums"><a class="header" href="#enums">Enums</a></h3>
 <p>Enumerated data types are data types which comprise a static (and also ordered) set of values.
-This is a bit similar to the union data type in TypeScript (although enums and union types <em>are not the same</em>).</p>
+This is a bit similar to creating a union of literal types in TypeScript (although enums and union types <em>are not the same</em>).</p>
 <p>You can define an enum using the <code>create type</code> statement.
 For example, this is how we defined the <code>status</code> enum:</p>
 <pre><code class="language-sql">create type status as enum ('todo', 'inprogress', 'done');
@@ -5231,9 +5231,9 @@ For example, this is how we defined the <code>status</code> enum:</p>
 );
 </code></pre>
 <h3 id="constraints"><a class="header" href="#constraints">Constraints</a></h3>
-<p>Often we want to limit the kind of data that can be stored in a table beyond just limiting the data types.
+<p>Often, we want to limit the kind of data that can be stored in a table beyond just limiting the data types.
 This can be accomplished with <strong>constraints</strong>.</p>
-<p>The <code>unique</code> constraint is used to ensure that the data in column is unique among all the rows in a table.</p>
+<p>The <code>unique</code> constraint is used to ensure that the data in a column is unique among all the rows in a table.</p>
 <p>For example, we gave the <code>title</code> column the <code>unique</code> constraint to ensure that there will never be two tasks with the same title:</p>
 <pre><code class="language-sql">create table task (
     -- code
@@ -5263,9 +5263,10 @@ If a column is marked as <code>primary key</code>, its values must be <code>uniq
 );
 </code></pre>
 <p>The <code>check</code> constraint is used to specify a condition that each row must satisfy for the value to be accepted into a column.</p>
-<p>We could have used this for the <code>status</code> column (by writing <code>check in ('todo', 'inprogress', 'done')</code>), however since we knew the values in advance, we were able to use an enum instead.
+<p>We could have used this for the <code>status</code> column by writing <code>check in ('todo', 'inprogress', 'done')</code>.
+However, since we knew the values in advance, we were able to use an enum instead.
 Unlike enums though, check constraints allow more flexibility.</p>
-<p>For example we gave the <code>duration</code> column a constraint that its values must be greater than 0:</p>
+<p>For example, we can give the <code>duration</code> column a constraint that its values must be greater than 0:</p>
 <pre><code class="language-sql">create table task (
     -- code
     duration integer check (duration &gt; 0),
@@ -5273,7 +5274,7 @@ Unlike enums though, check constraints allow more flexibility.</p>
 );
 </code></pre>
 <p>The <code>default</code> constraint allows us to specify a default value for a column.
-If an insert operation does not provide a value for a column, PostgreSQL will automatically insert the specified value.</p>
+If an insert operation doesn't provide a value for a column, PostgreSQL will automatically insert the specified value.</p>
 <p>In our example, we want the <code>created_at</code> value to simply be the current time and use the <code>default</code> constraint together with <code>current_timestamp</code> to accomplish that:</p>
 <pre><code class="language-sql">create table task (
     -- code
@@ -5284,7 +5285,8 @@ If an insert operation does not provide a value for a column, PostgreSQL will au
 <div style="text-align: right"> <i> To update is to change the course of a river; done wisely, it nourishes more land, done poorly, it leads to flood. <br> — Ancient Chinese proverb </i> </div>
 <h3 id="inserting-data"><a class="header" href="#inserting-data">Inserting Data</a></h3>
 <p>To insert rows into a table, you use the <code>insert</code> statement.
-Here you need to declare the table to write to, the columns to fill and one or more rows of data to insert:</p>
+Here, you need to declare the table to write to, the columns to fill and one or more rows of data to insert.</p>
+<p>Let's insert some values into our <code>task</code> table:</p>
 <pre><code class="language-sql">insert into task (title, description, duration, status) values
 ('Read the Next.js book', 'Read and understand the Next.js book.', 60, 'inprogress'),
 ('Write a task app', 'Write an awesome task app.', 10, 'todo'),
@@ -5295,11 +5297,11 @@ After all, the <code>id</code> value has the <code>serial</code> data type, so P
 Additionally, the <code>created_at</code> column has a <code>default</code> constraint, so PostgreSQL will automatically create new values for this column too.</p>
 <p>It's crucial to ensure that the inserted data respects the constraints we defined earlier.</p>
 <p>For example, we need to respect the <code>check</code> constraint on the <code>duration</code> column.
-This statement wouldn't work:</p>
+This statement wouldn't work because it would violate this constraint:</p>
 <pre><code class="language-sql">insert into task (title, description, duration, status) values
 ('Read the Next.js book', 'Read and understand the Next.js book', -10, 'todo');
 </code></pre>
-<p>You would get the following error:</p>
+<p>We would get the following error:</p>
 <pre><code>ERROR:  23514: new row for relation "task" violates check constraint "task_duration_check"
 </code></pre>
 <p>We would get a similar error if we would try to insert a <code>null</code> value into a column that declares a <code>not null</code> constraint:</p>
@@ -5311,7 +5313,8 @@ This statement wouldn't work:</p>
 </code></pre>
 <h3 id="updating-data"><a class="header" href="#updating-data">Updating Data</a></h3>
 <p>You can update rows using the <code>update</code> statement.
-Here you need to specify which table, which columns and which rows to update:</p>
+Here you need to specify the table, the columns and the rows to update.</p>
+<p>The following statement would set all tasks with the ID <code>1</code> to <code>done</code>:</p>
 <pre><code class="language-sql">update task
 set status = 'done'
 where id = 1;
@@ -5325,11 +5328,12 @@ where id = 1;
 If you make a mistake in the <code>where</code> clause you can update rows that you never intended to change.</p>
 <h3 id="deleting-data"><a class="header" href="#deleting-data">Deleting Data</a></h3>
 <p>You can delete rows using the <code>delete</code> statement.
-Here you need to specify which table to use and which rows to remove:</p>
+Here you need to specify which table to use and which rows to remove.</p>
+<p>The following statement would delete all <code>done</code> tasks from the <code>task</code> table:</p>
 <pre><code class="language-sql">delete from task
 where status = 'done';
 </code></pre>
-<p>If you don't specify a filter all data will be deleted:</p>
+<p>If you don't specify a filter <em>all</em> data will be deleted:</p>
 <pre><code class="language-sql">delete from task;
 </code></pre>
 <p>Again, you should be very careful when deleting data.
@@ -5338,7 +5342,7 @@ If you make a mistake in the <code>where</code> clause you will delete rows that
 <div style="text-align: right"> <i> A query without limits is like a river without banks — overflowing and uncontrollable. <br> — Ancient Chinese proverb </i> </div>
 <h3 id="basics"><a class="header" href="#basics">Basics</a></h3>
 <p>We will continue working with the inserted data from the last section.
-As a reminder this was the data that we inserted:</p>
+As a reminder, this was the data that we've inserted:</p>
 <pre><code class="language-sql">insert into task (title, description, duration, status) values
 ('Read the Next.js book', 'Read and understand the Next.js book.', 60, 'inprogress'),
 ('Write a task app', 'Write an awesome task app.', 10, 'todo'),
@@ -5366,10 +5370,10 @@ As a reminder this was the data that we inserted:</p>
 | 3  | Think of a funny joke | Come up with a funny joke to lighten the mood. | inprogress | 120      | 2024-04-19 14:26:44.726311 |
 </code></pre>
 <h3 id="filtering-results"><a class="header" href="#filtering-results">Filtering Results</a></h3>
-<p>You can use the <code>where</code> clause to filter results.
-This clause takes one or multiple conditions.</p>
+<p>You can use the <code>where</code> clause to filter the results that are returned by the <code>select</code> statement.
+The <code>where</code> clause takes one or multiple conditions.</p>
 <p>The conditions can contain operators like <code>=</code>, <code>!=</code>, <code>&lt;</code>, <code>&lt;=</code>, <code>&gt;</code>, <code>&gt;=</code>.</p>
-<p>For example, here is how you could select all tasks that are in progress:</p>
+<p>For example, here is how you can select all tasks that are in progress:</p>
 <pre><code class="language-sql">select id, title, status from task where status = 'inprogress';
 </code></pre>
 <p>This would return:</p>
@@ -5388,7 +5392,7 @@ This clause takes one or multiple conditions.</p>
 | 3  | Think of a funny joke | 120      |
 </code></pre>
 <p>You can use the <code>like</code> operator for more involved (string) comparisons.</p>
-<p>When using the <code>like</code> operator there are two characters of particular interest.
+<p>When using the <code>like</code> operator, there are two characters of particular interest.
 The <code>%</code> character matches a sequence of zero or more characters.
 The <code>_</code> character matches a single character.</p>
 <p>For example, you could match all tasks that contain the sequence "book" somewhere in the description like this:</p>
@@ -5407,7 +5411,7 @@ The <code>_</code> character matches a single character.</p>
 | -- | ---------------- | -------------------------- |
 | 2  | Write a task app | Write an awesome task app. |
 </code></pre>
-<p>You can check if a value exists in the list using the <code>in</code> operator:</p>
+<p>You can create a filter that checks if a value exists in a list by using the <code>in</code> operator:</p>
 <pre><code class="language-sql">select id, title from task where status in ('todo', 'inprogress');
 </code></pre>
 <p>This would return:</p>
@@ -5419,7 +5423,9 @@ The <code>_</code> character matches a single character.</p>
 </code></pre>
 <p>You can use the <code>and</code> and <code>or</code> keywords to combine conditions.
 For example, you could select all tasks that are in progress <em>and</em> will take longer than 90 minutes:</p>
-<pre><code class="language-sql">select id, title, status, duration from task where status = 'inprogress' and duration &gt; 90;
+<pre><code class="language-sql">select id, title, status, duration
+from task
+where status = 'inprogress' and duration &gt; 90;
 </code></pre>
 <p>This would return:</p>
 <pre><code>| id | title                 | status     | duration |
@@ -5427,7 +5433,9 @@ For example, you could select all tasks that are in progress <em>and</em> will t
 | 3  | Think of a funny joke | inprogress | 120      |
 </code></pre>
 <p>You could also select all tasks that are in progress <em>or</em> will take longer than 90 minutes:</p>
-<pre><code class="language-sql">select id, title, status, duration from task where status = 'inprogress' or duration &gt; 90;
+<pre><code class="language-sql">select id, title, status, duration
+from task
+where status = 'inprogress' or duration &gt; 90;
 </code></pre>
 <p>This would return:</p>
 <pre><code>| id | title                 | status     | duration |
@@ -5436,9 +5444,9 @@ For example, you could select all tasks that are in progress <em>and</em> will t
 | 3  | Think of a funny joke | inprogress | 120      |
 </code></pre>
 <h3 id="ordering-and-limiting-results"><a class="header" href="#ordering-and-limiting-results">Ordering and Limiting Results</a></h3>
-<p>You can order the results using <code>order by</code>.
-To specify the ordering, you can use <code>asc</code> (ascending) or <code>desc</code> (descending).</p>
-<p>Here is how would order the tasks by duration (ascending):</p>
+<p>You can order the results using the <code>order by</code> keyword.
+To specify the ordering, you can use the <code>asc</code> (ascending) or <code>desc</code> (descending) keywords.</p>
+<p>Here is how you could order the tasks by duration (ascending):</p>
 <pre><code class="language-sql">select id, title, duration from task order by duration asc;
 </code></pre>
 <p>This would return:</p>
@@ -5448,7 +5456,7 @@ To specify the ordering, you can use <code>asc</code> (ascending) or <code>desc<
 | 1  | Read the Next.js book | 60       |
 | 3  | Think of a funny joke | 120      |
 </code></pre>
-<p>Alternatively you could order the tasks by duration (descending):</p>
+<p>Alternatively, you could order the tasks by duration (descending):</p>
 <pre><code class="language-sql">select id, title, duration from task order by duration desc;
 </code></pre>
 <p>This would return:</p>
@@ -5458,7 +5466,9 @@ To specify the ordering, you can use <code>asc</code> (ascending) or <code>desc<
 | 1  | Read the Next.js book | 60       |
 | 2  | Write a task app      | 10       |
 </code></pre>
-<p>You can limit results using <code>limit</code>:</p>
+<p>You can limit results using the <code>limit</code> clause.
+The <code>limit</code> clause allows you to limit the number of records to return.</p>
+<p>For example, here is how you could get the two tasks with the highest duration:</p>
 <pre><code class="language-sql">select id, title, duration
 from task
 order by duration desc
@@ -5470,7 +5480,8 @@ limit 2;
 | 3  | Think of a funny joke | 120      |
 | 1  | Read the Next.js book | 60       |
 </code></pre>
-<p>Of course, you can use the <code>order by</code> and <code>limit</code> clauses together with the <code>where</code> clause:</p>
+<p>Of course, you can use the <code>order by</code> and <code>limit</code> clauses together with the <code>where</code> clause.</p>
+<p>For example, here is how you could get the longest task that has the status <code>inprogress</code>:</p>
 <pre><code class="language-sql">select id, title, duration, status
 from task
 where status = 'inprogress'
@@ -5484,10 +5495,13 @@ limit 1;
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="modifying-tables"><a class="header" href="#modifying-tables">Modifying Tables</a></h2>
 <div style="text-align: right"> <i> A drop statement is a swift sword; one stroke can sever years of growth. <br> — Ancient Chinese proverb </i> </div>
-<p>Remember how our task table looks like right now:</p>
-<pre><code class="language-sql">create table task (
+<h3 id="the-task-table"><a class="header" href="#the-task-table">The Task Table</a></h3>
+<p>Remember that our <code>task</code> table looks like this at the moment:</p>
+<pre><code class="language-sql">create type status as enum ('todo', 'inprogress', 'done');
+
+create table task (
     id serial primary key,
-    title text not null,
+    title text not null unique,
     description text not null,
     status status,
     duration integer check (duration &gt; 0),
@@ -5495,77 +5509,93 @@ limit 1;
 );
 </code></pre>
 <h3 id="adding-and-dropping-columns"><a class="header" href="#adding-and-dropping-columns">Adding and Dropping Columns</a></h3>
-<p>To add a column use the <code>alter table ... add column</code> statement:</p>
-<pre><code class="language-sql">alter table task add column priority text;
+<p>To add a column, we can use the <code>alter table ... add column</code> statement.</p>
+<p>For example, here is how we can add a <code>priority</code> column that has the <code>text</code> data type:</p>
+<pre><code class="language-sql">alter table task
+add column priority text;
 </code></pre>
-<p>You could add constraints here:</p>
-<pre><code class="language-sql">alter table task add column priority text check (priority in ('low', 'medium', 'high'));
+<p>When adding a column, we can also specify constraints on it.</p>
+<p>For example, here is how we can add a <code>priority</code> column with a <code>check</code> constraint:</p>
+<pre><code class="language-sql">alter table task
+add column priority text
+check (priority in ('low', 'medium', 'high'));
 </code></pre>
-<p>You can use the <code>alter table ... drop column</code> statement to remove a column:</p>
+<p>You can use the <code>alter table ... drop column</code> statement to remove a column.</p>
+<p>For example, here is how we can drop the <code>priority</code> column again:</p>
 <pre><code class="language-sql">alter table task
 drop column priority;
 </code></pre>
 <h3 id="adding-and-dropping-constraints"><a class="header" href="#adding-and-dropping-constraints">Adding and Dropping Constraints</a></h3>
-<p>You can add a new constraint to a column using the <code>alter table ... add constraint</code> statement:</p>
+<p>You can add a new constraint to a column using the <code>alter table ... add constraint</code> statement.</p>
+<p>For example, here is how we can add a <code>check</code> constraint to the <code>duration</code> column:</p>
 <pre><code class="language-sql">alter table task
 add constraint check_duration_max check (duration &lt;= 600);
 </code></pre>
-<p>You can drop an existing constraint to a column using the <code>alter table ... drop constraint</code> statement:</p>
+<p>You can drop an existing constraint from a column using the <code>alter table ... drop constraint</code> statement.</p>
+<p>Let's undo the addition of the <code>check</code> constraint:</p>
 <pre><code class="language-sql">alter table task
 drop constraint check_duration_max;
 </code></pre>
 <h3 id="renaming-columns-and-tables"><a class="header" href="#renaming-columns-and-tables">Renaming Columns and Tables</a></h3>
-<p>You can rename a column using the <code>alter table ... rename column</code> statement:</p>
+<p>You can rename a column using the <code>alter table ... rename column</code> statement.</p>
+<p>For example, here is how you can rename the column <code>description</code> to <code>details</code>:</p>
 <pre><code class="language-sql">alter table task
 rename column description to details;
 </code></pre>
-<p>You can rename an entire table using the <code>alter table rename ...</code> statement:</p>
+<p>You can rename an entire table using the <code>alter table rename ...</code> statement.</p>
+<p>For example, here is how you can rename the <code>task</code> table to <code>task_list</code>:</p>
 <pre><code class="language-sql">alter table task
 rename to task_list;
 </code></pre>
 <h3 id="removing-tables"><a class="header" href="#removing-tables">Removing Tables</a></h3>
-<p>You can remove an entire table using the <code>drop table</code> statement:</p>
+<p>You can remove an entire table using the <code>drop table</code> statement.</p>
+<p>For example, here is how you can remove the <code>task</code> table completely:</p>
 <pre><code class="language-sql">drop table task;
 </code></pre>
+<p>It hopefully goes without saying that you should be very careful when removing an entire table, as you will also remove all the data it currently stores.</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="working-with-multiple-tables"><a class="header" href="#working-with-multiple-tables">Working with Multiple Tables</a></h2>
 <div style="text-align: right"> <i> Joins are like bamboo bridges, they connect distant tables as if they were neighbors. <br> — Ancient Chinese proverb </i> </div>
 <h3 id="adding-projects"><a class="header" href="#adding-projects">Adding Projects</a></h3>
 <p>Let's add projects to our application.
 Each project can contain multiple tasks and each task should belong to exactly one project.</p>
-<p>Now it might be tempting to simply add a project ID and name to each task row.
+<p>It might be tempting to simply add a project ID and name to each task row.
 However, that would lead to a lot of redundant data.
-This is bad primarily because it means that if we update tasks or project we might make a mistake somewhere resulting in malformed data.</p>
+After all, you would now have to repeat the project name over and over again.</p>
+<p>And consider what would happen once you add more project fields like a project description, status, etc.
+You would now have to repeat all these fields as well for every project.
+This will quickly become quite repetitive.</p>
+<p>Repeating this information is not just unwieldy, it means that if we update some project fields we might make a mistake somewhere resulting in malformed data.</p>
 <p>For example, we might forget to change a project name in some row.
 Suddenly we would have a project with one ID and two names.</p>
-<p>Therefore it is good practice to split data into multiple tables to reduce redundancy and improve data integrity.
+<p>Therefore, it is good practice to split data into multiple tables to reduce redundancy and improve data integrity.
 Each table should contain data about a specific entity (like "task" or "project").</p>
 <p>The entities can then be linked together using <strong>foreign keys</strong>.</p>
 <h3 id="foreign-keys"><a class="header" href="#foreign-keys">Foreign Keys</a></h3>
-<p>Let's create a project table:</p>
+<p>Let's create a <code>project</code> table:</p>
 <pre><code class="language-sql">create table project (
     id serial primary key,
     name varchar(255) not null
 );
 </code></pre>
-<p>Let's add a column to the task table that will store the project ID:</p>
+<p>Let's add a column to the <code>task</code> table that will store the project ID:</p>
 <pre><code class="language-sql">alter table task
 add column project_id integer;
 </code></pre>
 <p>Finally, we will establish a foreign key relationship.
 A foreign key is a column in one table that <em>links</em> to the <em>primary key in another table</em>.</p>
-<p>Here the <code>project_id</code> should reference the <code>id</code> column in the <code>project</code> table:</p>
+<p>Here, the <code>project_id</code> column in the <code>task</code> table should <em>reference</em> the <code>id</code> column in the <code>project</code> table:</p>
 <pre><code class="language-sql">alter table task
 add constraint fk_project
 foreign key (project_id)
-references project(ID);
+references project(id);
 </code></pre>
-<p>Note that foreign keys are another type of constraint.
-You can't insert a <code>task</code> into the task table if the <code>project_id</code> column doesn't reference some <code>task</code>.</p>
-<p>For example:</p>
+<p>Note that foreign keys are basically just another type of constraint.
+You can't insert a task into the <code>task</code> table if the <code>project_id</code> column doesn't reference a valid project.</p>
+<p>Consider this example:</p>
 <pre><code class="language-sql">insert into task (title, description, duration, status, project_id) values
 ('Read the Next.js book', 'Read and understand the Next.js book.', 60, 'inprogress', 1);
 </code></pre>
-<p>This will result in the following error:</p>
+<p>This statement would result in the following error:</p>
 <pre><code>ERROR: 23503: insert or update on table "task" violates foreign key constraint "fk_project"
 DETAIL: Key (project_id)=(1) is not present in table "project".
 </code></pre>
@@ -5603,6 +5633,7 @@ insert into task (title, description, duration, status, project_id) values
 </code></pre>
 <p>Now let's query some data across both tables.
 For example, we might care about getting every task ID, title and status together with the project ID and name.</p>
+<p>To accomplish this, we need to query both the <code>task</code> and <code>project</code> table at the same time and join them on the project ID:</p>
 <pre><code class="language-sql">select task.id as task_id, task.title as task_title, task.status as task_status, project.id as project_id, project.name as project_name
 from task
 inner join project on task.project_id = project.id;
@@ -5614,11 +5645,14 @@ inner join project on task.project_id = project.id;
 | 2       | Read the Next.js docs | inprogress  | 1          | Learn web development     |
 | 3       | Write a task app      | todo        | 2          | Gain practical experience |
 </code></pre>
-<p>Note that the 'Have fun' project doesn't appear in the table since there are no corresponding tasks.
-The same goes for the 'Think of a funny joke' task.</p>
+<p>Pay attention to the way the <code>inner join</code> statement looks like.
+Here you join the <code>task</code> table with the <code>project</code> table on the statement <code>task.project_id = project.id</code>.
+This means that every time we have a task whose project ID is equal to <em>some</em> ID of a project, the two records will appear in the same row in the final result.</p>
+<p>This is why the <code>Have fun</code> project doesn't appear in the table since there are no corresponding tasks.
+The same goes for the <code>Think of a funny joke</code> task.</p>
 <h3 id="outer-joins"><a class="header" href="#outer-joins">Outer Joins</a></h3>
-<p>If we wanted tasks/project that don't have corresponding projects/tasks to appear as well, we would need to use an <strong>outer join</strong> - either a <strong>left outer join</strong> or a <strong>right outer join</strong>.</p>
-<p>For example, if we wanted to get all tasks that don't have any associated project, we would need to use a left join:</p>
+<p>If we wanted tasks or projects that don't have corresponding projects or tasks to appear as well, we would need to use an <strong>outer join</strong>—either a <strong>left outer join</strong> or a <strong>right outer join</strong>.</p>
+<p>For example, if we wanted to get all tasks that don't have any associated project, we could use a left join:</p>
 <pre><code class="language-sql">select task.id as task_id, task.title as task_title, task.status as task_status, project.id as project_id, project.name as project_name
 from task
 left join project on task.project_id = project.id;
@@ -5631,7 +5665,7 @@ left join project on task.project_id = project.id;
 | 3       | Write a task app      | todo        | 2          | Gain practical experience |
 | 4       | Think of a funny joke | inprogress  |            |                           |
 </code></pre>
-<p>Similarly, if we wanted to return all projects that don't have any associated tasks, we would need to use a right join:</p>
+<p>Similarly, if we wanted to return all projects that don't have any associated tasks, we could use a right join:</p>
 <pre><code class="language-sql">select task.id as task_id, task.title as task_title, task.status as task_status, project.id as project_id, project.name as project_name
 from task
 right join project on task.project_id = project.id;
@@ -5644,13 +5678,14 @@ right join project on task.project_id = project.id;
 | 3       | Write a task app      | todo        | 2          | Gain practical experience |
 |         |                       |             | 3          | Have fun                  |
 </code></pre>
+<p>Of course, you can achieve the same effect by using a left join here and just swapping the order of the <code>task</code> and <code>project</code> table in the statement.</p>
 <h3 id="association-tables"><a class="header" href="#association-tables">Association Tables</a></h3>
 <p>So far the relationships we worked with were <strong>one-to-many relationships</strong> (or many-to-one relationships depending on your point of view).
 However, often we need to work with <strong>many-to-many relationships</strong> instead.</p>
 <p>Let's say that one task could belong to multiple projects at the same time.
 Since one project can have multiple tasks, we now have a many-to-many relationship.</p>
 <p>The way to model this in SQL is by using a <strong>junction table</strong> (also called an associative table).
-This table maps the two tables together.</p>
+A junction table is a table whose sole purpose is to create a many-to-many relationship between two other tables.</p>
 <p>Consider the following <code>task</code> table:</p>
 <pre><code class="language-sql">create table task (
     id serial primary key,
@@ -5676,7 +5711,7 @@ This table maps the two tables together.</p>
     foreign key (task_id) references task(id)
 );
 </code></pre>
-<p>Next we could insert some data:</p>
+<p>Let's insert some projects and some tasks:</p>
 <pre><code class="language-sql">insert into project (name) values ('Learn web development'), ('Gain practical experience'), ('Have fun');
 insert into task (title, description, duration, status) values
 ('Read the Next.js book', 'Read and understand the Next.js book.', 60, 'inprogress'),
@@ -5684,12 +5719,12 @@ insert into task (title, description, duration, status) values
 ('Write a task app', 'Write an awesome task app.', 120, 'todo'),
 ('Think of a funny joke', 'Come up with a funny joke to lighten the mood.', 120, 'inprogress');
 </code></pre>
-<p>Finally we need to link tasks to projects:</p>
+<p>Here is how we could then link tasks and projects:</p>
 <pre><code class="language-sql">insert into project_task (project_id, task_id) values
 (1, 1), (1, 2), (1, 3), (2, 3)
 </code></pre>
 <p>Note that the task <code>'Write a task app'</code> is now linked to both the <code>'Learn web development'</code> and the <code>'Gain practical experience'</code> project.</p>
-<p>To query the data, we now need to perform a join over multiple tables:</p>
+<p>To query the data, we would need to perform a join over multiple tables:</p>
 <pre><code class="language-sql">select p.name as project_name, t.title as task_title, t.status as task_status
 from project_task pt
 join project p on pt.project_id = p.id

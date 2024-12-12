@@ -154,10 +154,13 @@
                     <main>
                         <h2 id="modifying-tables"><a class="header" href="#modifying-tables">Modifying Tables</a></h2>
 <div style="text-align: right"> <i> A drop statement is a swift sword; one stroke can sever years of growth. <br> — Ancient Chinese proverb </i> </div>
-<p>Remember how our task table looks like right now:</p>
-<pre><code class="language-sql">create table task (
+<h3 id="the-task-table"><a class="header" href="#the-task-table">The Task Table</a></h3>
+<p>Remember that our <code>task</code> table looks like this at the moment:</p>
+<pre><code class="language-sql">create type status as enum ('todo', 'inprogress', 'done');
+
+create table task (
     id serial primary key,
-    title text not null,
+    title text not null unique,
     description text not null,
     status status,
     duration integer check (duration &gt; 0),
@@ -165,38 +168,50 @@
 );
 </code></pre>
 <h3 id="adding-and-dropping-columns"><a class="header" href="#adding-and-dropping-columns">Adding and Dropping Columns</a></h3>
-<p>To add a column use the <code>alter table ... add column</code> statement:</p>
-<pre><code class="language-sql">alter table task add column priority text;
+<p>To add a column, we can use the <code>alter table ... add column</code> statement.</p>
+<p>For example, here is how we can add a <code>priority</code> column that has the <code>text</code> data type:</p>
+<pre><code class="language-sql">alter table task
+add column priority text;
 </code></pre>
-<p>You could add constraints here:</p>
-<pre><code class="language-sql">alter table task add column priority text check (priority in ('low', 'medium', 'high'));
+<p>When adding a column, we can also specify constraints on it.</p>
+<p>For example, here is how we can add a <code>priority</code> column with a <code>check</code> constraint:</p>
+<pre><code class="language-sql">alter table task
+add column priority text
+check (priority in ('low', 'medium', 'high'));
 </code></pre>
-<p>You can use the <code>alter table ... drop column</code> statement to remove a column:</p>
+<p>You can use the <code>alter table ... drop column</code> statement to remove a column.</p>
+<p>For example, here is how we can drop the <code>priority</code> column again:</p>
 <pre><code class="language-sql">alter table task
 drop column priority;
 </code></pre>
 <h3 id="adding-and-dropping-constraints"><a class="header" href="#adding-and-dropping-constraints">Adding and Dropping Constraints</a></h3>
-<p>You can add a new constraint to a column using the <code>alter table ... add constraint</code> statement:</p>
+<p>You can add a new constraint to a column using the <code>alter table ... add constraint</code> statement.</p>
+<p>For example, here is how we can add a <code>check</code> constraint to the <code>duration</code> column:</p>
 <pre><code class="language-sql">alter table task
 add constraint check_duration_max check (duration &lt;= 600);
 </code></pre>
-<p>You can drop an existing constraint to a column using the <code>alter table ... drop constraint</code> statement:</p>
+<p>You can drop an existing constraint from a column using the <code>alter table ... drop constraint</code> statement.</p>
+<p>Let's undo the addition of the <code>check</code> constraint:</p>
 <pre><code class="language-sql">alter table task
 drop constraint check_duration_max;
 </code></pre>
 <h3 id="renaming-columns-and-tables"><a class="header" href="#renaming-columns-and-tables">Renaming Columns and Tables</a></h3>
-<p>You can rename a column using the <code>alter table ... rename column</code> statement:</p>
+<p>You can rename a column using the <code>alter table ... rename column</code> statement.</p>
+<p>For example, here is how you can rename the column <code>description</code> to <code>details</code>:</p>
 <pre><code class="language-sql">alter table task
 rename column description to details;
 </code></pre>
-<p>You can rename an entire table using the <code>alter table rename ...</code> statement:</p>
+<p>You can rename an entire table using the <code>alter table rename ...</code> statement.</p>
+<p>For example, here is how you can rename the <code>task</code> table to <code>task_list</code>:</p>
 <pre><code class="language-sql">alter table task
 rename to task_list;
 </code></pre>
 <h3 id="removing-tables"><a class="header" href="#removing-tables">Removing Tables</a></h3>
-<p>You can remove an entire table using the <code>drop table</code> statement:</p>
+<p>You can remove an entire table using the <code>drop table</code> statement.</p>
+<p>For example, here is how you can remove the <code>task</code> table completely:</p>
 <pre><code class="language-sql">drop table task;
 </code></pre>
+<p>It hopefully goes without saying that you should be very careful when removing an entire table, as you will also remove all the data it currently stores.</p>
 
                     </main>
 

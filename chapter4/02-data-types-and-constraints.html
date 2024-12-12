@@ -160,11 +160,11 @@ You usually use this data type for counts, identifiers etc.</p>
 <p>In our example, we use <code>integer</code> for the <code>duration</code> column of the <code>task</code> table.</p>
 <p>Note that there are actually multiple integer data types in PostgreSQL.
 The <code>smallint</code> data type allows you to store "small-range integers" and the <code>bigint</code> data type allows you to store "large-range integers".</p>
-<p>The difference between <code>smallint</code>, <code>integer</code> and <code>bigint</code> is basically the minimum and maximum integers that can be stored.</p>
+<p>The difference between <code>smallint</code>, <code>integer</code> and <code>bigint</code> is basically the number of bytes they contain which impacts the minimum and maximum integers that can be stored.</p>
 <p>A <code>smallint</code> value has 2 bytes, i.e. it can store values from <code>-32768</code> up to <code>32767</code>.</p>
 <p>An <code>integer</code> value has 4 bytes, i.e. it can store values from <code>-2147483648</code> up to <code>2147483647</code>.</p>
-<p>An <code>bigint</code> value has 8 bytes, i.e. it can store values from <code>-9223372036854775808</code> up to <code>9223372036854775807</code>.</p>
-<p>For most regular web applications, <code>integer</code> values are more than enough and by default, PostgreSQL uses <code>integer</code> values for numbers.
+<p>A <code>bigint</code> value has 8 bytes, i.e. it can store values from <code>-9223372036854775808</code> up to <code>9223372036854775807</code>.</p>
+<p>For most regular web applications, <code>integer</code> values are more than enough, and by default, PostgreSQL uses <code>integer</code> values for numbers.
 Consider this example:</p>
 <pre><code class="language-sql">select 41234, pg_typeof(41234);
 </code></pre>
@@ -175,9 +175,9 @@ Consider this example:</p>
 </code></pre>
 <blockquote>
 <p>The <code>pg_typeof</code> operator returns the data type of an expression.
-Additionally you should ignore the column names in this section - only the column values are relevant for now.</p>
+Additionally, you should ignore the column names in this section—only the column values are relevant for us here.</p>
 </blockquote>
-<p>By default integers have the type <code>integer</code> even if they could be <code>smallint</code>.
+<p>Note that by default integers have the type <code>integer</code> even if they could be <code>smallint</code>.
 Consider this example:</p>
 <pre><code class="language-sql">select 42, pg_typeof(42);
 </code></pre>
@@ -190,14 +190,14 @@ Consider this example:</p>
 <pre><code class="language-sql">select 42::smallint, pg_typeof(42::smallint);
 </code></pre>
 <blockquote>
-<p>Note that <code>::</code> is a PostgreSQL - specific operator and not part of the official SQL standard.</p>
+<p>Note that <code>::</code> is a PostgreSQL-specific operator and not part of the official SQL standard.</p>
 </blockquote>
 <p>This will return:</p>
 <pre><code>| int2 | pg_typeof |
 | ---- | --------- |
 | 42   | smallint  |
 </code></pre>
-<p>Of course, if you provide a <code>bigint</code> value, PostgreSQL will use the <code>bigint</code> data type, since <code>bigint</code> would not fit into <code>integer</code>:</p>
+<p>Of course, if you provide a <code>bigint</code> value, PostgreSQL will use the <code>bigint</code> data type, since <code>bigint</code> doesn't fit into <code>integer</code>:</p>
 <pre><code class="language-sql">select 2147483652, pg_typeof(2147483652);
 </code></pre>
 <p>This will return:</p>
@@ -205,16 +205,16 @@ Consider this example:</p>
 | ---------- | --------- |
 | 2147483652 | bigint    |
 </code></pre>
-<p>Note that if you would try to convert this value to an <code>integer</code>, you would get an error.
+<p>If you would try to convert this value to an <code>integer</code>, you would get an error.
 For example, trying to execute <code>select 2147483652::integer</code> would result in the error <code>ERROR: 22003: integer out of range</code>.</p>
 <p>The <code>serial</code> data type allows you to represent <em>autoincrementing</em> integers (along with <code>smallserial</code> and <code>bigserial</code>).
 This makes <code>serial</code> very useful for unique identifiers since you don't need to handle the incrementing logic yourself.</p>
 <p>In the <code>task</code> table, the <code>id</code> column has the <code>serial</code> data type.</p>
 <blockquote>
 <p>Note that there are many other data types and strategies for automatically handling unique identifiers.
-<em>Usually</em> it doesn't matter, so in this chapter we will stick to the <code>serial</code> data type.</p>
+For <em>simple</em> applications it doesn't matter, so in this chapter we will stick to the <code>serial</code> data type.</p>
 </blockquote>
-<p>PostgreSQL knows four data types for storing real numbers - <code>decimal</code>, <code>numeric</code>, <code>real</code> and <code>double precision</code>.</p>
+<p>PostgreSQL knows four data types for storing real numbers—<code>decimal</code>, <code>numeric</code>, <code>real</code> and <code>double precision</code>.</p>
 <p>The <code>decimal</code> and <code>numeric</code> types are equivalent and allow you to store numbers with a very large number of digits.
 These data types are recommended for quantities where your floating-point calculations need to be exact (e.g. when working with money).</p>
 <p>By default, PostgreSQL will use <code>numeric</code> for floating-point numbers:</p>
@@ -247,9 +247,8 @@ Consider this example:</p>
 <p>Note that you have a precision of <code>15</code> digits now (which is more than the <code>real</code> data type, but still not enough to represent the number in the given example).</p>
 <h3 id="character-data-types"><a class="header" href="#character-data-types">Character Data Types</a></h3>
 <p>PostgreSQL supports the <code>char(n)</code>, <code>varchar(n)</code> and <code>text</code> data types for storing characters and strings.</p>
-<p>The <code>char(n)</code> and <code>varchar(n)</code> data types can store strings up to <code>n</code> characters in length.
-If you try to store more than <code>n</code> characters, the string will be silently truncated.</p>
-<p>For example:</p>
+<p>The <code>char(n)</code> and <code>varchar(n)</code> data types can store strings up to <code>n</code> characters in length.</p>
+<p>For example, conversions to <code>char(n)</code> and <code>varchar(n)</code> would silently truncate the string:</p>
 <pre><code class="language-sql">select 'Next.js book'::char(3), pg_typeof('Next.js book'::char(3));
 </code></pre>
 <p>This will return:</p>
@@ -281,9 +280,10 @@ For example:</p>
 </blockquote>
 <h3 id="datetime-data-types"><a class="header" href="#datetime-data-types">Date/Time Data Types</a></h3>
 <p>Dates and times are a famously dreaded topic among programmers, especially in combination with persistent data storage.
-We will only look at the very tip of the iceberg here, however you should keep in mind that there are many complexities that we will skip for now.</p>
+We will only look at the very tip of the iceberg here.
+However, you should keep in mind that there are many complexities that we will skip for now.</p>
 <p>The three most important date/time data types are <code>date</code>, <code>time</code> and <code>timestamp</code>.</p>
-<p>The <code>date</code> data type allows you to store the date part (year, month, day) without time information.
+<p>The <code>date</code> data type allows you to store the date part (year, month, day) without the time information.
 Consider this example:</p>
 <pre><code class="language-sql">select '2023-07-04'::date, pg_typeof('2023-07-04'::date);
 </code></pre>
@@ -292,19 +292,19 @@ Consider this example:</p>
 | ---------- | --------- |
 | 2023-07-04 | date      |
 </code></pre>
-<p>The <code>time</code> data type is basically the "complement" to the <code>date</code> type and allows you to store the time part (hours, minutes, seconds) without date information.
+<p>The <code>time</code> data type is basically the "complement" to the <code>date</code> type and allows you to store the time part (hours, minutes, seconds) without the date information.
 Consider this example:</p>
 <pre><code class="language-sql">select '07:05:16'::time, pg_typeof('07:05:16'::time);
 </code></pre>
 <p>This will return:</p>
 <pre><code>| time     | pg_typeof |
 | -------- | --------- |
-| 07:05:16 | date      |
+| 07:05:16 | time      |
 </code></pre>
 <p>Finally, the <code>timestamp</code> data type allows us to store a date and a time.
 This is also the most commonly used date/time data type (since you usually care about the date <em>and</em> time).
 Consider this example:</p>
-<pre><code class="language-sql">select '2023-07-04 07:05:16'::timestamp, pg_typeof('2023-07-04 07:05:16'::timestamp)
+<pre><code class="language-sql">select '2023-07-04 07:05:16'::timestamp, pg_typeof('2023-07-04 07:05:16'::timestamp);
 </code></pre>
 <p>This will return:</p>
 <pre><code>| timestamp           | pg_typeof                   |
@@ -316,7 +316,7 @@ Since we care about the date and the time, we use the <code>timestamp</code> dat
 <p>There are additional data types like <code>timestamp with time zone</code> (if we want to store the time zone with the timestamp), however for now we have enough data types to confidently work with dates and times in <em>simple</em> applications.</p>
 <h3 id="enums"><a class="header" href="#enums">Enums</a></h3>
 <p>Enumerated data types are data types which comprise a static (and also ordered) set of values.
-This is a bit similar to the union data type in TypeScript (although enums and union types <em>are not the same</em>).</p>
+This is a bit similar to creating a union of literal types in TypeScript (although enums and union types <em>are not the same</em>).</p>
 <p>You can define an enum using the <code>create type</code> statement.
 For example, this is how we defined the <code>status</code> enum:</p>
 <pre><code class="language-sql">create type status as enum ('todo', 'inprogress', 'done');
@@ -329,9 +329,9 @@ For example, this is how we defined the <code>status</code> enum:</p>
 );
 </code></pre>
 <h3 id="constraints"><a class="header" href="#constraints">Constraints</a></h3>
-<p>Often we want to limit the kind of data that can be stored in a table beyond just limiting the data types.
+<p>Often, we want to limit the kind of data that can be stored in a table beyond just limiting the data types.
 This can be accomplished with <strong>constraints</strong>.</p>
-<p>The <code>unique</code> constraint is used to ensure that the data in column is unique among all the rows in a table.</p>
+<p>The <code>unique</code> constraint is used to ensure that the data in a column is unique among all the rows in a table.</p>
 <p>For example, we gave the <code>title</code> column the <code>unique</code> constraint to ensure that there will never be two tasks with the same title:</p>
 <pre><code class="language-sql">create table task (
     -- code
@@ -361,9 +361,10 @@ If a column is marked as <code>primary key</code>, its values must be <code>uniq
 );
 </code></pre>
 <p>The <code>check</code> constraint is used to specify a condition that each row must satisfy for the value to be accepted into a column.</p>
-<p>We could have used this for the <code>status</code> column (by writing <code>check in ('todo', 'inprogress', 'done')</code>), however since we knew the values in advance, we were able to use an enum instead.
+<p>We could have used this for the <code>status</code> column by writing <code>check in ('todo', 'inprogress', 'done')</code>.
+However, since we knew the values in advance, we were able to use an enum instead.
 Unlike enums though, check constraints allow more flexibility.</p>
-<p>For example we gave the <code>duration</code> column a constraint that its values must be greater than 0:</p>
+<p>For example, we can give the <code>duration</code> column a constraint that its values must be greater than 0:</p>
 <pre><code class="language-sql">create table task (
     -- code
     duration integer check (duration &gt; 0),
@@ -371,7 +372,7 @@ Unlike enums though, check constraints allow more flexibility.</p>
 );
 </code></pre>
 <p>The <code>default</code> constraint allows us to specify a default value for a column.
-If an insert operation does not provide a value for a column, PostgreSQL will automatically insert the specified value.</p>
+If an insert operation doesn't provide a value for a column, PostgreSQL will automatically insert the specified value.</p>
 <p>In our example, we want the <code>created_at</code> value to simply be the current time and use the <code>default</code> constraint together with <code>current_timestamp</code> to accomplish that:</p>
 <pre><code class="language-sql">create table task (
     -- code

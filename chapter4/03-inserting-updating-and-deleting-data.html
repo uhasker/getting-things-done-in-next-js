@@ -156,7 +156,8 @@
 <div style="text-align: right"> <i> To update is to change the course of a river; done wisely, it nourishes more land, done poorly, it leads to flood. <br> — Ancient Chinese proverb </i> </div>
 <h3 id="inserting-data"><a class="header" href="#inserting-data">Inserting Data</a></h3>
 <p>To insert rows into a table, you use the <code>insert</code> statement.
-Here you need to declare the table to write to, the columns to fill and one or more rows of data to insert:</p>
+Here, you need to declare the table to write to, the columns to fill and one or more rows of data to insert.</p>
+<p>Let's insert some values into our <code>task</code> table:</p>
 <pre><code class="language-sql">insert into task (title, description, duration, status) values
 ('Read the Next.js book', 'Read and understand the Next.js book.', 60, 'inprogress'),
 ('Write a task app', 'Write an awesome task app.', 10, 'todo'),
@@ -167,11 +168,11 @@ After all, the <code>id</code> value has the <code>serial</code> data type, so P
 Additionally, the <code>created_at</code> column has a <code>default</code> constraint, so PostgreSQL will automatically create new values for this column too.</p>
 <p>It's crucial to ensure that the inserted data respects the constraints we defined earlier.</p>
 <p>For example, we need to respect the <code>check</code> constraint on the <code>duration</code> column.
-This statement wouldn't work:</p>
+This statement wouldn't work because it would violate this constraint:</p>
 <pre><code class="language-sql">insert into task (title, description, duration, status) values
 ('Read the Next.js book', 'Read and understand the Next.js book', -10, 'todo');
 </code></pre>
-<p>You would get the following error:</p>
+<p>We would get the following error:</p>
 <pre><code>ERROR:  23514: new row for relation "task" violates check constraint "task_duration_check"
 </code></pre>
 <p>We would get a similar error if we would try to insert a <code>null</code> value into a column that declares a <code>not null</code> constraint:</p>
@@ -183,7 +184,8 @@ This statement wouldn't work:</p>
 </code></pre>
 <h3 id="updating-data"><a class="header" href="#updating-data">Updating Data</a></h3>
 <p>You can update rows using the <code>update</code> statement.
-Here you need to specify which table, which columns and which rows to update:</p>
+Here you need to specify the table, the columns and the rows to update.</p>
+<p>The following statement would set all tasks with the ID <code>1</code> to <code>done</code>:</p>
 <pre><code class="language-sql">update task
 set status = 'done'
 where id = 1;
@@ -197,11 +199,12 @@ where id = 1;
 If you make a mistake in the <code>where</code> clause you can update rows that you never intended to change.</p>
 <h3 id="deleting-data"><a class="header" href="#deleting-data">Deleting Data</a></h3>
 <p>You can delete rows using the <code>delete</code> statement.
-Here you need to specify which table to use and which rows to remove:</p>
+Here you need to specify which table to use and which rows to remove.</p>
+<p>The following statement would delete all <code>done</code> tasks from the <code>task</code> table:</p>
 <pre><code class="language-sql">delete from task
 where status = 'done';
 </code></pre>
-<p>If you don't specify a filter all data will be deleted:</p>
+<p>If you don't specify a filter <em>all</em> data will be deleted:</p>
 <pre><code class="language-sql">delete from task;
 </code></pre>
 <p>Again, you should be very careful when deleting data.

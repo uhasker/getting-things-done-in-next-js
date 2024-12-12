@@ -156,7 +156,7 @@
 <div style="text-align: right"> <i> A query without limits is like a river without banks — overflowing and uncontrollable. <br> — Ancient Chinese proverb </i> </div>
 <h3 id="basics"><a class="header" href="#basics">Basics</a></h3>
 <p>We will continue working with the inserted data from the last section.
-As a reminder this was the data that we inserted:</p>
+As a reminder, this was the data that we've inserted:</p>
 <pre><code class="language-sql">insert into task (title, description, duration, status) values
 ('Read the Next.js book', 'Read and understand the Next.js book.', 60, 'inprogress'),
 ('Write a task app', 'Write an awesome task app.', 10, 'todo'),
@@ -184,10 +184,10 @@ As a reminder this was the data that we inserted:</p>
 | 3  | Think of a funny joke | Come up with a funny joke to lighten the mood. | inprogress | 120      | 2024-04-19 14:26:44.726311 |
 </code></pre>
 <h3 id="filtering-results"><a class="header" href="#filtering-results">Filtering Results</a></h3>
-<p>You can use the <code>where</code> clause to filter results.
-This clause takes one or multiple conditions.</p>
+<p>You can use the <code>where</code> clause to filter the results that are returned by the <code>select</code> statement.
+The <code>where</code> clause takes one or multiple conditions.</p>
 <p>The conditions can contain operators like <code>=</code>, <code>!=</code>, <code>&lt;</code>, <code>&lt;=</code>, <code>&gt;</code>, <code>&gt;=</code>.</p>
-<p>For example, here is how you could select all tasks that are in progress:</p>
+<p>For example, here is how you can select all tasks that are in progress:</p>
 <pre><code class="language-sql">select id, title, status from task where status = 'inprogress';
 </code></pre>
 <p>This would return:</p>
@@ -206,7 +206,7 @@ This clause takes one or multiple conditions.</p>
 | 3  | Think of a funny joke | 120      |
 </code></pre>
 <p>You can use the <code>like</code> operator for more involved (string) comparisons.</p>
-<p>When using the <code>like</code> operator there are two characters of particular interest.
+<p>When using the <code>like</code> operator, there are two characters of particular interest.
 The <code>%</code> character matches a sequence of zero or more characters.
 The <code>_</code> character matches a single character.</p>
 <p>For example, you could match all tasks that contain the sequence "book" somewhere in the description like this:</p>
@@ -225,7 +225,7 @@ The <code>_</code> character matches a single character.</p>
 | -- | ---------------- | -------------------------- |
 | 2  | Write a task app | Write an awesome task app. |
 </code></pre>
-<p>You can check if a value exists in the list using the <code>in</code> operator:</p>
+<p>You can create a filter that checks if a value exists in a list by using the <code>in</code> operator:</p>
 <pre><code class="language-sql">select id, title from task where status in ('todo', 'inprogress');
 </code></pre>
 <p>This would return:</p>
@@ -237,7 +237,9 @@ The <code>_</code> character matches a single character.</p>
 </code></pre>
 <p>You can use the <code>and</code> and <code>or</code> keywords to combine conditions.
 For example, you could select all tasks that are in progress <em>and</em> will take longer than 90 minutes:</p>
-<pre><code class="language-sql">select id, title, status, duration from task where status = 'inprogress' and duration &gt; 90;
+<pre><code class="language-sql">select id, title, status, duration
+from task
+where status = 'inprogress' and duration &gt; 90;
 </code></pre>
 <p>This would return:</p>
 <pre><code>| id | title                 | status     | duration |
@@ -245,7 +247,9 @@ For example, you could select all tasks that are in progress <em>and</em> will t
 | 3  | Think of a funny joke | inprogress | 120      |
 </code></pre>
 <p>You could also select all tasks that are in progress <em>or</em> will take longer than 90 minutes:</p>
-<pre><code class="language-sql">select id, title, status, duration from task where status = 'inprogress' or duration &gt; 90;
+<pre><code class="language-sql">select id, title, status, duration
+from task
+where status = 'inprogress' or duration &gt; 90;
 </code></pre>
 <p>This would return:</p>
 <pre><code>| id | title                 | status     | duration |
@@ -254,9 +258,9 @@ For example, you could select all tasks that are in progress <em>and</em> will t
 | 3  | Think of a funny joke | inprogress | 120      |
 </code></pre>
 <h3 id="ordering-and-limiting-results"><a class="header" href="#ordering-and-limiting-results">Ordering and Limiting Results</a></h3>
-<p>You can order the results using <code>order by</code>.
-To specify the ordering, you can use <code>asc</code> (ascending) or <code>desc</code> (descending).</p>
-<p>Here is how would order the tasks by duration (ascending):</p>
+<p>You can order the results using the <code>order by</code> keyword.
+To specify the ordering, you can use the <code>asc</code> (ascending) or <code>desc</code> (descending) keywords.</p>
+<p>Here is how you could order the tasks by duration (ascending):</p>
 <pre><code class="language-sql">select id, title, duration from task order by duration asc;
 </code></pre>
 <p>This would return:</p>
@@ -266,7 +270,7 @@ To specify the ordering, you can use <code>asc</code> (ascending) or <code>desc<
 | 1  | Read the Next.js book | 60       |
 | 3  | Think of a funny joke | 120      |
 </code></pre>
-<p>Alternatively you could order the tasks by duration (descending):</p>
+<p>Alternatively, you could order the tasks by duration (descending):</p>
 <pre><code class="language-sql">select id, title, duration from task order by duration desc;
 </code></pre>
 <p>This would return:</p>
@@ -276,7 +280,9 @@ To specify the ordering, you can use <code>asc</code> (ascending) or <code>desc<
 | 1  | Read the Next.js book | 60       |
 | 2  | Write a task app      | 10       |
 </code></pre>
-<p>You can limit results using <code>limit</code>:</p>
+<p>You can limit results using the <code>limit</code> clause.
+The <code>limit</code> clause allows you to limit the number of records to return.</p>
+<p>For example, here is how you could get the two tasks with the highest duration:</p>
 <pre><code class="language-sql">select id, title, duration
 from task
 order by duration desc
@@ -288,7 +294,8 @@ limit 2;
 | 3  | Think of a funny joke | 120      |
 | 1  | Read the Next.js book | 60       |
 </code></pre>
-<p>Of course, you can use the <code>order by</code> and <code>limit</code> clauses together with the <code>where</code> clause:</p>
+<p>Of course, you can use the <code>order by</code> and <code>limit</code> clauses together with the <code>where</code> clause.</p>
+<p>For example, here is how you could get the longest task that has the status <code>inprogress</code>:</p>
 <pre><code class="language-sql">select id, title, duration, status
 from task
 where status = 'inprogress'

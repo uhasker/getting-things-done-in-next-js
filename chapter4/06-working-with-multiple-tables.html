@@ -157,40 +157,44 @@
 <h3 id="adding-projects"><a class="header" href="#adding-projects">Adding Projects</a></h3>
 <p>Let's add projects to our application.
 Each project can contain multiple tasks and each task should belong to exactly one project.</p>
-<p>Now it might be tempting to simply add a project ID and name to each task row.
+<p>It might be tempting to simply add a project ID and name to each task row.
 However, that would lead to a lot of redundant data.
-This is bad primarily because it means that if we update tasks or project we might make a mistake somewhere resulting in malformed data.</p>
+After all, you would now have to repeat the project name over and over again.</p>
+<p>And consider what would happen once you add more project fields like a project description, status, etc.
+You would now have to repeat all these fields as well for every project.
+This will quickly become quite repetitive.</p>
+<p>Repeating this information is not just unwieldy, it means that if we update some project fields we might make a mistake somewhere resulting in malformed data.</p>
 <p>For example, we might forget to change a project name in some row.
 Suddenly we would have a project with one ID and two names.</p>
-<p>Therefore it is good practice to split data into multiple tables to reduce redundancy and improve data integrity.
+<p>Therefore, it is good practice to split data into multiple tables to reduce redundancy and improve data integrity.
 Each table should contain data about a specific entity (like "task" or "project").</p>
 <p>The entities can then be linked together using <strong>foreign keys</strong>.</p>
 <h3 id="foreign-keys"><a class="header" href="#foreign-keys">Foreign Keys</a></h3>
-<p>Let's create a project table:</p>
+<p>Let's create a <code>project</code> table:</p>
 <pre><code class="language-sql">create table project (
     id serial primary key,
     name varchar(255) not null
 );
 </code></pre>
-<p>Let's add a column to the task table that will store the project ID:</p>
+<p>Let's add a column to the <code>task</code> table that will store the project ID:</p>
 <pre><code class="language-sql">alter table task
 add column project_id integer;
 </code></pre>
 <p>Finally, we will establish a foreign key relationship.
 A foreign key is a column in one table that <em>links</em> to the <em>primary key in another table</em>.</p>
-<p>Here the <code>project_id</code> should reference the <code>id</code> column in the <code>project</code> table:</p>
+<p>Here, the <code>project_id</code> column in the <code>task</code> table should <em>reference</em> the <code>id</code> column in the <code>project</code> table:</p>
 <pre><code class="language-sql">alter table task
 add constraint fk_project
 foreign key (project_id)
-references project(ID);
+references project(id);
 </code></pre>
-<p>Note that foreign keys are another type of constraint.
-You can't insert a <code>task</code> into the task table if the <code>project_id</code> column doesn't reference some <code>task</code>.</p>
-<p>For example:</p>
+<p>Note that foreign keys are basically just another type of constraint.
+You can't insert a task into the <code>task</code> table if the <code>project_id</code> column doesn't reference a valid project.</p>
+<p>Consider this example:</p>
 <pre><code class="language-sql">insert into task (title, description, duration, status, project_id) values
 ('Read the Next.js book', 'Read and understand the Next.js book.', 60, 'inprogress', 1);
 </code></pre>
-<p>This will result in the following error:</p>
+<p>This statement would result in the following error:</p>
 <pre><code>ERROR: 23503: insert or update on table "task" violates foreign key constraint "fk_project"
 DETAIL: Key (project_id)=(1) is not present in table "project".
 </code></pre>
@@ -228,6 +232,7 @@ insert into task (title, description, duration, status, project_id) values
 </code></pre>
 <p>Now let's query some data across both tables.
 For example, we might care about getting every task ID, title and status together with the project ID and name.</p>
+<p>To accomplish this, we need to query both the <code>task</code> and <code>project</code> table at the same time and join them on the project ID:</p>
 <pre><code class="language-sql">select task.id as task_id, task.title as task_title, task.status as task_status, project.id as project_id, project.name as project_name
 from task
 inner join project on task.project_id = project.id;
@@ -239,11 +244,14 @@ inner join project on task.project_id = project.id;
 | 2       | Read the Next.js docs | inprogress  | 1          | Learn web development     |
 | 3       | Write a task app      | todo        | 2          | Gain practical experience |
 </code></pre>
-<p>Note that the 'Have fun' project doesn't appear in the table since there are no corresponding tasks.
-The same goes for the 'Think of a funny joke' task.</p>
+<p>Pay attention to the way the <code>inner join</code> statement looks like.
+Here you join the <code>task</code> table with the <code>project</code> table on the statement <code>task.project_id = project.id</code>.
+This means that every time we have a task whose project ID is equal to <em>some</em> ID of a project, the two records will appear in the same row in the final result.</p>
+<p>This is why the <code>Have fun</code> project doesn't appear in the table since there are no corresponding tasks.
+The same goes for the <code>Think of a funny joke</code> task.</p>
 <h3 id="outer-joins"><a class="header" href="#outer-joins">Outer Joins</a></h3>
-<p>If we wanted tasks/project that don't have corresponding projects/tasks to appear as well, we would need to use an <strong>outer join</strong> - either a <strong>left outer join</strong> or a <strong>right outer join</strong>.</p>
-<p>For example, if we wanted to get all tasks that don't have any associated project, we would need to use a left join:</p>
+<p>If we wanted tasks or projects that don't have corresponding projects or tasks to appear as well, we would need to use an <strong>outer join</strong>—either a <strong>left outer join</strong> or a <strong>right outer join</strong>.</p>
+<p>For example, if we wanted to get all tasks that don't have any associated project, we could use a left join:</p>
 <pre><code class="language-sql">select task.id as task_id, task.title as task_title, task.status as task_status, project.id as project_id, project.name as project_name
 from task
 left join project on task.project_id = project.id;
@@ -256,7 +264,7 @@ left join project on task.project_id = project.id;
 | 3       | Write a task app      | todo        | 2          | Gain practical experience |
 | 4       | Think of a funny joke | inprogress  |            |                           |
 </code></pre>
-<p>Similarly, if we wanted to return all projects that don't have any associated tasks, we would need to use a right join:</p>
+<p>Similarly, if we wanted to return all projects that don't have any associated tasks, we could use a right join:</p>
 <pre><code class="language-sql">select task.id as task_id, task.title as task_title, task.status as task_status, project.id as project_id, project.name as project_name
 from task
 right join project on task.project_id = project.id;
@@ -269,13 +277,14 @@ right join project on task.project_id = project.id;
 | 3       | Write a task app      | todo        | 2          | Gain practical experience |
 |         |                       |             | 3          | Have fun                  |
 </code></pre>
+<p>Of course, you can achieve the same effect by using a left join here and just swapping the order of the <code>task</code> and <code>project</code> table in the statement.</p>
 <h3 id="association-tables"><a class="header" href="#association-tables">Association Tables</a></h3>
 <p>So far the relationships we worked with were <strong>one-to-many relationships</strong> (or many-to-one relationships depending on your point of view).
 However, often we need to work with <strong>many-to-many relationships</strong> instead.</p>
 <p>Let's say that one task could belong to multiple projects at the same time.
 Since one project can have multiple tasks, we now have a many-to-many relationship.</p>
 <p>The way to model this in SQL is by using a <strong>junction table</strong> (also called an associative table).
-This table maps the two tables together.</p>
+A junction table is a table whose sole purpose is to create a many-to-many relationship between two other tables.</p>
 <p>Consider the following <code>task</code> table:</p>
 <pre><code class="language-sql">create table task (
     id serial primary key,
@@ -301,7 +310,7 @@ This table maps the two tables together.</p>
     foreign key (task_id) references task(id)
 );
 </code></pre>
-<p>Next we could insert some data:</p>
+<p>Let's insert some projects and some tasks:</p>
 <pre><code class="language-sql">insert into project (name) values ('Learn web development'), ('Gain practical experience'), ('Have fun');
 insert into task (title, description, duration, status) values
 ('Read the Next.js book', 'Read and understand the Next.js book.', 60, 'inprogress'),
@@ -309,12 +318,12 @@ insert into task (title, description, duration, status) values
 ('Write a task app', 'Write an awesome task app.', 120, 'todo'),
 ('Think of a funny joke', 'Come up with a funny joke to lighten the mood.', 120, 'inprogress');
 </code></pre>
-<p>Finally we need to link tasks to projects:</p>
+<p>Here is how we could then link tasks and projects:</p>
 <pre><code class="language-sql">insert into project_task (project_id, task_id) values
 (1, 1), (1, 2), (1, 3), (2, 3)
 </code></pre>
 <p>Note that the task <code>'Write a task app'</code> is now linked to both the <code>'Learn web development'</code> and the <code>'Gain practical experience'</code> project.</p>
-<p>To query the data, we now need to perform a join over multiple tables:</p>
+<p>To query the data, we would need to perform a join over multiple tables:</p>
 <pre><code class="language-sql">select p.name as project_name, t.title as task_title, t.status as task_status
 from project_task pt
 join project p on pt.project_id = p.id
