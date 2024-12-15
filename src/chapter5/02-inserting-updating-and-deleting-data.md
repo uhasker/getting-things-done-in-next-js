@@ -1,16 +1,19 @@
 ## Inserting, Updating and Deleting Data
 
-<div style="text-align: right"> <i> Django had it in 2008 <br> - From Drizzles official page </i> </div>
+<div style="text-align: right"> <i> Django had it in 2008 <br> — From Drizzles' official marketing page </i> </div>
 
 ### Inserting Data
 
-Inserting data generally looks like this:
+To insert data in SQL, you use the `insert` statement.
+In Drizzle, you can use the appropriately named `insert` function on the `db` object:
 
 ```ts
 await db.insert(table).values(values);
 ```
 
-Here is how you would insert a row into `taskTable`:
+You need to declare the table to write to and the dictionary containing the columns and the values to insert into the respective columns.
+
+For example, here is how you would insert a row into `taskTable`:
 
 ```ts
 await db.insert(taskTable).values({
@@ -21,27 +24,23 @@ await db.insert(taskTable).values({
 });
 ```
 
-You can insert a row and get it back:
+You can also insert a row and get it back using the `returning` function.
+This is useful if you want to get the data that has been automatically inserted into the database (like an ID):
 
 ```ts
 const row = await db
   .insert(taskTable)
   .values({
-    name: 'Example project',
+    title: 'Read the Next.js book',
+    description: 'Read and understand the Next.js book.',
+    status: 'inprogress',
+    duration: 60,
   })
   .returning();
-console.log(row);
+console.log(row.id); // Will output the ID of the resulting row
 ```
 
-This would output something like:
-
-```
-[ { id: 3, name: 'Example project' } ]
-```
-
-The `returning` function is mostly useful if you want to get the ID of the inserted row.
-
-You can insert multiple rows by providing an array of objects:
+You can insert multiple rows at the same by providing an array of objects:
 
 ```ts
 await db.insert(taskTable).values([
@@ -68,11 +67,14 @@ await db.insert(taskTable).values([
 
 ### Updating Data
 
-Updating data generally looks like this:
+To update data in SQL, you use the `update` statement.
+In Drizzle, you can use the appropriately named `update` function on the `db` object:
 
 ```ts
 await db.update(table).set(object).where(condition);
 ```
+
+You need to specify the table to update, the columns with the values to update, and a condition for which rows to update.
 
 For example, let's say that wanted to set status of the task with the ID `1` to `'done'`:
 
@@ -80,13 +82,22 @@ For example, let's say that wanted to set status of the task with the ID `1` to 
 await db.update(taskTable).set({ status: 'done' }).where(eq(taskTable.id, 1));
 ```
 
+Just as with SQL, you can update more than one column at the same time:
+
+```ts
+await db.update(taskTable).set({ status: 'done', duration: 0 }).where(eq(taskTable.id, 1));
+```
+
 ### Deleting Data
 
-Updating data generally looks like this:
+To delete data in SQL, you use the `delete` statement.
+In Drizzle, you can use the appropriately named `delete` function on the `db` object:
 
 ```ts
 await db.delete(table).where(condition);
 ```
+
+You need to specify the table to delete data from as well as a condition that specifies what data to delete.
 
 For example, here is how you could delete all the completed tasks:
 
