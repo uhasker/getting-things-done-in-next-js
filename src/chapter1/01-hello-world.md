@@ -87,7 +87,7 @@ The filename should have an _html_ extension though.
 Open the HTML file in any text editor (see below for text editors that are good choices for coding) and add the following text to the file:
 
 ```html
-<!doctype html>
+<!DOCTYPE html>
 <html>
   <head></head>
   <body>
@@ -319,4 +319,6 @@ Waiting...
 Waiting...
 
 _Finally_.
-Let's move on.
+
+Additionally, **you should absolutely type the code yourself and not copy and paste it**.
+If you just copy and paste the code, you will learn absolutely nothing and may as well not read this book at all.
