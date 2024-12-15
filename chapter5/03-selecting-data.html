@@ -153,48 +153,235 @@
                 <div id="content" class="content">
                     <main>
                         <h2 id="selecting-data"><a class="header" href="#selecting-data">Selecting Data</a></h2>
-<div style="text-align: right"> <i> I hate @DrizzleOrm
- so much that I wrote the Auth.js adapter for it. <br> - From Drizzles official page </i> </div>
-<p>You can use the <code>select</code> function to select data.</p>
-<p>You can select all columns:</p>
+<div style="text-align: right"> <i> I hate @DrizzleOrm so much that I wrote the Auth.js adapter for it. <br> — From Drizzles' official marketing page </i> </div>
+<h3 id="basics"><a class="header" href="#basics">Basics</a></h3>
+<p>We will work with the data that we've inserted in the last section.
+As a reminder, this is how it looked like:</p>
+<pre><code class="language-js">insert into task (title, description, duration, status) values
+('Read the Next.js book', 'Read and understand the Next.js book.', 60, 'inprogress'),
+('Write a task app', 'Write an awesome task app.', 10, 'todo'),
+('Think of a funny joke', 'Come up with a funny joke to lighten the mood.', 120, 'inprogress');
+</code></pre>
+<p>To select data in SQL, you use the <code>select</code> statement.
+In Drizzle, you can use the appropriately named <code>select</code> function on the <code>db</code> object.</p>
+<p>You can <code>select</code> all columns from a table:</p>
 <pre><code class="language-ts">await db.select().from(taskTable);
 </code></pre>
-<p>Here is how you can specify the columns to select:</p>
+<p>This would return the following:</p>
+<pre><code class="language-json">[
+  {
+    "id": 1,
+    "title": "Read the Next.js book",
+    "description": "Read and understand the Next.js book.",
+    "status": "inprogress",
+    "duration": 60,
+    "createdAt": "2024-12-15T10:49:46.049Z"
+  },
+  {
+    "id": 2,
+    "title": "Write a task app",
+    "description": "Write an awesome task app.",
+    "status": "todo",
+    "duration": 10,
+    "createdAt": "2024-12-15T10:49:46.049Z"
+  },
+  {
+    "id": 3,
+    "title": "Think of a funny joke",
+    "description": "Come up with a funny joke to lighten the mood.",
+    "status": "inprogress",
+    "duration": 120,
+    "createdAt": "2024-12-15T10:49:46.049Z"
+  }
+]
+</code></pre>
+<p>You can also specify certain columns to <code>select</code>:</p>
 <pre><code class="language-ts">await db.select({ title: taskTable.title }).from(taskTable);
 </code></pre>
-<p>You can use the <code>where</code> function to filter results.
+<p>This would return the following:</p>
+<pre><code class="language-json">[
+  { "title": "Read the Next.js book" },
+  { "title": "Write a task app" },
+  { "title": "Think of a funny joke" }
+]
+</code></pre>
+<h3 id="filtering-results"><a class="header" href="#filtering-results">Filtering Results</a></h3>
+<p>You can use the <code>where</code> function to filter results which works similar to the <code>where</code> clause in SQL.
 This function takes one or multiple conditions.</p>
 <p>The conditions can contain functions like <code>eq</code>, <code>ne</code>, <code>lt</code>, <code>lte</code>, <code>gt</code>, <code>gte</code>.</p>
 <p>For example, here is how you could select all tasks that are in progress:</p>
-<pre><code class="language-ts">await db.select().from(taskTable).where(eq(taskTable.status, 'inprogress'));
+<pre><code class="language-ts">import { eq } from 'drizzle-orm';
+
+// ...
+
+await db
+  .select({
+    id: taskTable.id,
+    title: taskTable.title,
+    status: taskTable.status,
+  })
+  .from(taskTable)
+  .where(eq(taskTable.status, 'inprogress'));
+</code></pre>
+<p>This would return the following:</p>
+<pre><code class="language-json">[
+  {
+    "id": 1,
+    "title": "Read the Next.js book",
+    "status": "inprogress"
+  },
+  {
+    "id": 3,
+    "title": "Think of a funny joke",
+    "status": "inprogress"
+  }
+]
 </code></pre>
 <p>Here is how you can select all tasks that will take longer than 30 minutes:</p>
-<pre><code class="language-ts">await db.select().from(taskTable).where(gt(taskTable.duration, 30));
+<pre><code class="language-ts">import { gt } from 'drizzle-orm';
+
+// ...
+
+await db
+  .select({
+    id: taskTable.id,
+    title: taskTable.title,
+    duration: taskTable.duration,
+  })
+  .from(taskTable)
+  .where(gt(taskTable.duration, 30));
+</code></pre>
+<p>This would return the following:</p>
+<pre><code class="language-json">[
+  {
+    "id": 1,
+    "title": "Read the Next.js book",
+    "duration": 60
+  },
+  {
+    "id": 3,
+    "title": "Think of a funny joke",
+    "duration": 120
+  }
+]
 </code></pre>
 <p>You can use the <code>and</code> and <code>or</code> functions to combine conditions.
 For example, you could select all tasks that are in progress <em>and</em> will take longer than 30 minutes:</p>
-<pre><code class="language-ts">await db
-  .select()
+<pre><code class="language-ts">import { and, eq, gt } from 'drizzle-orm';
+
+// ...
+
+await db
+  .select({
+    id: taskTable.id,
+    title: taskTable.title,
+    status: taskTable.status,
+    duration: taskTable.duration,
+  })
   .from(taskTable)
   .where(and(eq(taskTable.status, 'inprogress'), gt(taskTable.duration, 30)));
 </code></pre>
+<p>This would return the following:</p>
+<pre><code class="language-json">[
+  {
+    "id": 1,
+    "title": "Read the Next.js book",
+    "status": "inprogress",
+    "duration": 60
+  },
+  {
+    "id": 3,
+    "title": "Think of a funny joke",
+    "status": "inprogress",
+    "duration": 120
+  }
+]
+</code></pre>
 <p>You could also select all tasks that are in progress <em>or</em> will take longer than 30 minutes:</p>
-<pre><code class="language-ts">await db
-  .select()
+<pre><code class="language-ts">import { or, eq, gt } from 'drizzle-orm';
+
+// ...
+
+await db
+  .select({
+    id: taskTable.id,
+    title: taskTable.title,
+    status: taskTable.status,
+    duration: taskTable.duration,
+  })
   .from(taskTable)
   .where(or(eq(taskTable.status, 'inprogress'), gt(taskTable.duration, 30)));
 </code></pre>
-<p>You can order the results using <code>orderBy</code>.
-To specify the ordering, you can use <code>asc</code> (ascending) or <code>desc</code> (descending):</p>
-<pre><code class="language-ts">await db.select().from(taskTable).orderBy(asc(taskTable.duration));
+<p>This would return the following:</p>
+<pre><code class="language-json">[
+  {
+    "id": 1,
+    "title": "Read the Next.js book",
+    "status": "inprogress",
+    "duration": 60
+  },
+  {
+    "id": 3,
+    "title": "Think of a funny joke",
+    "status": "inprogress",
+    "duration": 120
+  }
+]
 </code></pre>
-<p>Alternatively:</p>
-<pre><code class="language-ts">await db.select().from(taskTable).orderBy(desc(taskTable.duration));
+<h3 id="ordering-and-limiting-results"><a class="header" href="#ordering-and-limiting-results">Ordering and Limiting Results</a></h3>
+<p>You can order the results using the <code>orderBy</code> function.
+To specify the ordering, you can use <code>asc</code> (ascending) or <code>desc</code> (descending).</p>
+<p>For example, this is how you could retrieve all the tasks from the <code>task</code> table and sort them by the duration in an ascending order:</p>
+<pre><code class="language-ts">import { asc } from 'drizzle-orm';
+
+// ...
+
+await db
+  .select({
+    id: taskTable.id,
+    title: taskTable.title,
+    duration: taskTable.duration,
+  })
+  .from(taskTable)
+  .orderBy(asc(taskTable.duration));
 </code></pre>
-<p>You can limit results using <code>limit</code>:</p>
-<pre><code class="language-ts">await db.select().from(taskTable).orderBy(asc(taskTable.duration)).limit(10);
+<p>This would return:</p>
+<pre><code class="language-json">[
+  { "id": 2, "title": "Write a task app", "duration": 10 },
+  { "id": 1, "title": "Read the Next.js book", "duration": 60 },
+  { "id": 3, "title": "Think of a funny joke", "duration": 120 }
+]
 </code></pre>
-<p>Again note how similar all these statements are to the statements from the SQL chapter.</p>
+<p>Alternatively you could order the tasks by the duration in a descending order:</p>
+<pre><code class="language-ts">import { desc } from 'drizzle-orm';
+
+await db
+  .select({
+    id: taskTable.id,
+    title: taskTable.title,
+    duration: taskTable.duration,
+  })
+  .from(taskTable)
+  .orderBy(desc(taskTable.duration));
+</code></pre>
+<p>You can also limit results using the <code>limit</code> function:</p>
+<pre><code class="language-ts">await db
+  .select({
+    id: taskTable.id,
+    title: taskTable.title,
+    duration: taskTable.duration,
+  })
+  .from(taskTable)
+  .orderBy(asc(taskTable.duration))
+  .limit(2);
+</code></pre>
+<p>This would return:</p>
+<pre><code class="language-json">[
+  { "id": 2, "title": "Write a task app", "duration": 10 },
+  { "id": 1, "title": "Read the Next.js book", "duration": 60 }
+]
+</code></pre>
+<p>Again, note how similar all these statements are to the statements from the SQL chapter.</p>
 
                     </main>
 

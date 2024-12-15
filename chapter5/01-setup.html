@@ -153,41 +153,83 @@
                 <div id="content" class="content">
                     <main>
                         <h2 id="setup"><a class="header" href="#setup">Setup</a></h2>
-<div style="text-align: right"> <i> Astro DB is powered by Drizzle! <br> ... and we regret everything omg this thing sucks <br> - From Drizzles official page </i> </div>
+<div style="text-align: right"> <i> Astro DB is powered by Drizzle! <br> ... and we regret everything omg this thing sucks <br> — From Drizzles' official marketing page </i> </div>
 <h3 id="a-simple-example"><a class="header" href="#a-simple-example">A Simple Example</a></h3>
-<p>Let's create a simple Drizzle script that will declare a task table and read all the tasks from the table.</p>
-<p>Create a new supabase database and recreate the task table from the SQL chapter.
-Don't add the project IDs and table yet, that will follow later.</p>
-<p>Create a new TypeScript project:</p>
+<p>Create a new Supabase database and recreate the <code>task</code> table from the SQL chapter:</p>
+<pre><code class="language-sql">create type status as enum ('todo', 'inprogress', 'done');
+
+create table task (
+    id serial primary key,
+    title text not null unique,
+    description text not null,
+    status status,
+    duration integer check (duration &gt; 0),
+    created_at timestamp default current_timestamp not null
+);
+</code></pre>
+<p>Let's also insert some values into the <code>task</code> table:</p>
+<pre><code class="language-sql">insert into task (title, description, duration, status) values
+('Read the Next.js book', 'Read and understand the Next.js book.', 60, 'inprogress'),
+('Write a task app', 'Write an awesome task app.', 10, 'todo'),
+('Think of a funny joke', 'Come up with a funny joke to lighten the mood.', 120, 'inprogress');
+</code></pre>
+<p>Don't add the <code>project</code> table yet, that will come later.</p>
+<p>Before we can write code, we need to setup Drizzle.</p>
+<p>First, we have to initialize a new TypeScript project and also add a <code>tsconfig.json</code> file.
+You already know the relevant commands from the TypeScript chapter:</p>
 <pre><code class="language-sh">pnpm init
 pnpm add typescript tsx --save-dev
 pnpm tsc --init
 </code></pre>
-<p>Install Drizzle:</p>
-<pre><code class="language-sh">pnpm add drizzle-orm postgres
-pnpm add drizzle-kit --save-dev
+<p>Next, we have to install Drizzle.
+The core package is called <code>drizzle-orm</code>.
+We will also need the <code>pg</code> package to be able to interact with our PostgreSQL database.</p>
+<pre><code class="language-sh">pnpm add drizzle-orm pg
+</code></pre>
+<p>We will also need the <code>@types/pg</code> package to get the type definitions for <code>pg</code>:</p>
+<pre><code class="language-sh">pnpm add @types/pg --save-dev
 </code></pre>
 <p>Create the following file <code>demo.ts</code>:</p>
-<pre><code class="language-ts">import { pgTable, serial, text, integer, timestamp, varchar } from 'drizzle-orm/pg-core';
-import { drizzle } from 'drizzle-orm/postgres-js';
-import postgres from 'postgres';
+<pre><code class="language-ts">import {
+  pgTable,
+  pgEnum,
+  serial,
+  text,
+  integer,
+  timestamp,
+  varchar,
+  check,
+} from 'drizzle-orm/pg-core';
+import { sql } from 'drizzle-orm';
+import { drizzle } from 'drizzle-orm/node-postgres';
 
 // Paste the supabase URI here
 const databaseURI = '...';
 
+const statusEnum = pgEnum('status', ['todo', 'inprogress', 'done']);
+
 // Declare the task table
-const taskTable = pgTable('task', {
-  id: serial('id').primaryKey(),
-  title: varchar('title', { length: 255 }).notNull(),
-  description: text('description').notNull(),
-  status: varchar('status', { length: 255 }).notNull(),
-  duration: integer('duration'),
-  createdAt: timestamp('created_at').defaultNow().notNull(),
-});
+const taskTable = pgTable(
+  'task',
+  {
+    id: serial('id').primaryKey(),
+    title: text('title').notNull(),
+    description: text('description').notNull(),
+    status: statusEnum().notNull(),
+    duration: integer('duration'),
+    createdAt: timestamp('created_at').defaultNow().notNull(),
+  },
+  (table) =&gt; [
+    {
+      durationCheckConstraint: check('duration_check', sql`${table.duration} &gt; 0`),
+    },
+  ],
+);
 
-const client = postgres(databaseURI);
-const db = drizzle(client);
+// Connect Drizzle to the database
+const db = drizzle(databaseURI);
 
+// Execute a query
 async function getTasks() {
   return await db.select().from(taskTable);
 }
@@ -195,12 +237,46 @@ async function getTasks() {
 getTasks().then(console.log);
 </code></pre>
 <blockquote>
-<p>Note that the <code>check</code> constraint is not yet implemented in Drizzle at the time of this writing.</p>
+<p>Note that hardcoding passwords and secrets in code is really poor style.
+We will fix this at the end of this chapter.</p>
 </blockquote>
+<p>There are two really important functions that Drizzle provides for you.</p>
+<p>First, we have the <code>pgTable</code> function.
+This declares a table schema and allows you to map the underneath SQL table to JavaScript (or TypeScript) objects.</p>
+<p>Second, we have the <code>drizzle</code> function.
+This allows you to establish the actual connection to the database and serves as the entry point for all your database interactions.
+It returns a <code>db</code> object that represents the Drizzle client and allows you execute the actual queries (like <code>db.select().from(taskTable)</code>).</p>
 <p>Execute the file:</p>
 <pre><code class="language-sh">pnpm tsx demo.ts
 </code></pre>
-<p>You will see a list of all the tasks that are currently present in the table.</p>
+<p>You will see a list of all the tasks that are currently present in the table:</p>
+<pre><code class="language-json">[
+  {
+    "id": 1,
+    "title": "Read the Next.js book",
+    "description": "Read and understand the Next.js book.",
+    "status": "inprogress",
+    "duration": 60,
+    "createdAt": "2024-12-15T10:49:46.049Z"
+  },
+  {
+    "id": 2,
+    "title": "Write a task app",
+    "description": "Write an awesome task app.",
+    "status": "todo",
+    "duration": 10,
+    "createdAt": "2024-12-15T10:49:46.049Z"
+  },
+  {
+    "id": 3,
+    "title": "Think of a funny joke",
+    "description": "Come up with a funny joke to lighten the mood.",
+    "status": "inprogress",
+    "duration": 120,
+    "createdAt": "2024-12-15T10:49:46.049Z"
+  }
+]
+</code></pre>
 <h3 id="drizzle-as-typesafe-sql"><a class="header" href="#drizzle-as-typesafe-sql">Drizzle as Typesafe SQL</a></h3>
 <p>Did you notice how similar the Drizzle function and the SQL statement are?
 The Drizzle function is:</p>
@@ -209,7 +285,7 @@ The Drizzle function is:</p>
 <p>The SQL function was:</p>
 <pre><code class="language-sql">select * from task;
 </code></pre>
-<p>This similarity is <em>intentional</em> and will be a major theme in this chapter.
+<p>This similarity is quite intentional and will be a major theme in this chapter.
 Unlike many other frameworks which try to "abstract" SQL away, Drizzle embraces SQL and only adds a bit of type safety on top of it.</p>
 <p>If you know SQL, learning Drizzle is a very fast process.</p>
 

@@ -153,12 +153,14 @@
                 <div id="content" class="content">
                     <main>
                         <h2 id="inserting-updating-and-deleting-data"><a class="header" href="#inserting-updating-and-deleting-data">Inserting, Updating and Deleting Data</a></h2>
-<div style="text-align: right"> <i> Django had it in 2008 <br> - From Drizzles official page </i> </div>
+<div style="text-align: right"> <i> Django had it in 2008 <br> — From Drizzles' official marketing page </i> </div>
 <h3 id="inserting-data"><a class="header" href="#inserting-data">Inserting Data</a></h3>
-<p>Inserting data generally looks like this:</p>
+<p>To insert data in SQL, you use the <code>insert</code> statement.
+In Drizzle, you can use the appropriately named <code>insert</code> function on the <code>db</code> object:</p>
 <pre><code class="language-ts">await db.insert(table).values(values);
 </code></pre>
-<p>Here is how you would insert a row into <code>taskTable</code>:</p>
+<p>You need to declare the table to write to and the dictionary containing the columns and the values to insert into the respective columns.</p>
+<p>For example, here is how you would insert a row into <code>taskTable</code>:</p>
 <pre><code class="language-ts">await db.insert(taskTable).values({
   title: 'Read the Next.js book',
   description: 'Read and understand the Next.js book.',
@@ -166,20 +168,20 @@
   duration: 60,
 });
 </code></pre>
-<p>You can insert a row and get it back:</p>
+<p>You can also insert a row and get it back using the <code>returning</code> function.
+This is useful if you want to get the data that has been automatically inserted into the database (like an ID):</p>
 <pre><code class="language-ts">const row = await db
   .insert(taskTable)
   .values({
-    name: 'Example project',
+    title: 'Read the Next.js book',
+    description: 'Read and understand the Next.js book.',
+    status: 'inprogress',
+    duration: 60,
   })
   .returning();
-console.log(row);
+console.log(row.id); // Will output the ID of the resulting row
 </code></pre>
-<p>This would output something like:</p>
-<pre><code>[ { id: 3, name: 'Example project' } ]
-</code></pre>
-<p>The <code>returning</code> function is mostly useful if you want to get the ID of the inserted row.</p>
-<p>You can insert multiple rows by providing an array of objects:</p>
+<p>You can insert multiple rows at the same by providing an array of objects:</p>
 <pre><code class="language-ts">await db.insert(taskTable).values([
   {
     title: 'Read the Next.js book',
@@ -202,16 +204,23 @@ console.log(row);
 ]);
 </code></pre>
 <h3 id="updating-data"><a class="header" href="#updating-data">Updating Data</a></h3>
-<p>Updating data generally looks like this:</p>
+<p>To update data in SQL, you use the <code>update</code> statement.
+In Drizzle, you can use the appropriately named <code>update</code> function on the <code>db</code> object:</p>
 <pre><code class="language-ts">await db.update(table).set(object).where(condition);
 </code></pre>
+<p>You need to specify the table to update, the columns with the values to update, and a condition for which rows to update.</p>
 <p>For example, let's say that wanted to set status of the task with the ID <code>1</code> to <code>'done'</code>:</p>
 <pre><code class="language-ts">await db.update(taskTable).set({ status: 'done' }).where(eq(taskTable.id, 1));
 </code></pre>
+<p>Just as with SQL, you can update more than one column at the same time:</p>
+<pre><code class="language-ts">await db.update(taskTable).set({ status: 'done', duration: 0 }).where(eq(taskTable.id, 1));
+</code></pre>
 <h3 id="deleting-data"><a class="header" href="#deleting-data">Deleting Data</a></h3>
-<p>Updating data generally looks like this:</p>
+<p>To delete data in SQL, you use the <code>delete</code> statement.
+In Drizzle, you can use the appropriately named <code>delete</code> function on the <code>db</code> object:</p>
 <pre><code class="language-ts">await db.delete(table).where(condition);
 </code></pre>
+<p>You need to specify the table to delete data from as well as a condition that specifies what data to delete.</p>
 <p>For example, here is how you could delete all the completed tasks:</p>
 <pre><code class="language-ts">await db.delete(taskTable).where(eq(taskTable.status, 'done'));
 </code></pre>

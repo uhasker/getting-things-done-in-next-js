@@ -153,27 +153,131 @@
                 <div id="content" class="content">
                     <main>
                         <h2 id="multiple-tables"><a class="header" href="#multiple-tables">Multiple Tables</a></h2>
-<div style="text-align: right"> <i> Y'all should just copy everything Eloquent has <br> - From Drizzles official page </i> </div>
+<div style="text-align: right"> <i> Y'all should just copy everything Eloquent has <br> — From Drizzles' official marketing page </i> </div>
+<h3 id="adding-projects"><a class="header" href="#adding-projects">Adding Projects</a></h3>
+<p>Let's again add projects to our application.
+Remember, that each project can contain multiple tasks and each task should belong to exactly one project.</p>
+<p>Here is how we could accomplish this in SQL:</p>
+<pre><code class="language-sql">create table project (
+    id serial primary key,
+    name varchar(255) not null
+);
+
+alter table task
+add column project_id integer;
+
+alter table task
+add constraint fk_project
+foreign key (project_id)
+references project(id);
+</code></pre>
+<p>Let's also add new tasks and projects to the <code>task</code> and <code>project</code> tables respectively:</p>
+<pre><code class="language-sql">insert into project (name) values ('Learn web development'), ('Gain practical experience'), ('Have fun');
+insert into task (title, description, duration, status, project_id) values
+('Read the Next.js book', 'Read and understand the Next.js book.', 60, 'inprogress', 1),
+('Read the Next.js docs', 'Read and understand the Next.js docs.', 120, 'inprogress', 1),
+('Write a task app', 'Write an awesome task app.', 120, 'todo', 2),
+('Think of a funny joke', 'Come up with a funny joke to lighten the mood.', 120, 'inprogress', null);
+</code></pre>
 <h3 id="foreign-keys"><a class="header" href="#foreign-keys">Foreign Keys</a></h3>
 <p>Let's recreate the project and task table from the SQL chapter in Drizzle:</p>
-<pre><code class="language-ts">export const projectTable = pgTable('project', {
+<pre><code class="language-ts">const statusEnum = pgEnum('status', ['todo', 'inprogress', 'done']);
+
+const projectTable = pgTable('project', {
   id: serial('id').primaryKey(),
   name: text('name').notNull(),
 });
 
-export const taskTable = pgTable('task', {
-  id: serial('id').primaryKey(),
-  title: varchar('title', { length: 255 }).notNull(),
-  description: text('description').notNull(),
-  status: varchar('status', { length: 255 }).notNull(),
-  duration: integer('duration'),
-  createdAt: timestamp('created_at').defaultNow().notNull(),
-  projectId: integer('project_id').notNull().references(() =&gt; projectTable.id);
-});
+const taskTable = pgTable(
+  'task',
+  {
+    id: serial('id').primaryKey(),
+    title: text('title').notNull(),
+    description: text('description').notNull(),
+    status: statusEnum().notNull(),
+    duration: integer('duration'),
+    createdAt: timestamp('created_at').defaultNow().notNull(),
+    projectId: integer('project_id').references(() =&gt; projectTable.id),
+  },
+  (table) =&gt; [
+    {
+      durationCheckConstraint: check('duration_check', sql`${table.duration} &gt; 0`),
+    },
+  ],
+);
 </code></pre>
 <h3 id="inner-join"><a class="header" href="#inner-join">Inner Join</a></h3>
-<p>You can perform an inner join like this:</p>
+<p>In the SQL chapter, we've already explained that to select data from multiple tables, we can use join operations.</p>
+<p>In Drizzle, the <code>innerJoin</code> function can be used to perform an inner join:</p>
 <pre><code class="language-ts">await db.select().from(projectTable).innerJoin(taskTable, eq(projectTable.id, taskTable.projectId));
+</code></pre>
+<p>This would return:</p>
+<pre><code class="language-json">[
+  {
+    "project": { "id": 1, "name": "Learn web development" },
+    "task": {
+      "id": 1,
+      "title": "Read the Next.js book",
+      "description": "Read and understand the Next.js book.",
+      "status": "inprogress",
+      "duration": 60,
+      "createdAt": "2024-12-15T19:31:15.196Z",
+      "projectId": 1
+    }
+  },
+  {
+    "project": { "id": 1, "name": "Learn web development" },
+    "task": {
+      "id": 2,
+      "title": "Read the Next.js docs",
+      "description": "Read and understand the Next.js docs.",
+      "status": "inprogress",
+      "duration": 120,
+      "createdAt": "2024-12-15T19:31:15.196Z",
+      "projectId": 1
+    }
+  },
+  {
+    "project": { "id": 2, "name": "Gain practical experience" },
+    "task": {
+      "id": 3,
+      "title": "Write a task app",
+      "description": "Write an awesome task app.",
+      "status": "todo",
+      "duration": 120,
+      "createdAt": "2024-12-15T19:31:15.196Z",
+      "projectId": 2
+    }
+  }
+]
+</code></pre>
+<p>Note that the result is a list of objects, where each object in turn contains multiple objects representing the rows from the different tables.</p>
+<p>For example, here is you could access the task and the project of the first record in the join result:</p>
+<pre><code class="language-ts">const tasksAndProjects = await db
+  .select()
+  .from(projectTable)
+  .innerJoin(taskTable, eq(projectTable.id, taskTable.projectId));
+const firstTask = tasksAndProjects[0].task;
+const firstProject = tasksAndProjects[0].project;
+console.log({ firstTask, firstProject });
+</code></pre>
+<p>This would output:</p>
+<pre><code class="language-json">{
+  "firstTask": {
+    "id": 1,
+    "title": "Read the Next.js book",
+    "description": "Read and understand the Next.js book.",
+    "status": "inprogress",
+    "duration": 60,
+    "createdAt": "2024-12-15T19:31:15.196Z",
+    "projectId": 1
+  },
+  "firstProject": { "id": 1, "name": "Learn web development" }
+}
+</code></pre>
+<p>You can perform a left join and a right join in a similar manner:</p>
+<pre><code class="language-ts">await db.select().from(projectTable).leftJoin(taskTable, eq(projectTable.id, taskTable.projectId));
+await db.select().from(projectTable).rightJoin(taskTable, eq(projectTable.id, taskTable.projectId));
 </code></pre>
 
                     </main>

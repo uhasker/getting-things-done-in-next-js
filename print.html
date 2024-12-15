@@ -237,7 +237,7 @@ We will call it <em>hello.html</em>.
 However, you can name it whatever you want.
 The filename should have an <em>html</em> extension though.</p>
 <p>Open the HTML file in any text editor (see below for text editors that are good choices for coding) and add the following text to the file:</p>
-<pre><code class="language-html">&lt;!doctype html&gt;
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
 &lt;html&gt;
   &lt;head&gt;&lt;/head&gt;
   &lt;body&gt;
@@ -389,8 +389,9 @@ Go ahead and open a Node.js console <em>now</em>.</p>
 <p>Waiting...</p>
 <p>Waiting...</p>
 <p>Waiting...</p>
-<p><em>Finally</em>.
-Let's move on.</p>
+<p><em>Finally</em>.</p>
+<p>Additionally, <strong>you should absolutely type the code yourself and not copy and paste it</strong>.
+If you just copy and paste the code, you will learn absolutely nothing and may as well not read this book at all.</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="primitive-data-types"><a class="header" href="#primitive-data-types">Primitive Data Types</a></h2>
 <div style="text-align: right"> <i> == is the equality operator <br> === is the one and true equality operator <br> ==== is the equality operator which transcends time and space <br> ===== is the equality operator which transcends all other equality operators <br> ====== is the equality operator which summons the UNSPEAKABLE DOOM (all is lost) <br> — from "The Book of the Equality Operators and their Virtue" by Laozi </i> </div>
 <h3 id="variables"><a class="header" href="#variables">Variables</a></h3>
@@ -5739,45 +5740,92 @@ join task t on pt.task_id = t.id;
 | Gain practical experience | Write a task app      | todo        |
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="chapter-5-typesafe-sql-with-drizzle"><a class="header" href="#chapter-5-typesafe-sql-with-drizzle">Chapter 5: Typesafe SQL with Drizzle</a></h1>
-<div style="text-align: right"> <i> I hate Drizzle <br> - From Drizzles official page </i> </div>
-<p>Drizzle is a TypeScript ORM (object relational mapping).
-It allows you to write TypeScript functions that perform database operations in a very similar manner to SQL.</p>
+<div style="text-align: right"> <i> I hate Drizzle <br> — From Drizzles' official marketing page </i> </div>
+<p>Drizzle is a ORM (object relational mapping) framework written in TypeScript.
+ORM frameworks allow you to convert data between regular (TypeScript) objects and SQL rows.</p>
+<p>Basically, instead of writing SQL queries directly and then laboriously translating the results between TypeScript objects and SQL rows, you let the ORM do the translation for you.</p>
+<p>Unfortunately, a lot of ORMs add a ton of (often unnecessary) abstractions.
+Luckily, Drizzle decided to go the opposite direction—it provides you a very simple and intuitive collection of functions that closely mirror the way SQL works.
+You can think of Drizzle as basically being typesafe SQL.</p>
+<p>This makes Drizzle very simple to learn, simple to use and simple to debug problems.</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="setup-1"><a class="header" href="#setup-1">Setup</a></h2>
-<div style="text-align: right"> <i> Astro DB is powered by Drizzle! <br> ... and we regret everything omg this thing sucks <br> - From Drizzles official page </i> </div>
+<div style="text-align: right"> <i> Astro DB is powered by Drizzle! <br> ... and we regret everything omg this thing sucks <br> — From Drizzles' official marketing page </i> </div>
 <h3 id="a-simple-example"><a class="header" href="#a-simple-example">A Simple Example</a></h3>
-<p>Let's create a simple Drizzle script that will declare a task table and read all the tasks from the table.</p>
-<p>Create a new supabase database and recreate the task table from the SQL chapter.
-Don't add the project IDs and table yet, that will follow later.</p>
-<p>Create a new TypeScript project:</p>
+<p>Create a new Supabase database and recreate the <code>task</code> table from the SQL chapter:</p>
+<pre><code class="language-sql">create type status as enum ('todo', 'inprogress', 'done');
+
+create table task (
+    id serial primary key,
+    title text not null unique,
+    description text not null,
+    status status,
+    duration integer check (duration &gt; 0),
+    created_at timestamp default current_timestamp not null
+);
+</code></pre>
+<p>Let's also insert some values into the <code>task</code> table:</p>
+<pre><code class="language-sql">insert into task (title, description, duration, status) values
+('Read the Next.js book', 'Read and understand the Next.js book.', 60, 'inprogress'),
+('Write a task app', 'Write an awesome task app.', 10, 'todo'),
+('Think of a funny joke', 'Come up with a funny joke to lighten the mood.', 120, 'inprogress');
+</code></pre>
+<p>Don't add the <code>project</code> table yet, that will come later.</p>
+<p>Before we can write code, we need to setup Drizzle.</p>
+<p>First, we have to initialize a new TypeScript project and also add a <code>tsconfig.json</code> file.
+You already know the relevant commands from the TypeScript chapter:</p>
 <pre><code class="language-sh">pnpm init
 pnpm add typescript tsx --save-dev
 pnpm tsc --init
 </code></pre>
-<p>Install Drizzle:</p>
-<pre><code class="language-sh">pnpm add drizzle-orm postgres
-pnpm add drizzle-kit --save-dev
+<p>Next, we have to install Drizzle.
+The core package is called <code>drizzle-orm</code>.
+We will also need the <code>pg</code> package to be able to interact with our PostgreSQL database.</p>
+<pre><code class="language-sh">pnpm add drizzle-orm pg
+</code></pre>
+<p>We will also need the <code>@types/pg</code> package to get the type definitions for <code>pg</code>:</p>
+<pre><code class="language-sh">pnpm add @types/pg --save-dev
 </code></pre>
 <p>Create the following file <code>demo.ts</code>:</p>
-<pre><code class="language-ts">import { pgTable, serial, text, integer, timestamp, varchar } from 'drizzle-orm/pg-core';
-import { drizzle } from 'drizzle-orm/postgres-js';
-import postgres from 'postgres';
+<pre><code class="language-ts">import {
+  pgTable,
+  pgEnum,
+  serial,
+  text,
+  integer,
+  timestamp,
+  varchar,
+  check,
+} from 'drizzle-orm/pg-core';
+import { sql } from 'drizzle-orm';
+import { drizzle } from 'drizzle-orm/node-postgres';
 
 // Paste the supabase URI here
 const databaseURI = '...';
 
+const statusEnum = pgEnum('status', ['todo', 'inprogress', 'done']);
+
 // Declare the task table
-const taskTable = pgTable('task', {
-  id: serial('id').primaryKey(),
-  title: varchar('title', { length: 255 }).notNull(),
-  description: text('description').notNull(),
-  status: varchar('status', { length: 255 }).notNull(),
-  duration: integer('duration'),
-  createdAt: timestamp('created_at').defaultNow().notNull(),
-});
+const taskTable = pgTable(
+  'task',
+  {
+    id: serial('id').primaryKey(),
+    title: text('title').notNull(),
+    description: text('description').notNull(),
+    status: statusEnum().notNull(),
+    duration: integer('duration'),
+    createdAt: timestamp('created_at').defaultNow().notNull(),
+  },
+  (table) =&gt; [
+    {
+      durationCheckConstraint: check('duration_check', sql`${table.duration} &gt; 0`),
+    },
+  ],
+);
 
-const client = postgres(databaseURI);
-const db = drizzle(client);
+// Connect Drizzle to the database
+const db = drizzle(databaseURI);
 
+// Execute a query
 async function getTasks() {
   return await db.select().from(taskTable);
 }
@@ -5785,12 +5833,46 @@ async function getTasks() {
 getTasks().then(console.log);
 </code></pre>
 <blockquote>
-<p>Note that the <code>check</code> constraint is not yet implemented in Drizzle at the time of this writing.</p>
+<p>Note that hardcoding passwords and secrets in code is really poor style.
+We will fix this at the end of this chapter.</p>
 </blockquote>
+<p>There are two really important functions that Drizzle provides for you.</p>
+<p>First, we have the <code>pgTable</code> function.
+This declares a table schema and allows you to map the underneath SQL table to JavaScript (or TypeScript) objects.</p>
+<p>Second, we have the <code>drizzle</code> function.
+This allows you to establish the actual connection to the database and serves as the entry point for all your database interactions.
+It returns a <code>db</code> object that represents the Drizzle client and allows you execute the actual queries (like <code>db.select().from(taskTable)</code>).</p>
 <p>Execute the file:</p>
 <pre><code class="language-sh">pnpm tsx demo.ts
 </code></pre>
-<p>You will see a list of all the tasks that are currently present in the table.</p>
+<p>You will see a list of all the tasks that are currently present in the table:</p>
+<pre><code class="language-json">[
+  {
+    "id": 1,
+    "title": "Read the Next.js book",
+    "description": "Read and understand the Next.js book.",
+    "status": "inprogress",
+    "duration": 60,
+    "createdAt": "2024-12-15T10:49:46.049Z"
+  },
+  {
+    "id": 2,
+    "title": "Write a task app",
+    "description": "Write an awesome task app.",
+    "status": "todo",
+    "duration": 10,
+    "createdAt": "2024-12-15T10:49:46.049Z"
+  },
+  {
+    "id": 3,
+    "title": "Think of a funny joke",
+    "description": "Come up with a funny joke to lighten the mood.",
+    "status": "inprogress",
+    "duration": 120,
+    "createdAt": "2024-12-15T10:49:46.049Z"
+  }
+]
+</code></pre>
 <h3 id="drizzle-as-typesafe-sql"><a class="header" href="#drizzle-as-typesafe-sql">Drizzle as Typesafe SQL</a></h3>
 <p>Did you notice how similar the Drizzle function and the SQL statement are?
 The Drizzle function is:</p>
@@ -5799,16 +5881,18 @@ The Drizzle function is:</p>
 <p>The SQL function was:</p>
 <pre><code class="language-sql">select * from task;
 </code></pre>
-<p>This similarity is <em>intentional</em> and will be a major theme in this chapter.
+<p>This similarity is quite intentional and will be a major theme in this chapter.
 Unlike many other frameworks which try to "abstract" SQL away, Drizzle embraces SQL and only adds a bit of type safety on top of it.</p>
 <p>If you know SQL, learning Drizzle is a very fast process.</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="inserting-updating-and-deleting-data-1"><a class="header" href="#inserting-updating-and-deleting-data-1">Inserting, Updating and Deleting Data</a></h2>
-<div style="text-align: right"> <i> Django had it in 2008 <br> - From Drizzles official page </i> </div>
+<div style="text-align: right"> <i> Django had it in 2008 <br> — From Drizzles' official marketing page </i> </div>
 <h3 id="inserting-data-1"><a class="header" href="#inserting-data-1">Inserting Data</a></h3>
-<p>Inserting data generally looks like this:</p>
+<p>To insert data in SQL, you use the <code>insert</code> statement.
+In Drizzle, you can use the appropriately named <code>insert</code> function on the <code>db</code> object:</p>
 <pre><code class="language-ts">await db.insert(table).values(values);
 </code></pre>
-<p>Here is how you would insert a row into <code>taskTable</code>:</p>
+<p>You need to declare the table to write to and the dictionary containing the columns and the values to insert into the respective columns.</p>
+<p>For example, here is how you would insert a row into <code>taskTable</code>:</p>
 <pre><code class="language-ts">await db.insert(taskTable).values({
   title: 'Read the Next.js book',
   description: 'Read and understand the Next.js book.',
@@ -5816,20 +5900,20 @@ Unlike many other frameworks which try to "abstract" SQL away, Drizzle embraces 
   duration: 60,
 });
 </code></pre>
-<p>You can insert a row and get it back:</p>
+<p>You can also insert a row and get it back using the <code>returning</code> function.
+This is useful if you want to get the data that has been automatically inserted into the database (like an ID):</p>
 <pre><code class="language-ts">const row = await db
   .insert(taskTable)
   .values({
-    name: 'Example project',
+    title: 'Read the Next.js book',
+    description: 'Read and understand the Next.js book.',
+    status: 'inprogress',
+    duration: 60,
   })
   .returning();
-console.log(row);
+console.log(row.id); // Will output the ID of the resulting row
 </code></pre>
-<p>This would output something like:</p>
-<pre><code>[ { id: 3, name: 'Example project' } ]
-</code></pre>
-<p>The <code>returning</code> function is mostly useful if you want to get the ID of the inserted row.</p>
-<p>You can insert multiple rows by providing an array of objects:</p>
+<p>You can insert multiple rows at the same by providing an array of objects:</p>
 <pre><code class="language-ts">await db.insert(taskTable).values([
   {
     title: 'Read the Next.js book',
@@ -5852,219 +5936,571 @@ console.log(row);
 ]);
 </code></pre>
 <h3 id="updating-data-1"><a class="header" href="#updating-data-1">Updating Data</a></h3>
-<p>Updating data generally looks like this:</p>
+<p>To update data in SQL, you use the <code>update</code> statement.
+In Drizzle, you can use the appropriately named <code>update</code> function on the <code>db</code> object:</p>
 <pre><code class="language-ts">await db.update(table).set(object).where(condition);
 </code></pre>
+<p>You need to specify the table to update, the columns with the values to update, and a condition for which rows to update.</p>
 <p>For example, let's say that wanted to set status of the task with the ID <code>1</code> to <code>'done'</code>:</p>
 <pre><code class="language-ts">await db.update(taskTable).set({ status: 'done' }).where(eq(taskTable.id, 1));
 </code></pre>
+<p>Just as with SQL, you can update more than one column at the same time:</p>
+<pre><code class="language-ts">await db.update(taskTable).set({ status: 'done', duration: 0 }).where(eq(taskTable.id, 1));
+</code></pre>
 <h3 id="deleting-data-1"><a class="header" href="#deleting-data-1">Deleting Data</a></h3>
-<p>Updating data generally looks like this:</p>
+<p>To delete data in SQL, you use the <code>delete</code> statement.
+In Drizzle, you can use the appropriately named <code>delete</code> function on the <code>db</code> object:</p>
 <pre><code class="language-ts">await db.delete(table).where(condition);
 </code></pre>
+<p>You need to specify the table to delete data from as well as a condition that specifies what data to delete.</p>
 <p>For example, here is how you could delete all the completed tasks:</p>
 <pre><code class="language-ts">await db.delete(taskTable).where(eq(taskTable.status, 'done'));
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="selecting-data-1"><a class="header" href="#selecting-data-1">Selecting Data</a></h2>
-<div style="text-align: right"> <i> I hate @DrizzleOrm
- so much that I wrote the Auth.js adapter for it. <br> - From Drizzles official page </i> </div>
-<p>You can use the <code>select</code> function to select data.</p>
-<p>You can select all columns:</p>
+<div style="text-align: right"> <i> I hate @DrizzleOrm so much that I wrote the Auth.js adapter for it. <br> — From Drizzles' official marketing page </i> </div>
+<h3 id="basics-1"><a class="header" href="#basics-1">Basics</a></h3>
+<p>We will work with the data that we've inserted in the last section.
+As a reminder, this is how it looked like:</p>
+<pre><code class="language-js">insert into task (title, description, duration, status) values
+('Read the Next.js book', 'Read and understand the Next.js book.', 60, 'inprogress'),
+('Write a task app', 'Write an awesome task app.', 10, 'todo'),
+('Think of a funny joke', 'Come up with a funny joke to lighten the mood.', 120, 'inprogress');
+</code></pre>
+<p>To select data in SQL, you use the <code>select</code> statement.
+In Drizzle, you can use the appropriately named <code>select</code> function on the <code>db</code> object.</p>
+<p>You can <code>select</code> all columns from a table:</p>
 <pre><code class="language-ts">await db.select().from(taskTable);
 </code></pre>
-<p>Here is how you can specify the columns to select:</p>
+<p>This would return the following:</p>
+<pre><code class="language-json">[
+  {
+    "id": 1,
+    "title": "Read the Next.js book",
+    "description": "Read and understand the Next.js book.",
+    "status": "inprogress",
+    "duration": 60,
+    "createdAt": "2024-12-15T10:49:46.049Z"
+  },
+  {
+    "id": 2,
+    "title": "Write a task app",
+    "description": "Write an awesome task app.",
+    "status": "todo",
+    "duration": 10,
+    "createdAt": "2024-12-15T10:49:46.049Z"
+  },
+  {
+    "id": 3,
+    "title": "Think of a funny joke",
+    "description": "Come up with a funny joke to lighten the mood.",
+    "status": "inprogress",
+    "duration": 120,
+    "createdAt": "2024-12-15T10:49:46.049Z"
+  }
+]
+</code></pre>
+<p>You can also specify certain columns to <code>select</code>:</p>
 <pre><code class="language-ts">await db.select({ title: taskTable.title }).from(taskTable);
 </code></pre>
-<p>You can use the <code>where</code> function to filter results.
+<p>This would return the following:</p>
+<pre><code class="language-json">[
+  { "title": "Read the Next.js book" },
+  { "title": "Write a task app" },
+  { "title": "Think of a funny joke" }
+]
+</code></pre>
+<h3 id="filtering-results-1"><a class="header" href="#filtering-results-1">Filtering Results</a></h3>
+<p>You can use the <code>where</code> function to filter results which works similar to the <code>where</code> clause in SQL.
 This function takes one or multiple conditions.</p>
 <p>The conditions can contain functions like <code>eq</code>, <code>ne</code>, <code>lt</code>, <code>lte</code>, <code>gt</code>, <code>gte</code>.</p>
 <p>For example, here is how you could select all tasks that are in progress:</p>
-<pre><code class="language-ts">await db.select().from(taskTable).where(eq(taskTable.status, 'inprogress'));
+<pre><code class="language-ts">import { eq } from 'drizzle-orm';
+
+// ...
+
+await db
+  .select({
+    id: taskTable.id,
+    title: taskTable.title,
+    status: taskTable.status,
+  })
+  .from(taskTable)
+  .where(eq(taskTable.status, 'inprogress'));
+</code></pre>
+<p>This would return the following:</p>
+<pre><code class="language-json">[
+  {
+    "id": 1,
+    "title": "Read the Next.js book",
+    "status": "inprogress"
+  },
+  {
+    "id": 3,
+    "title": "Think of a funny joke",
+    "status": "inprogress"
+  }
+]
 </code></pre>
 <p>Here is how you can select all tasks that will take longer than 30 minutes:</p>
-<pre><code class="language-ts">await db.select().from(taskTable).where(gt(taskTable.duration, 30));
+<pre><code class="language-ts">import { gt } from 'drizzle-orm';
+
+// ...
+
+await db
+  .select({
+    id: taskTable.id,
+    title: taskTable.title,
+    duration: taskTable.duration,
+  })
+  .from(taskTable)
+  .where(gt(taskTable.duration, 30));
+</code></pre>
+<p>This would return the following:</p>
+<pre><code class="language-json">[
+  {
+    "id": 1,
+    "title": "Read the Next.js book",
+    "duration": 60
+  },
+  {
+    "id": 3,
+    "title": "Think of a funny joke",
+    "duration": 120
+  }
+]
 </code></pre>
 <p>You can use the <code>and</code> and <code>or</code> functions to combine conditions.
 For example, you could select all tasks that are in progress <em>and</em> will take longer than 30 minutes:</p>
-<pre><code class="language-ts">await db
-  .select()
+<pre><code class="language-ts">import { and, eq, gt } from 'drizzle-orm';
+
+// ...
+
+await db
+  .select({
+    id: taskTable.id,
+    title: taskTable.title,
+    status: taskTable.status,
+    duration: taskTable.duration,
+  })
   .from(taskTable)
   .where(and(eq(taskTable.status, 'inprogress'), gt(taskTable.duration, 30)));
 </code></pre>
+<p>This would return the following:</p>
+<pre><code class="language-json">[
+  {
+    "id": 1,
+    "title": "Read the Next.js book",
+    "status": "inprogress",
+    "duration": 60
+  },
+  {
+    "id": 3,
+    "title": "Think of a funny joke",
+    "status": "inprogress",
+    "duration": 120
+  }
+]
+</code></pre>
 <p>You could also select all tasks that are in progress <em>or</em> will take longer than 30 minutes:</p>
-<pre><code class="language-ts">await db
-  .select()
+<pre><code class="language-ts">import { or, eq, gt } from 'drizzle-orm';
+
+// ...
+
+await db
+  .select({
+    id: taskTable.id,
+    title: taskTable.title,
+    status: taskTable.status,
+    duration: taskTable.duration,
+  })
   .from(taskTable)
   .where(or(eq(taskTable.status, 'inprogress'), gt(taskTable.duration, 30)));
 </code></pre>
-<p>You can order the results using <code>orderBy</code>.
-To specify the ordering, you can use <code>asc</code> (ascending) or <code>desc</code> (descending):</p>
-<pre><code class="language-ts">await db.select().from(taskTable).orderBy(asc(taskTable.duration));
+<p>This would return the following:</p>
+<pre><code class="language-json">[
+  {
+    "id": 1,
+    "title": "Read the Next.js book",
+    "status": "inprogress",
+    "duration": 60
+  },
+  {
+    "id": 3,
+    "title": "Think of a funny joke",
+    "status": "inprogress",
+    "duration": 120
+  }
+]
 </code></pre>
-<p>Alternatively:</p>
-<pre><code class="language-ts">await db.select().from(taskTable).orderBy(desc(taskTable.duration));
+<h3 id="ordering-and-limiting-results-1"><a class="header" href="#ordering-and-limiting-results-1">Ordering and Limiting Results</a></h3>
+<p>You can order the results using the <code>orderBy</code> function.
+To specify the ordering, you can use <code>asc</code> (ascending) or <code>desc</code> (descending).</p>
+<p>For example, this is how you could retrieve all the tasks from the <code>task</code> table and sort them by the duration in an ascending order:</p>
+<pre><code class="language-ts">import { asc } from 'drizzle-orm';
+
+// ...
+
+await db
+  .select({
+    id: taskTable.id,
+    title: taskTable.title,
+    duration: taskTable.duration,
+  })
+  .from(taskTable)
+  .orderBy(asc(taskTable.duration));
 </code></pre>
-<p>You can limit results using <code>limit</code>:</p>
-<pre><code class="language-ts">await db.select().from(taskTable).orderBy(asc(taskTable.duration)).limit(10);
+<p>This would return:</p>
+<pre><code class="language-json">[
+  { "id": 2, "title": "Write a task app", "duration": 10 },
+  { "id": 1, "title": "Read the Next.js book", "duration": 60 },
+  { "id": 3, "title": "Think of a funny joke", "duration": 120 }
+]
 </code></pre>
-<p>Again note how similar all these statements are to the statements from the SQL chapter.</p>
+<p>Alternatively you could order the tasks by the duration in a descending order:</p>
+<pre><code class="language-ts">import { desc } from 'drizzle-orm';
+
+await db
+  .select({
+    id: taskTable.id,
+    title: taskTable.title,
+    duration: taskTable.duration,
+  })
+  .from(taskTable)
+  .orderBy(desc(taskTable.duration));
+</code></pre>
+<p>You can also limit results using the <code>limit</code> function:</p>
+<pre><code class="language-ts">await db
+  .select({
+    id: taskTable.id,
+    title: taskTable.title,
+    duration: taskTable.duration,
+  })
+  .from(taskTable)
+  .orderBy(asc(taskTable.duration))
+  .limit(2);
+</code></pre>
+<p>This would return:</p>
+<pre><code class="language-json">[
+  { "id": 2, "title": "Write a task app", "duration": 10 },
+  { "id": 1, "title": "Read the Next.js book", "duration": 60 }
+]
+</code></pre>
+<p>Again, note how similar all these statements are to the statements from the SQL chapter.</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="multiple-tables"><a class="header" href="#multiple-tables">Multiple Tables</a></h2>
-<div style="text-align: right"> <i> Y'all should just copy everything Eloquent has <br> - From Drizzles official page </i> </div>
+<div style="text-align: right"> <i> Y'all should just copy everything Eloquent has <br> — From Drizzles' official marketing page </i> </div>
+<h3 id="adding-projects-1"><a class="header" href="#adding-projects-1">Adding Projects</a></h3>
+<p>Let's again add projects to our application.
+Remember, that each project can contain multiple tasks and each task should belong to exactly one project.</p>
+<p>Here is how we could accomplish this in SQL:</p>
+<pre><code class="language-sql">create table project (
+    id serial primary key,
+    name varchar(255) not null
+);
+
+alter table task
+add column project_id integer;
+
+alter table task
+add constraint fk_project
+foreign key (project_id)
+references project(id);
+</code></pre>
+<p>Let's also add new tasks and projects to the <code>task</code> and <code>project</code> tables respectively:</p>
+<pre><code class="language-sql">insert into project (name) values ('Learn web development'), ('Gain practical experience'), ('Have fun');
+insert into task (title, description, duration, status, project_id) values
+('Read the Next.js book', 'Read and understand the Next.js book.', 60, 'inprogress', 1),
+('Read the Next.js docs', 'Read and understand the Next.js docs.', 120, 'inprogress', 1),
+('Write a task app', 'Write an awesome task app.', 120, 'todo', 2),
+('Think of a funny joke', 'Come up with a funny joke to lighten the mood.', 120, 'inprogress', null);
+</code></pre>
 <h3 id="foreign-keys-1"><a class="header" href="#foreign-keys-1">Foreign Keys</a></h3>
 <p>Let's recreate the project and task table from the SQL chapter in Drizzle:</p>
-<pre><code class="language-ts">export const projectTable = pgTable('project', {
+<pre><code class="language-ts">const statusEnum = pgEnum('status', ['todo', 'inprogress', 'done']);
+
+const projectTable = pgTable('project', {
   id: serial('id').primaryKey(),
   name: text('name').notNull(),
 });
 
-export const taskTable = pgTable('task', {
-  id: serial('id').primaryKey(),
-  title: varchar('title', { length: 255 }).notNull(),
-  description: text('description').notNull(),
-  status: varchar('status', { length: 255 }).notNull(),
-  duration: integer('duration'),
-  createdAt: timestamp('created_at').defaultNow().notNull(),
-  projectId: integer('project_id').notNull().references(() =&gt; projectTable.id);
-});
+const taskTable = pgTable(
+  'task',
+  {
+    id: serial('id').primaryKey(),
+    title: text('title').notNull(),
+    description: text('description').notNull(),
+    status: statusEnum().notNull(),
+    duration: integer('duration'),
+    createdAt: timestamp('created_at').defaultNow().notNull(),
+    projectId: integer('project_id').references(() =&gt; projectTable.id),
+  },
+  (table) =&gt; [
+    {
+      durationCheckConstraint: check('duration_check', sql`${table.duration} &gt; 0`),
+    },
+  ],
+);
 </code></pre>
 <h3 id="inner-join"><a class="header" href="#inner-join">Inner Join</a></h3>
-<p>You can perform an inner join like this:</p>
+<p>In the SQL chapter, we've already explained that to select data from multiple tables, we can use join operations.</p>
+<p>In Drizzle, the <code>innerJoin</code> function can be used to perform an inner join:</p>
 <pre><code class="language-ts">await db.select().from(projectTable).innerJoin(taskTable, eq(projectTable.id, taskTable.projectId));
 </code></pre>
+<p>This would return:</p>
+<pre><code class="language-json">[
+  {
+    "project": { "id": 1, "name": "Learn web development" },
+    "task": {
+      "id": 1,
+      "title": "Read the Next.js book",
+      "description": "Read and understand the Next.js book.",
+      "status": "inprogress",
+      "duration": 60,
+      "createdAt": "2024-12-15T19:31:15.196Z",
+      "projectId": 1
+    }
+  },
+  {
+    "project": { "id": 1, "name": "Learn web development" },
+    "task": {
+      "id": 2,
+      "title": "Read the Next.js docs",
+      "description": "Read and understand the Next.js docs.",
+      "status": "inprogress",
+      "duration": 120,
+      "createdAt": "2024-12-15T19:31:15.196Z",
+      "projectId": 1
+    }
+  },
+  {
+    "project": { "id": 2, "name": "Gain practical experience" },
+    "task": {
+      "id": 3,
+      "title": "Write a task app",
+      "description": "Write an awesome task app.",
+      "status": "todo",
+      "duration": 120,
+      "createdAt": "2024-12-15T19:31:15.196Z",
+      "projectId": 2
+    }
+  }
+]
+</code></pre>
+<p>Note that the result is a list of objects, where each object in turn contains multiple objects representing the rows from the different tables.</p>
+<p>For example, here is you could access the task and the project of the first record in the join result:</p>
+<pre><code class="language-ts">const tasksAndProjects = await db
+  .select()
+  .from(projectTable)
+  .innerJoin(taskTable, eq(projectTable.id, taskTable.projectId));
+const firstTask = tasksAndProjects[0].task;
+const firstProject = tasksAndProjects[0].project;
+console.log({ firstTask, firstProject });
+</code></pre>
+<p>This would output:</p>
+<pre><code class="language-json">{
+  "firstTask": {
+    "id": 1,
+    "title": "Read the Next.js book",
+    "description": "Read and understand the Next.js book.",
+    "status": "inprogress",
+    "duration": 60,
+    "createdAt": "2024-12-15T19:31:15.196Z",
+    "projectId": 1
+  },
+  "firstProject": { "id": 1, "name": "Learn web development" }
+}
+</code></pre>
+<p>You can perform a left join and a right join in a similar manner:</p>
+<pre><code class="language-ts">await db.select().from(projectTable).leftJoin(taskTable, eq(projectTable.id, taskTable.projectId));
+await db.select().from(projectTable).rightJoin(taskTable, eq(projectTable.id, taskTable.projectId));
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="migrations"><a class="header" href="#migrations">Migrations</a></h2>
-<div style="text-align: right"> <i> DrizzleOrm
- is not an “ORM”, it’s merely a overrated typesafe sql wrapper not even a query builder.  <br> - From Drizzles official page </i> </div>
+<div style="text-align: right"> <i> DrizzleOrm is not an “ORM”, it’s merely a overrated typesafe sql wrapper not even a query builder.  <br> — From Drizzles' official marketing page </i> </div>
 <h3 id="why-migrations"><a class="header" href="#why-migrations">Why Migrations?</a></h3>
 <p>Quite often, during the course of development an application will have to change.
 This will sometimes include the underlying tables in the database.</p>
-<p>To manage these changes, Drizzle allows you to create <strong>migrations</strong>, i.e. files that can help you update the table schemas.</p>
+<p>The problem is when you need to change the tables, you usually already have some data in those tables which will not match the new table structures.
+For example, let's say that you want to add a <code>finished_at</code> column to the <code>tasks</code> table.
+What would you do with the tasks that are already present in the table?
+Do you set the <code>finished_at</code> value for all those tasks to <code>null</code>?
+Do you set them to some arbitrary "default" date?</p>
+<p><strong>Database migrations</strong> are sets of changes that allow you to transition a database schema from a current state to a new desired state without breaking your existing data.
+These changes can involve adding tables, adding columns, removing columns and even changing data type or constraints.</p>
+<p>How do we perform database migrations in practice?
+We could theoretically just execute SQL queries that modify our tables and call it a day.
+However, in a real project that's a bad idea.</p>
+<p>For example, if you execute a mistaken SQL query during a migration you will have no simple way to reverse the change, i.e. to perform a so-called "rollback".
+Additionally, you want to be able to allow other developers to reproduce the changes you made to a database, especially if you work with different database instances during development (which is a common practice).</p>
+<p>Therefore, most tools (including Drizzle) split the migration process in two separate steps.</p>
+<p>First, you need to create a file containing the desired migration.
+Second, you need actually execute that file to perform the migration and move your database to the new desired state.</p>
+<p>If you want to follow along, you should drop the <code>task</code> and <code>project</code> tables along with the <code>status</code> enum:</p>
+<pre><code class="language-sql">drop table task;
+drop table project;
+drop type status;
+</code></pre>
+<p>You should also delete the <code>demo.ts</code> as we will now split the logic across multiple files.</p>
 <h3 id="creating-your-first-migration"><a class="header" href="#creating-your-first-migration">Creating Your First Migration</a></h3>
-<p>Let's consider the task table without the project IDs.</p>
-<p>Create a <code>schema.ts</code> file:</p>
-<pre><code class="language-ts">import { pgTable, serial, text } from 'drizzle-orm/pg-core';
+<p>Install the <code>drizzle-kit</code> package as a dev dependency:</p>
+<pre><code class="language-sh">pnpm add drizzle-kit --save-dev
+</code></pre>
+<p>Let's create a <code>schema.ts</code> file that will contain all our table definitions.</p>
+<p>For now, we will only add the <code>task</code> table to it:</p>
+<pre><code class="language-ts">import { pgTable, serial, text, integer, timestamp, check, pgEnum } from 'drizzle-orm/pg-core';
+import { sql } from 'drizzle-orm';
 
-export const taskTable = pgTable('task', {
-  id: serial('id').primaryKey(),
-  title: varchar('title', { length: 255 }).notNull(),
-  description: text('description').notNull(),
-  status: varchar('status', { length: 255 }).notNull(),
-  duration: integer('duration'),
-  createdAt: timestamp('created_at').defaultNow().notNull(),
+export const statusEnum = pgEnum('status', ['todo', 'inprogress', 'done']);
+
+export const taskTable = pgTable(
+  'task',
+  {
+    id: serial('id').primaryKey(),
+    title: text('title').notNull(),
+    description: text('description').notNull(),
+    status: statusEnum().notNull(),
+    duration: integer('duration'),
+    createdAt: timestamp('created_at').defaultNow().notNull(),
+  },
+  (table) =&gt; [
+    {
+      durationCheckConstraint: check('duration_check', sql`${table.duration} &gt; 0`),
+    },
+  ],
+);
+</code></pre>
+<p>Next, we need to create a <code>drizzle.config.ts</code> file.</p>
+<p>This file should specify the various configuration options we use when connecting to the database and performing migrations:</p>
+<pre><code class="language-ts">import { defineConfig } from 'drizzle-kit';
+
+export default defineConfig({
+  out: './migrations',
+  schema: './schema.ts',
+  dialect: 'postgresql',
+  dbCredentials: {
+    url: '$YOUR_DATABASE_URL_HERE',
+  },
 });
 </code></pre>
-<p>Create a <code>drizzle.config.ts</code> file:</p>
-<pre><code class="language-ts">import type { Config } from 'drizzle-kit';
-
-export default {
-  schema: './schema.ts',
-  out: '.',
-  driver: 'pg',
-  dbCredentials: {
-    connectionString: '$YOUR_DATABASE_URL_HERE',
-  },
-} satisfies Config;
+<p>Now, we need to generate out first migration file:</p>
+<pre><code class="language-sh">pnpm drizzle-kit generate
 </code></pre>
-<p>Now run:</p>
-<pre><code class="language-sh">pnpm drizzle-kit generate:pg
+<p>This will create a <code>migrations</code> directory containing <code>meta</code> directory and an SQL file with the migration.
+It's quite instructive to look inside the SQL file:</p>
+<pre><code class="language-sql">CREATE TYPE "public"."status" AS ENUM('todo', 'inprogress', 'done');
+CREATE TABLE "task" (
+	"id" serial PRIMARY KEY NOT NULL,
+	"title" text NOT NULL,
+	"description" text NOT NULL,
+	"status" "status" NOT NULL,
+	"duration" integer,
+	"created_at" timestamp DEFAULT now() NOT NULL
+);
 </code></pre>
-<p>This will create a <code>meta</code> directory and an SQL file containing the migration.</p>
-<p>In this example, running the migration will create a new task table with the columns we would expect.</p>
+<p>As you can see, a Drizzle migration file simply specifies the SQL queries that should be executed when you perform the migration.
+In this example, running the migration will create a new <code>task</code> table with the columns we would expect.</p>
 <h3 id="run-migrations"><a class="header" href="#run-migrations">Run Migrations</a></h3>
-<p>Create the <code>migrate.ts</code> script:</p>
-<pre><code class="language-ts">import { drizzle } from 'drizzle-orm/postgres-js';
-import postgres from 'postgres';
-import { migrate } from 'drizzle-orm/postgres-js/migrator';
-
-const databaseURI = '$YOUR_DATABASE_URL_HERE';
-
-const client = postgres(databaseURI, { max: 1 });
-const db = drizzle(client);
-
-async function runMigrations() {
-  await migrate(db, { migrationsFolder: '.' });
-  await client.end();
-}
-
-runMigrations().then(console.log).catch(console.error);
-</code></pre>
-<p>Run the script:</p>
-<pre><code class="language-sh">pnpm tsx migrate.ts
+<p>To run the migration script, we simply need to execute the following command:</p>
+<pre><code class="language-sh">pnpm drizzle-kit migrate
 </code></pre>
 <p>You will see that the table now appears in Supabase.</p>
-<h3 id="read-the-database-password-from-environment"><a class="header" href="#read-the-database-password-from-environment">Read the Database Password from Environment</a></h3>
-<p>Of course, in real life, we want to avoid hardcoding the database password in our scripts.
-Instead, we will read it from an environment variable.</p>
-<p>Change the <code>migrate.ts</code> to read the password from <code>process.env.DATABASE_URL</code>:</p>
-<pre><code class="language-ts">const databaseURL = process.env.DATABASE_URL;
+<h3 id="the-second-migration"><a class="header" href="#the-second-migration">The Second Migration</a></h3>
+<p>Now, let's add the project ID and table to the schema.
+Here is how the final <code>schema.ts</code> file should look like:</p>
+<pre><code class="language-ts">import { pgTable, serial, text, integer, timestamp, check, pgEnum } from 'drizzle-orm/pg-core';
+import { sql } from 'drizzle-orm';
 
-if (databaseURL === undefined) {
-  console.log('You need to provide the database URI');
-  process.exit(1);
-}
-</code></pre>
-<p>Do the same thing with <code>drizzle.config.ts</code>:</p>
-<pre><code class="language-ts">import type { Config } from 'drizzle-kit';
+export const statusEnum = pgEnum('status', ['todo', 'inprogress', 'done']);
 
-export default {
-  schema: './schema.ts',
-  out: '.',
-  driver: 'pg',
-  dbCredentials: {
-    connectionString: process.env.DATABASE_URL,
+export const projectTable = pgTable('project', {
+  id: serial('id').primaryKey(),
+  name: text('name').notNull(),
+});
+
+export const taskTable = pgTable(
+  'task',
+  {
+    id: serial('id').primaryKey(),
+    title: text('title').notNull(),
+    description: text('description').notNull(),
+    status: statusEnum().notNull(),
+    duration: integer('duration'),
+    createdAt: timestamp('created_at').defaultNow().notNull(),
+    projectId: integer('project_id').references(() =&gt; projectTable.id),
   },
-} satisfies Config;
+  (table) =&gt; [
+    {
+      durationCheckConstraint: check('duration_check', sql`${table.duration} &gt; 0`),
+    },
+  ],
+);
 </code></pre>
-<p>Now you can run the script again:</p>
-<pre><code class="language-sh">export DATABASE_URL=$YOUR_DATABASE_URL_HERE
-pnpm tsx migrate.ts
+<p>Next, we create the second migration:</p>
+<pre><code class="language-sh">pnpm drizzle-kit generate
 </code></pre>
-<p>If you want to get typechecking for <code>process.env</code>, you can install <code>@types/node</code>:</p>
-<pre><code class="language-sh">pnpm add --save-dev @types/node
+<p>This will create another migration file in the <code>migrations</code> directory which looks as follows:</p>
+<pre><code class="language-sql">CREATE TABLE "project" (
+	"id" serial PRIMARY KEY NOT NULL,
+	"name" text NOT NULL
+);
+ALTER TABLE "task" ADD COLUMN "project_id" integer;
+ALTER TABLE "task" ADD CONSTRAINT "task_project_id_project_id_fk" FOREIGN KEY ("project_id") REFERENCES "public"."project"("id") ON DELETE no action ON UPDATE no action;
 </code></pre>
-<p>Alternatively you can read the environment variables from a <code>.env</code> file.
-Install <code>dotenv</code>:</p>
+<p>You will see that the migration contains the "diff" between the old schema and the new desired schema.
+Namely:</p>
+<ul>
+<li>the migration adds the <code>project</code> table</li>
+<li>the migration adds a <code>project_id</code> column to the <code>task</code> table</li>
+<li>the migration adds the relevant <code>foreign key</code> constraint to the <code>task</code> table</li>
+</ul>
+<p>Finally, you can execute the migration by running <code>pnpm drizzle-kit migrate</code>.
+This will execute the migration and you should see the updated tables in your Supabase project.</p>
+<h3 id="read-the-database-password-from-environment"><a class="header" href="#read-the-database-password-from-environment">Read the Database Password from Environment</a></h3>
+<p>There is one last thing that we need to fix.</p>
+<p>Right now we're hardcoding our database connection URL into our script.</p>
+<p>In real life, we want to avoid this to prevent everyone who has access to our code also having access to our database.
+Therefore, in practice, we read such secret information from an environment variable.</p>
+<p>The change is relatively simple.
+All we need to do is to replace the hardcoded database URL in the <code>drizzle.config.ts</code> file with <code>process.env.DATABASE_URL</code>:</p>
+<pre><code class="language-ts">import { defineConfig } from 'drizzle-kit';
+
+export default defineConfig({
+  out: './migrations',
+  schema: './schema.ts',
+  dialect: 'postgresql',
+  dbCredentials: {
+    url: process.env.DATABASE_URL!,
+  },
+});
+</code></pre>
+<p>Now you just need to export the <code>DATABASE_URL</code> environment variable and you can run all the commands as you normally would:</p>
+<pre><code class="language-sh">export DATABASE_URL="$YOUR_DATABASE_URL_HERE"
+pnpm drizzle-kit generate
+pnpm drizzle-kit migrate
+</code></pre>
+<p>Alternatively, you can read the environment variables from a <code>.env</code> file.</p>
+<p>To accomplish this, you first need to install the <code>dotenv</code> package:</p>
 <pre><code class="language-sh">pnpm add dotenv
 </code></pre>
-<p>Create a <code>.env</code> file:</p>
+<p>Next, create a <code>.env</code> file:</p>
 <pre><code>DATABASE_URL=$YOUR_DATABASE_URL_HERE
 </code></pre>
-<p>Add this to the <code>migrate.ts</code> script:</p>
-<pre><code class="language-ts">import dotenv from 'dotenv';
-dotenv.config();
+<p>Again, you can run the commands as you usually would:</p>
+<pre><code class="language-sh">pnpm drizzle-kit generate
+pnpm drizzle-kit migrate
 </code></pre>
-<p>The final migration script now looks like this:</p>
-<pre><code class="language-ts">import { drizzle } from 'drizzle-orm/postgres-js';
-import postgres from 'postgres';
-import dotenv from 'dotenv';
-import { migrate } from 'drizzle-orm/postgres-js/migrator';
+<p>You can now recreate the <code>demo.ts</code> script from the first section:</p>
+<pre><code class="language-ts">import 'dotenv/config';
+import { drizzle } from 'drizzle-orm/node-postgres';
+import { taskTable } from './schema';
 
-dotenv.config();
+const db = drizzle(process.env.DATABASE_URL!);
 
-const databaseURI = process.env.DATABASE_URL;
-
-if (databaseURI === undefined) {
-  console.log('You need to provide the database URI');
-  process.exit(0);
+async function getTasks() {
+  return await db.select().from(taskTable);
 }
 
-const client = postgres(databaseURI, { max: 1 });
-const db = drizzle(client);
-
-async function runMigrations() {
-  await migrate(db, { migrationsFolder: '.' });
-  await client.end();
-}
-
-runMigrations().then(console.log).catch(console.error);
+getTasks().then(console.log);
 </code></pre>
-<p>You can now run:</p>
-<pre><code class="language-ts">pnpm tsx migrate.ts
-</code></pre>
-<p>Note that you no longer need to export <code>DATABASE_URL</code> manually.
-Thanks to <code>dotenv</code> the script will simply pick the URL up from the <code>.env</code> file.</p>
-<h3 id="more-migrations"><a class="header" href="#more-migrations">More Migrations</a></h3>
-<p>Now, add the project ID and table to the schema and generate another migration.
-You will see that the migration will contain the "diff" between the current schema and the old schema.</p>
+<p>If you run it with <code>pnpm tsx demo.ts</code>, you will get the same results as in the first section.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="chapter-6-a-vanilla-client"><a class="header" href="#chapter-6-a-vanilla-client">Chapter 6: A Vanilla Client</a></h1>
 <div style="text-align: right"> <i> Whenever you write a web app in vanilla JavaScript, you end up creating your own framework. <br> And who in their right mind wants another JavaScript framework? <br> - Common programmer idiom </i> </div>
 <p>In this chapter we will write a small example client in <em>vanilla</em> HTML and JavaScript (i.e. without using any frameworks).
