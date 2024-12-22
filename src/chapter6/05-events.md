@@ -105,8 +105,8 @@ Let's put a `click` event listener on the parent `<div>`:
 
 ```js
 document.querySelector('#parent').addEventListener('click', (e) => {
-  console.log('event.target:', event.target);
-  console.log('event.currentTarget:', event.currentTarget);
+  console.log('event.target:', e.target);
+  console.log('event.currentTarget:', e.currentTarget);
 });
 ```
 
@@ -115,7 +115,7 @@ After all, you click the child `<button>` and not the parent `<div>`.
 
 However, the `currentTarget` would be the parent `<div>` because that was the element to which we attached the event handler.
 
-You can verify this yorself.
+You can verify this yourself.
 If you click the `child` button, you will see that `event.target` refers to the child `<button>` while `event.currentTarget` refers to the parent `<div>`.
 
 It's also important to note that the value of `event.currentTarget` is only available while the event is being handled.

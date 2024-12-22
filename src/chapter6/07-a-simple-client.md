@@ -4,7 +4,7 @@
 
 ### The Requirements
 
-One day you sit around and dream about going outside as suddently the dreaded _Project Manager_ approaches you and asks you to build a small task application.
+One day you sit around and dream about going outside as suddenly the dreaded _Project Manager_ approaches you and asks you to build a small task application.
 The application should consist of a list showing the current tasks.
 Additionally, a web form should allow the user to create a new task (which should then be displayed in the list of current tasks).
 
@@ -40,7 +40,7 @@ You get to work and quickly come up with the initial document:
 ```
 
 You now have a heading, a list and a form.
-However, if you click the submit button, not a whole lot happens.
+However, if you click the submit button, not much happens.
 After all, we haven't added any submit logic to the form yet.
 
 ### Grabbing the Items
@@ -107,7 +107,7 @@ If you click the button now, you will see that a new task will be added to the t
 
 As you complete the project, the _Project Manager_ once again walks up to you and remembers that it might be a good idea to allow the user to delete tasks.
 
-Therefore, whenever you create a new element, that elements should have a delete button.
+Therefore, whenever you create a new element, that element should have a delete button.
 
 To accomplish this, we first need to add a delete button to every task we create:
 
