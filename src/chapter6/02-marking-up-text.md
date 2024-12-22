@@ -1,6 +1,6 @@
 ## Marking Up Text
 
-<div style="text-align: right"> <i> Who needs semantic HTML anyway? <br> - Seconds before disaster </i> </div>
+<div style="text-align: right"> <i> Who needs semantic HTML anyway? <br> — Seconds before disaster </i> </div>
 
 ### The Paragraph Element
 
@@ -28,10 +28,10 @@ Additionally, you can use the `<hr>` element for a thematic break of some text.
 It will usually be visually presented as a horizontal line.
 
 ```html
-Here is some text. <hr /> Here some text about something totally different.
+Here is some text. <hr /> Here is some text about something totally different.
 ```
 
-The `<hr />` element is often used to introduce thematic breaks between paragraphs.
+The `<hr>` element is often used to introduce thematic breaks between paragraphs.
 
 ### Heading Elements
 
@@ -55,43 +55,44 @@ The different heading elements represent different "heading levels", e.g. `<h1>`
 <p>Some content related to subheading 2.2</p>
 ```
 
-You will rarely need `<h4>` to `<h6>` - very few documents require such an amount of heading levels.
+You will rarely need `<h4>` to `<h6>`—very few documents require such deeply nested heading levels.
 
-> Always try to use a single `<h1>` per page since this is the top level heading.
+Additionally, you should only use a single `<h1>` heading in a page since this is the top-level heading.
 
 ### Emphasis and Importance
 
 If we want to emphasize a part of a text (like an important word) we can use the `<em>` and `<strong>` elements.
-The `<em>` element marks that a text should be emphasized, for example:
+The `<em>` element marks that a text should be emphasized:
 
 ```html
 The weather today is <em>very</em> hot.
 ```
 
-The `<strong>` element marks that a text has strong importance, for example:
+The `<strong>` element marks that a text has strong importance:
 
 ```html
 The weather today is not just hot, it's <strong>scorching</strong>.
 ```
 
 As you probably guessed, deciding which of these two elements is appropriate is largely on you.
-If you want to emphasize some part of a text, but it doesn't have strong urgency you should use `<em>`.
-If a text is very important, you should use `<strong>`
+If you want to emphasize some part of a text, but it doesn't have strong urgency, you should use `<em>`.
+If a text is very important, you should use `<strong>` instead.
 
-> There are also `<i>` and `<b>`, however we will rarely use them, since `<em>` and `<strong>` have a semantic meaning (see below for what this means).
+> There are also the `<i>` and `<b>` elements.
+> However, we will rarely use them, since `<em>` and `<strong>` have a semantic meaning (see below for what this means).
 
 ### Other Text Elements
 
-We only scratched the surface of the kind of text markup you can perform with HTML.
+We've only scratched the surface of the kind of text markup you can perform with HTML.
 There are many, many other elements you can use.
 For example, you can mark up subscripts and superscripts with `<sub>` and `<sup>` respectively:
 
 ```html
-The chemical formula for water is H<sub>2</sub>O.
+<p>The chemical formula for water is H<sub>2</sub>O.</p>
 <p>The equation for energy is E = mc<sup>2</sup>.</p>
 ```
 
-You can add quotes - both blockquotes (with `<blockquote>`) and inline quotes (with `<q>`):
+You can add quotes—both blockquotes (with `<blockquote>`) and inline quotes (with `<q>`):
 
 ```html
 <p>As the famous physicist once said:</p>
@@ -111,7 +112,7 @@ Just be aware that when it comes to marking up text there might be an HTML eleme
 
 ### Semantic HTML
 
-In a few chapters, we will introduce you to CSS, which will allow you to style your HTML elements however you like.
+In a few chapters, we will introduce you to CSS, which will allow you to style your HTML elements however you see fit.
 At this point most people forget that there are any elements besides the generic `<div>` container since they can now just _style_ the `<div>` to look however they want.
 
 This is a _really bad idea_.
@@ -122,12 +123,13 @@ First of all, there are a lot of visually impaired people in the world who use s
 Screen readers tend to focus on the HTML elements and not the styles (which makes sense, since reading out styles is not really something you want to do).
 
 If you write a heading as a styled `<div>` instead of an `<h1>` you are not only doing more (unneccessary) work, you also give visually impaired people a worse experience.
-Screen readers often interpret headings in a special way - for example you can ask most screen readers to read all headings on a page out loud and then jump to some heading you care about.
+Screen readers often interpret headings in a special way.
+For example, you can ask most screen readers to read all headings on a page out loud and then jump to some heading you care about.
 This is of course not possible with `<div>`s.
 
 Second, your page will also be consumed by programs responsible for indexing and ranking.
 If your website contains generic containers only, it will usually be downgraded resulting in the much dreaded _bad Search Engine Optimization_.
 
-Therefore you should _absolutely not_ forget about the _semantically correct_ HTML elements we presented in this section.
+Therefore, you should _absolutely not_ forget about the _semantically correct_ HTML elements we've presented in this section.
 
 > Also, if you don't use semantically correct HTML, your fellow developers will let you know about this in the _smuggest_ way possible.

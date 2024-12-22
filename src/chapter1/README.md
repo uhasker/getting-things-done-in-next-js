@@ -1,6 +1,6 @@
 # Chapter 1: A Brief Introduction to JavaScript
 
-<div style="text-align: right"> <i> JavaScript has beauty, but not everyone sees it. <br> - Confucius </i> </div>
+<div style="text-align: right"> <i> JavaScript has beauty, but not everyone sees it. <br> — Confucius </i> </div>
 
 First we will need to go through the basics of the JavaScript language that we will use pretty much everywhere throughout this book. After all the Next.js stack is built on top of it.
 

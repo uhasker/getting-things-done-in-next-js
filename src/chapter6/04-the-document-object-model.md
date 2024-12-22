@@ -1,21 +1,22 @@
 ## The Document Object Model
 
-<div style="text-align: right"> <i> Well, DOM and HTML are baaaasically the same thing. <br> - Seconds before disaster </i> </div>
+<div style="text-align: right"> <i> Well, DOM and HTML are baaaasically the same thing. <br> — Seconds before disaster </i> </div>
 
 ### HTML and DOM
 
-When you open an HTML document in a browser, it is represented by the **Document Object Model** (DOM for short).
+When you open an HTML document in a browser, it's represented by the **Document Object Model** (DOM for short).
 Essentially, the DOM is a model for documents which represent _editable logical trees_.
+
 This sounds _way_ scarier than it really is, so let's consider an example:
 
 ```html
 <div id="task-list">
-  <p> Read the Next.js book: Read and understand the Next.js book. </p>
-  <p> Write a website: Create a new and cool website. </p>
+  <p> Read the Next.js book </p>
+  <p> Write a website </p>
 </div>
 ```
 
-Here we have a `<div>` element (the generic container) and two `<p>` (paragraph) elements inside it.
+Here, we have a `<div>` element (the generic container) and two `<p>` (paragraph) elements inside it.
 The `<div>` element is the _parent_ of the `<p>` elements and the `<p>` elements are the _children_ of the `<div>` element.
 The elements form a (very small) _tree_:
 
@@ -27,8 +28,8 @@ Let's take a look at a bigger document:
 <div id="app">
   <h1>My tasks</h1>
   <div id="task-list">
-    <p> Read the Next.js book: Read and understand the Next.js book. </p>
-    <p> Write a website: Create a new and cool website. </p>
+    <p> Read the Next.js book </p>
+    <p> Write a website </p>
   </div>
 </div>
 ```
@@ -41,12 +42,12 @@ It's crucial to distinguish between HTML and the DOM, as they are _absolutely_ n
 The DOM is a _language-agnostic model_ that represents the structure of a document.
 On the other hand, HTML is a _specific language_ that encodes a particular kind of DOM into text usable by web browsers.
 
-To simplify, _you_ write HTML, the browser parses that and then _the browser_ displays a DOM tree.
+To simplify, _you_ write an HTML document, the browser parses that document into a DOM tree and then _the browser_ displays a DOM tree.
 
-## Manipulating the DOM using JavaScript
+### Manipulating the DOM using JavaScript
 
 Whenever you write applications which have a lot of logic in the client, you will need to manipulate the DOM (i.e. add, remove, change or retrieve elements).
-This can be done by using JavaScript functions that exist on the `document` object, which is is a global variable that refers to the currently rendered DOM tree.
+This can be done by using JavaScript functions that exist on the `document` object, which is a global variable that refers to the currently rendered DOM tree.
 
 For the rest of this section, we will consider the following document:
 
@@ -60,9 +61,9 @@ For the rest of this section, we will consider the following document:
   <body>
     <div id="app">
       <h1>My tasks</h1>
-      <div id="taskList">
-        <p id="firstParagraph" class="task"> Read the Next.js book </p>
-        <p id="secondParagraph" class="task"> Write a website </p>
+      <div id="task-list">
+        <p id="first-paragraph" class="task"> Read the Next.js book </p>
+        <p id="second-paragraph" class="task"> Write a website </p>
       </div>
     </div>
   </body>
@@ -71,13 +72,13 @@ For the rest of this section, we will consider the following document:
 
 > If you want to follow along, you can open this document in a browser, open the JavaScript console and then write the code in the console.
 
-First let's talk about how to _retrieve_ elements.
+First, let's talk about how to _retrieve_ elements.
 
 The `document.getElementById(id)` function allows you to select an element by its unique ID:
 
 ```js
-const paragraph = document.getElementById('firstParagraph');
-console.log(paragraph); // <p id="firstParagraph" class="task">
+const paragraph = document.getElementById('first-paragraph');
+console.log(paragraph); // <p id="first-paragraph" class="task">
 ```
 
 Note that `paragraph` is just a regular JavaScript object.
@@ -85,7 +86,7 @@ Note that `paragraph` is just a regular JavaScript object.
 For example, you could access various properties like the element ID and class or the HTML markup contained within the element:
 
 ```js
-console.log(paragraph.id); // firstParagraph
+console.log(paragraph.id); // first-paragraph
 console.log(paragraph.className); // task
 console.log(paragraph.innerHTML); // Read the Next.js book
 ```
@@ -94,7 +95,7 @@ We can also get all the elements that have a certain class using `document.getEl
 
 ```js
 const tasks = document.getElementsByClassName('task');
-console.log(tasks); // HTMLCollection { 0: p#firstParagraph.task, 1: p#secondParagraph.task, length: 2, … }
+console.log(tasks); // HTMLCollection { 0: p#first-paragraph.task, 1: p#second-paragraph.task, length: 2, … }
 ```
 
 Note that `tasks` is an `HTMLCollection` which is an array-like object.
@@ -102,7 +103,7 @@ This means that it behaves similar to an array (for example you can index it), b
 
 ```js
 console.log(tasks.length); // 2
-console.log(tasks[0]); // <p id="firstParagraph" class="task">
+console.log(tasks[0]); // <p id="first-paragraph" class="task">
 
 // This will throw a TypeError: tasks.map is not a function
 const ids = tasks.map((task) => task.id);
@@ -113,17 +114,18 @@ Consider this example:
 
 ```js
 const paragraphs = document.getElementsByTagName('p');
-console.log(paragraphs); // HTMLCollection { 0: p#firstParagraph.task, 1: p#secondParagraph.task, length: 2, … }
+console.log(paragraphs); // HTMLCollection { 0: p#first-paragraph.task, 1: p#second-paragraph.task, length: 2, … }
 ```
 
 Note how this is again an `HTMLCollection`.
 
-The two most important and modern JavaScript methods for element retrieval are `document.querySelector(selector)` and `document.querySelectorAll(selector)` which returns the first and all elements that match a certain CSS selector respectively.
+The two most important and modern JavaScript methods for element retrieval are `document.querySelector(selector)` and `document.querySelectorAll(selector)` which return the first and all elements that match a certain CSS selector respectively.
+
 Here is how we could use these methods to accomplish our tasks from before:
 
 ```js
 // The hash (#) indicates an ID selector
-const paragraph = document.querySelector('#firstParagraph');
+const paragraph = document.querySelector('#first-paragraph');
 // The period (.) indicates a class selector
 const tasks = document.querySelectorAll('.task');
 const paragraphs = document.querySelectorAll('p');
@@ -145,7 +147,7 @@ element.innerHTML = 'New task';
 ```
 
 You can append an element as a last child of a parent element using `parentElement.appendChild(childElement)`.
-For example to append the newly created `element` to another element `taskList` you would write this:
+For example, to append the newly created `element` to another element `taskList` you would write this:
 
 ```js
 // Retrieve the taskList element
@@ -155,13 +157,11 @@ const taskList = document.querySelector('#task-list');
 taskList.appendChild(element);
 ```
 
-Let's put all of this together and add a button to our page that allows us to add a new task.
-
-This is the JavaScript that we would like to execute if the button is clicked:
+Let's put all of this together and add a new task using these methods:
 
 ```js
 const paragraph = document.createElement('p');
-paragraph.id = 'thirdParagraph';
+paragraph.id = 'third-paragraph';
 paragraph.classList.add('task');
 paragraph.innerHTML = 'New task';
 const taskList = document.querySelector('#task-list');
