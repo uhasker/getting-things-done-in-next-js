@@ -153,18 +153,18 @@
                 <div id="content" class="content">
                     <main>
                         <h2 id="hyperlinks-and-images"><a class="header" href="#hyperlinks-and-images">Hyperlinks and Images</a></h2>
-<div style="text-align: right"> <i> Who uses alt tags on images? They're just decorations, right? <br> - Seconds before disaster </i> </div>
+<div style="text-align: right"> <i> Who uses alt tags on images? They're just decorations, right? <br> — Seconds before disaster </i> </div>
 <h3 id="hyperlinks"><a class="header" href="#hyperlinks">Hyperlinks</a></h3>
 <p>One of the most important HTML elements is the <strong>hyperlink</strong>.
-You are probably already familiar with hyperlinks - they allow you to link web pages, documents or other resources from your page.
+You're probably already familiar with hyperlinks—they allow you to link web pages, documents or other resources from your page.
 If the link is clicked, the linked page is typically opened in your browser for you to see.</p>
 <p>Here is how you can create a hyperlink:</p>
 <pre><code class="language-html">&lt;a href="https://example.com"&gt;Example&lt;/a&gt;
 </code></pre>
-<p>This creates a link with the text "Example" that links the resource mentioned in the <code>href</code> attribute (which in this case is <code>"https://example.com"</code>).
-By default the text becomes blue and underlined.
+<p>This creates a link with the text "Example" that links the resource mentioned in the <code>href</code> attribute (which in this case is <code>"https://example.com"</code>).</p>
+<p>By default, the text becomes blue and underlined.
 If you click the text, the web browser opens the page located at <code>https://example.com</code>.</p>
-<p>Note that HTML elements can also be made into links by simply nesting them.
+<p>Note that HTML elements can also be made into links by simply nesting them inside an <code>&lt;a&gt;</code> element.
 For example:</p>
 <pre><code class="language-html">&lt;a href="https://example.com"&gt;
   &lt;h1&gt;Example&lt;/h1&gt;
@@ -175,8 +175,7 @@ For example:</p>
 <pre><code class="language-html">&lt;img src="cat.jpg" alt="A cute cat" /&gt;
 </code></pre>
 <blockquote>
-<p>Notice that the <code>img</code> element is a self-closing HTML element, since it doesn't contain any content.
-Instead of <code>&lt;img&gt;&lt;/img&gt;</code> we write <code>&lt;img /&gt;</code>.</p>
+<p>Note that the <code>img</code> element is a void element.</p>
 </blockquote>
 <p>The <code>src</code> attribute contains the path to the image you want to show.
 The <code>alt</code> attribute holds a textual replacement for the image and is necessary in case the image can't be shown.
@@ -188,11 +187,11 @@ Try misspelling the filename on purpose and you will see the textual replacement
 <li>the browser doesn't support the image type</li>
 <li>the user has turned off images to reduce data transfer</li>
 </ul>
-<p>Additionally search engines will usually look at the <code>alt</code> attributes of images when processing your web page.</p>
+<p>Additionally, search engines will usually look at the <code>alt</code> attributes of images when processing your web page.</p>
 <p>You should therefore <em>always</em> include the <code>alt</code> attribute for every image you serve.</p>
 <blockquote>
 <p>The <code>alt</code> attribute is a typical example of semantically correct HTML.
-Sure, your page will usually look right even if you don't use it, but the user experience for some users will be much worse.</p>
+Sure, your page will usually look right even if you don't use it, but the user experience for some users (including search engines) will be much worse.</p>
 </blockquote>
 <h3 id="image-links"><a class="header" href="#image-links">Image Links</a></h3>
 <p>You can use the fact that HTML elements can be made into links to create image links:</p>
@@ -200,7 +199,7 @@ Sure, your page will usually look right even if you don't use it, but the user e
   &lt;img src="example.png" alt="An example image" /&gt;
 &lt;/a&gt;
 </code></pre>
-<p>This will show a clickable image - if the image is clicked, the browser will open <code>https://example.com</code>.</p>
+<p>This will show a clickable image—if the image is clicked, the browser will open <code>https://example.com</code>.</p>
 
                     </main>
 

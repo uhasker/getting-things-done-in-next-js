@@ -153,14 +153,14 @@
                 <div id="content" class="content">
                     <main>
                         <h2 id="a-simple-client"><a class="header" href="#a-simple-client">A Simple Client</a></h2>
-<div style="text-align: right"> <i> Why use a framework? I'll just write my own in a weekend. <br> - Seconds before disaster </i> </div>
+<div style="text-align: right"> <i> Why use a framework? I'll just write my own in a weekend. <br> — Seconds before disaster </i> </div>
 <h3 id="the-requirements"><a class="header" href="#the-requirements">The Requirements</a></h3>
-<p>One day you sit around and dream about sunshine as suddently the dreaded <em>Project Manager</em> approaches you and asks you to build a small task application.
+<p>One day you sit around and dream about going outside as suddenly the dreaded <em>Project Manager</em> approaches you and asks you to build a small task application.
 The application should consist of a list showing the current tasks.
 Additionally, a web form should allow the user to create a new task (which should then be displayed in the list of current tasks).</p>
 <h3 id="the-initial-html"><a class="header" href="#the-initial-html">The Initial HTML</a></h3>
 <p>You get to work and quickly come up with the initial document:</p>
-<pre><code class="language-html">&lt;!doctype html&gt;
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
 &lt;html lang="en"&gt;
   &lt;head&gt;
     &lt;meta charset="utf-8" /&gt;
@@ -186,54 +186,56 @@ Additionally, a web form should allow the user to create a new task (which shoul
 &lt;/html&gt;
 </code></pre>
 <p>You now have a heading, a list and a form.
-However if you click the submit button, not a whole lot happens - this is because we haven't added any submit logic to the form yet.</p>
+However, if you click the submit button, not much happens.
+After all, we haven't added any submit logic to the form yet.</p>
 <h3 id="grabbing-the-items"><a class="header" href="#grabbing-the-items">Grabbing the Items</a></h3>
-<p>Lets first grab the relevant items (remember that the code goes between the <code>&lt;script&gt;&lt;/script&gt;</code> tags).
+<p>Let's first grab the relevant items.
 This can be done using the <code>querySelector</code> method.
 In this case we want to select by ID, so we use the <code>#</code> selector:</p>
-<pre><code class="language-js">const taskList = document.querySelector('#taskList');
-const taskForm = document.querySelector('#taskForm');
+<pre><code class="language-js">const taskList = document.querySelector('#task-list');
+const taskForm = document.querySelector('#task-form');
 </code></pre>
+<p>Remember, the code goes between the <code>&lt;script&gt;&lt;/script&gt;</code> tags.</p>
 <h3 id="adding-an-event-listener"><a class="header" href="#adding-an-event-listener">Adding an Event Listener</a></h3>
-<p>Next, we need to add an event listener to <code>taskForm</code>.</p>
-<p>The <code>event.currentTarget</code> will have the property <code>elements</code> which contains <code>taskInput</code> whose property <code>value</code> contains our input:</p>
+<p>Next, we need to add an event listener to the task form that will simply log the task input for now.
+Note that we want to</p>
 <pre><code class="language-js">taskForm.addEventListener('submit', function (event) {
   // Prevent default form submission
   event.preventDefault();
 
-  console.log({ inputValue: event.currentTarget.taskInput.value });
+  console.log({ inputValue: event.currentTarget.elements['task-input'].value });
 });
 </code></pre>
-<p>This should log the input.</p>
-<p>Lets now store it in a variable and use <code>trim</code> to remove whitespace from both ends:</p>
+<p>Let's now store the task input in a variable and use <code>trim</code> to remove whitespace from both ends:</p>
 <pre><code class="language-js">taskForm.addEventListener('submit', function (event) {
   // Prevent default form submission
   event.preventDefault();
 
-  const task = event.currentTarget.taskInput.value.trim();
+  const task = event.currentTarget.elements['task-input'].value.trim();
 });
 </code></pre>
-<p>Finally we will use the <code>createElement</code> method to create a new <code>li</code> element and the <code>appendChild</code> method to add the newly created element to our task list:</p>
+<p>Finally, we will use the <code>createElement</code> method to create a new <code>li</code> element and the <code>appendChild</code> method to add the newly created element to our task list:</p>
 <pre><code class="language-js">taskForm.addEventListener('submit', function (event) {
   // Prevent default form submission
   event.preventDefault();
 
-  const task = event.currentTarget.taskInput.value.trim();
+  // Get the task input
+  const task = event.currentTarget['task-input'].value.trim();
 
+  // Create a new task element and append it to the task list
   const li = document.createElement('li');
   li.textContent = task;
   taskList.appendChild(li);
 
   // Clear the input field
-  event.currentTarget.taskInput.value = '';
+  event.currentTarget['task-input'].value = '';
 });
 </code></pre>
-<p>When you now click the button, you will see that a new task will be added.</p>
+<p>If you click the button now, you will see that a new task will be added to the task list.</p>
 <h3 id="adding-a-delete-button"><a class="header" href="#adding-a-delete-button">Adding a Delete Button</a></h3>
-<p>As you complete the project, the <em>Project Manager</em> once again walks up to you and remembers that it might be a good idea to allow the user to delete tasks.
-So now you need to add a delete button.</p>
-<p>This means that whenever you create a new element, you need to add a delete button to it.
-To accomplish this we first need to create the delete button:</p>
+<p>As you complete the project, the <em>Project Manager</em> once again walks up to you and remembers that it might be a good idea to allow the user to delete tasks.</p>
+<p>Therefore, whenever you create a new element, that element should have a delete button.</p>
+<p>To accomplish this, we first need to add a delete button to every task we create:</p>
 <pre><code class="language-js">const li = document.createElement('li');
 li.textContent = task;
 
@@ -242,21 +244,21 @@ li.textContent = task;
 const deleteButton = document.createElement('button');
 deleteButton.textContent = 'Delete';
 </code></pre>
-<p>Then we need to attach an event listener to the delete button:</p>
+<p>Next, we need to attach an event listener to the delete button:</p>
 <pre><code class="language-js">deleteButton.addEventListener('click', function () {
   taskList.removeChild(li);
 });
 </code></pre>
-<p>Finally we need to add the delete button to the task item:</p>
+<p>Finally, we need to add the delete button to the task item:</p>
 <pre><code class="language-js">li.appendChild(deleteButton);
 </code></pre>
-<p>Quite a lot of work to just add a little delete button.
-Additionally our code is now all over the place and not really reusable.
-This doesn't seem like it will scale to a larger application.</p>
+<p>It's easy to see that our code is now all over the place and not really reusable.
+Additionally, it's getting much harder to understand by the minute and we've only started writing our application.
+This doesn't seem like it will scale to a larger project.</p>
 <p>To simplify our lives, we will use a library called <strong>React</strong>.
-The idea behind React is to create declarative UIs with nicely separated components.
-Basically we only define how the application should look like (hence the <em>declarative</em> aspect) and React takes care of the rest, such as determining the necessary DOM manipulations.
-As you will see soon, this is an incredibly useful feature.</p>
+The idea behind React is to create declarative UIs with nicely separated components.</p>
+<p>Basically, we only declare how the application should look like and React takes care of the rest, including determining the necessary DOM manipulations.
+As you will see soon, this will save us a lot of time.</p>
 
                     </main>
 

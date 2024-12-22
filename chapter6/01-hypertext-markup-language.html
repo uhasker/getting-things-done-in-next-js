@@ -153,20 +153,19 @@
                 <div id="content" class="content">
                     <main>
                         <h2 id="hypertext-markup-language"><a class="header" href="#hypertext-markup-language">Hypertext Markup Language</a></h2>
-<div style="text-align: right"> <i> Hey guys, how do I parse HTML with a regular expression? <br> - Seconds before disaster </i> </div>
+<div style="text-align: right"> <i> Hey guys, how do I parse HTML with a regular expression? <br> — Seconds before disaster </i> </div>
 <h3 id="a-minimal-html-file"><a class="header" href="#a-minimal-html-file">A Minimal HTML File</a></h3>
-<p>Create a project directory.
-From here on, all work will be done within that directory.</p>
-<p>Now, let's create a webpage using <strong>HTML</strong>, a markup language designed for defining documents to be displayed in a browser.
+<p>Let's create a webpage using <strong>HTML</strong>, a markup language designed for defining documents to be displayed in a browser.
 We briefly touched on HTML in the first section of the JavaScript chapter, but now we will dive deeper.</p>
 <blockquote>
 <p>Markup languages provide rules for defining the type of information contained in a document.
-Markup languages differ from programming languages - while markup languages enable the creation of displayable documents, programming languages offer much more powerful capabilities.
-Therefore HTML is a markup language and JavaScript is a programming language.</p>
+Markup languages differ from programming languages—while markup languages enable the creation of displayable documents, programming languages offer much more powerful capabilities.
+Therefore, HTML is a markup language and JavaScript is a programming language.</p>
 </blockquote>
-<p>Create a file named <code>index.html</code> in the project directory.
-Now write some minimal useful HTML to display two hardcoded tasks:</p>
-<pre><code class="language-html">&lt;!doctype html&gt;
+<p>First, create a project directory.
+From here on, all work will be done within that directory.</p>
+<p>Now, create a file named <code>index.html</code> in the project directory and write some minimal useful HTML to display two hardcoded tasks:</p>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
 &lt;html lang="en"&gt;
   &lt;head&gt;
     &lt;meta charset="utf-8" /&gt;
@@ -186,15 +185,15 @@ Now write some minimal useful HTML to display two hardcoded tasks:</p>
 &lt;/html&gt;
 </code></pre>
 <p>When you open the HTML file in your browser you should see a heading and two tasks.</p>
-<p>Hooray, you've created a simple HTML document!
-Now you can close this book and go procrastinate.</p>
+<p>That's it, you've created a simple HTML document!
+Now, you can close this book and go procrastinate.</p>
 <p>What's that?
 You're not budging?
 Hm, that's weird.
-Oh we see, you've <em>unfortunately</em> been <em>forced</em> to read this book (blink <em>once</em> for help).</p>
-<p>Well, since both of us have to be here anyway, let's march onwards and dissect the masterpiece you've just created!</p>
+Oh, we see, you've <em>unfortunately</em> been <em>forced</em> to read this book (blink <em>once</em> for help).</p>
+<p>Well, since we have to be here anyway, might as well continue and dissect the masterpiece you've just created!</p>
 <h3 id="html-elements"><a class="header" href="#html-elements">HTML Elements</a></h3>
-<p>HTML is comprised of <strong>HTML elements</strong> used to specify the type of content you want to render.
+<p>HTML documents are comprised of <strong>HTML elements</strong> used to specify the type of content that should be rendered.
 For example, the <code>p</code> element represents a paragraph:</p>
 <pre><code class="language-html">&lt;p&gt;Read the Next.js book&lt;/p&gt;
 </code></pre>
@@ -212,7 +211,7 @@ For example, you could nest paragraphs within a generic container:</p>
   &lt;p&gt;Profit!&lt;/p&gt;
 &lt;/div&gt;
 </code></pre>
-<p>The nesting can go as many levels as you want.
+<p>The nesting can go as deep as you want.
 For example, we could use the <code>&lt;em&gt;</code> element to emphasize some of the words in the previous example:</p>
 <pre><code class="language-html">&lt;div&gt;
   &lt;p&gt;Read the &lt;em&gt;Next.js&lt;/em&gt; book&lt;/p&gt;
@@ -221,31 +220,41 @@ For example, we could use the <code>&lt;em&gt;</code> element to emphasize some 
   &lt;p&gt;Profit!&lt;/p&gt;
 &lt;/div&gt;
 </code></pre>
-<p>Note that the tags of the element being nested must be inside the tags of the element it is being nested in.
-For example the tags of the element <code>&lt;em&gt;Next.js&lt;/em&gt;</code> are inside the element <code>&lt;p&gt;Read the &lt;em&gt;Next.js&lt;/em&gt; book&lt;/p&gt;</code>.</p>
+<p>Note that the tags of the element being nested must be inside the tags of the element it's being nested in.
+For example, the tags of the element <code>&lt;em&gt;Next.js&lt;/em&gt;</code> are inside the element <code>&lt;p&gt;Read the &lt;em&gt;Next.js&lt;/em&gt; book&lt;/p&gt;</code>.</p>
+<p>Some elements are so-called <strong>void elements</strong>, meaning that they can't have any nested child elements.
+Void elements only have a start tag.
+End tags must not be specified for such void elements.</p>
+<p>For example, the line break <code>&lt;br&gt;</code> is a void element because it wouldn't make sense to put additional elements inside a line break.
+It's common to write void elements by appending a trailing slash character to the element <code>&lt;br /&gt;</code>.</p>
+<blockquote>
+<p>Note that technically self-closing tags do not exist in HTML.
+If a trailing slash is present, HTML parsers simply ignore that character.
+However, adding a trailing slash makes void elements more readable and is therefore common practice.</p>
+</blockquote>
 <h3 id="html-attributes"><a class="header" href="#html-attributes">HTML Attributes</a></h3>
 <p>Elements can also have <strong>HTML attributes</strong>.
 Attributes contain further information about the element.
 Two particularly important attributes are <code>id</code> and <code>class</code>.</p>
 <p>The <code>id</code> attribute is used to specify a <strong>unique identity</strong> for an HTML element.
-You can use that attribute to - well - uniquely identify an element.
-This allows us to reference that element using JavaScript or CSS.</p>
+You can use that attribute to—well—uniquely identify an element.
+This allows us to reference that element from places like JavaScript code or CSS stylesheets.</p>
 <p>Here is how we can create an element with an <code>id</code> attribute:</p>
 <pre><code class="language-html">&lt;p id="read-book"&gt;Read the Next.js book&lt;/p&gt;
 </code></pre>
-<p>Generally speaking, you can specify attributes by writing the attribute name, followed by an equal sign, followed by the attribute value wrapped inside double quotes.</p>
+<p>Generally speaking, you can specify attributes by writing the attribute name, followed by an equals sign <code>=</code>, followed by the attribute value wrapped inside double quotes.</p>
 <p>The <code>class</code> attribute is used to specify a <strong>class</strong> for an HTML element.
-Unlike unique identifiers, multiple HTML elements can share the same class, which is useful for applying consistent styles to multiple elements.
-For example, you could color all HTML elements of class <code>blue-text</code> blue by using a CSS class with the same class name.</p>
+Unlike unique identifiers, multiple HTML elements can share the same class, which is useful for applying consistent logic to multiple elements.
+For example, you could give all HTML elements of class <code>blue-text</code> a blue text color.</p>
 <p>Here is how we can create an element with a <code>class</code> attribute:</p>
 <pre><code class="language-html">&lt;p class="blue-text"&gt;Read the Next.js book&lt;/p&gt;
 </code></pre>
-<p>A common naming convention for IDs and classes is <code>dashed-lowercase</code>.</p>
-<p>There are many more attributes and different HTML elements often have different attributes.
+<p>A common naming convention for IDs and classes is <code>dash-case</code> where each word is in lower case, and separated by dashes.</p>
+<p>There are many more attributes and different HTML elements often have different attributes you can apply to them.
 We will cover some of the most important elements together with their attributes in the next sections.</p>
 <h3 id="structure-of-an-html-document"><a class="header" href="#structure-of-an-html-document">Structure of an HTML Document</a></h3>
 <p>Let's have a look at <code>index.html</code> again and examine its structure in more detail:</p>
-<pre><code class="language-html">&lt;!doctype html&gt;
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
 &lt;html lang="en"&gt;
   &lt;head&gt;
     &lt;meta charset="utf-8" /&gt;
@@ -265,16 +274,17 @@ We will cover some of the most important elements together with their attributes
 &lt;/html&gt;
 </code></pre>
 <p>The document begins with <code>&lt;!doctype html&gt;</code> which is a <em>document type declaration</em>.
-It is there mainly for historical reasons - in the <em>olden days</em> of HTML the doctype specified which rules the HTML page followed.
-Now the olden days are no longer and we just use the shortest valid doctype which happens to be <code>&lt;!doctype html&gt;</code>.</p>
+It is there mainly for historical reasons—in the <em>olden days</em> of HTML the doctype specified which rules the HTML page followed.
+However, the olden days are no longer with us and we just use the shortest valid doctype which happens to be <code>&lt;!doctype html&gt;</code>.</p>
 <p>The doctype is followed by an <code>&lt;html&gt;</code> element which contains all the content of the document.
-This element is usually called the <strong>root element</strong>.</p>
+This element is usually called the <strong>root element</strong>.
+The <code>&lt;html&gt;</code> element contains a <code>&lt;head&gt;</code> and <code>&lt;body&gt;</code> elements (there is that nesting again).</p>
 <p>The <code>&lt;head&gt;</code> element includes important information about the page that doesn't appear on the page itself.
 Here is where we could specify how our page would appear in search results, which character encoding our website uses and more.</p>
-<p>In our example the <code>&lt;head&gt;</code> element includes a <code>&lt;meta&gt;</code> element with a <code>charset</code> attribute and a <code>&lt;title&gt;</code> element.
-This particular <code>&lt;meta&gt;</code> element describes the character encoding for the HTML document (we will return to this later in more detail) and the <code>&lt;title&gt;</code> element sets the title of the page.
+<p>In this example, the <code>&lt;head&gt;</code> element includes a <code>&lt;meta&gt;</code> element with a <code>charset</code> attribute and a <code>&lt;title&gt;</code> element.</p>
+<p>This particular <code>&lt;meta&gt;</code> element describes the character encoding for the HTML document and the <code>&lt;title&gt;</code> element sets the title of the page.
 This title is displayed in the browser tab and is also used when you save the page in your bookmarks.</p>
-<p>Finally the <code>&lt;body&gt;</code> element contains all the content that will actually be rendered on the page.
+<p>Finally, the <code>&lt;body&gt;</code> element contains all the content that will actually be rendered on the page.
 In our example, the heading and the task list are within the <code>&lt;body&gt;</code> element.</p>
 
                     </main>

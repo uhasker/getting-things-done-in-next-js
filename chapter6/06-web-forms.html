@@ -153,13 +153,13 @@
                 <div id="content" class="content">
                     <main>
                         <h2 id="web-forms"><a class="header" href="#web-forms">Web Forms</a></h2>
-<div style="text-align: right"> <i> A 10-page registration form seems reasonable, right? <br> - Seconds before disaster </i> </div>
+<div style="text-align: right"> <i> A 10-page registration form seems reasonable, right? <br> — Seconds before disaster </i> </div>
 <h3 id="why-web-forms"><a class="header" href="#why-web-forms">Why Web Forms?</a></h3>
 <p><strong>Web forms</strong> (or just <strong>forms</strong> for short) provide a tool for accepting user input.
-They are one of the key components that make your pages interactive.
+They're one of the key components that make your pages interactive.
 A web form contains one or more <strong>form controls</strong> which are usually paired with text labels that describe the purpose of the control.
 For example, a textual form control for providing a message might be paired with a label explaining that the textual form control represents a message.</p>
-<p>Consider a very common example - the contact form.</p>
+<p>Consider a very common example—the contact form.</p>
 <p>Such a contact form should probably have:</p>
 <ul>
 <li>a text input for the name of the user submitting the form</li>
@@ -181,11 +181,11 @@ However, in this book we will handle form submissions manually, so we won't go i
 &lt;!-- The form control--&gt;
 &lt;input type="text" id="name" name="name" /&gt;
 </code></pre>
-<p>There are two HTML elements at play here - <code>&lt;input&gt;</code> and <code>&lt;label&gt;</code>.</p>
+<p>There are two HTML elements at play here—<code>&lt;input&gt;</code> and <code>&lt;label&gt;</code>.</p>
 <p>The form control is represented by the <code>&lt;input&gt;</code> element.
 It has a lot of possible attributes, but the two most important ones (apart from the <code>id</code> attribute) are the <code>type</code> and <code>name</code> attribute.</p>
 <p>The <code>type</code> attribute represents the type of the form control.
-For example, a plaintext input field would have the type <code>text</code> while a checkbox would have the type <code>checkbox</code> (big surprise).</p>
+For example, a plaintext input field would have the type <code>text</code> while a checkbox would have the type <code>checkbox</code> (surprise).</p>
 <p>The <code>name</code> attribute specifies a name for the form control.
 This attribute is important when submitting the form (usually by clicking the submit button) as it will identify the submitted value.</p>
 <p>The label is represented by the <code>&lt;label&gt;</code> element.
@@ -193,7 +193,7 @@ The <code>for</code> attribute of the label must be an ID of a form control.
 In this case the ID of the <code>&lt;input&gt;</code> element is <code>name</code> and therefore the <code>for</code> attribute of the <code>&lt;label&gt;</code> element has <code>name</code> as its value.</p>
 <p>Now let's add the form control for the email.
 We could theoretically use the <code>text</code> type again, however HTML provides us a custom email type called <code>email</code>.
-This field looks like a regular text input, but has a few additional nice properties - for example the email is validated on submission:</p>
+This field looks like a regular text input, but has a few additional nice properties—for example the email is validated on submission:</p>
 <pre><code class="language-html">&lt;!-- The label --&gt;
 &lt;label for="email"&gt;Email:&lt;/label&gt;
 &lt;!-- The form control--&gt;
@@ -220,7 +220,7 @@ This field looks like a regular text input, but has a few additional nice proper
 &lt;/form&gt;
 </code></pre>
 <h3 id="structuring-forms-with-fieldset-and-legend"><a class="header" href="#structuring-forms-with-fieldset-and-legend">Structuring Forms with <code>&lt;fieldset&gt;</code> and <code>&lt;legend&gt;</code></a></h3>
-<p>We can use the <code>&lt;fieldset&gt;</code> and <code>&lt;legend&gt;</code> attrributes to further improve our form:</p>
+<p>We can use the <code>&lt;fieldset&gt;</code> and <code>&lt;legend&gt;</code> attributes to further improve our form:</p>
 <pre><code class="language-html">&lt;form id="contact"&gt;
   &lt;fieldset&gt;
     &lt;legend&gt;Message Form&lt;/legend&gt;
@@ -234,7 +234,7 @@ This field looks like a regular text input, but has a few additional nice proper
   &lt;/fieldset&gt;
 &lt;/form&gt;
 </code></pre>
-<h2 id="handling-a-form-submission"><a class="header" href="#handling-a-form-submission">Handling a Form Submission</a></h2>
+<h3 id="handling-a-form-submission"><a class="header" href="#handling-a-form-submission">Handling a Form Submission</a></h3>
 <p>If you click the button right now, the page will refresh, the URL will change and your inputs will be cleared.
 This is the default behaviour of a form submission, however we often want to intercept and modify this.</p>
 <p>To achieve this, let's add an event listener to the form that will listen for <code>submit</code> events:</p>

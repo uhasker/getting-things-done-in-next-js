@@ -153,12 +153,12 @@
                 <div id="content" class="content">
                     <main>
                         <h2 id="events"><a class="header" href="#events">Events</a></h2>
-<div style="text-align: right"> <i> What was the difference between target and currentTarget again? <br> - Seconds before disaster </i> </div>
+<div style="text-align: right"> <i> What was the difference between target and currentTarget again? <br> — Seconds before disaster </i> </div>
 <h3 id="the-basics"><a class="header" href="#the-basics">The Basics</a></h3>
 <p><strong>Events</strong> can be used to react to "interesting changes" like user input.
 For example, you might want to do something if the user clicks a button, presses a key or resizes the window.</p>
-<p>Cosnider the following simple HTML example:</p>
-<pre><code class="language-html">&lt;!doctype html&gt;
+<p>Consider the following simple HTML example:</p>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
 &lt;html lang="en"&gt;
   &lt;head&gt;
     &lt;meta charset="utf-8" /&gt;
@@ -171,14 +171,14 @@ For example, you might want to do something if the user clicks a button, presses
       &lt;button id="child"&gt;Click the child!&lt;/button&gt;
     &lt;/div&gt;
     &lt;script&gt;
-      /* Our JavaScript code go be here. Note that the script tag must be at the end of the body. */
+      /* Our JavaScript code will go here. Note that the script tag must be at the end of the body. */
     &lt;/script&gt;
   &lt;/body&gt;
 &lt;/html&gt;
 </code></pre>
 <p>We can use the <code>addEventListener</code> to register an <strong>event listener</strong> on the button to set up a function that should be called if the button is clicked.</p>
 <p>The <code>addEventListener</code> function takes two arguments.
-The first argument is the event to listen to (which is <code>'click'</code> in this case).
+The first argument is the event to listen to (which in this case will be <code>'click'</code>).
 The second argument is a function that takes the specific event and handles it.</p>
 <pre><code class="language-js">document.querySelector('#example-button').addEventListener('click', () =&gt; {
   console.log('Button was clicked!');
@@ -210,23 +210,37 @@ For example, clicking a link will navigate you to a new page.</p>
   console.log("You can't click this link, harharhar.");
 });
 </code></pre>
-<p>While you should definitely not break links, <code>event.preventDefault()</code> is useful with other elements as we will see in the next sections.</p>
-<h3 id="event-target"><a class="header" href="#event-target">Event Target</a></h3>
-<p>A event object has two important properties that are a common source of confusion for beginners - <code>target</code> and <code>currentTarget</code>.</p>
-<p>The <code>target</code> property is a reference to the object onto which the event was dispatched.
-The <code>currentTarget</code> property is a reference to the element to which the event handler was attached in the first place.</p>
-<p>The difference is important, as you can see in the following example:</p>
+<p>While you should definitely not break links in this manner, <code>event.preventDefault()</code> is useful with other elements as we will see in the next sections.</p>
+<h3 id="event-targets"><a class="header" href="#event-targets">Event Targets</a></h3>
+<p>An event object has two important properties that are a common source of confusion for beginners—<code>target</code> and <code>currentTarget</code>.</p>
+<p>The <code>target</code> is the element that triggered the event.</p>
+<p>However, the <code>currentTarget</code> is a reference to the element to
+which the event handler was attached in the first place.
+Put simply, <code>currentTarget</code> is the element that listens to the event.</p>
+<p>The <code>target</code> and <code>currentTarget</code> can be the same element if the element that triggers the event is also the element that listens to the event.
+However, that doesn't have to be the case.</p>
+<p>Consider our setup with a <code>&lt;div&gt;</code> element containing a <code>&lt;button&gt;</code>:</p>
+<pre><code class="language-html">&lt;div id="parent"&gt;
+  &lt;button id="child"&gt;Click the child!&lt;/button&gt;
+&lt;/div&gt;
+</code></pre>
+<p>Let's put a <code>click</code> event listener on the parent <code>&lt;div&gt;</code>:</p>
 <pre><code class="language-js">document.querySelector('#parent').addEventListener('click', (e) =&gt; {
-  console.log('event.target:', event.target);
-  console.log('event.currentTarget:', event.currentTarget);
+  console.log('event.target:', e.target);
+  console.log('event.currentTarget:', e.currentTarget);
 });
 </code></pre>
-<p>If you click the <code>child</code> button, you will see that <code>event.target</code> refers the <code>child</code> button, however <code>event.currentTarget</code> is the <code>parent</code> div.
-This is because the <code>child</code> button is the object onto which the event was actually dispatched (because you clicked the child button, and not the div).
-However, the <code>parent</code> div is the element to which we attached the event handler.</p>
+<p>Here, the <code>target</code> would be the child <code>&lt;button&gt;</code> because that was the element that actually triggered the event.
+After all, you click the child <code>&lt;button&gt;</code> and not the parent <code>&lt;div&gt;</code>.</p>
+<p>However, the <code>currentTarget</code> would be the parent <code>&lt;div&gt;</code> because that was the element to which we attached the event handler.</p>
+<p>You can verify this yourself.
+If you click the <code>child</code> button, you will see that <code>event.target</code> refers to the child <code>&lt;button&gt;</code> while <code>event.currentTarget</code> refers to the parent <code>&lt;div&gt;</code>.</p>
+<p>It's also important to note that the value of <code>event.currentTarget</code> is only available while the event is being handled.
+This means that if you <code>console.log()</code> the event, store in a variable and then look at <code>event.currentTarget</code> in the console, you will get <code>null</code>.
+This can be extremely confusing if you're trying to debug events.</p>
 <h3 id="a-simple-example"><a class="header" href="#a-simple-example">A Simple Example</a></h3>
 <p>Here is how we could create a button that dynamically adds a new task every time we click it:</p>
-<pre><code class="language-html">&lt;!doctype html&gt;
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
 &lt;html lang="en"&gt;
   &lt;head&gt;
     &lt;meta charset="utf-8" /&gt;

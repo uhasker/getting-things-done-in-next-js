@@ -153,7 +153,7 @@
                 <div id="content" class="content">
                     <main>
                         <h2 id="marking-up-text"><a class="header" href="#marking-up-text">Marking Up Text</a></h2>
-<div style="text-align: right"> <i> Who needs semantic HTML anyway? <br> - Seconds before disaster </i> </div>
+<div style="text-align: right"> <i> Who needs semantic HTML anyway? <br> — Seconds before disaster </i> </div>
 <h3 id="the-paragraph-element"><a class="header" href="#the-paragraph-element">The Paragraph Element</a></h3>
 <p>The most basic element for marking up text is the paragraph element <code>&lt;p&gt;</code>:</p>
 <pre><code class="language-html">&lt;p&gt;This is the first paragraph of many, many paragraphs.&lt;/p&gt;
@@ -169,9 +169,9 @@ This is some text after the line break.
 </code></pre>
 <p>Additionally, you can use the <code>&lt;hr&gt;</code> element for a thematic break of some text.
 It will usually be visually presented as a horizontal line.</p>
-<pre><code class="language-html">Here is some text. &lt;hr /&gt; Here some text about something totally different.
+<pre><code class="language-html">Here is some text. &lt;hr /&gt; Here is some text about something totally different.
 </code></pre>
-<p>The <code>&lt;hr /&gt;</code> element is often used to introduce thematic breaks between paragraphs.</p>
+<p>The <code>&lt;hr&gt;</code> element is often used to introduce thematic breaks between paragraphs.</p>
 <h3 id="heading-elements"><a class="header" href="#heading-elements">Heading Elements</a></h3>
 <p>There are six heading elements, <code>&lt;h1&gt;</code> to <code>&lt;h6&gt;</code>.
 The different heading elements represent different "heading levels", e.g. <code>&lt;h1&gt;</code> is the main heading, <code>&lt;h2&gt;</code> a subheading and so on:</p>
@@ -190,32 +190,31 @@ The different heading elements represent different "heading levels", e.g. <code>
 &lt;h3&gt;Subsubheading 2.2&lt;/h3&gt;
 &lt;p&gt;Some content related to subheading 2.2&lt;/p&gt;
 </code></pre>
-<p>You will rarely need <code>&lt;h4&gt;</code> to <code>&lt;h6&gt;</code> - very few documents require such an amount of heading levels.</p>
-<blockquote>
-<p>Always try to use a single <code>&lt;h1&gt;</code> per page since this is the top level heading.</p>
-</blockquote>
+<p>You will rarely need <code>&lt;h4&gt;</code> to <code>&lt;h6&gt;</code>—very few documents require such deeply nested heading levels.</p>
+<p>Additionally, you should only use a single <code>&lt;h1&gt;</code> heading in a page since this is the top-level heading.</p>
 <h3 id="emphasis-and-importance"><a class="header" href="#emphasis-and-importance">Emphasis and Importance</a></h3>
 <p>If we want to emphasize a part of a text (like an important word) we can use the <code>&lt;em&gt;</code> and <code>&lt;strong&gt;</code> elements.
-The <code>&lt;em&gt;</code> element marks that a text should be emphasized, for example:</p>
+The <code>&lt;em&gt;</code> element marks that a text should be emphasized:</p>
 <pre><code class="language-html">The weather today is &lt;em&gt;very&lt;/em&gt; hot.
 </code></pre>
-<p>The <code>&lt;strong&gt;</code> element marks that a text has strong importance, for example:</p>
+<p>The <code>&lt;strong&gt;</code> element marks that a text has strong importance:</p>
 <pre><code class="language-html">The weather today is not just hot, it's &lt;strong&gt;scorching&lt;/strong&gt;.
 </code></pre>
 <p>As you probably guessed, deciding which of these two elements is appropriate is largely on you.
-If you want to emphasize some part of a text, but it doesn't have strong urgency you should use <code>&lt;em&gt;</code>.
-If a text is very important, you should use <code>&lt;strong&gt;</code></p>
+If you want to emphasize some part of a text, but it doesn't have strong urgency, you should use <code>&lt;em&gt;</code>.
+If a text is very important, you should use <code>&lt;strong&gt;</code> instead.</p>
 <blockquote>
-<p>There are also <code>&lt;i&gt;</code> and <code>&lt;b&gt;</code>, however we will rarely use them, since <code>&lt;em&gt;</code> and <code>&lt;strong&gt;</code> have a semantic meaning (see below for what this means).</p>
+<p>There are also the <code>&lt;i&gt;</code> and <code>&lt;b&gt;</code> elements.
+However, we will rarely use them, since <code>&lt;em&gt;</code> and <code>&lt;strong&gt;</code> have a semantic meaning (see below for what this means).</p>
 </blockquote>
 <h3 id="other-text-elements"><a class="header" href="#other-text-elements">Other Text Elements</a></h3>
-<p>We only scratched the surface of the kind of text markup you can perform with HTML.
+<p>We've only scratched the surface of the kind of text markup you can perform with HTML.
 There are many, many other elements you can use.
 For example, you can mark up subscripts and superscripts with <code>&lt;sub&gt;</code> and <code>&lt;sup&gt;</code> respectively:</p>
-<pre><code class="language-html">The chemical formula for water is H&lt;sub&gt;2&lt;/sub&gt;O.
+<pre><code class="language-html">&lt;p&gt;The chemical formula for water is H&lt;sub&gt;2&lt;/sub&gt;O.&lt;/p&gt;
 &lt;p&gt;The equation for energy is E = mc&lt;sup&gt;2&lt;/sup&gt;.&lt;/p&gt;
 </code></pre>
-<p>You can add quotes - both blockquotes (with <code>&lt;blockquote&gt;</code>) and inline quotes (with <code>&lt;q&gt;</code>):</p>
+<p>You can add quotes—both blockquotes (with <code>&lt;blockquote&gt;</code>) and inline quotes (with <code>&lt;q&gt;</code>):</p>
 <pre><code class="language-html">&lt;p&gt;As the famous physicist once said:&lt;/p&gt;
 
 &lt;blockquote cite="https://some-random-quotes.com/"&gt;
@@ -230,18 +229,19 @@ For example, you can mark up subscripts and superscripts with <code>&lt;sub&gt;<
 <p>Trying to learn every single HTML element for marking up text would be a pointless endeavour (you can look them up with a simple Google search anyway).
 Just be aware that when it comes to marking up text there might be an HTML element for your use case.</p>
 <h3 id="semantic-html"><a class="header" href="#semantic-html">Semantic HTML</a></h3>
-<p>In a few chapters, we will introduce you to CSS, which will allow you to style your HTML elements however you like.
+<p>In a few chapters, we will introduce you to CSS, which will allow you to style your HTML elements however you see fit.
 At this point most people forget that there are any elements besides the generic <code>&lt;div&gt;</code> container since they can now just <em>style</em> the <code>&lt;div&gt;</code> to look however they want.</p>
 <p>This is a <em>really bad idea</em>.</p>
 <p>The problem is that <em>looking</em> at a page is not the only way to browse the web.</p>
 <p>First of all, there are a lot of visually impaired people in the world who use screen readers to navigate the internet.
 Screen readers tend to focus on the HTML elements and not the styles (which makes sense, since reading out styles is not really something you want to do).</p>
 <p>If you write a heading as a styled <code>&lt;div&gt;</code> instead of an <code>&lt;h1&gt;</code> you are not only doing more (unneccessary) work, you also give visually impaired people a worse experience.
-Screen readers often interpret headings in a special way - for example you can ask most screen readers to read all headings on a page out loud and then jump to some heading you care about.
+Screen readers often interpret headings in a special way.
+For example, you can ask most screen readers to read all headings on a page out loud and then jump to some heading you care about.
 This is of course not possible with <code>&lt;div&gt;</code>s.</p>
 <p>Second, your page will also be consumed by programs responsible for indexing and ranking.
 If your website contains generic containers only, it will usually be downgraded resulting in the much dreaded <em>bad Search Engine Optimization</em>.</p>
-<p>Therefore you should <em>absolutely not</em> forget about the <em>semantically correct</em> HTML elements we presented in this section.</p>
+<p>Therefore, you should <em>absolutely not</em> forget about the <em>semantically correct</em> HTML elements we've presented in this section.</p>
 <blockquote>
 <p>Also, if you don't use semantically correct HTML, your fellow developers will let you know about this in the <em>smuggest</em> way possible.</p>
 </blockquote>
