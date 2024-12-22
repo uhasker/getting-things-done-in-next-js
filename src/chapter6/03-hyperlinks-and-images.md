@@ -1,11 +1,11 @@
 ## Hyperlinks and Images
 
-<div style="text-align: right"> <i> Who uses alt tags on images? They're just decorations, right? <br> - Seconds before disaster </i> </div>
+<div style="text-align: right"> <i> Who uses alt tags on images? They're just decorations, right? <br> — Seconds before disaster </i> </div>
 
 ### Hyperlinks
 
 One of the most important HTML elements is the **hyperlink**.
-You are probably already familiar with hyperlinks - they allow you to link web pages, documents or other resources from your page.
+You're probably already familiar with hyperlinks—they allow you to link web pages, documents or other resources from your page.
 If the link is clicked, the linked page is typically opened in your browser for you to see.
 
 Here is how you can create a hyperlink:
@@ -15,10 +15,11 @@ Here is how you can create a hyperlink:
 ```
 
 This creates a link with the text "Example" that links the resource mentioned in the `href` attribute (which in this case is `"https://example.com"`).
-By default the text becomes blue and underlined.
+
+By default, the text becomes blue and underlined.
 If you click the text, the web browser opens the page located at `https://example.com`.
 
-Note that HTML elements can also be made into links by simply nesting them.
+Note that HTML elements can also be made into links by simply nesting them inside an `<a>` element.
 For example:
 
 ```html
@@ -35,8 +36,7 @@ To show an image, you can use the `<img>` element:
 <img src="cat.jpg" alt="A cute cat" />
 ```
 
-> Notice that the `img` element is a self-closing HTML element, since it doesn't contain any content.
-> Instead of `<img></img>` we write `<img />`.
+> Note that the `img` element is a void element.
 
 The `src` attribute contains the path to the image you want to show.
 The `alt` attribute holds a textual replacement for the image and is necessary in case the image can't be shown.
@@ -49,12 +49,12 @@ In practice the textual replacement is useful if, for example:
 - the browser doesn't support the image type
 - the user has turned off images to reduce data transfer
 
-Additionally search engines will usually look at the `alt` attributes of images when processing your web page.
+Additionally, search engines will usually look at the `alt` attributes of images when processing your web page.
 
 You should therefore _always_ include the `alt` attribute for every image you serve.
 
 > The `alt` attribute is a typical example of semantically correct HTML.
-> Sure, your page will usually look right even if you don't use it, but the user experience for some users will be much worse.
+> Sure, your page will usually look right even if you don't use it, but the user experience for some users (including search engines) will be much worse.
 
 ### Image Links
 
@@ -66,4 +66,4 @@ You can use the fact that HTML elements can be made into links to create image l
 </a>
 ```
 
-This will show a clickable image - if the image is clicked, the browser will open `https://example.com`.
+This will show a clickable image—if the image is clicked, the browser will open `https://example.com`.
