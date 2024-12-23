@@ -1,6 +1,6 @@
 ## React Effects
 
-<div style="text-align: right"> <i> Why can't React effects keep a secret? <br> Because as soon as something changes, they just have to run and tell everyone! <br> - From "1000 programming dad-jokes" </i> </div>
+<div style="text-align: right"> <i> Why can't React effects keep a secret? <br> Because as soon as something changes, they just have to run and tell everyone! <br> — From "1000 programming dad-jokes" </i> </div>
 
 ### Why Effects?
 
@@ -9,7 +9,7 @@
 Consider a component which, upon rendering, needs to fetch a task title and display it to the user.
 While your first instinct might be to use an event handler together with state, this is not possible.
 After all, there is no real user event here.
-Instead we need to execute something _because the component is rendering_.
+Instead, we need to execute something _because the component is rendering_.
 
 This is where effects come in handy.
 
@@ -69,7 +69,7 @@ Open the page containing the component again and you will see the following log:
 Effect runs (currently count=0)
 ```
 
-Now click the button a few times - you will see that on each rerender the effect is executed:
+Now click the button a few times—you will see that on each rerender the effect is executed:
 
 ```
 Effect runs (currently count=1)
@@ -78,7 +78,9 @@ Effect runs (currently count=3)
 Effect runs (currently count=4)
 ```
 
-Additionally we can return a cleanup function, which will run when the component is destroyed (_unmounted_), and before every _rerun_ of the useEffect. We will examine when exactly an useEffect reruns in the [next section](#the-dependency-array).
+Additionally, we can return a cleanup function, which will run when the component is destroyed (_unmounted_), and before every _rerun_ of the useEffect.
+We will examine when exactly an effect reruns in the next section.
+
 Consider this example:
 
 ```jsx
@@ -103,12 +105,12 @@ If the component is destroyed (for example, because you refresh the page or navi
 Component destroyed
 ```
 
-Usually you would use the cleanup function to do some cleanup (_no way_).
-For example, if you've connected to an external system, here is were you would disconnect.
+Usually, you would use the cleanup function to do some cleanup (_no way_).
+For example, if you've connected to an external system, here is where you would disconnect.
 
 ### The Dependency Array
 
-The `useEffect` hook also takes a second argument - a **dependency array**.
+The `useEffect` hook also takes a second argument—a **dependency array**.
 This allows you to specify that the effect should run only if a particular value changes.
 
 Consider this (slightly constructed) example:
@@ -153,7 +155,7 @@ However, if you click the "Increment second count" button, you will see that the
 
 This is because `firstCount` is in the dependency array, but `secondCount` isn't.
 Therefore, an update to `firstCount` (via the `setFirstCount` setter function) will trigger the effect.
-But an update to `secondCount` (via the `setSecondCount` setter function) won't.
+However, an update to `secondCount` (via the `setSecondCount` setter function) will not trigger the effect.
 
 If you want to trigger the effect when `secondCount` is updated, you will need to add `secondCount` to the dependency array:
 
@@ -163,8 +165,8 @@ React.useEffect(() => {
 }, [firstCount, secondCount]);
 ```
 
-Note that if the dependency array is empty, the effect will run only once - when the component is first rendered.
-This directly follows from the explanation above - an empty dependency array contains no values that would trigger the effect again.
+Note that if the dependency array is empty, the effect will run only once—when the component is first rendered.
+This directly follows from the explanation above—an empty dependency array contains no values that would trigger the effect again.
 
 Consider this example:
 
@@ -220,7 +222,7 @@ export default function ExampleComponent() {
 ```
 
 If you run this, you will see that the counter just keeps incrementing in an infinite loop.
-This is because, the effect calls `setCount`, which will trigger a rerender, which will trigger the effect again, which will call `setCount` etc.
+This is because the effect calls `setCount`, which will trigger a rerender, which will trigger the effect again, which will call `setCount` etc.
 
 React is actually smart enough to realize the problem and will log the following warning to the console:
 
@@ -265,7 +267,7 @@ This code should be pretty clear if you understand the `fetch` function and the 
 Our effect fetches a the task from the API and then sets a state called `title` after the fetch is completed.
 Because we only want this to happen on the initial component render, we specify an empty dependency array.
 
-Note that we don't have a cleanup function in our effect - normally we would abort the request here.
+Note that we don't have a cleanup function in our effect—normally we would abort the request here.
 However this is out of scope for this introductory book.
 
 ### You Rarely Need an Effect
@@ -276,7 +278,7 @@ Remember: **Effects are only needed if you need to synchronize with an external 
 You should not need an effect in any other scenario.
 
 Effects are definitely not needed if you need update some state based on props and other state.
-Something like this is completely unneccessary:
+Something like this is completely unnecessary:
 
 ```jsx
 import * as React from 'react';
@@ -292,7 +294,7 @@ export default function TaskList() {
 
   // This is a really bad idea
   React.useEffect(() => {
-    setNumTasks(tasks + 1);
+    setNumTasks(tasks.length + 1);
   }, [tasks])
 
   function handleSubmit(event) {
@@ -329,7 +331,7 @@ export default function TaskList() {
 }
 ```
 
-Instead you should simply calculate the depending value during rendering (like we discussed in the previous section).
+Instead, you should simply calculate the depending value during rendering (like we've discussed in the previous section).
 
 Similarly, you don't need effects when you want to reset or adjust some state based on a prop change.
 
