@@ -1,6 +1,6 @@
 ## Servers and Clients
 
-<div style="text-align: right"> <i> TODO. <br> — Seconds before disaster </i> </div>
+<div style="text-align: right"> <i> Who needs error handling? It'll never fail. <br> — Seconds before disaster </i> </div>
 
 ### Basics
 
