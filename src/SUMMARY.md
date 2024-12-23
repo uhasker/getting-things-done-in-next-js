@@ -35,6 +35,7 @@
   - [IPs, Ports and Domains](chapter3/01-ips-ports-and-domains.md)
   - [An HTTP Primer](chapter3/02-an-http-primer.md)
   - [More on HTTP](chapter3/03-more-on-http.md)
+  - [Servers and Clients](chapter3/04-servers-and-clients.md)
 
 - [Persistence with SQL](chapter4/README.md)
 
