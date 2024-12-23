@@ -122,7 +122,7 @@ The problem is that _looking_ at a page is not the only way to browse the web.
 First of all, there are a lot of visually impaired people in the world who use screen readers to navigate the internet.
 Screen readers tend to focus on the HTML elements and not the styles (which makes sense, since reading out styles is not really something you want to do).
 
-If you write a heading as a styled `<div>` instead of an `<h1>` you are not only doing more (unneccessary) work, you also give visually impaired people a worse experience.
+If you write a heading as a styled `<div>` instead of an `<h1>` you are not only doing more (unnecessary) work, you also give visually impaired people a worse experience.
 Screen readers often interpret headings in a special way.
 For example, you can ask most screen readers to read all headings on a page out loud and then jump to some heading you care about.
 This is of course not possible with `<div>`s.

@@ -1,18 +1,19 @@
 ## React State
 
 <div style="text-align: right"> <i> Why was the useState hook feeling nostalgic? <br>
-Because every time it was called, it brought back memories! <br> - From "1000 programming dad-jokes" </i> </div>
+Because every time it was called, it brought back memories! <br> — From "1000 programming dad-jokes" </i> </div>
 
 ### Why State?
 
-In the previous section we learned how to render components.
-However, these components are completely "static" right now.
-But in reality, you often need to have "dynamic" components that change based on some action.
+In the previous section we've learned how to render components.
+
+However, these components were completely "static".
+But, in reality, you often need to have "dynamic" components that can change based on some action.
 
 For example, clicking a button might update a counter and typing into a form might update the input field.
-This means that components need to be able to "remember" things (like the current counter or the current input field value).
+This means that components need to be able to "remember" things (like the current count or the current input field value).
 
-To "remember" something, you can use state, which serves as a sort of memory for your component.
+To "remember" something, you can use **state**, which serves as a sort of memory for your component.
 
 ### A Simple Example
 
@@ -40,16 +41,16 @@ export default function Counter() {
 }
 ```
 
-Try clicking the "Increment" button - it will increment the count by 1 each time you click it.
+Try clicking the "Increment" button—it will increment the count by `1` each time you click it.
 
 This example is simple, but it still shows exactly how to use state in React.
 
 State is provided by the `useState` hook (a hook is basically just a special function).
 
-This hook returns an array with two elements - a **state variable** and a **state setter function**.
+This hook returns an array with two elements—a **state variable** and a **state setter function**.
 The state variable (`count` in this case) will be the value that you want to remember.
 The state setter function (`setCount` in this case) can be used to update the state variable.
-The `useState` hook takes a single argument - the initial value of the state variable (which is `0` in this case).
+The `useState` hook takes a single argument—the initial value of the state variable (which is `0` in this case).
 
 Note that we make use of array destructuring here (which you should remember from the JavaScript chapter):
 
@@ -65,15 +66,13 @@ const count = countState[0];
 const setCount = countState[1];
 ```
 
-Please don't do that though - it will result in confusion since it's very unconventional to manually destructure the value returned from a hook.
+Please don't do that though—it will result in confusion since it's very unconventional to manually destructure the value returned from a hook.
 
 ### State vs Regular Variables
 
-You should have a big question in the back of your head right now.
-_Why do we need to go through all this pain?_
-_Why not just use a regular variable?_
+Why do we need to go through all that pain instead of just using a regular variable?
 
-After all, this is how we always remembered values before.
+After all, this is how we've always remembered values before.
 We simply assigned them to variables.
 
 Let's have a look at why this doesn't work with React:
@@ -97,11 +96,11 @@ export default function Counter() {
 }
 ```
 
-Try clicking the button know - nothing will happen.
+Try clicking the button now—nothing happens.
 But why?
 
 The problem lies in the fact that, while we do update the local variable, React doesn't actually rerender the component to show the change.
-You can verify this by adding a few `console.logs`:
+You can verify this by adding a few `console.log`s:
 
 ```jsx
 export default function Counter() {
@@ -134,8 +133,8 @@ New value of count is 2
 New value of count is 3
 ```
 
-So the local variable is indeed updated - but this doesn't rerender the component.
-We begin to see the purpose of the `useState` hook - to define a state whose _updates will trigger a rerender_.
+So the local variable is indeed updated—but this doesn't rerender the component.
+We begin to see the purpose of the `useState` hook—to define a state whose _updates will trigger a rerender_.
 
 This explanation should have immediately raised another question.
 What happens if we skip the state setter function and just set the state variable directly?
@@ -171,7 +170,7 @@ New value of count is 2
 New value of count is 3
 ```
 
-Therefore if you need to update the UI of your component, you can't use local variables and you can't update the state variables directly.
+Therefore, if you need to update the UI of your component, you can't use local variables and you can't update the state variables directly.
 You need to use the state setter function to not only update the state variable, but also to rerender the component.
 
 Let's verify that using the state setter function does what we expect:
@@ -220,14 +219,14 @@ Because React remembered that `count` was set to `1`, the component will render 
 
 ### Using State with a Form
 
-Let us return to our example application and add the form for creating a new task.
+Let's return to our example application and add the form for creating a new task.
 Enter the `task-list.tsx` file and import React at the top:
 
 ```js
 import * as React from 'react';
 ```
 
-Next we add the form containing inputs for the ID and the title, as well as an "Add task" button below the task list:
+Next, we add the form containing inputs for the ID and the title, as well as an "Add task" button below the task list:
 
 ```jsx
 export function TaskList({ tasks }: TaskListProps) {
@@ -251,7 +250,7 @@ export function TaskList({ tasks }: TaskListProps) {
 }
 ```
 
-Now we need to create a `handleSubmit` function, which will just log something to the console for now.
+Now, we need to create a `handleSubmit` function, which will just log something to the console for now.
 Remember from the HTML chapter that we need to call the `preventDefault` function to prevent the default behaviour of a form submission (which includes a page refresh):
 
 ```js
@@ -263,7 +262,7 @@ function handleSubmit(event) {
 }
 ```
 
-Next we need to make sure that the `handleSubmit` function is called when the button is clicked.
+Next, we need to make sure that the `handleSubmit` function is called when the button is clicked.
 To accomplish that, we set the `onSubmit` property of the form to the `handleSubmit` function:
 
 ```jsx
@@ -272,7 +271,7 @@ To accomplish that, we set the `onSubmit` property of the form to the `handleSub
 
 If you click the button, you should now see the title logged to the console.
 
-Again we use the `useState` hook:
+Again, we use the `useState` hook:
 
 ```js
 const [tasks, setTasks] = React.useState<Task[]>([]);
@@ -342,14 +341,14 @@ export default function TaskList() {
 
 ```
 
-Try clicking the button - a new task should appear.
+Try clicking the button—a new task should appear.
 
 > Just like with the HTML client the changes will go away if you refresh the page or close the browser.
-> We will talk about how to persist data in later chapters.
+> We will talk about how to persist data later.
 
-### When to use State
+### When to Use State
 
-There is a common theme regarding state in React - a lot of beginners _heavily overuse_ it.
+There is a common theme regarding state in React—a lot of beginners _heavily overuse_ it.
 This is usually because they misunderstand the purpose of state and what it actually does.
 
 Before we give specific examples of when to and when not to use state, we want to reiterate two things we already discussed:

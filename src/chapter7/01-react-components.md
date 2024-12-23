@@ -1,10 +1,10 @@
 ## React Components
 
-<div style="text-align: right"> <i> Why do React components have great self-esteem? <br> Because they keep getting props. <br> - From "1000 programming dad-jokes" </i> </div>
+<div style="text-align: right"> <i> Why do React components have great self-esteem? <br> Because they keep getting props. <br> — From "1000 programming dad-jokes" </i> </div>
 
 ### Why React Components?
 
-The idea behind React is that you can think about a page in terms of isolated **components**, where every component is an _independent and reusable piece of the UI_.
+The idea behind React is that you can think about a web page in terms of isolated **components**, where every component is an _independent and reusable piece of the UI_.
 
 Consider a potential first version of our _easy-opus_ app, which would need to display a bunch of tasks.
 
@@ -13,14 +13,14 @@ The title, description and the button could in turn be components themselves.
 
 The tasks might then be grouped in a task list component, which in addition to the tasks, should have a button to add a new task.
 
-Here is a simple mockup of the website structure:
+Here is a simple mockup of the structure of our new web page:
 
 ![](images/components.png)
 
 Now comes the interesting part about React.
 In terms of implementation, a component is just a _regular JavaScript function_ that takes the _data it should render as input_ and returns the _UI representation of the data as output_.
 
-Here is an example of how the a `Task` component could look like:
+Here is an example of how the `Task` component could look like:
 
 ```jsx
 function Task({ title, description }: { title: string, description: string }) {
@@ -34,12 +34,15 @@ function Task({ title, description }: { title: string, description: string }) {
 }
 ```
 
+> Currently, our components have no styling.
+> We'll fix this in another chapter, for now we just focus on the logic.
+
 Let's have a look at this function.
 
-It takes an object containing the data it should render as input.
+Looking at its inputs, we see that it takes an object containing the data it should render.
 Here the data to be rendered are the `title` and the `description`.
 
-It returns the UI representation of the data as output.
+Looking at its outputs, we see that it returns the UI representation of the data.
 Here the UI representation is a `div` containing the `title`, `description` and a button.
 
 > Note that the button currently doesn't do much.
@@ -51,16 +54,16 @@ To see components in action, let's actually create a simple React project.
 
 To create a React project, we will use a tool called Vite, which provides various frontend tooling (including a development server and optimized builds).
 
-First let's create a new `vite` project:
+First, let's create a new `vite` project:
 
 ```sh
 pnpm create vite
 ```
 
 You will be asked to select various options.
-For the framework select `React` and for the variant you will select `TypeScript + SWC`.
+Select `React` for the framework and `TypeScript + SWC` for the variant.
 
-After you've created the new project, the tool will even output the commands you should execute afterwards (quite helpful).
+After you've created the new project, the tool will even output the commands you should execute afterwards (which is quite helpful).
 
 Now navigate to the newly created directory, where your project resides:
 
@@ -68,7 +71,7 @@ Now navigate to the newly created directory, where your project resides:
 cd example
 ```
 
-You will see a couple of familiar files, including a `package.json` which - among other things - includes the dependencies of the project.
+You will see a couple of familiar files, including a `package.json` which—among other things—includes the dependencies of the project.
 Let's install those dependencies:
 
 ```sh
@@ -81,7 +84,7 @@ Finally, you can run a development server:
 pnpm dev
 ```
 
-If you go to `http://localhost:5173` and observe the result, you will see a page with some demo content.
+If you go to `http://localhost:5173` and look at the result, you will see a web page with some demo content.
 Let's replace this demo content with our own components!
 
 First, you can remove `App.tsx`, `App.css`, `index.css` and the `assets/` folder.
@@ -107,13 +110,14 @@ function App() {
 ReactDOM.createRoot(document.getElementById('root')!).render(<App />);
 ```
 
-Save the file and again navigate to `http://localhost:5173`.
-You will now see our component rendered.
-This is actually one of the main features of the development server - it will automatically recreate the page when you edit your code.
+Save the file and navigate to `http://localhost:5173` once more.
+You will now see our component.
 
-If you've paid attention so far, there should a big question mark in your head now: Why are we allowed to write HTML in our JavaScript?
+> This is one of the greatest features of the development server—it will automatically recreate the page when you edit your code.
 
-The answer is simple: The syntax is not actually HTML (queue ominous music here).
+If you've paid attention so far, there should be a giant question mark in your head now: Why are we allowed to write HTML in our JavaScript?
+
+The answer is simple: The syntax is not actually HTML (cue ominous music here).
 
 ### Introducing JSX
 
@@ -134,7 +138,7 @@ function App() {
 ```
 
 While this might look like HTML, it is important to emphasize that this is _absolutely not_ HTML.
-Instead this syntax is JSX, which is a _syntax extension_ to _JavaScript_ that can be transpiled to _normal_ JavaScript.
+Instead this syntax is something called **JSX**, which is a _syntax extension_ to _JavaScript_ that can be transpiled to _normal_ JavaScript.
 
 To be precise, the JSX will be transpiled to calls to the `React.createElement` function which will return regular JavaScript objects.
 The root object will be dynamically added to the DOM using this line of code:
@@ -183,6 +187,8 @@ function Example() {
 }
 ```
 
+You can't do this in regular HTML.
+
 ### Add Props to a React Component
 
 JSX is great, but our current `TaskList` component is not.
@@ -191,8 +197,8 @@ The main problem is that the data it represents is hardcoded into the component.
 We fix that by passing properties (`props`) to the component.
 This is simply a JavaScript object containing the data the component should render.
 
-In the case of the `TaskList` we simply want to pass an array of strings named `tasks` containing our - well - tasks.
-We can then use `map` to create a list item `li` for each element of that array:
+In the case of the `TaskList` we simply want to pass an array of strings named `tasks` containing our—well—tasks.
+We can then use the `map` function to create a list item `li` for each element of that array:
 
 ```jsx
 type TaskListProps = {
@@ -211,8 +217,7 @@ function TaskList(props: TaskListProps) {
 ```
 
 This is already not too bad, but of course we want to take advantage of the latest and greatest JavaScript syntax there is.
-Writing `props.tasks` is annoying.
-This will become even more annoying when we have a lot of props.
+Writing `props.tasks` is annoying and will become even more annoying when we have a lot of props.
 
 We can use object destructuring to alleviate this:
 
@@ -228,9 +233,10 @@ function TaskList({ tasks }: TaskListProps) {
 }
 ```
 
-> You can hopefully see how all the concepts from the JavaScript and TypeScript chapters are coming together quite nicely.
+> You can see how all the concepts from the JavaScript and TypeScript chapters are coming together quite nicely.
 
-Excellent! We can use the new component like this:
+Excellent!
+We can use the new component like this:
 
 ```jsx
 function App() {
@@ -243,9 +249,12 @@ function App() {
 }
 ```
 
-Great.
 Note that there is a problem with the current implementation of our component.
-If you open your browser console, you will see an error "Warning: Each child in a list should have a unique 'key' prop.".
+If you open your browser console, you will see an error:
+
+```
+Warning: Each child in a list should have a unique 'key' prop.
+```
 
 The reason for that is that React needs a way to identify which items in a list have changed or have been added or removed.
 It does that by looking at the keys of the items.
@@ -313,9 +322,9 @@ function App() {
 }
 ```
 
-### Improve Project Structure
+### Improving our Project Structure
 
-We should note that it is common practice to put components into separate files (unless two components are heavily related to each other).
+We should note that it's common practice to put components into separate files (unless two components are heavily related to each other).
 
 In this example, we might put the `TaskList` component into a file `task-list.tsx`:
 
@@ -367,3 +376,7 @@ function App() {
 
 ReactDOM.createRoot(document.getElementById('root')!).render(<App />);
 ```
+
+Now, we have two separate files.
+The `index.tsx` file contains our main `App` component and the `task-list.tsx` file contains our `TaskList` component.
+Additional components will go into additional files, allowing us to keep our codebase well structured and maintainable.
