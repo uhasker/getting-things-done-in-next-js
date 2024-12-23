@@ -6728,7 +6728,7 @@ At this point most people forget that there are any elements besides the generic
 <p>The problem is that <em>looking</em> at a page is not the only way to browse the web.</p>
 <p>First of all, there are a lot of visually impaired people in the world who use screen readers to navigate the internet.
 Screen readers tend to focus on the HTML elements and not the styles (which makes sense, since reading out styles is not really something you want to do).</p>
-<p>If you write a heading as a styled <code>&lt;div&gt;</code> instead of an <code>&lt;h1&gt;</code> you are not only doing more (unneccessary) work, you also give visually impaired people a worse experience.
+<p>If you write a heading as a styled <code>&lt;div&gt;</code> instead of an <code>&lt;h1&gt;</code> you are not only doing more (unnecessary) work, you also give visually impaired people a worse experience.
 Screen readers often interpret headings in a special way.
 For example, you can ask most screen readers to read all headings on a page out loud and then jump to some heading you care about.
 This is of course not possible with <code>&lt;div&gt;</code>s.</p>
@@ -7222,21 +7222,22 @@ The idea behind React is to create declarative UIs with nicely separated compone
 As you will see soon, this will save us a lot of time.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="chapter-7-adding-spice-with-react"><a class="header" href="#chapter-7-adding-spice-with-react">Chapter 7: Adding Spice with React</a></h1>
 <div style="text-align: right"> <i> What's a React developer's favorite place to hang out? <br> The State Park. <br> - From "1000 programming dad-jokes" </i> </div>
-<p>In this chapter we will create a simple (website) client using React. This client will allow us to add and delete tasks. Each task will have a title and a description.</p>
+<p>In this chapter we will create a simple (website) client using React.
+This client will allow us to add and delete tasks, where each task will have a title and a description.</p>
 <p>Let's begin.</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="react-components"><a class="header" href="#react-components">React Components</a></h2>
-<div style="text-align: right"> <i> Why do React components have great self-esteem? <br> Because they keep getting props. <br> - From "1000 programming dad-jokes" </i> </div>
+<div style="text-align: right"> <i> Why do React components have great self-esteem? <br> Because they keep getting props. <br> — From "1000 programming dad-jokes" </i> </div>
 <h3 id="why-react-components"><a class="header" href="#why-react-components">Why React Components?</a></h3>
-<p>The idea behind React is that you can think about a page in terms of isolated <strong>components</strong>, where every component is an <em>independent and reusable piece of the UI</em>.</p>
+<p>The idea behind React is that you can think about a web page in terms of isolated <strong>components</strong>, where every component is an <em>independent and reusable piece of the UI</em>.</p>
 <p>Consider a potential first version of our <em>easy-opus</em> app, which would need to display a bunch of tasks.</p>
 <p>Every task could be its own component containing the task title, description and a button to delete the task.
 The title, description and the button could in turn be components themselves.</p>
 <p>The tasks might then be grouped in a task list component, which in addition to the tasks, should have a button to add a new task.</p>
-<p>Here is a simple mockup of the website structure:</p>
+<p>Here is a simple mockup of the structure of our new web page:</p>
 <p><img src="chapter7/images/components.png" alt="" /></p>
 <p>Now comes the interesting part about React.
 In terms of implementation, a component is just a <em>regular JavaScript function</em> that takes the <em>data it should render as input</em> and returns the <em>UI representation of the data as output</em>.</p>
-<p>Here is an example of how the a <code>Task</code> component could look like:</p>
+<p>Here is an example of how the <code>Task</code> component could look like:</p>
 <pre><code class="language-jsx">function Task({ title, description }: { title: string, description: string }) {
   return (
     &lt;div&gt;
@@ -7247,10 +7248,14 @@ In terms of implementation, a component is just a <em>regular JavaScript functio
   );
 }
 </code></pre>
+<blockquote>
+<p>Currently, our components have no styling.
+We'll fix this in another chapter, for now we just focus on the logic.</p>
+</blockquote>
 <p>Let's have a look at this function.</p>
-<p>It takes an object containing the data it should render as input.
+<p>Looking at its inputs, we see that it takes an object containing the data it should render.
 Here the data to be rendered are the <code>title</code> and the <code>description</code>.</p>
-<p>It returns the UI representation of the data as output.
+<p>Looking at its outputs, we see that it returns the UI representation of the data.
 Here the UI representation is a <code>div</code> containing the <code>title</code>, <code>description</code> and a button.</p>
 <blockquote>
 <p>Note that the button currently doesn't do much.
@@ -7259,23 +7264,23 @@ We will change this later.</p>
 <p>To see components in action, let's actually create a simple React project.</p>
 <h3 id="create-a-react-project"><a class="header" href="#create-a-react-project">Create a React Project</a></h3>
 <p>To create a React project, we will use a tool called Vite, which provides various frontend tooling (including a development server and optimized builds).</p>
-<p>First let's create a new <code>vite</code> project:</p>
+<p>First, let's create a new <code>vite</code> project:</p>
 <pre><code class="language-sh">pnpm create vite
 </code></pre>
 <p>You will be asked to select various options.
-For the framework select <code>React</code> and for the variant you will select <code>TypeScript + SWC</code>.</p>
-<p>After you've created the new project, the tool will even output the commands you should execute afterwards (quite helpful).</p>
+Select <code>React</code> for the framework and <code>TypeScript + SWC</code> for the variant.</p>
+<p>After you've created the new project, the tool will even output the commands you should execute afterwards (which is quite helpful).</p>
 <p>Now navigate to the newly created directory, where your project resides:</p>
 <pre><code class="language-sh">cd example
 </code></pre>
-<p>You will see a couple of familiar files, including a <code>package.json</code> which - among other things - includes the dependencies of the project.
+<p>You will see a couple of familiar files, including a <code>package.json</code> which—among other things—includes the dependencies of the project.
 Let's install those dependencies:</p>
 <pre><code class="language-sh">pnpm install
 </code></pre>
 <p>Finally, you can run a development server:</p>
 <pre><code class="language-sh">pnpm dev
 </code></pre>
-<p>If you go to <code>http://localhost:5173</code> and observe the result, you will see a page with some demo content.
+<p>If you go to <code>http://localhost:5173</code> and look at the result, you will see a web page with some demo content.
 Let's replace this demo content with our own components!</p>
 <p>First, you can remove <code>App.tsx</code>, <code>App.css</code>, <code>index.css</code> and the <code>assets/</code> folder.
 We will not need these right now.</p>
@@ -7296,11 +7301,13 @@ function App() {
 
 ReactDOM.createRoot(document.getElementById('root')!).render(&lt;App /&gt;);
 </code></pre>
-<p>Save the file and again navigate to <code>http://localhost:5173</code>.
-You will now see our component rendered.
-This is actually one of the main features of the development server - it will automatically recreate the page when you edit your code.</p>
-<p>If you've paid attention so far, there should a big question mark in your head now: Why are we allowed to write HTML in our JavaScript?</p>
-<p>The answer is simple: The syntax is not actually HTML (queue ominous music here).</p>
+<p>Save the file and navigate to <code>http://localhost:5173</code> once more.
+You will now see our component.</p>
+<blockquote>
+<p>This is one of the greatest features of the development server—it will automatically recreate the page when you edit your code.</p>
+</blockquote>
+<p>If you've paid attention so far, there should be a giant question mark in your head now: Why are we allowed to write HTML in our JavaScript?</p>
+<p>The answer is simple: The syntax is not actually HTML (cue ominous music here).</p>
 <h3 id="introducing-jsx"><a class="header" href="#introducing-jsx">Introducing JSX</a></h3>
 <p>Consider our <code>App</code> function:</p>
 <pre><code class="language-jsx">function App() {
@@ -7316,7 +7323,7 @@ This is actually one of the main features of the development server - it will au
 }
 </code></pre>
 <p>While this might look like HTML, it is important to emphasize that this is <em>absolutely not</em> HTML.
-Instead this syntax is JSX, which is a <em>syntax extension</em> to <em>JavaScript</em> that can be transpiled to <em>normal</em> JavaScript.</p>
+Instead this syntax is something called <strong>JSX</strong>, which is a <em>syntax extension</em> to <em>JavaScript</em> that can be transpiled to <em>normal</em> JavaScript.</p>
 <p>To be precise, the JSX will be transpiled to calls to the <code>React.createElement</code> function which will return regular JavaScript objects.
 The root object will be dynamically added to the DOM using this line of code:</p>
 <pre><code class="language-jsx">ReactDOM.createRoot(document.getElementById('root')!).render(&lt;App /&gt;);
@@ -7355,13 +7362,14 @@ For example, this is a totally valid React component:</p>
   return &lt;p&gt;{x + y}&lt;/p&gt;;
 }
 </code></pre>
+<p>You can't do this in regular HTML.</p>
 <h3 id="add-props-to-a-react-component"><a class="header" href="#add-props-to-a-react-component">Add Props to a React Component</a></h3>
 <p>JSX is great, but our current <code>TaskList</code> component is not.
 The main problem is that the data it represents is hardcoded into the component.</p>
 <p>We fix that by passing properties (<code>props</code>) to the component.
 This is simply a JavaScript object containing the data the component should render.</p>
-<p>In the case of the <code>TaskList</code> we simply want to pass an array of strings named <code>tasks</code> containing our - well - tasks.
-We can then use <code>map</code> to create a list item <code>li</code> for each element of that array:</p>
+<p>In the case of the <code>TaskList</code> we simply want to pass an array of strings named <code>tasks</code> containing our—well—tasks.
+We can then use the <code>map</code> function to create a list item <code>li</code> for each element of that array:</p>
 <pre><code class="language-jsx">type TaskListProps = {
   tasks: string[],
 };
@@ -7377,8 +7385,7 @@ function TaskList(props: TaskListProps) {
 }
 </code></pre>
 <p>This is already not too bad, but of course we want to take advantage of the latest and greatest JavaScript syntax there is.
-Writing <code>props.tasks</code> is annoying.
-This will become even more annoying when we have a lot of props.</p>
+Writing <code>props.tasks</code> is annoying and will become even more annoying when we have a lot of props.</p>
 <p>We can use object destructuring to alleviate this:</p>
 <pre><code class="language-jsx">function TaskList({ tasks }: TaskListProps) {
   return (
@@ -7391,9 +7398,10 @@ This will become even more annoying when we have a lot of props.</p>
 }
 </code></pre>
 <blockquote>
-<p>You can hopefully see how all the concepts from the JavaScript and TypeScript chapters are coming together quite nicely.</p>
+<p>You can see how all the concepts from the JavaScript and TypeScript chapters are coming together quite nicely.</p>
 </blockquote>
-<p>Excellent! We can use the new component like this:</p>
+<p>Excellent!
+We can use the new component like this:</p>
 <pre><code class="language-jsx">function App() {
   return (
     &lt;div&gt;
@@ -7403,9 +7411,10 @@ This will become even more annoying when we have a lot of props.</p>
   );
 }
 </code></pre>
-<p>Great.
-Note that there is a problem with the current implementation of our component.
-If you open your browser console, you will see an error "Warning: Each child in a list should have a unique 'key' prop.".</p>
+<p>Note that there is a problem with the current implementation of our component.
+If you open your browser console, you will see an error:</p>
+<pre><code>Warning: Each child in a list should have a unique 'key' prop.
+</code></pre>
 <p>The reason for that is that React needs a way to identify which items in a list have changed or have been added or removed.
 It does that by looking at the keys of the items.
 These basically give the elements a stable identity.</p>
@@ -7464,8 +7473,8 @@ Luckily, there is a special component called a React <strong>fragment</strong> w
   );
 }
 </code></pre>
-<h3 id="improve-project-structure"><a class="header" href="#improve-project-structure">Improve Project Structure</a></h3>
-<p>We should note that it is common practice to put components into separate files (unless two components are heavily related to each other).</p>
+<h3 id="improving-our-project-structure"><a class="header" href="#improving-our-project-structure">Improving our Project Structure</a></h3>
+<p>We should note that it's common practice to put components into separate files (unless two components are heavily related to each other).</p>
 <p>In this example, we might put the <code>TaskList</code> component into a file <code>task-list.tsx</code>:</p>
 <pre><code class="language-jsx">type Task = {
   id: string,
@@ -7511,16 +7520,19 @@ function App() {
 
 ReactDOM.createRoot(document.getElementById('root')!).render(&lt;App /&gt;);
 </code></pre>
+<p>Now, we have two separate files.
+The <code>index.tsx</code> file contains our main <code>App</code> component and the <code>task-list.tsx</code> file contains our <code>TaskList</code> component.
+Additional components will go into additional files, allowing us to keep our codebase well structured and maintainable.</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="react-state"><a class="header" href="#react-state">React State</a></h2>
 <div style="text-align: right"> <i> Why was the useState hook feeling nostalgic? <br>
-Because every time it was called, it brought back memories! <br> - From "1000 programming dad-jokes" </i> </div>
+Because every time it was called, it brought back memories! <br> — From "1000 programming dad-jokes" </i> </div>
 <h3 id="why-state"><a class="header" href="#why-state">Why State?</a></h3>
-<p>In the previous section we learned how to render components.
-However, these components are completely "static" right now.
-But in reality, you often need to have "dynamic" components that change based on some action.</p>
+<p>In the previous section we've learned how to render components.</p>
+<p>However, these components were completely "static".
+But, in reality, you often need to have "dynamic" components that can change based on some action.</p>
 <p>For example, clicking a button might update a counter and typing into a form might update the input field.
-This means that components need to be able to "remember" things (like the current counter or the current input field value).</p>
-<p>To "remember" something, you can use state, which serves as a sort of memory for your component.</p>
+This means that components need to be able to "remember" things (like the current count or the current input field value).</p>
+<p>To "remember" something, you can use <strong>state</strong>, which serves as a sort of memory for your component.</p>
 <h3 id="a-simple-example-2"><a class="header" href="#a-simple-example-2">A Simple Example</a></h3>
 <p>Let's create a simple counter component.
 This component will have a button that increments a value:</p>
@@ -7543,13 +7555,13 @@ export default function Counter() {
   );
 }
 </code></pre>
-<p>Try clicking the "Increment" button - it will increment the count by 1 each time you click it.</p>
+<p>Try clicking the "Increment" button—it will increment the count by <code>1</code> each time you click it.</p>
 <p>This example is simple, but it still shows exactly how to use state in React.</p>
 <p>State is provided by the <code>useState</code> hook (a hook is basically just a special function).</p>
-<p>This hook returns an array with two elements - a <strong>state variable</strong> and a <strong>state setter function</strong>.
+<p>This hook returns an array with two elements—a <strong>state variable</strong> and a <strong>state setter function</strong>.
 The state variable (<code>count</code> in this case) will be the value that you want to remember.
 The state setter function (<code>setCount</code> in this case) can be used to update the state variable.
-The <code>useState</code> hook takes a single argument - the initial value of the state variable (which is <code>0</code> in this case).</p>
+The <code>useState</code> hook takes a single argument—the initial value of the state variable (which is <code>0</code> in this case).</p>
 <p>Note that we make use of array destructuring here (which you should remember from the JavaScript chapter):</p>
 <pre><code class="language-ts">const [count, setCount] = React.useState(0);
 </code></pre>
@@ -7558,12 +7570,10 @@ The <code>useState</code> hook takes a single argument - the initial value of th
 const count = countState[0];
 const setCount = countState[1];
 </code></pre>
-<p>Please don't do that though - it will result in confusion since it's very unconventional to manually destructure the value returned from a hook.</p>
+<p>Please don't do that though—it will result in confusion since it's very unconventional to manually destructure the value returned from a hook.</p>
 <h3 id="state-vs-regular-variables"><a class="header" href="#state-vs-regular-variables">State vs Regular Variables</a></h3>
-<p>You should have a big question in the back of your head right now.
-<em>Why do we need to go through all this pain?</em>
-<em>Why not just use a regular variable?</em></p>
-<p>After all, this is how we always remembered values before.
+<p>Why do we need to go through all that pain instead of just using a regular variable?</p>
+<p>After all, this is how we've always remembered values before.
 We simply assigned them to variables.</p>
 <p>Let's have a look at why this doesn't work with React:</p>
 <pre><code class="language-jsx">export default function Counter() {
@@ -7583,10 +7593,10 @@ We simply assigned them to variables.</p>
   );
 }
 </code></pre>
-<p>Try clicking the button know - nothing will happen.
+<p>Try clicking the button now—nothing happens.
 But why?</p>
 <p>The problem lies in the fact that, while we do update the local variable, React doesn't actually rerender the component to show the change.
-You can verify this by adding a few <code>console.logs</code>:</p>
+You can verify this by adding a few <code>console.log</code>s:</p>
 <pre><code class="language-jsx">export default function Counter() {
   let count = 0;
 
@@ -7613,8 +7623,8 @@ New value of count is 1
 New value of count is 2
 New value of count is 3
 </code></pre>
-<p>So the local variable is indeed updated - but this doesn't rerender the component.
-We begin to see the purpose of the <code>useState</code> hook - to define a state whose <em>updates will trigger a rerender</em>.</p>
+<p>So the local variable is indeed updated—but this doesn't rerender the component.
+We begin to see the purpose of the <code>useState</code> hook—to define a state whose <em>updates will trigger a rerender</em>.</p>
 <p>This explanation should have immediately raised another question.
 What happens if we skip the state setter function and just set the state variable directly?</p>
 <pre><code class="language-jsx">export default function Counter() {
@@ -7643,7 +7653,7 @@ New value of count is 1
 New value of count is 2
 New value of count is 3
 </code></pre>
-<p>Therefore if you need to update the UI of your component, you can't use local variables and you can't update the state variables directly.
+<p>Therefore, if you need to update the UI of your component, you can't use local variables and you can't update the state variables directly.
 You need to use the state setter function to not only update the state variable, but also to rerender the component.</p>
 <p>Let's verify that using the state setter function does what we expect:</p>
 <pre><code class="language-jsx">export default function Counter() {
@@ -7680,11 +7690,11 @@ React rerenders the component while remembering that the new <code>count</code> 
 <p>The component renders for the second time.
 Because React remembered that <code>count</code> was set to <code>1</code>, the component will render with <code>count</code> set to <code>1</code>.</p>
 <h3 id="using-state-with-a-form"><a class="header" href="#using-state-with-a-form">Using State with a Form</a></h3>
-<p>Let us return to our example application and add the form for creating a new task.
+<p>Let's return to our example application and add the form for creating a new task.
 Enter the <code>task-list.tsx</code> file and import React at the top:</p>
 <pre><code class="language-js">import * as React from 'react';
 </code></pre>
-<p>Next we add the form containing inputs for the ID and the title, as well as an "Add task" button below the task list:</p>
+<p>Next, we add the form containing inputs for the ID and the title, as well as an "Add task" button below the task list:</p>
 <pre><code class="language-jsx">export function TaskList({ tasks }: TaskListProps) {
   return (
     &lt;&gt;
@@ -7705,7 +7715,7 @@ Enter the <code>task-list.tsx</code> file and import React at the top:</p>
   );
 }
 </code></pre>
-<p>Now we need to create a <code>handleSubmit</code> function, which will just log something to the console for now.
+<p>Now, we need to create a <code>handleSubmit</code> function, which will just log something to the console for now.
 Remember from the HTML chapter that we need to call the <code>preventDefault</code> function to prevent the default behaviour of a form submission (which includes a page refresh):</p>
 <pre><code class="language-js">function handleSubmit(event) {
   event.preventDefault();
@@ -7714,12 +7724,12 @@ Remember from the HTML chapter that we need to call the <code>preventDefault</co
   console.log(`Submitted ${taskId}, ${title}`);
 }
 </code></pre>
-<p>Next we need to make sure that the <code>handleSubmit</code> function is called when the button is clicked.
+<p>Next, we need to make sure that the <code>handleSubmit</code> function is called when the button is clicked.
 To accomplish that, we set the <code>onSubmit</code> property of the form to the <code>handleSubmit</code> function:</p>
 <pre><code class="language-jsx">&lt;form onSubmit={handleSubmit}&gt;{/*Additional JSX here*/}&lt;/form&gt;
 </code></pre>
 <p>If you click the button, you should now see the title logged to the console.</p>
-<p>Again we use the <code>useState</code> hook:</p>
+<p>Again, we use the <code>useState</code> hook:</p>
 <pre><code class="language-js">const [tasks, setTasks] = React.useState&lt;Task[]&gt;([]);
 </code></pre>
 <p>We now want to add the task to the end when the form is submitted:</p>
@@ -7780,13 +7790,13 @@ export default function TaskList() {
 }
 
 </code></pre>
-<p>Try clicking the button - a new task should appear.</p>
+<p>Try clicking the button—a new task should appear.</p>
 <blockquote>
 <p>Just like with the HTML client the changes will go away if you refresh the page or close the browser.
-We will talk about how to persist data in later chapters.</p>
+We will talk about how to persist data later.</p>
 </blockquote>
-<h3 id="when-to-use-state"><a class="header" href="#when-to-use-state">When to use State</a></h3>
-<p>There is a common theme regarding state in React - a lot of beginners <em>heavily overuse</em> it.
+<h3 id="when-to-use-state"><a class="header" href="#when-to-use-state">When to Use State</a></h3>
+<p>There is a common theme regarding state in React—a lot of beginners <em>heavily overuse</em> it.
 This is usually because they misunderstand the purpose of state and what it actually does.</p>
 <p>Before we give specific examples of when to and when not to use state, we want to reiterate two things we already discussed:</p>
 <p>First, state should only be used if your component needs to remember something.</p>
@@ -7936,13 +7946,13 @@ export default function TaskList() {
 }
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="react-effects"><a class="header" href="#react-effects">React Effects</a></h2>
-<div style="text-align: right"> <i> Why can't React effects keep a secret? <br> Because as soon as something changes, they just have to run and tell everyone! <br> - From "1000 programming dad-jokes" </i> </div>
+<div style="text-align: right"> <i> Why can't React effects keep a secret? <br> Because as soon as something changes, they just have to run and tell everyone! <br> — From "1000 programming dad-jokes" </i> </div>
 <h3 id="why-effects"><a class="header" href="#why-effects">Why Effects?</a></h3>
 <p><strong>Effects</strong> are useful if you want to synchronize React with some <em>external system</em> (like a server).</p>
 <p>Consider a component which, upon rendering, needs to fetch a task title and display it to the user.
 While your first instinct might be to use an event handler together with state, this is not possible.
 After all, there is no real user event here.
-Instead we need to execute something <em>because the component is rendering</em>.</p>
+Instead, we need to execute something <em>because the component is rendering</em>.</p>
 <p>This is where effects come in handy.</p>
 <h3 id="the-useeffect-hook"><a class="header" href="#the-useeffect-hook">The <code>useEffect</code> Hook</a></h3>
 <p>Here is the simplest possible example for a <code>useEffect</code> hook.
@@ -7987,14 +7997,15 @@ export default function ExampleCounter() {
 <p>Open the page containing the component again and you will see the following log:</p>
 <pre><code>Effect runs (currently count=0)
 </code></pre>
-<p>Now click the button a few times - you will see that on each rerender the effect is executed:</p>
+<p>Now click the button a few times—you will see that on each rerender the effect is executed:</p>
 <pre><code>Effect runs (currently count=1)
 Effect runs (currently count=2)
 Effect runs (currently count=3)
 Effect runs (currently count=4)
 </code></pre>
-<p>Additionally we can return a cleanup function, which will run when the component is destroyed (<em>unmounted</em>), and before every <em>rerun</em> of the useEffect. We will examine when exactly an useEffect reruns in the <a href="chapter7/03-react-effects.html#the-dependency-array">next section</a>.
-Consider this example:</p>
+<p>Additionally, we can return a cleanup function, which will run when the component is destroyed (<em>unmounted</em>), and before every <em>rerun</em> of the useEffect.
+We will examine when exactly an effect reruns in the next section.</p>
+<p>Consider this example:</p>
 <pre><code class="language-jsx">import * as React from 'react';
 
 export default function ExampleComponent() {
@@ -8012,10 +8023,10 @@ export default function ExampleComponent() {
 <p>If the component is destroyed (for example, because you refresh the page or navigate away from the current page), you will see the following log:</p>
 <pre><code>Component destroyed
 </code></pre>
-<p>Usually you would use the cleanup function to do some cleanup (<em>no way</em>).
-For example, if you've connected to an external system, here is were you would disconnect.</p>
+<p>Usually, you would use the cleanup function to do some cleanup (<em>no way</em>).
+For example, if you've connected to an external system, here is where you would disconnect.</p>
 <h3 id="the-dependency-array"><a class="header" href="#the-dependency-array">The Dependency Array</a></h3>
-<p>The <code>useEffect</code> hook also takes a second argument - a <strong>dependency array</strong>.
+<p>The <code>useEffect</code> hook also takes a second argument—a <strong>dependency array</strong>.
 This allows you to specify that the effect should run only if a particular value changes.</p>
 <p>Consider this (slightly constructed) example:</p>
 <pre><code class="language-jsx">import * as React from 'react';
@@ -8049,14 +8060,14 @@ Current counts: firstCount=4, secondCount=0
 <p>However, if you click the "Increment second count" button, you will see that the effect doesn't run (and nothing is logged to the console).</p>
 <p>This is because <code>firstCount</code> is in the dependency array, but <code>secondCount</code> isn't.
 Therefore, an update to <code>firstCount</code> (via the <code>setFirstCount</code> setter function) will trigger the effect.
-But an update to <code>secondCount</code> (via the <code>setSecondCount</code> setter function) won't.</p>
+However, an update to <code>secondCount</code> (via the <code>setSecondCount</code> setter function) will not trigger the effect.</p>
 <p>If you want to trigger the effect when <code>secondCount</code> is updated, you will need to add <code>secondCount</code> to the dependency array:</p>
 <pre><code class="language-js">React.useEffect(() =&gt; {
   console.log(`Current counts: firstCount=${firstCount}, secondCount=${secondCount}`);
 }, [firstCount, secondCount]);
 </code></pre>
-<p>Note that if the dependency array is empty, the effect will run only once - when the component is first rendered.
-This directly follows from the explanation above - an empty dependency array contains no values that would trigger the effect again.</p>
+<p>Note that if the dependency array is empty, the effect will run only once—when the component is first rendered.
+This directly follows from the explanation above—an empty dependency array contains no values that would trigger the effect again.</p>
 <p>Consider this example:</p>
 <pre><code class="language-jsx">import * as React from 'react';
 
@@ -8100,7 +8111,7 @@ In fact this can result in catastrophic behaviour, like in the following example
 }
 </code></pre>
 <p>If you run this, you will see that the counter just keeps incrementing in an infinite loop.
-This is because, the effect calls <code>setCount</code>, which will trigger a rerender, which will trigger the effect again, which will call <code>setCount</code> etc.</p>
+This is because the effect calls <code>setCount</code>, which will trigger a rerender, which will trigger the effect again, which will call <code>setCount</code> etc.</p>
 <p>React is actually smart enough to realize the problem and will log the following warning to the console:</p>
 <pre><code>Maximum update depth exceeded.
 This can happen when a component calls setState inside useEffect,
@@ -8134,14 +8145,14 @@ export default function ExampleTask() {
 <p>This code should be pretty clear if you understand the <code>fetch</code> function and the <code>useEffect</code> hook.</p>
 <p>Our effect fetches a the task from the API and then sets a state called <code>title</code> after the fetch is completed.
 Because we only want this to happen on the initial component render, we specify an empty dependency array.</p>
-<p>Note that we don't have a cleanup function in our effect - normally we would abort the request here.
+<p>Note that we don't have a cleanup function in our effect—normally we would abort the request here.
 However this is out of scope for this introductory book.</p>
 <h3 id="you-rarely-need-an-effect"><a class="header" href="#you-rarely-need-an-effect">You Rarely Need an Effect</a></h3>
 <p>Just like with state, beginners tend to heavily <em>overuse</em> effects.</p>
 <p>Remember: <strong>Effects are only needed if you need to synchronize with an external system</strong>.
 You should not need an effect in any other scenario.</p>
 <p>Effects are definitely not needed if you need update some state based on props and other state.
-Something like this is completely unneccessary:</p>
+Something like this is completely unnecessary:</p>
 <pre><code class="language-jsx">import * as React from 'react';
 
 type Task = {
@@ -8155,7 +8166,7 @@ export default function TaskList() {
 
   // This is a really bad idea
   React.useEffect(() =&gt; {
-    setNumTasks(tasks + 1);
+    setNumTasks(tasks.length + 1);
   }, [tasks])
 
   function handleSubmit(event) {
@@ -8191,7 +8202,7 @@ export default function TaskList() {
   );
 }
 </code></pre>
-<p>Instead you should simply calculate the depending value during rendering (like we discussed in the previous section).</p>
+<p>Instead, you should simply calculate the depending value during rendering (like we've discussed in the previous section).</p>
 <p>Similarly, you don't need effects when you want to reset or adjust some state based on a prop change.</p>
 <blockquote>
 <p>In fact, these days some guidelines recommend to not use an effect even for fetching data.

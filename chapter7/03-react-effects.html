@@ -153,13 +153,13 @@
                 <div id="content" class="content">
                     <main>
                         <h2 id="react-effects"><a class="header" href="#react-effects">React Effects</a></h2>
-<div style="text-align: right"> <i> Why can't React effects keep a secret? <br> Because as soon as something changes, they just have to run and tell everyone! <br> - From "1000 programming dad-jokes" </i> </div>
+<div style="text-align: right"> <i> Why can't React effects keep a secret? <br> Because as soon as something changes, they just have to run and tell everyone! <br> — From "1000 programming dad-jokes" </i> </div>
 <h3 id="why-effects"><a class="header" href="#why-effects">Why Effects?</a></h3>
 <p><strong>Effects</strong> are useful if you want to synchronize React with some <em>external system</em> (like a server).</p>
 <p>Consider a component which, upon rendering, needs to fetch a task title and display it to the user.
 While your first instinct might be to use an event handler together with state, this is not possible.
 After all, there is no real user event here.
-Instead we need to execute something <em>because the component is rendering</em>.</p>
+Instead, we need to execute something <em>because the component is rendering</em>.</p>
 <p>This is where effects come in handy.</p>
 <h3 id="the-useeffect-hook"><a class="header" href="#the-useeffect-hook">The <code>useEffect</code> Hook</a></h3>
 <p>Here is the simplest possible example for a <code>useEffect</code> hook.
@@ -204,14 +204,15 @@ export default function ExampleCounter() {
 <p>Open the page containing the component again and you will see the following log:</p>
 <pre><code>Effect runs (currently count=0)
 </code></pre>
-<p>Now click the button a few times - you will see that on each rerender the effect is executed:</p>
+<p>Now click the button a few times—you will see that on each rerender the effect is executed:</p>
 <pre><code>Effect runs (currently count=1)
 Effect runs (currently count=2)
 Effect runs (currently count=3)
 Effect runs (currently count=4)
 </code></pre>
-<p>Additionally we can return a cleanup function, which will run when the component is destroyed (<em>unmounted</em>), and before every <em>rerun</em> of the useEffect. We will examine when exactly an useEffect reruns in the <a href="#the-dependency-array">next section</a>.
-Consider this example:</p>
+<p>Additionally, we can return a cleanup function, which will run when the component is destroyed (<em>unmounted</em>), and before every <em>rerun</em> of the useEffect.
+We will examine when exactly an effect reruns in the next section.</p>
+<p>Consider this example:</p>
 <pre><code class="language-jsx">import * as React from 'react';
 
 export default function ExampleComponent() {
@@ -229,10 +230,10 @@ export default function ExampleComponent() {
 <p>If the component is destroyed (for example, because you refresh the page or navigate away from the current page), you will see the following log:</p>
 <pre><code>Component destroyed
 </code></pre>
-<p>Usually you would use the cleanup function to do some cleanup (<em>no way</em>).
-For example, if you've connected to an external system, here is were you would disconnect.</p>
+<p>Usually, you would use the cleanup function to do some cleanup (<em>no way</em>).
+For example, if you've connected to an external system, here is where you would disconnect.</p>
 <h3 id="the-dependency-array"><a class="header" href="#the-dependency-array">The Dependency Array</a></h3>
-<p>The <code>useEffect</code> hook also takes a second argument - a <strong>dependency array</strong>.
+<p>The <code>useEffect</code> hook also takes a second argument—a <strong>dependency array</strong>.
 This allows you to specify that the effect should run only if a particular value changes.</p>
 <p>Consider this (slightly constructed) example:</p>
 <pre><code class="language-jsx">import * as React from 'react';
@@ -266,14 +267,14 @@ Current counts: firstCount=4, secondCount=0
 <p>However, if you click the "Increment second count" button, you will see that the effect doesn't run (and nothing is logged to the console).</p>
 <p>This is because <code>firstCount</code> is in the dependency array, but <code>secondCount</code> isn't.
 Therefore, an update to <code>firstCount</code> (via the <code>setFirstCount</code> setter function) will trigger the effect.
-But an update to <code>secondCount</code> (via the <code>setSecondCount</code> setter function) won't.</p>
+However, an update to <code>secondCount</code> (via the <code>setSecondCount</code> setter function) will not trigger the effect.</p>
 <p>If you want to trigger the effect when <code>secondCount</code> is updated, you will need to add <code>secondCount</code> to the dependency array:</p>
 <pre><code class="language-js">React.useEffect(() =&gt; {
   console.log(`Current counts: firstCount=${firstCount}, secondCount=${secondCount}`);
 }, [firstCount, secondCount]);
 </code></pre>
-<p>Note that if the dependency array is empty, the effect will run only once - when the component is first rendered.
-This directly follows from the explanation above - an empty dependency array contains no values that would trigger the effect again.</p>
+<p>Note that if the dependency array is empty, the effect will run only once—when the component is first rendered.
+This directly follows from the explanation above—an empty dependency array contains no values that would trigger the effect again.</p>
 <p>Consider this example:</p>
 <pre><code class="language-jsx">import * as React from 'react';
 
@@ -317,7 +318,7 @@ In fact this can result in catastrophic behaviour, like in the following example
 }
 </code></pre>
 <p>If you run this, you will see that the counter just keeps incrementing in an infinite loop.
-This is because, the effect calls <code>setCount</code>, which will trigger a rerender, which will trigger the effect again, which will call <code>setCount</code> etc.</p>
+This is because the effect calls <code>setCount</code>, which will trigger a rerender, which will trigger the effect again, which will call <code>setCount</code> etc.</p>
 <p>React is actually smart enough to realize the problem and will log the following warning to the console:</p>
 <pre><code>Maximum update depth exceeded.
 This can happen when a component calls setState inside useEffect,
@@ -351,14 +352,14 @@ export default function ExampleTask() {
 <p>This code should be pretty clear if you understand the <code>fetch</code> function and the <code>useEffect</code> hook.</p>
 <p>Our effect fetches a the task from the API and then sets a state called <code>title</code> after the fetch is completed.
 Because we only want this to happen on the initial component render, we specify an empty dependency array.</p>
-<p>Note that we don't have a cleanup function in our effect - normally we would abort the request here.
+<p>Note that we don't have a cleanup function in our effect—normally we would abort the request here.
 However this is out of scope for this introductory book.</p>
 <h3 id="you-rarely-need-an-effect"><a class="header" href="#you-rarely-need-an-effect">You Rarely Need an Effect</a></h3>
 <p>Just like with state, beginners tend to heavily <em>overuse</em> effects.</p>
 <p>Remember: <strong>Effects are only needed if you need to synchronize with an external system</strong>.
 You should not need an effect in any other scenario.</p>
 <p>Effects are definitely not needed if you need update some state based on props and other state.
-Something like this is completely unneccessary:</p>
+Something like this is completely unnecessary:</p>
 <pre><code class="language-jsx">import * as React from 'react';
 
 type Task = {
@@ -372,7 +373,7 @@ export default function TaskList() {
 
   // This is a really bad idea
   React.useEffect(() =&gt; {
-    setNumTasks(tasks + 1);
+    setNumTasks(tasks.length + 1);
   }, [tasks])
 
   function handleSubmit(event) {
@@ -408,7 +409,7 @@ export default function TaskList() {
   );
 }
 </code></pre>
-<p>Instead you should simply calculate the depending value during rendering (like we discussed in the previous section).</p>
+<p>Instead, you should simply calculate the depending value during rendering (like we've discussed in the previous section).</p>
 <p>Similarly, you don't need effects when you want to reset or adjust some state based on a prop change.</p>
 <blockquote>
 <p>In fact, these days some guidelines recommend to not use an effect even for fetching data.
