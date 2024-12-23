@@ -1,0 +1,450 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Servers and Clients</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title"></h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h2 id="servers-and-clients"><a class="header" href="#servers-and-clients">Servers and Clients</a></h2>
+<div style="text-align: right"> <i> TODO. <br> — Seconds before disaster </i> </div>
+<h3 id="basics"><a class="header" href="#basics">Basics</a></h3>
+<p>We've already discussed servers and clients at the beginning of this chapter.
+Additionally, we wrote a server and even used a few clients (like our browser and the <code>curl</code> tool).</p>
+<p>However, because this is such an important concept we will use this section to cover a complete and standalone example of a server-client setup.</p>
+<p>Remember our definition of servers and clients:</p>
+<blockquote>
+<p><strong>Servers</strong> and <strong>clients</strong> are nothing more than regular programs (like the ones you saw in the first chapter).
+For example, a server might be a JavaScript program that waits for HTTP requests and sends back HTTP responses.
+A client might be a browser on your laptop or your phone—it might even be a regular script.
+Often, the term "server" is also used to refer to the actual machine the software is running on.</p>
+</blockquote>
+<p>We've also discussed that we will often need to transmit data from the client to the server (and the other way around).
+When writing a web application, the most common way to do so is by using the HTTP protocol.</p>
+<p>Let's now dive into an example.
+We will create a simple server that exposes an API to add and list tasks and a simple client that uses the API.</p>
+<h3 id="building-the-server"><a class="header" href="#building-the-server">Building the Server</a></h3>
+<p>First, we will create the server.</p>
+<p>Create a new directory named <code>server</code> and enter it:</p>
+<pre><code class="language-sh">mkdir server
+cd server
+</code></pre>
+<p>Initialize a new project and add the <code>express</code> dependency to it:</p>
+<pre><code class="language-sh">pnpm init
+pnpm add express
+</code></pre>
+<p>Now, create an <code>app.js</code> file.</p>
+<p>Here, we will create an express <code>app</code> that will listen on port <code>3000</code>.
+We will also add a JSON middleware and a list that will store the added tasks:</p>
+<pre><code class="language-js">const express = require('express');
+
+const app = express();
+const port = 3000;
+
+// Middleware
+app.use(express.json());
+
+// In-memory store for tasks
+const tasks = [];
+
+// Start server
+app.listen(port, () =&gt; {
+  console.log(`Server is running at http://localhost:${port}`);
+});
+</code></pre>
+<p>Next, we need two routes—a <code>GET</code> route for listing all tasks and a <code>POST</code> route for adding a new task.
+This is nothing new, we've already covered how to do this in the previous sections:</p>
+<pre><code class="language-js">app.get('/tasks', (req, res) =&gt; {
+  res.json(tasks);
+});
+
+app.post('/tasks', (req, res) =&gt; {
+  const { name } = req.body;
+  if (!name) {
+    return res.status(400).json({ error: 'Name is required' });
+  }
+  const task = { id: tasks.length + 1, name };
+  tasks.push(task);
+  res.status(201).json(task);
+});
+</code></pre>
+<p>Here is how the full server code looks like:</p>
+<pre><code class="language-js">const express = require('express');
+
+const app = express();
+const port = 3000;
+
+// Middleware
+app.use(express.json());
+
+// In-memory store for tasks
+const tasks = [];
+
+// Routes
+app.get('/tasks', (req, res) =&gt; {
+  res.json(tasks);
+});
+
+app.post('/tasks', (req, res) =&gt; {
+  const { name } = req.body;
+  if (!name) {
+    return res.status(400).json({ error: 'Name is required' });
+  }
+  const task = { id: tasks.length + 1, name };
+  tasks.push(task);
+  res.status(201).json(task);
+});
+
+// Start server
+app.listen(port, () =&gt; {
+  console.log(`Server is running at http://localhost:${port}`);
+});
+</code></pre>
+<p>Start the server by running:</p>
+<pre><code class="language-sh">node app.js
+</code></pre>
+<h3 id="building-the-client"><a class="header" href="#building-the-client">Building the Client</a></h3>
+<p>Return to the top-level directory, create a new directory named <code>client</code> and enter it:</p>
+<pre><code class="language-sh">mkdir client
+cd client
+</code></pre>
+<p>Initialize a new project and add the <code>node-fetch</code> dependency to it.
+This will allow us to use the <code>fetch</code> function in Node.js:</p>
+<pre><code class="language-sh">pnpm init
+pnpm add node-fetch
+</code></pre>
+<p>Finally, add <code>{"type": "module"}</code> to the <code>package.json</code> file.</p>
+<p>Next, we will write a script <code>client.js</code> that will contain a CLI that allows us to list all tasks and add a task:</p>
+<pre><code class="language-js">import fetch from 'node-fetch';
+
+const baseUrl = 'http://localhost:3000/';
+
+async function listTasks() {
+  // Make a GET request to `${baseUrl}/tasks`
+}
+
+async function addTask(name) {
+  // Make a POST request to `${baseUrl}/tasks`
+}
+
+function showHelp() {
+  console.log(`
+Usage:
+  node client.js list               List all tasks
+  node client.js add &lt;name&gt;         Add a new task
+`);
+}
+
+const args = process.argv.slice(2);
+
+if (args.length === 0) {
+  showHelp();
+} else if (args[0] === 'list') {
+  listTasks();
+} else if (args[0] === 'add' &amp;&amp; args[1]) {
+  addTask(args[1]);
+} else {
+  showHelp();
+}
+</code></pre>
+<p>To make the requests, we will use the <code>fetch</code> function that we've already discussed in the JavaScript chapter.
+You already know how to make a <code>GET</code> request:</p>
+<pre><code class="language-js">async function listTasks() {
+  try {
+    const response = await fetch(`${baseUrl}/tasks`);
+    const tasks = await response.json();
+    console.log('Tasks:', tasks);
+  } catch (error) {
+    console.error('Error fetching tasks:', error);
+  }
+}
+</code></pre>
+<p>However, <code>POST</code> requests using <code>fetch</code> are a bit more complex.</p>
+<p>First, we will need to explicitly set the <code>method</code> to <code>POST</code> inside the <code>fetch</code> function and pass the request body.</p>
+<p>However, that's not all.
+Since we want to pass a JSON in the request body, we will also need to explicitly specify that using the <code>Content-Type</code> header.</p>
+<p>Therefore, this is how the <code>fetch</code> call should look like:</p>
+<pre><code class="language-js">await fetch(`${baseUrl}/tasks`, {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ name }),
+});
+</code></pre>
+<p>And this is how the <code>addTask</code> function will look like in the end:</p>
+<pre><code class="language-js">async function addTask(name) {
+  try {
+    const response = await fetch(`${baseUrl}/tasks`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name }),
+    });
+    const task = await response.json();
+    console.log('Added task:', task);
+  } catch (error) {
+    console.error('Error adding task:', error);
+  }
+}
+</code></pre>
+<p>For your reference, here is how the full client should look like:</p>
+<pre><code class="language-js">import fetch from 'node-fetch';
+
+const baseUrl = 'http://localhost:3000/';
+
+async function listTasks() {
+  try {
+    const response = await fetch(`${baseUrl}/tasks`);
+    const tasks = await response.json();
+    console.log('Tasks:', tasks);
+  } catch (error) {
+    console.error('Error fetching tasks:', error);
+  }
+}
+
+async function addTask(name) {
+  try {
+    const response = await fetch(`${baseUrl}/tasks`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name }),
+    });
+    const task = await response.json();
+    console.log('Added task:', task);
+  } catch (error) {
+    console.error('Error adding task:', error);
+  }
+}
+
+function showHelp() {
+  console.log(`
+Usage:
+  node client.js list               List all tasks
+  node client.js add &lt;name&gt;         Add a new task
+`);
+}
+
+const args = process.argv.slice(2);
+
+if (args.length === 0) {
+  showHelp();
+} else if (args[0] === 'list') {
+  listTasks();
+} else if (args[0] === 'add' &amp;&amp; args[1]) {
+  addTask(args[1]);
+} else {
+  showHelp();
+}
+</code></pre>
+<p>Let's now add a task using the client command line interface:</p>
+<pre><code class="language-sh">node client.js add example
+</code></pre>
+<p>This will output:</p>
+<pre><code>Added task: { id: 1, name: 'example' }
+</code></pre>
+<p>Let's also list the tasks using the CLI:</p>
+<pre><code class="language-sh">node client.js list
+</code></pre>
+<p>This will output:</p>
+<pre><code>Tasks: [ { id: 1, name: 'example' } ]
+</code></pre>
+<p>It works!
+In reality, our client would not be a command-line client, but a client running in our browser.
+Additionally, in practice we wouldn't store the tasks in an in-memory list (because this list would vanish once we stop the server).
+Instead, we would persist our tasks in a database, which is what we will cover in the next chapter.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../chapter3/03-more-on-http.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../chapter4/index.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../chapter3/03-more-on-http.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../chapter4/index.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

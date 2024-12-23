@@ -4979,6 +4979,250 @@ If you open the network tab, you will see that two requests are sent to accompli
 <p>First, your browser sends a request to <code>http://localhost:3000/permanent-redirect</code> and receives a response with status code <code>301</code> and the response header <code>Location</code> set to <code>/permanent-target</code>.
 Your browser now sends another request to the URL that is indicated in the <code>Location</code> header and receives the actual content.</p>
 <p>You will see similar behaviour with the <code>/temporary-redirect</code> and <code>/temporary-target</code> routes.</p>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="servers-and-clients-1"><a class="header" href="#servers-and-clients-1">Servers and Clients</a></h2>
+<div style="text-align: right"> <i> TODO. <br> — Seconds before disaster </i> </div>
+<h3 id="basics"><a class="header" href="#basics">Basics</a></h3>
+<p>We've already discussed servers and clients at the beginning of this chapter.
+Additionally, we wrote a server and even used a few clients (like our browser and the <code>curl</code> tool).</p>
+<p>However, because this is such an important concept we will use this section to cover a complete and standalone example of a server-client setup.</p>
+<p>Remember our definition of servers and clients:</p>
+<blockquote>
+<p><strong>Servers</strong> and <strong>clients</strong> are nothing more than regular programs (like the ones you saw in the first chapter).
+For example, a server might be a JavaScript program that waits for HTTP requests and sends back HTTP responses.
+A client might be a browser on your laptop or your phone—it might even be a regular script.
+Often, the term "server" is also used to refer to the actual machine the software is running on.</p>
+</blockquote>
+<p>We've also discussed that we will often need to transmit data from the client to the server (and the other way around).
+When writing a web application, the most common way to do so is by using the HTTP protocol.</p>
+<p>Let's now dive into an example.
+We will create a simple server that exposes an API to add and list tasks and a simple client that uses the API.</p>
+<h3 id="building-the-server"><a class="header" href="#building-the-server">Building the Server</a></h3>
+<p>First, we will create the server.</p>
+<p>Create a new directory named <code>server</code> and enter it:</p>
+<pre><code class="language-sh">mkdir server
+cd server
+</code></pre>
+<p>Initialize a new project and add the <code>express</code> dependency to it:</p>
+<pre><code class="language-sh">pnpm init
+pnpm add express
+</code></pre>
+<p>Now, create an <code>app.js</code> file.</p>
+<p>Here, we will create an express <code>app</code> that will listen on port <code>3000</code>.
+We will also add a JSON middleware and a list that will store the added tasks:</p>
+<pre><code class="language-js">const express = require('express');
+
+const app = express();
+const port = 3000;
+
+// Middleware
+app.use(express.json());
+
+// In-memory store for tasks
+const tasks = [];
+
+// Start server
+app.listen(port, () =&gt; {
+  console.log(`Server is running at http://localhost:${port}`);
+});
+</code></pre>
+<p>Next, we need two routes—a <code>GET</code> route for listing all tasks and a <code>POST</code> route for adding a new task.
+This is nothing new, we've already covered how to do this in the previous sections:</p>
+<pre><code class="language-js">app.get('/tasks', (req, res) =&gt; {
+  res.json(tasks);
+});
+
+app.post('/tasks', (req, res) =&gt; {
+  const { name } = req.body;
+  if (!name) {
+    return res.status(400).json({ error: 'Name is required' });
+  }
+  const task = { id: tasks.length + 1, name };
+  tasks.push(task);
+  res.status(201).json(task);
+});
+</code></pre>
+<p>Here is how the full server code looks like:</p>
+<pre><code class="language-js">const express = require('express');
+
+const app = express();
+const port = 3000;
+
+// Middleware
+app.use(express.json());
+
+// In-memory store for tasks
+const tasks = [];
+
+// Routes
+app.get('/tasks', (req, res) =&gt; {
+  res.json(tasks);
+});
+
+app.post('/tasks', (req, res) =&gt; {
+  const { name } = req.body;
+  if (!name) {
+    return res.status(400).json({ error: 'Name is required' });
+  }
+  const task = { id: tasks.length + 1, name };
+  tasks.push(task);
+  res.status(201).json(task);
+});
+
+// Start server
+app.listen(port, () =&gt; {
+  console.log(`Server is running at http://localhost:${port}`);
+});
+</code></pre>
+<p>Start the server by running:</p>
+<pre><code class="language-sh">node app.js
+</code></pre>
+<h3 id="building-the-client"><a class="header" href="#building-the-client">Building the Client</a></h3>
+<p>Return to the top-level directory, create a new directory named <code>client</code> and enter it:</p>
+<pre><code class="language-sh">mkdir client
+cd client
+</code></pre>
+<p>Initialize a new project and add the <code>node-fetch</code> dependency to it.
+This will allow us to use the <code>fetch</code> function in Node.js:</p>
+<pre><code class="language-sh">pnpm init
+pnpm add node-fetch
+</code></pre>
+<p>Finally, add <code>{"type": "module"}</code> to the <code>package.json</code> file.</p>
+<p>Next, we will write a script <code>client.js</code> that will contain a CLI that allows us to list all tasks and add a task:</p>
+<pre><code class="language-js">import fetch from 'node-fetch';
+
+const baseUrl = 'http://localhost:3000/';
+
+async function listTasks() {
+  // Make a GET request to `${baseUrl}/tasks`
+}
+
+async function addTask(name) {
+  // Make a POST request to `${baseUrl}/tasks`
+}
+
+function showHelp() {
+  console.log(`
+Usage:
+  node client.js list               List all tasks
+  node client.js add &lt;name&gt;         Add a new task
+`);
+}
+
+const args = process.argv.slice(2);
+
+if (args.length === 0) {
+  showHelp();
+} else if (args[0] === 'list') {
+  listTasks();
+} else if (args[0] === 'add' &amp;&amp; args[1]) {
+  addTask(args[1]);
+} else {
+  showHelp();
+}
+</code></pre>
+<p>To make the requests, we will use the <code>fetch</code> function that we've already discussed in the JavaScript chapter.
+You already know how to make a <code>GET</code> request:</p>
+<pre><code class="language-js">async function listTasks() {
+  try {
+    const response = await fetch(`${baseUrl}/tasks`);
+    const tasks = await response.json();
+    console.log('Tasks:', tasks);
+  } catch (error) {
+    console.error('Error fetching tasks:', error);
+  }
+}
+</code></pre>
+<p>However, <code>POST</code> requests using <code>fetch</code> are a bit more complex.</p>
+<p>First, we will need to explicitly set the <code>method</code> to <code>POST</code> inside the <code>fetch</code> function and pass the request body.</p>
+<p>However, that's not all.
+Since we want to pass a JSON in the request body, we will also need to explicitly specify that using the <code>Content-Type</code> header.</p>
+<p>Therefore, this is how the <code>fetch</code> call should look like:</p>
+<pre><code class="language-js">await fetch(`${baseUrl}/tasks`, {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ name }),
+});
+</code></pre>
+<p>And this is how the <code>addTask</code> function will look like in the end:</p>
+<pre><code class="language-js">async function addTask(name) {
+  try {
+    const response = await fetch(`${baseUrl}/tasks`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name }),
+    });
+    const task = await response.json();
+    console.log('Added task:', task);
+  } catch (error) {
+    console.error('Error adding task:', error);
+  }
+}
+</code></pre>
+<p>For your reference, here is how the full client should look like:</p>
+<pre><code class="language-js">import fetch from 'node-fetch';
+
+const baseUrl = 'http://localhost:3000/';
+
+async function listTasks() {
+  try {
+    const response = await fetch(`${baseUrl}/tasks`);
+    const tasks = await response.json();
+    console.log('Tasks:', tasks);
+  } catch (error) {
+    console.error('Error fetching tasks:', error);
+  }
+}
+
+async function addTask(name) {
+  try {
+    const response = await fetch(`${baseUrl}/tasks`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name }),
+    });
+    const task = await response.json();
+    console.log('Added task:', task);
+  } catch (error) {
+    console.error('Error adding task:', error);
+  }
+}
+
+function showHelp() {
+  console.log(`
+Usage:
+  node client.js list               List all tasks
+  node client.js add &lt;name&gt;         Add a new task
+`);
+}
+
+const args = process.argv.slice(2);
+
+if (args.length === 0) {
+  showHelp();
+} else if (args[0] === 'list') {
+  listTasks();
+} else if (args[0] === 'add' &amp;&amp; args[1]) {
+  addTask(args[1]);
+} else {
+  showHelp();
+}
+</code></pre>
+<p>Let's now add a task using the client command line interface:</p>
+<pre><code class="language-sh">node client.js add example
+</code></pre>
+<p>This will output:</p>
+<pre><code>Added task: { id: 1, name: 'example' }
+</code></pre>
+<p>Let's also list the tasks using the CLI:</p>
+<pre><code class="language-sh">node client.js list
+</code></pre>
+<p>This will output:</p>
+<pre><code>Tasks: [ { id: 1, name: 'example' } ]
+</code></pre>
+<p>It works!
+In reality, our client would not be a command-line client, but a client running in our browser.
+Additionally, in practice we wouldn't store the tasks in an in-memory list (because this list would vanish once we stop the server).
+Instead, we would persist our tasks in a database, which is what we will cover in the next chapter.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="chapter-4-persistence-with-sql"><a class="header" href="#chapter-4-persistence-with-sql">Chapter 4: Persistence with SQL</a></h1>
 <div style="text-align: right"> <i> SQL is the language of the ancestors, spoken to call forth truths hidden deep within data. <br> — Ancient Chinese proverb </i> </div
 <p>So far we've introduced the programming language that will power our project (TypeScript) and some relevant networking theory.</p>
@@ -5341,7 +5585,7 @@ where status = 'done';
 If you make a mistake in the <code>where</code> clause you will delete rows that you never intended to remove.</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="selecting-data"><a class="header" href="#selecting-data">Selecting Data</a></h2>
 <div style="text-align: right"> <i> A query without limits is like a river without banks — overflowing and uncontrollable. <br> — Ancient Chinese proverb </i> </div>
-<h3 id="basics"><a class="header" href="#basics">Basics</a></h3>
+<h3 id="basics-1"><a class="header" href="#basics-1">Basics</a></h3>
 <p>We will continue working with the inserted data from the last section.
 As a reminder, this was the data that we've inserted:</p>
 <pre><code class="language-sql">insert into task (title, description, duration, status) values
@@ -5958,7 +6202,7 @@ In Drizzle, you can use the appropriately named <code>delete</code> function on 
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="selecting-data-1"><a class="header" href="#selecting-data-1">Selecting Data</a></h2>
 <div style="text-align: right"> <i> I hate @DrizzleOrm so much that I wrote the Auth.js adapter for it. <br> — From Drizzles' official marketing page </i> </div>
-<h3 id="basics-1"><a class="header" href="#basics-1">Basics</a></h3>
+<h3 id="basics-2"><a class="header" href="#basics-2">Basics</a></h3>
 <p>We will work with the data that we've inserted in the last section.
 As a reminder, this is how it looked like:</p>
 <pre><code class="language-js">insert into task (title, description, duration, status) values
