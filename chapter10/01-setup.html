@@ -209,9 +209,10 @@ To accomplish this, we will simply follow the steps from the SQL chapter.</p>
 <p>Create a new Supabase project, copy the database URL and create the following <code>.env.local</code> file:</p>
 <pre><code>DATABASE_URL=$YOUR_DATABASE_URL_HERE
 </code></pre>
-<blockquote>
 <p>Of course, you need to specify the actual database URL you copied from Supabase instead of <code>$YOUR_DATABASE_URL_HERE</code>.</p>
-</blockquote>
+<p>Note that if your password has special characters like <code>:</code> or <code>/</code>, you will need to replace them with their respective percent-encodings (also called URL encodings).
+For example, <code>:</code> should be replaced with <code>%3A</code> and <code>/</code> should be replaced with <code>%2F</code>.
+You can read more about percent-encodings in the <a href="https://developer.mozilla.org/en-US/docs/Glossary/Percent-encoding">MDN docs</a>.</p>
 <h3 id="setup-drizzle"><a class="header" href="#setup-drizzle">Setup Drizzle</a></h3>
 <p>Next, we need to set up Drizzle.
 Here we will simply follow the steps from the Drizzle chapter.</p>
