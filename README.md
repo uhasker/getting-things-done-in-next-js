@@ -12,8 +12,8 @@ The book is in **beta stage**.
 
 We welcome issues & contributions.
 If you want to contribute, you can either create an issue or a pull request.
-If you create a pull request, **read the `CONTRIBUTING.md` first**.
-We will reject PRs that fail to adhere to the `CONTRIBUTING.md` without further review.
+If you create a pull request, **read the [CONTRIBUTING.md](/CONTRIBUTING.md) first**.
+We will reject PRs that fail to adhere to the [CONTRIBUTING.md](/CONTRIBUTING.md) without further review.
 
 We are specifically interested if you find one of the following:
 
