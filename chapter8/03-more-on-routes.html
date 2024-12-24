@@ -153,29 +153,31 @@
                 <div id="content" class="content">
                     <main>
                         <h2 id="more-on-routes"><a class="header" href="#more-on-routes">More on Routes</a></h2>
-<div style="text-align: right"> <i> Why do Next.js routes make terrible secret agents? <br> Because they keep exposing endpoints. <br> - From "1000 programming dad-jokes" </i> </div>
+<div style="text-align: right"> <i> Why do Next.js routes make terrible secret agents? <br> Because they keep exposing endpoints. <br> — From "1000 programming dad-jokes" </i> </div>
 <h3 id="dynamic-routes"><a class="header" href="#dynamic-routes">Dynamic Routes</a></h3>
 <p>You can use <strong>dynamic routes</strong> when you don't know segment names ahead of time.
 Let's say you want to add a route that displays a task with a certain ID at <code>/task/$ID</code>.
 For example, you might wish to display a task with the ID <code>1</code> at <code>/task/1</code> and a task with the ID <code>2</code> at <code>/task/2</code>.</p>
 <p>Of course, since tasks are added and deleted by the user, you can't know all of the IDs beforehand.
-This where dynamic routes come in.</p>
-<p>Create a new file <code>task/[id]/page.tsx</code>:</p>
+This is where dynamic routes come in.</p>
+<p>Create a new file <code>task/[id]/page.tsx</code> with the following content:</p>
 <pre><code class="language-jsx">export default function Task({ params }: { params: { id: string } }) {
   return &lt;p&gt;This is a task with ID {params.id}&lt;/p&gt;;
 }
 </code></pre>
-<p>If you go to <code>http://localhost:3000/task/1</code>, you should see the following text:</p>
+<p>Here, you pass a <code>params</code> object that contains the <code>id</code> property.
+This <code>id</code> property will contain the ID passed in the URL.</p>
+<p>For example, if you go to <code>http://localhost:3000/task/1</code>, you should see the following text:</p>
 <pre><code>This is a task with ID 1
 </code></pre>
 <p>However, if you go to <code>http://localhost:3000/task/56789</code>, you will see:</p>
 <pre><code>This is a task with ID 56789
 </code></pre>
 <p>Note that the <code>[id]</code> notation will only match a single segment.
-This means for example <code>http://localhost:3000/task/1/status</code> will not be matched by <code>task/[id]</code> and you will see a <code>404</code>.</p>
+This means that e.g. <code>http://localhost:3000/task/1/status</code> will not be matched by <code>task/[id]</code> and you will see a <code>404</code>.</p>
 <p>If you want to change this, you can use catch-all segments with <code>[...id]</code> and optional catch-all segments with <code>[[...id]]</code>.</p>
 <h3 id="route-handlers"><a class="header" href="#route-handlers">Route Handlers</a></h3>
-<p>Route handlers basically allow you to create API routes.
+<p>Route handlers basically allow you to create API routes (similar to what we did in the networking chapter).
 Route handlers are defined by <code>route</code> files.</p>
 <p>Let's create a new file <code>api/task/route.ts</code> and add a simple example route handler:</p>
 <pre><code class="language-ts">import { NextResponse } from 'next/server';
@@ -186,11 +188,13 @@ export async function GET() {
   });
 }
 </code></pre>
-<p>Try accessing the route:</p>
-<pre><code>$ curl localhost:3000/api/task
-{"taskId":1}
+<p>You can try accessing the route by using <code>curl</code>:</p>
+<pre><code class="language-sh">curl localhost:3000/api/task
 </code></pre>
-<p>You can access the request by passing a <code>request</code> argument to the function:</p>
+<p>This will output the following JSON:</p>
+<pre><code class="language-json">{ "taskId": 1 }
+</code></pre>
+<p>You can access the request by passing a <code>request</code> argument to the function (similar to <code>express</code>):</p>
 <pre><code class="language-ts">import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(request: NextRequest) {
@@ -202,8 +206,8 @@ export async function GET(request: NextRequest) {
 }
 </code></pre>
 <p>If you look at your console, you will see that the request object is logged.</p>
-<p>You can use the <code>request</code> object to access the various request properties.
-For example, you could retrieve the cookies of the current request using <code>request.cookies</code>.
+<p>You can use the <code>request</code> object to access the various request properties.</p>
+<p>For example, you could retrieve the cookies of the current request using <code>request.cookies</code>.
 This is a special <code>RequestCookies</code> object that exposes methods that you can use to retrieve cookies:</p>
 <pre><code class="language-ts">import { NextRequest, NextResponse } from 'next/server';
 
@@ -219,9 +223,14 @@ export async function GET(request: NextRequest) {
   });
 }
 </code></pre>
-<p>Try accessing the route now:</p>
-<pre><code>$ curl --cookie "language=de" localhost:3000/api/task
-{"allCookies":[{"name":"language","value":"de"}],"languageCookie":{"name":"language","value":"de"}}
+<p>Try accessing the route while passing it a cookie:</p>
+<pre><code class="language-sh">curl --cookie "language=de" localhost:3000/api/task
+</code></pre>
+<p>The result will be:</p>
+<pre><code class="language-json">{
+  "allCookies": [{ "name": "language", "value": "de" }],
+  "languageCookie": { "name": "language", "value": "de" }
+}
 </code></pre>
 <p>Similarly you can access the headers of a request:</p>
 <pre><code class="language-ts">import { NextRequest, NextResponse } from 'next/server';
@@ -237,10 +246,24 @@ export async function GET(request: NextRequest) {
 }
 </code></pre>
 <p>Try accessing the route again:</p>
-<pre><code>$ curl localhost:3000/api/task
-{"headers":[["accept","*/*"],["host","localhost:3000"],["user-agent","curl/7.81.0"],["x-forwarded-for","::ffff:127.0.0.1"],["x-forwarded-host","localhost:3000"],["x-forwarded-port","3000"],["x-forwarded-proto","http"]],"userAgent":"curl/7.81.0"}
+<pre><code class="language-sh">curl localhost:3000/api/task
 </code></pre>
-<p>You can have dynamic segments in your route handlers:</p>
+<p>This will print the headers that are automatically set by <code>curl</code>:</p>
+<pre><code class="language-json">{
+  "headers": [
+    ["accept", "*/*"],
+    ["host", "localhost:3000"],
+    ["user-agent", "curl/7.81.0"],
+    ["x-forwarded-for", "::ffff:127.0.0.1"],
+    ["x-forwarded-host", "localhost:3000"],
+    ["x-forwarded-port", "3000"],
+    ["x-forwarded-proto", "http"]
+  ],
+  "userAgent": "curl/7.81.0"
+}
+</code></pre>
+<p>You can have dynamic segments in your route handlers.
+Let's create a new file <code>api/task/[id]/route.ts</code>:</p>
 <pre><code class="language-ts">import { NextResponse } from 'next/server';
 
 export async function GET(request: Request, { params }: { params: { id: string } }) {
@@ -250,6 +273,12 @@ export async function GET(request: Request, { params }: { params: { id: string }
     taskId: id,
   });
 }
+</code></pre>
+<p>Try accessing the dynamic route:</p>
+<pre><code class="language-sh">curl localhost:3000/api/task/42
+</code></pre>
+<p>This will return:</p>
+<pre><code class="language-json">{ "taskId": "42" }
 </code></pre>
 <p>You can read query params from the <code>nextUrl.searchParams</code> object:</p>
 <pre><code class="language-ts">import { NextResponse, type NextRequest } from 'next/server';
@@ -262,9 +291,11 @@ export function GET(request: NextRequest) {
   });
 }
 </code></pre>
-<p>For example:</p>
-<pre><code>$ curl "localhost:3000/api/task?title=Title&amp;description=Description"
-{"title":"Title"}
+<p>Try accessing the route:</p>
+<pre><code class="language-sh">curl "localhost:3000/api/task?title=Title&amp;description=Description"
+</code></pre>
+<p>This should return:</p>
+<pre><code class="language-json">{ "title": "Title" }
 </code></pre>
 
                     </main>

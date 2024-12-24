@@ -8457,11 +8457,12 @@ This why most frameworks that build on top of React (like Next.js) usually provi
 <div style="text-align: right"> <i> Why did the Next.js developer order the steak? <br> Because he wanted a full-steak experience. <br> - From "1000 programming dad-jokes" </i> </div>
 <p>Now that you have a rough overview of React, we want to move to the server.
 Next.js is a React-based framework for building full-stack applications.</p>
-<p>You will need to use at least version 13 of Next.js, because that introduced the App Router which is built on top of React Server Components.</p>
+<p>We will use Next.js 15, which includes the App Router and React Server Components.</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="setup-2"><a class="header" href="#setup-2">Setup</a></h2>
-<div style="text-align: right"> <i> What's a Next.js developer's favorite part of setting up a new project? <br> Installing dependencies. It's like Christmas, but every package is a surprise! <br> - From "1000 programming dad-jokes" </i> </div>
+<div style="text-align: right"> <i> What's a Next.js developer's favorite part of setting up a new project? <br> Installing dependencies. It's like Christmas, every package is a surprise! <br> — From "1000 programming dad-jokes" </i> </div>
 <h3 id="creating-a-nextjs-project"><a class="header" href="#creating-a-nextjs-project">Creating a Next.js Project</a></h3>
-<p>Run the following command to create a new Next.js project:</p>
+<p>In this section, we will setup a clean Next.js project for the following sections.</p>
+<p>Let's run the following command to create a new Next.js project:</p>
 <pre><code class="language-sh">pnpm create next-app
 </code></pre>
 <p>Give your project a name and select the following options:</p>
@@ -8471,18 +8472,33 @@ Next.js is a React-based framework for building full-stack applications.</p>
 <li>we want to use Tailwind CSS</li>
 <li>we want to use the <code>src/</code> directory</li>
 <li>we want to use the App Router</li>
-<li>we don't want to customize the defalt import alias</li>
+<li>we don't want to customize the default import alias</li>
 </ul>
-<p>Next, navigate to the newly created directory and run:</p>
 <pre><code class="language-sh">pnpm dev
 </code></pre>
 <blockquote>
 <p>Note that <code>pnpm create next-app</code> automatically runs <code>pnpm install</code>, so you don't need to worry about that.</p>
 </blockquote>
 <p>If you go to <code>http://localhost:3000</code>, you will see the default home page.
-Let's simplify it a bit for the following sections.</p>
+But where is this home page coming from?</p>
+<p>Looking at our new Next.js project, we will see the following layout:</p>
+<pre><code>├── package.json
+├── pnpm-lock.yaml
+├── postcss.config.mjs
+├── public
+├── README.md
+├── src
+│   └── app
+│       ├── ...
+│       ├── layout.tsx
+│       └── page.tsx
+├── tailwind.config.ts
+└── tsconfig.json
+</code></pre>
+<p>Crucially, our code is contained in <code>src/app</code> and our home page is located at <code>src/app/page.tsx</code>.
+Let's clean it up a bit.</p>
 <h3 id="simplifying-the-default-project"><a class="header" href="#simplifying-the-default-project">Simplifying the Default Project</a></h3>
-<p>Enter the <code>src</code> directory.</p>
+<p>Enter the <code>src/app</code> directory.</p>
 <p>First, remove the <code>globals.css</code> file (styles will be the topic of the next chapter).</p>
 <p>Next, replace the code in <code>page.tsx</code> with this:</p>
 <pre><code class="language-jsx">export default function Home() {
@@ -8500,34 +8516,39 @@ Let's simplify it a bit for the following sections.</p>
 </code></pre>
 <p>Go to <code>http://localhost:3000</code> again and observe the simplified home page.</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="pages-and-layouts"><a class="header" href="#pages-and-layouts">Pages and Layouts</a></h2>
-<div style="text-align: right"> <i> Why do Next.js pages make lousy customs officers? <br> Because they keep exporting everything. <br> - From "1000 programming dad-jokes" </i> </div>
+<div style="text-align: right"> <i> Why do Next.js pages make lousy customs officers? <br> Because they keep exporting everything. <br> — From "1000 programming dad-jokes" </i> </div>
 <h3 id="pages"><a class="header" href="#pages">Pages</a></h3>
 <p>Next.js uses <strong>file-based routing</strong>.
-Folders are used to define routes and each folder represents a route segment (which maps to a URL segment).
-You can define nested routes by nesting folders inside each other.</p>
-<p>For example the folder <code>about</code> would represent the route <code>/about</code> (which would be mapped to the URL <code>/about</code>).
-If you would have a folder <code>about</code> inside a folder <code>company</code> this would represent the route <code>/company/about</code> (which would be mapped to the URL <code>/company/about</code>).</p>
+This means that folders are used to define routes and each folder represents a route segment (which maps to a URL segment).</p>
+<p>You can define nested routes by nesting folders inside each other.</p>
+<p>For example, the folder <code>about</code> would represent the route <code>/about</code> (which would be mapped to the URL <code>/about</code>).
+On the other hand, a folder <code>about</code> inside a folder <code>company</code> would represent the route <code>/company/about</code> (which would be mapped to the URL <code>/company/about</code>).</p>
 <p>Note that all of this is relative to our root directory (which in our application is <code>src/app</code>).
 This means that the route <code>/about</code> would actually be located at <code>src/app/about</code> and the route <code>/company/about</code> would actually be located at <code>src/app/company/about</code>.</p>
 <p>Routes can have special files, which are used to actually define the route.
-For example, the special <code>page</code> file (e.g. <code>page.js</code>, <code>page.jsx</code> or <code>page.tsx</code>) is used to display UI for the given route.
+For example, the special <code>page</code> file (which can be e.g. <code>page.js</code>, <code>page.jsx</code> or <code>page.tsx</code>) is used to display the UI for the given route.
 For this to work, the <code>page</code> file needs to <code>default</code> export a React component.</p>
-<p>You already have one of these files - namely <code>src/app/page.tsx</code> which defines the UI to be displayed for the route <code>/</code>.</p>
+<p>We already have a route with a special <code>page</code> file—namely <code>src/app/page.tsx</code> which defines the UI to be displayed for the (root) route <code>/</code>:</p>
+<pre><code class="language-jsx">export default function Home() {
+  return &lt;h1&gt;Welcome&lt;/h1&gt;;
+}
+</code></pre>
+<p>If you go to <code>http://localhost:3000/</code>, you will see the text <code>Welcome</code>, because that's the UI that is defined in the <code>default</code> exported React component.</p>
 <p>Let's create another page.
 Add a new directory <code>about</code> in <code>src/app</code> and create the following file <code>src/app/about/page.tsx</code>:</p>
 <pre><code class="language-jsx">export default function About() {
   return &lt;h1&gt;About&lt;/h1&gt;;
 }
 </code></pre>
-<p>Go to <code>http://localhost:3000/about</code> and you will see the new page.</p>
+<p>Go to <code>http://localhost:3000/about</code> and you will see the text <code>About</code>.</p>
 <blockquote>
 <p>From now on we will stop prefixing everything with <code>src/app</code> and simply assume that you are always in <code>src/app</code>.
 For example, if we tell you to create a file <code>task/route.ts</code> you should actually create the file at <code>src/app/task/route.ts</code>.</p>
 </blockquote>
 <h3 id="layouts"><a class="header" href="#layouts">Layouts</a></h3>
-<p>A page is a UI that is unique to a route.
-You can also define a UI that is shared between multiple pages.
-This is called a <strong>layout</strong>.</p>
+<p>A page defines the UI that is unique to a route.
+You can also define UI that is shared between multiple pages.
+This is called a <strong>layout</strong> in Next.js.</p>
 <p>You define a layout by <code>default</code> exporting a React component from a <code>layout</code> file (e.g. <code>layout.tsx</code>).
 The component should accept a <code>children</code> prop that will be populated with a child layout or a child page.</p>
 <p>Let's go to the <code>layout.tsx</code> file in the root directory, which currently looks like this:</p>
@@ -8553,12 +8574,12 @@ The component should accept a <code>children</code> prop that will be populated 
 </code></pre>
 <p>Now the header <code>"My header"</code> will appear on every page (i.e. both on <code>/</code> and <code>/about</code>).</p>
 <blockquote>
-<p>After you verified this, you can remove the header again.</p>
+<p>After you've verified this, you can remove the header again.</p>
 </blockquote>
 <p>Note that the top-most layout (which must always be present) is called the <strong>root layout</strong> and will be shared across all pages.
 The root layout must contain <code>html</code> and <code>body</code> tags.</p>
 <p>The root layout is also where you define metadata.
-This can be done by exporting a <code>metadata</code> object:</p>
+This can be done by exporting a <code>metadata</code> object in the root layout file:</p>
 <pre><code class="language-ts">export const metadata: Metadata = {
   title: 'Example Application',
   description: 'My example application',
@@ -8569,7 +8590,7 @@ This can be done by exporting a <code>metadata</code> object:</p>
 <p>This is a component built on top of the HTML <code>&lt;a&gt;</code> tag that you already know.
 However, this component does some additional things, like prefetching (i.e. preloading routes in the background).
 It also changes the way navigation works (we will talk more about this in the next sections).</p>
-<p>Here is how you could link the About page from the home page:</p>
+<p>For example, you could add a link to the <code>/about</code> page from the <code>/</code> page by changing the content in <code>page.tsx</code> to this:</p>
 <pre><code class="language-jsx">import Link from 'next/link';
 
 export default function Home() {
@@ -8582,29 +8603,31 @@ export default function Home() {
 }
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="more-on-routes"><a class="header" href="#more-on-routes">More on Routes</a></h2>
-<div style="text-align: right"> <i> Why do Next.js routes make terrible secret agents? <br> Because they keep exposing endpoints. <br> - From "1000 programming dad-jokes" </i> </div>
+<div style="text-align: right"> <i> Why do Next.js routes make terrible secret agents? <br> Because they keep exposing endpoints. <br> — From "1000 programming dad-jokes" </i> </div>
 <h3 id="dynamic-routes"><a class="header" href="#dynamic-routes">Dynamic Routes</a></h3>
 <p>You can use <strong>dynamic routes</strong> when you don't know segment names ahead of time.
 Let's say you want to add a route that displays a task with a certain ID at <code>/task/$ID</code>.
 For example, you might wish to display a task with the ID <code>1</code> at <code>/task/1</code> and a task with the ID <code>2</code> at <code>/task/2</code>.</p>
 <p>Of course, since tasks are added and deleted by the user, you can't know all of the IDs beforehand.
-This where dynamic routes come in.</p>
-<p>Create a new file <code>task/[id]/page.tsx</code>:</p>
+This is where dynamic routes come in.</p>
+<p>Create a new file <code>task/[id]/page.tsx</code> with the following content:</p>
 <pre><code class="language-jsx">export default function Task({ params }: { params: { id: string } }) {
   return &lt;p&gt;This is a task with ID {params.id}&lt;/p&gt;;
 }
 </code></pre>
-<p>If you go to <code>http://localhost:3000/task/1</code>, you should see the following text:</p>
+<p>Here, you pass a <code>params</code> object that contains the <code>id</code> property.
+This <code>id</code> property will contain the ID passed in the URL.</p>
+<p>For example, if you go to <code>http://localhost:3000/task/1</code>, you should see the following text:</p>
 <pre><code>This is a task with ID 1
 </code></pre>
 <p>However, if you go to <code>http://localhost:3000/task/56789</code>, you will see:</p>
 <pre><code>This is a task with ID 56789
 </code></pre>
 <p>Note that the <code>[id]</code> notation will only match a single segment.
-This means for example <code>http://localhost:3000/task/1/status</code> will not be matched by <code>task/[id]</code> and you will see a <code>404</code>.</p>
+This means that e.g. <code>http://localhost:3000/task/1/status</code> will not be matched by <code>task/[id]</code> and you will see a <code>404</code>.</p>
 <p>If you want to change this, you can use catch-all segments with <code>[...id]</code> and optional catch-all segments with <code>[[...id]]</code>.</p>
 <h3 id="route-handlers"><a class="header" href="#route-handlers">Route Handlers</a></h3>
-<p>Route handlers basically allow you to create API routes.
+<p>Route handlers basically allow you to create API routes (similar to what we did in the networking chapter).
 Route handlers are defined by <code>route</code> files.</p>
 <p>Let's create a new file <code>api/task/route.ts</code> and add a simple example route handler:</p>
 <pre><code class="language-ts">import { NextResponse } from 'next/server';
@@ -8615,11 +8638,13 @@ export async function GET() {
   });
 }
 </code></pre>
-<p>Try accessing the route:</p>
-<pre><code>$ curl localhost:3000/api/task
-{"taskId":1}
+<p>You can try accessing the route by using <code>curl</code>:</p>
+<pre><code class="language-sh">curl localhost:3000/api/task
 </code></pre>
-<p>You can access the request by passing a <code>request</code> argument to the function:</p>
+<p>This will output the following JSON:</p>
+<pre><code class="language-json">{ "taskId": 1 }
+</code></pre>
+<p>You can access the request by passing a <code>request</code> argument to the function (similar to <code>express</code>):</p>
 <pre><code class="language-ts">import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(request: NextRequest) {
@@ -8631,8 +8656,8 @@ export async function GET(request: NextRequest) {
 }
 </code></pre>
 <p>If you look at your console, you will see that the request object is logged.</p>
-<p>You can use the <code>request</code> object to access the various request properties.
-For example, you could retrieve the cookies of the current request using <code>request.cookies</code>.
+<p>You can use the <code>request</code> object to access the various request properties.</p>
+<p>For example, you could retrieve the cookies of the current request using <code>request.cookies</code>.
 This is a special <code>RequestCookies</code> object that exposes methods that you can use to retrieve cookies:</p>
 <pre><code class="language-ts">import { NextRequest, NextResponse } from 'next/server';
 
@@ -8648,9 +8673,14 @@ export async function GET(request: NextRequest) {
   });
 }
 </code></pre>
-<p>Try accessing the route now:</p>
-<pre><code>$ curl --cookie "language=de" localhost:3000/api/task
-{"allCookies":[{"name":"language","value":"de"}],"languageCookie":{"name":"language","value":"de"}}
+<p>Try accessing the route while passing it a cookie:</p>
+<pre><code class="language-sh">curl --cookie "language=de" localhost:3000/api/task
+</code></pre>
+<p>The result will be:</p>
+<pre><code class="language-json">{
+  "allCookies": [{ "name": "language", "value": "de" }],
+  "languageCookie": { "name": "language", "value": "de" }
+}
 </code></pre>
 <p>Similarly you can access the headers of a request:</p>
 <pre><code class="language-ts">import { NextRequest, NextResponse } from 'next/server';
@@ -8666,10 +8696,24 @@ export async function GET(request: NextRequest) {
 }
 </code></pre>
 <p>Try accessing the route again:</p>
-<pre><code>$ curl localhost:3000/api/task
-{"headers":[["accept","*/*"],["host","localhost:3000"],["user-agent","curl/7.81.0"],["x-forwarded-for","::ffff:127.0.0.1"],["x-forwarded-host","localhost:3000"],["x-forwarded-port","3000"],["x-forwarded-proto","http"]],"userAgent":"curl/7.81.0"}
+<pre><code class="language-sh">curl localhost:3000/api/task
 </code></pre>
-<p>You can have dynamic segments in your route handlers:</p>
+<p>This will print the headers that are automatically set by <code>curl</code>:</p>
+<pre><code class="language-json">{
+  "headers": [
+    ["accept", "*/*"],
+    ["host", "localhost:3000"],
+    ["user-agent", "curl/7.81.0"],
+    ["x-forwarded-for", "::ffff:127.0.0.1"],
+    ["x-forwarded-host", "localhost:3000"],
+    ["x-forwarded-port", "3000"],
+    ["x-forwarded-proto", "http"]
+  ],
+  "userAgent": "curl/7.81.0"
+}
+</code></pre>
+<p>You can have dynamic segments in your route handlers.
+Let's create a new file <code>api/task/[id]/route.ts</code>:</p>
 <pre><code class="language-ts">import { NextResponse } from 'next/server';
 
 export async function GET(request: Request, { params }: { params: { id: string } }) {
@@ -8679,6 +8723,12 @@ export async function GET(request: Request, { params }: { params: { id: string }
     taskId: id,
   });
 }
+</code></pre>
+<p>Try accessing the dynamic route:</p>
+<pre><code class="language-sh">curl localhost:3000/api/task/42
+</code></pre>
+<p>This will return:</p>
+<pre><code class="language-json">{ "taskId": "42" }
 </code></pre>
 <p>You can read query params from the <code>nextUrl.searchParams</code> object:</p>
 <pre><code class="language-ts">import { NextResponse, type NextRequest } from 'next/server';
@@ -8691,18 +8741,20 @@ export function GET(request: NextRequest) {
   });
 }
 </code></pre>
-<p>For example:</p>
-<pre><code>$ curl "localhost:3000/api/task?title=Title&amp;description=Description"
-{"title":"Title"}
+<p>Try accessing the route:</p>
+<pre><code class="language-sh">curl "localhost:3000/api/task?title=Title&amp;description=Description"
+</code></pre>
+<p>This should return:</p>
+<pre><code class="language-json">{ "title": "Title" }
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="server-and-client-components"><a class="header" href="#server-and-client-components">Server and Client Components</a></h2>
-<div style="text-align: right"> <i> Why did the Next.js component get anxiety during drinking? <br> Because it was afraid of hydration errors. <br> - From "1000 programming dad-jokes" </i> </div>
+<div style="text-align: right"> <i> Why did the Next.js component get anxiety during drinking? <br> Because it was afraid of hydration errors. <br> — From "1000 programming dad-jokes" </i> </div>
 <h3 id="rendering"><a class="header" href="#rendering">Rendering</a></h3>
 <p>Next.js renders as much as it can on the server.
-By default the React components you write are rendered on the server side and the resulting HTML is sent to the browser.
-However, not all components can be fully rendered on the server.
+By default, the React components you write are rendered on the server side and the resulting HTML is sent to the browser.</p>
+<p>Unfortunately, not all components can be fully rendered on the server.
 For example, components that require interactivity must be partially rendered on the client.</p>
-<p>Therefore the rendering is split into multiple stages:</p>
+<p>Therefore, the rendering is split into multiple stages:</p>
 <p>First, Next.js renders as much as it can on the server.</p>
 <p>Once the initial HTML is rendered, the client-side JavaScript takes over.
 It reconciles the server-rendered HTML with the client-side React tree.</p>
@@ -8716,17 +8768,17 @@ This can significantly improve performance (especially for content that doesn't 
 <p>Data fetching can be moved from the client to the server which can simplify the code and reduce the amount of data that needs to be sent to the client.
 This is especially beneficial for clients with slow network speeds.</p>
 <p>Additionally, dependencies are now on the server and don't need to be served to the client.
-This helps greatly with reducing bundle sizes.</p>
+This helps greatly with reducing how much the server needs to send to the client.</p>
 <h3 id="server-components"><a class="header" href="#server-components">Server Components</a></h3>
 <p><strong>Server components</strong> are the components that are completely rendered on the server.</p>
-<p>For example this component is a server component:</p>
+<p>For example, this component is a server component:</p>
 <pre><code class="language-jsx">import * as React from 'react';
 
 export default function Task() {
   return &lt;p&gt;My task&lt;/p&gt;;
 }
 </code></pre>
-<p>There is no interactivity here, so this component can be rendered on the server completely.</p>
+<p>There is no interactivity here, so this component can and will be rendered completely on the server.</p>
 <h3 id="client-components"><a class="header" href="#client-components">Client Components</a></h3>
 <p><strong>Client components</strong> are components that are rendered both on the server and on the client.
 You use client components when you need interactivity or you need to use certain browser APIs.</p>
@@ -8783,9 +8835,11 @@ export default function Counter() {
   );
 }
 </code></pre>
-<p>If you go to <code>http://localhost:3000/counter</code>, you will see that the message is output both on the server as well as the client.
-If you click the button, you will see that the message is output only on the client (since the component only rerenders there).
-However, if you refresh the page, you will observe that the message is again logged both to the server as well as the client.</p>
+<p>If you go to <code>http://localhost:3000/counter</code>, you will see that the <code>Rendered counter</code> message is output both on the server console as well as on the client console.
+That's because the component renders both on the server and on the client.</p>
+<p>However, all further interactivity happens only on the client.
+For example, if you click the button, you will see that the <code>Rendered counter</code> message is output only on the client console.</p>
+<p>However, if you refresh the page, you will observe that the <code>Rendered counter</code> message is again logged both to the server as well as the client.</p>
 <h3 id="when-to-use-what"><a class="header" href="#when-to-use-what">When to use what?</a></h3>
 <p>Use server components if:</p>
 <ul>
@@ -8796,9 +8850,9 @@ However, if you refresh the page, you will observe that the message is again log
 </ul>
 <p>Use client components only if:</p>
 <ul>
-<li>you need event listeners (like <code>onClick</code>)</li>
-<li>you need to use <code>useState</code>, <code>useEffect</code> or <code>useReducer</code></li>
-<li>you need to use certain browser APIs</li>
+<li>you need to use event listeners (like <code>onClick</code>)</li>
+<li>you need to use certain React hooks like <code>useState</code> or <code>useEffect</code></li>
+<li>you need to use certain browser functionality (like resizing the browser window)</li>
 </ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="chapter-9-becoming-pretty-with-tailwind-css"><a class="header" href="#chapter-9-becoming-pretty-with-tailwind-css">Chapter 9: Becoming Pretty with Tailwind CSS</a></h1>
 <div style="text-align: right"> <i> I feel like an idiot for not using Tailwind CSS until now. <br> - Ryan Florence </i> </div>

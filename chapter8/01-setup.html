@@ -153,9 +153,10 @@
                 <div id="content" class="content">
                     <main>
                         <h2 id="setup"><a class="header" href="#setup">Setup</a></h2>
-<div style="text-align: right"> <i> What's a Next.js developer's favorite part of setting up a new project? <br> Installing dependencies. It's like Christmas, but every package is a surprise! <br> - From "1000 programming dad-jokes" </i> </div>
+<div style="text-align: right"> <i> What's a Next.js developer's favorite part of setting up a new project? <br> Installing dependencies. It's like Christmas, every package is a surprise! <br> — From "1000 programming dad-jokes" </i> </div>
 <h3 id="creating-a-nextjs-project"><a class="header" href="#creating-a-nextjs-project">Creating a Next.js Project</a></h3>
-<p>Run the following command to create a new Next.js project:</p>
+<p>In this section, we will setup a clean Next.js project for the following sections.</p>
+<p>Let's run the following command to create a new Next.js project:</p>
 <pre><code class="language-sh">pnpm create next-app
 </code></pre>
 <p>Give your project a name and select the following options:</p>
@@ -165,18 +166,33 @@
 <li>we want to use Tailwind CSS</li>
 <li>we want to use the <code>src/</code> directory</li>
 <li>we want to use the App Router</li>
-<li>we don't want to customize the defalt import alias</li>
+<li>we don't want to customize the default import alias</li>
 </ul>
-<p>Next, navigate to the newly created directory and run:</p>
 <pre><code class="language-sh">pnpm dev
 </code></pre>
 <blockquote>
 <p>Note that <code>pnpm create next-app</code> automatically runs <code>pnpm install</code>, so you don't need to worry about that.</p>
 </blockquote>
 <p>If you go to <code>http://localhost:3000</code>, you will see the default home page.
-Let's simplify it a bit for the following sections.</p>
+But where is this home page coming from?</p>
+<p>Looking at our new Next.js project, we will see the following layout:</p>
+<pre><code>├── package.json
+├── pnpm-lock.yaml
+├── postcss.config.mjs
+├── public
+├── README.md
+├── src
+│   └── app
+│       ├── ...
+│       ├── layout.tsx
+│       └── page.tsx
+├── tailwind.config.ts
+└── tsconfig.json
+</code></pre>
+<p>Crucially, our code is contained in <code>src/app</code> and our home page is located at <code>src/app/page.tsx</code>.
+Let's clean it up a bit.</p>
 <h3 id="simplifying-the-default-project"><a class="header" href="#simplifying-the-default-project">Simplifying the Default Project</a></h3>
-<p>Enter the <code>src</code> directory.</p>
+<p>Enter the <code>src/app</code> directory.</p>
 <p>First, remove the <code>globals.css</code> file (styles will be the topic of the next chapter).</p>
 <p>Next, replace the code in <code>page.tsx</code> with this:</p>
 <pre><code class="language-jsx">export default function Home() {

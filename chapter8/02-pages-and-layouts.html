@@ -153,34 +153,39 @@
                 <div id="content" class="content">
                     <main>
                         <h2 id="pages-and-layouts"><a class="header" href="#pages-and-layouts">Pages and Layouts</a></h2>
-<div style="text-align: right"> <i> Why do Next.js pages make lousy customs officers? <br> Because they keep exporting everything. <br> - From "1000 programming dad-jokes" </i> </div>
+<div style="text-align: right"> <i> Why do Next.js pages make lousy customs officers? <br> Because they keep exporting everything. <br> — From "1000 programming dad-jokes" </i> </div>
 <h3 id="pages"><a class="header" href="#pages">Pages</a></h3>
 <p>Next.js uses <strong>file-based routing</strong>.
-Folders are used to define routes and each folder represents a route segment (which maps to a URL segment).
-You can define nested routes by nesting folders inside each other.</p>
-<p>For example the folder <code>about</code> would represent the route <code>/about</code> (which would be mapped to the URL <code>/about</code>).
-If you would have a folder <code>about</code> inside a folder <code>company</code> this would represent the route <code>/company/about</code> (which would be mapped to the URL <code>/company/about</code>).</p>
+This means that folders are used to define routes and each folder represents a route segment (which maps to a URL segment).</p>
+<p>You can define nested routes by nesting folders inside each other.</p>
+<p>For example, the folder <code>about</code> would represent the route <code>/about</code> (which would be mapped to the URL <code>/about</code>).
+On the other hand, a folder <code>about</code> inside a folder <code>company</code> would represent the route <code>/company/about</code> (which would be mapped to the URL <code>/company/about</code>).</p>
 <p>Note that all of this is relative to our root directory (which in our application is <code>src/app</code>).
 This means that the route <code>/about</code> would actually be located at <code>src/app/about</code> and the route <code>/company/about</code> would actually be located at <code>src/app/company/about</code>.</p>
 <p>Routes can have special files, which are used to actually define the route.
-For example, the special <code>page</code> file (e.g. <code>page.js</code>, <code>page.jsx</code> or <code>page.tsx</code>) is used to display UI for the given route.
+For example, the special <code>page</code> file (which can be e.g. <code>page.js</code>, <code>page.jsx</code> or <code>page.tsx</code>) is used to display the UI for the given route.
 For this to work, the <code>page</code> file needs to <code>default</code> export a React component.</p>
-<p>You already have one of these files - namely <code>src/app/page.tsx</code> which defines the UI to be displayed for the route <code>/</code>.</p>
+<p>We already have a route with a special <code>page</code> file—namely <code>src/app/page.tsx</code> which defines the UI to be displayed for the (root) route <code>/</code>:</p>
+<pre><code class="language-jsx">export default function Home() {
+  return &lt;h1&gt;Welcome&lt;/h1&gt;;
+}
+</code></pre>
+<p>If you go to <code>http://localhost:3000/</code>, you will see the text <code>Welcome</code>, because that's the UI that is defined in the <code>default</code> exported React component.</p>
 <p>Let's create another page.
 Add a new directory <code>about</code> in <code>src/app</code> and create the following file <code>src/app/about/page.tsx</code>:</p>
 <pre><code class="language-jsx">export default function About() {
   return &lt;h1&gt;About&lt;/h1&gt;;
 }
 </code></pre>
-<p>Go to <code>http://localhost:3000/about</code> and you will see the new page.</p>
+<p>Go to <code>http://localhost:3000/about</code> and you will see the text <code>About</code>.</p>
 <blockquote>
 <p>From now on we will stop prefixing everything with <code>src/app</code> and simply assume that you are always in <code>src/app</code>.
 For example, if we tell you to create a file <code>task/route.ts</code> you should actually create the file at <code>src/app/task/route.ts</code>.</p>
 </blockquote>
 <h3 id="layouts"><a class="header" href="#layouts">Layouts</a></h3>
-<p>A page is a UI that is unique to a route.
-You can also define a UI that is shared between multiple pages.
-This is called a <strong>layout</strong>.</p>
+<p>A page defines the UI that is unique to a route.
+You can also define UI that is shared between multiple pages.
+This is called a <strong>layout</strong> in Next.js.</p>
 <p>You define a layout by <code>default</code> exporting a React component from a <code>layout</code> file (e.g. <code>layout.tsx</code>).
 The component should accept a <code>children</code> prop that will be populated with a child layout or a child page.</p>
 <p>Let's go to the <code>layout.tsx</code> file in the root directory, which currently looks like this:</p>
@@ -206,12 +211,12 @@ The component should accept a <code>children</code> prop that will be populated 
 </code></pre>
 <p>Now the header <code>"My header"</code> will appear on every page (i.e. both on <code>/</code> and <code>/about</code>).</p>
 <blockquote>
-<p>After you verified this, you can remove the header again.</p>
+<p>After you've verified this, you can remove the header again.</p>
 </blockquote>
 <p>Note that the top-most layout (which must always be present) is called the <strong>root layout</strong> and will be shared across all pages.
 The root layout must contain <code>html</code> and <code>body</code> tags.</p>
 <p>The root layout is also where you define metadata.
-This can be done by exporting a <code>metadata</code> object:</p>
+This can be done by exporting a <code>metadata</code> object in the root layout file:</p>
 <pre><code class="language-ts">export const metadata: Metadata = {
   title: 'Example Application',
   description: 'My example application',
@@ -222,7 +227,7 @@ This can be done by exporting a <code>metadata</code> object:</p>
 <p>This is a component built on top of the HTML <code>&lt;a&gt;</code> tag that you already know.
 However, this component does some additional things, like prefetching (i.e. preloading routes in the background).
 It also changes the way navigation works (we will talk more about this in the next sections).</p>
-<p>Here is how you could link the About page from the home page:</p>
+<p>For example, you could add a link to the <code>/about</code> page from the <code>/</code> page by changing the content in <code>page.tsx</code> to this:</p>
 <pre><code class="language-jsx">import Link from 'next/link';
 
 export default function Home() {
