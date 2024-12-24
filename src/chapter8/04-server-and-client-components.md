@@ -1,15 +1,16 @@
 ## Server and Client Components
 
-<div style="text-align: right"> <i> Why did the Next.js component get anxiety during drinking? <br> Because it was afraid of hydration errors. <br> - From "1000 programming dad-jokes" </i> </div>
+<div style="text-align: right"> <i> Why did the Next.js component get anxiety during drinking? <br> Because it was afraid of hydration errors. <br> — From "1000 programming dad-jokes" </i> </div>
 
 ### Rendering
 
 Next.js renders as much as it can on the server.
-By default the React components you write are rendered on the server side and the resulting HTML is sent to the browser.
-However, not all components can be fully rendered on the server.
+By default, the React components you write are rendered on the server side and the resulting HTML is sent to the browser.
+
+Unfortunately, not all components can be fully rendered on the server.
 For example, components that require interactivity must be partially rendered on the client.
 
-Therefore the rendering is split into multiple stages:
+Therefore, the rendering is split into multiple stages:
 
 First, Next.js renders as much as it can on the server.
 
@@ -31,13 +32,13 @@ Data fetching can be moved from the client to the server which can simplify the 
 This is especially beneficial for clients with slow network speeds.
 
 Additionally, dependencies are now on the server and don't need to be served to the client.
-This helps greatly with reducing bundle sizes.
+This helps greatly with reducing how much the server needs to send to the client.
 
 ### Server Components
 
 **Server components** are the components that are completely rendered on the server.
 
-For example this component is a server component:
+For example, this component is a server component:
 
 ```jsx
 import * as React from 'react';
@@ -47,7 +48,7 @@ export default function Task() {
 }
 ```
 
-There is no interactivity here, so this component can be rendered on the server completely.
+There is no interactivity here, so this component can and will be rendered completely on the server.
 
 ### Client Components
 
@@ -121,9 +122,13 @@ export default function Counter() {
 }
 ```
 
-If you go to `http://localhost:3000/counter`, you will see that the message is output both on the server as well as the client.
-If you click the button, you will see that the message is output only on the client (since the component only rerenders there).
-However, if you refresh the page, you will observe that the message is again logged both to the server as well as the client.
+If you go to `http://localhost:3000/counter`, you will see that the `Rendered counter` message is output both on the server console as well as on the client console.
+That's because the component renders both on the server and on the client.
+
+However, all further interactivity happens only on the client.
+For example, if you click the button, you will see that the `Rendered counter` message is output only on the client console.
+
+However, if you refresh the page, you will observe that the `Rendered counter` message is again logged both to the server as well as the client.
 
 ### When to use what?
 
@@ -136,6 +141,6 @@ Use server components if:
 
 Use client components only if:
 
-- you need event listeners (like `onClick`)
-- you need to use `useState`, `useEffect` or `useReducer`
-- you need to use certain browser APIs
+- you need to use event listeners (like `onClick`)
+- you need to use certain React hooks like `useState` or `useEffect`
+- you need to use certain browser functionality (like resizing the browser window)

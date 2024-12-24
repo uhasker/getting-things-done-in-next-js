@@ -1,10 +1,12 @@
 ## Setup
 
-<div style="text-align: right"> <i> What's a Next.js developer's favorite part of setting up a new project? <br> Installing dependencies. It's like Christmas, but every package is a surprise! <br> - From "1000 programming dad-jokes" </i> </div>
+<div style="text-align: right"> <i> What's a Next.js developer's favorite part of setting up a new project? <br> Installing dependencies. It's like Christmas, every package is a surprise! <br> — From "1000 programming dad-jokes" </i> </div>
 
 ### Creating a Next.js Project
 
-Run the following command to create a new Next.js project:
+In this section, we will setup a clean Next.js project for the following sections.
+
+Let's run the following command to create a new Next.js project:
 
 ```sh
 pnpm create next-app
@@ -17,9 +19,7 @@ Give your project a name and select the following options:
 - we want to use Tailwind CSS
 - we want to use the `src/` directory
 - we want to use the App Router
-- we don't want to customize the defalt import alias
-
-Next, navigate to the newly created directory and run:
+- we don't want to customize the default import alias
 
 ```sh
 pnpm dev
@@ -28,11 +28,31 @@ pnpm dev
 > Note that `pnpm create next-app` automatically runs `pnpm install`, so you don't need to worry about that.
 
 If you go to `http://localhost:3000`, you will see the default home page.
-Let's simplify it a bit for the following sections.
+But where is this home page coming from?
+
+Looking at our new Next.js project, we will see the following layout:
+
+```
+├── package.json
+├── pnpm-lock.yaml
+├── postcss.config.mjs
+├── public
+├── README.md
+├── src
+│   └── app
+│       ├── ...
+│       ├── layout.tsx
+│       └── page.tsx
+├── tailwind.config.ts
+└── tsconfig.json
+```
+
+Crucially, our code is contained in `src/app` and our home page is located at `src/app/page.tsx`.
+Let's clean it up a bit.
 
 ### Simplifying the Default Project
 
-Enter the `src` directory.
+Enter the `src/app` directory.
 
 First, remove the `globals.css` file (styles will be the topic of the next chapter).
 
