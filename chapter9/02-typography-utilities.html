@@ -153,14 +153,10 @@
                 <div id="content" class="content">
                     <main>
                         <h2 id="typography-utilities"><a class="header" href="#typography-utilities">Typography Utilities</a></h2>
-<div style="text-align: right"> <i> I don't use it but if I would use something I'd use Tailwind! <br> - Pieter Levels </i> </div>
-<p>Consider the following component:</p>
-<pre><code class="language-jsx">export default function Home() {
-  return &lt;p&gt;This is a sentence&lt;/p&gt;;
-}
-</code></pre>
+<div style="text-align: right"> <i> I don't use it but if I would use something I'd use Tailwind! <br> — Pieter Levels </i> </div>
 <h3 id="font-family"><a class="header" href="#font-family">Font Family</a></h3>
-<p>You can change the font family:</p>
+<p>You can change the typeface of your text using the font-family utility classes which include <code>font-sans</code>, <code>font-serif</code> and <code>font-mono</code>.</p>
+<p>Consider the following example:</p>
 <pre><code class="language-jsx">export default function Home() {
   return (
     &lt;&gt;
@@ -172,7 +168,8 @@
 }
 </code></pre>
 <h3 id="font-size"><a class="header" href="#font-size">Font Size</a></h3>
-<p>You can change the font size:</p>
+<p>You can change the font size using the <code>text-*</code> utility classes.</p>
+<p>Consider the following example:</p>
 <pre><code class="language-jsx">export default function Home() {
   return (
     &lt;&gt;
@@ -186,7 +183,8 @@
 </code></pre>
 <p>You can make your sentences larger than <code>text-xl</code> by prefixing the <code>xl</code> with a number, e.g. <code>text-2xl</code>, <code>text-3xl</code> all the way up <code>text-9xl</code>.</p>
 <h3 id="font-weight"><a class="header" href="#font-weight">Font Weight</a></h3>
-<p>You can change the font weight:</p>
+<p>You can change the font weight using the <code>font-*</code> utility classes.</p>
+<p>Consider the following example:</p>
 <pre><code class="language-jsx">export default function Home() {
   return (
     &lt;&gt;
@@ -200,8 +198,9 @@
 }
 </code></pre>
 <h3 id="line-height"><a class="header" href="#line-height">Line Height</a></h3>
-<p>You can also set the line height.</p>
-<p>This can be used to control the distance between text lines:</p>
+<p>You can also set the line height which can be used to control the distance between text lines.
+This can be done using the <code>leading-*</code> utility classes.</p>
+<p>Consider the following example:</p>
 <pre><code class="language-jsx">export default function Home() {
   return (
     &lt;&gt;
@@ -226,7 +225,8 @@
 </code></pre>
 <p>You can also control the line height via <code>leading-{num}</code> utility classes (from <code>leading-3</code> to <code>leading-10</code>).</p>
 <h3 id="alignment"><a class="header" href="#alignment">Alignment</a></h3>
-<p>The text alignment can be set like this:</p>
+<p>You can also set the text alignment using the <code>text-*</code> utility classes, most notably <code>text-left</code>, <code>text-center</code> and <code>text-right</code>.</p>
+<p>Consider the following example:</p>
 <pre><code class="language-jsx">export default function Home() {
   return (
     &lt;&gt;
@@ -237,12 +237,15 @@
   );
 }
 </code></pre>
-<p>You can justify text with <code>text-justify</code>.</p>
+<p>You can also justify text using the <code>text-justify</code> utility class.</p>
 <h3 id="text-color"><a class="header" href="#text-color">Text Color</a></h3>
-<p>You can also set the text color.
-These utility classes usually have the form <code>text-{color}-{number}</code>.
+<p>You can also set the text color using Tailwind CSS utility classes.</p>
+<p>These utility classes usually have the form <code>text-{color}-{number}</code>.</p>
+<p>Here, <code>{color}</code> is a string indicating the color of the text (e.g. <code>blue</code> or <code>red</code>).</p>
+<p>Additionally, <code>{number}</code> indicates the darkness of the color.
 The higher the number, the darker the color will be.
-The number should be one of the values <code>100</code>, <code>200</code>, <code>300</code> all the way up to <code>900</code>.</p>
+It can be one of the values <code>100</code>, <code>200</code>, <code>300</code> all the way up to <code>900</code>.</p>
+<p>Consider the following example:</p>
 <pre><code class="language-jsx">export default function Home() {
   return (
     &lt;&gt;

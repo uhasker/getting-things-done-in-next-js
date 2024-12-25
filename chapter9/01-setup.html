@@ -153,8 +153,9 @@
                 <div id="content" class="content">
                     <main>
                         <h2 id="setup"><a class="header" href="#setup">Setup</a></h2>
-<div style="text-align: right"> <i> Skip to the end. Use @tailwindcss. <br> - Kent C. Dodds </i> </div>
-<p>Once you've created an app with <code>pnpm create next-app</code>, you are already using Tailwind CSS by default.</p>
+<div style="text-align: right"> <i> Skip to the end. Use @tailwindcss. <br> — Kent C. Dodds </i> </div>
+<h3 id="tailwind-css-and-postcss"><a class="header" href="#tailwind-css-and-postcss">Tailwind CSS and PostCSS</a></h3>
+<p>Once you've created an app with <code>pnpm create next-app</code>, you're already using Tailwind CSS by default.</p>
 <p>If you look at the <code>package.json</code> file, you will notice these dependencies:</p>
 <ul>
 <li><code>tailwindcss</code></li>
@@ -163,8 +164,9 @@
 </ul>
 <p>PostCSS is a special tool for transforming CSS with JavaScript.
 Autoprefixer is a PostCSS plugin for parsing CSS and adding vendor prefixes to CSS rules.</p>
-<p>Both TailwindCSS and PostCSS require configuration - luckily, <code>pnpm create next-app</code> has already supplied this configuration for us.</p>
-<p>You will find the TailwindCSS configuration in the <code>tailwind.config.ts</code> file:</p>
+<p>Both Tailwind CSS and PostCSS require some configuration.
+Luckily, <code>pnpm create next-app</code> has already supplied this configuration for us.</p>
+<p>You'll find the Tailwind CSS configuration in the <code>tailwind.config.ts</code> file:</p>
 <pre><code class="language-ts">import type { Config } from 'tailwindcss';
 
 const config: Config = {
@@ -185,7 +187,7 @@ const config: Config = {
 };
 export default config;
 </code></pre>
-<p>You will find the PostCSS configuration in the <code>postcss.config.js</code> file:</p>
+<p>You'll find the PostCSS configuration in the <code>postcss.config.js</code> file:</p>
 <pre><code class="language-js">module.exports = {
   plugins: {
     tailwindcss: {},
@@ -193,26 +195,29 @@ export default config;
   },
 };
 </code></pre>
-<p>One last important file is the <code>globals.css</code> file.
+<h3 id="tailwind-directives"><a class="header" href="#tailwind-directives">Tailwind Directives</a></h3>
+<p>The final important file is <code>globals.css</code>.
 If you've created your app with <code>pnpm create next-app</code>, this will contain a bunch of unneeded fluff, so let's replace the content of <code>globals.css</code> with these lines:</p>
 <pre><code class="language-css">@tailwind base;
 @tailwind components;
 @tailwind utilities;
 </code></pre>
-<p>These lines are so called <strong>Tailwind directives</strong>.</p>
+<p>These lines are so-called <strong>Tailwind directives</strong>.</p>
 <p>The <code>@tailwind base</code> directive injects Tailwind's base styles in your CSS.</p>
 <p>The <code>@tailwind components</code> injects Tailwind's component classes in your CSS.</p>
 <p>Finally, the <code>@tailwind utilities</code> injects Tailwind's utility classes in your CSS.</p>
-<p>Let's try and use Tailwind now.
-We will add a component with a few Tailwind utility classes to <code>page.tsx</code>:</p>
+<h3 id="a-simple-example"><a class="header" href="#a-simple-example">A Simple Example</a></h3>
+<p>Let's try and use Tailwind CSS now.</p>
+<p>We'll add a component with a few Tailwind utility classes to <code>page.tsx</code>:</p>
 <pre><code class="language-jsx">export default function Home() {
   return &lt;h1 className="text-3xl font-bold underline"&gt;Welcome&lt;/h1&gt;;
 }
 </code></pre>
-<p>You should see how the styles are applied to the text.</p>
-<p>This components highlights Tailwinds <strong>utility-first</strong> approach to styling.
-Insteads of writing a lot of custom CSS, you style elements by applying pre-existing classes directly in your HTML.</p>
-<p>Next, we will introduce some of the most important utility classes.</p>
+<p>Start the development server and open the homepage.
+You should see how the styles are applied to the text.</p>
+<p>This component highlights the <strong>utility-first</strong> approach to styling that is behind Tailwind CSS.
+Instead of writing lots of custom CSS, you style elements by applying pre-existing classes directly in your HTML.</p>
+<p>Next, we'll introduce some of the most important utility classes.</p>
 
                     </main>
 

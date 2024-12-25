@@ -153,9 +153,10 @@
                 <div id="content" class="content">
                     <main>
                         <h2 id="background-utilities"><a class="header" href="#background-utilities">Background Utilities</a></h2>
-<div style="text-align: right"> <i> If I had to recommend a way of getting into programming today, it would be HTML + CSS with Tailwind CSS. <br> - Guillermo Rauch </i> </div>
+<div style="text-align: right"> <i> If I had to recommend a way of getting into programming today, it would be HTML + CSS with Tailwind CSS. <br> — Guillermo Rauch </i> </div>
 <h3 id="background-color"><a class="header" href="#background-color">Background Color</a></h3>
-<p>You can change the background color of an element using the <code>bg-{color}</code> utilities:</p>
+<p>You can change the background color of an element using the <code>bg-{color}-{number}</code> utilities.</p>
+<p>Consider the following example:</p>
 <pre><code class="language-jsx">export default function Home() {
   return (
     &lt;&gt;
@@ -168,11 +169,11 @@
 </code></pre>
 <h3 id="linear-gradients"><a class="header" href="#linear-gradients">Linear Gradients</a></h3>
 <p>You can give elements a linear gradient background using the <code>bg-gradient-{direction}</code> utilities.</p>
-<p>First, you specify the direction of the gradient.
+<p>First, you need to specify the direction of the gradient.
 For example, you can specify <code>bg-gradient-to-r</code> for "right", <code>bg-gradient-to-t</code> for "top" and more.</p>
-<p>Then you specify the starting color via <code>from-{color}-{number}</code> and the end color via <code>to-{color}-{number}</code>.
+<p>Second, you need to specify the starting color via <code>from-{color}-{number}</code> and the end color via <code>to-{color}-{number}</code>.
 You can additionally specify a middle color by using <code>via-{color}-{number}</code>.</p>
-<p>Here are a few examples:</p>
+<p>Here are a few examples on how to use these utilities:</p>
 <pre><code class="language-jsx">export default function Home() {
   return (
     &lt;&gt;

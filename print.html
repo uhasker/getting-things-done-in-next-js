@@ -8860,8 +8860,9 @@ For example, if you click the button, you will see that the <code>Rendered count
 <p>CSS (short for Cascading Style Sheets) is a special language that is used for specifying the styling of an HTML document.
 We won't use CSS directly, but rather Tailwind CSS - a utility-first CSS framework that greatly simplifies the styling process.</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="setup-3"><a class="header" href="#setup-3">Setup</a></h2>
-<div style="text-align: right"> <i> Skip to the end. Use @tailwindcss. <br> - Kent C. Dodds </i> </div>
-<p>Once you've created an app with <code>pnpm create next-app</code>, you are already using Tailwind CSS by default.</p>
+<div style="text-align: right"> <i> Skip to the end. Use @tailwindcss. <br> — Kent C. Dodds </i> </div>
+<h3 id="tailwind-css-and-postcss"><a class="header" href="#tailwind-css-and-postcss">Tailwind CSS and PostCSS</a></h3>
+<p>Once you've created an app with <code>pnpm create next-app</code>, you're already using Tailwind CSS by default.</p>
 <p>If you look at the <code>package.json</code> file, you will notice these dependencies:</p>
 <ul>
 <li><code>tailwindcss</code></li>
@@ -8870,8 +8871,9 @@ We won't use CSS directly, but rather Tailwind CSS - a utility-first CSS framewo
 </ul>
 <p>PostCSS is a special tool for transforming CSS with JavaScript.
 Autoprefixer is a PostCSS plugin for parsing CSS and adding vendor prefixes to CSS rules.</p>
-<p>Both TailwindCSS and PostCSS require configuration - luckily, <code>pnpm create next-app</code> has already supplied this configuration for us.</p>
-<p>You will find the TailwindCSS configuration in the <code>tailwind.config.ts</code> file:</p>
+<p>Both Tailwind CSS and PostCSS require some configuration.
+Luckily, <code>pnpm create next-app</code> has already supplied this configuration for us.</p>
+<p>You'll find the Tailwind CSS configuration in the <code>tailwind.config.ts</code> file:</p>
 <pre><code class="language-ts">import type { Config } from 'tailwindcss';
 
 const config: Config = {
@@ -8892,7 +8894,7 @@ const config: Config = {
 };
 export default config;
 </code></pre>
-<p>You will find the PostCSS configuration in the <code>postcss.config.js</code> file:</p>
+<p>You'll find the PostCSS configuration in the <code>postcss.config.js</code> file:</p>
 <pre><code class="language-js">module.exports = {
   plugins: {
     tailwindcss: {},
@@ -8900,35 +8902,34 @@ export default config;
   },
 };
 </code></pre>
-<p>One last important file is the <code>globals.css</code> file.
+<h3 id="tailwind-directives"><a class="header" href="#tailwind-directives">Tailwind Directives</a></h3>
+<p>The final important file is <code>globals.css</code>.
 If you've created your app with <code>pnpm create next-app</code>, this will contain a bunch of unneeded fluff, so let's replace the content of <code>globals.css</code> with these lines:</p>
 <pre><code class="language-css">@tailwind base;
 @tailwind components;
 @tailwind utilities;
 </code></pre>
-<p>These lines are so called <strong>Tailwind directives</strong>.</p>
+<p>These lines are so-called <strong>Tailwind directives</strong>.</p>
 <p>The <code>@tailwind base</code> directive injects Tailwind's base styles in your CSS.</p>
 <p>The <code>@tailwind components</code> injects Tailwind's component classes in your CSS.</p>
 <p>Finally, the <code>@tailwind utilities</code> injects Tailwind's utility classes in your CSS.</p>
-<p>Let's try and use Tailwind now.
-We will add a component with a few Tailwind utility classes to <code>page.tsx</code>:</p>
+<h3 id="a-simple-example-3"><a class="header" href="#a-simple-example-3">A Simple Example</a></h3>
+<p>Let's try and use Tailwind CSS now.</p>
+<p>We'll add a component with a few Tailwind utility classes to <code>page.tsx</code>:</p>
 <pre><code class="language-jsx">export default function Home() {
   return &lt;h1 className="text-3xl font-bold underline"&gt;Welcome&lt;/h1&gt;;
 }
 </code></pre>
-<p>You should see how the styles are applied to the text.</p>
-<p>This components highlights Tailwinds <strong>utility-first</strong> approach to styling.
-Insteads of writing a lot of custom CSS, you style elements by applying pre-existing classes directly in your HTML.</p>
-<p>Next, we will introduce some of the most important utility classes.</p>
+<p>Start the development server and open the homepage.
+You should see how the styles are applied to the text.</p>
+<p>This component highlights the <strong>utility-first</strong> approach to styling that is behind Tailwind CSS.
+Instead of writing lots of custom CSS, you style elements by applying pre-existing classes directly in your HTML.</p>
+<p>Next, we'll introduce some of the most important utility classes.</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="typography-utilities"><a class="header" href="#typography-utilities">Typography Utilities</a></h2>
-<div style="text-align: right"> <i> I don't use it but if I would use something I'd use Tailwind! <br> - Pieter Levels </i> </div>
-<p>Consider the following component:</p>
-<pre><code class="language-jsx">export default function Home() {
-  return &lt;p&gt;This is a sentence&lt;/p&gt;;
-}
-</code></pre>
+<div style="text-align: right"> <i> I don't use it but if I would use something I'd use Tailwind! <br> — Pieter Levels </i> </div>
 <h3 id="font-family"><a class="header" href="#font-family">Font Family</a></h3>
-<p>You can change the font family:</p>
+<p>You can change the typeface of your text using the font-family utility classes which include <code>font-sans</code>, <code>font-serif</code> and <code>font-mono</code>.</p>
+<p>Consider the following example:</p>
 <pre><code class="language-jsx">export default function Home() {
   return (
     &lt;&gt;
@@ -8940,7 +8941,8 @@ Insteads of writing a lot of custom CSS, you style elements by applying pre-exis
 }
 </code></pre>
 <h3 id="font-size"><a class="header" href="#font-size">Font Size</a></h3>
-<p>You can change the font size:</p>
+<p>You can change the font size using the <code>text-*</code> utility classes.</p>
+<p>Consider the following example:</p>
 <pre><code class="language-jsx">export default function Home() {
   return (
     &lt;&gt;
@@ -8954,7 +8956,8 @@ Insteads of writing a lot of custom CSS, you style elements by applying pre-exis
 </code></pre>
 <p>You can make your sentences larger than <code>text-xl</code> by prefixing the <code>xl</code> with a number, e.g. <code>text-2xl</code>, <code>text-3xl</code> all the way up <code>text-9xl</code>.</p>
 <h3 id="font-weight"><a class="header" href="#font-weight">Font Weight</a></h3>
-<p>You can change the font weight:</p>
+<p>You can change the font weight using the <code>font-*</code> utility classes.</p>
+<p>Consider the following example:</p>
 <pre><code class="language-jsx">export default function Home() {
   return (
     &lt;&gt;
@@ -8968,8 +8971,9 @@ Insteads of writing a lot of custom CSS, you style elements by applying pre-exis
 }
 </code></pre>
 <h3 id="line-height"><a class="header" href="#line-height">Line Height</a></h3>
-<p>You can also set the line height.</p>
-<p>This can be used to control the distance between text lines:</p>
+<p>You can also set the line height which can be used to control the distance between text lines.
+This can be done using the <code>leading-*</code> utility classes.</p>
+<p>Consider the following example:</p>
 <pre><code class="language-jsx">export default function Home() {
   return (
     &lt;&gt;
@@ -8994,7 +8998,8 @@ Insteads of writing a lot of custom CSS, you style elements by applying pre-exis
 </code></pre>
 <p>You can also control the line height via <code>leading-{num}</code> utility classes (from <code>leading-3</code> to <code>leading-10</code>).</p>
 <h3 id="alignment"><a class="header" href="#alignment">Alignment</a></h3>
-<p>The text alignment can be set like this:</p>
+<p>You can also set the text alignment using the <code>text-*</code> utility classes, most notably <code>text-left</code>, <code>text-center</code> and <code>text-right</code>.</p>
+<p>Consider the following example:</p>
 <pre><code class="language-jsx">export default function Home() {
   return (
     &lt;&gt;
@@ -9005,12 +9010,15 @@ Insteads of writing a lot of custom CSS, you style elements by applying pre-exis
   );
 }
 </code></pre>
-<p>You can justify text with <code>text-justify</code>.</p>
+<p>You can also justify text using the <code>text-justify</code> utility class.</p>
 <h3 id="text-color"><a class="header" href="#text-color">Text Color</a></h3>
-<p>You can also set the text color.
-These utility classes usually have the form <code>text-{color}-{number}</code>.
+<p>You can also set the text color using Tailwind CSS utility classes.</p>
+<p>These utility classes usually have the form <code>text-{color}-{number}</code>.</p>
+<p>Here, <code>{color}</code> is a string indicating the color of the text (e.g. <code>blue</code> or <code>red</code>).</p>
+<p>Additionally, <code>{number}</code> indicates the darkness of the color.
 The higher the number, the darker the color will be.
-The number should be one of the values <code>100</code>, <code>200</code>, <code>300</code> all the way up to <code>900</code>.</p>
+It can be one of the values <code>100</code>, <code>200</code>, <code>300</code> all the way up to <code>900</code>.</p>
+<p>Consider the following example:</p>
 <pre><code class="language-jsx">export default function Home() {
   return (
     &lt;&gt;
@@ -9056,9 +9064,10 @@ The number should be one of the values <code>100</code>, <code>200</code>, <code
 </code></pre>
 <p>You can also change the decoration thickness using one of the <code>decoration-1</code>, <code>decoration-2</code>, <code>decoration-4</code> or <code>decoration-8</code> attributes.</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="background-utilities"><a class="header" href="#background-utilities">Background Utilities</a></h2>
-<div style="text-align: right"> <i> If I had to recommend a way of getting into programming today, it would be HTML + CSS with Tailwind CSS. <br> - Guillermo Rauch </i> </div>
+<div style="text-align: right"> <i> If I had to recommend a way of getting into programming today, it would be HTML + CSS with Tailwind CSS. <br> — Guillermo Rauch </i> </div>
 <h3 id="background-color"><a class="header" href="#background-color">Background Color</a></h3>
-<p>You can change the background color of an element using the <code>bg-{color}</code> utilities:</p>
+<p>You can change the background color of an element using the <code>bg-{color}-{number}</code> utilities.</p>
+<p>Consider the following example:</p>
 <pre><code class="language-jsx">export default function Home() {
   return (
     &lt;&gt;
@@ -9071,11 +9080,11 @@ The number should be one of the values <code>100</code>, <code>200</code>, <code
 </code></pre>
 <h3 id="linear-gradients"><a class="header" href="#linear-gradients">Linear Gradients</a></h3>
 <p>You can give elements a linear gradient background using the <code>bg-gradient-{direction}</code> utilities.</p>
-<p>First, you specify the direction of the gradient.
+<p>First, you need to specify the direction of the gradient.
 For example, you can specify <code>bg-gradient-to-r</code> for "right", <code>bg-gradient-to-t</code> for "top" and more.</p>
-<p>Then you specify the starting color via <code>from-{color}-{number}</code> and the end color via <code>to-{color}-{number}</code>.
+<p>Second, you need to specify the starting color via <code>from-{color}-{number}</code> and the end color via <code>to-{color}-{number}</code>.
 You can additionally specify a middle color by using <code>via-{color}-{number}</code>.</p>
-<p>Here are a few examples:</p>
+<p>Here are a few examples on how to use these utilities:</p>
 <pre><code class="language-jsx">export default function Home() {
   return (
     &lt;&gt;
@@ -9096,12 +9105,10 @@ You can additionally specify a middle color by using <code>via-{color}-{number}<
 }
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="size-utilities"><a class="header" href="#size-utilities">Size Utilities</a></h2>
-<div style="text-align: right"> <i> Tailwind makes writing code feel like I'm using a design tool. <br> - Ryan Florence </i> </div>
-<p>To actually see that the size utilities work the way we expect, we will give our elements backgrounds.
-Don't be distracted by this.</p>
+<div style="text-align: right"> <i> Tailwind makes writing code feel like I'm using a design tool. <br> — Ryan Florence </i> </div>
 <h3 id="width"><a class="header" href="#width">Width</a></h3>
-<p>You can give an element a fixed width using the <code>w-{number}</code> utilities.
-For example:</p>
+<p>You can give an element a fixed width using the <code>w-{number}</code> utilities.</p>
+<p>Consider the following example:</p>
 <pre><code class="language-jsx">export default function Home() {
   return (
     &lt;&gt;
@@ -9113,9 +9120,11 @@ For example:</p>
 }
 </code></pre>
 <blockquote>
-<p>Of course, there are many more <code>w-{number}</code> utilities.</p>
+<p>To actually see that the size utilities work the way we expect, we give all our elements that are present in this section backgrounds.
+Don't be distracted by this.</p>
 </blockquote>
-<p>You can give an element a percentage-based width using the <code>w-{fraction}</code> utilities:</p>
+<p>Of course, there are many more <code>w-{number}</code> utilities.</p>
+<p>You can also give an element a percentage-based width using the <code>w-{fraction}</code> utilities:</p>
 <pre><code class="language-jsx">export default function Home() {
   return (
     &lt;div className="flex"&gt;
@@ -9127,10 +9136,10 @@ For example:</p>
 }
 </code></pre>
 <p>You can use <code>w-screen</code> if you want an element to span the entire viewport width.</p>
-<p>You can set the minimum and the maximum width of an elemnent using the <code>min-w-{number}</code> and <code>max-w-{number}</code> attributes.</p>
+<p>You can also set the minimum and the maximum width of an element using the <code>min-w-{number}</code> and <code>max-w-{number}</code> attributes.</p>
 <h3 id="height"><a class="header" href="#height">Height</a></h3>
-<p>You can give an element a fixed height using the <code>h-{number}</code> utilities.
-For example:</p>
+<p>You can give an element a fixed height using the <code>h-{number}</code> utilities.</p>
+<p>Consider the following example:</p>
 <pre><code class="language-jsx">export default function Home() {
   return (
     &lt;&gt;
@@ -9141,14 +9150,12 @@ For example:</p>
   );
 }
 </code></pre>
-<blockquote>
 <p>Of course, there are many more <code>h-{number}</code> utilities.</p>
-</blockquote>
 <p>You can use <code>h-screen</code> if you want an element to span the entire viewport height.</p>
-<p>You can set the minimum and the maximum height of an elemnent using the <code>min-h-{number}</code> and <code>max-h-{number}</code> attributes.</p>
+<p>You can set the minimum and the maximum height of an element using the <code>min-h-{number}</code> and <code>max-h-{number}</code> attributes.</p>
 <h3 id="size"><a class="header" href="#size">Size</a></h3>
-<p>You can set the width and height of an element at the same time using the <code>size-{number}</code> utility classes.
-For example:</p>
+<p>You can set the width and height of an element at the same time using the <code>size-{number}</code> utility classes.</p>
+<p>Consider the following example:</p>
 <pre><code class="language-jsx">export default function Home() {
   return (
     &lt;&gt;
@@ -9160,10 +9167,10 @@ For example:</p>
 }
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="border-utilities"><a class="header" href="#border-utilities">Border Utilities</a></h2>
-<div style="text-align: right"> <i> Tailwind CSS is the greatest framework on the planet. <br> - Bret Hart (wait what?) </i> </div>
-<p>You can use the <code>border</code> attribute to add a border.</p>
+<div style="text-align: right"> <i> Tailwind CSS is the greatest framework on the planet. <br> — Bret Hart (wait what?) </i> </div>
 <h3 id="border-color"><a class="header" href="#border-color">Border Color</a></h3>
-<p>You can use the <code>border-{color}-{number}</code> to control the border element:</p>
+<p>You can use the <code>border-{color}-{number}</code> to control the border element.</p>
+<p>Consider the following example:</p>
 <pre><code class="language-jsx">export default function Home() {
   return (
     &lt;&gt;
@@ -9175,6 +9182,7 @@ For example:</p>
 </code></pre>
 <h3 id="border-width"><a class="header" href="#border-width">Border Width</a></h3>
 <p>You can set the border width using the <code>border-{number}</code> utilities:</p>
+<p>Consider the following example:</p>
 <pre><code class="language-jsx">export default function Home() {
   return (
     &lt;&gt;
@@ -9187,7 +9195,8 @@ For example:</p>
 }
 </code></pre>
 <h3 id="border-style"><a class="header" href="#border-style">Border Style</a></h3>
-<p>You can use <code>border-{style}</code> to control the border style of an element:</p>
+<p>You can use <code>border-{style}</code> utilities to control the border style of an element.</p>
+<p>Consider the following example:</p>
 <pre><code class="language-jsx">export default function Home() {
   return (
     &lt;&gt;
@@ -9200,8 +9209,8 @@ For example:</p>
 }
 </code></pre>
 <h3 id="border-radius"><a class="header" href="#border-radius">Border Radius</a></h3>
-<p>You can control the border radius by using utilies like <code>rounded</code>, <code>rounded-md</code>, <code>rounded-lg</code> and <code>rounded-full</code>.</p>
-<p>Example:</p>
+<p>You can control the border radius by using utilities like <code>rounded</code>, <code>rounded-md</code>, <code>rounded-lg</code> and <code>rounded-full</code>.</p>
+<p>Consider the following example:</p>
 <pre><code class="language-jsx">export default function Home() {
   return (
     &lt;&gt;
@@ -9216,9 +9225,10 @@ For example:</p>
 }
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="spacing-utilities"><a class="header" href="#spacing-utilities">Spacing Utilities</a></h2>
-<div style="text-align: right"> <i> Thanks to @tailwindcss, CSS started to make sense ot me. <br> - Nuno Maduro </i> </div>
+<div style="text-align: right"> <i> Thanks to @tailwindcss, CSS started to make sense to me. <br> — Nuno Maduro </i> </div>
 <h3 id="padding"><a class="header" href="#padding">Padding</a></h3>
-<p>You can control the padding on all sides of an element using the <code>p-{size}</code> utilities:</p>
+<p>You can control the padding on all sides of an element using the <code>p-{size}</code> utilities.</p>
+<p>Consider the following example:</p>
 <pre><code class="language-jsx">export default function Home() {
   return (
     &lt;&gt;
@@ -9230,7 +9240,7 @@ For example:</p>
 }
 </code></pre>
 <p>You can control the padding on one side of an element using the <code>p{t | r | b | l}-{size}</code> utilities.</p>
-<p>For example:</p>
+<p>Consider the following example:</p>
 <pre><code class="language-jsx">export default function Home() {
   return (
     &lt;&gt;
@@ -9241,7 +9251,8 @@ For example:</p>
 }
 </code></pre>
 <h3 id="margin"><a class="header" href="#margin">Margin</a></h3>
-<p>You can control the margin on all sides of an element using the <code>m-{size}</code> utilities:</p>
+<p>You can control the margin on all sides of an element using the <code>m-{size}</code> utilities.</p>
+<p>Consider the following example:</p>
 <pre><code class="language-jsx">export default function Home() {
   return (
     &lt;&gt;
@@ -9253,7 +9264,7 @@ For example:</p>
 }
 </code></pre>
 <p>You can control the margin on one side of an element using the <code>m{t | r | b | l}-{size}</code> utilities.</p>
-<p>For example:</p>
+<p>Consider the following example:</p>
 <pre><code class="language-jsx">export default function Home() {
   return (
     &lt;&gt;
@@ -9264,11 +9275,11 @@ For example:</p>
 }
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="flexbox"><a class="header" href="#flexbox">Flexbox</a></h2>
-<div style="text-align: right"> <i> I never want to write regular CSS again. Only @tailwindcss. <br> - Trey Piepmeier </i> </div>
-<p>The "flex" feature enables you to control the layout of elements in a one-dimensional space.
-You position the elements either as rows or columns.</p>
+<div style="text-align: right"> <i> I never want to write regular CSS again. Only @tailwindcss. <br> — Trey Piepmeier </i> </div>
 <h3 id="the-flex-utility-class"><a class="header" href="#the-flex-utility-class">The <code>flex</code> Utility Class</a></h3>
-<p>Here is a simple example of a a flex container with 3 elements that are placed horizontally:</p>
+<p>The "flex" feature enables you to control the layout of elements in a one-dimensional space.
+You can position the elements either as rows or columns.</p>
+<p>Here is a simple example of a flex container with 3 elements that are placed horizontally:</p>
 <pre><code class="language-jsx">export default function Home() {
   return (
     &lt;div className="flex"&gt;
@@ -9279,7 +9290,8 @@ You position the elements either as rows or columns.</p>
   );
 }
 </code></pre>
-<p>You can use the <code>flex-col</code> utility class if you want a vertical layout:</p>
+<p>You can use the <code>flex-col</code> utility class if you want a vertical layout.</p>
+<p>Consider the following example:</p>
 <pre><code class="language-jsx">export default function Home() {
   return (
     &lt;div className="flex flex-col"&gt;
@@ -9291,7 +9303,8 @@ You position the elements either as rows or columns.</p>
 }
 </code></pre>
 <h3 id="flex-basis"><a class="header" href="#flex-basis">Flex Basis</a></h3>
-<p>You can use the <code>basis-{size}</code> utilities to set the initial size of flex items:</p>
+<p>You can use the <code>basis-{size}</code> utilities to set the initial size of flex items.</p>
+<p>Consider the following example:</p>
 <pre><code class="language-jsx">export default function Home() {
   return (
     &lt;div className="flex"&gt;
@@ -9302,7 +9315,7 @@ You position the elements either as rows or columns.</p>
   );
 }
 </code></pre>
-<p>You can also specify a fraction:</p>
+<p>You can also specify a fraction like in this example:</p>
 <pre><code class="language-jsx">export default function Home() {
   return (
     &lt;div className="flex size-64"&gt;
@@ -9314,6 +9327,7 @@ You position the elements either as rows or columns.</p>
 }
 </code></pre>
 <h3 id="flex-wrap"><a class="header" href="#flex-wrap">Flex Wrap</a></h3>
+<p>The <code>flex-wrap</code> utility class can be used to control how flex items wrap.</p>
 <p>Consider this example:</p>
 <pre><code class="language-jsx">export default function Home() {
   return (
@@ -9339,7 +9353,7 @@ If you want to allow flex items to wrap, you can use <code>flex-wrap</code>:</p>
 </code></pre>
 <p>Now the third child element will be placed on the next line.</p>
 <h3 id="grow"><a class="header" href="#grow">Grow</a></h3>
-<p>You can use <code>grow</code> to tell a flex item to fill all available space:</p>
+<p>You can use the <code>grow</code> utility to tell a flex item to fill all of the available space:</p>
 <pre><code class="language-jsx">export default function Home() {
   return (
     &lt;div className="flex w-64"&gt;
@@ -9351,7 +9365,8 @@ If you want to allow flex items to wrap, you can use <code>flex-wrap</code>:</p>
 }
 </code></pre>
 <h3 id="space-between"><a class="header" href="#space-between">Space Between</a></h3>
-<p>You can control horizontal space between elements using <code>space-x-{amount}</code> utilities:</p>
+<p>You can control horizontal space between elements using <code>space-x-{amount}</code> utilities.</p>
+<p>Consider the following example:</p>
 <pre><code class="language-jsx">export default function Home() {
   return (
     &lt;div className="flex space-x-8"&gt;
@@ -9362,7 +9377,8 @@ If you want to allow flex items to wrap, you can use <code>flex-wrap</code>:</p>
   );
 }
 </code></pre>
-<p>You can control vertical space between elements using <code>space-y-{amount}</code> utilities:</p>
+<p>You can control vertical space between elements using <code>space-y-{amount}</code> utilities.</p>
+<p>Consider the following example:</p>
 <pre><code class="language-jsx">export default function Home() {
   return (
     &lt;div className="flex flex-col space-y-8"&gt;
@@ -9374,10 +9390,11 @@ If you want to allow flex items to wrap, you can use <code>flex-wrap</code>:</p>
 }
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="grid"><a class="header" href="#grid">Grid</a></h2>
-<div style="text-align: right"> <i> Loved it the very moment I used it. <br> - Gilbert Rabut Tsurwa </i> </div>
-<p>Grids allow you to specify two-dimensional layouts.</p>
+<div style="text-align: right"> <i> Loved it the very moment I used it. <br> — Gilbert Rabut Tsurwa </i> </div>
 <h3 id="template-columns"><a class="header" href="#template-columns">Template Columns</a></h3>
-<p>You can use the <code>grid</code> and <code>grid-cols-{n}</code> utilities to create a simple grid with a certain number of columns:</p>
+<p>Grids allow you to specify two-dimensional layouts.</p>
+<p>You can use the <code>grid</code> and <code>grid-cols-{n}</code> utilities to create a simple grid with a certain number of columns.</p>
+<p>Consider the following example:</p>
 <pre><code class="language-jsx">export default function Home() {
   return (
     &lt;div className="grid grid-cols-2 size-64"&gt;
@@ -9391,7 +9408,8 @@ If you want to allow flex items to wrap, you can use <code>flex-wrap</code>:</p>
   );
 }
 </code></pre>
-<p>You can use the <code>col-span-{n}</code> utilities to make an element span multiple columns:</p>
+<p>You can use the <code>col-span-{n}</code> utilities to make an element span multiple columns.</p>
+<p>Consider the following example:</p>
 <pre><code class="language-jsx">export default function Home() {
   return (
     &lt;div className="grid grid-cols-3 size-96"&gt;
@@ -9404,11 +9422,11 @@ If you want to allow flex items to wrap, you can use <code>flex-wrap</code>:</p>
   );
 }
 </code></pre>
-<p>You can use the <code>col-start-{n}</code> and <code>col-end-{n}</code> to start/end an element at the nth grid line.
-There are two important caveats here:
+<p>You can use the <code>col-start-{n}</code> and <code>col-end-{n}</code> to start and end an element at the nth grid line, respectively.</p>
+<p>There are two important caveats here:
 First, grid lines start at <code>1</code>, not at <code>0</code>.
 Second, the numbers indicate grid <em>lines</em>.</p>
-<p>This means that if you want an element to span colummns <code>2</code> and <code>3</code> in a grid, you need to start at grid line <code>2</code> and end at grid line <code>4</code>:</p>
+<p>This means that if you want an element to span columns <code>2</code> and <code>3</code> in a grid, you need to start at grid line <code>2</code> and end at grid line <code>4</code>:</p>
 <pre><code class="language-jsx">export default function Home() {
   return (
     &lt;div className="grid grid-cols-3 size-96"&gt;
@@ -9421,7 +9439,8 @@ Second, the numbers indicate grid <em>lines</em>.</p>
 }
 </code></pre>
 <h3 id="template-rows"><a class="header" href="#template-rows">Template Rows</a></h3>
-<p>You can use the <code>grid</code>, <code>grid-flow-col</code> and <code>grid-rows-{n}</code> utilities to create a simple grid with a certain number of rows:</p>
+<p>You can use the <code>grid</code>, <code>grid-flow-col</code> and <code>grid-rows-{n}</code> utilities to create a simple grid with a certain number of rows.</p>
+<p>Consider the following example:</p>
 <pre><code class="language-jsx">export default function Home() {
   return (
     &lt;div className="grid grid-flow-col grid-rows-2 size-64"&gt;
@@ -9435,7 +9454,8 @@ Second, the numbers indicate grid <em>lines</em>.</p>
   );
 }
 </code></pre>
-<p>You can use the <code>row-span-{n}</code> utilities to make an element span multiple rows:</p>
+<p>You can use the <code>row-span-{n}</code> utilities to make an element span multiple rows.</p>
+<p>Consider the following example:</p>
 <pre><code class="language-jsx">export default function Home() {
   return (
     &lt;div className="grid grid-flow-col grid-rows-3 size-64"&gt;
@@ -9448,8 +9468,7 @@ Second, the numbers indicate grid <em>lines</em>.</p>
   );
 }
 </code></pre>
-<p>You can use the <code>row-start-{n}</code> and <code>row-end-{n}</code> to start/end an element at the nth grid line.
-The same caveats as with columns apply:</p>
+<p>You can use the <code>row-start-{n}</code> and <code>row-end-{n}</code> to start and end an element at the nth grid line, respectively:</p>
 <pre><code class="language-jsx">export default function Home() {
   return (
     &lt;div className="grid grid-flow-col grid-rows-3 size-64"&gt;
@@ -9462,7 +9481,8 @@ The same caveats as with columns apply:</p>
 }
 </code></pre>
 <h3 id="gaps"><a class="header" href="#gaps">Gaps</a></h3>
-<p>You can use <code>gap-{size}</code> utilities to control the gaps between rows and columns:</p>
+<p>You can use <code>gap-{size}</code> utilities to control the gaps between rows and columns.</p>
+<p>Consider the following example:</p>
 <pre><code class="language-jsx">export default function Home() {
   return (
     &lt;div className="grid grid-cols-2 gap-4 size-64"&gt;

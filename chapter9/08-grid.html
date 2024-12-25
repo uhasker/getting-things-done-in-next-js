@@ -153,10 +153,11 @@
                 <div id="content" class="content">
                     <main>
                         <h2 id="grid"><a class="header" href="#grid">Grid</a></h2>
-<div style="text-align: right"> <i> Loved it the very moment I used it. <br> - Gilbert Rabut Tsurwa </i> </div>
-<p>Grids allow you to specify two-dimensional layouts.</p>
+<div style="text-align: right"> <i> Loved it the very moment I used it. <br> — Gilbert Rabut Tsurwa </i> </div>
 <h3 id="template-columns"><a class="header" href="#template-columns">Template Columns</a></h3>
-<p>You can use the <code>grid</code> and <code>grid-cols-{n}</code> utilities to create a simple grid with a certain number of columns:</p>
+<p>Grids allow you to specify two-dimensional layouts.</p>
+<p>You can use the <code>grid</code> and <code>grid-cols-{n}</code> utilities to create a simple grid with a certain number of columns.</p>
+<p>Consider the following example:</p>
 <pre><code class="language-jsx">export default function Home() {
   return (
     &lt;div className="grid grid-cols-2 size-64"&gt;
@@ -170,7 +171,8 @@
   );
 }
 </code></pre>
-<p>You can use the <code>col-span-{n}</code> utilities to make an element span multiple columns:</p>
+<p>You can use the <code>col-span-{n}</code> utilities to make an element span multiple columns.</p>
+<p>Consider the following example:</p>
 <pre><code class="language-jsx">export default function Home() {
   return (
     &lt;div className="grid grid-cols-3 size-96"&gt;
@@ -183,11 +185,11 @@
   );
 }
 </code></pre>
-<p>You can use the <code>col-start-{n}</code> and <code>col-end-{n}</code> to start/end an element at the nth grid line.
-There are two important caveats here:
+<p>You can use the <code>col-start-{n}</code> and <code>col-end-{n}</code> to start and end an element at the nth grid line, respectively.</p>
+<p>There are two important caveats here:
 First, grid lines start at <code>1</code>, not at <code>0</code>.
 Second, the numbers indicate grid <em>lines</em>.</p>
-<p>This means that if you want an element to span colummns <code>2</code> and <code>3</code> in a grid, you need to start at grid line <code>2</code> and end at grid line <code>4</code>:</p>
+<p>This means that if you want an element to span columns <code>2</code> and <code>3</code> in a grid, you need to start at grid line <code>2</code> and end at grid line <code>4</code>:</p>
 <pre><code class="language-jsx">export default function Home() {
   return (
     &lt;div className="grid grid-cols-3 size-96"&gt;
@@ -200,7 +202,8 @@ Second, the numbers indicate grid <em>lines</em>.</p>
 }
 </code></pre>
 <h3 id="template-rows"><a class="header" href="#template-rows">Template Rows</a></h3>
-<p>You can use the <code>grid</code>, <code>grid-flow-col</code> and <code>grid-rows-{n}</code> utilities to create a simple grid with a certain number of rows:</p>
+<p>You can use the <code>grid</code>, <code>grid-flow-col</code> and <code>grid-rows-{n}</code> utilities to create a simple grid with a certain number of rows.</p>
+<p>Consider the following example:</p>
 <pre><code class="language-jsx">export default function Home() {
   return (
     &lt;div className="grid grid-flow-col grid-rows-2 size-64"&gt;
@@ -214,7 +217,8 @@ Second, the numbers indicate grid <em>lines</em>.</p>
   );
 }
 </code></pre>
-<p>You can use the <code>row-span-{n}</code> utilities to make an element span multiple rows:</p>
+<p>You can use the <code>row-span-{n}</code> utilities to make an element span multiple rows.</p>
+<p>Consider the following example:</p>
 <pre><code class="language-jsx">export default function Home() {
   return (
     &lt;div className="grid grid-flow-col grid-rows-3 size-64"&gt;
@@ -227,8 +231,7 @@ Second, the numbers indicate grid <em>lines</em>.</p>
   );
 }
 </code></pre>
-<p>You can use the <code>row-start-{n}</code> and <code>row-end-{n}</code> to start/end an element at the nth grid line.
-The same caveats as with columns apply:</p>
+<p>You can use the <code>row-start-{n}</code> and <code>row-end-{n}</code> to start and end an element at the nth grid line, respectively:</p>
 <pre><code class="language-jsx">export default function Home() {
   return (
     &lt;div className="grid grid-flow-col grid-rows-3 size-64"&gt;
@@ -241,7 +244,8 @@ The same caveats as with columns apply:</p>
 }
 </code></pre>
 <h3 id="gaps"><a class="header" href="#gaps">Gaps</a></h3>
-<p>You can use <code>gap-{size}</code> utilities to control the gaps between rows and columns:</p>
+<p>You can use <code>gap-{size}</code> utilities to control the gaps between rows and columns.</p>
+<p>Consider the following example:</p>
 <pre><code class="language-jsx">export default function Home() {
   return (
     &lt;div className="grid grid-cols-2 gap-4 size-64"&gt;
