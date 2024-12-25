@@ -1,12 +1,12 @@
 ## Border Utilities
 
-<div style="text-align: right"> <i> Tailwind CSS is the greatest framework on the planet. <br> - Bret Hart (wait what?) </i> </div>
-
-You can use the `border` attribute to add a border.
+<div style="text-align: right"> <i> Tailwind CSS is the greatest framework on the planet. <br> — Bret Hart (wait what?) </i> </div>
 
 ### Border Color
 
-You can use the `border-{color}-{number}` to control the border element:
+You can use the `border-{color}-{number}` to control the border element.
+
+Consider the following example:
 
 ```jsx
 export default function Home() {
@@ -23,6 +23,8 @@ export default function Home() {
 
 You can set the border width using the `border-{number}` utilities:
 
+Consider the following example:
+
 ```jsx
 export default function Home() {
   return (
@@ -38,7 +40,9 @@ export default function Home() {
 
 ### Border Style
 
-You can use `border-{style}` to control the border style of an element:
+You can use `border-{style}` utilities to control the border style of an element.
+
+Consider the following example:
 
 ```jsx
 export default function Home() {
@@ -55,9 +59,9 @@ export default function Home() {
 
 ### Border Radius
 
-You can control the border radius by using utilies like `rounded`, `rounded-md`, `rounded-lg` and `rounded-full`.
+You can control the border radius by using utilities like `rounded`, `rounded-md`, `rounded-lg` and `rounded-full`.
 
-Example:
+Consider the following example:
 
 ```jsx
 export default function Home() {

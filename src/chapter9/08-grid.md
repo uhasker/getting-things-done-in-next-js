@@ -1,12 +1,14 @@
 ## Grid
 
-<div style="text-align: right"> <i> Loved it the very moment I used it. <br> - Gilbert Rabut Tsurwa </i> </div>
-
-Grids allow you to specify two-dimensional layouts.
+<div style="text-align: right"> <i> Loved it the very moment I used it. <br> — Gilbert Rabut Tsurwa </i> </div>
 
 ### Template Columns
 
-You can use the `grid` and `grid-cols-{n}` utilities to create a simple grid with a certain number of columns:
+Grids allow you to specify two-dimensional layouts.
+
+You can use the `grid` and `grid-cols-{n}` utilities to create a simple grid with a certain number of columns.
+
+Consider the following example:
 
 ```jsx
 export default function Home() {
@@ -23,7 +25,9 @@ export default function Home() {
 }
 ```
 
-You can use the `col-span-{n}` utilities to make an element span multiple columns:
+You can use the `col-span-{n}` utilities to make an element span multiple columns.
+
+Consider the following example:
 
 ```jsx
 export default function Home() {
@@ -39,12 +43,13 @@ export default function Home() {
 }
 ```
 
-You can use the `col-start-{n}` and `col-end-{n}` to start/end an element at the nth grid line.
+You can use the `col-start-{n}` and `col-end-{n}` to start and end an element at the nth grid line, respectively.
+
 There are two important caveats here:
 First, grid lines start at `1`, not at `0`.
 Second, the numbers indicate grid _lines_.
 
-This means that if you want an element to span colummns `2` and `3` in a grid, you need to start at grid line `2` and end at grid line `4`:
+This means that if you want an element to span columns `2` and `3` in a grid, you need to start at grid line `2` and end at grid line `4`:
 
 ```jsx
 export default function Home() {
@@ -61,7 +66,9 @@ export default function Home() {
 
 ### Template Rows
 
-You can use the `grid`, `grid-flow-col` and `grid-rows-{n}` utilities to create a simple grid with a certain number of rows:
+You can use the `grid`, `grid-flow-col` and `grid-rows-{n}` utilities to create a simple grid with a certain number of rows.
+
+Consider the following example:
 
 ```jsx
 export default function Home() {
@@ -78,7 +85,9 @@ export default function Home() {
 }
 ```
 
-You can use the `row-span-{n}` utilities to make an element span multiple rows:
+You can use the `row-span-{n}` utilities to make an element span multiple rows.
+
+Consider the following example:
 
 ```jsx
 export default function Home() {
@@ -94,8 +103,7 @@ export default function Home() {
 }
 ```
 
-You can use the `row-start-{n}` and `row-end-{n}` to start/end an element at the nth grid line.
-The same caveats as with columns apply:
+You can use the `row-start-{n}` and `row-end-{n}` to start and end an element at the nth grid line, respectively:
 
 ```jsx
 export default function Home() {
@@ -112,7 +120,9 @@ export default function Home() {
 
 ### Gaps
 
-You can use `gap-{size}` utilities to control the gaps between rows and columns:
+You can use `gap-{size}` utilities to control the gaps between rows and columns.
+
+Consider the following example:
 
 ```jsx
 export default function Home() {

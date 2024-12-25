@@ -1,14 +1,12 @@
 ## Size Utilities
 
-<div style="text-align: right"> <i> Tailwind makes writing code feel like I'm using a design tool. <br> - Ryan Florence </i> </div>
-
-To actually see that the size utilities work the way we expect, we will give our elements backgrounds.
-Don't be distracted by this.
+<div style="text-align: right"> <i> Tailwind makes writing code feel like I'm using a design tool. <br> — Ryan Florence </i> </div>
 
 ### Width
 
 You can give an element a fixed width using the `w-{number}` utilities.
-For example:
+
+Consider the following example:
 
 ```jsx
 export default function Home() {
@@ -22,9 +20,12 @@ export default function Home() {
 }
 ```
 
-> Of course, there are many more `w-{number}` utilities.
+> To actually see that the size utilities work the way we expect, we give all our elements that are present in this section backgrounds.
+> Don't be distracted by this.
 
-You can give an element a percentage-based width using the `w-{fraction}` utilities:
+Of course, there are many more `w-{number}` utilities.
+
+You can also give an element a percentage-based width using the `w-{fraction}` utilities:
 
 ```jsx
 export default function Home() {
@@ -40,12 +41,13 @@ export default function Home() {
 
 You can use `w-screen` if you want an element to span the entire viewport width.
 
-You can set the minimum and the maximum width of an elemnent using the `min-w-{number}` and `max-w-{number}` attributes.
+You can also set the minimum and the maximum width of an element using the `min-w-{number}` and `max-w-{number}` attributes.
 
 ### Height
 
 You can give an element a fixed height using the `h-{number}` utilities.
-For example:
+
+Consider the following example:
 
 ```jsx
 export default function Home() {
@@ -59,16 +61,17 @@ export default function Home() {
 }
 ```
 
-> Of course, there are many more `h-{number}` utilities.
+Of course, there are many more `h-{number}` utilities.
 
 You can use `h-screen` if you want an element to span the entire viewport height.
 
-You can set the minimum and the maximum height of an elemnent using the `min-h-{number}` and `max-h-{number}` attributes.
+You can set the minimum and the maximum height of an element using the `min-h-{number}` and `max-h-{number}` attributes.
 
 ### Size
 
 You can set the width and height of an element at the same time using the `size-{number}` utility classes.
-For example:
+
+Consider the following example:
 
 ```jsx
 export default function Home() {
