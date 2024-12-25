@@ -1,10 +1,12 @@
 ## Spacing Utilities
 
-<div style="text-align: right"> <i> Thanks to @tailwindcss, CSS started to make sense ot me. <br> - Nuno Maduro </i> </div>
+<div style="text-align: right"> <i> Thanks to @tailwindcss, CSS started to make sense to me. <br> — Nuno Maduro </i> </div>
 
 ### Padding
 
-You can control the padding on all sides of an element using the `p-{size}` utilities:
+You can control the padding on all sides of an element using the `p-{size}` utilities.
+
+Consider the following example:
 
 ```jsx
 export default function Home() {
@@ -20,7 +22,7 @@ export default function Home() {
 
 You can control the padding on one side of an element using the `p{t | r | b | l}-{size}` utilities.
 
-For example:
+Consider the following example:
 
 ```jsx
 export default function Home() {
@@ -35,7 +37,9 @@ export default function Home() {
 
 ### Margin
 
-You can control the margin on all sides of an element using the `m-{size}` utilities:
+You can control the margin on all sides of an element using the `m-{size}` utilities.
+
+Consider the following example:
 
 ```jsx
 export default function Home() {
@@ -51,7 +55,7 @@ export default function Home() {
 
 You can control the margin on one side of an element using the `m{t | r | b | l}-{size}` utilities.
 
-For example:
+Consider the following example:
 
 ```jsx
 export default function Home() {

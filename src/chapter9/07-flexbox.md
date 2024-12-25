@@ -1,13 +1,13 @@
 ## Flexbox
 
-<div style="text-align: right"> <i> I never want to write regular CSS again. Only @tailwindcss. <br> - Trey Piepmeier </i> </div>
-
-The "flex" feature enables you to control the layout of elements in a one-dimensional space.
-You position the elements either as rows or columns.
+<div style="text-align: right"> <i> I never want to write regular CSS again. Only @tailwindcss. <br> — Trey Piepmeier </i> </div>
 
 ### The `flex` Utility Class
 
-Here is a simple example of a a flex container with 3 elements that are placed horizontally:
+The "flex" feature enables you to control the layout of elements in a one-dimensional space.
+You can position the elements either as rows or columns.
+
+Here is a simple example of a flex container with 3 elements that are placed horizontally:
 
 ```jsx
 export default function Home() {
@@ -21,7 +21,9 @@ export default function Home() {
 }
 ```
 
-You can use the `flex-col` utility class if you want a vertical layout:
+You can use the `flex-col` utility class if you want a vertical layout.
+
+Consider the following example:
 
 ```jsx
 export default function Home() {
@@ -37,7 +39,9 @@ export default function Home() {
 
 ### Flex Basis
 
-You can use the `basis-{size}` utilities to set the initial size of flex items:
+You can use the `basis-{size}` utilities to set the initial size of flex items.
+
+Consider the following example:
 
 ```jsx
 export default function Home() {
@@ -51,7 +55,7 @@ export default function Home() {
 }
 ```
 
-You can also specify a fraction:
+You can also specify a fraction like in this example:
 
 ```jsx
 export default function Home() {
@@ -66,6 +70,8 @@ export default function Home() {
 ```
 
 ### Flex Wrap
+
+The `flex-wrap` utility class can be used to control how flex items wrap.
 
 Consider this example:
 
@@ -100,7 +106,7 @@ Now the third child element will be placed on the next line.
 
 ### Grow
 
-You can use `grow` to tell a flex item to fill all available space:
+You can use the `grow` utility to tell a flex item to fill all of the available space:
 
 ```jsx
 export default function Home() {
@@ -116,7 +122,9 @@ export default function Home() {
 
 ### Space Between
 
-You can control horizontal space between elements using `space-x-{amount}` utilities:
+You can control horizontal space between elements using `space-x-{amount}` utilities.
+
+Consider the following example:
 
 ```jsx
 export default function Home() {
@@ -130,7 +138,9 @@ export default function Home() {
 }
 ```
 
-You can control vertical space between elements using `space-y-{amount}` utilities:
+You can control vertical space between elements using `space-y-{amount}` utilities.
+
+Consider the following example:
 
 ```jsx
 export default function Home() {

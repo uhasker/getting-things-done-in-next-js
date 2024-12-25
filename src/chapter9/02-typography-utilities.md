@@ -1,18 +1,12 @@
 ## Typography Utilities
 
-<div style="text-align: right"> <i> I don't use it but if I would use something I'd use Tailwind! <br> - Pieter Levels </i> </div>
-
-Consider the following component:
-
-```jsx
-export default function Home() {
-  return <p>This is a sentence</p>;
-}
-```
+<div style="text-align: right"> <i> I don't use it but if I would use something I'd use Tailwind! <br> — Pieter Levels </i> </div>
 
 ### Font Family
 
-You can change the font family:
+You can change the typeface of your text using the font-family utility classes which include `font-sans`, `font-serif` and `font-mono`.
+
+Consider the following example:
 
 ```jsx
 export default function Home() {
@@ -28,7 +22,9 @@ export default function Home() {
 
 ### Font Size
 
-You can change the font size:
+You can change the font size using the `text-*` utility classes.
+
+Consider the following example:
 
 ```jsx
 export default function Home() {
@@ -47,7 +43,9 @@ You can make your sentences larger than `text-xl` by prefixing the `xl` with a n
 
 ### Font Weight
 
-You can change the font weight:
+You can change the font weight using the `font-*` utility classes.
+
+Consider the following example:
 
 ```jsx
 export default function Home() {
@@ -65,9 +63,10 @@ export default function Home() {
 
 ### Line Height
 
-You can also set the line height.
+You can also set the line height which can be used to control the distance between text lines.
+This can be done using the `leading-*` utility classes.
 
-This can be used to control the distance between text lines:
+Consider the following example:
 
 ```jsx
 export default function Home() {
@@ -97,7 +96,9 @@ You can also control the line height via `leading-{num}` utility classes (from `
 
 ### Alignment
 
-The text alignment can be set like this:
+You can also set the text alignment using the `text-*` utility classes, most notably `text-left`, `text-center` and `text-right`.
+
+Consider the following example:
 
 ```jsx
 export default function Home() {
@@ -111,14 +112,21 @@ export default function Home() {
 }
 ```
 
-You can justify text with `text-justify`.
+You can also justify text using the `text-justify` utility class.
 
 ### Text Color
 
-You can also set the text color.
+You can also set the text color using Tailwind CSS utility classes.
+
 These utility classes usually have the form `text-{color}-{number}`.
+
+Here, `{color}` is a string indicating the color of the text (e.g. `blue` or `red`).
+
+Additionally, `{number}` indicates the darkness of the color.
 The higher the number, the darker the color will be.
-The number should be one of the values `100`, `200`, `300` all the way up to `900`.
+It can be one of the values `100`, `200`, `300` all the way up to `900`.
+
+Consider the following example:
 
 ```jsx
 export default function Home() {
