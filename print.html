@@ -157,9 +157,9 @@
 <p><em>by Mikhail Berkov</em></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="introduction"><a class="header" href="#introduction">Introduction</a></h1>
 <div style="text-align: right"> <i>No one reads introductions anyway.<br> — Sun Tzu</i></div>
-<p>Long gone are the times when JavaScript was just a scripting language to add simple interactive behaviour to websites. The ECMAScript 2015 standard significantly improved the usability of the language. Excellent UI libraries like React allow you to write straightforward declarative code which massively simplifies building user interfaces. Thanks to Node.js you can write JavaScript on the server. Next.js empowers you to write complex APIs very quickly and PostgreSQL provides a relational database that fits right in with the other tools. The Next.js stack therefore allows you to quickly develop complex applications using just one language - JavaScript (with optional type hints via TypeScript).</p>
-<p>This book serves as an introduction to the Next.js stack. However you don't learn software development by <em>just</em> reading books, you learn it by creating projects. We will therefore not bombard you with useless language trivia for hundreds of pages. If you care about that, go read the standard - it's <em>pretty comprehensive</em>. Instead we will create a real software project - an application for managing tasks called <strong>easy-opus</strong> (get it?). We will begin with nothing more than an empty project directory and the <em>will to learn</em>. We will end with a useful piece of software that allows us to create tasks, assign tasks to different users, update their statuses and much more.</p>
-<p>This book is therefore <em>inherently practical</em> - unlike some other literature we will not dwell much on theoretical considerations. On the other hand, purely practical concerns are first-class citizens here (for example there is an entire chapter devoted to hosting your application). This doesn't mean that <em>theory bad, practice good</em>. It simply means that the approach for <em>this particular book</em> is heavily geared towards completing a real software project.</p>
+<p>Long gone are the times when JavaScript was just a scripting language to add simple interactive behaviour to websites. The ECMAScript 2015 standard significantly improved the usability of the language. Excellent UI libraries like React allow you to write straightforward declarative code which massively simplifies building user interfaces. Thanks to Node.js you can write JavaScript on the server. Next.js empowers you to write complex APIs very quickly and PostgreSQL provides a relational database that fits right in with the other tools. The Next.js stack therefore allows you to quickly develop complex applications using just one language—JavaScript (with optional type hints via TypeScript).</p>
+<p>This book serves as an introduction to the Next.js stack. However you don't learn software development by <em>just</em> reading books, you learn it by creating projects. We will therefore not bombard you with useless language trivia for hundreds of pages. If you care about that, go read the standard—it's <em>pretty comprehensive</em>. Instead we will create a real software project—an application for managing tasks called <strong>easy-opus</strong> (get it?). We will begin with nothing more than an empty project directory and the <em>will to learn</em>. We will end with a useful piece of software that allows us to create tasks, assign tasks to different users, update their statuses and much more.</p>
+<p>This book is therefore <em>inherently practical</em>—unlike some other literature we will not dwell much on theoretical considerations. On the other hand, purely practical concerns are first-class citizens here (for example there is an entire chapter devoted to hosting your application). This doesn't mean that <em>theory bad, practice good</em>. It simply means that the approach for <em>this particular book</em> is heavily geared towards completing a real software project.</p>
 <p>This book is therefore also <em>not</em> about becoming <em>yet another JavaScript guru</em>™ (there are already too many of them). It's about writing a useful product. It is fundamentally about <strong>getting things done</strong>. The Next.js stack is really just a tool we use to get things done.</p>
 <p>This book is suitable for both beginners who want to pick up their first tech stack as well as for seasoned software developers looking to expand their knowledge.</p>
 <p>This book is intended to be a standalone resource. While there are resources for further reading in each section, these are merely pointers if you want to dive deeper into a certain topic. You <em>don't have</em> to read them and you should be able to understand everything without reading them. In fact, if you are hard stuck in a certain place, this probably represents a failure on our part. Maybe we didn't explain an important concept well enough (or at all!). Don't hesitate to write an email to <code>uhasker@protonmail.com</code> or to create an issue at <code>https://github.com/uhasker/getting-things-done-in-next-js</code> explaining your problem.</p>
@@ -170,7 +170,7 @@
 <div style="break-before: page; page-break-before: always;"></div><h1 id="chapter-1-a-brief-introduction-to-javascript"><a class="header" href="#chapter-1-a-brief-introduction-to-javascript">Chapter 1: A Brief Introduction to JavaScript</a></h1>
 <div style="text-align: right"> <i> JavaScript has beauty, but not everyone sees it. <br> — Confucius </i> </div>
 <p>First we will need to go through the basics of the JavaScript language that we will use pretty much everywhere throughout this book. After all the Next.js stack is built on top of it.</p>
-<p>You will setup your runtime, learn about variables, data types, operators and control flow. You will also learn how to write functions and how to think <em>functionally</em>. Thinking <em>functionally</em> will make you a better software developer and a better person. Isn't that great?</p>
+<p>You will set up your runtime, learn about variables, data types, operators and control flow. You will also learn how to write functions and how to think <em>functionally</em>. Thinking <em>functionally</em> will make you a better software developer and a better person. Isn't that great?</p>
 <p>Let's dive right in!</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="hello-world"><a class="header" href="#hello-world">Hello World</a></h2>
 <div style="text-align: right"> <i> A journey of a thousand miles begins with a single "Hello, World!" program. <br> — Ancient Chinese proverb </i> </div>
@@ -3388,7 +3388,7 @@ Unfortunately, the answer is a hard <strong>no</strong>.</p>
 <p>Now that we learned the basics of JavaScript, we could theoretically dive right into writing our application.
 However, JavaScript as a language has a central problem—it does not come with type checking.
 For example, there is nothing preventing you from trying to add two objects except the fact that—well—your application will crash and burn.</p>
-<p>In general, one the most common error sources are what can be described as type errors: a certain kind of value was used where a different kind of value was expected.
+<p>In general, one of the most common error sources are what can be described as type errors: a certain kind of value was used where a different kind of value was expected.
 This could be due to simple typos, a failure to understand how to use a library correctly, incorrect assumptions about runtime behavior and more.</p>
 <p>The goal of TypeScript is to provide static type checking for JavaScript programs—in other words, TypeScript provides you with tooling that runs before your code is executed (static) and ensures that the types of the program are correct (type checking).</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="why-typescript"><a class="header" href="#why-typescript">Why TypeScript?</a></h2>
@@ -5228,7 +5228,7 @@ Instead, we would persist our tasks in a database, which is what we will cover i
 <p>So far we've introduced the programming language that will power our project (TypeScript) and some relevant networking theory.</p>
 <p>But our users don't really care about the code we write nor the theory we know—they care about their <em>data</em>.
 After all, the primary purpose of web applications is to ingest and show interesting data to the user.</p>
-<p>Of course, it would be really bad if after every page refresh that data would be lost—therefore we need a way to store data <em>persistenly</em> which is where <em>relational databases</em> and the SQL language come into play.</p>
+<p>Of course, it would be really bad if after every page refresh that data would be lost—therefore we need a way to store data <em>persistently</em> which is where <em>relational databases</em> and the SQL language come into play.</p>
 <p>This chapter will introduce these concepts.</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="setup"><a class="header" href="#setup">Setup</a></h2>
 <div style="text-align: right"> <i> Setting up a database without planning is like sailing without a compass; sooner or later, you will lose your way. <br> — Ancient Chinese proverb </i> </div>
@@ -5985,7 +5985,7 @@ join task t on pt.task_id = t.id;
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="chapter-5-typesafe-sql-with-drizzle"><a class="header" href="#chapter-5-typesafe-sql-with-drizzle">Chapter 5: Typesafe SQL with Drizzle</a></h1>
 <div style="text-align: right"> <i> I hate Drizzle <br> — From Drizzles' official marketing page </i> </div>
-<p>Drizzle is a ORM (object relational mapping) framework written in TypeScript.
+<p>Drizzle is an ORM (object relational mapping) framework written in TypeScript.
 ORM frameworks allow you to convert data between regular (TypeScript) objects and SQL rows.</p>
 <p>Basically, instead of writing SQL queries directly and then laboriously translating the results between TypeScript objects and SQL rows, you let the ORM do the translation for you.</p>
 <p>Unfortunately, a lot of ORMs add a ton of (often unnecessary) abstractions.
@@ -7461,7 +7461,7 @@ The idea behind React is to create declarative UIs with nicely separated compone
 <p>Basically, we only declare how the application should look like and React takes care of the rest, including determining the necessary DOM manipulations.
 As you will see soon, this will save us a lot of time.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="chapter-7-adding-spice-with-react"><a class="header" href="#chapter-7-adding-spice-with-react">Chapter 7: Adding Spice with React</a></h1>
-<div style="text-align: right"> <i> What's a React developer's favorite place to hang out? <br> The State Park. <br> - From "1000 programming dad-jokes" </i> </div>
+<div style="text-align: right"> <i> What's a React developer's favorite place to hang out? <br> The State Park. <br> — From "1000 programming dad-jokes" </i> </div>
 <p>In this chapter we will create a simple (website) client using React.
 This client will allow us to add and delete tasks, where each task will have a title and a description.</p>
 <p>Let's begin.</p>
@@ -8450,7 +8450,7 @@ This is because if you fetch data inside an effect in more complex scenarios, yo
 This why most frameworks that build on top of React (like Next.js) usually provide better data fetching mechanisms than fetching data in effects.</p>
 </blockquote>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="chapter-8-moving-to-the-server-with-nextjs"><a class="header" href="#chapter-8-moving-to-the-server-with-nextjs">Chapter 8: Moving to the Server with Next.js</a></h1>
-<div style="text-align: right"> <i> Why did the Next.js developer order the steak? <br> Because he wanted a full-steak experience. <br> - From "1000 programming dad-jokes" </i> </div>
+<div style="text-align: right"> <i> Why did the Next.js developer order the steak? <br> Because he wanted a full-steak experience. <br> — From "1000 programming dad-jokes" </i> </div>
 <p>Now that you have a rough overview of React, we want to move to the server.
 Next.js is a React-based framework for building full-stack applications.</p>
 <p>We will use Next.js 15, which includes the App Router and React Server Components.</p>
@@ -8852,10 +8852,10 @@ For example, if you click the button, you will see that the <code>Rendered count
 <li>you need to use certain browser functionality (like resizing the browser window)</li>
 </ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="chapter-9-becoming-pretty-with-tailwind-css"><a class="header" href="#chapter-9-becoming-pretty-with-tailwind-css">Chapter 9: Becoming Pretty with Tailwind CSS</a></h1>
-<div style="text-align: right"> <i> I feel like an idiot for not using Tailwind CSS until now. <br> - Ryan Florence </i> </div>
-<p>So far, our pages are functional, but they're not pretty to look.</p>
+<div style="text-align: right"> <i> I feel like an idiot for not using Tailwind CSS until now. <br> — Ryan Florence </i> </div>
+<p>So far, our pages are functional, but they're not pretty to look at.</p>
 <p>CSS (short for Cascading Style Sheets) is a special language that is used for specifying the styling of an HTML document.
-We won't use CSS directly, but rather Tailwind CSS - a utility-first CSS framework that greatly simplifies the styling process.</p>
+We won't use CSS directly, but rather Tailwind CSS—a utility-first CSS framework that greatly simplifies the styling process.</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="setup-3"><a class="header" href="#setup-3">Setup</a></h2>
 <div style="text-align: right"> <i> Skip to the end. Use @tailwindcss. <br> — Kent C. Dodds </i> </div>
 <h3 id="tailwind-css-and-postcss"><a class="header" href="#tailwind-css-and-postcss">Tailwind CSS and PostCSS</a></h3>
