@@ -6720,11 +6720,7 @@ export default defineConfig({
 pnpm drizzle-kit generate
 pnpm drizzle-kit migrate
 </code></pre>
-<p>Alternatively, you can read the environment variables from a <code>.env</code> file.</p>
-<p>To accomplish this, you first need to install the <code>dotenv</code> package:</p>
-<pre><code class="language-sh">pnpm add dotenv
-</code></pre>
-<p>Next, create a <code>.env</code> file:</p>
+<p>Alternatively, you can read the environment variables from a <code>.env</code> file:</p>
 <pre><code>DATABASE_URL=$YOUR_DATABASE_URL_HERE
 </code></pre>
 <p>Again, you can run the commands as you usually would:</p>
@@ -8472,6 +8468,7 @@ Next.js is a React-based framework for building full-stack applications.</p>
 <li>we want to use Tailwind CSS</li>
 <li>we want to use the <code>src/</code> directory</li>
 <li>we want to use the App Router</li>
+<li>we want to use Turbopack for <code>next dev</code></li>
 <li>we don't want to customize the default import alias</li>
 </ul>
 <pre><code class="language-sh">pnpm dev
@@ -9515,16 +9512,18 @@ Here, we simply follow the steps from the Next.js chapter.</p>
 <li>we want to use Tailwind CSS</li>
 <li>we want to use the <code>src/</code> directory</li>
 <li>we want to use the App Router</li>
-<li>we don't want to customize the defalt import alias</li>
+<li>we want to use Turbopack for <code>next dev</code></li>
+<li>we don't want to customize the default import alias</li>
 </ul>
-<p>Note that from now on we specify all paths relative to the <code>src</code> directory.
-For example if we refer to a file <code>thingy/example.ts</code> that file will actually be in <code>src/thingy/example.ts</code>.
+<p>Note that from now on we specify all paths relative to the <code>src/app</code> directory.
+For example if we refer to a file <code>thingy/example.ts</code> that file will actually be in <code>src/app/thingy/example.ts</code>.
 If you're unsure about the location of a file, you can also look at the end of this section, which contains the file tree you should have after the setup is completed.</p>
-<h3 id="removing-unneccessary-code"><a class="header" href="#removing-unneccessary-code">Removing Unneccessary Code</a></h3>
-<p>Let's remove all the unneccessary code from the generated files.</p>
-<p>Change the file <code>app/layout.tsx</code> to look like this:</p>
+<h3 id="removing-unnecessary-code"><a class="header" href="#removing-unnecessary-code">Removing Unnecessary Code</a></h3>
+<p>Let's remove all the unnecessary code from the generated files.</p>
+<p>Change the file <code>layout.tsx</code> to look like this:</p>
 <pre><code class="language-jsx">import type { Metadata } from 'next';
 import './globals.css';
+import Link from 'next/link';
 
 export const metadata: Metadata = {
   title: 'Easy Opus',
@@ -9534,12 +9533,21 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     &lt;html lang="en"&gt;
-      &lt;body&gt;{children}&lt;/body&gt;
+      &lt;body&gt;
+        &lt;nav className="bg-blue-600 bg-opacity-70 text-white p-4 shadow-md flex items-center justify-between"&gt;
+          &lt;div className="flex justify-center w-full"&gt;
+            &lt;Link href="/" className="text-lg font-bold"&gt;
+              easy-opus
+            &lt;/Link&gt;
+          &lt;/div&gt;
+        &lt;/nav&gt;
+        &lt;&gt;{children}&lt;/&gt;
+      &lt;/body&gt;
     &lt;/html&gt;
   );
 }
 </code></pre>
-<p>Change the file <code>app/page.tsx</code> to look like this:</p>
+<p>Change the file <code>page.tsx</code> to look like this:</p>
 <pre><code class="language-jsx">export default function Home() {
   return &lt;h1 className="underline"&gt;Welcome to easy-opus&lt;/h1&gt;;
 }
@@ -9549,93 +9557,70 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 @tailwind components;
 @tailwind utilities;
 </code></pre>
-<p>Additionally, feel free to delete the SVG files in the <code>public</code> directory and to change (or delete) the <code>favicon</code>.</p>
+<p>Additionally, feel free to delete the SVG files in the <code>public</code> directory and to change the <code>favicon.ico</code>.</p>
 <p>Run <code>pnpm dev</code> and check out the page at <code>http://localhost:3000</code>.
 You should see the underlined text <code>Welcome to easy-opus</code>.</p>
 <h3 id="setup-a-database"><a class="header" href="#setup-a-database">Setup a Database</a></h3>
 <p>Next we need to setup our database.
 To accomplish this, we will simply follow the steps from the SQL chapter.</p>
-<p>Create a new Supabase project, copy the database URL and create the following <code>.env.local</code> file:</p>
+<p>Create a new Supabase project, copy the database URL and create the following <code>.env</code> file:</p>
 <pre><code>DATABASE_URL=$YOUR_DATABASE_URL_HERE
 </code></pre>
 <p>Of course, you need to specify the actual database URL you copied from Supabase instead of <code>$YOUR_DATABASE_URL_HERE</code>.</p>
-<p>Note that if your password has special characters like <code>:</code> or <code>/</code>, you will need to replace them with their respective percent-encodings (also called URL encodings).
-For example, <code>:</code> should be replaced with <code>%3A</code> and <code>/</code> should be replaced with <code>%2F</code>.
-You can read more about percent-encodings in the <a href="https://developer.mozilla.org/en-US/docs/Glossary/Percent-encoding">MDN docs</a>.</p>
+<p>Remember that if your password has special characters like <code>:</code> or <code>/</code>, you will need to replace them with their respective percent-encodings.</p>
 <h3 id="setup-drizzle"><a class="header" href="#setup-drizzle">Setup Drizzle</a></h3>
 <p>Next, we need to set up Drizzle.
 Here we will simply follow the steps from the Drizzle chapter.</p>
-<p>Install Drizzle and <code>dotenv</code>:</p>
-<pre><code class="language-sh">pnpm add drizzle-orm postgres dotenv
+<p>Install <code>drizzle-orm</code> and <code>pg</code>:</p>
+<pre><code class="language-sh">pnpm add drizzle-orm pg
 pnpm add --save-dev tsx drizzle-kit
 </code></pre>
+<p>Also, install the <code>@types/pg</code> package to get the type definitions for <code>pg</code>:</p>
+<pre><code class="language-sh">pnpm add @types/pg --save-dev
+</code></pre>
+<p>Finally, install the <code>drizzle-kit</code> package as a dev dependency:</p>
+<pre><code class="language-sh">pnpm add drizzle-kit --save-dev
+</code></pre>
 <p>Create a new directory called <code>db</code>.
-This is where our database-related files will go.</p>
+This is where our database-related files will go.
+You should also create a directory <code>db/migrations</code> where we will store the migrations.</p>
 <blockquote>
-<p>Remember that we specify all paths relative to <code>src</code>, i.e. you need to create the <code>db</code> directory in <code>src</code>.</p>
+<p>Remember that we specify all paths relative to <code>src/app</code>, i.e. you need to create the <code>db</code> directory in <code>src/app</code>.</p>
 </blockquote>
-<p>Now create a directory <code>db/migrations</code> to store the migrations.</p>
 <p>Create a file <code>db/drizzle.config.ts</code>:</p>
 <pre><code class="language-ts">import { defineConfig } from 'drizzle-kit';
 
 export default defineConfig({
+  out: './src/app/db/migrations',
+  schema: './src/app/db/schema.ts',
   dialect: 'postgresql',
-  schema: './src/db/schema.ts',
-  out: './src/db/migrations',
   dbCredentials: {
     url: process.env.DATABASE_URL!,
   },
 });
-</code></pre>
-<p>Next we create a file <code>db/migrate.ts</code>:</p>
-<pre><code class="language-ts">import { drizzle } from 'drizzle-orm/postgres-js';
-import postgres from 'postgres';
-import dotenv from 'dotenv';
-import { migrate } from 'drizzle-orm/postgres-js/migrator';
-
-dotenv.config({ path: ['.env.local', '.env'] });
-
-const databaseURI = process.env.DATABASE_URL;
-
-if (databaseURI === undefined) {
-  console.log('You need to provide the database URI');
-  process.exit(0);
-}
-
-const client = postgres(databaseURI, { max: 1 });
-const db = drizzle(client);
-
-async function runMigrations() {
-  await migrate(db, { migrationsFolder: './src/db/migrations' });
-  await client.end();
-}
-
-runMigrations().then(console.log).catch(console.error);
 </code></pre>
 <p>Finally, let's create the initial schema at <code>db/schema.ts</code>:</p>
 <pre><code class="language-ts">import { pgTable, serial, text, timestamp } from 'drizzle-orm/pg-core';
 
 export const projectTable = pgTable('project', {
   id: serial('id').primaryKey(),
-  userId: text('user_id').notNull(),
   name: text('name').notNull(),
   createdAt: timestamp('created_at').defaultNow().notNull(),
 });
 </code></pre>
-<p>To simplify migrations, we will add the following scripts to <code>package.json</code>:</p>
+<p>To simplify migrations, we will add the <code>generate</code> and <code>migrate</code> scripts to <code>package.json</code>:</p>
 <pre><code class="language-json">{
   "scripts": {
     // other scripts
-    "db:generate": "pnpm drizzle-kit generate --config=src/db/drizzle.config.ts",
-    "db:migrate": "pnpm tsx src/db/migrate.ts"
+    "db:generate": "pnpm drizzle-kit generate --config=./src/app/db/drizzle.config.ts",
+    "db:migrate": "pnpm drizzle-kit migrate"
   }
 }
 </code></pre>
-<p>Now run <code>pnpm db:generate</code> to generate the migration.</p>
-<p>Inspect the migration (which would be something like <code>db/migrations/0000_curious_vanisher-sql</code>) and make sure that it contains the right content:</p>
+<p>Now, run <code>pnpm db:generate</code> to generate the migration.</p>
+<p>Inspect the migration (which would be something like <code>db/migrations/0000_curious_vanisher.sql</code>) and make sure that it contains the right content:</p>
 <pre><code class="language-sql">CREATE TABLE IF NOT EXISTS "project" (
 	"id" serial PRIMARY KEY NOT NULL,
-	"user_id" text NOT NULL,
 	"name" text NOT NULL,
 	"created_at" timestamp DEFAULT now() NOT NULL
 );
@@ -9644,22 +9629,18 @@ export const projectTable = pgTable('project', {
 Verify that your database contains a <code>project</code> table with the right columns.</p>
 <p>Finally, we create the <code>db/index.ts</code> file which exports the <code>db</code> object to allow other files to call database functions:</p>
 <pre><code class="language-ts">import { drizzle } from 'drizzle-orm/postgres-js';
-import postgres from 'postgres';
 
-const databaseURL = process.env.DATABASE_URL!;
-
-const client = postgres(databaseURL);
-export const db = drizzle(client);
+export const db = drizzle(process.env.DATABASE_URL!);
 </code></pre>
 <blockquote>
-<p>Yes, this subsection was essentially a repeat of things you already learned in the Drizzle chapter.</p>
+<p>Yes, this subsection was essentially a repeat of things you've already learned in the Drizzle chapter.</p>
 </blockquote>
 <h3 id="linting"><a class="header" href="#linting">Linting</a></h3>
 <p>If you look through the scripts in <code>package.json</code>, you will see a curious little script called <code>lint</code> that executes <code>next lint</code>.</p>
-<p>This scripts provides an integrated ESLint experience.
+<p>This script provides an integrated ESLint experience.
 ESLint is an awesome tool that statically analyzes your code to quickly find problems.</p>
 <p>Note that ESLint is not for finding syntax or type errors (your TypeScript compiler already takes care of that).
-Instead it has a lot of rules for good code and bad code and attempts to help you with writing high-quality code.</p>
+Instead it has a lot of rules that help you avoid sketchy code.</p>
 <p>Let's run it:</p>
 <pre><code class="language-sh">pnpm lint
 </code></pre>
@@ -9670,7 +9651,7 @@ Instead it has a lot of rules for good code and bad code and attempts to help yo
 Currently, ESLint has nothing to tell us.</p>
 <h3 id="file-structure"><a class="header" href="#file-structure">File Structure</a></h3>
 <p>This is the file structure you should have right now:</p>
-<pre><code>├── .env.local
+<pre><code>├── .env
 ├── .eslintrc.json
 ├── next.config.mjs
 ├── next-env.d.ts
@@ -9686,7 +9667,6 @@ Currently, ESLint has nothing to tell us.</p>
 │   └── db
 │       ├── drizzle.config.ts
 │       ├── index.ts
-│       ├── migrate.ts
 │       ├── migrations
 │       │   ├── 0000_curious_vanisher.sql
 │       │   └── meta
@@ -9708,131 +9688,19 @@ The <code>next-env.d.ts</code> file ensures that Next.js types are picked up by 
 <p>The <code>tailwind.config.ts</code> file contains the configuration that is relevant for Tailwind CSS.
 The <code>postcss.config.js</code> file contains the configuration relevant for PostCSS (which is used by Tailwind CSS).</p>
 <p>The file <code>src/app/page.tsx</code> specifies the root page and <code>src/app/layout.tsx</code> specifies the root layout.</p>
-<p>The <code>globals.css</code> file specifies global styles - right we only really need it for the Tailwind directives.</p>
+<p>The <code>globals.css</code> file specifies global styles—right we only really need it for the Tailwind directives.</p>
 <p>The <code>src/db</code> directory contains everything that is related to the database (including the migrations).</p>
 <p>The <code>.eslintrc.json</code> contain the <code>eslint</code> configuration.</p>
-<p>The <code>.env.local</code> file contains our enviroment variables.</p>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="authentication"><a class="header" href="#authentication">Authentication</a></h2>
-<p>The tasks and projects should be "owned" by individual users of our application.</p>
-<p>Of course, users should not be able to access or look at projects of other users.
-This means that we need to implement authentication.</p>
-<p>That used to be very hard - luckily, nowadays there are prebuilt libraries to help us out (at least for the common use cases).
-We will use a library called Clerk.</p>
-<p>Go to <code>dashboard.clerk.com</code> and create a new application.</p>
-<p>Let's give the application the name <code>easy-opus</code>.
-You will get a bunch of sign in options, we will select "Email" and "Google".
-Click "Create application".</p>
-<p><img src="chapter10/images/new-auth-app.png" alt="" /></p>
-<p>After you've created an application, you will be redirected to a page that shows the values of two API keys, namely <code>NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY</code> and <code>CLERK_SECRET_KEY</code>.
-You should copy these values to your <code>.env</code> file:</p>
-<pre><code>NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=$YOUR_NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
-CLERK_SECRET_KEY=$YOUR_CLERK_SECRET_KEY
-</code></pre>
-<p>Next install <code>@clerk/nextjs</code>:</p>
-<pre><code class="language-sh">pnpm add @clerk/nextjs
-</code></pre>
-<p>Next we will need to add a <code>&lt;ClerkProvider&gt;</code> to our app in <code>layout.tsx</code>:</p>
-<pre><code class="language-jsx">import { ClerkProvider } from '@clerk/nextjs';
-
-// ...
-
-export default function RootLayout({ children }: { children: React.ReactNode }) {
-  return (
-    &lt;ClerkProvider&gt;
-      &lt;html lang="en"&gt;
-        &lt;body&gt;{children}&lt;/body&gt;
-      &lt;/html&gt;
-    &lt;/ClerkProvider&gt;
-  );
-}
-</code></pre>
-<p>Now we need to add a <code>middleware.ts</code> file that will specify what routes we want to protect:</p>
-<pre><code class="language-jsx">import { authMiddleware } from '@clerk/nextjs';
-
-export default authMiddleware({
-  publicRoutes: ['/'],
-});
-
-export const config = {
-  matcher: [
-    // Exclude files with a "." followed by an extension, which are typically static files.
-    // Exclude files in the _next directory, which are Next.js internals.
-    '/((?!.+\\.[\\w]+$|_next).*)',
-    // Re-include any files in the api or trpc folders that might have an extension
-    '/(api)(.*)',
-  ],
-};
-</code></pre>
-<blockquote>
-<p>Note that <code>middleware.ts</code> should be directly in <code>src</code>, not in <code>src/app</code>.</p>
-</blockquote>
-<p>Next, let's create the first version of the homepage <code>app/page.tsx</code>.</p>
-<p>We will keep it simple for now.
-If the user is not logged in, we will show the <code>SignIn</code> button.
-Otherwise we will show a placeholder text:</p>
-<pre><code class="language-jsx">import { SignIn } from '@clerk/nextjs';
-import { auth } from '@clerk/nextjs/server';
-import * as React from 'react';
-
-export default async function Home() {
-  const { userId } = auth();
-
-  if (userId === null) {
-    return (
-      &lt;div className="flex justify-center items-center h-screen"&gt;
-        &lt;SignIn /&gt;
-      &lt;/div&gt;
-    );
-  }
-
-  return &lt;p&gt;Projects will be here&lt;/p&gt;;
-}
-</code></pre>
-<p>Finally, let's add a navbar to every page that will show a <code>UserButton</code>.
-Modify <code>app/layout.tsx</code>:</p>
-<pre><code class="language-jsx">import { ClerkProvider, UserButton } from '@clerk/nextjs';
-import type { Metadata } from 'next';
-import './globals.css';
-
-export const metadata: Metadata = {
-  title: 'Easy Opus',
-  description: 'A simple task management application',
-};
-
-export default function RootLayout({ children }: { children: React.ReactNode }) {
-  return (
-    &lt;ClerkProvider&gt;
-      &lt;html lang="en"&gt;
-        &lt;body&gt;
-          &lt;nav className="bg-blue-600 bg-opacity-70 text-white p-4 shadow-md flex items-center justify-between"&gt;
-            &lt;div className="flex justify-center w-full"&gt;
-              &lt;a href="/" className="text-lg font-bold"&gt;
-                easy-opus
-              &lt;/a&gt;
-            &lt;/div&gt;
-            &lt;div className="absolute right-4"&gt;
-              &lt;UserButton /&gt;
-            &lt;/div&gt;
-          &lt;/nav&gt;
-          &lt;&gt;{children}&lt;/&gt;
-        &lt;/body&gt;
-      &lt;/html&gt;
-    &lt;/ClerkProvider&gt;
-  );
-}
-</code></pre>
-<p>If you try accessing <code>localhost:3000</code> now you will see a sign-in form provided by Clerk.js.
-You can use this to sign in with your Google account or create a new account with an email and password and sign in using that.</p>
-<p>Once you are signed in, you will see a page with a navbar, a user button in the top right corner and the placeholder text <code>Projects will be here</code>.</p>
+<p>The <code>.env</code> file contains our environment variables.</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="the-projects-page"><a class="header" href="#the-projects-page">The Projects Page</a></h2>
 <h3 id="project-list"><a class="header" href="#project-list">Project List</a></h3>
-<p>Let's create a component <code>ProjectList</code> in <code>app/project-list.tsx</code> that will show a nicely styled list of projects:</p>
+<p>Let's create a component <code>ProjectList</code> in <code>project-list.tsx</code> that will show a nicely styled list of projects:</p>
 <pre><code class="language-jsx">export function ProjectList({ projects }: { projects: { id: number, name: string }[] }) {
   return (
-    &lt;div className="my-8 mx-auto w-full max-w-2xl"&gt;
+    &lt;div className="my-8 mx-auto max-w-2xl"&gt;
       {projects.map((project) =&gt; (
-        &lt;div className="flex items-center justify-between bg-white p-4 rounded-lg shadow-md mb-4 hover:shadow-lg transition-shadow duration-200 ease-in-out"&gt;
-          &lt;span className="text-lg font-semibold text-gray-800 hover:text-blue-500 transition-colors duration-150 ease-in-out"&gt;
+        &lt;div className="flex items-center justify-between bg-white p-4 rounded shadow mb-4 hover:shadow transition"&gt;
+          &lt;span className="text-lg font-semibold text-gray-800 hover:text-blue-500 transition"&gt;
             {project.name}
           &lt;/span&gt;
         &lt;/div&gt;
@@ -9841,30 +9709,21 @@ You can use this to sign in with your Google account or create a new account wit
   );
 }
 </code></pre>
-<p>Update the <code>app/page.tsx</code> file to retrieve the projects show the project list:</p>
-<pre><code class="language-jsx">import { db } from '@/db';
-import { projectTable } from '@/db/schema';
-import { auth } from '@clerk/nextjs/server';
-import { SignIn } from '@clerk/nextjs';
+<p>Next, we will update the <code>page.tsx</code> file to show the project list.</p>
+<pre><code class="language-jsx">import { db } from './db';
+import { projectTable } from './db/schema';
 import { ProjectList } from './project-list';
-import { eq } from 'drizzle-orm';
 
 export default async function Home() {
-  const { userId } = auth();
-
-  if (userId === null) {
-    // ...
-  }
-
-  const projects = await db.select().from(projectTable).where(eq(projectTable.userId, userId));
+  const projects = await db.select().from(projectTable);
 
   return &lt;ProjectList projects={projects} /&gt;;
 }
 </code></pre>
-<p>Add a few projects with the correct user ID to the database and go to <code>localhost:3000</code>.
+<p>Add a few projects to the database and go to <code>http://localhost:3000</code>.
 You should see a project list containing the added projects.</p>
 <h3 id="fixing-a-lint"><a class="header" href="#fixing-a-lint">Fixing a Lint</a></h3>
-<p>While has no syntax errors, no type errors and generally works correctly, there is one issue.</p>
+<p>While our project has no syntax errors, no type errors and generally works correctly, there is one issue.</p>
 <p>If you read this book carefully so far, you should theoretically be able to figure it out, but it might take a while.
 Let's use our awesome ESLint tool instead:</p>
 <pre><code class="language-sh">pnpm lint
@@ -9875,21 +9734,19 @@ Let's use our awesome ESLint tool instead:</p>
 </code></pre>
 <p>Remember that if you want to render a list in React, you should give the individual elements a <code>key</code> prop.
 In this case, a good key prop would be the primary key from the database, so let's use that.</p>
-<p>Add the <code>key</code> property to the project <code>div</code> in <code>app/project-list.tsx</code> like this:</p>
-<pre><code class="language-jsx">// ...
-&lt;div
+<p>Add the <code>key</code> property to the project <code>div</code> in <code>project-list.tsx</code> like this:</p>
+<pre><code class="language-jsx">&lt;div
   key={project.id}
-  className="flex items-center justify-between bg-white p-4 rounded-lg shadow-md mb-4 hover:shadow-lg transition-shadow duration-200 ease-in-out"
+  className="flex items-center justify-between bg-white p-4 rounded shadow mb-4 hover:shadow transition"
 &gt;
-  &lt;span className="text-lg font-semibold text-gray-800 hover:text-blue-500 transition-colors duration-150 ease-in-out"&gt;
+  &lt;span className="text-lg font-semibold text-gray-800 hover:text-blue-500 transition"&gt;
     {project.name}
   &lt;/span&gt;
 &lt;/div&gt;
-// ...
 </code></pre>
 <p>If you rerun <code>pnpm lint</code>, you should see no more errors.</p>
 <h3 id="new-project-modal"><a class="header" href="#new-project-modal">New Project Modal</a></h3>
-<p>Let's create a modal that will allow us to add new projects at <code>app/new-project-modal.tsx</code>:</p>
+<p>Let's create a modal that will allow us to add new projects at <code>project-modal.tsx</code>:</p>
 <pre><code class="language-jsx">"use client";
 
 import * as React from "react";
@@ -9916,16 +9773,16 @@ export function NewProjectModal({
   }
 
   return (
-    &lt;div className="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center px-4"&gt;
-      &lt;div className="relative w-full max-w-md bg-white p-6 rounded-lg shadow-lg"&gt;
+    &lt;div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center p-4"&gt;
+      &lt;div className="relative w-full max-w-md bg-white p-6 rounded shadow"&gt;
         &lt;button
           onClick={onClose}
-          className="absolute top-0 right-0 m-4 text-gray-400 hover:text-gray-600 transition duration-150 ease-in-out"
+          className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
         &gt;
           &amp;times;
         &lt;/button&gt;
-        &lt;form onSubmit={handleSubmit} className="space-y-6"&gt;
-          &lt;h2 className="text-xl font-semibold text-gray-800"&gt;Add Project&lt;/h2&gt;
+        &lt;form onSubmit={handleSubmit} className="space-y-4"&gt;
+          &lt;h2 className="text-lg font-semibold text-gray-800"&gt;Add Project&lt;/h2&gt;
           &lt;div&gt;
             &lt;label htmlFor="name" className="text-sm font-medium text-gray-600"&gt;
               Project Name
@@ -9934,12 +9791,12 @@ export function NewProjectModal({
               type="text"
               id="name"
               name="name"
-              className="mt-2 block w-full px-4 py-3 bg-gray-50 rounded-md border-transparent focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+              className="mt-1 block w-full px-3 py-2 border rounded focus:border-blue-500 focus:ring focus:ring-blue-200"
             /&gt;
           &lt;/div&gt;
           &lt;button
             type="submit"
-            className="w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-gradient-to-r from-blue-500 to-teal-400 hover:from-blue-600 hover:to-teal-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-150 ease-in-out"
+            className="w-full py-2 px-4 text-sm font-medium text-white bg-blue-500 rounded hover:bg-blue-600 focus:ring-2 focus:ring-blue-400"
           &gt;
             Add Project
           &lt;/button&gt;
@@ -9949,38 +9806,48 @@ export function NewProjectModal({
   );
 }
 </code></pre>
-<p>Let's create a file <code>db/actions.ts</code> containing the <code>insertProject</code> function:</p>
-<pre><code class="language-ts">'use server';
+<p>Let's create a file <code>api/project/route.ts</code> with a <code>POST</code> endpoint that allows us to add a new project:</p>
+<pre><code class="language-ts">import { db } from '@/app/db';
+import { projectTable } from '@/app/db/schema';
+import { NextRequest, NextResponse } from 'next/server';
 
-import { db } from '.';
-import { projectTable } from './schema';
+export async function POST(request: NextRequest) {
+  const { name } = await request.json();
 
-export async function insertProject(userId: string, name: string) {
-  await db.insert(projectTable).values({ userId, name });
+  if (!name) {
+    return NextResponse.json({ error: 'Project name is required' }, { status: 400 });
+  }
+
+  await db.insert(projectTable).values({ name });
+
+  return NextResponse.json({ message: 'Project inserted successfully' }, { status: 200 });
 }
 </code></pre>
-<p>We need to show the modal in the project list by modifying the <code>app/project-list.tsx</code> file:</p>
+<p>We need to show the modal in the project list by modifying the <code>project-list.tsx</code> file:</p>
 <pre><code class="language-jsx">'use client';
 
-import { insertProject } from '@/db/actions';
-import { NewProjectModal } from './new-project-modal';
+import { NewProjectModal } from './project-modal';
 
 import * as React from 'react';
 import { useRouter } from 'next/navigation';
 
-export function ProjectList({
-  userId,
-  projects,
-}: {
-  userId: string,
-  projects: { id: number, name: string }[],
-}) {
+export function ProjectList({ projects }: { projects: { id: number, name: string }[] }) {
   const router = useRouter();
 
   const [showModal, setShowModal] = React.useState(false);
 
   async function handleNewProject(name: string) {
-    await insertProject(userId, name);
+    const response = await fetch('/api/project', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ name }),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to create project');
+    }
     setShowModal(false);
     router.refresh();
   }
@@ -9989,7 +9856,7 @@ export function ProjectList({
     &lt;div className="my-8 mx-auto w-full max-w-2xl"&gt;
       &lt;button
         onClick={() =&gt; setShowModal(true)}
-        className="mb-6 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded shadow hover:shadow-md transition duration-200 ease-in-out"
+        className="mb-6 bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-600 shadow transition"
       &gt;
         Add New Project
       &lt;/button&gt;
@@ -9997,59 +9864,62 @@ export function ProjectList({
       {/* Project list here */}
 
       {showModal &amp;&amp; (
-        &lt;NewProjectModal onSubmit={handleNewProject} onClose={() =&gt; setShowModal(true)} /&gt;
+        &lt;NewProjectModal onSubmit={handleNewProject} onClose={() =&gt; setShowModal(false)} /&gt;
       )}
     &lt;/div&gt;
   );
 }
 </code></pre>
-<p>Finally, we need to update the <code>app/page.tsx</code> file since the <code>ProjectList</code> component now takes a user ID:</p>
-<pre><code class="language-jsx">export default async function Home() {
-  // ...
-
-  return &lt;ProjectList userId={userId} projects={projects} /&gt;;
-}
-</code></pre>
-<p>Go to <code>localhost:3000</code> and try adding a few projects using the "Add new project" button and the project modal.</p>
+<p>Go to <code>http://localhost:3000</code> and try adding a few projects.</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="task-page"><a class="header" href="#task-page">Task Page</a></h2>
 <h3 id="schema-update"><a class="header" href="#schema-update">Schema Update</a></h3>
 <p>We now have a page where we can show the created projects.
 However, this is not terribly useful as long as we can't add tasks to the projects.</p>
 <p>First, we need a place to store the tasks in our database.
-Create a new task table in <code>db/schema.ts</code>:</p>
-<pre><code class="language-ts">import { integer /*...*/ } from 'drizzle-orm/pg-core';
+Create a new <code>task</code> table in <code>db/schema.ts</code>:</p>
+<pre><code class="language-ts">import { sql } from 'drizzle-orm';
+import { check, integer, pgEnum /*...*/ } from 'drizzle-orm/pg-core';
 
 // ...
 
-export const taskTable = pgTable('task', {
-  id: serial('id').primaryKey(),
-  title: text('title').notNull(),
-  description: text('description').notNull(),
-  status: text('status').notNull(),
-  createdAt: timestamp('created_at').defaultNow().notNull(),
-  projectId: integer('project_id')
-    .notNull()
-    .references(() =&gt; projectTable.id),
-});
+export const statusEnum = pgEnum('status', ['todo', 'inprogress', 'done']);
+
+// Declare the task table
+export const taskTable = pgTable(
+  'task',
+  {
+    id: serial('id').primaryKey(),
+    title: text('title').notNull(),
+    description: text('description').notNull(),
+    status: statusEnum().notNull(),
+    duration: integer('duration'),
+    createdAt: timestamp('created_at').defaultNow().notNull(),
+    projectId: integer('project_id')
+      .notNull()
+      .references(() =&gt; projectTable.id),
+  },
+  (table) =&gt; [
+    {
+      durationCheckConstraint: check('duration_check', sql`${table.duration} &gt; 0`),
+    },
+  ],
+);
 </code></pre>
 <p>Generate the migration:</p>
 <pre><code class="language-sh">pnpm db:generate
 </code></pre>
 <p>Review the migration (which might be something like <code>db/migrations/0001_loose_wonder_man.sql</code>):</p>
-<pre><code class="language-sql">CREATE TABLE IF NOT EXISTS "task" (
+<pre><code class="language-sql">CREATE TYPE "public"."status" AS ENUM('todo', 'inprogress', 'done');
+CREATE TABLE "task" (
 	"id" serial PRIMARY KEY NOT NULL,
 	"title" text NOT NULL,
 	"description" text NOT NULL,
-	"status" text NOT NULL,
+	"status" "status" NOT NULL,
+	"duration" integer,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"project_id" integer NOT NULL
 );
---&gt; statement-breakpoint
-DO $$ BEGIN
- ALTER TABLE "task" ADD CONSTRAINT "task_project_id_project_id_fk" FOREIGN KEY ("project_id") REFERENCES "project"("id") ON DELETE no action ON UPDATE no action;
-EXCEPTION
- WHEN duplicate_object THEN null;
-END $$;
+ALTER TABLE "task" ADD CONSTRAINT "task_project_id_project_id_fk" FOREIGN KEY ("project_id") REFERENCES "public"."project"("id") ON DELETE no action ON UPDATE no action;
 </code></pre>
 <p>Execute the migration:</p>
 <pre><code class="language-sh">pnpm db:migrate
@@ -10057,21 +9927,11 @@ END $$;
 <p>Check that the <code>task</code> table is present in the database together with the right columns.</p>
 <h3 id="task-page-1"><a class="header" href="#task-page-1">Task Page</a></h3>
 <p>Now let's create a page containing the tasks of a given project at <code>app/project/[id]/page.tsx</code>:</p>
-<pre><code class="language-jsx">import { db } from '@/db';
-import { projectTable, taskTable } from '@/db/schema';
+<pre><code class="language-jsx">import { db } from '@/app/db';
+import { projectTable, taskTable } from '@/app/db/schema';
 import { eq } from 'drizzle-orm';
-import { auth } from '@clerk/nextjs/server';
 
 export default async function Project({ params: { id } }: { params: { id: number } }) {
-  const { userId } = auth();
-
-  const projects = await db.select().from(projectTable).where(eq(projectTable.id, id));
-  const project = projects[0];
-
-  if (project.userId !== userId) {
-    return &lt;h1&gt;Not allowed to access project&lt;/h1&gt;;
-  }
-
   const tasks = await db.select().from(taskTable).where(eq(taskTable.projectId, id));
 
   return (
@@ -10083,24 +9943,21 @@ export default async function Project({ params: { id } }: { params: { id: number
   );
 }
 </code></pre>
-<p>Add a few tasks to the project with the ID <code>1</code> and go to <code>localhost:3000/project/1</code> - you should see these tasks.
-However, the UX is currently quite ugly, so let's improve it.</p>
+<p>Add a few tasks to the project with the ID <code>1</code> and go to <code>http://localhost:3000/project/1</code> - you should see these tasks.
+Next, we need to give the user a way to add tasks by themselves.</p>
 <h3 id="task-list"><a class="header" href="#task-list">Task List</a></h3>
-<p>Create the a <code>TaskList</code> component at <code>app/project/[id]/task-list.tsx</code>:</p>
+<p>Create a <code>TaskList</code> component at <code>app/project/[id]/task-list.tsx</code>:</p>
 <pre><code class="language-jsx">export function TaskList({
   tasks,
 }: {
   tasks: { id: number, title: string, description: string, status: string }[],
 }) {
   return (
-    &lt;div className="my-8 mx-auto w-full max-w-2xl"&gt;
+    &lt;div className="my-8 mx-auto max-w-2xl"&gt;
       {tasks.map((task) =&gt; (
-        &lt;div
-          key={task.id}
-          className="flex flex-col bg-white p-4 rounded-lg shadow-md mb-4 hover:shadow-lg transition-shadow duration-200 ease-in-out"
-        &gt;
+        &lt;div key={task.id} className="bg-white p-4 rounded shadow mb-4 hover:shadow transition"&gt;
           &lt;h3 className="text-lg font-semibold text-gray-800 mb-2"&gt;{task.title}&lt;/h3&gt;
-          &lt;p className="text-gray-600 mb-4"&gt;{task.description}&lt;/p&gt;
+          &lt;p className="text-gray-600 mb-2"&gt;{task.description}&lt;/p&gt;
           &lt;p className="text-sm text-blue-500"&gt;{task.status}&lt;/p&gt;
         &lt;/div&gt;
       ))}
@@ -10120,7 +9977,7 @@ export default async function Project({ params: { id } }: { params: { id: number
 </code></pre>
 <h3 id="new-task-modal"><a class="header" href="#new-task-modal">New Task Modal</a></h3>
 <p>Finally, let's create a modal that will allow us to add new tasks.
-Create a file <code>app/project/[id]/new-task-modal.tsx</code>:</p>
+Create a file <code>app/project/[id]/task-modal.tsx</code>:</p>
 <pre><code class="language-jsx">"use client";
 
 interface FormElements extends HTMLFormControlsCollection {
@@ -10147,16 +10004,16 @@ export function NewTaskModal({
   }
 
   return (
-    &lt;div className="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center px-4"&gt;
-      &lt;div className="relative w-full max-w-md bg-white p-6 rounded-lg shadow-lg"&gt;
+    &lt;div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center p-4"&gt;
+      &lt;div className="relative w-full max-w-md bg-white p-6 rounded shadow"&gt;
         &lt;button
           onClick={onClose}
-          className="absolute top-0 right-0 m-4 text-gray-400 hover:text-gray-600 transition duration-150 ease-in-out"
+          className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
         &gt;
           &amp;times;
         &lt;/button&gt;
-        &lt;form onSubmit={handleSubmit} className="space-y-6"&gt;
-          &lt;h2 className="text-xl font-semibold text-gray-800"&gt;Add Task&lt;/h2&gt;
+        &lt;form onSubmit={handleSubmit} className="space-y-4"&gt;
+          &lt;h2 className="text-lg font-semibold text-gray-800"&gt;Add Task&lt;/h2&gt;
           &lt;div&gt;
             &lt;label
               htmlFor="title"
@@ -10168,7 +10025,7 @@ export function NewTaskModal({
               type="text"
               id="title"
               name="title"
-              className="mt-2 block w-full px-4 py-3 bg-gray-50 rounded-md border-transparent focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+              className="mt-1 block w-full px-3 py-2 bg-gray-50 rounded border focus:border-blue-500 focus:ring-blue-200"
             /&gt;
           &lt;/div&gt;
           &lt;div&gt;
@@ -10182,12 +10039,12 @@ export function NewTaskModal({
               type="text"
               id="description"
               name="description"
-              className="mt-2 block w-full px-4 py-3 bg-gray-50 rounded-md border-transparent focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+              className="mt-1 block w-full px-3 py-2 bg-gray-50 rounded border focus:border-blue-500 focus:ring-blue-200"
             /&gt;
           &lt;/div&gt;
           &lt;button
             type="submit"
-            className="w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-gradient-to-r from-blue-500 to-teal-400 hover:from-blue-600 hover:to-teal-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-150 ease-in-out"
+            className="w-full py-2 px-4 text-sm font-medium text-white bg-blue-500 rounded hover:bg-blue-600 focus:ring-2 focus:ring-blue-400"
           &gt;
             Add Task
           &lt;/button&gt;
@@ -10197,21 +10054,30 @@ export function NewTaskModal({
   );
 }
 </code></pre>
-<p>Let's add a new database function <code>insertTask</code> in <code>db/actions.ts</code>:</p>
-<pre><code class="language-ts">// ...
-import { taskTable /*...*/ } from './schema';
+<p>Let's add a new route in <code>task/route.ts</code>:</p>
+<pre><code class="language-ts">import { db } from '@/app/db';
+import { taskTable } from '@/app/db/schema';
+import { NextRequest, NextResponse } from 'next/server';
 
-// ...
+export async function POST(request: NextRequest) {
+  const { title, description, status, projectId } = await request.json();
 
-export async function insertTask(title: string, description: string, projectId: number) {
+  if (!title || !description || !projectId) {
+    return NextResponse.json(
+      { error: 'Task title, description and project ID are required' },
+      { status: 400 },
+    );
+  }
+
   await db.insert(taskTable).values({ title, description, status: 'inprogress', projectId });
+
+  return NextResponse.json({ message: 'Task inserted successfully' }, { status: 200 });
 }
 </code></pre>
 <p>Use the new task modal in the <code>app/project/[id]/task-list.tsx</code> file:</p>
 <pre><code class="language-jsx">'use client';
 
-import { insertTask } from '@/db/actions';
-import { NewTaskModal } from './new-task-modal';
+import { NewTaskModal } from './task-modal';
 import * as React from 'react';
 import { useRouter } from 'next/navigation';
 
@@ -10227,7 +10093,17 @@ export function TaskList({
   const router = useRouter();
 
   async function handleNewTask(title: string, description: string) {
-    await insertTask(title, description, projectId);
+    const response = await fetch('/api/task', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ title, description, projectId }),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to create task');
+    }
     setShowNewTaskModal(false);
     router.refresh();
   }
@@ -10236,7 +10112,7 @@ export function TaskList({
     &lt;div className="my-8 mx-auto w-full max-w-2xl"&gt;
       &lt;button
         onClick={() =&gt; setShowNewTaskModal(true)}
-        className="mb-6 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded shadow hover:shadow-md transition duration-200 ease-in-out"
+        className="mb-6 bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-600 shadow"
       &gt;
         Add New Task
       &lt;/button&gt;
@@ -10255,17 +10131,27 @@ export function TaskList({
 }
 </code></pre>
 <p>You should now be able to use the "Add new task" button and the modal to add new tasks to the project.</p>
+<p>Finally, let's make all the projects on the homepage into links that take you to the respective project pages:</p>
+<pre><code class="language-jsx">&lt;Link href={`/project/${project.id}`}&gt;
+  &lt;span className="text-lg font-semibold text-gray-800 hover:text-blue-500 transition"&gt;
+    {project.name}
+  &lt;/span&gt;
+&lt;/Link&gt;
+</code></pre>
+<blockquote>
+<p>Don't forget to import the <code>&lt;Link&gt;</code> component here.</p>
+</blockquote>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="deployment"><a class="header" href="#deployment">Deployment</a></h2>
 <p>Now that we're done writing the first version, let's get our application out into the world.
 We will use <strong>GitHub</strong> and <strong>Vercel</strong> to deploy our application.</p>
 <h3 id="creating-a-git-repository"><a class="header" href="#creating-a-git-repository">Creating a Git Repository</a></h3>
 <p>GitHub is a platform that allows developers to upload, store, manage and share their code.</p>
 <p>If you look at <code>easy-opus</code> you will see a directory <code>.git</code> and a file <code>.gitignore</code>.
-This is because <code>pnpm create next-app</code> has initialize a git repository for you.</p>
+This is because <code>pnpm create next-app</code> has initialized a git repository for you.</p>
 <p>Let's update the index with our current content:</p>
 <pre><code class="language-sh">git add .
 </code></pre>
-<p>If you run <code>git status</code> you will a bunch of change to be committed.
+<p>If you run <code>git status</code> you will see the changes to be committed.
 To actually commit them, run:</p>
 <pre><code class="language-sh">git commit -m "feat: initial commit"
 </code></pre>
@@ -10275,10 +10161,24 @@ git push --set-upstream origin main
 </code></pre>
 <h3 id="deploying-on-vercel"><a class="header" href="#deploying-on-vercel">Deploying on Vercel</a></h3>
 <p>Finally, we will deploy this project on Vercel.
-Simply go to <code>vercel.com</code>, create a new project and import the git repository that we just created.</p>
+Simply go to <code>vercel.com</code>, create a new project and import the git repository that we've just created.</p>
 <p>Next, you need to add the environment variables in the "environment variables" section.</p>
 <p>Finally, Vercel will deploy your application and automatically set up a domain for it.</p>
 <p>Congratulations, you can now access <code>easy-opus</code> from anywhere in the world!</p>
+<blockquote>
+<p>Note that normally we would also protect our webpage with authentication precisely in order to prevent everyone in the world from making changes to your tasks.
+However, authentication is out of scope for this book.</p>
+</blockquote>
+<h3 id="more-features"><a class="header" href="#more-features">More Features</a></h3>
+<p>Congratulations, you now have a working minimal task application.</p>
+<p>You should try adding more features, most importantly:</p>
+<ul>
+<li>make the status field in the tasks a dropdown that allows you to change the status</li>
+<li>add a button that allows you to delete the tasks</li>
+<li>arrange the tasks in columns by their status</li>
+<li>show the creation date of the tasks in the UI</li>
+</ul>
+<p>And more!</p>
 
                     </main>
 

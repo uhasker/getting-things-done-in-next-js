@@ -166,16 +166,18 @@ Here, we simply follow the steps from the Next.js chapter.</p>
 <li>we want to use Tailwind CSS</li>
 <li>we want to use the <code>src/</code> directory</li>
 <li>we want to use the App Router</li>
-<li>we don't want to customize the defalt import alias</li>
+<li>we want to use Turbopack for <code>next dev</code></li>
+<li>we don't want to customize the default import alias</li>
 </ul>
-<p>Note that from now on we specify all paths relative to the <code>src</code> directory.
-For example if we refer to a file <code>thingy/example.ts</code> that file will actually be in <code>src/thingy/example.ts</code>.
+<p>Note that from now on we specify all paths relative to the <code>src/app</code> directory.
+For example if we refer to a file <code>thingy/example.ts</code> that file will actually be in <code>src/app/thingy/example.ts</code>.
 If you're unsure about the location of a file, you can also look at the end of this section, which contains the file tree you should have after the setup is completed.</p>
-<h3 id="removing-unneccessary-code"><a class="header" href="#removing-unneccessary-code">Removing Unneccessary Code</a></h3>
-<p>Let's remove all the unneccessary code from the generated files.</p>
-<p>Change the file <code>app/layout.tsx</code> to look like this:</p>
+<h3 id="removing-unnecessary-code"><a class="header" href="#removing-unnecessary-code">Removing Unnecessary Code</a></h3>
+<p>Let's remove all the unnecessary code from the generated files.</p>
+<p>Change the file <code>layout.tsx</code> to look like this:</p>
 <pre><code class="language-jsx">import type { Metadata } from 'next';
 import './globals.css';
+import Link from 'next/link';
 
 export const metadata: Metadata = {
   title: 'Easy Opus',
@@ -185,12 +187,21 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     &lt;html lang="en"&gt;
-      &lt;body&gt;{children}&lt;/body&gt;
+      &lt;body&gt;
+        &lt;nav className="bg-blue-600 bg-opacity-70 text-white p-4 shadow-md flex items-center justify-between"&gt;
+          &lt;div className="flex justify-center w-full"&gt;
+            &lt;Link href="/" className="text-lg font-bold"&gt;
+              easy-opus
+            &lt;/Link&gt;
+          &lt;/div&gt;
+        &lt;/nav&gt;
+        &lt;&gt;{children}&lt;/&gt;
+      &lt;/body&gt;
     &lt;/html&gt;
   );
 }
 </code></pre>
-<p>Change the file <code>app/page.tsx</code> to look like this:</p>
+<p>Change the file <code>page.tsx</code> to look like this:</p>
 <pre><code class="language-jsx">export default function Home() {
   return &lt;h1 className="underline"&gt;Welcome to easy-opus&lt;/h1&gt;;
 }
@@ -200,93 +211,70 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 @tailwind components;
 @tailwind utilities;
 </code></pre>
-<p>Additionally, feel free to delete the SVG files in the <code>public</code> directory and to change (or delete) the <code>favicon</code>.</p>
+<p>Additionally, feel free to delete the SVG files in the <code>public</code> directory and to change the <code>favicon.ico</code>.</p>
 <p>Run <code>pnpm dev</code> and check out the page at <code>http://localhost:3000</code>.
 You should see the underlined text <code>Welcome to easy-opus</code>.</p>
 <h3 id="setup-a-database"><a class="header" href="#setup-a-database">Setup a Database</a></h3>
 <p>Next we need to setup our database.
 To accomplish this, we will simply follow the steps from the SQL chapter.</p>
-<p>Create a new Supabase project, copy the database URL and create the following <code>.env.local</code> file:</p>
+<p>Create a new Supabase project, copy the database URL and create the following <code>.env</code> file:</p>
 <pre><code>DATABASE_URL=$YOUR_DATABASE_URL_HERE
 </code></pre>
 <p>Of course, you need to specify the actual database URL you copied from Supabase instead of <code>$YOUR_DATABASE_URL_HERE</code>.</p>
-<p>Note that if your password has special characters like <code>:</code> or <code>/</code>, you will need to replace them with their respective percent-encodings (also called URL encodings).
-For example, <code>:</code> should be replaced with <code>%3A</code> and <code>/</code> should be replaced with <code>%2F</code>.
-You can read more about percent-encodings in the <a href="https://developer.mozilla.org/en-US/docs/Glossary/Percent-encoding">MDN docs</a>.</p>
+<p>Remember that if your password has special characters like <code>:</code> or <code>/</code>, you will need to replace them with their respective percent-encodings.</p>
 <h3 id="setup-drizzle"><a class="header" href="#setup-drizzle">Setup Drizzle</a></h3>
 <p>Next, we need to set up Drizzle.
 Here we will simply follow the steps from the Drizzle chapter.</p>
-<p>Install Drizzle and <code>dotenv</code>:</p>
-<pre><code class="language-sh">pnpm add drizzle-orm postgres dotenv
+<p>Install <code>drizzle-orm</code> and <code>pg</code>:</p>
+<pre><code class="language-sh">pnpm add drizzle-orm pg
 pnpm add --save-dev tsx drizzle-kit
 </code></pre>
+<p>Also, install the <code>@types/pg</code> package to get the type definitions for <code>pg</code>:</p>
+<pre><code class="language-sh">pnpm add @types/pg --save-dev
+</code></pre>
+<p>Finally, install the <code>drizzle-kit</code> package as a dev dependency:</p>
+<pre><code class="language-sh">pnpm add drizzle-kit --save-dev
+</code></pre>
 <p>Create a new directory called <code>db</code>.
-This is where our database-related files will go.</p>
+This is where our database-related files will go.
+You should also create a directory <code>db/migrations</code> where we will store the migrations.</p>
 <blockquote>
-<p>Remember that we specify all paths relative to <code>src</code>, i.e. you need to create the <code>db</code> directory in <code>src</code>.</p>
+<p>Remember that we specify all paths relative to <code>src/app</code>, i.e. you need to create the <code>db</code> directory in <code>src/app</code>.</p>
 </blockquote>
-<p>Now create a directory <code>db/migrations</code> to store the migrations.</p>
 <p>Create a file <code>db/drizzle.config.ts</code>:</p>
 <pre><code class="language-ts">import { defineConfig } from 'drizzle-kit';
 
 export default defineConfig({
+  out: './src/app/db/migrations',
+  schema: './src/app/db/schema.ts',
   dialect: 'postgresql',
-  schema: './src/db/schema.ts',
-  out: './src/db/migrations',
   dbCredentials: {
     url: process.env.DATABASE_URL!,
   },
 });
-</code></pre>
-<p>Next we create a file <code>db/migrate.ts</code>:</p>
-<pre><code class="language-ts">import { drizzle } from 'drizzle-orm/postgres-js';
-import postgres from 'postgres';
-import dotenv from 'dotenv';
-import { migrate } from 'drizzle-orm/postgres-js/migrator';
-
-dotenv.config({ path: ['.env.local', '.env'] });
-
-const databaseURI = process.env.DATABASE_URL;
-
-if (databaseURI === undefined) {
-  console.log('You need to provide the database URI');
-  process.exit(0);
-}
-
-const client = postgres(databaseURI, { max: 1 });
-const db = drizzle(client);
-
-async function runMigrations() {
-  await migrate(db, { migrationsFolder: './src/db/migrations' });
-  await client.end();
-}
-
-runMigrations().then(console.log).catch(console.error);
 </code></pre>
 <p>Finally, let's create the initial schema at <code>db/schema.ts</code>:</p>
 <pre><code class="language-ts">import { pgTable, serial, text, timestamp } from 'drizzle-orm/pg-core';
 
 export const projectTable = pgTable('project', {
   id: serial('id').primaryKey(),
-  userId: text('user_id').notNull(),
   name: text('name').notNull(),
   createdAt: timestamp('created_at').defaultNow().notNull(),
 });
 </code></pre>
-<p>To simplify migrations, we will add the following scripts to <code>package.json</code>:</p>
+<p>To simplify migrations, we will add the <code>generate</code> and <code>migrate</code> scripts to <code>package.json</code>:</p>
 <pre><code class="language-json">{
   "scripts": {
     // other scripts
-    "db:generate": "pnpm drizzle-kit generate --config=src/db/drizzle.config.ts",
-    "db:migrate": "pnpm tsx src/db/migrate.ts"
+    "db:generate": "pnpm drizzle-kit generate --config=./src/app/db/drizzle.config.ts",
+    "db:migrate": "pnpm drizzle-kit migrate"
   }
 }
 </code></pre>
-<p>Now run <code>pnpm db:generate</code> to generate the migration.</p>
-<p>Inspect the migration (which would be something like <code>db/migrations/0000_curious_vanisher-sql</code>) and make sure that it contains the right content:</p>
+<p>Now, run <code>pnpm db:generate</code> to generate the migration.</p>
+<p>Inspect the migration (which would be something like <code>db/migrations/0000_curious_vanisher.sql</code>) and make sure that it contains the right content:</p>
 <pre><code class="language-sql">CREATE TABLE IF NOT EXISTS "project" (
 	"id" serial PRIMARY KEY NOT NULL,
-	"user_id" text NOT NULL,
 	"name" text NOT NULL,
 	"created_at" timestamp DEFAULT now() NOT NULL
 );
@@ -295,22 +283,18 @@ export const projectTable = pgTable('project', {
 Verify that your database contains a <code>project</code> table with the right columns.</p>
 <p>Finally, we create the <code>db/index.ts</code> file which exports the <code>db</code> object to allow other files to call database functions:</p>
 <pre><code class="language-ts">import { drizzle } from 'drizzle-orm/postgres-js';
-import postgres from 'postgres';
 
-const databaseURL = process.env.DATABASE_URL!;
-
-const client = postgres(databaseURL);
-export const db = drizzle(client);
+export const db = drizzle(process.env.DATABASE_URL!);
 </code></pre>
 <blockquote>
-<p>Yes, this subsection was essentially a repeat of things you already learned in the Drizzle chapter.</p>
+<p>Yes, this subsection was essentially a repeat of things you've already learned in the Drizzle chapter.</p>
 </blockquote>
 <h3 id="linting"><a class="header" href="#linting">Linting</a></h3>
 <p>If you look through the scripts in <code>package.json</code>, you will see a curious little script called <code>lint</code> that executes <code>next lint</code>.</p>
-<p>This scripts provides an integrated ESLint experience.
+<p>This script provides an integrated ESLint experience.
 ESLint is an awesome tool that statically analyzes your code to quickly find problems.</p>
 <p>Note that ESLint is not for finding syntax or type errors (your TypeScript compiler already takes care of that).
-Instead it has a lot of rules for good code and bad code and attempts to help you with writing high-quality code.</p>
+Instead it has a lot of rules that help you avoid sketchy code.</p>
 <p>Let's run it:</p>
 <pre><code class="language-sh">pnpm lint
 </code></pre>
@@ -321,7 +305,7 @@ Instead it has a lot of rules for good code and bad code and attempts to help yo
 Currently, ESLint has nothing to tell us.</p>
 <h3 id="file-structure"><a class="header" href="#file-structure">File Structure</a></h3>
 <p>This is the file structure you should have right now:</p>
-<pre><code>├── .env.local
+<pre><code>├── .env
 ├── .eslintrc.json
 ├── next.config.mjs
 ├── next-env.d.ts
@@ -337,7 +321,6 @@ Currently, ESLint has nothing to tell us.</p>
 │   └── db
 │       ├── drizzle.config.ts
 │       ├── index.ts
-│       ├── migrate.ts
 │       ├── migrations
 │       │   ├── 0000_curious_vanisher.sql
 │       │   └── meta
@@ -359,10 +342,10 @@ The <code>next-env.d.ts</code> file ensures that Next.js types are picked up by 
 <p>The <code>tailwind.config.ts</code> file contains the configuration that is relevant for Tailwind CSS.
 The <code>postcss.config.js</code> file contains the configuration relevant for PostCSS (which is used by Tailwind CSS).</p>
 <p>The file <code>src/app/page.tsx</code> specifies the root page and <code>src/app/layout.tsx</code> specifies the root layout.</p>
-<p>The <code>globals.css</code> file specifies global styles - right we only really need it for the Tailwind directives.</p>
+<p>The <code>globals.css</code> file specifies global styles—right we only really need it for the Tailwind directives.</p>
 <p>The <code>src/db</code> directory contains everything that is related to the database (including the migrations).</p>
 <p>The <code>.eslintrc.json</code> contain the <code>eslint</code> configuration.</p>
-<p>The <code>.env.local</code> file contains our enviroment variables.</p>
+<p>The <code>.env</code> file contains our environment variables.</p>
 
                     </main>
 
@@ -372,7 +355,7 @@ The <code>postcss.config.js</code> file contains the configuration relevant for 
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../chapter10/02-authentication.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../chapter10/02-the-projects-page.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -386,7 +369,7 @@ The <code>postcss.config.js</code> file contains the configuration relevant for 
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../chapter10/02-authentication.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../chapter10/02-the-projects-page.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

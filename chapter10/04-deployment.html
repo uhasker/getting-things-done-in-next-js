@@ -158,11 +158,11 @@ We will use <strong>GitHub</strong> and <strong>Vercel</strong> to deploy our ap
 <h3 id="creating-a-git-repository"><a class="header" href="#creating-a-git-repository">Creating a Git Repository</a></h3>
 <p>GitHub is a platform that allows developers to upload, store, manage and share their code.</p>
 <p>If you look at <code>easy-opus</code> you will see a directory <code>.git</code> and a file <code>.gitignore</code>.
-This is because <code>pnpm create next-app</code> has initialize a git repository for you.</p>
+This is because <code>pnpm create next-app</code> has initialized a git repository for you.</p>
 <p>Let's update the index with our current content:</p>
 <pre><code class="language-sh">git add .
 </code></pre>
-<p>If you run <code>git status</code> you will a bunch of change to be committed.
+<p>If you run <code>git status</code> you will see the changes to be committed.
 To actually commit them, run:</p>
 <pre><code class="language-sh">git commit -m "feat: initial commit"
 </code></pre>
@@ -172,16 +172,30 @@ git push --set-upstream origin main
 </code></pre>
 <h3 id="deploying-on-vercel"><a class="header" href="#deploying-on-vercel">Deploying on Vercel</a></h3>
 <p>Finally, we will deploy this project on Vercel.
-Simply go to <code>vercel.com</code>, create a new project and import the git repository that we just created.</p>
+Simply go to <code>vercel.com</code>, create a new project and import the git repository that we've just created.</p>
 <p>Next, you need to add the environment variables in the "environment variables" section.</p>
 <p>Finally, Vercel will deploy your application and automatically set up a domain for it.</p>
 <p>Congratulations, you can now access <code>easy-opus</code> from anywhere in the world!</p>
+<blockquote>
+<p>Note that normally we would also protect our webpage with authentication precisely in order to prevent everyone in the world from making changes to your tasks.
+However, authentication is out of scope for this book.</p>
+</blockquote>
+<h3 id="more-features"><a class="header" href="#more-features">More Features</a></h3>
+<p>Congratulations, you now have a working minimal task application.</p>
+<p>You should try adding more features, most importantly:</p>
+<ul>
+<li>make the status field in the tasks a dropdown that allows you to change the status</li>
+<li>add a button that allows you to delete the tasks</li>
+<li>arrange the tasks in columns by their status</li>
+<li>show the creation date of the tasks in the UI</li>
+</ul>
+<p>And more!</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../chapter10/04-task-page.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../chapter10/03-task-page.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
@@ -192,7 +206,7 @@ Simply go to <code>vercel.com</code>, create a new project and import the git re
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../chapter10/04-task-page.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../chapter10/03-task-page.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 

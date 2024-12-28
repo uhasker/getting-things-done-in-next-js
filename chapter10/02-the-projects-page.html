@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Task Page</title>
+        <title>The Projects Page</title>
 
 
         <!-- Custom HTML head -->
@@ -152,185 +152,113 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h2 id="task-page"><a class="header" href="#task-page">Task Page</a></h2>
-<h3 id="schema-update"><a class="header" href="#schema-update">Schema Update</a></h3>
-<p>We now have a page where we can show the created projects.
-However, this is not terribly useful as long as we can't add tasks to the projects.</p>
-<p>First, we need a place to store the tasks in our database.
-Create a new task table in <code>db/schema.ts</code>:</p>
-<pre><code class="language-ts">import { integer /*...*/ } from 'drizzle-orm/pg-core';
-
-// ...
-
-export const taskTable = pgTable('task', {
-  id: serial('id').primaryKey(),
-  title: text('title').notNull(),
-  description: text('description').notNull(),
-  status: text('status').notNull(),
-  createdAt: timestamp('created_at').defaultNow().notNull(),
-  projectId: integer('project_id')
-    .notNull()
-    .references(() =&gt; projectTable.id),
-});
-</code></pre>
-<p>Generate the migration:</p>
-<pre><code class="language-sh">pnpm db:generate
-</code></pre>
-<p>Review the migration (which might be something like <code>db/migrations/0001_loose_wonder_man.sql</code>):</p>
-<pre><code class="language-sql">CREATE TABLE IF NOT EXISTS "task" (
-	"id" serial PRIMARY KEY NOT NULL,
-	"title" text NOT NULL,
-	"description" text NOT NULL,
-	"status" text NOT NULL,
-	"created_at" timestamp DEFAULT now() NOT NULL,
-	"project_id" integer NOT NULL
-);
---&gt; statement-breakpoint
-DO $$ BEGIN
- ALTER TABLE "task" ADD CONSTRAINT "task_project_id_project_id_fk" FOREIGN KEY ("project_id") REFERENCES "project"("id") ON DELETE no action ON UPDATE no action;
-EXCEPTION
- WHEN duplicate_object THEN null;
-END $$;
-</code></pre>
-<p>Execute the migration:</p>
-<pre><code class="language-sh">pnpm db:migrate
-</code></pre>
-<p>Check that the <code>task</code> table is present in the database together with the right columns.</p>
-<h3 id="task-page-1"><a class="header" href="#task-page-1">Task Page</a></h3>
-<p>Now let's create a page containing the tasks of a given project at <code>app/project/[id]/page.tsx</code>:</p>
-<pre><code class="language-jsx">import { db } from '@/db';
-import { projectTable, taskTable } from '@/db/schema';
-import { eq } from 'drizzle-orm';
-import { auth } from '@clerk/nextjs/server';
-
-export default async function Project({ params: { id } }: { params: { id: number } }) {
-  const { userId } = auth();
-
-  const projects = await db.select().from(projectTable).where(eq(projectTable.id, id));
-  const project = projects[0];
-
-  if (project.userId !== userId) {
-    return &lt;h1&gt;Not allowed to access project&lt;/h1&gt;;
-  }
-
-  const tasks = await db.select().from(taskTable).where(eq(taskTable.projectId, id));
-
+                        <h2 id="the-projects-page"><a class="header" href="#the-projects-page">The Projects Page</a></h2>
+<h3 id="project-list"><a class="header" href="#project-list">Project List</a></h3>
+<p>Let's create a component <code>ProjectList</code> in <code>project-list.tsx</code> that will show a nicely styled list of projects:</p>
+<pre><code class="language-jsx">export function ProjectList({ projects }: { projects: { id: number, name: string }[] }) {
   return (
-    &lt;div&gt;
-      {tasks.map((task) =&gt; (
-        &lt;p key={task.id}&gt;{task.title}&lt;/p&gt;
-      ))}
-    &lt;/div&gt;
-  );
-}
-</code></pre>
-<p>Add a few tasks to the project with the ID <code>1</code> and go to <code>localhost:3000/project/1</code> - you should see these tasks.
-However, the UX is currently quite ugly, so let's improve it.</p>
-<h3 id="task-list"><a class="header" href="#task-list">Task List</a></h3>
-<p>Create the a <code>TaskList</code> component at <code>app/project/[id]/task-list.tsx</code>:</p>
-<pre><code class="language-jsx">export function TaskList({
-  tasks,
-}: {
-  tasks: { id: number, title: string, description: string, status: string }[],
-}) {
-  return (
-    &lt;div className="my-8 mx-auto w-full max-w-2xl"&gt;
-      {tasks.map((task) =&gt; (
-        &lt;div
-          key={task.id}
-          className="flex flex-col bg-white p-4 rounded-lg shadow-md mb-4 hover:shadow-lg transition-shadow duration-200 ease-in-out"
-        &gt;
-          &lt;h3 className="text-lg font-semibold text-gray-800 mb-2"&gt;{task.title}&lt;/h3&gt;
-          &lt;p className="text-gray-600 mb-4"&gt;{task.description}&lt;/p&gt;
-          &lt;p className="text-sm text-blue-500"&gt;{task.status}&lt;/p&gt;
+    &lt;div className="my-8 mx-auto max-w-2xl"&gt;
+      {projects.map((project) =&gt; (
+        &lt;div className="flex items-center justify-between bg-white p-4 rounded shadow mb-4 hover:shadow transition"&gt;
+          &lt;span className="text-lg font-semibold text-gray-800 hover:text-blue-500 transition"&gt;
+            {project.name}
+          &lt;/span&gt;
         &lt;/div&gt;
       ))}
     &lt;/div&gt;
   );
 }
 </code></pre>
-<p>Use the <code>TaskList</code> in <code>app/project/[id]/page.tsx</code>:</p>
-<pre><code class="language-jsx">// ...
-import { TaskList } from './task-list';
+<p>Next, we will update the <code>page.tsx</code> file to show the project list.</p>
+<pre><code class="language-jsx">import { db } from './db';
+import { projectTable } from './db/schema';
+import { ProjectList } from './project-list';
 
-export default async function Project({ params: { id } }: { params: { id: number } }) {
-  // ...
+export default async function Home() {
+  const projects = await db.select().from(projectTable);
 
-  return &lt;TaskList tasks={tasks} /&gt;;
+  return &lt;ProjectList projects={projects} /&gt;;
 }
 </code></pre>
-<h3 id="new-task-modal"><a class="header" href="#new-task-modal">New Task Modal</a></h3>
-<p>Finally, let's create a modal that will allow us to add new tasks.
-Create a file <code>app/project/[id]/new-task-modal.tsx</code>:</p>
+<p>Add a few projects to the database and go to <code>http://localhost:3000</code>.
+You should see a project list containing the added projects.</p>
+<h3 id="fixing-a-lint"><a class="header" href="#fixing-a-lint">Fixing a Lint</a></h3>
+<p>While our project has no syntax errors, no type errors and generally works correctly, there is one issue.</p>
+<p>If you read this book carefully so far, you should theoretically be able to figure it out, but it might take a while.
+Let's use our awesome ESLint tool instead:</p>
+<pre><code class="language-sh">pnpm lint
+</code></pre>
+<p>You should see:</p>
+<pre><code>./src/app/project-list.tsx
+9:9  Error: Missing "key" prop for element in iterator  react/jsx-key
+</code></pre>
+<p>Remember that if you want to render a list in React, you should give the individual elements a <code>key</code> prop.
+In this case, a good key prop would be the primary key from the database, so let's use that.</p>
+<p>Add the <code>key</code> property to the project <code>div</code> in <code>project-list.tsx</code> like this:</p>
+<pre><code class="language-jsx">&lt;div
+  key={project.id}
+  className="flex items-center justify-between bg-white p-4 rounded shadow mb-4 hover:shadow transition"
+&gt;
+  &lt;span className="text-lg font-semibold text-gray-800 hover:text-blue-500 transition"&gt;
+    {project.name}
+  &lt;/span&gt;
+&lt;/div&gt;
+</code></pre>
+<p>If you rerun <code>pnpm lint</code>, you should see no more errors.</p>
+<h3 id="new-project-modal"><a class="header" href="#new-project-modal">New Project Modal</a></h3>
+<p>Let's create a modal that will allow us to add new projects at <code>project-modal.tsx</code>:</p>
 <pre><code class="language-jsx">"use client";
 
+import * as React from "react";
+
 interface FormElements extends HTMLFormControlsCollection {
-  title: HTMLInputElement;
-  description: HTMLInputElement;
+  name: HTMLInputElement;
 }
 
-interface TaskFormElement extends HTMLFormElement {
+interface ProjectFormElement extends HTMLFormElement {
   readonly elements: FormElements;
 }
 
-export function NewTaskModal({
+export function NewProjectModal({
   onClose,
   onSubmit,
 }: {
   onClose: () =&gt; void;
-  onSubmit: (title: string, description: string) =&gt; Promise&lt;void&gt;;
+  onSubmit: (name: string) =&gt; Promise&lt;void&gt;;
 }) {
-  async function handleSubmit(event: React.FormEvent&lt;TaskFormElement&gt;) {
+  async function handleSubmit(event: React.FormEvent&lt;ProjectFormElement&gt;) {
     event.preventDefault();
-    const title = event.currentTarget.elements.title.value.trim();
-    const description = event.currentTarget.elements.description.value.trim();
-    await onSubmit(title, description);
+    const name = event.currentTarget.elements.name.value.trim();
+    await onSubmit(name);
   }
 
   return (
-    &lt;div className="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center px-4"&gt;
-      &lt;div className="relative w-full max-w-md bg-white p-6 rounded-lg shadow-lg"&gt;
+    &lt;div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center p-4"&gt;
+      &lt;div className="relative w-full max-w-md bg-white p-6 rounded shadow"&gt;
         &lt;button
           onClick={onClose}
-          className="absolute top-0 right-0 m-4 text-gray-400 hover:text-gray-600 transition duration-150 ease-in-out"
+          className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
         &gt;
           &amp;times;
         &lt;/button&gt;
-        &lt;form onSubmit={handleSubmit} className="space-y-6"&gt;
-          &lt;h2 className="text-xl font-semibold text-gray-800"&gt;Add Task&lt;/h2&gt;
+        &lt;form onSubmit={handleSubmit} className="space-y-4"&gt;
+          &lt;h2 className="text-lg font-semibold text-gray-800"&gt;Add Project&lt;/h2&gt;
           &lt;div&gt;
-            &lt;label
-              htmlFor="title"
-              className="text-sm font-medium text-gray-600"
-            &gt;
-              Title
+            &lt;label htmlFor="name" className="text-sm font-medium text-gray-600"&gt;
+              Project Name
             &lt;/label&gt;
             &lt;input
               type="text"
-              id="title"
-              name="title"
-              className="mt-2 block w-full px-4 py-3 bg-gray-50 rounded-md border-transparent focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
-            /&gt;
-          &lt;/div&gt;
-          &lt;div&gt;
-            &lt;label
-              htmlFor="description"
-              className="text-sm font-medium text-gray-600"
-            &gt;
-              Description
-            &lt;/label&gt;
-            &lt;input
-              type="text"
-              id="description"
-              name="description"
-              className="mt-2 block w-full px-4 py-3 bg-gray-50 rounded-md border-transparent focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+              id="name"
+              name="name"
+              className="mt-1 block w-full px-3 py-2 border rounded focus:border-blue-500 focus:ring focus:ring-blue-200"
             /&gt;
           &lt;/div&gt;
           &lt;button
             type="submit"
-            className="w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-gradient-to-r from-blue-500 to-teal-400 hover:from-blue-600 hover:to-teal-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-150 ease-in-out"
+            className="w-full py-2 px-4 text-sm font-medium text-white bg-blue-500 rounded hover:bg-blue-600 focus:ring-2 focus:ring-blue-400"
           &gt;
-            Add Task
+            Add Project
           &lt;/button&gt;
         &lt;/form&gt;
       &lt;/div&gt;
@@ -338,74 +266,81 @@ export function NewTaskModal({
   );
 }
 </code></pre>
-<p>Let's add a new database function <code>insertTask</code> in <code>db/actions.ts</code>:</p>
-<pre><code class="language-ts">// ...
-import { taskTable /*...*/ } from './schema';
+<p>Let's create a file <code>api/project/route.ts</code> with a <code>POST</code> endpoint that allows us to add a new project:</p>
+<pre><code class="language-ts">import { db } from '@/app/db';
+import { projectTable } from '@/app/db/schema';
+import { NextRequest, NextResponse } from 'next/server';
 
-// ...
+export async function POST(request: NextRequest) {
+  const { name } = await request.json();
 
-export async function insertTask(title: string, description: string, projectId: number) {
-  await db.insert(taskTable).values({ title, description, status: 'inprogress', projectId });
+  if (!name) {
+    return NextResponse.json({ error: 'Project name is required' }, { status: 400 });
+  }
+
+  await db.insert(projectTable).values({ name });
+
+  return NextResponse.json({ message: 'Project inserted successfully' }, { status: 200 });
 }
 </code></pre>
-<p>Use the new task modal in the <code>app/project/[id]/task-list.tsx</code> file:</p>
+<p>We need to show the modal in the project list by modifying the <code>project-list.tsx</code> file:</p>
 <pre><code class="language-jsx">'use client';
 
-import { insertTask } from '@/db/actions';
-import { NewTaskModal } from './new-task-modal';
+import { NewProjectModal } from './project-modal';
+
 import * as React from 'react';
 import { useRouter } from 'next/navigation';
 
-export function TaskList({
-  projectId,
-  tasks,
-}: {
-  projectId: number,
-  tasks: { id: number, title: string, description: string, status: string }[],
-}) {
-  const [showNewTaskModal, setShowNewTaskModal] = React.useState(false);
-
+export function ProjectList({ projects }: { projects: { id: number, name: string }[] }) {
   const router = useRouter();
 
-  async function handleNewTask(title: string, description: string) {
-    await insertTask(title, description, projectId);
-    setShowNewTaskModal(false);
+  const [showModal, setShowModal] = React.useState(false);
+
+  async function handleNewProject(name: string) {
+    const response = await fetch('/api/project', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ name }),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to create project');
+    }
+    setShowModal(false);
     router.refresh();
   }
 
   return (
     &lt;div className="my-8 mx-auto w-full max-w-2xl"&gt;
       &lt;button
-        onClick={() =&gt; setShowNewTaskModal(true)}
-        className="mb-6 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded shadow hover:shadow-md transition duration-200 ease-in-out"
+        onClick={() =&gt; setShowModal(true)}
+        className="mb-6 bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-600 shadow transition"
       &gt;
-        Add New Task
+        Add New Project
       &lt;/button&gt;
-      {/* Task list */}
-      {showNewTaskModal &amp;&amp; (
-        &lt;NewTaskModal onSubmit={handleNewTask} onClose={() =&gt; setShowNewTaskModal(false)} /&gt;
+
+      {/* Project list here */}
+
+      {showModal &amp;&amp; (
+        &lt;NewProjectModal onSubmit={handleNewProject} onClose={() =&gt; setShowModal(false)} /&gt;
       )}
     &lt;/div&gt;
   );
 }
 </code></pre>
-<p>Since the <code>TaskList</code> component takes a <code>projectId</code> prop, we need to update <code>app/project/[id]/page.tsx</code>:</p>
-<pre><code class="language-js">export default async function Project(/* ...*/) {
-  // ...
-  return &lt;TaskList projectId={id} tasks={tasks} /&gt;;
-}
-</code></pre>
-<p>You should now be able to use the "Add new task" button and the modal to add new tasks to the project.</p>
+<p>Go to <code>http://localhost:3000</code> and try adding a few projects.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../chapter10/03-the-projects-page.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../chapter10/01-setup.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../chapter10/05-deployment.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../chapter10/03-task-page.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -415,11 +350,11 @@ export function TaskList({
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../chapter10/03-the-projects-page.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../chapter10/01-setup.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../chapter10/05-deployment.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../chapter10/03-task-page.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
