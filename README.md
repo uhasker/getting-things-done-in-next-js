@@ -20,7 +20,7 @@ We are specifically interested if you find one of the following:
 - typos
 - grammatical errors
 - factual errors
-- poor explanations that are unaccessible for beginners
+- poor explanations that are inaccessible for beginners
 - poor structure within a book section
 
 This list is not exhaustive - if you think that an interesting piece of trivia or a funny joke would add value to this book, don't hesitate to contribute it.

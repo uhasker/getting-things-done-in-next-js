@@ -2,7 +2,7 @@
 
 <div style="text-align: right"> <i> I hate Drizzle <br> — From Drizzles' official marketing page </i> </div>
 
-Drizzle is a ORM (object relational mapping) framework written in TypeScript.
+Drizzle is an ORM (object relational mapping) framework written in TypeScript.
 ORM frameworks allow you to convert data between regular (TypeScript) objects and SQL rows.
 
 Basically, instead of writing SQL queries directly and then laboriously translating the results between TypeScript objects and SQL rows, you let the ORM do the translation for you.
