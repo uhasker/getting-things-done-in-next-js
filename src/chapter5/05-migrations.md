@@ -220,15 +220,7 @@ pnpm drizzle-kit generate
 pnpm drizzle-kit migrate
 ```
 
-Alternatively, you can read the environment variables from a `.env` file.
-
-To accomplish this, you first need to install the `dotenv` package:
-
-```sh
-pnpm add dotenv
-```
-
-Next, create a `.env` file:
+Alternatively, you can read the environment variables from a `.env` file:
 
 ```
 DATABASE_URL=$YOUR_DATABASE_URL_HERE

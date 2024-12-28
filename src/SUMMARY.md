@@ -91,7 +91,6 @@
 - [The Project](chapter10/README.md)
 
   - [Setup](chapter10/01-setup.md)
-  - [Authentication](chapter10/02-authentication.md)
-  - [The Projects Page](chapter10/03-the-projects-page.md)
-  - [Task Page](chapter10/04-task-page.md)
-  - [Deployment](chapter10/05-deployment.md)
+  - [The Projects Page](chapter10/02-the-projects-page.md)
+  - [Task Page](chapter10/03-task-page.md)
+  - [Deployment](chapter10/04-deployment.md)

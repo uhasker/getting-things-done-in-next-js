@@ -18,21 +18,23 @@ Give your project the name `easy-opus` and select the following options:
 - we want to use Tailwind CSS
 - we want to use the `src/` directory
 - we want to use the App Router
-- we don't want to customize the defalt import alias
+- we want to use Turbopack for `next dev`
+- we don't want to customize the default import alias
 
-Note that from now on we specify all paths relative to the `src` directory.
-For example if we refer to a file `thingy/example.ts` that file will actually be in `src/thingy/example.ts`.
+Note that from now on we specify all paths relative to the `src/app` directory.
+For example if we refer to a file `thingy/example.ts` that file will actually be in `src/app/thingy/example.ts`.
 If you're unsure about the location of a file, you can also look at the end of this section, which contains the file tree you should have after the setup is completed.
 
-### Removing Unneccessary Code
+### Removing Unnecessary Code
 
-Let's remove all the unneccessary code from the generated files.
+Let's remove all the unnecessary code from the generated files.
 
-Change the file `app/layout.tsx` to look like this:
+Change the file `layout.tsx` to look like this:
 
 ```jsx
 import type { Metadata } from 'next';
 import './globals.css';
+import Link from 'next/link';
 
 export const metadata: Metadata = {
   title: 'Easy Opus',
@@ -42,13 +44,22 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <nav className="bg-blue-600 bg-opacity-70 text-white p-4 shadow-md flex items-center justify-between">
+          <div className="flex justify-center w-full">
+            <Link href="/" className="text-lg font-bold">
+              easy-opus
+            </Link>
+          </div>
+        </nav>
+        <>{children}</>
+      </body>
     </html>
   );
 }
 ```
 
-Change the file `app/page.tsx` to look like this:
+Change the file `page.tsx` to look like this:
 
 ```jsx
 export default function Home() {
@@ -64,7 +75,7 @@ Change the file `app/globals.css` to look like this:
 @tailwind utilities;
 ```
 
-Additionally, feel free to delete the SVG files in the `public` directory and to change (or delete) the `favicon`.
+Additionally, feel free to delete the SVG files in the `public` directory and to change the `favicon.ico`.
 
 Run `pnpm dev` and check out the page at `http://localhost:3000`.
 You should see the underlined text `Welcome to easy-opus`.
@@ -74,7 +85,7 @@ You should see the underlined text `Welcome to easy-opus`.
 Next we need to setup our database.
 To accomplish this, we will simply follow the steps from the SQL chapter.
 
-Create a new Supabase project, copy the database URL and create the following `.env.local` file:
+Create a new Supabase project, copy the database URL and create the following `.env` file:
 
 ```
 DATABASE_URL=$YOUR_DATABASE_URL_HERE
@@ -82,28 +93,37 @@ DATABASE_URL=$YOUR_DATABASE_URL_HERE
 
 Of course, you need to specify the actual database URL you copied from Supabase instead of `$YOUR_DATABASE_URL_HERE`.
 
-Note that if your password has special characters like `:` or `/`, you will need to replace them with their respective percent-encodings (also called URL encodings).
-For example, `:` should be replaced with `%3A` and `/` should be replaced with `%2F`.
-You can read more about percent-encodings in the [MDN docs](https://developer.mozilla.org/en-US/docs/Glossary/Percent-encoding).
+Remember that if your password has special characters like `:` or `/`, you will need to replace them with their respective percent-encodings.
 
 ### Setup Drizzle
 
 Next, we need to set up Drizzle.
 Here we will simply follow the steps from the Drizzle chapter.
 
-Install Drizzle and `dotenv`:
+Install `drizzle-orm` and `pg`:
 
 ```sh
-pnpm add drizzle-orm postgres dotenv
+pnpm add drizzle-orm pg
 pnpm add --save-dev tsx drizzle-kit
+```
+
+Also, install the `@types/pg` package to get the type definitions for `pg`:
+
+```sh
+pnpm add @types/pg --save-dev
+```
+
+Finally, install the `drizzle-kit` package as a dev dependency:
+
+```sh
+pnpm add drizzle-kit --save-dev
 ```
 
 Create a new directory called `db`.
 This is where our database-related files will go.
+You should also create a directory `db/migrations` where we will store the migrations.
 
-> Remember that we specify all paths relative to `src`, i.e. you need to create the `db` directory in `src`.
-
-Now create a directory `db/migrations` to store the migrations.
+> Remember that we specify all paths relative to `src/app`, i.e. you need to create the `db` directory in `src/app`.
 
 Create a file `db/drizzle.config.ts`:
 
@@ -111,41 +131,13 @@ Create a file `db/drizzle.config.ts`:
 import { defineConfig } from 'drizzle-kit';
 
 export default defineConfig({
+  out: './src/app/db/migrations',
+  schema: './src/app/db/schema.ts',
   dialect: 'postgresql',
-  schema: './src/db/schema.ts',
-  out: './src/db/migrations',
   dbCredentials: {
     url: process.env.DATABASE_URL!,
   },
 });
-```
-
-Next we create a file `db/migrate.ts`:
-
-```ts
-import { drizzle } from 'drizzle-orm/postgres-js';
-import postgres from 'postgres';
-import dotenv from 'dotenv';
-import { migrate } from 'drizzle-orm/postgres-js/migrator';
-
-dotenv.config({ path: ['.env.local', '.env'] });
-
-const databaseURI = process.env.DATABASE_URL;
-
-if (databaseURI === undefined) {
-  console.log('You need to provide the database URI');
-  process.exit(0);
-}
-
-const client = postgres(databaseURI, { max: 1 });
-const db = drizzle(client);
-
-async function runMigrations() {
-  await migrate(db, { migrationsFolder: './src/db/migrations' });
-  await client.end();
-}
-
-runMigrations().then(console.log).catch(console.error);
 ```
 
 Finally, let's create the initial schema at `db/schema.ts`:
@@ -155,32 +147,30 @@ import { pgTable, serial, text, timestamp } from 'drizzle-orm/pg-core';
 
 export const projectTable = pgTable('project', {
   id: serial('id').primaryKey(),
-  userId: text('user_id').notNull(),
   name: text('name').notNull(),
   createdAt: timestamp('created_at').defaultNow().notNull(),
 });
 ```
 
-To simplify migrations, we will add the following scripts to `package.json`:
+To simplify migrations, we will add the `generate` and `migrate` scripts to `package.json`:
 
 ```json
 {
   "scripts": {
     // other scripts
-    "db:generate": "pnpm drizzle-kit generate --config=src/db/drizzle.config.ts",
-    "db:migrate": "pnpm tsx src/db/migrate.ts"
+    "db:generate": "pnpm drizzle-kit generate --config=./src/app/db/drizzle.config.ts",
+    "db:migrate": "pnpm drizzle-kit migrate"
   }
 }
 ```
 
-Now run `pnpm db:generate` to generate the migration.
+Now, run `pnpm db:generate` to generate the migration.
 
-Inspect the migration (which would be something like `db/migrations/0000_curious_vanisher-sql`) and make sure that it contains the right content:
+Inspect the migration (which would be something like `db/migrations/0000_curious_vanisher.sql`) and make sure that it contains the right content:
 
 ```sql
 CREATE TABLE IF NOT EXISTS "project" (
 	"id" serial PRIMARY KEY NOT NULL,
-	"user_id" text NOT NULL,
 	"name" text NOT NULL,
 	"created_at" timestamp DEFAULT now() NOT NULL
 );
@@ -193,25 +183,21 @@ Finally, we create the `db/index.ts` file which exports the `db` object to allow
 
 ```ts
 import { drizzle } from 'drizzle-orm/postgres-js';
-import postgres from 'postgres';
 
-const databaseURL = process.env.DATABASE_URL!;
-
-const client = postgres(databaseURL);
-export const db = drizzle(client);
+export const db = drizzle(process.env.DATABASE_URL!);
 ```
 
-> Yes, this subsection was essentially a repeat of things you already learned in the Drizzle chapter.
+> Yes, this subsection was essentially a repeat of things you've already learned in the Drizzle chapter.
 
 ### Linting
 
 If you look through the scripts in `package.json`, you will see a curious little script called `lint` that executes `next lint`.
 
-This scripts provides an integrated ESLint experience.
+This script provides an integrated ESLint experience.
 ESLint is an awesome tool that statically analyzes your code to quickly find problems.
 
 Note that ESLint is not for finding syntax or type errors (your TypeScript compiler already takes care of that).
-Instead it has a lot of rules for good code and bad code and attempts to help you with writing high-quality code.
+Instead it has a lot of rules that help you avoid sketchy code.
 
 Let's run it:
 
@@ -233,7 +219,7 @@ Currently, ESLint has nothing to tell us.
 This is the file structure you should have right now:
 
 ```
-├── .env.local
+├── .env
 ├── .eslintrc.json
 ├── next.config.mjs
 ├── next-env.d.ts
@@ -249,7 +235,6 @@ This is the file structure you should have right now:
 │   └── db
 │       ├── drizzle.config.ts
 │       ├── index.ts
-│       ├── migrate.ts
 │       ├── migrations
 │       │   ├── 0000_curious_vanisher.sql
 │       │   └── meta
@@ -280,10 +265,10 @@ The `postcss.config.js` file contains the configuration relevant for PostCSS (wh
 
 The file `src/app/page.tsx` specifies the root page and `src/app/layout.tsx` specifies the root layout.
 
-The `globals.css` file specifies global styles - right we only really need it for the Tailwind directives.
+The `globals.css` file specifies global styles—right we only really need it for the Tailwind directives.
 
 The `src/db` directory contains everything that is related to the database (including the migrations).
 
 The `.eslintrc.json` contain the `eslint` configuration.
 
-The `.env.local` file contains our enviroment variables.
+The `.env` file contains our environment variables.
