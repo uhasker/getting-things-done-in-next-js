@@ -6,23 +6,36 @@ We now have a page where we can show the created projects.
 However, this is not terribly useful as long as we can't add tasks to the projects.
 
 First, we need a place to store the tasks in our database.
-Create a new task table in `db/schema.ts`:
+Create a new `task` table in `db/schema.ts`:
 
 ```ts
-import { integer /*...*/ } from 'drizzle-orm/pg-core';
+import { sql } from 'drizzle-orm';
+import { check, integer, pgEnum /*...*/ } from 'drizzle-orm/pg-core';
 
 // ...
 
-export const taskTable = pgTable('task', {
-  id: serial('id').primaryKey(),
-  title: text('title').notNull(),
-  description: text('description').notNull(),
-  status: text('status').notNull(),
-  createdAt: timestamp('created_at').defaultNow().notNull(),
-  projectId: integer('project_id')
-    .notNull()
-    .references(() => projectTable.id),
-});
+export const statusEnum = pgEnum('status', ['todo', 'inprogress', 'done']);
+
+// Declare the task table
+export const taskTable = pgTable(
+  'task',
+  {
+    id: serial('id').primaryKey(),
+    title: text('title').notNull(),
+    description: text('description').notNull(),
+    status: statusEnum().notNull(),
+    duration: integer('duration'),
+    createdAt: timestamp('created_at').defaultNow().notNull(),
+    projectId: integer('project_id')
+      .notNull()
+      .references(() => projectTable.id),
+  },
+  (table) => [
+    {
+      durationCheckConstraint: check('duration_check', sql`${table.duration} > 0`),
+    },
+  ],
+);
 ```
 
 Generate the migration:
@@ -34,20 +47,17 @@ pnpm db:generate
 Review the migration (which might be something like `db/migrations/0001_loose_wonder_man.sql`):
 
 ```sql
-CREATE TABLE IF NOT EXISTS "task" (
+CREATE TYPE "public"."status" AS ENUM('todo', 'inprogress', 'done');
+CREATE TABLE "task" (
 	"id" serial PRIMARY KEY NOT NULL,
 	"title" text NOT NULL,
 	"description" text NOT NULL,
-	"status" text NOT NULL,
+	"status" "status" NOT NULL,
+	"duration" integer,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"project_id" integer NOT NULL
 );
---> statement-breakpoint
-DO $$ BEGIN
- ALTER TABLE "task" ADD CONSTRAINT "task_project_id_project_id_fk" FOREIGN KEY ("project_id") REFERENCES "project"("id") ON DELETE no action ON UPDATE no action;
-EXCEPTION
- WHEN duplicate_object THEN null;
-END $$;
+ALTER TABLE "task" ADD CONSTRAINT "task_project_id_project_id_fk" FOREIGN KEY ("project_id") REFERENCES "public"."project"("id") ON DELETE no action ON UPDATE no action;
 ```
 
 Execute the migration:
@@ -63,21 +73,11 @@ Check that the `task` table is present in the database together with the right c
 Now let's create a page containing the tasks of a given project at `app/project/[id]/page.tsx`:
 
 ```jsx
-import { db } from '@/db';
-import { projectTable, taskTable } from '@/db/schema';
+import { db } from '@/app/db';
+import { projectTable, taskTable } from '@/app/db/schema';
 import { eq } from 'drizzle-orm';
-import { auth } from '@clerk/nextjs/server';
 
 export default async function Project({ params: { id } }: { params: { id: number } }) {
-  const { userId } = auth();
-
-  const projects = await db.select().from(projectTable).where(eq(projectTable.id, id));
-  const project = projects[0];
-
-  if (project.userId !== userId) {
-    return <h1>Not allowed to access project</h1>;
-  }
-
   const tasks = await db.select().from(taskTable).where(eq(taskTable.projectId, id));
 
   return (
@@ -90,12 +90,12 @@ export default async function Project({ params: { id } }: { params: { id: number
 }
 ```
 
-Add a few tasks to the project with the ID `1` and go to `localhost:3000/project/1` - you should see these tasks.
-However, the UX is currently quite ugly, so let's improve it.
+Add a few tasks to the project with the ID `1` and go to `http://localhost:3000/project/1` - you should see these tasks.
+Next, we need to give the user a way to add tasks by themselves.
 
 ### Task List
 
-Create the a `TaskList` component at `app/project/[id]/task-list.tsx`:
+Create a `TaskList` component at `app/project/[id]/task-list.tsx`:
 
 ```jsx
 export function TaskList({
@@ -104,14 +104,11 @@ export function TaskList({
   tasks: { id: number, title: string, description: string, status: string }[],
 }) {
   return (
-    <div className="my-8 mx-auto w-full max-w-2xl">
+    <div className="my-8 mx-auto max-w-2xl">
       {tasks.map((task) => (
-        <div
-          key={task.id}
-          className="flex flex-col bg-white p-4 rounded-lg shadow-md mb-4 hover:shadow-lg transition-shadow duration-200 ease-in-out"
-        >
+        <div key={task.id} className="bg-white p-4 rounded shadow mb-4 hover:shadow transition">
           <h3 className="text-lg font-semibold text-gray-800 mb-2">{task.title}</h3>
-          <p className="text-gray-600 mb-4">{task.description}</p>
+          <p className="text-gray-600 mb-2">{task.description}</p>
           <p className="text-sm text-blue-500">{task.status}</p>
         </div>
       ))}
@@ -136,7 +133,7 @@ export default async function Project({ params: { id } }: { params: { id: number
 ### New Task Modal
 
 Finally, let's create a modal that will allow us to add new tasks.
-Create a file `app/project/[id]/new-task-modal.tsx`:
+Create a file `app/project/[id]/task-modal.tsx`:
 
 ```jsx
 "use client";
@@ -165,16 +162,16 @@ export function NewTaskModal({
   }
 
   return (
-    <div className="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center px-4">
-      <div className="relative w-full max-w-md bg-white p-6 rounded-lg shadow-lg">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center p-4">
+      <div className="relative w-full max-w-md bg-white p-6 rounded shadow">
         <button
           onClick={onClose}
-          className="absolute top-0 right-0 m-4 text-gray-400 hover:text-gray-600 transition duration-150 ease-in-out"
+          className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
         >
           &times;
         </button>
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <h2 className="text-xl font-semibold text-gray-800">Add Task</h2>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <h2 className="text-lg font-semibold text-gray-800">Add Task</h2>
           <div>
             <label
               htmlFor="title"
@@ -186,7 +183,7 @@ export function NewTaskModal({
               type="text"
               id="title"
               name="title"
-              className="mt-2 block w-full px-4 py-3 bg-gray-50 rounded-md border-transparent focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+              className="mt-1 block w-full px-3 py-2 bg-gray-50 rounded border focus:border-blue-500 focus:ring-blue-200"
             />
           </div>
           <div>
@@ -200,12 +197,12 @@ export function NewTaskModal({
               type="text"
               id="description"
               name="description"
-              className="mt-2 block w-full px-4 py-3 bg-gray-50 rounded-md border-transparent focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+              className="mt-1 block w-full px-3 py-2 bg-gray-50 rounded border focus:border-blue-500 focus:ring-blue-200"
             />
           </div>
           <button
             type="submit"
-            className="w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-gradient-to-r from-blue-500 to-teal-400 hover:from-blue-600 hover:to-teal-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-150 ease-in-out"
+            className="w-full py-2 px-4 text-sm font-medium text-white bg-blue-500 rounded hover:bg-blue-600 focus:ring-2 focus:ring-blue-400"
           >
             Add Task
           </button>
@@ -216,16 +213,26 @@ export function NewTaskModal({
 }
 ```
 
-Let's add a new database function `insertTask` in `db/actions.ts`:
+Let's add a new route in `task/route.ts`:
 
 ```ts
-// ...
-import { taskTable /*...*/ } from './schema';
+import { db } from '@/app/db';
+import { taskTable } from '@/app/db/schema';
+import { NextRequest, NextResponse } from 'next/server';
 
-// ...
+export async function POST(request: NextRequest) {
+  const { title, description, status, projectId } = await request.json();
 
-export async function insertTask(title: string, description: string, projectId: number) {
+  if (!title || !description || !projectId) {
+    return NextResponse.json(
+      { error: 'Task title, description and project ID are required' },
+      { status: 400 },
+    );
+  }
+
   await db.insert(taskTable).values({ title, description, status: 'inprogress', projectId });
+
+  return NextResponse.json({ message: 'Task inserted successfully' }, { status: 200 });
 }
 ```
 
@@ -234,8 +241,7 @@ Use the new task modal in the `app/project/[id]/task-list.tsx` file:
 ```jsx
 'use client';
 
-import { insertTask } from '@/db/actions';
-import { NewTaskModal } from './new-task-modal';
+import { NewTaskModal } from './task-modal';
 import * as React from 'react';
 import { useRouter } from 'next/navigation';
 
@@ -251,7 +257,17 @@ export function TaskList({
   const router = useRouter();
 
   async function handleNewTask(title: string, description: string) {
-    await insertTask(title, description, projectId);
+    const response = await fetch('/api/task', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ title, description, projectId }),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to create task');
+    }
     setShowNewTaskModal(false);
     router.refresh();
   }
@@ -260,7 +276,7 @@ export function TaskList({
     <div className="my-8 mx-auto w-full max-w-2xl">
       <button
         onClick={() => setShowNewTaskModal(true)}
-        className="mb-6 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded shadow hover:shadow-md transition duration-200 ease-in-out"
+        className="mb-6 bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-600 shadow"
       >
         Add New Task
       </button>
@@ -283,3 +299,15 @@ export default async function Project(/* ...*/) {
 ```
 
 You should now be able to use the "Add new task" button and the modal to add new tasks to the project.
+
+Finally, let's make all the projects on the homepage into links that take you to the respective project pages:
+
+```jsx
+<Link href={`/project/${project.id}`}>
+  <span className="text-lg font-semibold text-gray-800 hover:text-blue-500 transition">
+    {project.name}
+  </span>
+</Link>
+```
+
+> Don't forget to import the `<Link>` component here.

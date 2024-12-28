@@ -19,6 +19,7 @@ Give your project a name and select the following options:
 - we want to use Tailwind CSS
 - we want to use the `src/` directory
 - we want to use the App Router
+- we want to use Turbopack for `next dev`
 - we don't want to customize the default import alias
 
 ```sh
