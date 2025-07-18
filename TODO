@@ -1,0 +1,52 @@
+<div class="p-2">
+  <ul class="flex flex-col gap-2">
+    <li class="flex rounded border overflow-hidden">
+      <div
+        class="w-14 flex items-center justify-center bg-blue-600 text-white text-sm font-semibold"
+        >P1</div
+      >
+      <div class="flex-1 p-3 bg-white">
+        <a href="#" class="block font-medium text-gray-700 hover:text-gray-900 hover:underline"
+          >Project 1</a
+        >
+        <p class="text-sm text-gray-500">My first project</p>
+      </div>
+    </li>
+    <li class="flex rounded border overflow-hidden">
+      <div
+        class="w-14 flex items-center justify-center bg-blue-600 text-white text-sm font-semibold"
+        >P2</div
+      >
+      <div class="flex-1 p-3 bg-white">
+        <a href="#" class="block font-medium text-gray-700 hover:text-gray-900 hover:underline"
+          >Project 2</a
+        >
+        <p class="text-sm text-gray-500">My second project</p>
+      </div>
+    </li>
+  </ul>
+</div>
+
+<ul class="divide-y divide-gray-200 p-2">
+  <li class="flex justify-between items-start py-4">
+    <div>
+      <div class="flex gap-2 items-center">
+        <p class="text-sm font-semibold text-gray-800">GraphQL API</p>
+        <span class="text-xs text-green-700 bg-green-100 px-2 py-0.5 rounded">Complete</span>
+      </div>
+      <p class="text-xs text-gray-500 mt-1">Created 2023</p>
+    </div>
+    <a href="#" class="text-sm text-red-600 hover:underline">Delete</a>
+  </li>
+
+  <li class="flex justify-between items-start py-4">
+    <div>
+      <div class="flex gap-2 items-center">
+        <p class="text-sm font-semibold text-gray-800">GraphQL API</p>
+        <span class="text-xs text-green-700 bg-green-100 px-2 py-0.5 rounded">Complete</span>
+      </div>
+      <p class="text-xs text-gray-500 mt-1">Created 2023</p>
+    </div>
+    <a href="#" class="text-sm text-red-600 hover:underline">Delete</a>
+  </li>
+</ul>
