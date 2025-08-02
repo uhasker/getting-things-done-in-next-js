@@ -76,24 +76,24 @@
   - [Flexbox](08-adding-even-more-style-with-tailwind-css/07-flexbox.md)
   - [Grid](08-adding-even-more-style-with-tailwind-css/08-grid.md)
 
-- [Writing a Multi-Page App with Express and Pug](09-writing-a-multi-page-app-with-express-and-pug/README.md)
+- [Adding Spice with React](09-adding-spice-with-react/README.md)
 
-- [Writing a Single-Page App with React](10-writing-a-single-page-app-with-react/README.md)
+  - [React Components](09-adding-spice-with-react/01-react-components.md)
+  - [React State](09-adding-spice-with-react/02-react-state.md)
+  - [React Effects](09-adding-spice-with-react/03-react-effects.md)
 
-  - [React Components](10-writing-a-single-page-app-with-react/01-react-components.md)
-  - [React State](10-writing-a-single-page-app-with-react/02-react-state.md)
-  - [React Effects](10-writing-a-single-page-app-with-react/03-react-effects.md)
+- [The Project (CSR)](10-the-project-csr/README.md)
 
-- [Writing a Hybrid App with Next.js](11-writing-a-hybrid-app-with-nextjs/README.md)
+- [Moving to the Server with Next.js](11-moving-to-the-server-with-nextjs/README.md)
 
-  - [Setup](11-writing-a-hybrid-app-with-nextjs/01-setup.md)
-  - [Pages and Layouts](11-writing-a-hybrid-app-with-nextjs/02-pages-and-layouts.md)
-  - [More on Routes](11-writing-a-hybrid-app-with-nextjs/03-more-on-routes.md)
-  - [Server and Client Components](11-writing-a-hybrid-app-with-nextjs/04-server-and-client-components.md)
+  - [Setup](11-moving-to-the-server-with-nextjs/01-setup.md)
+  - [Pages and Layouts](11-moving-to-the-server-with-nextjs/02-pages-and-layouts.md)
+  - [More on Routes](11-moving-to-the-server-with-nextjs/03-more-on-routes.md)
+  - [Server and Client Components](11-moving-to-the-server-with-nextjs/04-server-and-client-components.md)
 
-- [The Project](12-the-project/README.md)
+- [The Project (SSR)](12-the-project-ssr/README.md)
 
-  - [Setup](12-the-project/01-setup.md)
-  - [The Projects Page](12-the-project/02-the-projects-page.md)
-  - [Task Page](12-the-project/03-task-page.md)
-  - [Deployment](12-the-project/04-deployment.md)
+  - [Setup](12-the-project-ssr/01-setup.md)
+  - [The Projects Page](12-the-project-ssr/02-the-projects-page.md)
+  - [Task Page](12-the-project-ssr/03-task-page.md)
+  - [Deployment](12-the-project-ssr/04-deployment.md)
