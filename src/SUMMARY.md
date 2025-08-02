@@ -4,6 +4,7 @@
 [Introduction](introduction.md)
 
 - [A Brief Introduction to JavaScript](01-a-brief-introduction-to-javascript/README.md)
+
   - [Hello World](01-a-brief-introduction-to-javascript/01-hello-world.md)
   - [Primitive Data Types](01-a-brief-introduction-to-javascript/02-primitive-data-types.md)
   - [Arrays and Objects](01-a-brief-introduction-to-javascript/03-arrays-and-objects.md)
@@ -20,6 +21,7 @@
   - [Tips for Larger Projects](01-a-brief-introduction-to-javascript/14-tips-for-larger-projects.md)
 
 - [Leveling Up with TypeScript](02-leveling-up-with-typescript/README.md)
+
   - [Why TypeScript?](02-leveling-up-with-typescript/01-why-typescript.md)
   - [Basic Types](02-leveling-up-with-typescript/02-basic-types.md)
   - [Annotating Functions](02-leveling-up-with-typescript/03-annotating-functions.md)
@@ -28,12 +30,14 @@
   - [Configuring TypeScript](02-leveling-up-with-typescript/06-configuring-typescript.md)
 
 - [Networking Fundamentals](03-networking-fundamentals/README.md)
+
   - [IPs, Ports and Domains](03-networking-fundamentals/01-ips-ports-and-domains.md)
   - [An HTTP Primer](03-networking-fundamentals/02-an-http-primer.md)
   - [More on HTTP](03-networking-fundamentals/03-more-on-http.md)
   - [Servers and Clients](03-networking-fundamentals/04-servers-and-clients.md)
 
 - [Persistence with SQL](04-persistence-with-sql/README.md)
+
   - [Setup](04-persistence-with-sql/01-setup.md)
   - [Data Types and Constraints](04-persistence-with-sql/02-data-types-and-constraints.md)
   - [Inserting, Updating and Deleting Data](04-persistence-with-sql/03-inserting-updating-and-deleting-data.md)
@@ -42,6 +46,7 @@
   - [Working with Multiple Tables](04-persistence-with-sql/06-working-with-multiple-tables.md)
 
 - [Typesafe SQL with Drizzle](05-typesafe-sql-with-drizzle/README.md)
+
   - [Setup](05-typesafe-sql-with-drizzle/01-setup.md)
   - [Inserting, Updating and Deleting Data](05-typesafe-sql-with-drizzle/02-inserting-updating-and-deleting-data.md)
   - [Selecting Data](05-typesafe-sql-with-drizzle/03-selecting-data.md)
@@ -49,6 +54,7 @@
   - [Migrations](05-typesafe-sql-with-drizzle/05-migrations.md)
 
 - [A Vanilla Client](06-a-vanilla-client/README.md)
+
   - [Hypertext Markup Language](06-a-vanilla-client/01-hypertext-markup-language.md)
   - [Marking Up Text](06-a-vanilla-client/02-marking-up-text.md)
   - [Hyperlinks and Images](06-a-vanilla-client/03-hyperlinks-and-images.md)
@@ -59,7 +65,14 @@
 
 - [Adding Style with CSS](07-adding-style-with-css/README.md)
 
+  - [Using CSS](07-adding-style-with-css/01-using-css.md)
+  - [CSS Selectors](07-adding-style-with-css/02-css-selectors.md)
+  - [Basic Styles](07-adding-style-with-css/03-basic-styles.md)
+  - [The Box Model](07-adding-style-with-css/04-the-box-model.md)
+  - [The Flexbox](07-adding-style-with-css/05-the-flexbox.md)
+
 - [Adding Even More Style with Tailwind CSS](08-adding-even-more-style-with-tailwind-css/README.md)
+
   - [Setup](08-adding-even-more-style-with-tailwind-css/01-setup.md)
   - [Typography Utilities](08-adding-even-more-style-with-tailwind-css/02-typography-utilities.md)
   - [Background Utilities](08-adding-even-more-style-with-tailwind-css/03-background-utilities.md)
@@ -67,9 +80,9 @@
   - [Border Utilities](08-adding-even-more-style-with-tailwind-css/05-border-utilities.md)
   - [Spacing Utilities](08-adding-even-more-style-with-tailwind-css/06-spacing-utilities.md)
   - [Flexbox](08-adding-even-more-style-with-tailwind-css/07-flexbox.md)
-  - [Grid](08-adding-even-more-style-with-tailwind-css/08-grid.md)
 
 - [Adding Spice with React](09-adding-spice-with-react/README.md)
+
   - [React Components](09-adding-spice-with-react/01-react-components.md)
   - [React State](09-adding-spice-with-react/02-react-state.md)
   - [React Effects](09-adding-spice-with-react/03-react-effects.md)
@@ -77,6 +90,7 @@
 - [The Project (CSR)](10-the-project-csr/README.md)
 
 - [Moving to the Server with Next.js](11-moving-to-the-server-with-nextjs/README.md)
+
   - [Setup](11-moving-to-the-server-with-nextjs/01-setup.md)
   - [Pages and Layouts](11-moving-to-the-server-with-nextjs/02-pages-and-layouts.md)
   - [More on Routes](11-moving-to-the-server-with-nextjs/03-more-on-routes.md)

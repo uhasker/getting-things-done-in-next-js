@@ -1,4 +1,4 @@
-## Cascading Style Sheets
+## Using CSS
 
 ### Internal Style Sheets
 

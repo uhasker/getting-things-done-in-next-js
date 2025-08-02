@@ -1,6 +1,6 @@
-## Typography
+## Basic Styles
 
-### Font Family
+### Typography
 
 You can change the typeface of your text using the `font-family` CSS property.
 
@@ -17,8 +17,6 @@ Here is how you could use this CSS in your HTML document:
 <p style="font-family: serif;">This uses a serif font</p>
 <p style="font-family: monospace;">This uses a monospace font</p>
 ```
-
-### Font Size
 
 You can change the size of your text using the `font-size` CSS property.
 
@@ -64,8 +62,6 @@ Here is how you could use this CSS in your HTML document:
 <p style="font-size: 1rem;">This uses a 1rem font</p>
 ```
 
-### Font Weight
-
 You can change the weight of your text using the `font-weight` CSS property.
 
 For example, the following CSS will change the weight of the text to bold:
@@ -80,8 +76,6 @@ Here is how you could use this CSS in your HTML document:
 <p style="font-weight: bold;">This uses a bold font</p>
 ```
 
-### Line Height
-
 You can change the height of the line of text using the `line-height` CSS property.
 
 For example, the following CSS will change the height of the line of text to 1.5:
@@ -95,8 +89,6 @@ Here is how you could use this CSS in your HTML document:
 ```html
 <p style="line-height: 1.5;">This uses a 1.5 line height</p>
 ```
-
-### Text Alignment
 
 You can change the alignment of your text using the `text-align` CSS property.
 
@@ -115,8 +107,6 @@ Here is how you could use this CSS in your HTML document:
 <p style="text-align: justify;">This text is justified</p>
 ```
 
-### Text Color
-
 You can change the color of your text using the `color` CSS property.
 
 For example, the following CSS will change the color of the text to red:
@@ -133,8 +123,6 @@ Here is how you could use this CSS in your HTML document:
 <p style="color: green;">This text is green</p>
 ```
 
-### Text Decoration
-
 You can change the decoration of your text using the `text-decoration` CSS property.
 
 For example, the following CSS will change the decoration of the text to underline:
@@ -148,4 +136,20 @@ Here is how you could use this CSS in your HTML document:
 ```html
 <p style="text-decoration: underline;">This text is underlined</p>
 <p style="text-decoration: none;">This text is not underlined</p>
+```
+
+### Background
+
+You can change the background of an element using the `background` CSS property.
+
+For example, the following CSS will change the background of the element to red:
+
+```css
+background: red;
+```
+
+Here is how you could use this CSS in your HTML document:
+
+```html
+<div style="background: red; color: white;">This is a red background</div>
 ```
