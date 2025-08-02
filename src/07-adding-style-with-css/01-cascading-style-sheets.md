@@ -133,5 +133,40 @@ Here is how the full HTML document looks like:
 </html>
 ```
 
-Throughout this chapter, we will use internal style sheets for simplicity.
+### Inline Styles
+
+You can also use **inline styles** to style an element.
+
+Inline styles are defined inside the `style` attribute of the element.
+
+For example, the following CSS will style the h1 element red:
+
+```html
+<h1 style="color: red">My tasks</h1>
+```
+
+Here is how the full HTML document looks like:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Easy Opus</title>
+  </head>
+  <body>
+    <div id="app">
+      <div>
+        <h1 style="color: red">My tasks</h1>
+        <div id="taskList">
+          <p>Read the Next.js book</p>
+          <p>Write a website</p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+```
+
+Throughout this chapter, we will use either inline styles or internal style sheets for simplicity.
 However, in the real world, you will most likely use external style sheets.
