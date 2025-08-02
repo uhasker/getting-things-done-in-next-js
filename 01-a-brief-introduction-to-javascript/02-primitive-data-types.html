@@ -1,0 +1,518 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Primitive Data Types</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title"></h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h2 id="primitive-data-types"><a class="header" href="#primitive-data-types">Primitive Data Types</a></h2>
+<div style="text-align: right"> <i> == is the equality operator <br> === is the one and true equality operator <br> ==== is the equality operator which transcends time and space <br> ===== is the equality operator which transcends all other equality operators <br> ====== is the equality operator which summons the UNSPEAKABLE DOOM (all is lost) <br> — from "The Book of the Equality Operators and their Virtue" by Laozi </i> </div>
+<h3 id="variables"><a class="header" href="#variables">Variables</a></h3>
+<p>Whenever we write programs, we need to manipulate data.
+This data needs to be stored somewhere and we need to be able to access it somehow.</p>
+<p>We also need to deal with the fact that when we execute a program, the values we deal with are <em>not predictable</em> in advance.
+For example, we don't know which tasks a user might create (that's kind of the point of writing our application after all).
+Nevertheless, we must be able to access created tasks through a <em>predictable</em> name like <code>tasks</code> or <code>createdTasks</code>.</p>
+<p>Therefore, we need a way to put an <em>unpredictable</em> value somewhere and refer to it using a <em>predictable</em> name.
+In programming, that "somewhere" is referred to as <em>storage</em> and the predictable name as a <em>symbolic name</em>.</p>
+<p>A <strong>variable</strong> is just that—a storage location containing a value which is referred to by a symbolic name.
+This <em>sounds</em> really fancy, but it just means that there is a value somewhere in your storage and you can refer to that value using a symbolic name that doesn't change (even if the value itself changes).</p>
+<p>For example, you could have a variable <code>age</code> which has the value <code>20</code> (we say that <code>age</code> is equal to <code>20</code>):</p>
+<p><img src="images/variable.png" alt="" /></p>
+<p>Now even if the value of <code>age</code> changes (e.g. to <code>21</code> because a birthday happened), the variable name doesn't change, only the value does.
+The variable name will still be <code>age</code>.
+However, <code>age</code> will now have the value <code>21</code> (i.e. <code>age</code> will be equal to <code>21</code>):</p>
+<p><img src="images/variable-changed.png" alt="" /></p>
+<p>JavaScript lets you declare variables using the <code>let</code> keyword.
+You can assign values to variables with the <strong>assignment operator</strong> (<code>=</code>):</p>
+<pre><code class="language-js">// Declare a variable
+let x;
+
+// Assign a value to a variable
+x = 10;
+</code></pre>
+<p>You can print the value of the variable using the <code>console.log</code> method:</p>
+<pre><code class="language-js">console.log(x); // 10
+</code></pre>
+<blockquote>
+<p>If you follow along in the Node.js (or browser) console, you don't actually need to use the <code>console.log</code> method to print the value of a variable.
+Instead, you can simply type the variable (or any expression for that matter) and the console will display its value.
+For example, you can simply type <code>x</code> instead of <code>console.log(x)</code> and you will see the value of <code>x</code>.</p>
+</blockquote>
+<p>You can also have a declaration and an assignment on a single line.
+In fact, this is usually the way to go:</p>
+<pre><code class="language-js">let y = 10;
+</code></pre>
+<p>The value of a variable may change over the course of a program:</p>
+<pre><code class="language-js">let y = 10;
+console.log(y); // 10
+
+// Assign a new value to the variable
+y = 20;
+console.log(y); // 20
+</code></pre>
+<p>This will output <code>10</code>, followed by a <code>20</code>.</p>
+<blockquote>
+<p>Remember that, according to our book conventions, a comment after a <code>console.log</code> indicates the value that will be logged.</p>
+</blockquote>
+<p>If you want to declare a predictable name for a value that never changes, you can declare a <strong>constant</strong>.
+This is done using the <code>const</code> keyword:</p>
+<pre><code class="language-js">const ten = 10;
+</code></pre>
+<p>If you try to reassign a value to a constant, you will get an error.
+For example, let's declare a constant and try to assign a new value to it:</p>
+<pre><code class="language-js">const ten = 10;
+ten = 20;
+</code></pre>
+<p>You will get the following error:</p>
+<pre><code>Uncaught TypeError: Assignment to constant variable.
+</code></pre>
+<p>You will almost exclusively see us using <code>const</code> instead of <code>let</code> from now on.
+Reassignment is not nearly as necessary as you might think right now.</p>
+<blockquote>
+<p>You can also declare variables using the <code>var</code> keyword.
+We will not cover it here and you essentially only need to know one thing about <code>var</code>—you should <em>basically never use it</em>.
+That's because <code>var</code> has really weird behaviour around scopes (we will talk about scopes later).
+For all practical purposes, you can treat <code>var</code> as a historical artifact of JavaScript.</p>
+</blockquote>
+<p>Any variable has a <strong>data type</strong> which denotes the range of values it can take and which operations can be performed on the variable.
+You can use the <code>typeof</code> operator to obtain the data type of a variable.</p>
+<p>We begin with a few particularly important <strong>primitive data types</strong>.
+These are numbers, booleans, strings and <code>undefined</code>.</p>
+<h3 id="numbers"><a class="header" href="#numbers">Numbers</a></h3>
+<p>You've already encountered the <code>number</code> data type:</p>
+<pre><code class="language-js">const age = 20;
+console.log(typeof age); // number
+</code></pre>
+<p>Any integer or real number is a <code>number</code>:</p>
+<pre><code class="language-js">console.log(typeof 42); // number
+console.log(typeof -20); // number
+console.log(typeof 3.4); // number
+console.log(typeof -1.7); // number
+</code></pre>
+<p>You can perform arithmetic on numbers using the usual arithmetic operators <code>+</code>, <code>-</code>, <code>*</code> and <code>/</code>.
+There is also the <code>%</code> (modulo) operator which returns the remainder of a division.
+Finally, there is the <code>**</code> operator which does exponentiation:</p>
+<pre><code class="language-js">const a = 3;
+const b = 4;
+console.log(a + b); // 7
+console.log(a - b); // -1
+console.log(a * b); // 12
+console.log(a / b); // 0.75
+console.log(a % b); // 3
+console.log(a ** b); // 81
+</code></pre>
+<p>You can also use the <strong>shorthand assignment operators</strong> to combine assignment and arithmetic operators:</p>
+<pre><code class="language-js">let a = 3;
+a += 4;
+console.log(a); // 7
+a -= 2;
+console.log(a); // 5
+a *= 3;
+console.log(a); // 15
+a /= 3;
+console.log(a); // 5
+a %= 3;
+console.log(a); // 2
+a **= 5;
+console.log(a); // 32
+</code></pre>
+<p>You also use the <strong>postfix increment</strong> and the <strong>postfix decrement</strong> operators to increment or decrement a value by 1:</p>
+<pre><code class="language-js">let a = 4;
+a++;
+console.log(a); // 5
+a--;
+console.log(a); // 4
+</code></pre>
+<p>So far, so obvious.
+However, there are also some other things which have the <code>number</code> type.</p>
+<p>One of them is <code>Infinity</code>.
+<code>Infinity</code> is a special value that represents—well—mathematical infinity:</p>
+<pre><code class="language-js">console.log(typeof Infinity); // number
+</code></pre>
+<p>One way to arrive at <code>Infinity</code> in JavaScript is to divide something positive by <code>0</code>:</p>
+<pre><code class="language-js">console.log(1 / 0); // Infinity
+</code></pre>
+<p>Additionally, there is a special value called <code>NaN</code> (short for "not a number").
+For example, the result of <code>0 / 0</code> is <code>NaN</code>:</p>
+<pre><code class="language-js">console.log(0 / 0); // NaN
+</code></pre>
+<p>Hilariously, <code>NaN</code> itself is a number (despite its name explicitly stating that it's <em>not</em> a number):</p>
+<pre><code class="language-js">console.log(typeof NaN); // number
+</code></pre>
+<p>Don't let that confuse you.</p>
+<blockquote>
+<p>We will not debate whether decisions like <code>1/0</code> being equal to <code>Infinity</code>, <code>0/0</code> being equal to <code>NaN</code> or <code>NaN</code> having type <code>number</code> are good decisions.
+We simply note that this is the way JavaScript works and move on.
+Don't worry, there is in fact a lot of hot debate around some of JavaScripts more—shall we say—controversial features.
+If you wish to do so, you can go on any programming forum of your choice and start a local holy war by making fun of the way JavaScript's primitive data types work.
+Deciding whether that's a good use of time is up to you.</p>
+</blockquote>
+<p>Another important thing about numbers is that you need to be careful when you are trying to perform operations with real numbers.
+For example, if you add <code>0.1</code> and <code>0.2</code> you get a weird result:</p>
+<pre><code class="language-js">console.log(0.1 + 0.2); // 0.30000000000000004
+</code></pre>
+<p>This is not the fault of JavaScript, but instead has to do with the limitations of trying to represent numbers with a potentially infinite amount of digits on a finite hardware.</p>
+<blockquote>
+<p>We will not go into great detail in this book about this problem.
+If you're interested in more details we encourage you to have a look at the IEEE754 standard.</p>
+</blockquote>
+<h3 id="booleans"><a class="header" href="#booleans">Booleans</a></h3>
+<p>Another primitive type is the <code>boolean</code> type.
+This allows you to represent values which are either <code>true</code> or <code>false</code>:</p>
+<pre><code class="language-js">const thisBookIsAwesome = true;
+const thisBookSucks = false;
+console.log(typeof thisBookIsAwesome); // boolean
+console.log(typeof thisBookSucks); // boolean
+</code></pre>
+<p>You can do simple logic using the logical operators <code>&amp;&amp;</code> (which denotes <strong>and</strong>), <code>||</code> (which denotes <strong>or</strong>) and <code>!</code> (which denotes <strong>not</strong>).</p>
+<p>The <code>&amp;&amp;</code> (<em>and</em>) operator takes two values and evaluates to <code>true</code> only if both values are <code>true</code>.
+Otherwise, it evaluates to <code>false</code>:</p>
+<pre><code class="language-js">console.log(true &amp;&amp; true); // true
+console.log(false &amp;&amp; true); // false
+console.log(true &amp;&amp; false); // false
+console.log(false &amp;&amp; false); // false
+</code></pre>
+<p>The <code>||</code> (<em>or</em>) operator takes two values and evaluates to <code>true</code> if <em>at least one</em> of the values is <code>true</code>.
+Otherwise, it evaluates to <code>false</code>:</p>
+<pre><code class="language-js">console.log(true || true); // true
+console.log(false || true); // true
+console.log(true || false); // true
+console.log(false || false); // false
+</code></pre>
+<p>The <code>!</code> (<em>not</em>) operator takes a single value and simply negates it, i.e. "switches" a value to its opposite:</p>
+<pre><code class="language-js">console.log(!true); // false
+console.log(!false); // true
+</code></pre>
+<p>Here is an example with all the operators together:</p>
+<pre><code class="language-js">const b1 = true;
+const b2 = false;
+console.log(b1 &amp;&amp; b2); // false
+console.log(b1 || b2); // true
+console.log(!b1); // false
+</code></pre>
+<blockquote>
+<p>Note that, technically, the logical operators can work with <em>any</em> values (not just boolean values).
+The result of the logical operator application is then dependent on whether the values are <em>truthy</em> or <em>falsy</em>.
+We will discuss this later.</p>
+</blockquote>
+<p>A boolean variable usually occurs as the result of an expression.
+Often it's the result of an expression containing the <strong>strict equality operator</strong> (<code>===</code>) which allows us to compare the values of variables:</p>
+<pre><code class="language-js">const x1 = 5;
+const x2 = 10;
+const x3 = 5;
+console.log(x1 === x1); // true
+console.log(x1 === x2); // false
+console.log(x1 === x3); // true
+</code></pre>
+<blockquote>
+<p>There is also another equality operator (<code>==</code>) which performs various type coercions before doing the equality comparison (for example, <code>0 == "0"</code> will be <code>true</code>).
+This operator can be best described as an April Fools' joke that somehow made it into the language.
+<em>Never use it</em>.</p>
+</blockquote>
+<p>If you want to write <em>not equals</em>, you can use <code>!==</code>:</p>
+<pre><code class="language-js">console.log(5 !== 10); // true
+console.log(5 !== 5); // false
+</code></pre>
+<p>Additionally, you can check if one value is less than or greater than another value using <code>&lt;</code>, <code>&lt;=</code>, <code>&gt;</code> and <code>&gt;=</code>.
+These operators are most commonly used with numbers:</p>
+<pre><code class="language-js">console.log(2 &lt; 3); // true
+console.log(2 &lt;= 3); // true
+console.log(2 &gt; 3); // false
+console.log(2 &gt;= 3); // false
+</code></pre>
+<h3 id="strings"><a class="header" href="#strings">Strings</a></h3>
+<p>Another primitive data type is the <code>string</code> type.
+A string is simply a sequence of characters and is used to represent text.
+Strings are usually written using single quotes in JavaScript:</p>
+<pre><code class="language-js">const s = 'Some text';
+console.log(typeof s); // string
+</code></pre>
+<blockquote>
+<p>Note that it's also possible to write strings using double quotes, however in most projects strings are written using single quotes and we will stick to this convention.
+Nevertheless, we want to stress that there is absolutely nothing wrong to use double quotes.
+However, you should be consistent throughout your project—pick one style and stick to it.</p>
+</blockquote>
+<p>The <code>+</code> operator works on strings and does concatenation:</p>
+<pre><code class="language-js">const s1 = 'Next.js ';
+const s2 = 'book';
+console.log(s1 + s2); // Next.js book
+</code></pre>
+<p>Note that instead of doing concatenation all the time you can also use <strong>template strings</strong> (also called template literals).
+This allows writing JavaScript expressions directly inside strings.
+Consider the following example:</p>
+<pre><code class="language-js">const s = 'World';
+const greeting = `Hello, ${s}!`;
+console.log(greeting); // Hello, World!
+</code></pre>
+<p>Template strings are written using backticks (<em>not</em> single quotes).
+They may contain so-called <em>placeholders</em> which are expressions embedded inside <code>${...}</code>:</p>
+<pre><code class="language-js">console.log(`2 + 2 = ${2 + 2}`); // 2 + 2 = 4
+</code></pre>
+<blockquote>
+<p>Technically, expressions inside template literals have to be "implicitly convertible to a string" because JavaScript has to convert any placeholder value to a string first.
+However, you will find that expressions not "implicitly convertible to a string" are rare indeed.</p>
+</blockquote>
+<p>You can get the length (i.e. the number of characters) of a string like this:</p>
+<pre><code class="language-js">const s = 'MERN book';
+console.log(s.length); // 9
+</code></pre>
+<p>Note that JavaScript does not have a special "character" data type (unlike Java for example).
+Instead, characters are simply strings of length 1:</p>
+<pre><code class="language-js">const c = 'm';
+console.log(typeof c); // string
+</code></pre>
+<p>There is much more to strings and we will return to them later.</p>
+<blockquote>
+<p>In fact, strings are a really complicated data type.
+We will omit most of these complications since they are not relevant to simple web applications.
+Nevertheless, you should keep in mind that you will not have a perfectly accurate understanding of strings by the end of this book.</p>
+</blockquote>
+<h3 id="undefined"><a class="header" href="#undefined">Undefined</a></h3>
+<p>Finally, there is one more primitive type that's of interest to us, namely <code>undefined</code>.
+There is only one value of this type: <code>undefined</code>.</p>
+<p>If a variable has the value <code>undefined</code>, this (quite logically) means that it hasn't been defined.
+For example, whenever you have a variable that has been initialized, but not assigned to, it will automatically have the value and therefore the type <code>undefined</code>.</p>
+<pre><code class="language-js">let someVariable;
+console.log(someVariable); // undefined
+console.log(typeof someVariable); // undefined
+</code></pre>
+<p>You can also manually assign the <code>undefined</code> value to a variable:</p>
+<pre><code class="language-js">let someVariable = undefined;
+console.log(someVariable); // undefined
+console.log(typeof someVariable); // undefined
+</code></pre>
+<p>An important operator to know if you plan to work with <code>undefined</code> is the nullish coalescing operator <code>??</code>.
+This operator takes two values and checks if the left-hand side is <code>undefined</code> (or <code>null</code>—a value that we will not pay much attention to).
+If the left value is <code>undefined</code> (or <code>null</code>), the nullish coalescing operator evaluates the expression to the right-hand side, otherwise it returns the left-hand side:</p>
+<pre><code class="language-js">console.log(undefined ?? 1); // 1
+console.log(0 ?? 1); // 0
+</code></pre>
+<p>The <code>??</code> operator is commonly used to provide useful default values.</p>
+<blockquote>
+<p>Note that <code>string</code>, <code>number</code>, <code>boolean</code> and <code>undefined</code> are not the only primitive data types.
+However, the other primitive data types will not be relevant for this book.</p>
+</blockquote>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../01-a-brief-introduction-to-javascript/01-hello-world.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../01-a-brief-introduction-to-javascript/03-arrays-and-objects.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../01-a-brief-introduction-to-javascript/01-hello-world.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../01-a-brief-introduction-to-javascript/03-arrays-and-objects.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

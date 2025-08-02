@@ -1,0 +1,596 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Writing Decent Code</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title"></h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h2 id="writing-decent-code"><a class="header" href="#writing-decent-code">Writing Decent Code</a></h2>
+<div style="text-align: right"> <i>He who writes JavaScript with simplicity, rides the dragon of efficiency; he who writes in confusion, invites the monkeys of bugs into his code. <br> — Ancient Chinese proverb </i> </div>
+<h3 id="it-just-works"><a class="header" href="#it-just-works">It Just Works</a></h3>
+<p>A common misunderstanding among beginner programmers is that if the program runs correctly, then the code must automatically be fine.
+A correctly running program is indeed better than a crashing program (a truly shocking insight for some developers).
+However, good code should not just work, but also be maintainable <em>in the future</em>.</p>
+<p>This <strong>maintainability</strong> has two aspects:</p>
+<ol>
+<li>Code should be maintainable by future <em>you</em> in (let's say) six months.</li>
+<li>Code should be maintainable by other people that aren't you.</li>
+</ol>
+<blockquote>
+<p>We wish to reiterate that there are indeed people that aren't you in the world, some of which might even end up on your team.
+There are programmers that tend to forget that.</p>
+</blockquote>
+<p>This section is aimed at giving you a few practical tips to achieve these goals.
+It won't make you a great programmer, but it will help you to make your teammates hate you slightly less (which is why the section is called "writing decent code" and not "writing the greatest code of all time").</p>
+<h3 id="sensible-naming"><a class="header" href="#sensible-naming">Sensible Naming</a></h3>
+<p>In order for code to be maintainable, it has to be readable first.
+After all, if you can't read something, you most certainly will not be able to maintain it.</p>
+<p>The ultimate number one tip for writing better code is therefore as obvious in theory, as it's complicated in practice:</p>
+<p><strong>Your variables and functions should have sensible names that describe their purpose.</strong></p>
+<p>Consider this simple example:</p>
+<pre><code class="language-js">function f(a, s) {
+  const r = [];
+  for (const i of a) {
+    if (i.st === s) {
+      r.push(i.su);
+    }
+  }
+  return r;
+}
+</code></pre>
+<p>Clearly, this code sucks.
+It's absolutely unreadable and the unreadability is solely down to really terrible variable names.</p>
+<p>Let's rewrite it:</p>
+<pre><code class="language-js">function getTaskTitlesByStatus(tasks, status) {
+  const taskTitles = [];
+  for (const task of tasks) {
+    if (task.status === status) {
+      taskTitles.push(task.title);
+    }
+  }
+  return taskTitles;
+}
+</code></pre>
+<p>And suddenly the purpose of the code is clear as day.</p>
+<p>The function <code>getTaskTitlesByStatus</code> gets all the titles of the tasks that have a certain status.
+And we know that, because it is literally in the name of the function!</p>
+<p>Not only does the function have a good name (which is important when trying to use this function), but so do the variables (which is important when we need to fix possible mistakes in this function).</p>
+<p>This is a very extreme example (that's on purpose), but very often even professional software developers give terrible names to functions and variables.</p>
+<p>Of course, naming things is usually not as easy as in this example.
+There are many legitimate cases where giving something a good name is not trivial.
+Nevertheless, you should at least always <em>try hard</em> to have sensible names.
+The poor soul that will have to fix your bugs six months from now will really thank you for that.
+And you should always remember that this poor soul might be <em>you</em>.</p>
+<blockquote>
+<p>Note how we wrote <em>try hard</em> and not just <em>try</em>.
+The worst code is code that has lots of bad naming.
+You should therefore absolutely invest time into thinking about good names for your variables and functions.</p>
+</blockquote>
+<h3 id="know-and-use-your-language-features"><a class="header" href="#know-and-use-your-language-features">Know and Use Your Language Features</a></h3>
+<p>JavaScript has drastically changed for the better in the past decade—there is no need to write code like it's 2012.
+For example <code>getTaskTitlesByStatus</code> could be rewritten in a functional style:</p>
+<pre><code class="language-js">function getTaskTitlesByStatus(tasks, status) {
+  return tasks.filter((task) =&gt; task.status === status).map((task) =&gt; task.title);
+}
+</code></pre>
+<p><strong>Modern programming languages have a wide variety of features, most of which can make your life easier. Use them.</strong></p>
+<h3 id="write-small-helper-functions"><a class="header" href="#write-small-helper-functions">Write Small Helper Functions</a></h3>
+<p>Most of the time a function is not as simple as <code>getTaskTitlesByStatus</code>, which often leads to many lines of complex code that are hard to understand.
+A common practice for such cases is this:</p>
+<p><strong>Extract code from complicated functions into helper functions and then call the helper functions</strong>.</p>
+<p>Consider a function that takes an array of tasks and returns an array of generated notifications to be shown to the user.</p>
+<p>The notifications are generated for urgent tasks (i.e. tasks where the deadline is in the next two days).
+Additionally, we generate a notification with the number of uncompleted tasks.</p>
+<p>You might write the function like this:</p>
+<pre><code class="language-js">function generateNotifications(tasks) {
+  const urgentTasks = [];
+
+  let uncompletedTaskCount = 0;
+
+  tasks.forEach((task) =&gt; {
+    const today = new Date();
+    const twoDaysLater = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 2);
+
+    if (task.deadline &lt;= twoDaysLater) {
+      urgentTasks.push(task);
+    }
+
+    if (task.status === 'todo' || task.status === 'inprogress') {
+      uncompletedTaskCount++;
+    }
+  });
+
+  const notifications = [];
+  if (urgentTasks.length &gt; 0) {
+    notifications.push(
+      `You have ${urgentTasks.length} urgent tasks. Here they are: ${urgentTasks}.`,
+    );
+  }
+
+  if (uncompletedTaskCount &gt; 0) {
+    notifications.push(`You have ${uncompletedTaskCount} uncompleted tasks.`);
+  }
+
+  return notifications;
+}
+</code></pre>
+<p>Try to read this function and understand it—this will probably take up quite some time.</p>
+<p>We can massively improve this code by splitting the function into small helper functions.</p>
+<p>If you look at this function closely, you can see that it really does two different things.
+It prepares the relevant information to generate the notifications and then generates the actual notifications.</p>
+<p>Therefore, we can split this function into two smaller functions, where the first function prepares the information and the second function generates the notifications.</p>
+<p>Additionally, the first function computes two different pieces of information.
+First, it finds all the urgent tasks and second, it finds the number of tasks that haven't been yet completed.</p>
+<p>Therefore, we can split the initial function into three smaller functions and call them one by one:</p>
+<ul>
+<li>a <code>findUrgentTasks</code> function which finds all the tasks that are urgent</li>
+<li>a <code>countUncompletedTasks</code> function which finds the number of uncompleted tasks</li>
+<li>a <code>generateNotificationsFromTasks</code> function which generates the notifications</li>
+</ul>
+<p>Here is how the final result could look like:</p>
+<pre><code class="language-js">function findUrgentTasks(tasks) {
+  const urgentTasks = [];
+
+  const today = new Date();
+  const twoDaysLater = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 2);
+
+  tasks.forEach((task) =&gt; {
+    if (task.deadline &lt;= twoDaysLater) {
+      urgentTasks.push(task);
+    }
+  });
+
+  return urgentTasks;
+}
+
+function countUncompletedTasks(tasks) {
+  let uncompletedTaskCount = 0;
+  tasks.forEach((task) =&gt; {
+    if (task.status === 'todo' || task.status === 'inprogress') {
+      uncompletedTaskCount++;
+    }
+  });
+  return uncompletedTaskCount;
+}
+
+function generateNotificationsFromTasks(urgentTasks, uncompletedTaskCount) {
+  const notifications = [];
+  if (urgentTasks.length &gt; 0) {
+    notifications.push(
+      `You have ${urgentTasks.length} urgent tasks. Here they are: ${urgentTasks}.`,
+    );
+  }
+
+  if (uncompletedTaskCount &gt; 0) {
+    notifications.push(`You have ${uncompletedTaskCount} uncompleted tasks.`);
+  }
+
+  return notifications;
+}
+
+function generateNotifications(tasks) {
+  const urgentTasks = findUrgentTasks(tasks);
+  const uncompletedTaskCount = countUncompletedTasks(tasks);
+  return generateNotificationsFromTasks(urgentTasks, uncompletedTaskCount);
+}
+</code></pre>
+<p>The <code>generateNotifications</code> function is now much simpler to read.
+Instead of a multiple potentially complex calculations, it contains functions where each function is responsible for exactly one complex calculation.</p>
+<p>Note that the if statements and loops didn't really change, but they now do isolated things inside helper functions with sensible names.
+For example, the for loop that calculates the <code>uncompletedTaskCount</code> is now isolated inside the <code>countUncompletedTasks</code> function and therefore its purpose is immediately clear—even before you've read the actual loop.</p>
+<blockquote>
+<p>Of course, the implementations of the helper functions in this section could be improved by using a more functional style.
+You should absolutely go ahead and try it out.</p>
+</blockquote>
+<h3 id="make-functions-reusable"><a class="header" href="#make-functions-reusable">Make Functions Reusable</a></h3>
+<p>You try to keep your functions not just small, but also <em>reusable</em>.</p>
+<p>A practical hint for making functions more reusable is this:</p>
+<p><strong>Extract values from function bodies into (default) parameters.</strong></p>
+<p>For example, <code>findUrgentTasks</code> calculates the future date by adding <code>2</code>.
+But what if that changes, or even worse, different users can set a different number of added days for their notifications?
+Then we would have to update the function implementation or write another function that does essentially the same thing but with a different number of added days.
+This seems kind of redundant.</p>
+<p>Let's move the number of added days into a default parameter:</p>
+<pre><code class="language-js">function findUrgentTasks(tasks, addedDays = 2) {
+  const urgentTasks = [];
+
+  const today = new Date();
+  const laterDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() + addedDays);
+
+  tasks.forEach((task) =&gt; {
+    if (task.deadline &lt;= laterDate) {
+      urgentTasks.push(task);
+    }
+  });
+
+  return urgentTasks;
+}
+</code></pre>
+<p>Note how we've also renamed <code>twoDaysLater</code> to <code>laterDate</code> since that variable now has a more general purpose.</p>
+<h3 id="dont-repeat-yourself"><a class="header" href="#dont-repeat-yourself">Don't Repeat Yourself</a></h3>
+<p>This is probably one of the most well-known idioms in software development:</p>
+<p><strong>Don't repeat yourself.</strong></p>
+<p>For example, if you write a book, you shouldn't repeat the subsection heading in your text—that looks ugly and doesn't make any sense.
+Only a fool would do that.</p>
+<p>The same principle goes for writing code.
+Consider the following example:</p>
+<pre><code class="language-js">function reportOverdueTasks(tasks) {
+  const today = new Date();
+  const overdueTasks = tasks.filter((task) =&gt; {
+    return task.deadline &lt; today &amp;&amp; task.status !== 'done';
+  });
+  return overdueTasks.map((task) =&gt; `Task ID: ${task.id}, Title: ${task.title}`).join('\n');
+}
+
+function reportCompletedTasks(tasks) {
+  const completedTasks = tasks.filter((task) =&gt; task.status === 'done');
+  return completedTasks.map((task) =&gt; `Task ID: ${task.id}, Title: ${task.title}`).join('\n');
+}
+</code></pre>
+<p>You might notice that the last line of both functions is essentially the same.
+This leads to a problem: If the report format changes, we need to update it multiple times.</p>
+<p>Not only does this mean more work, we might even forget to update the report format in some place, leading to inconsistencies in our code.</p>
+<p>We can refactor <code>reportOverdueTasks</code> and <code>reportCompletedTasks</code> like this:</p>
+<pre><code class="language-js">function formatReport(tasks) {
+  return tasks.map((task) =&gt; `Task ID: ${task.id}, Title: ${task.title}`).join('\n');
+}
+
+function reportOverdueTasks(tasks) {
+  const today = new Date();
+  const overdueTasks = tasks.filter((task) =&gt; {
+    return task.deadline &lt; today &amp;&amp; task.status !== 'done';
+  });
+  return formatReport(overdueTasks);
+}
+
+function reportCompletedTasks(tasks) {
+  const completedTasks = tasks.filter((task) =&gt; task.status === 'done');
+  return formatReport(completedTasks);
+}
+</code></pre>
+<p>Again, this is a very simple example, but the general principle holds for more complex situations as well.
+If you find yourself repeating very similar code over and over, you should probably extract it into a function.</p>
+<p>Remember, that's why we introduced functions in the first place.</p>
+<h3 id="avoid-deep-nesting"><a class="header" href="#avoid-deep-nesting">Avoid Deep Nesting</a></h3>
+<p>Consider a function that filters tasks based on their status, user ID and days until deadline.
+We could write it like this:</p>
+<pre><code class="language-js">function filterTasks(tasks, status, userId, daysUntilDeadline) {
+  const filteredTasks = [];
+
+  for (let i = 0; i &lt; tasks.length; i++) {
+    if (tasks[i].status === status) {
+      if (tasks[i].assignee === userId) {
+        const deadline = new Date(tasks[i].deadline);
+        const today = new Date();
+        const futureDate = new Date(
+          today.getFullYear(),
+          today.getMonth(),
+          today.getDate() + daysUntilDeadline,
+        );
+
+        if (deadline &lt;= futureDate) {
+          filteredTasks.push(tasks[i]);
+        }
+      }
+    }
+  }
+
+  return filteredTasks;
+}
+</code></pre>
+<p>This looks supremely ugly and hard to read due to the deep nesting of the code.
+Luckily, this is pretty easy to fix using two very specific tricks:</p>
+<p>First, we can extract the body of the for loop into a helper function:</p>
+<pre><code class="language-js">function taskMatchesCriteria(task, status, userId, daysUntilDeadline) {
+  if (task.status === status) {
+    if (task.assignee === userId) {
+      const today = new Date();
+      const futureDate = new Date(
+        today.getFullYear(),
+        today.getMonth(),
+        today.getDate() + daysUntilDeadline,
+      );
+
+      if (task.deadline &lt;= futureDate) {
+        return true;
+      }
+    }
+  }
+
+  return false;
+}
+
+function filterTasks(tasks, status, userId, daysUntilDeadline) {
+  return tasks.filter((task) =&gt; taskMatchesCriteria(task, status, userId, daysUntilDeadline));
+}
+</code></pre>
+<p>One level of nesting gone already.</p>
+<p>For the second trick, we can simplify the <code>taskMatchesCriteria</code> by either flattening the conditions or using early exits.</p>
+<p>Flattening the condition is simple:</p>
+<pre><code class="language-js">function taskMatchesCriteria(task, status, userId, daysUntilDeadline) {
+  const today = new Date();
+  const futureDate = new Date(
+    today.getFullYear(),
+    today.getMonth(),
+    today.getDate() + daysUntilDeadline,
+  );
+
+  return task.status === status &amp;&amp; task.assignee === userId &amp;&amp; task.deadline &lt;= futureDate;
+}
+</code></pre>
+<p>However, sometimes this isn't possible or leads to a very complex logical expression.
+In this case we can check the "inverted" conditions one by one and "early exit" if something doesn't match:</p>
+<pre><code class="language-js">function taskMatchesCriteria(task, status, userId, daysUntilDeadline) {
+  // Early exit number 1
+  if (task.status !== status) {
+    return false;
+  }
+
+  // Early exit number 2
+  if (task.assignee !== userId) {
+    return false;
+  }
+
+  const today = new Date();
+  const futureDate = new Date(
+    today.getFullYear(),
+    today.getMonth(),
+    today.getDate() + daysUntilDeadline,
+  );
+
+  return task.deadline &lt;= futureDate;
+}
+</code></pre>
+<p>The general takeaway is this:</p>
+<p><strong>Flatten deeply nested code by extracting helper functions and simplifying conditions.</strong></p>
+<h3 id="think-about-edge-cases"><a class="header" href="#think-about-edge-cases">Think About Edge Cases</a></h3>
+<p>One of the big differences between junior programmers and more senior developers is that juniors tend to ignore edge cases and just focus on the "happy path".</p>
+<p>Consider this piece of code:</p>
+<pre><code class="language-js">const task = tasks.find((task) =&gt; task.id === taskId);
+task.assignee = userId;
+task.status = 'inprogress';
+</code></pre>
+<p>This has a big problem: What if <code>taskId</code> is not present in the IDs of <code>tasks</code>?
+Then <code>task</code> will be <code>undefined</code> and our program will crash when trying to assign the <code>assignee</code> property to <code>task</code>.</p>
+<p>This edge case needs to be handled:</p>
+<pre><code class="language-js">const task = tasks.find((task) =&gt; task.id === taskId);
+if (task === undefined) {
+  console.log(`Task with ID ${taskId} not present`);
+} else {
+  task.assignee = userId;
+  task.status = 'inprogress';
+}
+</code></pre>
+<p>Example operations which can lead to problems if you don't consider edge cases are:</p>
+<ul>
+<li>division (because you could divide by zero)</li>
+<li>processing strings (because strings could be empty or have whitespace at the beginning or the end)</li>
+<li>extracting elements from arrays by a condition (because there might be no elements present that match the condition)</li>
+<li>processing user input (because users can and will type arbitrary garbage into your application)</li>
+</ul>
+<p>Finally, every time you work with an external resource (like <code>fetch</code>ing something), you need to handle potential errors.</p>
+<p>The main takeaway from this subsection is:</p>
+<p><strong>Don't be satisfied by just writing the happy path. Think about the edge cases.</strong></p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../01-a-brief-introduction-to-javascript/12-packages.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../01-a-brief-introduction-to-javascript/14-tips-for-larger-projects.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../01-a-brief-introduction-to-javascript/12-packages.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../01-a-brief-introduction-to-javascript/14-tips-for-larger-projects.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

@@ -1,0 +1,501 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Basic Data Structures</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title"></h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h2 id="basic-data-structures"><a class="header" href="#basic-data-structures">Basic Data Structures</a></h2>
+<div style="text-align: right"> <i> A set is like a wise emperor's court: it welcomes many, but never the same face twice. <br> — Ancient Chinese proverb </i> </div>
+<h3 id="more-on-strings"><a class="header" href="#more-on-strings">More on Strings</a></h3>
+<p>We already learned that strings represent sequences of characters.
+We also learned that they can be concatenated using the <code>+</code> operator and that you can get their length using the <code>length</code> property.
+However, this is not enough to efficiently work with strings.</p>
+<p>Luckily, strings offer a wide range of additional functionality for pretty much every use case you will ever need—in this subsection we will briefly look at some of it.</p>
+<p>First, you can access individual characters using the <code>charAt</code> function or array brackets:</p>
+<pre><code class="language-js">const str = 'Hello';
+console.log(str[1]); // e
+console.log(str.charAt(1)); // e
+</code></pre>
+<p>Remember, there is no special character data type in JavaScript, i.e. <code>typeof str[1]</code> is simply <code>'string'</code>.</p>
+<p>Strings also offer a wide range of methods, most of which are self-explanatory:</p>
+<pre><code class="language-js">const str = 'Hello';
+console.log(str.concat(', World!')); // Hello, World!
+console.log(str.includes('el')); // true
+console.log(str.startsWith('He')); // true
+console.log(str.endsWith('llo')); // true
+console.log(str.indexOf('l')); // 2
+console.log(str.lastIndexOf('l')); // 3
+console.log(str.toLowerCase()); // hello
+console.log(str.toUpperCase()); // HELLO
+</code></pre>
+<p>The <code>substring</code> method allows you to return a part of a string.
+You need to pass a start index and an end index:</p>
+<pre><code class="language-js">console.log(str.substring(1, 3)); // el
+</code></pre>
+<p>Note that the start index will be <em>included</em> and the end index will be <em>excluded</em> when creating the substring.</p>
+<blockquote>
+<p>There is also the <code>substr</code> method which is similar.
+However, <code>substr</code> is deprecated and, therefore, you shouldn't use it.</p>
+</blockquote>
+<p>The <code>trim</code> method allows you to remove whitespace from the start and the end of a string.
+This is especially useful when you need to process user input and remove accidental whitespace at the start and the end of a string:</p>
+<pre><code class="language-js">console.log(' Hello '.trim()); // Hello
+</code></pre>
+<p>The <code>split</code> method splits the string into substrings by a delimiter.
+For example, here is how you might split a comma-separated list into its items:</p>
+<pre><code class="language-js">console.log('Task 1, Task 2, Task 3, Task 4'.split(','));
+</code></pre>
+<p>This will result in the following array:</p>
+<pre><code>[ 'Task 1', ' Task 2', ' Task 3', ' Task 4' ]
+</code></pre>
+<p>Note that the whitespace is not removed by the <code>split</code> method.
+You would need to iterate over the resulting array and use the <code>trim</code> method on each string to accomplish that.</p>
+<h3 id="more-on-arrays"><a class="header" href="#more-on-arrays">More on Arrays</a></h3>
+<p>We already learned how to construct arrays and how to work with individual array elements.
+However, just like strings, arrays have a few additional methods that will often come in handy.</p>
+<p>You can check whether an object is an array using the <code>Array.isArray</code> method:</p>
+<pre><code class="language-js">console.log(Array.isArray([1, 2, 3])); // true
+console.log(Array.isArray('123')); // false
+</code></pre>
+<blockquote>
+<p><code>Array.isArray</code> is a static method.
+We talked about static methods in the section on classes.</p>
+</blockquote>
+<p>You can create an array from an object with <code>Array.from</code>.
+To successfully use <code>Array.from</code> the object must be <em>convertible to an array</em>.</p>
+<p>For example, a string is convertible to an array:</p>
+<pre><code class="language-js">console.log(Array.from('123')); // [ '1', '2', '3' ]
+</code></pre>
+<p>If you try to use <code>Array.from</code> on an object that is not convertible to an array you will get an empty array:</p>
+<pre><code class="language-js">console.log(Array.from(2)); // []
+</code></pre>
+<p>You can create an array from a variable number of arguments by using <code>Array.of</code>:</p>
+<pre><code class="language-js">console.log(Array.of(1, 2, 3)); // [ 1, 2, 3 ]
+</code></pre>
+<p>Just like strings, arrays have a <code>concat</code>, <code>includes</code>, <code>indexOf</code> and <code>lastIndexOf</code> method:</p>
+<pre><code class="language-js">console.log([1, 2, 3].concat([4, 5, 6])); // [ 1, 2, 3, 4, 5, 6 ]
+console.log([1, 2, 3].includes(2)); // true
+console.log(['a', 'b', 'b', 'c'].indexOf('b')); // 1
+console.log(['a', 'b', 'b', 'c'].lastIndexOf('b')); // 2
+</code></pre>
+<p>The <code>join</code> method allows you to concatenate all elements in an array to a string, where the elements are separated by a delimiter:</p>
+<pre><code class="language-js">console.log(['H', 'e', 'l', 'l', 'o'].join('')); // Hello
+console.log(['H', 'e', 'l', 'l', 'o'].join(',')); // H,e,l,l,o
+</code></pre>
+<p>You can use the <code>push</code> method to add a new element to the end of an array:</p>
+<pre><code class="language-js">const arr = [1, 2, 3];
+arr.push(4);
+console.log(arr); // [ 1, 2, 3, 4 ]
+</code></pre>
+<p>Of course, you could also do this with <code>concat</code>.
+However, when you just want to add a single element, it's more common to use <code>push</code>.</p>
+<p>The <code>pop</code> element removes the last element of an array:</p>
+<pre><code class="language-js">const arr = [1, 2, 3];
+arr.pop();
+console.log(arr); // [ 1, 2 ]
+</code></pre>
+<p>The <code>reverse</code> method allows you to reverse an array:</p>
+<pre><code class="language-js">const arr = [1, 2, 3];
+arr.reverse();
+console.log(arr); // [ 3, 2, 1 ]
+</code></pre>
+<p>Arrays can be nested, resulting in multidimensional arrays.
+Accessing an element of such a nested array results in another array (of a lower dimension).
+Nested arrays can be flattened with the <code>flat</code> method:</p>
+<pre><code class="language-js">const nestedArray = [
+  [1, 2, 3],
+  [4, 5, 6],
+  [7, 8, 9],
+];
+console.log(nestedArray[1]); // [ 4, 5, 6 ]
+console.log(nestedArray[1][2]); // 6
+console.log(nestedArray.flat()); // [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
+</code></pre>
+<h3 id="the-forof-loop"><a class="header" href="#the-forof-loop">The <code>for...of</code> Loop</a></h3>
+<p><code>For...of</code> loops allow you to <em>iterate over arrays and strings</em> (and a few other things) and perform a task for each element/character.</p>
+<p>Let's say you want to print all tasks from a list named <code>tasks</code>.
+Previously, we would have used a regular <code>for</code> loop:</p>
+<pre><code class="language-js">const tasks = ['Task 1', 'Task 2', 'Task 3'];
+for (let i = 0; i &lt; tasks.length; i++) {
+  console.log(tasks[i]);
+}
+</code></pre>
+<p>Instead you can use the <code>for...of</code> loop to accomplish the same thing:</p>
+<pre><code class="language-js">const tasks = ['Task 1', 'Task 2', 'Task 3'];
+for (let task of tasks) {
+  console.log(task);
+}
+</code></pre>
+<p>Both versions will output:</p>
+<pre><code>Task 1
+Task 2
+Task 3
+</code></pre>
+<p>As we already mentioned, you can use a <code>for..of</code> loop to iterate over a string as well:</p>
+<pre><code class="language-js">const str = 'Task';
+for (let char of str) {
+  console.log(char);
+}
+</code></pre>
+<p>This would output each character of the string, i.e.:</p>
+<pre><code>T
+a
+s
+k
+</code></pre>
+<p>The general syntax of a <code>for..of</code> loop is</p>
+<pre><code class="language-js">for (let variable of arrayOrString) {
+  statements;
+}
+</code></pre>
+<p>It should be noted that if you don't change the variable inside the loop, you can and should also declare it as <code>const</code>.
+Our first <code>for...of</code> example could therefore be rewritten to</p>
+<pre><code class="language-js">const tasks = ['Task 1', 'Task 2', 'Task 3'];
+for (const task of tasks) {
+  console.log(task);
+}
+</code></pre>
+<blockquote>
+<p>Just to reiterate, a <code>for...of</code> loop can iterate over more objects than just arrays and strings.
+However, this is out of scope for this book.</p>
+</blockquote>
+<h3 id="more-on-objects"><a class="header" href="#more-on-objects">More on Objects</a></h3>
+<p>You can use the static methods <code>Object.keys</code> and <code>Object.values</code> to retrieve the keys and values of an object respectively:</p>
+<pre><code class="language-js">const task = {
+  id: 1,
+  title: 'Read the Next.js book',
+  description: 'Read and understand the Next.js book.',
+};
+
+console.log(Object.keys(task)); // [ 'id', 'title', 'description' ]
+console.log(Object.values(task)); // [ 1, 'Read the Next.js book', 'Read and understand the Next.js book.' ]
+</code></pre>
+<p>You can also use the static method <code>Object.entries</code> to retrieve the key-value pairs of an object:</p>
+<pre><code class="language-js">const task = {
+  id: 1,
+  title: 'Read the Next.js book',
+  description: 'Read and understand the Next.js book.',
+};
+
+console.log(Object.entries(task));
+</code></pre>
+<p>This will output:</p>
+<pre><code class="language-js">[
+  ['id', 1],
+  ['title', 'Read the Next.js book'],
+  ['description', 'Read and understand the Next.js book.'],
+];
+</code></pre>
+<h3 id="the-forin-loop"><a class="header" href="#the-forin-loop">The <code>for...in</code> Loop</a></h3>
+<p>The <code>for...in</code> loop allows you to iterate over the properties of an object.
+For example:</p>
+<pre><code class="language-js">const task = {
+  id: 1,
+  title: 'Read the Next.js book',
+  description: 'Read and understand the Next.js book.',
+};
+
+for (const prop in task) {
+  console.log(prop);
+}
+</code></pre>
+<p>This will output:</p>
+<pre><code>id
+title
+description
+</code></pre>
+<h3 id="maps"><a class="header" href="#maps">Maps</a></h3>
+<p>A <code>Map</code> object is a collection of a key-value pairs:</p>
+<pre><code class="language-js">const capitals = new Map([
+  ['Germany', 'Berlin'],
+  ['France', 'Paris'],
+]);
+capitals.set('Spain', 'Madrid');
+console.log(capitals.get('France')); // Paris
+console.log(capitals.size); // 3
+capitals.delete('France');
+console.log(capitals.has('France')); // false
+</code></pre>
+<p>At first glance maps appear to be very similar to objects.
+However, there are a few important differences.</p>
+<p>First, it's very easy to get the size of a map (using the <code>size</code> property), whereas with objects you would need to keep track of the size manually.</p>
+<p>Second, the keys of an object are usually strings, whereas with maps they can have any data type.</p>
+<p>It's recommended to use maps if the key-value pairs are unknown until run time (for example, because they are determined by user input), all keys have the same type and all values have the same type.</p>
+<h3 id="sets"><a class="header" href="#sets">Sets</a></h3>
+<p>A <code>Set</code> object is a collection of unique values:</p>
+<pre><code class="language-js">const values = new Set([1, 2, 3]);
+values.add(4);
+console.log(values.has(2)); // true
+console.log(values.size); // 4
+values.delete(3);
+console.log(values.has(3)); // false
+</code></pre>
+<p>Note that all values in a set must be unique, i.e. duplicates are not allowed:</p>
+<pre><code class="language-js">const values = new Set([1, 2, 3]);
+values.add(2);
+console.log(values); // Set(3) { 1, 2, 3 }
+</code></pre>
+<h3 id="json"><a class="header" href="#json">JSON</a></h3>
+<p><strong>JSON</strong> is a data format for data exchange (e.g. on a network) and can basically store nested JavaScript objects and arrays.
+While it was heavily inspired by JavaScript, it has become a language-independent data format and is in fact used by many other programming languages to exchange data.</p>
+<p>Here is an example JSON file:</p>
+<pre><code class="language-json">{
+  "user": {
+    "name": "John Doe",
+    "age": 24,
+    "hobbies": ["running", "swimming"]
+  },
+  "group": "Example group"
+}
+</code></pre>
+<blockquote>
+<p>Yes, this is exactly the same syntax that you would use in JavaScript to define objects and arrays.</p>
+</blockquote>
+<p>You can convert a JavaScript value to a JSON string using <code>JSON.stringify</code>:</p>
+<pre><code class="language-js">const result1 = JSON.stringify({ x: 1 });
+console.log(typeof result1); // 'string'
+console.log(result1); // {"x":1}
+
+const result2 = JSON.stringify([1, 2, 3]);
+console.log(typeof result2); // 'string'
+console.log(result2); // [1,2,3]
+</code></pre>
+<p>Note that <code>JSON.stringify</code> has some unintuitive behaviors.
+For example, running <code>JSON.stringify</code> on a map or a set will always return <code>{}</code>:</p>
+<pre><code class="language-js">console.log(JSON.stringify(new Map([[1, 2]]))); // {}
+console.log(JSON.stringify(new Set([1, 2]))); // {}
+</code></pre>
+<p>The reverse operation to <code>JSON.stringify</code> is <code>JSON.parse</code> which takes a JSON string and constructs a JavaScript value from it:</p>
+<pre><code class="language-js">const obj = JSON.parse('{"x": 1}');
+console.log(typeof obj); // 'object'
+console.log(obj); // { x: 1 }
+
+const arr = JSON.parse('[1, 2, 3]');
+console.log(typeof arr); // 'object'
+console.log(arr); // [ 1, 2, 3 ]
+</code></pre>
+<p>We will revisit the JSON data format when we start sending data over a network.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../01-a-brief-introduction-to-javascript/07-error-handling.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../01-a-brief-introduction-to-javascript/09-functional-thinking.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../01-a-brief-introduction-to-javascript/07-error-handling.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../01-a-brief-introduction-to-javascript/09-functional-thinking.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

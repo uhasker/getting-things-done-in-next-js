@@ -1,0 +1,414 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Migrations</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title"></h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h2 id="migrations"><a class="header" href="#migrations">Migrations</a></h2>
+<div style="text-align: right"> <i> DrizzleOrm is not an “ORM”, it’s merely a overrated typesafe sql wrapper not even a query builder.  <br> — From Drizzles' official marketing page </i> </div>
+<h3 id="why-migrations"><a class="header" href="#why-migrations">Why Migrations?</a></h3>
+<p>Quite often, during the course of development an application will have to change.
+This will sometimes include the underlying tables in the database.</p>
+<p>The problem is when you need to change the tables, you usually already have some data in those tables which will not match the new table structures.
+For example, let's say that you want to add a <code>finished_at</code> column to the <code>tasks</code> table.
+What would you do with the tasks that are already present in the table?
+Do you set the <code>finished_at</code> value for all those tasks to <code>null</code>?
+Do you set them to some arbitrary "default" date?</p>
+<p><strong>Database migrations</strong> are sets of changes that allow you to transition a database schema from a current state to a new desired state without breaking your existing data.
+These changes can involve adding tables, adding columns, removing columns and even changing data type or constraints.</p>
+<p>How do we perform database migrations in practice?
+We could theoretically just execute SQL queries that modify our tables and call it a day.
+However, in a real project that's a bad idea.</p>
+<p>For example, if you execute a mistaken SQL query during a migration you will have no simple way to reverse the change, i.e. to perform a so-called "rollback".
+Additionally, you want to be able to allow other developers to reproduce the changes you made to a database, especially if you work with different database instances during development (which is a common practice).</p>
+<p>Therefore, most tools (including Drizzle) split the migration process in two separate steps.</p>
+<p>First, you need to create a file containing the desired migration.
+Second, you need actually execute that file to perform the migration and move your database to the new desired state.</p>
+<p>If you want to follow along, you should drop the <code>task</code> and <code>project</code> tables along with the <code>status</code> enum:</p>
+<pre><code class="language-sql">drop table task;
+drop table project;
+drop type status;
+</code></pre>
+<p>You should also delete the <code>demo.ts</code> as we will now split the logic across multiple files.</p>
+<h3 id="creating-your-first-migration"><a class="header" href="#creating-your-first-migration">Creating Your First Migration</a></h3>
+<p>Install the <code>drizzle-kit</code> package as a dev dependency:</p>
+<pre><code class="language-sh">pnpm add drizzle-kit --save-dev
+</code></pre>
+<p>Let's create a <code>schema.ts</code> file that will contain all our table definitions.</p>
+<p>For now, we will only add the <code>task</code> table to it:</p>
+<pre><code class="language-ts">import { pgTable, serial, text, integer, timestamp, check, pgEnum } from 'drizzle-orm/pg-core';
+import { sql } from 'drizzle-orm';
+
+export const statusEnum = pgEnum('status', ['todo', 'inprogress', 'done']);
+
+export const taskTable = pgTable(
+  'task',
+  {
+    id: serial('id').primaryKey(),
+    title: text('title').notNull(),
+    description: text('description').notNull(),
+    status: statusEnum().notNull(),
+    duration: integer('duration'),
+    createdAt: timestamp('created_at').defaultNow().notNull(),
+  },
+  (table) =&gt; [
+    {
+      durationCheckConstraint: check('duration_check', sql`${table.duration} &gt; 0`),
+    },
+  ],
+);
+</code></pre>
+<p>Next, we need to create a <code>drizzle.config.ts</code> file.</p>
+<p>This file should specify the various configuration options we use when connecting to the database and performing migrations:</p>
+<pre><code class="language-ts">import { defineConfig } from 'drizzle-kit';
+
+export default defineConfig({
+  out: './migrations',
+  schema: './schema.ts',
+  dialect: 'postgresql',
+  dbCredentials: {
+    url: '$YOUR_DATABASE_URL_HERE',
+  },
+});
+</code></pre>
+<p>Now, we need to generate out first migration file:</p>
+<pre><code class="language-sh">pnpm drizzle-kit generate
+</code></pre>
+<p>This will create a <code>migrations</code> directory containing <code>meta</code> directory and an SQL file with the migration.
+It's quite instructive to look inside the SQL file:</p>
+<pre><code class="language-sql">CREATE TYPE "public"."status" AS ENUM('todo', 'inprogress', 'done');
+CREATE TABLE "task" (
+	"id" serial PRIMARY KEY NOT NULL,
+	"title" text NOT NULL,
+	"description" text NOT NULL,
+	"status" "status" NOT NULL,
+	"duration" integer,
+	"created_at" timestamp DEFAULT now() NOT NULL
+);
+</code></pre>
+<p>As you can see, a Drizzle migration file simply specifies the SQL queries that should be executed when you perform the migration.
+In this example, running the migration will create a new <code>task</code> table with the columns we would expect.</p>
+<h3 id="run-migrations"><a class="header" href="#run-migrations">Run Migrations</a></h3>
+<p>To run the migration script, we simply need to execute the following command:</p>
+<pre><code class="language-sh">pnpm drizzle-kit migrate
+</code></pre>
+<p>You will see that the table now appears in Supabase.</p>
+<h3 id="the-second-migration"><a class="header" href="#the-second-migration">The Second Migration</a></h3>
+<p>Now, let's add the project ID and table to the schema.
+Here is how the final <code>schema.ts</code> file should look like:</p>
+<pre><code class="language-ts">import { pgTable, serial, text, integer, timestamp, check, pgEnum } from 'drizzle-orm/pg-core';
+import { sql } from 'drizzle-orm';
+
+export const statusEnum = pgEnum('status', ['todo', 'inprogress', 'done']);
+
+export const projectTable = pgTable('project', {
+  id: serial('id').primaryKey(),
+  name: text('name').notNull(),
+});
+
+export const taskTable = pgTable(
+  'task',
+  {
+    id: serial('id').primaryKey(),
+    title: text('title').notNull(),
+    description: text('description').notNull(),
+    status: statusEnum().notNull(),
+    duration: integer('duration'),
+    createdAt: timestamp('created_at').defaultNow().notNull(),
+    projectId: integer('project_id').references(() =&gt; projectTable.id),
+  },
+  (table) =&gt; [
+    {
+      durationCheckConstraint: check('duration_check', sql`${table.duration} &gt; 0`),
+    },
+  ],
+);
+</code></pre>
+<p>Next, we create the second migration:</p>
+<pre><code class="language-sh">pnpm drizzle-kit generate
+</code></pre>
+<p>This will create another migration file in the <code>migrations</code> directory which looks as follows:</p>
+<pre><code class="language-sql">CREATE TABLE "project" (
+	"id" serial PRIMARY KEY NOT NULL,
+	"name" text NOT NULL
+);
+ALTER TABLE "task" ADD COLUMN "project_id" integer;
+ALTER TABLE "task" ADD CONSTRAINT "task_project_id_project_id_fk" FOREIGN KEY ("project_id") REFERENCES "public"."project"("id") ON DELETE no action ON UPDATE no action;
+</code></pre>
+<p>You will see that the migration contains the "diff" between the old schema and the new desired schema.
+Namely:</p>
+<ul>
+<li>the migration adds the <code>project</code> table</li>
+<li>the migration adds a <code>project_id</code> column to the <code>task</code> table</li>
+<li>the migration adds the relevant <code>foreign key</code> constraint to the <code>task</code> table</li>
+</ul>
+<p>Finally, you can execute the migration by running <code>pnpm drizzle-kit migrate</code>.
+This will execute the migration and you should see the updated tables in your Supabase project.</p>
+<h3 id="read-the-database-password-from-environment"><a class="header" href="#read-the-database-password-from-environment">Read the Database Password from Environment</a></h3>
+<p>There is one last thing that we need to fix.</p>
+<p>Right now we're hardcoding our database connection URL into our script.</p>
+<p>In real life, we want to avoid this to prevent everyone who has access to our code also having access to our database.
+Therefore, in practice, we read such secret information from an environment variable.</p>
+<p>The change is relatively simple.
+All we need to do is to replace the hardcoded database URL in the <code>drizzle.config.ts</code> file with <code>process.env.DATABASE_URL</code>:</p>
+<pre><code class="language-ts">import { defineConfig } from 'drizzle-kit';
+
+export default defineConfig({
+  out: './migrations',
+  schema: './schema.ts',
+  dialect: 'postgresql',
+  dbCredentials: {
+    url: process.env.DATABASE_URL!,
+  },
+});
+</code></pre>
+<p>Now you just need to export the <code>DATABASE_URL</code> environment variable and you can run all the commands as you normally would:</p>
+<pre><code class="language-sh">export DATABASE_URL="$YOUR_DATABASE_URL_HERE"
+pnpm drizzle-kit generate
+pnpm drizzle-kit migrate
+</code></pre>
+<p>Alternatively, you can read the environment variables from a <code>.env</code> file:</p>
+<pre><code>DATABASE_URL=$YOUR_DATABASE_URL_HERE
+</code></pre>
+<p>Again, you can run the commands as you usually would:</p>
+<pre><code class="language-sh">pnpm drizzle-kit generate
+pnpm drizzle-kit migrate
+</code></pre>
+<p>You can now recreate the <code>demo.ts</code> script from the first section:</p>
+<pre><code class="language-ts">import 'dotenv/config';
+import { drizzle } from 'drizzle-orm/node-postgres';
+import { taskTable } from './schema';
+
+const db = drizzle(process.env.DATABASE_URL!);
+
+async function getTasks() {
+  return await db.select().from(taskTable);
+}
+
+getTasks().then(console.log);
+</code></pre>
+<p>If you run it with <code>pnpm tsx demo.ts</code>, you will get the same results as in the first section.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../05-typesafe-sql-with-drizzle/04-multiple-tables.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../06-a-vanilla-client/index.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../05-typesafe-sql-with-drizzle/04-multiple-tables.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../06-a-vanilla-client/index.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

@@ -1,0 +1,457 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Data Types and Constraints</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title"></h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h2 id="data-types-and-constraints"><a class="header" href="#data-types-and-constraints">Data Types and Constraints</a></h2>
+<div style="text-align: right"> <i> A primary key is the compass of a table; it guides every row to its unique destiny. <br> — Ancient Chinese proverb </i> </div>
+<h3 id="numeric-data-types"><a class="header" href="#numeric-data-types">Numeric Data Types</a></h3>
+<p>The <code>integer</code> data type allows you to store integers.
+You usually use this data type for counts, identifiers etc.</p>
+<p>In our example, we use <code>integer</code> for the <code>duration</code> column of the <code>task</code> table.</p>
+<p>Note that there are actually multiple integer data types in PostgreSQL.
+The <code>smallint</code> data type allows you to store "small-range integers" and the <code>bigint</code> data type allows you to store "large-range integers".</p>
+<p>The difference between <code>smallint</code>, <code>integer</code> and <code>bigint</code> is basically the number of bytes they contain which impacts the minimum and maximum integers that can be stored.</p>
+<p>A <code>smallint</code> value has 2 bytes, i.e. it can store values from <code>-32768</code> up to <code>32767</code>.</p>
+<p>An <code>integer</code> value has 4 bytes, i.e. it can store values from <code>-2147483648</code> up to <code>2147483647</code>.</p>
+<p>A <code>bigint</code> value has 8 bytes, i.e. it can store values from <code>-9223372036854775808</code> up to <code>9223372036854775807</code>.</p>
+<p>For most regular web applications, <code>integer</code> values are more than enough, and by default, PostgreSQL uses <code>integer</code> values for numbers.
+Consider this example:</p>
+<pre><code class="language-sql">select 41234, pg_typeof(41234);
+</code></pre>
+<p>This will return:</p>
+<pre><code>| ?column? | pg_typeof |
+| -------- | --------- |
+| 41234    | integer   |
+</code></pre>
+<blockquote>
+<p>The <code>pg_typeof</code> operator returns the data type of an expression.
+Additionally, you should ignore the column names in this section—only the column values are relevant for us here.</p>
+</blockquote>
+<p>Note that by default integers have the type <code>integer</code> even if they could be <code>smallint</code>.
+Consider this example:</p>
+<pre><code class="language-sql">select 42, pg_typeof(42);
+</code></pre>
+<p>This will return:</p>
+<pre><code>| ?column? | pg_typeof |
+| -------- | --------- |
+| 42       | integer   |
+</code></pre>
+<p>You could use the <code>::</code> operator to convert a value into a different data type:</p>
+<pre><code class="language-sql">select 42::smallint, pg_typeof(42::smallint);
+</code></pre>
+<blockquote>
+<p>Note that <code>::</code> is a PostgreSQL-specific operator and not part of the official SQL standard.</p>
+</blockquote>
+<p>This will return:</p>
+<pre><code>| int2 | pg_typeof |
+| ---- | --------- |
+| 42   | smallint  |
+</code></pre>
+<p>Of course, if you provide a <code>bigint</code> value, PostgreSQL will use the <code>bigint</code> data type, since <code>bigint</code> doesn't fit into <code>integer</code>:</p>
+<pre><code class="language-sql">select 2147483652, pg_typeof(2147483652);
+</code></pre>
+<p>This will return:</p>
+<pre><code>| ?column?   | pg_typeof |
+| ---------- | --------- |
+| 2147483652 | bigint    |
+</code></pre>
+<p>If you would try to convert this value to an <code>integer</code>, you would get an error.
+For example, trying to execute <code>select 2147483652::integer</code> would result in the error <code>ERROR: 22003: integer out of range</code>.</p>
+<p>The <code>serial</code> data type allows you to represent <em>autoincrementing</em> integers (along with <code>smallserial</code> and <code>bigserial</code>).
+This makes <code>serial</code> very useful for unique identifiers since you don't need to handle the incrementing logic yourself.</p>
+<p>In the <code>task</code> table, the <code>id</code> column has the <code>serial</code> data type.</p>
+<blockquote>
+<p>Note that there are many other data types and strategies for automatically handling unique identifiers.
+For <em>simple</em> applications it doesn't matter, so in this chapter we will stick to the <code>serial</code> data type.</p>
+</blockquote>
+<p>PostgreSQL knows four data types for storing real numbers—<code>decimal</code>, <code>numeric</code>, <code>real</code> and <code>double precision</code>.</p>
+<p>The <code>decimal</code> and <code>numeric</code> types are equivalent and allow you to store numbers with a very large number of digits.
+These data types are recommended for quantities where your floating-point calculations need to be exact (e.g. when working with money).</p>
+<p>By default, PostgreSQL will use <code>numeric</code> for floating-point numbers:</p>
+<pre><code class="language-sql">select 0.5::double precision, pg_typeof(0.5);
+</code></pre>
+<p>This will return:</p>
+<pre><code>| float8 | pg_typeof |
+| ------ | --------- |
+| 0.5    | numeric   |
+</code></pre>
+<p>Note that because of the arbitrary precision requirement, calculations on values of the <code>numeric</code> data type are relatively slow.</p>
+<p>The <code>real</code> and <code>double precision</code> data types allow you to store floating-point numbers with a precision of <code>6</code> and <code>15</code> digits, respectively.
+Consider this example:</p>
+<pre><code class="language-sql">select 0.123456789123456789::real, pg_typeof(0.123456789123456789::real);
+</code></pre>
+<p>This will return:</p>
+<pre><code>| float4   | pg_typeof |
+| -------- | --------- |
+| 0.123457 | real      |
+</code></pre>
+<p>Note that you only have a precision of <code>6</code> digits left after the conversion.</p>
+<p>Something similar happens for the <code>double precision</code> data type:</p>
+<pre><code class="language-sql">select 0.123456789123456789::double precision, pg_typeof(0.123456789123456789::double precision);
+</code></pre>
+<p>This will return:</p>
+<pre><code>| float8            | pg_typeof        |
+| ----------------- | ---------------- |
+| 0.123456789123457 | double precision |
+</code></pre>
+<p>Note that you have a precision of <code>15</code> digits now (which is more than the <code>real</code> data type, but still not enough to represent the number in the given example).</p>
+<h3 id="character-data-types"><a class="header" href="#character-data-types">Character Data Types</a></h3>
+<p>PostgreSQL supports the <code>char(n)</code>, <code>varchar(n)</code> and <code>text</code> data types for storing characters and strings.</p>
+<p>The <code>char(n)</code> and <code>varchar(n)</code> data types can store strings up to <code>n</code> characters in length.</p>
+<p>For example, conversions to <code>char(n)</code> and <code>varchar(n)</code> would silently truncate the string:</p>
+<pre><code class="language-sql">select 'Next.js book'::char(3), pg_typeof('Next.js book'::char(3));
+</code></pre>
+<p>This will return:</p>
+<pre><code>| bpchar | pg_typeof |
+| ------ | --------- |
+| Nex    | character |
+</code></pre>
+<p>You will get a similar result if you use <code>varchar</code>:</p>
+<pre><code class="language-sql">select 'Next.js book'::varchar(3), pg_typeof('Next.js book'::varchar(3));
+</code></pre>
+<p>This will return:</p>
+<pre><code>| varchar | pg_typeof         |
+| ------- | ----------------- |
+| Nex     | character varying |
+</code></pre>
+<p>The <code>text</code> data type allows you to store strings of arbitrary length.
+For example:</p>
+<pre><code class="language-sql">select 'Next.js book'::text, pg_typeof('Next.js book'::text);
+</code></pre>
+<p>This will return:</p>
+<pre><code>| text         | pg_typeof |
+| ------------ | --------- |
+| Next.js book | text      |
+</code></pre>
+<p>Note that while theoretically <code>char(n)</code> and <code>varchar(n)</code> have minor performance advantages over <code>text</code>, these performance advantages are usually irrelevant in practice (at least for PostgreSQL), so throughout this book we will simply always use the <code>text</code> data type.</p>
+<p>In our <code>task</code> table we use <code>text</code> both for the <code>title</code> and the <code>description</code> column.</p>
+<blockquote>
+<p>If you're interested in more details about the tradeoffs between <code>char(n)</code>, <code>varchar(n)</code> and <code>text</code>, check out the <a href="https://www.postgresql.org/docs/current/datatype-character.html">official PostgreSQL documentation</a>.</p>
+</blockquote>
+<h3 id="datetime-data-types"><a class="header" href="#datetime-data-types">Date/Time Data Types</a></h3>
+<p>Dates and times are a famously dreaded topic among programmers, especially in combination with persistent data storage.
+We will only look at the very tip of the iceberg here.
+However, you should keep in mind that there are many complexities that we will skip for now.</p>
+<p>The three most important date/time data types are <code>date</code>, <code>time</code> and <code>timestamp</code>.</p>
+<p>The <code>date</code> data type allows you to store the date part (year, month, day) without the time information.
+Consider this example:</p>
+<pre><code class="language-sql">select '2023-07-04'::date, pg_typeof('2023-07-04'::date);
+</code></pre>
+<p>This will return:</p>
+<pre><code>| date       | pg_typeof |
+| ---------- | --------- |
+| 2023-07-04 | date      |
+</code></pre>
+<p>The <code>time</code> data type is basically the "complement" to the <code>date</code> type and allows you to store the time part (hours, minutes, seconds) without the date information.
+Consider this example:</p>
+<pre><code class="language-sql">select '07:05:16'::time, pg_typeof('07:05:16'::time);
+</code></pre>
+<p>This will return:</p>
+<pre><code>| time     | pg_typeof |
+| -------- | --------- |
+| 07:05:16 | time      |
+</code></pre>
+<p>Finally, the <code>timestamp</code> data type allows us to store a date and a time.
+This is also the most commonly used date/time data type (since you usually care about the date <em>and</em> time).
+Consider this example:</p>
+<pre><code class="language-sql">select '2023-07-04 07:05:16'::timestamp, pg_typeof('2023-07-04 07:05:16'::timestamp);
+</code></pre>
+<p>This will return:</p>
+<pre><code>| timestamp           | pg_typeof                   |
+| ------------------- | --------------------------- |
+| 2023-07-04 07:05:16 | timestamp without time zone |
+</code></pre>
+<p>In our <code>task</code> table, we use the <code>created_at</code> column to store the time at which a task has been created.
+Since we care about the date and the time, we use the <code>timestamp</code> data type here.</p>
+<p>There are additional data types like <code>timestamp with time zone</code> (if we want to store the time zone with the timestamp), however for now we have enough data types to confidently work with dates and times in <em>simple</em> applications.</p>
+<h3 id="enums"><a class="header" href="#enums">Enums</a></h3>
+<p>Enumerated data types are data types which comprise a static (and also ordered) set of values.
+This is a bit similar to creating a union of literal types in TypeScript (although enums and union types <em>are not the same</em>).</p>
+<p>You can define an enum using the <code>create type</code> statement.
+For example, this is how we defined the <code>status</code> enum:</p>
+<pre><code class="language-sql">create type status as enum ('todo', 'inprogress', 'done');
+</code></pre>
+<p>Once the enum is defined, it can be used like every other data type:</p>
+<pre><code class="language-sql">create table task (
+    -- code
+    status status,
+    -- code
+);
+</code></pre>
+<h3 id="constraints"><a class="header" href="#constraints">Constraints</a></h3>
+<p>Often, we want to limit the kind of data that can be stored in a table beyond just limiting the data types.
+This can be accomplished with <strong>constraints</strong>.</p>
+<p>The <code>unique</code> constraint is used to ensure that the data in a column is unique among all the rows in a table.</p>
+<p>For example, we gave the <code>title</code> column the <code>unique</code> constraint to ensure that there will never be two tasks with the same title:</p>
+<pre><code class="language-sql">create table task (
+    -- code
+    title text unique,
+    -- code
+);
+</code></pre>
+<p>Another important constraint is the <code>not null</code> constraint.</p>
+<p>By default, you can insert a <code>null</code> value as data, where <code>null</code> is basically a special marker indicating that the given data doesn't exist (a bit similar to <code>null</code> and <code>undefined</code> in TypeScript).
+The <code>not null</code> constraint quite sensibly indicates that the inserted value can't be <code>null</code>.</p>
+<p>In our example, we want every task to have a <code>title</code>, a <code>description</code> and a <code>status</code> so we mark these columns as <code>not null</code>:</p>
+<pre><code class="language-sql">create table task (
+    -- code
+    title text not null,
+    description text not null,
+    -- code
+);
+</code></pre>
+<p>However, we allow a task to not have a <code>duration</code> and don't mark that column as <code>not null</code>.</p>
+<p>Basically, we apply the <code>not null</code> constraint if we want to ensure that a value is always present in this column.</p>
+<p>The <code>primary key</code> constraint means that the column should be used to identify the rows of the table.
+If a column is marked as <code>primary key</code>, its values must be <code>unique</code> <em>and</em> they can't be <code>null</code>.</p>
+<p>Since we want the <code>id</code> to uniquely identify each task, we apply the <code>primary key</code> constraint to the <code>id</code> column:</p>
+<pre><code class="language-sql">create table task (
+    id serial primary key,
+    -- code
+);
+</code></pre>
+<p>The <code>check</code> constraint is used to specify a condition that each row must satisfy for the value to be accepted into a column.</p>
+<p>We could have used this for the <code>status</code> column by writing <code>check in ('todo', 'inprogress', 'done')</code>.
+However, since we knew the values in advance, we were able to use an enum instead.
+Unlike enums though, check constraints allow more flexibility.</p>
+<p>For example, we can give the <code>duration</code> column a constraint that its values must be greater than 0:</p>
+<pre><code class="language-sql">create table task (
+    -- code
+    duration integer check (duration &gt; 0),
+    -- code
+);
+</code></pre>
+<p>The <code>default</code> constraint allows us to specify a default value for a column.
+If an insert operation doesn't provide a value for a column, PostgreSQL will automatically insert the specified value.</p>
+<p>In our example, we want the <code>created_at</code> value to simply be the current time and use the <code>default</code> constraint together with <code>current_timestamp</code> to accomplish that:</p>
+<pre><code class="language-sql">create table task (
+    -- code
+    created_at timestamp default current_timestamp
+);
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../04-persistence-with-sql/01-setup.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../04-persistence-with-sql/03-inserting-updating-and-deleting-data.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../04-persistence-with-sql/01-setup.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../04-persistence-with-sql/03-inserting-updating-and-deleting-data.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

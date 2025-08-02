@@ -1,0 +1,332 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>IPs, Ports and Domains</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title"></h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h2 id="ips-ports-and-domains"><a class="header" href="#ips-ports-and-domains">IPs, Ports and Domains</a></h2>
+<div style="text-align: right"> <i> Well, it works on localhost. <br> — Seconds before disaster </i> </div>
+<h3 id="network-interfaces"><a class="header" href="#network-interfaces">Network Interfaces</a></h3>
+<p><strong>Network interfaces</strong> are the mechanism your computer uses to connect to a network.
+Network interfaces can correspond to physical objects like a network interface controller (the hardware component that allows a computer to connect to a network via a cable or wireless connection).
+They can also be virtual, i.e. only exist in software.</p>
+<h3 id="protocols"><a class="header" href="#protocols">Protocols</a></h3>
+<p>A <strong>protocol</strong> defines the rules by which the network interfaces communicate.
+Protocols allow computers to "speak the same language".</p>
+<p>The internet knows a lot of different protocols—from really common ones like IP, HTTP, HTTPS or DNS to really exotic ones that are only relevant for a select group of specialists.</p>
+<p>For example, if you're browsing <code>http://example.com</code>, the underlying protocol is HTTP.
+Similarly, if you browse <code>https://www.google.com/</code>, the underlying protocol is HTTPS.</p>
+<p>Protocols can also use other protocols.
+For example, the HTTP protocol uses the TCP protocol which in turn uses the IP protocol.</p>
+<h3 id="the-ip-protocol"><a class="header" href="#the-ip-protocol">The IP Protocol</a></h3>
+<p>The <strong>IP protocol</strong> powers a large portion of the modern web.
+Its most important concept is the so-called IP address.</p>
+<blockquote>
+<p>Note that there are two versions of the IP protocol—the IPv4 protocol and the IPv6 protocol.
+We will only talk about the IPv4 protocol and ignore the IPv6 protocol in this book.</p>
+</blockquote>
+<p>An <strong>IPv4 address</strong> (or simply <strong>IP</strong> for short) is an identifier that is assigned to a network interface on your computer.
+For example, your wireless network interface might have an IPv4 address that it can use to communicate with other computers on the same wireless network.</p>
+<p>Such an address consists of 4 numbers between 0 and 255, separated by dots.
+Therefore, IP addresses look like <code>123.56.1.17</code> or <code>192.168.178.47</code>.</p>
+<p>Note that instead of saying that a <em>network interface has a particular IP</em>, we will often say that <em>a computer has some IP</em>.
+This is because often we only really care about a particular interface (usually your Ethernet or your wireless interface).
+However, it's important to understand that different network interfaces will usually have different IP addresses even if they're located on the same machine.</p>
+<p>The <strong>loopback address</strong> <code>127.0.0.1</code> is a special IP address which can be used to identify the machine you're currently on.
+You can basically use this to talk to your own computer.
+For example, if you run a local web server, you could access it at <code>127.0.0.1</code>.</p>
+<p>Additionally, some IP addresses are designated as <strong>private addresses</strong>, i.e. they can only appear on local networks and can't be used on the public internet.
+The Internet Assigned Number Authority (IANA) has reserved the following blocks of IP addresses for private networks:</p>
+<ul>
+<li><code>10.0.0.0-10.255.255.255</code></li>
+<li><code>172.16.0.0-172.31.255.255</code></li>
+<li><code>192.168.0.0-192.168.255.255</code></li>
+</ul>
+<p>This has the important consequence that if you're on a local network you usually won't be able to access a machine from another local network using its private address.
+For example, let's say that you're in your home network and you've finally managed to host a web server on your machine which has the IP address <code>172.16.32.155</code>.
+Full of excitement, you send a link to your friend Alice (who is on <em>her</em> home network), only for her to tell you that she can't reach your IP address.
+The problem is that your machine is only reachable at <code>172.16.32.155</code> <em>from your home network</em> and can't be reached under that address from any other network.</p>
+<p>Therefore, if you want your machine to be reachable from anywhere it needs to have a <strong>public address</strong>.
+A public address is basically any address that hasn't been explicitly marked as private.
+For example, <code>142.251.37.14</code> is a public address since it's not in one of the private address blocks.</p>
+<blockquote>
+<p>There are a few other special address blocks like the "link local" block.
+However, they won't be important for this book and therefore we'll simply skip over them.</p>
+</blockquote>
+<h3 id="ports"><a class="header" href="#ports">Ports</a></h3>
+<p>Usually, you want to be able to run multiple networking services on your machine.
+This poses the problem of <em>uniquely identifying</em> those services.
+After all, if they all share the same IP, how can we distinguish them from one another?</p>
+<p>The answer is that we can use <strong>ports</strong>.
+A port is simply a number assigned to uniquely identify a connection endpoint on a machine.</p>
+<p>Let's say you want to have a web service and an <code>ssh</code> service running on the same machine.</p>
+<blockquote>
+<p>The <code>ssh</code> protocol allows you to remotely log in to a computer and execute commands on it.</p>
+</blockquote>
+<p>You could assign the web service the port <code>443</code> and the ssh service the port <code>22</code>.
+Even though these services run on the same machine with the same IP, they can be distinguished from each other by their port number.</p>
+<p>If a service is assigned some port, programmers often say that the service is <strong>listening</strong> (for incoming connections) on that port.
+In our example, the web service would be <em>listening</em> on port <code>443</code> and the ssh service would be <em>listening</em> on port <code>22</code>.</p>
+<p>If you want to specify an IP and a port together, you use the colon <code>:</code> notation.
+For example, if you have an HTTPS web server running on a machine with the IP <code>123.56.1.17</code> and you have assigned the port <code>443</code> to the web server, it would be reachable at <code>123.56.1.17:443</code>.</p>
+<blockquote>
+<p>If we add the protocol (HTTPS), we would get the correct URL for the web server, which would be <code>https://123.56.1.17:443</code>.
+We will talk about URLs in more detail soon.</p>
+</blockquote>
+<p>Similarly, if you start an HTTP web server locally (i.e. on <code>127.0.0.1</code>) on port <code>80</code>, you could access it at <code>127.0.0.1:80</code>.</p>
+<blockquote>
+<p>If we add the protocol (HTTP), we would get the correct URL for the web server, which would be <code>http://127.0.0.1:80</code>.</p>
+</blockquote>
+<p>There is a list of <strong>well-known ports</strong>.
+For example, an HTTP application typically runs on port <code>80</code> while an HTTPS application typically runs on port <code>443</code>.
+This is why you don't need to explicitly tell your browser that <code>google.com</code> can be found at port <code>443</code>—your web browser will figure this out automatically because <code>443</code> is a well-known port.</p>
+<blockquote>
+<p>During development we will not follow this convention and mostly run our applications on port <code>3000</code>.
+This is because you don't need special "root" permissions to run something on port <code>3000</code>.
+Typically, ports below <code>1024</code> are considered "privileged" and require these special permissions.
+However, when we deploy our final application to production, it will run on the well-known port <code>443</code>.</p>
+</blockquote>
+<h3 id="domains"><a class="header" href="#domains">Domains</a></h3>
+<p>While IP addresses are great, they are very unwieldy and hard to remember for humans.
+Imagine that instead of "just google it" or "go to <code>google.com</code>" you would have to tell someone to "go to <code>142.251.37.14</code>".
+That would suck!</p>
+<p>This is why the concept of a <strong>domain</strong> was introduced.
+A domain is a string that identifies some network resource.
+In our neat and tidy web development world, a domain usually has a corresponding IP address.</p>
+<p>For example, the domain <code>google.com</code> might correspond to the IP address <code>142.251.37.14</code>.
+That is, you can identify the resource either via <code>google.com</code> or via <code>142.251.37.14</code>.</p>
+<p>The translation of domains to IP addresses is handled by the <strong>Domain Name System</strong> (DNS) protocol.
+If you type <code>google.com</code> into your browser address bar, DNS will translate it to the correct IP under the hood.</p>
+<blockquote>
+<p>The reality is much more complicated and involves something called DNS records.
+This means that domains can have IPv4 addresses, IPv6 addresses, mail addresses etc.
+Domains can also be forwarded to other domains with so-called CNAME records.
+The picture becomes even more complicated once we go into load balancing.
+Nevertheless, for our purposes the mental model of "there are domains and they correspond to IP addresses" is enough.</p>
+</blockquote>
+<p>A special domain is <code>localhost</code> which resolves to <code>127.0.0.1</code>.</p>
+<p>This means that if you want to access a locally running HTTP web server on port <code>3000</code>, you would need to go to <code>localhost:3000</code> or, more specifically, <code>http://localhost:3000</code>.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../03-networking-fundamentals/index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../03-networking-fundamentals/02-an-http-primer.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../03-networking-fundamentals/index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../03-networking-fundamentals/02-an-http-primer.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

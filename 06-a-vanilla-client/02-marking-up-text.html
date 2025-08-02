@@ -1,0 +1,323 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Marking Up Text</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title"></h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h2 id="marking-up-text"><a class="header" href="#marking-up-text">Marking Up Text</a></h2>
+<div style="text-align: right"> <i> Who needs semantic HTML anyway? <br> — Seconds before disaster </i> </div>
+<h3 id="the-paragraph-element"><a class="header" href="#the-paragraph-element">The Paragraph Element</a></h3>
+<p>The most basic element for marking up text is the paragraph element <code>&lt;p&gt;</code>:</p>
+<pre><code class="language-html">&lt;p&gt;This is the first paragraph of many, many paragraphs.&lt;/p&gt;
+&lt;p&gt;This is the second paragraph of many, many paragraphs.&lt;/p&gt;
+&lt;p&gt;This is the third paragraph of many, many paragraphs.&lt;/p&gt;
+</code></pre>
+<p>Visually speaking, paragraphs are represented as text blocks separated from surrounding content by blank lines.
+Paragraphs are commonly used to group related text.</p>
+<h3 id="breaking-up-text"><a class="header" href="#breaking-up-text">Breaking Up Text</a></h3>
+<p>You can break up text with the line break element <code>&lt;br&gt;</code>:</p>
+<pre><code class="language-html">There is a line break here. &lt;br /&gt;
+This is some text after the line break.
+</code></pre>
+<p>Additionally, you can use the <code>&lt;hr&gt;</code> element for a thematic break of some text.
+It will usually be visually presented as a horizontal line.</p>
+<pre><code class="language-html">Here is some text. &lt;hr /&gt; Here is some text about something totally different.
+</code></pre>
+<p>The <code>&lt;hr&gt;</code> element is often used to introduce thematic breaks between paragraphs.</p>
+<h3 id="heading-elements"><a class="header" href="#heading-elements">Heading Elements</a></h3>
+<p>There are six heading elements, <code>&lt;h1&gt;</code> to <code>&lt;h6&gt;</code>.
+The different heading elements represent different "heading levels", e.g. <code>&lt;h1&gt;</code> is the main heading, <code>&lt;h2&gt;</code> a subheading and so on:</p>
+<pre><code class="language-html">&lt;h1&gt;Main heading&lt;/h1&gt;
+
+&lt;h2&gt;Subheading 1&lt;/h2&gt;
+&lt;h3&gt;Subsubheading 1.1&lt;/h3&gt;
+&lt;p&gt;Some content related to subheading 1.1&lt;/p&gt;
+&lt;h3&gt;Subsubheading 1.2&lt;/h3&gt;
+&lt;p&gt;Some content related to subheading 1.2&lt;/p&gt;
+
+&lt;h2&gt;Subheading 2&lt;/h2&gt;
+
+&lt;h3&gt;Subsubheading 2.1&lt;/h3&gt;
+&lt;p&gt;Some content related to subheading 2.1&lt;/p&gt;
+&lt;h3&gt;Subsubheading 2.2&lt;/h3&gt;
+&lt;p&gt;Some content related to subheading 2.2&lt;/p&gt;
+</code></pre>
+<p>You will rarely need <code>&lt;h4&gt;</code> to <code>&lt;h6&gt;</code>—very few documents require such deeply nested heading levels.</p>
+<p>Additionally, you should only use a single <code>&lt;h1&gt;</code> heading in a page since this is the top-level heading.</p>
+<h3 id="emphasis-and-importance"><a class="header" href="#emphasis-and-importance">Emphasis and Importance</a></h3>
+<p>If we want to emphasize a part of a text (like an important word) we can use the <code>&lt;em&gt;</code> and <code>&lt;strong&gt;</code> elements.
+The <code>&lt;em&gt;</code> element marks that a text should be emphasized:</p>
+<pre><code class="language-html">The weather today is &lt;em&gt;very&lt;/em&gt; hot.
+</code></pre>
+<p>The <code>&lt;strong&gt;</code> element marks that a text has strong importance:</p>
+<pre><code class="language-html">The weather today is not just hot, it's &lt;strong&gt;scorching&lt;/strong&gt;.
+</code></pre>
+<p>As you probably guessed, deciding which of these two elements is appropriate is largely on you.
+If you want to emphasize some part of a text, but it doesn't have strong urgency, you should use <code>&lt;em&gt;</code>.
+If a text is very important, you should use <code>&lt;strong&gt;</code> instead.</p>
+<blockquote>
+<p>There are also the <code>&lt;i&gt;</code> and <code>&lt;b&gt;</code> elements.
+However, we will rarely use them, since <code>&lt;em&gt;</code> and <code>&lt;strong&gt;</code> have a semantic meaning (see below for what this means).</p>
+</blockquote>
+<h3 id="other-text-elements"><a class="header" href="#other-text-elements">Other Text Elements</a></h3>
+<p>We've only scratched the surface of the kind of text markup you can perform with HTML.
+There are many, many other elements you can use.
+For example, you can mark up subscripts and superscripts with <code>&lt;sub&gt;</code> and <code>&lt;sup&gt;</code> respectively:</p>
+<pre><code class="language-html">&lt;p&gt;The chemical formula for water is H&lt;sub&gt;2&lt;/sub&gt;O.&lt;/p&gt;
+&lt;p&gt;The equation for energy is E = mc&lt;sup&gt;2&lt;/sup&gt;.&lt;/p&gt;
+</code></pre>
+<p>You can add quotes—both blockquotes (with <code>&lt;blockquote&gt;</code>) and inline quotes (with <code>&lt;q&gt;</code>):</p>
+<pre><code class="language-html">&lt;p&gt;As the famous physicist once said:&lt;/p&gt;
+
+&lt;blockquote cite="https://some-random-quotes.com/"&gt;
+  "Stop believing quotes you found on the internet"
+&lt;/blockquote&gt;
+
+&lt;p&gt;
+  As Einstein once said,
+  &lt;q&gt;people who build their lifes around random internet quotes are stupid.&lt;/q&gt;
+&lt;/p&gt;
+</code></pre>
+<p>Trying to learn every single HTML element for marking up text would be a pointless endeavour (you can look them up with a simple Google search anyway).
+Just be aware that when it comes to marking up text there might be an HTML element for your use case.</p>
+<h3 id="semantic-html"><a class="header" href="#semantic-html">Semantic HTML</a></h3>
+<p>In a few chapters, we will introduce you to CSS, which will allow you to style your HTML elements however you see fit.
+At this point most people forget that there are any elements besides the generic <code>&lt;div&gt;</code> container since they can now just <em>style</em> the <code>&lt;div&gt;</code> to look however they want.</p>
+<p>This is a <em>really bad idea</em>.</p>
+<p>The problem is that <em>looking</em> at a page is not the only way to browse the web.</p>
+<p>First of all, there are a lot of visually impaired people in the world who use screen readers to navigate the internet.
+Screen readers tend to focus on the HTML elements and not the styles (which makes sense, since reading out styles is not really something you want to do).</p>
+<p>If you write a heading as a styled <code>&lt;div&gt;</code> instead of an <code>&lt;h1&gt;</code> you are not only doing more (unnecessary) work, you also give visually impaired people a worse experience.
+Screen readers often interpret headings in a special way.
+For example, you can ask most screen readers to read all headings on a page out loud and then jump to some heading you care about.
+This is of course not possible with <code>&lt;div&gt;</code>s.</p>
+<p>Second, your page will also be consumed by programs responsible for indexing and ranking.
+If your website contains generic containers only, it will usually be downgraded resulting in the much dreaded <em>bad Search Engine Optimization</em>.</p>
+<p>Therefore, you should <em>absolutely not</em> forget about the <em>semantically correct</em> HTML elements we've presented in this section.</p>
+<blockquote>
+<p>Also, if you don't use semantically correct HTML, your fellow developers will let you know about this in the <em>smuggest</em> way possible.</p>
+</blockquote>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../06-a-vanilla-client/01-hypertext-markup-language.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../06-a-vanilla-client/03-hyperlinks-and-images.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../06-a-vanilla-client/01-hypertext-markup-language.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../06-a-vanilla-client/03-hyperlinks-and-images.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

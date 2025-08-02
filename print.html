@@ -25,28 +25,41 @@
         <link rel="stylesheet" href="fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="highlight.css">
-        <link rel="stylesheet" href="tomorrow-night.css">
-        <link rel="stylesheet" href="ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
 
 
-        <!-- Provide site root to javascript -->
+        <!-- Provide site root and default themes to javascript -->
         <script>
-            var path_to_root = "";
-            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc.js"></script>
     </head>
     <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
     <div id="body-container">
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
         <script>
             try {
-                var theme = localStorage.getItem('mdbook-theme');
-                var sidebar = localStorage.getItem('mdbook-sidebar');
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
 
                 if (theme.startsWith('"') && theme.endsWith('"')) {
                     localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
@@ -60,7 +73,8 @@
 
         <!-- Set the theme before any content is loaded, prevents flash -->
         <script>
-            var theme;
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
             const html = document.documentElement;
@@ -73,17 +87,20 @@
 
         <!-- Hide / unhide sidebar before it is displayed -->
         <script>
-            var sidebar = null;
-            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
             } else {
                 sidebar = 'hidden';
+                sidebar_toggle.checked = false;
             }
-            sidebar_toggle.checked = sidebar === 'visible';
-            html.classList.remove('sidebar-visible');
-            html.classList.add("sidebar-" + sidebar);
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
@@ -110,13 +127,14 @@
                             <i class="fa fa-paint-brush"></i>
                         </button>
                         <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
                         </ul>
-                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
                             <i class="fa fa-search"></i>
                         </button>
                     </div>
@@ -133,7 +151,12 @@
 
                 <div id="search-wrapper" class="hidden">
                     <form id="searchbar-outer" class="searchbar-outer">
-                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
                     </form>
                     <div id="searchresults-outer" class="searchresults-outer hidden">
                         <div id="searchresults-header" class="searchresults-header"></div>
@@ -165,8 +188,6 @@
 <p>This book is intended to be a standalone resource. While there are resources for further reading in each section, these are merely pointers if you want to dive deeper into a certain topic. You <em>don't have</em> to read them and you should be able to understand everything without reading them. In fact, if you are hard stuck in a certain place, this probably represents a failure on our part. Maybe we didn't explain an important concept well enough (or at all!). Don't hesitate to write an email to <code>uhasker@protonmail.com</code> or to create an issue at <code>https://github.com/uhasker/getting-things-done-in-next-js</code> explaining your problem.</p>
 <p><em>Happy hacking</em></p>
 <p><em>Mikhail Berkov</em></p>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="acknowledgments"><a class="header" href="#acknowledgments">Acknowledgments</a></h2>
-<p>I sincerely thank <strong>Anastasiia Alekseeva</strong>, <strong>Ricardo Yanzon</strong>, <strong>Alexander Berkov</strong>, <strong>Jakob Stechow</strong>, <strong>Jannis Morgenstern</strong>, <strong>Julian Wasmeier</strong> for proofreading chapter drafts and giving valuable feedback on missing parts.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="chapter-1-a-brief-introduction-to-javascript"><a class="header" href="#chapter-1-a-brief-introduction-to-javascript">Chapter 1: A Brief Introduction to JavaScript</a></h1>
 <div style="text-align: right"> <i> JavaScript has beauty, but not everyone sees it. <br> — Confucius </i> </div>
 <p>First we will need to go through the basics of the JavaScript language that we will use pretty much everywhere throughout this book. After all the Next.js stack is built on top of it.</p>
@@ -207,7 +228,7 @@ Then you can open the console using <kbd>Cmd</kbd> + <kbd>Option</kbd> + <kbd>K<
 This line was originally intended to be a funny joke, but on June 15, 2022 Microsoft officially ended support for Internet Explorer, so it's not even a joke anymore.</p>
 </blockquote>
 <p>This is approximately how the browser console will look like in Firefox:</p>
-<p><img src="chapter1/images/browser-console.png" alt="" /></p>
+<p><img src="01-a-brief-introduction-to-javascript/images/browser-console.png" alt="" /></p>
 <blockquote>
 <p>Note that if you see a bunch of scary error or warning messages upon opening the console, <em>don't panic</em> (this is also good life advice in general).
 Most of these will probably come from various extensions you might have installed or the web page you are currently viewing.
@@ -219,7 +240,7 @@ Type the following into the browser console:</p>
 </code></pre>
 <p>Now hit <kbd>Return</kbd> (you may also know this as <kbd>Enter</kbd> or simply <kbd>⏎</kbd>).
 You will see the output <code>Hello, World!</code> in the console:</p>
-<p><img src="chapter1/images/browser-console-log.png" alt="" /></p>
+<p><img src="01-a-brief-introduction-to-javascript/images/browser-console-log.png" alt="" /></p>
 <blockquote>
 <p>Ignore the <code>undefined</code> for now.</p>
 </blockquote>
@@ -405,11 +426,11 @@ In programming, that "somewhere" is referred to as <em>storage</em> and the pred
 <p>A <strong>variable</strong> is just that—a storage location containing a value which is referred to by a symbolic name.
 This <em>sounds</em> really fancy, but it just means that there is a value somewhere in your storage and you can refer to that value using a symbolic name that doesn't change (even if the value itself changes).</p>
 <p>For example, you could have a variable <code>age</code> which has the value <code>20</code> (we say that <code>age</code> is equal to <code>20</code>):</p>
-<p><img src="chapter1/images/variable.png" alt="" /></p>
+<p><img src="01-a-brief-introduction-to-javascript/images/variable.png" alt="" /></p>
 <p>Now even if the value of <code>age</code> changes (e.g. to <code>21</code> because a birthday happened), the variable name doesn't change, only the value does.
 The variable name will still be <code>age</code>.
 However, <code>age</code> will now have the value <code>21</code> (i.e. <code>age</code> will be equal to <code>21</code>):</p>
-<p><img src="chapter1/images/variable-changed.png" alt="" /></p>
+<p><img src="01-a-brief-introduction-to-javascript/images/variable-changed.png" alt="" /></p>
 <p>JavaScript lets you declare variables using the <code>let</code> keyword.
 You can assign values to variables with the <strong>assignment operator</strong> (<code>=</code>):</p>
 <pre><code class="language-js">// Declare a variable
@@ -748,7 +769,7 @@ The reason for this behaviour is that <code>arr</code> and <code>arr2</code> bot
 Remember how we were careful to introduce a variable <em>as a storage location together with a symbolic name</em>?
 Well, it turns out that <em>different symbolic names</em> may refer to the <em>exact same storage location</em>.</p>
 <p>You can visualize it like this:</p>
-<p><img src="chapter1/images/array-copy-incorrect.png" alt="" /></p>
+<p><img src="01-a-brief-introduction-to-javascript/images/array-copy-incorrect.png" alt="" /></p>
 <p>Here we have a storage location containing the values <code>1</code>, <code>2</code>, <code>3</code> and <code>4</code> somewhere.
 We also have two symbolic names <code>arr</code> and <code>arr2</code>.
 While the symbolic names are different, they point to the same storage location.
@@ -763,7 +784,7 @@ console.log(copied[0]); // 1
 </code></pre>
 <p>This looks good.
 Here is the mental picture you should have in your head for copying an array:</p>
-<p><img src="chapter1/images/array-copy-correct.png" alt="" /></p>
+<p><img src="01-a-brief-introduction-to-javascript/images/array-copy-correct.png" alt="" /></p>
 <blockquote>
 <p>If you only briefly skimmed the section on array destructuring and the spread syntax, go back again and read it carefully.
 These two concepts will come up <em>a lot</em> in the following chapters (much more often than you think right now).</p>
@@ -2113,7 +2134,7 @@ const tasks = [
 </code></pre>
 <p>The <code>map</code> function takes one argument—a function <code>f</code> to apply to every element of the array.
 It returns the array that results from applying <code>f</code> to every element of the original array.</p>
-<p><img src="chapter1/images/map.png" alt="" /></p>
+<p><img src="01-a-brief-introduction-to-javascript/images/map.png" alt="" /></p>
 <p>Let's say we wanted to square all the elements of <code>numbers</code>.
 We could write something like this:</p>
 <pre><code class="language-js">const result = [];
@@ -3383,1102 +3404,13 @@ Unfortunately, the answer is a hard <strong>no</strong>.</p>
 <p>There is no way around it and in the end, experience is king.</p>
 <p>But there is one important caveat—you have to actually <em>learn</em> from that experience and reflect on your mistakes.</p>
 <p>So go out there, write features, make mistakes and learn something!</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="chapter-2-leveling-up-with-typescript"><a class="header" href="#chapter-2-leveling-up-with-typescript">Chapter 2: Leveling Up with TypeScript</a></h1>
-<div style="text-align: right"> <i> To employ TypeScript is to light a lantern on the dim path of JavaScript, revealing the stones upon which one may trip. <br> — Ancient Chinese proverb </i> </div>
-<p>Now that we learned the basics of JavaScript, we could theoretically dive right into writing our application.
-However, JavaScript as a language has a central problem—it does not come with type checking.
-For example, there is nothing preventing you from trying to add two objects except the fact that—well—your application will crash and burn.</p>
-<p>In general, one of the most common error sources are what can be described as type errors: a certain kind of value was used where a different kind of value was expected.
-This could be due to simple typos, a failure to understand how to use a library correctly, incorrect assumptions about runtime behavior and more.</p>
-<p>The goal of TypeScript is to provide static type checking for JavaScript programs—in other words, TypeScript provides you with tooling that runs before your code is executed (static) and ensures that the types of the program are correct (type checking).</p>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="why-typescript"><a class="header" href="#why-typescript">Why TypeScript?</a></h2>
-<div style="text-align: right"> <i> Better to wrangle with TypeScript's compiler today, than to wrestle with JavaScript bugs tomorrow. <br> — Ancient Chinese proverb </i> </div>
-<h3 id="a-little-story"><a class="header" href="#a-little-story">A Little Story</a></h3>
-<p>Consider the following scenario.
-You have a JavaScript function <code>showTask(task)</code> which takes a <code>task</code> object and displays the task in a UI (or in the console).</p>
-<p>For example, let's say you have a <code>task</code> object looks like this:</p>
-<pre><code class="language-js">const task = {
-  id: 1,
-  title: 'Read the Next.js book',
-  description: 'Read and understand the Next.js book.',
-};
-</code></pre>
-<p>Can you pass this object to <code>showTask</code>?
-Well, it's hard to tell.</p>
-<p><em>Maybe</em> the <code>showTask</code> function expects an object that has <code>id</code>, <code>title</code>, <code>description</code> <em>and</em> <code>status</code> fields.
-The only way to find out if your <code>task</code> object is a valid input for <code>showTask</code> is to—well—actually pass it and find out.
-This is obviously not the ideal workflow, especially if you happen to find out that your object lacked some important properties <em>in production</em>.</p>
-<p>Additionally, if the author of the <code>showTask</code> function changes their function to expect additional properties on the <code>task</code> object, they would now have to check all the invocations of <code>showTask</code> to verify that they didn't accidentally break something.</p>
-<p>This is where TypeScript comes in.
-With TypeScript we would be able to <em>statically type</em> the function by adding <em>type annotations</em> like this:</p>
-<pre><code class="language-ts">type Task = {
-  id: number;
-  title: string;
-  description: string;
-};
-
-function showTask(task: Task) {
-  // Implementation here
-}
-</code></pre>
-<p>Now we know <em>exactly</em> what kind of object <code>showTask</code> expects.
-Namely, it needs an <code>id</code> property which is a <code>number</code>, a <code>title</code> property which is a <code>string</code> and a <code>description</code> property which is also a <code>string</code>.</p>
-<p>Here is how we could call this function:</p>
-<pre><code class="language-ts">showTask({
-  id: 1,
-  title: 'Read the Next.js book',
-  description: 'Read and understand the Next.js book.',
-});
-</code></pre>
-<p>If we would pass an object that lacks some of the expected properties and run <em>type checks</em> (more on that later) we would get an error long before the bad code could make it anywhere near production.
-Even better—your editor would now be able to show you that you might have a problem during development:</p>
-<pre><code class="language-ts">showTask({
-  id: 1,
-  title: 'Read the Next.js book',
-});
-// Most editors will now show a squiggly red line somewhere around here and
-// politely scream at you that the object is missing the description property.
-</code></pre>
-<p>Better still (TypeScript just keeps giving), you now get <em>autocompletion</em>—editors will show possible suggestions for the property names your object should have <em>while you are typing</em>.
-This saves an enormous amount of time and effort when writing code.</p>
-<p>To summarize, using TypeScript massively enhances your developer workflow.
-This is why most large projects use TypeScript instead of vanilla JavaScript these days.</p>
-<h3 id="the-typescript-compiler"><a class="header" href="#the-typescript-compiler">The TypeScript Compiler</a></h3>
-<p>You can install the TypeScript compiler globally by running the following command:</p>
-<pre><code class="language-sh">pnpm add -g typescript
-</code></pre>
-<p>Let's see how we can use the TypeScript compiler.
-First, create a file <code>index.ts</code>:</p>
-<pre><code class="language-ts">type Task = {
-  id: number;
-  title: string;
-  description: string;
-};
-
-function showTask(task: Task) {
-  console.log(
-    `Task with ID=${task.id} has the title ${task.title} and description ${task.description}`,
-  );
-}
-
-showTask({
-  id: 1,
-  title: 'Read the Next.js book',
-  description: 'Read and understand the Next.js book.',
-});
-</code></pre>
-<p>We can't execute TypeScript files in the browser or in Node.js directly.
-Instead we need to first <em>compile</em> the TypeScript code to JavaScript—which is why we installed the compiler.</p>
-<p>Here is how we can compile the <code>index.ts</code> file:</p>
-<pre><code class="language-sh">tsc --strict index.ts
-</code></pre>
-<blockquote>
-<p>Note that the <code>--strict</code> turns on certain "strict" type checks.
-We will basically always use this flag.</p>
-</blockquote>
-<p>Since there were no type errors, nothing is logged in the console and we get a file <code>index.js</code> which looks (approximately) as follows:</p>
-<pre><code class="language-js">function showTask(task) {
-  console.log(
-    'Task with ID='
-      .concat(task.id, ' has the title ')
-      .concat(task.title, ' and description ')
-      .concat(task.description),
-  );
-}
-showTask({
-  id: 1,
-  title: 'Read the Next.js book',
-  description: 'Read and understand the Next.js book.',
-});
-</code></pre>
-<p>Note that all the type annotations are gone and all we get is vanilla JavaScript that we can execute.
-Additionally, the TypeScript compiler <em>downleveled</em> our code so that it can be executed by older platforms.
-Here the template string syntax (which is not supported by very old browsers) was replaced by a series of <code>concat</code> calls.</p>
-<blockquote>
-<p>Note that by the time you're reading this the default target settings might be different and you might not see this particular downleveling anymore.</p>
-</blockquote>
-<p>What if there is an error in <code>index.ts</code>?
-Consider the following TypeScript code:</p>
-<pre><code class="language-ts">type Task = {
-  id: number;
-  title: string;
-  description: string;
-};
-
-function showTask(task: Task) {
-  console.log(
-    `Task with ID=${task.id} has the title ${task.title} and description ${task.description}`,
-  );
-}
-
-showTask({
-  id: 1,
-  title: 'Read the Next.js book',
-});
-</code></pre>
-<p>If you would compile this code using <code>tsc --strict index.ts</code>, you would get the following error:</p>
-<pre><code>index.ts:13:10 - error TS2345: Argument of type '{ id: number; title: string; }' is not assignable to parameter of type 'Task'.
-  Property 'description' is missing in type '{ id: number; title: string; }' but required in type 'Task'.
-13 showTask({
-            ~
-14   id: 1,
-   ~~~~~~~~
-15   title: 'Read the Next.js book',
-   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-16 });
-   ~
-  index.ts:4:3
-    4   description: string;
-        ~~~~~~~~~~~
-    'description' is declared here.
-Found 1 error in index.ts:13
-</code></pre>
-<p>The compiler correctly informed us that if we were to run this code it would probably result in bad things happening due to the missing <code>description</code> property.
-We now know that the code is probably wrong long before it made to production and can fix it accordingly.</p>
-<h3 id="executing-typescript-directly-with-tsx"><a class="header" href="#executing-typescript-directly-with-tsx">Executing TypeScript Directly with <code>tsx</code></a></h3>
-<p>Sometimes you want to execute a TypeScript file directly (especially during development) and not go through the "compile and run" cycle manually.
-There are a couple of tools that allow you to do that—here we will introduce <code>tsx</code> (short for "TypeScript Execute").</p>
-<p>Install <code>tsx</code> using the package manager:</p>
-<pre><code class="language-sh">pnpm add -g tsx
-</code></pre>
-<p>You can now execute a TypeScript file <code>index.ts</code> directly by running:</p>
-<pre><code class="language-sh">tsx index.ts
-</code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="basic-types"><a class="header" href="#basic-types">Basic Types</a></h2>
-<div style="text-align: right"> <i> Use TypeScript, find enlightenment. Ignore TypeScript, trip over undefined. <br> — Ancient Chinese proverb </i> </div>
-<h3 id="annotating-variables"><a class="header" href="#annotating-variables">Annotating Variables</a></h3>
-<p>You can annotate variables by adding a <strong>type annotation</strong>:</p>
-<pre><code class="language-ts">let task: string = 'Read the Next.js book';
-</code></pre>
-<p>You can annotate constants in a similar fashion:</p>
-<pre><code class="language-ts">const name: string = 'Read the Next.js book';
-</code></pre>
-<p>Note that explicit type annotations are usually not needed, since TypeScript can perform <strong>type inference</strong> to <em>automatically</em> infer the type of a variable or a constant.</p>
-<p>In this example, the variable <code>name</code> will <em>automatically</em> be inferred to have the type <code>string</code>:</p>
-<pre><code class="language-ts">let name = 'Read the Next.js book';
-</code></pre>
-<p>We will very rarely write explicit type annotations (only if we really need them) and instead let TypeScript infer as much as it can.
-You will be surprised by how few type annotations you need to get completely type checked code!</p>
-<h3 id="primitive-types"><a class="header" href="#primitive-types">Primitive Types</a></h3>
-<p>The primitive types that are present in TypeScript should already be familiar to you from the chapter on JavaScript.
-TypeScript has the <code>number</code> type:</p>
-<pre><code class="language-ts">const id: number = 1;
-</code></pre>
-<p>TypeScript also has the <code>string</code> type:</p>
-<pre><code class="language-ts">const task: string = 'Read the Next.js book';
-</code></pre>
-<p>It also has the <code>boolean</code> type:</p>
-<pre><code class="language-ts">const inProgress: boolean = true;
-</code></pre>
-<p>Additionally, TypeScript has the <code>null</code> and <code>undefined</code> types:</p>
-<pre><code class="language-ts">const undefinedTask: undefined = undefined;
-const nullTask: null = null;
-</code></pre>
-<p>Remember, in a real codebase we would let TypeScript infer the variables:</p>
-<pre><code class="language-ts">const id = 1;
-const task = 'Read the Next.js book';
-const inProgress = true;
-const undefinedTask = undefined;
-const nullTask = null;
-</code></pre>
-<p>In this example, TypeScript will infer that <code>id</code> has the type <code>number</code>, <code>task</code> has the type <code>string</code>, <code>inProgress</code> has the type <code>boolean</code>, <code>undefinedTask</code> has the type <code>undefined</code> and <code>nullTask</code> has the type <code>null</code>.</p>
-<h3 id="the-any-and-unknown-types"><a class="header" href="#the-any-and-unknown-types">The <code>any</code> and <code>unknown</code> Types</a></h3>
-<p>TypeScript also has the <code>any</code> type.
-When a value is of the type <code>any</code>, you can access its properties, call it, or assign it freely, and basically do <em>any</em>thing (get it?) that's syntactically correct.
-Also note that any property that you access will in turn have the type <code>any</code>.</p>
-<p>Let's say you have a <code>task</code> variable of type <code>any</code>—then these are all legal:</p>
-<pre><code class="language-ts">let task: any;
-
-console.log(task.title);
-task();
-task.thingy();
-</code></pre>
-<p>Basically using <code>any</code> is a way to tell the compiler to "shut up" and skip type checking altogether.
-This is also the reason why using <code>any</code> is generally a bad idea since it defeats the purpose of using TypeScript in the first place!</p>
-<p>However, sometimes you do find yourself in a situation where you really don't know much or don't particularly care about a variable type.
-In this case it's better to use the <code>unknown</code> type.</p>
-<p>Anything is assignable to <code>unknown</code> (just as with <code>any</code>).
-However, no operations are allowed on an <code>unknown</code> variable without further assurances about the type of the variable.</p>
-<p>For example, if you have a <code>task</code> variable of type <code>unknown</code>, then these are all no longer legal:</p>
-<pre><code class="language-ts">let task: unknown;
-
-console.log(task.title);
-task();
-task.thingy();
-</code></pre>
-<h3 id="typing-arrays"><a class="header" href="#typing-arrays">Typing Arrays</a></h3>
-<p>You can type arrays as <code>T[]</code> where <code>T</code> is the type of the elements of the array.
-For example, here is how you would type an array of numbers:</p>
-<pre><code class="language-ts">const evenNumbers: number[] = [2, 4, 6, 8];
-</code></pre>
-<p>Here is how you would type an array of strings:</p>
-<pre><code class="language-ts">const tasks: string[] = ['First task', 'Second task', 'Third task'];
-</code></pre>
-<p>Note that for these simple examples we could again have TypeScript infer the types.
-In this example <code>evenNumbers</code> would have the type <code>number[]</code> and <code>tasks</code> would have the type <code>string[]</code>:</p>
-<pre><code class="language-ts">const evenNumbers = [2, 4, 6, 8];
-const tasks = ['First task', 'Second task', 'Third task'];
-</code></pre>
-<h3 id="typing-objects"><a class="header" href="#typing-objects">Typing Objects</a></h3>
-<p>You can type an object by writing the property keys and types inside curly braces <code>{}</code>.</p>
-<p>For example, here is how you could declare an object that has the properties <code>id</code> of type <code>number</code>, <code>title</code> of type <code>string</code> and <code>description</code> of type <code>string</code>:</p>
-<pre><code class="language-ts">const task: { id: number; title: string; description: string } = {
-  id: 1,
-  title: 'Read the Next.js book',
-  description: 'Read and understand the Next.js book.',
-};
-</code></pre>
-<p>Here too, you don't need to manually specify object types.
-In this example, <code>task</code> will be inferred to have the type <code>{ id: number; title: string; description: string }</code>:</p>
-<pre><code class="language-ts">const task = {
-  id: 1,
-  title: 'Read the Next.js book',
-  description: 'Read and understand the Next.js book.',
-};
-</code></pre>
-<p>You can mark properties as <em>optional</em> by using the question mark <code>?</code>.
-If a property is marked as optional, you can assign <code>undefined</code> to it or even not specify it altogether.
-For example, this is valid:</p>
-<pre><code class="language-ts">const task: { id: number; title: string; description?: string } = {
-  id: 1,
-  title: 'Read the Next.js book',
-};
-
-const task2: { id: number; title: string; description?: string } = {
-  id: 1,
-  title: 'Read the Next.js book',
-  description: undefined,
-};
-</code></pre>
-<h3 id="type-aliases"><a class="header" href="#type-aliases">Type Aliases</a></h3>
-<p>The object type syntax we just introduced is often quite verbose.
-This is why TypeScript gives you the possibility to specify a <strong>type alias</strong> (i.e. another name) for an object type:</p>
-<pre><code class="language-ts">type Task = {
-  id: number;
-  title: string;
-  description: string;
-};
-</code></pre>
-<p>Note that you can specify type aliases for more than just object types since type aliases are basically just different names for types.
-For example, we could specify a type alias for the primitive type <code>string</code>:</p>
-<pre><code class="language-ts">type ID = string;
-</code></pre>
-<p>Another important point to make about type aliases is that two type aliases are exactly the same as long as the underlying types are the same.
-For example, this is valid even though it doesn't look like it at first glance:</p>
-<pre><code class="language-ts">type MyString = string;
-const s1: MyString = 'My string';
-const s2: string = s1;
-</code></pre>
-<p>This is because TypeScript uses a <em>structural type system</em>—it doesn't matter what the types are named (except for the primitive types of course), it only matters what their <em>structure</em> looks like.</p>
-<p>Note that you can also use the <code>interface</code> keyword to achieve a similar effect:</p>
-<pre><code class="language-ts">interface Task {
-  id: number;
-  title: string;
-  description: string;
-}
-</code></pre>
-<p>We will stick to always using <code>type</code>.
-The <code>interface</code> keyword is out of scope for this book and will not be discussed further.</p>
-<blockquote>
-<p>We briefly note that <code>type</code> and <code>interface</code> are not exactly the same and have a few subtle, but important differences.
-Again, we will not discuss this further.</p>
-</blockquote>
-<h3 id="type-assertions"><a class="header" href="#type-assertions">Type Assertions</a></h3>
-<p>Sometimes, you know more about the type of a variable than TypeScript.
-For example, let's say that you have a function that returns an <code>any</code> value, but for some reason you know that in fact that value is definitely going to be a <code>string</code> in your case.
-Then you can use a <strong>type assertion</strong> (also called a type cast) to force TypeScript to treat that value as a <code>string</code>.</p>
-<p>Here is a (slightly contrived) example:</p>
-<pre><code class="language-ts">const str: any = 'This is a string';
-const strLength = (str as string).length;
-</code></pre>
-<p>You should use type assertions sparingly since you give up some of the benefits of using TypeScript.
-Usually there are better ways.</p>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="annotating-functions"><a class="header" href="#annotating-functions">Annotating Functions</a></h2>
-<div style="text-align: right"> <i> The function without types is like a river without banks: boundless, yet directionless. <br> — Ancient Chinese proverb </i> </div>
-<h3 id="annotating-parameters"><a class="header" href="#annotating-parameters">Annotating Parameters</a></h3>
-<p>We can annotate functions in TypeScript by annotating their parameters.
-Consider a function <code>greet</code> that takes a parameter <code>name</code> of type <code>string</code> and simply outputs a greeting to the console.
-Here is how we would annotate the function:</p>
-<pre><code class="language-ts">function greet(name: string) {
-  console.log(`Hello, ${name}`);
-}
-</code></pre>
-<p>Now arguments to the function will be checked against our annotation:</p>
-<pre><code class="language-ts">greet(false);
-// This will result in a type error
-</code></pre>
-<p>You can annotate functions that expect arrays or objects by simply using the syntax you learned in the previous section:</p>
-<pre><code class="language-ts">function showTask(task: { id: number; summary: string; description: string }) {
-  console.log(
-    `Task with ID=${task.id} has the summary ${task.summary} and description ${task.description}`,
-  );
-}
-</code></pre>
-<p>This is not particularly readable.
-Here, type aliases come in handy:</p>
-<pre><code class="language-ts">type Task = {
-  id: number;
-  summary: string;
-  description: string;
-};
-
-function showTask(task: Task) {
-  console.log(
-    `Task with ID=${task.id} has the summary ${task.summary} and description ${task.description}`,
-  );
-}
-</code></pre>
-<p>Note that TypeScript will not just check that the passed arguments have the correct types, but also check that the correct number of arguments was passed.
-This has an interesting side effect—introducing the TypeScript compiler in a JavaScript codebase can reveal bugs <em>without any further work</em>:</p>
-<pre><code class="language-js">function showTask(task) {
-  console.log(
-    `Task with ID=${task.id} has the summary ${task.summary} and description ${task.description}`,
-  );
-}
-
-// Uh-oh, we are passing multiple variables instead of a single object!
-showTask(1, 'Read the Next.js book', 'Read and understand the Next.js book.');
-</code></pre>
-<p>If we run <code>tsc --strict</code> on this code, we will get the following error:</p>
-<pre><code>index.ts:8:13 - error TS2554: Expected 1 arguments, but got 3.
-
-8 showTask(1, 'Read the Next.js book', 'Read and understand the Next.js book.');
-</code></pre>
-<p>Quite nifty indeed!</p>
-<h3 id="return-type-annotations"><a class="header" href="#return-type-annotations">Return Type Annotations</a></h3>
-<p>We can also annotate the return types of our functions:</p>
-<pre><code class="language-ts">function getGreeting(name: string): string {
-  return `Hello, ${name}`;
-}
-</code></pre>
-<p>Note that you usually don't need a return type annotation because TypeScript can do type inference for return types:</p>
-<pre><code class="language-ts">function getGreeting(name: string) {
-  return `Hello, ${name}`;
-}
-</code></pre>
-<p>Nevertheless, return types are often typed explicitly to avoid accidentally returning a type you didn't want to return or to prevent accidental changes to the return type.</p>
-<h3 id="optional-parameters"><a class="header" href="#optional-parameters">Optional Parameters</a></h3>
-<p>Similar to object properties, function parameters can be marked as <em>optional</em>.
-In this case we can, but don't need to pass the corresponding argument to the function.
-If a parameter is marked as optional, the corresponding argument might also be <code>undefined</code>:</p>
-<pre><code class="language-ts">function getGreeting(name: string, message?: string): string {
-  return `${message !== undefined ? message : 'Hello'}, ${name}`;
-}
-
-// These are all valid
-getGreeting('John Doe');
-getGreeting('John Doe', undefined);
-getGreeting('John Doe', 'Welcome');
-</code></pre>
-<h3 id="function-type-expressions"><a class="header" href="#function-type-expressions">Function Type Expressions</a></h3>
-<p>Sometimes, you need to create a type that specifies a function itself, instead of just its parameters or its return type.
-For example, you might want to say that <code>f</code> is a function that takes two strings and returns a string.</p>
-<p>You can achieve this with a <strong>function type expression</strong>:</p>
-<pre><code class="language-ts">let f: (x: string, y: string) =&gt; string;
-</code></pre>
-<p>The parameter names are required here, if you write <code>(string, string) =&gt; string</code> then TypeScript will think that you have a function with two parameters named <code>string</code> of type <code>any</code>.</p>
-<p>This syntax is very useful for typing higher-order functions:</p>
-<pre><code class="language-ts">function getGreeting(name: string, greeter: (name: string) =&gt; string) {
-  return greeter(name);
-}
-
-const myName = 'John Doe';
-const greeter = (name: string) =&gt; `Hello ${name}`;
-
-console.log(getGreeting(myName, greeter));
-</code></pre>
-<p>One interesting consequence of the way TypeScript inference works, is that parameters of functions can often be inferred.
-Let's change this example and make an anonymous function out of <code>greeter</code>:</p>
-<pre><code class="language-ts">function getGreeting(name: string, greeter: (name: string) =&gt; string) {
-  return greeter(name);
-}
-
-const myName = 'John Doe';
-
-console.log(getGreeting(myName, (name) =&gt; `Hello ${name}`));
-</code></pre>
-<p>Note how we no longer need to explicitly specify the type of <code>name</code> in the anonymous function—TypeScript has automatically inferred it to be of type <code>string</code>.</p>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="union-types"><a class="header" href="#union-types">Union Types</a></h2>
-<div style="text-align: right"> <i> To ignore a union is to marry a string and wake up with a number. <br> — Ancient Chinese proverb </i> </div>
-<h3 id="literal-types"><a class="header" href="#literal-types">Literal Types</a></h3>
-<p>A <strong>literal type</strong> is a type whose only value is a literal.
-Here is how we could define a literal type <code>'Todo'</code>:</p>
-<pre><code class="language-ts">type TodoType = 'Todo';
-</code></pre>
-<p>Here is how we can use it:</p>
-<pre><code class="language-ts">let todo: TodoType = 'Todo';
-</code></pre>
-<p>Note that we can't assign any other value to <code>todo</code> including other strings.
-For example, this isn't possible:</p>
-<pre><code class="language-ts">let todo: TodoType = 'Done';
-// This will result in a type error
-</code></pre>
-<p>We could also skip declaring the type alias and just use the literal type directly:</p>
-<pre><code class="language-ts">let todo: 'Todo' = 'Todo';
-</code></pre>
-<p>It should be noted that if we declare a variable, then by default TypeScript will infer it as a <code>string</code>.
-This makes sense since we could change the variable later:</p>
-<pre><code class="language-ts">let todo = 'Todo';
-// Without the explicit type annotation, todo is a string
-</code></pre>
-<p>However, if we declare a constant, then by default TypeScript will infer a literal type.
-This also makes sense since we can't change the constant later:</p>
-<pre><code class="language-ts">const todo = 'Todo';
-// Even without the explicit type annotation,
-// todo now has the literal type 'Todo'
-</code></pre>
-<p>While literal types by themselves are not very helpful, they become extremely useful in the context of union types.</p>
-<h3 id="unions-of-literal-types"><a class="header" href="#unions-of-literal-types">Unions of Literal Types</a></h3>
-<p>A <strong>union type</strong> is a type that represents a value which may be one of multiple types.
-Consider a type <code>TaskState</code> which represents one of the following states:</p>
-<ul>
-<li>Todo</li>
-<li>InProgress</li>
-<li>Done</li>
-</ul>
-<p>Here is how we would define the <code>TaskState</code> type:</p>
-<pre><code class="language-ts">type TaskState = 'Todo' | 'InProgress' | 'Done';
-</code></pre>
-<p>The <code>TaskState</code> type is a union type and each of the literal types <code>'Todo'</code>, <code>'InProgress'</code> and <code>'Done'</code> is a member of the union.
-A variable of type <code>TaskState</code> can only be of one of these literal types, i.e. it can only have one of the respective values.
-For example these assignments are all valid:</p>
-<pre><code class="language-ts">const state: TaskState = 'Todo';
-const state2: TaskState = 'InProgress';
-const state3: TaskState = 'Done';
-</code></pre>
-<p>On the other hand, this assignment isn't valid:</p>
-<pre><code class="language-ts">const invalidState: TaskState = 'Dropped';
-</code></pre>
-<h3 id="other-union-types"><a class="header" href="#other-union-types">Other Union Types</a></h3>
-<p>We can also declare unions of arbitrary types.
-The general syntax for declaring a union type is <code>Type1 | Type2 | Type3 | ...</code> and a value of this union type can have the type <code>Type1</code> or <code>Type2</code> or <code>Type3</code> etc.</p>
-<p>The various types <code>Type1</code>, <code>Type2</code>, <code>Type3</code> etc are called <strong>members</strong> of the union.</p>
-<p>One particularly common union type is <code>T | undefined</code>.
-Consider this example:</p>
-<pre><code class="language-ts">function getTaskId(taskName: string): string | undefined {
-  // Implementation here
-}
-</code></pre>
-<p>This function takes a <code>taskName</code> and returns the corresponding ID.
-Because we might discover that no task with the given name is present, we return either a <code>string</code> or <code>undefined</code>.</p>
-<h3 id="working-with-a-union-type"><a class="header" href="#working-with-a-union-type">Working with a Union Type</a></h3>
-<p>It should be clear by now how we can define a union type, but how can we work with a union type?
-Consider the following function:</p>
-<pre><code class="language-ts">function logTaskName(taskName: string | undefined) {
-  console.log({
-    taskName,
-    taskNameLength: taskName.length,
-  });
-}
-</code></pre>
-<p>Compiling this example will result in the following error:</p>
-<pre><code>index.ts:4:21 - error TS18048: 'taskName' is possibly 'undefined'.
-4     taskNameLength: taskName.length,
-                      ~~~~~~~~
-Found 1 error in index.ts:4
-</code></pre>
-<p>TypeScript will only allow to do an operation with the value of a union type if that operation is valid <em>for every member of the union</em>.
-Since <code>taskName</code> can be either a <code>string</code> or <code>undefined</code>, we can't access <code>.length</code> on it, because <code>.length</code> is not a valid property of <code>undefined</code>!</p>
-<p>Instead we need to perform <strong>type narrowing</strong> where we <em>narrow</em> the type of a variable with code.</p>
-<p>Basically, TypeScript can look at our code and understand that in certain code parts a value of a union type can only have the type of a particular member of the union.</p>
-<p>The simplest way of narrowing a type is <strong>equality narrowing</strong>.
-Here we use the <code>===</code> or <code>!==</code> operators to narrow a type.</p>
-<p>Consider this example:</p>
-<pre><code class="language-ts">function logTaskName(taskName: string | undefined) {
-  if (taskName !== undefined) {
-    console.log({
-      taskName,
-      taskNameLength: taskName.length,
-    });
-  } else {
-    console.log('The task is not defined');
-  }
-}
-</code></pre>
-<p>We narrow the type of <code>taskName</code> in the <code>taskName !== undefined</code> branch.
-TypeScript will inspect our code and realize that since <code>taskName</code> had the <code>string | undefined</code> type and <code>taskName !== undefined</code> in the truthy branch of the if statement, <code>taskName</code> must be of type <code>string</code> inside that branch (there is simply no other way).
-Similarly, in the falsy branch of the if statement (i.e. the <code>else</code> branch), TypeScript will know that <code>taskName</code> must be <code>undefined</code>.</p>
-<p>This example also showcases a very important concept: The same variable can have a different type depending on the part of the code we are in.
-This is not the case in many other programming languages, where a variable will always have the same type once it has been initialized.</p>
-<p>Another (similar) way of narrowing a type is <strong>truthiness narrowing</strong>.
-Here we use the fact that certain values are truthy or falsy to narrow a type.</p>
-<p>Consider this example:</p>
-<pre><code class="language-ts">function logTaskName(taskName: string | undefined | null) {
-  if (taskName) {
-    console.log({
-      taskName,
-      taskNameLength: taskName.length,
-    });
-  } else {
-    console.log('The task is not defined');
-  }
-}
-</code></pre>
-<p>Since <code>undefined</code> and <code>null</code> are both falsy, the <code>taskName</code> in the truthy branch of the <code>if</code> statement can only have the type <code>string</code> and we can use the <code>.length</code> property.</p>
-<p>However, truthiness narrowing can lead to subtle bugs due to the way truthy and falsy values work (we covered this in the JavaScript chapter).
-Indeed, the function <code>logTaskName</code> has a hard-to-spot error.
-Can you see it?</p>
-<p>That's right—it doesn't correctly handle the case of the empty string.
-After all, the empty string <code>''</code> is also falsy, therefore <code>logTaskName("")</code> would print that the task is not defined, which is probably not what we were going for.</p>
-<p>We could fix the function like this:</p>
-<pre><code class="language-ts">function logTaskName(taskName: string | undefined | null) {
-  if (taskName === '') {
-    console.log('The task is empty');
-  } else if (taskName) {
-    console.log({
-      taskName,
-      taskNameLength: taskName.length,
-    });
-  } else {
-    console.log('The task is not defined');
-  }
-}
-</code></pre>
-<p>You should generally be careful when relying on truthiness or falsiness.
-The way these concepts work in JavaScript can be a bit confusing and it's easy to miss edge cases.</p>
-<p>Some people prefer to avoid these concepts altogether and instead provide explicit checks, for example:</p>
-<pre><code class="language-ts">function logTaskName(taskName: string | undefined | null) {
-  if (taskName !== undefined &amp;&amp; taskName !== null) {
-    console.log({
-      taskName,
-      taskNameLength: taskName.length,
-    });
-  } else {
-    console.log('The task is not defined');
-  }
-}
-</code></pre>
-<p>The last way of narrowing a type is <code>typeof</code> narrowing.
-TypeScript knows how the <code>typeof</code> operator works and you can use it to narrow a type as you would expect:</p>
-<pre><code class="language-ts">function processInput(value: string | number): number {
-  if (typeof value === 'string') {
-    // Here, value must be a string
-    return value.length;
-  } else {
-    // Here, value must be a number
-    return value;
-  }
-}
-</code></pre>
-<h3 id="the-non-null-assertion-operator"><a class="header" href="#the-non-null-assertion-operator">The Non-Null Assertion Operator</a></h3>
-<p>You can use the non-null assertion operator to tell TypeScript that a value is definitely not <code>undefined</code> or <code>null</code>:</p>
-<pre><code class="language-ts">let input: string | undefined = 'Some string';
-let trimmedInput: string = input!.trim();
-</code></pre>
-<p>Just as with type assertions, you should use this <em>sparingly</em> and usually there is a better way.</p>
-<h3 id="type-predicates"><a class="header" href="#type-predicates">Type Predicates</a></h3>
-<p>We can write user-defined <strong>type guards</strong> by utilizing <strong>type predicates</strong>.
-Consider the following example:</p>
-<pre><code class="language-ts">const array = ['Hello', undefined, 'World', undefined];
-const filteredArray = array.filter((val) =&gt; val !== undefined);
-</code></pre>
-<p>Here <code>array</code> is a <code>(string | undefined)[]</code> and <code>filteredArray</code> removes the <code>undefined</code> elements.
-However, the inferred type of <code>filteredArray</code> would still be <code>(string | undefined)[]</code> because TypeScript can't easily inspect the contents of the filter function to realize that we remove the <code>undefined</code> elements.</p>
-<p>We could theoretically use a type assertion here:</p>
-<pre><code class="language-ts">const array = ['Hello', undefined, 'World', undefined];
-const filteredArray = array.filter((val) =&gt; val !== undefined) as string[];
-</code></pre>
-<p>However, instead of yelling at the TypeScript compiler that we know better, it's more productive to write a user-defined type guard:</p>
-<pre><code class="language-ts">function isString(val: string | undefined): val is string {
-  return typeof val === 'string';
-}
-</code></pre>
-<p>The <code>isString</code> function is a type guard, because it's return type is the type predicate <code>val is string</code>.
-Generally, a type predicate must have the form <code>parameter is Type</code> where <code>parameter</code> is the name of a parameter from the function signature.</p>
-<p>We can use the type guard like this:</p>
-<pre><code class="language-ts">const array = ['Hello', undefined, 'World', undefined];
-const filteredArray = array.filter(isString);
-</code></pre>
-<p>Now the inferred type of <code>filteredArray</code> will be <code>string[]</code>—and all that without using a single type assertion.</p>
-<h3 id="discriminated-unions"><a class="header" href="#discriminated-unions">Discriminated Unions</a></h3>
-<p>A particularly important union type is the <strong>discriminated union</strong>.
-This is a union where a property is used to discriminate between union members.
-Consider the following example:</p>
-<pre><code class="language-ts">type Square = {
-  kind: 'square';
-  size: number;
-};
-
-type Rectangle = {
-  kind: 'rectangle';
-  width: number;
-  height: number;
-};
-
-type Shape = Square | Rectangle;
-</code></pre>
-<p>We can now narrow values of the discriminated union based on the <strong>discriminant property</strong> (which in this case is <code>kind</code>):</p>
-<pre><code class="language-ts">function getArea(shape: Shape) {
-  if (shape.kind === 'square') {
-    // Here, shape must be of type Square
-    return shape.size * shape.size;
-  } else {
-    // Here, shape must be of type Rectangle
-    return shape.width * shape.height;
-  }
-}
-</code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="generics"><a class="header" href="#generics">Generics</a></h2>
-<div style="text-align: right"> <i> Generics are the invisible hat of the TypeScript sage, fitting the heads of both the giant and the dwarf. <br> — Ancient Chinese proverb </i> </div>
-<h3 id="why-generics"><a class="header" href="#why-generics">Why Generics?</a></h3>
-<p>Generics allow us to write code that is type-safe, yet independent of specific types.</p>
-<p>Consider the example of retrieving the first element of an array:</p>
-<pre><code class="language-js">function getFirstElement(arr) {
-  return arr[0];
-}
-</code></pre>
-<p>How would we type this?
-We could use <code>any</code>:</p>
-<pre><code class="language-ts">function getFirstElement(arr: any): any {
-  return arr[0];
-}
-</code></pre>
-<p>However using <code>any</code> is—as we already mentioned—a bad idea since we lose all the type information even if we pass in an array of a known type.
-For example, all these constants would be inferred to have type <code>any</code>:</p>
-<pre><code class="language-ts">const num = getFirstElement([1, 2, 3]);
-const str = getFirstElement(['a', 'b', 'c']);
-</code></pre>
-<p>We also can't use the <code>unknown</code> type since it doesn't permit any operations:</p>
-<pre><code class="language-ts">function getFirstElement(arr: unknown) {
-  // This will result in a type error
-  return arr[0];
-}
-</code></pre>
-<p>We could also make use of <em>function overloads</em> and write something like this:</p>
-<pre><code class="language-ts">function getFirstElement(arr: number[]): number;
-function getFirstElement(arr: string[]): string;
-function getFirstElement(arr: undefined[]): undefined;
-// More overloads and implementation here
-</code></pre>
-<blockquote>
-<p>We will not discuss function overloads in more detail as it's out of scope for this book.</p>
-</blockquote>
-<p>But this obviously gets very tedious and error-prone for most cases.
-Instead, TypeScript allows us to use <strong>generics</strong> to specify that some code doesn't depend on the concrete types and only cares about the relation between certain types.</p>
-<h3 id="generic-functions"><a class="header" href="#generic-functions">Generic Functions</a></h3>
-<p>Consider the identity function that simply takes an argument <code>arg</code> and returns it unchanged.
-We can use a <strong>type variable</strong> <code>Type</code> and type it like this:</p>
-<pre><code class="language-ts">function identity&lt;Type&gt;(arg: Type): Type {
-  return arg;
-}
-</code></pre>
-<p>This basically says that the <code>identity</code> function takes an argument of type <code>Type</code> and that its return type is of the same type as the argument.
-Now we get proper type inference:</p>
-<pre><code class="language-ts">let val = 'Hello, World!';
-let val2 = identity&lt;string&gt;(val); // val2 is of type string
-</code></pre>
-<p>We don't actually have to manually specify the type <code>string</code> when calling the function and can instead rely on the inference capabilities of TypeScript once again:</p>
-<pre><code class="language-ts">let val = 'Hello, World!';
-let val2 = identity(val); // val2 is of type string
-</code></pre>
-<blockquote>
-<p>There is no single convention for naming type parameters.
-Common names include <code>T</code>, <code>Type</code> and <code>TType</code>.
-We will stick to the <code>Type</code> convention throughout this book.</p>
-</blockquote>
-<p>Similarly, we can type the <code>getFirstElement</code> function using type parameters:</p>
-<pre><code class="language-ts">function getFirstElement&lt;Type&gt;(arr: Type[]): Type {
-  return arr[0];
-}
-
-const num = getFirstElement([1, 2, 3]);
-const str = getFirstElement(['a', 'b', 'c']);
-</code></pre>
-<p>Unlike in the <code>getFirstElement</code> example that was typed using <code>any</code>, we now get meaningful type inference.
-For example, <code>num</code> will have the type <code>number</code> (instead of <code>any</code>) and <code>str</code> will have the type <code>string</code>.</p>
-<p>You can use any number of type parameters you want.
-Here is how we could write a correctly annotated <code>map</code> function:</p>
-<pre><code class="language-ts">function map&lt;In, Out&gt;(array: In[], f: (value: In) =&gt; Out): Out[] {
-  return array.map(f);
-}
-</code></pre>
-<p>Here, we have two type parameters <code>In</code> and <code>Out</code>.
-The type parameter <code>In</code> indicates the types of the elements of the original array.
-The type parameter <code>Out</code> indicates the types of the elements of the result array.</p>
-<p>Note how the type of the parameter <code>f</code> makes uses of both the <code>In</code> and <code>Out</code> parameter types.
-This makes sense since <code>f</code> transforms an element of the original array (<code>In</code>) into an element of the result array (<code>Out</code>).</p>
-<p>Again, we will get proper type inference:</p>
-<pre><code class="language-ts">const arr = map([1, 2, 3, 4], (x) =&gt; x % 2 === 0);
-</code></pre>
-<p>Here <code>arr</code> will have the type <code>boolean[]</code>.</p>
-<h3 id="generic-object-types"><a class="header" href="#generic-object-types">Generic Object Types</a></h3>
-<p>Just as with functions, we can use type parameters with objects:</p>
-<pre><code class="language-ts">type Box&lt;Type&gt; = {
-  content: Type;
-};
-</code></pre>
-<p>Now we can use the <code>Box</code> type with any type:</p>
-<pre><code class="language-ts">// Here, box has the type Box&lt;number&gt;
-const box = {
-  content: 0,
-};
-
-// Here, box2 has the type Box&lt;string&gt;
-const box2 = {
-  content: 'Hello, world!',
-};
-</code></pre>
-<p>We can also use generic functions and objects together:</p>
-<pre><code class="language-ts">function extractContent&lt;Type&gt;(box: Box&lt;Type&gt;): Type {
-  return box.content;
-}
-</code></pre>
-<h3 id="important-builtin-generics"><a class="header" href="#important-builtin-generics">Important Builtin Generics</a></h3>
-<p>Generic object types are often useful for collections (and containers), since collection logic is often independent of the specific item types.
-For example, retrieving the first element of an array or finding an element of a set by value using the <code>===</code> operator will work the same way regardless of the types of the array or set elements.</p>
-<p>You already learned about generic arrays (note that you can use <code>Array&lt;T&gt;</code> in place of <code>T[]</code>).</p>
-<p>If you have an object type where the property keys have a certain known type and the property values have a certain known type, you can use the generic type <code>Record&lt;Key, Value&gt;</code></p>
-<pre><code class="language-ts">const ScoreRecord: Record&lt;string, number&gt; = {
-  Alice: 50,
-  Bob: 60,
-  Charlie: 70,
-};
-</code></pre>
-<p>Two other generic data structures that you already know about are sets and maps:</p>
-<pre><code class="language-ts">const mySet: Set&lt;number&gt; = new Set([1, 2, 3]);
-const myMap: Map&lt;string, number&gt; = new Map([
-  ['Item 1', 1],
-  ['Item 2', 2],
-]);
-</code></pre>
-<p>This example can also be written like this:</p>
-<pre><code class="language-ts">const mySet = new Set&lt;number&gt;([1, 2, 3]);
-const myMap = new Map&lt;string, number&gt;([
-  ['Item 1', 1],
-  ['Item 2', 2],
-]);
-</code></pre>
-<p>One other very important generic type is the <code>Promise&lt;Type&gt;</code> type which is most commonly used to annotate asynchronous functions.
-For example, if we have an asynchronous function <code>f</code> that returns a promise that will eventually fulfill with a <code>string</code>, we would annotate it like this:</p>
-<pre><code class="language-ts">async function f(): Promise&lt;string&gt; {
-  // Implementation here
-}
-</code></pre>
-<h3 id="generic-constraints"><a class="header" href="#generic-constraints">Generic Constraints</a></h3>
-<p>Often, we don't want to pass <em>completely arbitrary</em> type parameters.</p>
-<p>Consider this example:</p>
-<pre><code class="language-ts">function getLength&lt;Type&gt;(arg: Type): number {
-  return arg.length;
-}
-</code></pre>
-<p>This will throw the following error:</p>
-<pre><code>index.ts:2:14 - error TS2339: Property 'length' does not exist on type 'Type'.
-2   return arg.length;
-               ~~~~~~
-Found 1 error in index.ts:2
-</code></pre>
-<p>This makes sense since <code>arg</code> can be of literally any type and there is no guarantee that <code>arg</code> will actually have the property <code>length</code>.
-To change this, we need to constrain the type <code>Type</code> and make sure that <code>arg</code> must have the <code>length</code> property:</p>
-<pre><code class="language-ts">function getLength&lt;Type extends { length: number }&gt;(arg: Type): number {
-  return arg.length;
-}
-</code></pre>
-<p>As usual, we can use a type alias here:</p>
-<pre><code class="language-ts">type HasLength = {
-  length: number;
-};
-
-function printLength&lt;Type extends HasLength&gt;(arg: Type): number {
-  return arg.length;
-}
-</code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="configuring-typescript"><a class="header" href="#configuring-typescript">Configuring TypeScript</a></h2>
-<div style="text-align: right"> <i> Like the ancient master who chooses his brush, the wise coder sets 'strict' with care, for clarity is the first step to wisdom. <br> — Ancient Chinese proverb </i> </div>
-<h3 id="creating-a-typescript-project"><a class="header" href="#creating-a-typescript-project">Creating a TypeScript Project</a></h3>
-<p>We already learned how to create and run individual TypeScript files.
-However, as with JavaScript, we will usually be working with larger projects.</p>
-<p>Let's create a JavaScript project and add TypeScript support to it.</p>
-<p>First, we create a directory where our project will reside:</p>
-<pre><code class="language-sh">mkdir example
-cd example
-</code></pre>
-<p>Next, we need to create the <code>package.json</code> file to indicate that this directory should be a JavaScript project:</p>
-<pre><code class="language-sh">pnpm init
-</code></pre>
-<p>This will create a <code>package.json</code> file containing the project settings:</p>
-<pre><code class="language-json">{
-  "name": "example",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" &amp;&amp; exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC"
-}
-</code></pre>
-<p>Next, let's create a <code>tsconfig.json</code> to indicate that this particular project will use TypeScript:</p>
-<pre><code class="language-json">{
-  "compilerOptions": {
-    "strict": true
-  }
-}
-</code></pre>
-<p>Setting the <code>strict</code> option in <code>compilerOptions</code> is equivalent to running <code>tsc</code> with the <code>--strict</code> flag.
-We will talk about this option in some more detail later.</p>
-<blockquote>
-<p>We could have also created the <code>tsconfig.json</code> file by running <code>tsc --init</code>, however this will add a lot of options that we really don't care about at the moment.</p>
-</blockquote>
-<p>Now, let's create an <code>index.ts</code> file:</p>
-<pre><code class="language-ts">function getGreeting(name: string): string {
-  return `Hello, ${name}!`;
-}
-
-console.log(getGreeting('World'));
-</code></pre>
-<p>Finally, we can compile the code:</p>
-<pre><code class="language-sh">tsc
-</code></pre>
-<p>This will create approximately the following <code>index.js</code> file:</p>
-<pre><code class="language-js">'use strict';
-function getGreeting(name) {
-  return 'Hello, '.concat(name, '!');
-}
-console.log(getGreeting('World'));
-</code></pre>
-<p>We can execute this file the same way we would execute any other JavaScript file:</p>
-<pre><code class="language-sh">node index.js
-</code></pre>
-<p>There is one small modification we need to make to this process.
-While using the globally installed TypeScript compiler is fine if you have a single project, you often might need to work on multiple projects at the same time.
-Since these projects might use different TypeScript versions, we usually want to install <code>tsc</code> on a per-project basis.</p>
-<p>Let's therefore install <code>tsc</code> as a dev (development) dependency (since we will not need it in the final code output):</p>
-<pre><code class="language-sh">pnpm add --save-dev typescript
-</code></pre>
-<p>This will install TypeScript only for this particular project.
-We can now run the <code>tsc</code> that was installed for this project using the following command:</p>
-<pre><code class="language-sh">pnpm tsc
-</code></pre>
-<h3 id="using-modules-in-a-typescript-project"><a class="header" href="#using-modules-in-a-typescript-project">Using Modules in a TypeScript Project</a></h3>
-<p>Now that we know how to create TypeScript projects in general, let's quickly talk about how we can use modules in TypeScript projects.
-This process will be very similar to what we learned about JavaScript modules, except that we may need to make minor modifications to the <code>tsconfig.json</code> file.</p>
-<p>Create a <code>src</code> directory containing the files <code>greet.ts</code> and <code>index.ts</code>.
-You overall project structure should now look as follows:</p>
-<pre><code>.
-├── package.json
-├── pnpm-lock.yaml
-├── tsconfig.json
-├── node_modules/
-└── src/
-    ├── index.ts
-    └── greet.ts
-</code></pre>
-<p>Add the following exported function to <code>greet.ts</code>:</p>
-<pre><code class="language-ts">export function getGreeting(name: string): string {
-  return `Hello, ${name}!`;
-}
-</code></pre>
-<p>Now, let's use <code>getGreeting</code> in <code>index.ts</code>:</p>
-<pre><code class="language-ts">import { getGreeting } from './greet';
-
-console.log(getGreeting('World'));
-</code></pre>
-<p>We could theoretically compile our project using this setup already.
-However we will make a small modification to our <code>tsconfig.json</code> to avoid polluting the <code>src</code> directory with our compilation outputs.
-To this end, we utilize the <code>outDir</code> option, which specifies the output directory, where TypeScript will put the compilation result.</p>
-<p>Change your <code>tsconfig.json</code> file to be as follows:</p>
-<pre><code class="language-ts">{
-  "compilerOptions": {
-    "strict": true,
-    "outDir": "./dist"
-  }
-}
-</code></pre>
-<p>We can now compile again:</p>
-<pre><code class="language-sh">pnpm tsc
-</code></pre>
-<p>The project structure looks like this now:</p>
-<pre><code>.
-├── package.json
-├── pnpm-lock.yaml
-├── tsconfig.json
-├── node_modules/
-├── src/
-│   ├── index.ts
-│   └── greet.ts
-└── dist/
-    ├── index.js
-    └── greet.js
-</code></pre>
-<p>The files from <code>src</code> were successfully compiled and the compilation output is in <code>dist</code>.
-We can now execute <code>index.js</code> by running:</p>
-<pre><code class="language-sh">node ./dist/index.js
-</code></pre>
-<p>You should see <code>"Hello, World!"</code> logged to the console.</p>
-<h3 id="including-and-excluding-files"><a class="header" href="#including-and-excluding-files">Including and Excluding Files</a></h3>
-<p>Sometimes you want to include or exclude certain files from being processed by the TypeScript compiler.
-To accomplish this, you can specify the <code>include</code> or <code>exclude</code> parameters in the <code>tsconfig.json</code>.</p>
-<p>The <code>include</code> option takes an array of filenames or patterns to include in the program (relative to the directory containing the <code>tsconfig.json</code> file).
-For example, we could include all files in <code>src</code> directory by setting <code>include</code> to <code>["src/**/*"]</code>.</p>
-<p>The <code>src/**/*</code> notation is a so called glob pattern.
-Here, <code>*</code> matches zero or more characters (excluding directory separators) and <code>**/</code> matches any directory (with arbitrary nesting).
-Therefore, <code>src/**/*</code> means "match any file in the directory <code>src</code> and all its subdirectories (no matter how deeply nested)".</p>
-<blockquote>
-<p>Note that by default <code>include</code> is set to <code>["**/*"]</code> (i.e. it's set to match all files including arbitrarily nested subdirectories).</p>
-</blockquote>
-<p>The <code>exclude</code> parameter specifies an array of filenames or patterns that should be skipped when resolving <code>include</code>.
-It is important to note that the <code>exclude</code> parameter does not necessarily exclude the file from your codebase—a file specified by <code>exclude</code> can still become part of your codebase if you import it somewhere.
-The <code>exclude</code> parameter only changes which files are found by the <code>include</code> option.</p>
-<p>Consider the following example.
-Let's say that you have a bunch of <code>*.test.ts</code> files containing tests, like the following <code>greet.test.ts</code>:</p>
-<pre><code class="language-ts">import { getGreeting } from './greet';
-
-function testGreeting() {
-  if (getGreeting('World') !== 'Hello, World!') {
-    throw new Error('Test failed');
-  }
-}
-</code></pre>
-<blockquote>
-<p>This is not how we would really write a test, but that's irrelevant for now.</p>
-</blockquote>
-<p>If we would run <code>pnpm tsc</code> right now, we would see the we have <code>greet.test.js</code> in the output which is probably not desirable, since the tests probably shouldn't be part of the final compilation output.</p>
-<p>Therefore we could write the following <code>tsconfig.json</code>:</p>
-<pre><code class="language-json">{
-  "include": ["src/**/*"],
-  "exclude": ["src/**/*.test.ts"],
-  "compilerOptions": {
-    "strict": true,
-    "outDir": "./dist"
-  }
-}
-</code></pre>
-<p>If we delete the <code>dist</code> directory and run <code>pnpm tsc</code> again, we will see that <code>greet.test.js</code> is no longer present.</p>
-<h3 id="compiler-options"><a class="header" href="#compiler-options">Compiler Options</a></h3>
-<p>There a lot of compiler options that we can set in the <code>compilerOptions</code> section of <code>tsconfig.json</code> besides <code>strict</code> and <code>outDir</code>.
-Let's discuss some of them.</p>
-<h4 id="the-strict-option"><a class="header" href="#the-strict-option">The <code>strict</code> Option</a></h4>
-<p>The <code>strict</code> option enables a wide range of—well—strict type checking.</p>
-<p>Here is some example code that contains a few type issues:</p>
-<pre><code class="language-ts">function getNumber(): number | undefined {
-  return Math.random() &gt; 0.5 ? 0 : undefined;
-}
-
-function logNumber(n: number) {
-  console.log(n);
-}
-
-function logAny(x) {
-  console.log(x);
-}
-
-const number = getNumber();
-logNumber(number);
-logAny(number);
-</code></pre>
-<p>If we set <code>strict</code> to <code>false</code> (which it is by default), this code will (surprisingly) compile.</p>
-<p>However, if we turn <code>strict</code> on, we get the errors that you would expect if you remember what you've learned in the previous sections of the TypeScript chapter:</p>
-<pre><code class="language-ts">src/index.ts:9:17 - error TS7006: Parameter 'x' implicitly has an 'any' type.
-
-9 function logAny(x) {
-                  ~
-
-src/index.ts:14:11 - error TS2345: Argument of type 'number | undefined' is not assignable to parameter of type 'number'.
-  Type 'undefined' is not assignable to type 'number'.
-
-14 logNumber(number);
-             ~~~~~~
-
-
-Found 2 errors in the same file, starting at: src/index.ts:9
-</code></pre>
-<p>You should <em>always</em> turn <code>strict</code> on, unless you have a really good reason not to (for example because you are migrating from a JavaScript or a very old TypeScript codebase).</p>
-<h4 id="the-target-option"><a class="header" href="#the-target-option">The <code>target</code> Option</a></h4>
-<p>Remember, how we talked about downleveling in the first section of this chapter?
-The <code>target</code> option changes which JS features are downleveled and which are left as is.
-For example, if <code>target</code> is <code>es5</code> template strings will be downleveled, but if it's <code>es2015</code> (equivalent to <code>es6</code>) they won't be, because template strings were introduced in ES2015.</p>
-<p>Take this code:</p>
-<pre><code class="language-ts">const world = 'World';
-console.log(`Hello ${world}`);
-</code></pre>
-<p>If <code>target</code> is set to <code>es5</code>, it would compile to this:</p>
-<pre><code class="language-js">'use strict';
-var world = 'World';
-console.log('Hello '.concat(world));
-</code></pre>
-<p>If <code>target</code> is set to <code>es2015</code>, the compilation output would look like this:</p>
-<pre><code class="language-js">'use strict';
-const world = 'World';
-console.log(`Hello ${world}`);
-</code></pre>
-<p>This is because with <code>target</code> set to <code>es5</code> the template string had to be downleveled.</p>
-<p>Some valid targets are:</p>
-<ul>
-<li><code>es5</code></li>
-<li><code>es2015</code> (equivalent to <code>es6</code>)</li>
-<li><code>es2016</code> up to <code>es2022</code></li>
-</ul>
-<p>There is also the <code>esnext</code> target which refers to the highest version of TypeScript.
-This target should be used with caution since it means different things between different TypeScript versions.</p>
-<p>Modern browsers support all <code>es6</code> features, so <code>es6</code> is often a good choice.
-You might choose to set a lower target though if your code is deployed to older environments.
-Alternatively, you might choose a higher target if your code is guaranteed to run in newer environments.</p>
-<h4 id="the-lib-option"><a class="header" href="#the-lib-option">The <code>lib</code> Option</a></h4>
-<p>The <code>lib</code> option allows you to specify libraries to be included in the compilation.
-Basically, you can use this to let TypeScript know which APIs will be available in the runtime environment.</p>
-<p>Let's say we have this code which would only work in the browser since it attaches an event listener to the browser <code>document</code>:</p>
-<pre><code class="language-ts">document.addEventListener('DOMContentLoaded', () =&gt; {
-  console.log('DOM has loaded');
-});
-</code></pre>
-<p>If we set <code>lib</code> to <code>["es2015"]</code>, we will get a bunch of compilation errors:</p>
-<pre><code>src/index.ts:1:1 - error TS2584: Cannot find name 'document'. Do you need to change your target library? Try changing the 'lib' compiler option to include 'dom'.
-
-1 document.addEventListener('DOMContentLoaded', () =&gt; {
-  ~~~~~~~~
-
-src/index.ts:2:5 - error TS2584: Cannot find name 'console'. Do you need to change your target library? Try changing the 'lib' compiler option to include 'dom'.
-
-2     console.log("DOM has loaded");
-      ~~~~~~~
-
-
-Found 2 errors in the same file, starting at: src/index.ts:1
-</code></pre>
-<p>But if we set <code>lib</code> to <code>["es2015", "dom"]</code> the compilation errors go away since TypeScript now introduces the DOM types into the compilation process.</p>
-<h4 id="the-noemit-option"><a class="header" href="#the-noemit-option">The <code>noEmit</code> Option</a></h4>
-<p>The <code>noEmit</code> option can be set to <code>true</code> to not produce JavaScript output.
-This makes room for another tool to convert the TypeScript files to something that can be run inside a JavaScript environment.</p>
-<p>This is often done when we only want to use TypeScript as a type checker (as is common in many projects) or to provide suggestions in your coding editor.</p>
-<h3 id="an-example-tsconfigjson"><a class="header" href="#an-example-tsconfigjson">An Example <code>tsconfig.json</code></a></h3>
-<p>You now learned about some of the most important <code>tsconfig.json</code> settings!
-Here is an example <code>tsconfig.json</code> to summarize your newfound knowledge:</p>
-<pre><code class="language-json">{
-  "include": ["src/**/*"],
-  "exclude": ["src/**/*.test.ts"],
-  "compilerOptions": {
-    "strict": true,
-    "noEmit": true,
-    "target": "es2015",
-    "lib": ["es2015", "dom"]
-  }
-}
-</code></pre>
-<p>In this case, we don't produce compilation output, but only type check the code (due to <code>noEmit</code> being <code>true</code>).
-We only look at the files in <code>src</code> and its subdirectories, ignoring the <code>*.test.ts</code> file (because of the <code>include</code> and <code>exclude</code> setting).</p>
-<p>Finally, the type checking process is strict (due to <code>noEmit</code> being <code>true</code>), all features that are not available before ES2015 will be downleveled (since <code>target</code> is <code>es2015</code>) and we can use the DOM API types.</p>
-<h3 id="reusing-a-tsconfigjson"><a class="header" href="#reusing-a-tsconfigjson">Reusing a <code>tsconfig.json</code></a></h3>
-<p>The <code>extends</code> option can be used to inherit from another configuration file.</p>
-<p>For example, we might have a <code>base.json</code> configuration file like this:</p>
-<pre><code class="language-json">{
-  "compilerOptions": {
-    "strict": true
-  }
-}
-</code></pre>
-<p>Now, the <code>tsconfig.json</code> could extend this file:</p>
-<pre><code class="language-json">{
-  "extends": "base.json",
-  "include": ["src/**/*.ts"],
-  "compilerOptions": {
-    "noEmit": true
-  }
-}
-</code></pre>
-<p>The resulting configuration would be strict and not emit JavaScript files.</p>
-<p>This feature is particularly useful because it allows someone to write a TypeScript configuration file that specifies the settings that should be applied to TypeScript codebases in a company or a project and then everyone can simply extend this configuration file.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="leveling-up-with-typescript"><a class="header" href="#leveling-up-with-typescript">Leveling Up with TypeScript</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="why-typescript"><a class="header" href="#why-typescript">Why TypeScript?</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="basic-types"><a class="header" href="#basic-types">Basic Types</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="annotating-functions"><a class="header" href="#annotating-functions">Annotating Functions</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="union-types"><a class="header" href="#union-types">Union Types</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="generics"><a class="header" href="#generics">Generics</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="configuring-typescript"><a class="header" href="#configuring-typescript">Configuring TypeScript</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="chapter-3-networking-fundamentals"><a class="header" href="#chapter-3-networking-fundamentals">Chapter 3: Networking Fundamentals</a></h1>
 <div style="text-align: right"> <i> I don't need to know how networks operate. <br> — Seconds before disaster </i> </div>
 <p>Now that you've learned a bit of programming, we're almost ready to start diving into writing web applications.
@@ -7040,7 +5972,7 @@ Essentially, the DOM is a model for documents which represent <em>editable logic
 <p>Here, we have a <code>&lt;div&gt;</code> element (the generic container) and two <code>&lt;p&gt;</code> (paragraph) elements inside it.
 The <code>&lt;div&gt;</code> element is the <em>parent</em> of the <code>&lt;p&gt;</code> elements and the <code>&lt;p&gt;</code> elements are the <em>children</em> of the <code>&lt;div&gt;</code> element.
 The elements form a (very small) <em>tree</em>:</p>
-<p><img src="chapter6/images/small_tree.png" alt="" /></p>
+<p><img src="06-a-vanilla-client/images/small_tree.png" alt="" /></p>
 <p>Let's take a look at a bigger document:</p>
 <pre><code class="language-html">&lt;div id="app"&gt;
   &lt;h1&gt;My tasks&lt;/h1&gt;
@@ -7051,7 +5983,7 @@ The elements form a (very small) <em>tree</em>:</p>
 &lt;/div&gt;
 </code></pre>
 <p>You can visualize this document in the following way:</p>
-<p><img src="chapter6/images/tree.png" alt="" /></p>
+<p><img src="06-a-vanilla-client/images/tree.png" alt="" /></p>
 <p>It's crucial to distinguish between HTML and the DOM, as they are <em>absolutely</em> not the same thing.
 The DOM is a <em>language-agnostic model</em> that represents the structure of a document.
 On the other hand, HTML is a <em>specific language</em> that encodes a particular kind of DOM into text usable by web browsers.</p>
@@ -7460,7 +6392,1063 @@ This doesn't seem like it will scale to a larger project.</p>
 The idea behind React is to create declarative UIs with nicely separated components.</p>
 <p>Basically, we only declare how the application should look like and React takes care of the rest, including determining the necessary DOM manipulations.
 As you will see soon, this will save us a lot of time.</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="chapter-7-adding-spice-with-react"><a class="header" href="#chapter-7-adding-spice-with-react">Chapter 7: Adding Spice with React</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="chapter-7-adding-style-with-css"><a class="header" href="#chapter-7-adding-style-with-css">Chapter 7: Adding Style with CSS</a></h1>
+<p>So far, our pages are functional, but they're not pretty to look at.</p>
+<p>CSS (short for Cascading Style Sheets) is a special language that is used for specifying the styling of an HTML document.</p>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="using-css"><a class="header" href="#using-css">Using CSS</a></h2>
+<h3 id="internal-style-sheets"><a class="header" href="#internal-style-sheets">Internal Style Sheets</a></h3>
+<p>CSS is the language that describes the styling of an HTML document.</p>
+<p>The simplest way to add CSS to an HTML document is by using the <code>&lt;style&gt;</code> tag inside the <code>&lt;head&gt;</code> section of the HTML document.
+This is called an <strong>internal style sheet</strong>.</p>
+<p>Consider the HTML document from the HTML chapter:</p>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+  &lt;head&gt;
+    &lt;meta charset="utf-8" /&gt;
+    &lt;title&gt;Easy Opus&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div id="app"&gt;
+      &lt;div&gt;
+        &lt;h1&gt;My tasks&lt;/h1&gt;
+        &lt;div id="taskList"&gt;
+          &lt;p&gt;Read the Next.js book&lt;/p&gt;
+          &lt;p&gt;Write a website&lt;/p&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>Let's make the h1 element red and the p elements blue.</p>
+<p>To do this, we can add the following CSS to the <code>&lt;head&gt;</code> section of the HTML document:</p>
+<pre><code class="language-html">&lt;style&gt;
+  h1 {
+    color: red;
+  }
+
+  p {
+    color: blue;
+  }
+&lt;/style&gt;
+</code></pre>
+<p>Here is how the full HTML document looks like:</p>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+  &lt;head&gt;
+    &lt;meta charset="utf-8" /&gt;
+    &lt;title&gt;Easy Opus&lt;/title&gt;
+    &lt;style&gt;
+      h1 {
+        color: red;
+      }
+
+      p {
+        color: blue;
+      }
+    &lt;/style&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div id="app"&gt;
+      &lt;div&gt;
+        &lt;h1&gt;My tasks&lt;/h1&gt;
+        &lt;div id="taskList"&gt;
+          &lt;p&gt;Read the Next.js book&lt;/p&gt;
+          &lt;p&gt;Write a website&lt;/p&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<h3 id="external-style-sheets"><a class="header" href="#external-style-sheets">External Style Sheets</a></h3>
+<p>Internal style sheets are fine for small projects, but as the project grows, it can become cumbersome to have all the CSS in the <code>&lt;head&gt;</code> section of the HTML document.</p>
+<p>To solve this problem, we can use <strong>external style sheets</strong>.</p>
+<p>An external style sheet is a separate CSS file that can be linked to an HTML document.</p>
+<p>Create a CSS file <code>styles.css</code> in your project directory:</p>
+<pre><code class="language-css">h1 {
+  color: red;
+}
+
+p {
+  color: blue;
+}
+</code></pre>
+<p>Now, you can link the CSS file to the HTML document by adding the following line to the <code>&lt;head&gt;</code> section of the HTML document:</p>
+<pre><code class="language-html">&lt;link rel="stylesheet" href="styles.css" /&gt;
+</code></pre>
+<p>The <code>&lt;link&gt;</code> element is used to link an external resource to the HTML document.
+We use the <code>rel</code> attribute to specify the relationship between the HTML document and the linked resource.
+In this case, we use the <code>stylesheet</code> value to indicate that the linked resource is a CSS stylesheet.
+Finally, we use the <code>href</code> attribute to specify the path to the CSS file.</p>
+<p>Here is how the full HTML document looks like:</p>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+  &lt;head&gt;
+    &lt;meta charset="utf-8" /&gt;
+    &lt;title&gt;Easy Opus&lt;/title&gt;
+    &lt;link rel="stylesheet" href="styles.css" /&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div id="app"&gt;
+      &lt;div&gt;
+        &lt;h1&gt;My tasks&lt;/h1&gt;
+        &lt;div id="taskList"&gt;
+          &lt;p&gt;Read the Next.js book&lt;/p&gt;
+          &lt;p&gt;Write a website&lt;/p&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<h3 id="inline-styles"><a class="header" href="#inline-styles">Inline Styles</a></h3>
+<p>You can also use <strong>inline styles</strong> to style an element.</p>
+<p>Inline styles are defined inside the <code>style</code> attribute of the element.</p>
+<p>For example, the following CSS will style the h1 element red:</p>
+<pre><code class="language-html">&lt;h1 style="color: red"&gt;My tasks&lt;/h1&gt;
+</code></pre>
+<p>Here is how the full HTML document looks like:</p>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+  &lt;head&gt;
+    &lt;meta charset="utf-8" /&gt;
+    &lt;title&gt;Easy Opus&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div id="app"&gt;
+      &lt;div&gt;
+        &lt;h1 style="color: red"&gt;My tasks&lt;/h1&gt;
+        &lt;div id="taskList"&gt;
+          &lt;p&gt;Read the Next.js book&lt;/p&gt;
+          &lt;p&gt;Write a website&lt;/p&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>Throughout this chapter, we will use either inline styles or internal style sheets for simplicity.
+However, in the real world, you will most likely use external style sheets.</p>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="css-selectors"><a class="header" href="#css-selectors">CSS Selectors</a></h2>
+<h3 id="the-document"><a class="header" href="#the-document">The Document</a></h3>
+<p>We will use the following HTML document for our examples:</p>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+  &lt;head&gt;
+    &lt;meta charset="utf-8" /&gt;
+    &lt;title&gt;Easy Opus&lt;/title&gt;
+    &lt;style&gt;
+      /* styles go here */
+    &lt;/style&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div id="app"&gt;
+      &lt;div&gt;
+        &lt;h1 id="title"&gt;My tasks&lt;/h1&gt;
+        &lt;p&gt;Here is a list of my tasks:&lt;/p&gt;
+        &lt;div id="taskList"&gt;
+          &lt;p id="task1" class="task"&gt;Read the Next.js book&lt;/p&gt;
+          &lt;p id="task2" class="task"&gt;Write a website&lt;/p&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<h3 id="type-selectors"><a class="header" href="#type-selectors">Type Selectors</a></h3>
+<p>CSS selectors are used to target the elements we want to style.</p>
+<p>You can use <strong>type selectors</strong> (also called tag name selectors or element selectors) to target all elements of a certain type.</p>
+<p>For example, the following CSS will style all <code>&lt;p&gt;</code> elements:</p>
+<pre><code class="language-css">p {
+  color: red;
+}
+</code></pre>
+<h3 id="id-selectors"><a class="header" href="#id-selectors">ID Selectors</a></h3>
+<p>You can use <strong>ID selectors</strong> to target a specific element by its <code>id</code> attribute.
+ID selectors begin with a <code>#</code> symbol.</p>
+<p>For example, the following CSS will style the element with the <code>id</code> attribute set to <code>task1</code>:</p>
+<pre><code class="language-css">#task1 {
+  color: blue;
+}
+</code></pre>
+<p>If you would like to style the first task blue and the second task green, you can use the following CSS:</p>
+<pre><code class="language-css">#task1 {
+  color: blue;
+}
+
+#task2 {
+  color: green;
+}
+</code></pre>
+<h3 id="class-selectors"><a class="header" href="#class-selectors">Class Selectors</a></h3>
+<p>You can use <strong>class selectors</strong> to target all elements with a specific class.
+Class selectors begin with a <code>.</code> symbol.</p>
+<p>For example, the following CSS will style all elements with the <code>task</code> class:</p>
+<pre><code class="language-css">.task {
+  color: blue;
+}
+</code></pre>
+<h3 id="selector-lists"><a class="header" href="#selector-lists">Selector Lists</a></h3>
+<p>You can target multiple selectors by separating them with a comma.</p>
+<p>For example, the following CSS will style all <code>&lt;p&gt;</code> and <code>&lt;h1&gt;</code> elements:</p>
+<pre><code class="language-css">p,
+h1 {
+  color: red;
+}
+</code></pre>
+<p>Selector lists don't need to consist of selectors of the same type.
+For example, you can write a selector list that targets eleemnt by tag and ID:</p>
+<pre><code class="language-css">p,
+#title {
+  color: red;
+}
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="basic-styles"><a class="header" href="#basic-styles">Basic Styles</a></h2>
+<h3 id="typography"><a class="header" href="#typography">Typography</a></h3>
+<p>You can change the typeface of your text using the <code>font-family</code> CSS property.</p>
+<p>For example, the following CSS will change the typeface of the text to sans-serif:</p>
+<pre><code class="language-css">font-family: sans-serif;
+</code></pre>
+<p>Here is how you could use this CSS in your HTML document:</p>
+<pre><code class="language-html">&lt;p style="font-family: sans-serif;"&gt;This uses a sans-serif font&lt;/p&gt;
+&lt;p style="font-family: serif;"&gt;This uses a serif font&lt;/p&gt;
+&lt;p style="font-family: monospace;"&gt;This uses a monospace font&lt;/p&gt;
+</code></pre>
+<p>You can change the size of your text using the <code>font-size</code> CSS property.</p>
+<p>You can set sizes either in absolute units (pixels) or in relative units (em, rem).</p>
+<p>Pixels are absolute units, meaning that the styling of the element will be independent of other elements on the page.
+For example, the following CSS will change the size of the text to 16px:</p>
+<pre><code class="language-css">font-size: 16px;
+</code></pre>
+<p>Here is how you could use this CSS in your HTML document:</p>
+<pre><code class="language-html">&lt;p style="font-size: 16px;"&gt;This uses a 16px font&lt;/p&gt;
+</code></pre>
+<p>Unlike the absolute pixel unit, relative units are relative to something.
+The <code>em</code> unit is relative to the font size of the element and the <code>rem</code> unit is relative to the font size of the root element.</p>
+<p>For example, the following CSS will change the size of the text to 1em:</p>
+<pre><code class="language-css">font-size: 1em;
+</code></pre>
+<p>Here is how you could use this CSS in your HTML document:</p>
+<pre><code class="language-html">&lt;p style="font-size: 1em;"&gt;This uses a 1em font&lt;/p&gt;
+</code></pre>
+<p>Similarly, the following CSS will change the size of the text to 1rem:</p>
+<pre><code class="language-css">font-size: 1rem;
+</code></pre>
+<p>Here is how you could use this CSS in your HTML document:</p>
+<pre><code class="language-html">&lt;p style="font-size: 1rem;"&gt;This uses a 1rem font&lt;/p&gt;
+</code></pre>
+<p>You can change the weight of your text using the <code>font-weight</code> CSS property.</p>
+<p>For example, the following CSS will change the weight of the text to bold:</p>
+<pre><code class="language-css">font-weight: bold;
+</code></pre>
+<p>Here is how you could use this CSS in your HTML document:</p>
+<pre><code class="language-html">&lt;p style="font-weight: bold;"&gt;This uses a bold font&lt;/p&gt;
+</code></pre>
+<p>You can change the height of the line of text using the <code>line-height</code> CSS property.</p>
+<p>For example, the following CSS will change the height of the line of text to 1.5:</p>
+<pre><code class="language-css">line-height: 1.5;
+</code></pre>
+<p>Here is how you could use this CSS in your HTML document:</p>
+<pre><code class="language-html">&lt;p style="line-height: 1.5;"&gt;This uses a 1.5 line height&lt;/p&gt;
+</code></pre>
+<p>You can change the alignment of your text using the <code>text-align</code> CSS property.</p>
+<p>For example, the following CSS will change the alignment of the text to center:</p>
+<pre><code class="language-css">text-align: center;
+</code></pre>
+<p>Here is how you could use this CSS in your HTML document:</p>
+<pre><code class="language-html">&lt;p style="text-align: left;"&gt;This text is left-aligned&lt;/p&gt;
+&lt;p style="text-align: center;"&gt;This text is centered&lt;/p&gt;
+&lt;p style="text-align: right;"&gt;This text is right-aligned&lt;/p&gt;
+&lt;p style="text-align: justify;"&gt;This text is justified&lt;/p&gt;
+</code></pre>
+<p>You can change the color of your text using the <code>color</code> CSS property.</p>
+<p>For example, the following CSS will change the color of the text to red:</p>
+<pre><code class="language-css">color: red;
+</code></pre>
+<p>Here is how you could use this CSS in your HTML document:</p>
+<pre><code class="language-html">&lt;p style="color: red;"&gt;This text is red&lt;/p&gt;
+&lt;p style="color: blue;"&gt;This text is blue&lt;/p&gt;
+&lt;p style="color: green;"&gt;This text is green&lt;/p&gt;
+</code></pre>
+<p>You can change the decoration of your text using the <code>text-decoration</code> CSS property.</p>
+<p>For example, the following CSS will change the decoration of the text to underline:</p>
+<pre><code class="language-css">text-decoration: underline;
+</code></pre>
+<p>Here is how you could use this CSS in your HTML document:</p>
+<pre><code class="language-html">&lt;p style="text-decoration: underline;"&gt;This text is underlined&lt;/p&gt;
+&lt;p style="text-decoration: none;"&gt;This text is not underlined&lt;/p&gt;
+</code></pre>
+<h3 id="background"><a class="header" href="#background">Background</a></h3>
+<p>You can change the background of an element using the <code>background</code> CSS property.</p>
+<p>For example, the following CSS will change the background of the element to red:</p>
+<pre><code class="language-css">background: red;
+</code></pre>
+<p>Here is how you could use this CSS in your HTML document:</p>
+<pre><code class="language-html">&lt;div style="background: red; color: white;"&gt;This is a red background&lt;/div&gt;
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="the-box-model"><a class="header" href="#the-box-model">The Box Model</a></h2>
+<h3 id="the-basics-of-the-box-model"><a class="header" href="#the-basics-of-the-box-model">The Basics of the Box Model</a></h3>
+<p>Every element in HTML is a rectangular "box" made up of four nested areas:</p>
+<p><img src="https://developer.mozilla.org/de/docs/Web/CSS/CSS_box_model/boxmodel.png" alt="The Box Model" />
+<em>Credit: MDN</em></p>
+<p>The <strong>content area</strong> (bounded by the content edge) contains the actual content of the element, such as text, images, or other media.
+The content area has a width (the content width) and a height (the content height).</p>
+<p>The content area can be controlled using the <code>width</code> and <code>height</code> CSS properties.</p>
+<p>The <strong>padding area</strong> extends the content area by a certain distance.
+The padding area can be controlled using the <code>padding</code> CSS property as well as the <code>padding-top</code>, <code>padding-right</code>, <code>padding-bottom</code>, and <code>padding-left</code> CSS properties.</p>
+<p>The <strong>border area</strong> extends the padding area by a certain distance.
+The border area can be controlled using the <code>border</code> and <code>border-width</code> CSS properties.</p>
+<p>The <strong>margin area</strong> (bounded by the margin edge) extends the border area by a certain distance.
+This is useful if you want to separate an element from its neighbors.
+The margin area can be controlled using the <code>margin</code> CSS property as well as the <code>margin-top</code>, <code>margin-right</code>, <code>margin-bottom</code>, and <code>margin-left</code> CSS properties.</p>
+<h3 id="the-content-area"><a class="header" href="#the-content-area">The Content Area</a></h3>
+<p>To control the content area, you can use the <code>width</code> and <code>height</code> CSS properties.</p>
+<p>For example, the following CSS will set the width of the content area to 100 pixels and the height to 50 pixels:</p>
+<pre><code class="language-css">width: 100px;
+height: 50px;
+</code></pre>
+<p>Here is how you could use this CSS in your HTML document:</p>
+<pre><code class="language-html">&lt;div style="width: 100px; height: 50px; background: red; color: white;"&gt;This is a content area&lt;/div&gt;
+</code></pre>
+<h3 id="the-padding-area"><a class="header" href="#the-padding-area">The Padding Area</a></h3>
+<p>To control the padding area, you can use the <code>padding</code> CSS property.</p>
+<p>For example, the following CSS will set the padding of the element to 10 pixels:</p>
+<pre><code class="language-css">padding: 10px;
+</code></pre>
+<p>You can also use the <code>padding-top</code>, <code>padding-right</code>, <code>padding-bottom</code>, and <code>padding-left</code> CSS properties to control the padding of the element.</p>
+<p>For example, the following CSS will set the padding of the element to 10 pixels on the top, right, bottom, and left:</p>
+<pre><code class="language-css">padding-top: 10px;
+padding-right: 20px;
+padding-bottom: 30px;
+padding-left: 40px;
+</code></pre>
+<p>Alternatively, you can use the <code>padding</code> CSS property to set the padding of the element to 10 pixels on the top, right, bottom, and left:</p>
+<pre><code class="language-css">padding: 10px 20px 30px 40px;
+</code></pre>
+<p>Here is how you could use this CSS in your HTML document:</p>
+<pre><code class="language-html">&lt;div style="padding: 10px 20px 30px 40px; background: red; color: white;"
+  &gt;This is a padding area&lt;/div
+&gt;
+</code></pre>
+<h3 id="the-border-area"><a class="header" href="#the-border-area">The Border Area</a></h3>
+<p>To control the border area, you can use the <code>border</code> CSS property.</p>
+<p>For example, the following CSS will set the border of the element to 10 pixels wide and red:</p>
+<pre><code class="language-css">border: 10px solid red;
+</code></pre>
+<p>You can also use the <code>border-width</code> CSS property to control the width of the border.</p>
+<p>For example, the following CSS will set the width of the border to 10 pixels:</p>
+<pre><code class="language-css">border-width: 10px;
+</code></pre>
+<p>You can also use the <code>border-style</code> CSS property to control the style of the border.</p>
+<p>For example, the following CSS will set the style of the border to solid:</p>
+<pre><code class="language-css">border-style: solid;
+</code></pre>
+<p>Here is how you could use this CSS in your HTML document:</p>
+<pre><code class="language-html">&lt;div style="border-width: 10px; border-style: solid; border-color: red;"&gt;This is a border area&lt;/div&gt;
+</code></pre>
+<h3 id="the-margin-area"><a class="header" href="#the-margin-area">The Margin Area</a></h3>
+<p>To control the margin area, you can use the <code>margin</code> CSS property.</p>
+<p>For example, the following CSS will set the margin of the element to 10 pixels:</p>
+<pre><code class="language-css">margin: 10px;
+</code></pre>
+<p>You can also use the <code>margin-top</code>, <code>margin-right</code>, <code>margin-bottom</code>, and <code>margin-left</code> CSS properties to control the margin of the element.</p>
+<p>For example, the following CSS will set the margin of the element to 10 pixels on the top, right, bottom, and left:</p>
+<pre><code class="language-css">margin-top: 10px;
+margin-right: 20px;
+margin-bottom: 30px;
+margin-left: 40px;
+</code></pre>
+<p>Here is how you could use this CSS in your HTML document:</p>
+<pre><code class="language-html">&lt;div style="margin: 10px 20px 30px 40px; background: red; color: white;"&gt;This is a margin area&lt;/div&gt;
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="the-flexbox"><a class="header" href="#the-flexbox">The Flexbox</a></h2>
+<h3 id="basics-3"><a class="header" href="#basics-3">Basics</a></h3>
+<p>A <strong>flexbox</strong> is a one-dimensional layout for arranging items in rows or columns.
+Items expand to fill additional space or shrink to fit into smaller spaces.</p>
+<p>To create a flexbox, you need to set the <code>display</code> property of the parent of the elements you want to include in the flexbox to <code>flex</code>:</p>
+<pre><code class="language-html">&lt;div class="parent"&gt;
+  &lt;div class="child"&gt;1&lt;/div&gt;
+  &lt;div class="child"&gt;2&lt;/div&gt;
+  &lt;div class="child"&gt;3&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<p>This causes the parent element to become a <strong>flex container</strong> and the direct children to become <strong>flex items</strong>.</p>
+<pre><code class="language-css">.parent {
+  display: flex;
+}
+</code></pre>
+<p>You should also give the elements a border and the children a background color to make it easier to see the layout:</p>
+<pre><code class="language-css">.parent {
+  border: 1px solid red;
+}
+
+.child {
+  border: 1px solid black;
+}
+
+#child-one {
+  background-color: lightblue;
+}
+
+#child-two {
+  background-color: lightgreen;
+}
+
+#child-three {
+  background-color: lightcoral;
+}
+</code></pre>
+<h3 id="the-flex-model"><a class="header" href="#the-flex-model">The Flex Model</a></h3>
+<p>You can influence the direction of the flex items by setting the <code>flex-direction</code> property.
+By default, this is set to <code>row</code>, which means the items are laid out horizontally in a row.
+You can also set it to <code>column</code> which lays out the items vertically in a column.</p>
+<blockquote>
+<p>Additionally, there are the <code>row-reverse</code> and <code>column-reverse</code> values which reverse the order of the items.</p>
+</blockquote>
+<p>To understand what this does, let's first look at the flex model:</p>
+<p><img src="https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/CSS_layout/Flexbox/flex_terms.png" alt="Flex Model" /></p>
+<p>The flex model has two axes.</p>
+<p>The <strong>main axis</strong> is the axis running in the direction the flex items are laid out in.</p>
+<p>In our current example, the items are laid out horizontally and so the main axis is horizontal.
+The start and end of the main axis are called the <strong>main start</strong> and <strong>main end</strong>.
+The length from the main-start edge of each item to the main-end edge of each item is the <strong>main size</strong>.</p>
+<p>The <strong>cross axis</strong> is the axis running perpendicular to the main axis.
+In our example, the cross axis is vertical.
+The start and end of the cross axis are called the <strong>cross start</strong> and <strong>cross end</strong>.
+The length from the cross-start edge of each item to the cross-end edge of each item is the <strong>cross size</strong>.</p>
+<p>If we set the <code>flex-direction</code> property to <code>column</code> instead of <code>row</code>, then the main axis will be the vertical axis and the cross axis will be the horizontal axis.
+This means that all of the concepts that we will discuss in this section will apply to a <code>column</code> layout as well except with the axes swapped.</p>
+<h3 id="wrapping"><a class="header" href="#wrapping">Wrapping</a></h3>
+<p>If your children are overflowing the container, then you can use the <code>flex-wrap</code> property to wrap the children.</p>
+<p>Consider our running example:</p>
+<pre><code class="language-html">&lt;div class="parent"&gt;
+  &lt;div class="child"&gt;1&lt;/div&gt;
+  &lt;div class="child"&gt;2&lt;/div&gt;
+  &lt;div class="child"&gt;3&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<pre><code class="language-css">.parent {
+  display: flex;
+  border: 1px solid red;
+}
+
+.child {
+  border: 1px solid black;
+}
+
+#child-one {
+  background-color: lightblue;
+}
+
+#child-two {
+  background-color: lightgreen;
+}
+
+#child-three {
+  background-color: lightcoral;
+}
+</code></pre>
+<p>Let's add a width to the parent and the children:</p>
+<pre><code class="language-css">.parent {
+  width: 200px;
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+
+.child {
+  background-color: gray;
+  width: 100px;
+}
+</code></pre>
+<p>We need to set <code>flex-grow</code> and <code>flex-shrink</code> to <code>0</code> to prevent the flexbox from trying to intelligently fit the children into the container (more on this later).</p>
+<p>Since we have three children with a width of <code>100px</code> and the container has a width of <code>200px</code>, the children are overflowing the container.</p>
+<p>You can fix this using the <code>flex-wrap</code> property which basically tells the flexbox to wrap the children to the next line if they don't fit in the current line.</p>
+<pre><code class="language-css">.parent {
+  flex-wrap: wrap;
+}
+</code></pre>
+<p>The wrapping behaviour means that even though the flexbox is technically a one-dimensional layout, you can actually use it to implement two-dimensional layouts as well.</p>
+<h3 id="aligning-items"><a class="header" href="#aligning-items">Aligning Items</a></h3>
+<p>You can use the <code>justify-content</code> property to control how the positive free space is distributed around your flex items.</p>
+<pre><code class="language-css">.parent {
+  justify-content: flex-start;
+}
+</code></pre>
+<p>This is one of:</p>
+<ul>
+<li><code>flex-start</code>: Items are packed toward the start of the flex container</li>
+<li><code>flex-end</code>: Items are packed toward the end of the flex container</li>
+<li><code>center</code>: Items are centered in the flex container</li>
+<li><code>space-between</code>: Items are spread out evenly in the flex container with equal gaps between each pair</li>
+<li><code>space-around</code>: Items are spread out with equal space around each item (i.e. gaps between items are twice the gaps at the ends)</li>
+<li><code>space-evenly</code>: Items are spread out with equal space between items and at the ends</li>
+</ul>
+<p>You can use the <code>align-items</code> property to control how the items are aligned along the cross axis.</p>
+<p>To see what this does, let's add a height to the parent:</p>
+<pre><code class="language-css">.parent {
+  height: 200px;
+}
+</code></pre>
+<p>Now, you can set the <code>align-items</code> property to one of the following values:</p>
+<ul>
+<li><code>stretch</code>: Items are stretched to fill the flex container</li>
+<li><code>flex-start</code>: Items are packed toward the start of the flex container</li>
+<li><code>flex-end</code>: Items are packed toward the end of the flex container</li>
+<li><code>center</code>: Items are centered in the flex container</li>
+<li><code>baseline</code>: Items are aligned based on their baselines</li>
+</ul>
+<p>If you only want to align a single item, you can use the <code>align-self</code> property, e.g.:</p>
+<pre><code class="language-css">#child-one {
+  align-self: flex-start;
+}
+</code></pre>
+<p>You can also distribute the items along the cross axis using the <code>align-content</code> property.
+This will only have an effect if you have <code>flex-wrap: wrap</code> (or <code>wrap-reverse</code>) in your flex container and enough items so that they wrap.</p>
+<p>The <code>align-content</code> property takes similar values as the <code>justify-content</code> property.</p>
+<h3 id="gaps"><a class="header" href="#gaps">Gaps</a></h3>
+<p>You can set gaps between rows and columns using the <code>gap</code>, <code>column-gap</code>, and <code>row-gap</code> properties:</p>
+<pre><code class="language-css">.parent {
+  column-gap: 20px;
+  row-gap: 30px;
+}
+</code></pre>
+<p>This allows more granular control over the gaps between rows and columns than the other alignment properties.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="chapter-8-adding-even-more-style-with-tailwind-css"><a class="header" href="#chapter-8-adding-even-more-style-with-tailwind-css">Chapter 8: Adding Even More Style with Tailwind CSS</a></h1>
+<div style="text-align: right"> <i> I feel like an idiot for not using Tailwind CSS until now. <br> — Ryan Florence </i> </div>
+<p>We have already seen how to add some style to our pages using CSS.</p>
+<p>However, we won't use CSS directly, but rather Tailwind CSS—a utility-first CSS framework that greatly simplifies the styling process.</p>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="setup-2"><a class="header" href="#setup-2">Setup</a></h2>
+<div style="text-align: right"> <i> Skip to the end. Use @tailwindcss. <br> — Kent C. Dodds </i> </div>
+<h3 id="tailwind-css-and-postcss"><a class="header" href="#tailwind-css-and-postcss">Tailwind CSS and PostCSS</a></h3>
+<p>Once you've created an app with <code>pnpm create next-app</code>, you're already using Tailwind CSS by default.</p>
+<p>If you look at the <code>package.json</code> file, you will notice these dependencies:</p>
+<ul>
+<li><code>tailwindcss</code></li>
+<li><code>postcss</code></li>
+<li><code>autoprefixer</code></li>
+</ul>
+<p>PostCSS is a special tool for transforming CSS with JavaScript.
+Autoprefixer is a PostCSS plugin for parsing CSS and adding vendor prefixes to CSS rules.</p>
+<p>Both Tailwind CSS and PostCSS require some configuration.
+Luckily, <code>pnpm create next-app</code> has already supplied this configuration for us.</p>
+<p>You'll find the Tailwind CSS configuration in the <code>tailwind.config.ts</code> file:</p>
+<pre><code class="language-ts">import type { Config } from 'tailwindcss';
+
+const config: Config = {
+  content: [
+    './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/components/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/app/**/*.{js,ts,jsx,tsx,mdx}',
+  ],
+  theme: {
+    extend: {
+      backgroundImage: {
+        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+        'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+      },
+    },
+  },
+  plugins: [],
+};
+export default config;
+</code></pre>
+<p>You'll find the PostCSS configuration in the <code>postcss.config.js</code> file:</p>
+<pre><code class="language-js">module.exports = {
+  plugins: {
+    tailwindcss: {},
+    autoprefixer: {},
+  },
+};
+</code></pre>
+<h3 id="tailwind-directives"><a class="header" href="#tailwind-directives">Tailwind Directives</a></h3>
+<p>The final important file is <code>globals.css</code>.
+If you've created your app with <code>pnpm create next-app</code>, this will contain a bunch of unneeded fluff, so let's replace the content of <code>globals.css</code> with these lines:</p>
+<pre><code class="language-css">@tailwind base;
+@tailwind components;
+@tailwind utilities;
+</code></pre>
+<p>These lines are so-called <strong>Tailwind directives</strong>.</p>
+<p>The <code>@tailwind base</code> directive injects Tailwind's base styles in your CSS.</p>
+<p>The <code>@tailwind components</code> injects Tailwind's component classes in your CSS.</p>
+<p>Finally, the <code>@tailwind utilities</code> injects Tailwind's utility classes in your CSS.</p>
+<h3 id="a-simple-example-2"><a class="header" href="#a-simple-example-2">A Simple Example</a></h3>
+<p>Let's try and use Tailwind CSS now.</p>
+<p>We'll add a component with a few Tailwind utility classes to <code>page.tsx</code>:</p>
+<pre><code class="language-jsx">export default function Home() {
+  return &lt;h1 className="text-3xl font-bold underline"&gt;Welcome&lt;/h1&gt;;
+}
+</code></pre>
+<p>Start the development server and open the homepage.
+You should see how the styles are applied to the text.</p>
+<p>This component highlights the <strong>utility-first</strong> approach to styling that is behind Tailwind CSS.
+Instead of writing lots of custom CSS, you style elements by applying pre-existing classes directly in your HTML.</p>
+<p>Next, we'll introduce some of the most important utility classes.</p>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="typography-utilities"><a class="header" href="#typography-utilities">Typography Utilities</a></h2>
+<div style="text-align: right"> <i> I don't use it but if I would use something I'd use Tailwind! <br> — Pieter Levels </i> </div>
+<h3 id="font-family"><a class="header" href="#font-family">Font Family</a></h3>
+<p>You can change the typeface of your text using the font-family utility classes which include <code>font-sans</code>, <code>font-serif</code> and <code>font-mono</code>.</p>
+<p>Consider the following example:</p>
+<pre><code class="language-jsx">export default function Home() {
+  return (
+    &lt;&gt;
+      &lt;p className="font-sans"&gt;This uses a sans-serif font&lt;/p&gt;
+      &lt;p className="font-serif"&gt;This uses a serif font&lt;/p&gt;
+      &lt;p className="font-mono"&gt;This uses a monospace font&lt;/p&gt;
+    &lt;/&gt;
+  );
+}
+</code></pre>
+<h3 id="font-size"><a class="header" href="#font-size">Font Size</a></h3>
+<p>You can change the font size using the <code>text-*</code> utility classes.</p>
+<p>Consider the following example:</p>
+<pre><code class="language-jsx">export default function Home() {
+  return (
+    &lt;&gt;
+      &lt;p className="text-sm"&gt;This is a small sentence&lt;/p&gt;
+      &lt;p className="text-base"&gt;This is a normal sentence&lt;/p&gt;
+      &lt;p className="text-lg"&gt;This is a large sentence&lt;/p&gt;
+      &lt;p className="text-xl"&gt;This is an extra large sentence&lt;/p&gt;
+    &lt;/&gt;
+  );
+}
+</code></pre>
+<p>You can make your sentences larger than <code>text-xl</code> by prefixing the <code>xl</code> with a number, e.g. <code>text-2xl</code>, <code>text-3xl</code> all the way up <code>text-9xl</code>.</p>
+<h3 id="font-weight"><a class="header" href="#font-weight">Font Weight</a></h3>
+<p>You can change the font weight using the <code>font-*</code> utility classes.</p>
+<p>Consider the following example:</p>
+<pre><code class="language-jsx">export default function Home() {
+  return (
+    &lt;&gt;
+      &lt;p className="font-light"&gt;This sentence is light&lt;/p&gt;
+      &lt;p className="font-normal"&gt;This sentence is normal&lt;/p&gt;
+      &lt;p className="font-medium"&gt;This sentence is medium&lt;/p&gt;
+      &lt;p className="font-semibold"&gt;This sentence is semibold&lt;/p&gt;
+      &lt;p className="font-bold"&gt;This sentence is bold&lt;/p&gt;
+    &lt;/&gt;
+  );
+}
+</code></pre>
+<h3 id="line-height"><a class="header" href="#line-height">Line Height</a></h3>
+<p>You can also set the line height which can be used to control the distance between text lines.
+This can be done using the <code>leading-*</code> utility classes.</p>
+<p>Consider the following example:</p>
+<pre><code class="language-jsx">export default function Home() {
+  return (
+    &lt;&gt;
+      &lt;p className="leading-normal"&gt;
+        This is a really, really long sentence that spans multiple lines if you make the window of
+        your browser small enough. Just keep resizing the browser window until this text spans
+        multiple lines. Then you will be able to see the effect of line height.
+      &lt;/p&gt;
+      &lt;p className="leading-relaxed"&gt;
+        This is a really, really long sentence that spans multiple lines if you make the window of
+        your browser small enough. Just keep resizing the browser window until this text spans
+        multiple lines. Then you will be able to see the effect of line height.
+      &lt;/p&gt;
+      &lt;p className="leading-loose"&gt;
+        This is a really, really long sentence that spans multiple lines if you make the window of
+        your browser small enough. Just keep resizing the browser window until this text spans
+        multiple lines. Then you will be able to see the effect of line height.
+      &lt;/p&gt;
+    &lt;/&gt;
+  );
+}
+</code></pre>
+<p>You can also control the line height via <code>leading-{num}</code> utility classes (from <code>leading-3</code> to <code>leading-10</code>).</p>
+<h3 id="alignment"><a class="header" href="#alignment">Alignment</a></h3>
+<p>You can also set the text alignment using the <code>text-*</code> utility classes, most notably <code>text-left</code>, <code>text-center</code> and <code>text-right</code>.</p>
+<p>Consider the following example:</p>
+<pre><code class="language-jsx">export default function Home() {
+  return (
+    &lt;&gt;
+      &lt;p className="text-left"&gt;This text is left-aligned&lt;/p&gt;
+      &lt;p className="text-center"&gt;This text is centered&lt;/p&gt;
+      &lt;p className="text-right"&gt;This text is right-aligned&lt;/p&gt;
+    &lt;/&gt;
+  );
+}
+</code></pre>
+<p>You can also justify text using the <code>text-justify</code> utility class.</p>
+<h3 id="text-color"><a class="header" href="#text-color">Text Color</a></h3>
+<p>You can also set the text color using Tailwind CSS utility classes.</p>
+<p>These utility classes usually have the form <code>text-{color}-{number}</code>.</p>
+<p>Here, <code>{color}</code> is a string indicating the color of the text (e.g. <code>blue</code> or <code>red</code>).</p>
+<p>Additionally, <code>{number}</code> indicates the darkness of the color.
+The higher the number, the darker the color will be.
+It can be one of the values <code>100</code>, <code>200</code>, <code>300</code> all the way up to <code>900</code>.</p>
+<p>Consider the following example:</p>
+<pre><code class="language-jsx">export default function Home() {
+  return (
+    &lt;&gt;
+      &lt;p className="text-blue-300"&gt;Light blue&lt;/p&gt;
+      &lt;p className="text-blue-800"&gt;Dark blue&lt;/p&gt;
+      &lt;p className="text-red-300"&gt;Light red&lt;/p&gt;
+      &lt;p className="text-red-800"&gt;Dark red&lt;/p&gt;
+      &lt;p className="text-green-300"&gt;Light green&lt;/p&gt;
+      &lt;p className="text-green-800"&gt;Dark green&lt;/p&gt;
+    &lt;/&gt;
+  );
+}
+</code></pre>
+<h3 id="font-style-and-decoration"><a class="header" href="#font-style-and-decoration">Font Style and Decoration</a></h3>
+<p>There are a few additional interesting utility classes for typography.</p>
+<p>For example, font style can be controlled with the <code>italic</code> utility:</p>
+<pre><code class="language-jsx">export default function Home() {
+  return &lt;p className="italic"&gt;This is an italic sentence&lt;/p&gt;;
+}
+</code></pre>
+<p>You can also control text decoration with utilities like <code>underline</code>:</p>
+<pre><code class="language-jsx">export default function Home() {
+  return &lt;p className="underline"&gt;This text is underlined&lt;/p&gt;;
+}
+</code></pre>
+<p>You can change the text decoration color by using the <code>decoration-{color}-{number}</code> utility classes:</p>
+<pre><code class="language-jsx">export default function Home() {
+  return &lt;p className="underline decoration-blue-500"&gt;This text has a blue underline&lt;/p&gt;;
+}
+</code></pre>
+<p>And you can even change the decoration style:</p>
+<pre><code class="language-jsx">export default function Home() {
+  return (
+    &lt;&gt;
+      &lt;p className="underline decoration-solid"&gt;This text has a solid underline&lt;/p&gt;
+      &lt;p className="underline decoration-double"&gt;This text has a double underline&lt;/p&gt;
+      &lt;p className="underline decoration-dotted"&gt;This text has a dotted underline&lt;/p&gt;
+      &lt;p className="underline decoration-dashed"&gt;This text has a dashed underline&lt;/p&gt;
+      &lt;p className="underline decoration-wavy"&gt;This text has a wavy underline&lt;/p&gt;
+    &lt;/&gt;
+  );
+}
+</code></pre>
+<p>You can also change the decoration thickness using one of the <code>decoration-1</code>, <code>decoration-2</code>, <code>decoration-4</code> or <code>decoration-8</code> attributes.</p>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="background-utilities"><a class="header" href="#background-utilities">Background Utilities</a></h2>
+<div style="text-align: right"> <i> If I had to recommend a way of getting into programming today, it would be HTML + CSS with Tailwind CSS. <br> — Guillermo Rauch </i> </div>
+<h3 id="background-color"><a class="header" href="#background-color">Background Color</a></h3>
+<p>You can change the background color of an element using the <code>bg-{color}-{number}</code> utilities.</p>
+<p>Consider the following example:</p>
+<pre><code class="language-jsx">export default function Home() {
+  return (
+    &lt;&gt;
+      &lt;div className="bg-blue-500"&gt;Blue background&lt;/div&gt;
+      &lt;button className="bg-blue-500"&gt;Blue button&lt;/button&gt;
+      &lt;p className="bg-blue-500"&gt;Blue paragraph&lt;/p&gt;
+    &lt;/&gt;
+  );
+}
+</code></pre>
+<h3 id="linear-gradients"><a class="header" href="#linear-gradients">Linear Gradients</a></h3>
+<p>You can give elements a linear gradient background using the <code>bg-gradient-{direction}</code> utilities.</p>
+<p>First, you need to specify the direction of the gradient.
+For example, you can specify <code>bg-gradient-to-r</code> for "right", <code>bg-gradient-to-t</code> for "top" and more.</p>
+<p>Second, you need to specify the starting color via <code>from-{color}-{number}</code> and the end color via <code>to-{color}-{number}</code>.
+You can additionally specify a middle color by using <code>via-{color}-{number}</code>.</p>
+<p>Here are a few examples on how to use these utilities:</p>
+<pre><code class="language-jsx">export default function Home() {
+  return (
+    &lt;&gt;
+      &lt;div className="bg-gradient-to-r from-blue-500 to-green-500"&gt;
+        Right direction, blue to green
+      &lt;/div&gt;
+      &lt;div className="bg-gradient-to-r from-blue-500 via-yellow-500 to-green-500"&gt;
+        Right direction, blue to green, via yellow
+      &lt;/div&gt;
+      &lt;div className="bg-gradient-to-t from-blue-500 to-green-500"&gt;
+        Top direction, blue to green
+      &lt;/div&gt;
+      &lt;div className="bg-gradient-to-t from-blue-500 to-green-500 via-yellow-500"&gt;
+        Top direction, blue to green, via yellow
+      &lt;/div&gt;
+    &lt;/&gt;
+  );
+}
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="size-utilities"><a class="header" href="#size-utilities">Size Utilities</a></h2>
+<div style="text-align: right"> <i> Tailwind makes writing code feel like I'm using a design tool. <br> — Ryan Florence </i> </div>
+<h3 id="width"><a class="header" href="#width">Width</a></h3>
+<p>You can give an element a fixed width using the <code>w-{number}</code> utilities.</p>
+<p>Consider the following example:</p>
+<pre><code class="language-jsx">export default function Home() {
+  return (
+    &lt;&gt;
+      &lt;div className="bg-blue-500 w-24"&gt;Text&lt;/div&gt;
+      &lt;div className="bg-blue-500 w-64"&gt;Text&lt;/div&gt;
+      &lt;div className="bg-blue-500 w-96"&gt;Text&lt;/div&gt;
+    &lt;/&gt;
+  );
+}
+</code></pre>
+<blockquote>
+<p>To actually see that the size utilities work the way we expect, we give all our elements that are present in this section backgrounds.
+Don't be distracted by this.</p>
+</blockquote>
+<p>Of course, there are many more <code>w-{number}</code> utilities.</p>
+<p>You can also give an element a percentage-based width using the <code>w-{fraction}</code> utilities:</p>
+<pre><code class="language-jsx">export default function Home() {
+  return (
+    &lt;div className="flex"&gt;
+      &lt;div className="bg-blue-500 w-1/4"&gt;Text&lt;/div&gt;
+      &lt;div className="bg-yellow-500 w-1/4"&gt;Text&lt;/div&gt;
+      &lt;div className="bg-green-500 w-1/2"&gt;Text&lt;/div&gt;
+    &lt;/div&gt;
+  );
+}
+</code></pre>
+<p>You can use <code>w-screen</code> if you want an element to span the entire viewport width.</p>
+<p>You can also set the minimum and the maximum width of an element using the <code>min-w-{number}</code> and <code>max-w-{number}</code> attributes.</p>
+<h3 id="height"><a class="header" href="#height">Height</a></h3>
+<p>You can give an element a fixed height using the <code>h-{number}</code> utilities.</p>
+<p>Consider the following example:</p>
+<pre><code class="language-jsx">export default function Home() {
+  return (
+    &lt;&gt;
+      &lt;div className="bg-blue-500 h-24"&gt;Text&lt;/div&gt;
+      &lt;div className="bg-yellow-500 h-64"&gt;Text&lt;/div&gt;
+      &lt;div className="bg-green-500 h-96"&gt;Text&lt;/div&gt;
+    &lt;/&gt;
+  );
+}
+</code></pre>
+<p>Of course, there are many more <code>h-{number}</code> utilities.</p>
+<p>You can use <code>h-screen</code> if you want an element to span the entire viewport height.</p>
+<p>You can set the minimum and the maximum height of an element using the <code>min-h-{number}</code> and <code>max-h-{number}</code> attributes.</p>
+<h3 id="size"><a class="header" href="#size">Size</a></h3>
+<p>You can set the width and height of an element at the same time using the <code>size-{number}</code> utility classes.</p>
+<p>Consider the following example:</p>
+<pre><code class="language-jsx">export default function Home() {
+  return (
+    &lt;&gt;
+      &lt;div className="bg-blue-500 size-24"&gt;Text&lt;/div&gt;
+      &lt;div className="bg-yellow-500 size-64"&gt;Text&lt;/div&gt;
+      &lt;div className="bg-green-500 size-96"&gt;Text&lt;/div&gt;
+    &lt;/&gt;
+  );
+}
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="border-utilities"><a class="header" href="#border-utilities">Border Utilities</a></h2>
+<div style="text-align: right"> <i> Tailwind CSS is the greatest framework on the planet. <br> — Bret Hart (wait what?) </i> </div>
+<h3 id="border-color"><a class="header" href="#border-color">Border Color</a></h3>
+<p>You can use the <code>border-{color}-{number}</code> to control the border element.</p>
+<p>Consider the following example:</p>
+<pre><code class="language-jsx">export default function Home() {
+  return (
+    &lt;&gt;
+      &lt;div className="border border-blue-500"&gt;Blue border&lt;/div&gt;
+      &lt;div className="border border-green-500"&gt;Green border&lt;/div&gt;
+    &lt;/&gt;
+  );
+}
+</code></pre>
+<h3 id="border-width"><a class="header" href="#border-width">Border Width</a></h3>
+<p>You can set the border width using the <code>border-{number}</code> utilities:</p>
+<p>Consider the following example:</p>
+<pre><code class="language-jsx">export default function Home() {
+  return (
+    &lt;&gt;
+      &lt;div className="border border-blue-500"&gt;Text&lt;/div&gt;
+      &lt;div className="border-2 border-blue-500"&gt;Text&lt;/div&gt;
+      &lt;div className="border-4 border-blue-500"&gt;Text&lt;/div&gt;
+      &lt;div className="border-8 border-blue-500"&gt;Text&lt;/div&gt;
+    &lt;/&gt;
+  );
+}
+</code></pre>
+<h3 id="border-style"><a class="header" href="#border-style">Border Style</a></h3>
+<p>You can use <code>border-{style}</code> utilities to control the border style of an element.</p>
+<p>Consider the following example:</p>
+<pre><code class="language-jsx">export default function Home() {
+  return (
+    &lt;&gt;
+      &lt;div className="border border-blue-500 border-solid"&gt;Text&lt;/div&gt;
+      &lt;div className="border border-blue-500 border-dashed"&gt;Text&lt;/div&gt;
+      &lt;div className="border border-blue-500 border-dotted"&gt;Text&lt;/div&gt;
+      &lt;div className="border border-blue-500 border-double"&gt;Text&lt;/div&gt;
+    &lt;/&gt;
+  );
+}
+</code></pre>
+<h3 id="border-radius"><a class="header" href="#border-radius">Border Radius</a></h3>
+<p>You can control the border radius by using utilities like <code>rounded</code>, <code>rounded-md</code>, <code>rounded-lg</code> and <code>rounded-full</code>.</p>
+<p>Consider the following example:</p>
+<pre><code class="language-jsx">export default function Home() {
+  return (
+    &lt;&gt;
+      &lt;div className="border border-blue-500 bg-blue-500 size-32 border-solid rounded"&gt;Text&lt;/div&gt;
+      &lt;div className="border border-blue-500 bg-blue-500 size-32 border-solid rounded-md"&gt;Text&lt;/div&gt;
+      &lt;div className="border border-blue-500 bg-blue-500 size-32 border-solid rounded-lg"&gt;Text&lt;/div&gt;
+      &lt;div className="border border-blue-500 bg-blue-500 size-32 border-solid rounded-full"&gt;
+        Text
+      &lt;/div&gt;
+    &lt;/&gt;
+  );
+}
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="spacing-utilities"><a class="header" href="#spacing-utilities">Spacing Utilities</a></h2>
+<div style="text-align: right"> <i> Thanks to @tailwindcss, CSS started to make sense to me. <br> — Nuno Maduro </i> </div>
+<h3 id="padding"><a class="header" href="#padding">Padding</a></h3>
+<p>You can control the padding on all sides of an element using the <code>p-{size}</code> utilities.</p>
+<p>Consider the following example:</p>
+<pre><code class="language-jsx">export default function Home() {
+  return (
+    &lt;&gt;
+      &lt;div className="border border-blue-500 size-32 p-2"&gt;Text&lt;/div&gt;
+      &lt;div className="border border-blue-500 size-32 p-4"&gt;Text&lt;/div&gt;
+      &lt;div className="border border-blue-500 size-32 p-8"&gt;Text&lt;/div&gt;
+    &lt;/&gt;
+  );
+}
+</code></pre>
+<p>You can control the padding on one side of an element using the <code>p{t | r | b | l}-{size}</code> utilities.</p>
+<p>Consider the following example:</p>
+<pre><code class="language-jsx">export default function Home() {
+  return (
+    &lt;&gt;
+      &lt;div className="border border-blue-500 size-32 pl-4"&gt;Left-padded text&lt;/div&gt;
+      &lt;div className="border border-blue-500 size-32 pt-4"&gt;Top-padded text&lt;/div&gt;
+    &lt;/&gt;
+  );
+}
+</code></pre>
+<h3 id="margin"><a class="header" href="#margin">Margin</a></h3>
+<p>You can control the margin on all sides of an element using the <code>m-{size}</code> utilities.</p>
+<p>Consider the following example:</p>
+<pre><code class="language-jsx">export default function Home() {
+  return (
+    &lt;&gt;
+      &lt;div className="border border-blue-500 size-32 m-2"&gt;Text&lt;/div&gt;
+      &lt;div className="border border-blue-500 size-32 m-4"&gt;Text&lt;/div&gt;
+      &lt;div className="border border-blue-500 size-32 m-8"&gt;Text&lt;/div&gt;
+    &lt;/&gt;
+  );
+}
+</code></pre>
+<p>You can control the margin on one side of an element using the <code>m{t | r | b | l}-{size}</code> utilities.</p>
+<p>Consider the following example:</p>
+<pre><code class="language-jsx">export default function Home() {
+  return (
+    &lt;&gt;
+      &lt;div className="border border-blue-500 size-32 ml-4"&gt;Left margin&lt;/div&gt;
+      &lt;div className="border border-blue-500 size-32 mt-4"&gt;Top margin&lt;/div&gt;
+    &lt;/&gt;
+  );
+}
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="flexbox"><a class="header" href="#flexbox">Flexbox</a></h2>
+<div style="text-align: right"> <i> I never want to write regular CSS again. Only @tailwindcss. <br> — Trey Piepmeier </i> </div>
+<h3 id="the-flex-utility-class"><a class="header" href="#the-flex-utility-class">The <code>flex</code> Utility Class</a></h3>
+<p>The "flex" feature enables you to control the layout of elements in a one-dimensional space.
+You can position the elements either as rows or columns.</p>
+<p>Here is a simple example of a flex container with 3 elements that are placed horizontally:</p>
+<pre><code class="language-jsx">export default function Home() {
+  return (
+    &lt;div className="flex"&gt;
+      &lt;div className="size-32 border border-blue-500"&gt;First element&lt;/div&gt;
+      &lt;div className="size-32 border border-blue-500"&gt;Second element&lt;/div&gt;
+      &lt;div className="size-32 border border-blue-500"&gt;Third element&lt;/div&gt;
+    &lt;/div&gt;
+  );
+}
+</code></pre>
+<p>You can use the <code>flex-col</code> utility class if you want a vertical layout.</p>
+<p>Consider the following example:</p>
+<pre><code class="language-jsx">export default function Home() {
+  return (
+    &lt;div className="flex flex-col"&gt;
+      &lt;div className="size-32 border border-blue-500"&gt;First element&lt;/div&gt;
+      &lt;div className="size-32 border border-blue-500"&gt;Second element&lt;/div&gt;
+      &lt;div className="size-32 border border-blue-500"&gt;Third element&lt;/div&gt;
+    &lt;/div&gt;
+  );
+}
+</code></pre>
+<h3 id="flex-basis"><a class="header" href="#flex-basis">Flex Basis</a></h3>
+<p>You can use the <code>basis-{size}</code> utilities to set the initial size of flex items.</p>
+<p>Consider the following example:</p>
+<pre><code class="language-jsx">export default function Home() {
+  return (
+    &lt;div className="flex"&gt;
+      &lt;div className="border border-blue-500 basis-32"&gt;First element&lt;/div&gt;
+      &lt;div className="border border-blue-500 basis-32"&gt;Second element&lt;/div&gt;
+      &lt;div className="border border-blue-500 basis-64"&gt;Third element&lt;/div&gt;
+    &lt;/div&gt;
+  );
+}
+</code></pre>
+<p>You can also specify a fraction like in this example:</p>
+<pre><code class="language-jsx">export default function Home() {
+  return (
+    &lt;div className="flex size-64"&gt;
+      &lt;div className="border border-blue-500 basis-1/4"&gt;First element&lt;/div&gt;
+      &lt;div className="border border-blue-500 basis-1/4"&gt;Second element&lt;/div&gt;
+      &lt;div className="border border-blue-500 basis-1/2"&gt;Third element&lt;/div&gt;
+    &lt;/div&gt;
+  );
+}
+</code></pre>
+<h3 id="flex-wrap"><a class="header" href="#flex-wrap">Flex Wrap</a></h3>
+<p>The <code>flex-wrap</code> utility class can be used to control how flex items wrap.</p>
+<p>Consider this example:</p>
+<pre><code class="language-jsx">export default function Home() {
+  return (
+    &lt;div className="flex w-64"&gt;
+      &lt;div className="border border-blue-500 w-32"&gt;First element&lt;/div&gt;
+      &lt;div className="border border-blue-500 w-32"&gt;Second element&lt;/div&gt;
+      &lt;div className="border border-blue-500 w-32"&gt;Third element&lt;/div&gt;
+    &lt;/div&gt;
+  );
+}
+</code></pre>
+<p>Note that the parent container is too large for the children.
+If you want to allow flex items to wrap, you can use <code>flex-wrap</code>:</p>
+<pre><code class="language-jsx">export default function Home() {
+  return (
+    &lt;div className="flex flex-wrap w-64"&gt;
+      &lt;div className="border border-blue-500 w-32"&gt;First element&lt;/div&gt;
+      &lt;div className="border border-blue-500 w-32"&gt;Second element&lt;/div&gt;
+      &lt;div className="border border-blue-500 w-32"&gt;Third element&lt;/div&gt;
+    &lt;/div&gt;
+  );
+}
+</code></pre>
+<p>Now the third child element will be placed on the next line.</p>
+<h3 id="grow"><a class="header" href="#grow">Grow</a></h3>
+<p>You can use the <code>grow</code> utility to tell a flex item to fill all of the available space:</p>
+<pre><code class="language-jsx">export default function Home() {
+  return (
+    &lt;div className="flex w-64"&gt;
+      &lt;div className="border border-blue-500 w-16"&gt;First&lt;/div&gt;
+      &lt;div className="border border-blue-500 grow"&gt;Second&lt;/div&gt;
+      &lt;div className="border border-blue-500 w-16"&gt;Third&lt;/div&gt;
+    &lt;/div&gt;
+  );
+}
+</code></pre>
+<h3 id="space-between"><a class="header" href="#space-between">Space Between</a></h3>
+<p>You can control horizontal space between elements using <code>space-x-{amount}</code> utilities.</p>
+<p>Consider the following example:</p>
+<pre><code class="language-jsx">export default function Home() {
+  return (
+    &lt;div className="flex space-x-8"&gt;
+      &lt;div className="size-32 bg-blue-500"&gt;First element&lt;/div&gt;
+      &lt;div className="size-32 bg-blue-500"&gt;Second element&lt;/div&gt;
+      &lt;div className="size-32 bg-blue-500"&gt;Third element&lt;/div&gt;
+    &lt;/div&gt;
+  );
+}
+</code></pre>
+<p>You can control vertical space between elements using <code>space-y-{amount}</code> utilities.</p>
+<p>Consider the following example:</p>
+<pre><code class="language-jsx">export default function Home() {
+  return (
+    &lt;div className="flex flex-col space-y-8"&gt;
+      &lt;div className="size-32 bg-blue-500"&gt;First element&lt;/div&gt;
+      &lt;div className="size-32 bg-blue-500"&gt;Second element&lt;/div&gt;
+      &lt;div className="size-32 bg-blue-500"&gt;Third element&lt;/div&gt;
+    &lt;/div&gt;
+  );
+}
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="chapter-9-adding-spice-with-react"><a class="header" href="#chapter-9-adding-spice-with-react">Chapter 9: Adding Spice with React</a></h1>
 <div style="text-align: right"> <i> What's a React developer's favorite place to hang out? <br> The State Park. <br> — From "1000 programming dad-jokes" </i> </div>
 <p>In this chapter we will create a simple (website) client using React.
 This client will allow us to add and delete tasks, where each task will have a title and a description.</p>
@@ -7474,7 +7462,7 @@ This client will allow us to add and delete tasks, where each task will have a t
 The title, description and the button could in turn be components themselves.</p>
 <p>The tasks might then be grouped in a task list component, which in addition to the tasks, should have a button to add a new task.</p>
 <p>Here is a simple mockup of the structure of our new web page:</p>
-<p><img src="chapter7/images/components.png" alt="" /></p>
+<p><img src="09-adding-spice-with-react/images/components.png" alt="" /></p>
 <p>Now comes the interesting part about React.
 In terms of implementation, a component is just a <em>regular JavaScript function</em> that takes the <em>data it should render as input</em> and returns the <em>UI representation of the data as output</em>.</p>
 <p>Here is an example of how the <code>Task</code> component could look like:</p>
@@ -7773,7 +7761,7 @@ But, in reality, you often need to have "dynamic" components that can change bas
 <p>For example, clicking a button might update a counter and typing into a form might update the input field.
 This means that components need to be able to "remember" things (like the current count or the current input field value).</p>
 <p>To "remember" something, you can use <strong>state</strong>, which serves as a sort of memory for your component.</p>
-<h3 id="a-simple-example-2"><a class="header" href="#a-simple-example-2">A Simple Example</a></h3>
+<h3 id="a-simple-example-3"><a class="header" href="#a-simple-example-3">A Simple Example</a></h3>
 <p>Let's create a simple counter component.
 This component will have a button that increments a value:</p>
 <pre><code class="language-jsx">import * as React from 'react';
@@ -8449,12 +8437,16 @@ export default function TaskList() {
 This is because if you fetch data inside an effect in more complex scenarios, you need to think about cleanup functions, race conditions etc.
 This why most frameworks that build on top of React (like Next.js) usually provide better data fetching mechanisms than fetching data in effects.</p>
 </blockquote>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="chapter-8-moving-to-the-server-with-nextjs"><a class="header" href="#chapter-8-moving-to-the-server-with-nextjs">Chapter 8: Moving to the Server with Next.js</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="chapter-10-the-project-csr"><a class="header" href="#chapter-10-the-project-csr">Chapter 10: The Project (CSR)</a></h1>
+<p>Finally, the first version of the project is upon us.</p>
+<p>In this chapter we will create our long awaited <em>easy-opus</em> task management application as a CSR (client-side rendered) application.</p>
+<p>TODO: This chapter is work in progress.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="chapter-11-moving-to-the-server-with-nextjs"><a class="header" href="#chapter-11-moving-to-the-server-with-nextjs">Chapter 11: Moving to the Server with Next.js</a></h1>
 <div style="text-align: right"> <i> Why did the Next.js developer order the steak? <br> Because he wanted a full-steak experience. <br> — From "1000 programming dad-jokes" </i> </div>
 <p>Now that you have a rough overview of React, we want to move to the server.
 Next.js is a React-based framework for building full-stack applications.</p>
 <p>We will use Next.js 15, which includes the App Router and React Server Components.</p>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="setup-2"><a class="header" href="#setup-2">Setup</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="setup-3"><a class="header" href="#setup-3">Setup</a></h2>
 <div style="text-align: right"> <i> What's a Next.js developer's favorite part of setting up a new project? <br> Installing dependencies. It's like Christmas, every package is a surprise! <br> — From "1000 programming dad-jokes" </i> </div>
 <h3 id="creating-a-nextjs-project"><a class="header" href="#creating-a-nextjs-project">Creating a Next.js Project</a></h3>
 <p>In this section, we will setup a clean Next.js project for the following sections.</p>
@@ -8851,653 +8843,8 @@ For example, if you click the button, you will see that the <code>Rendered count
 <li>you need to use certain React hooks like <code>useState</code> or <code>useEffect</code></li>
 <li>you need to use certain browser functionality (like resizing the browser window)</li>
 </ul>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="chapter-9-becoming-pretty-with-tailwind-css"><a class="header" href="#chapter-9-becoming-pretty-with-tailwind-css">Chapter 9: Becoming Pretty with Tailwind CSS</a></h1>
-<div style="text-align: right"> <i> I feel like an idiot for not using Tailwind CSS until now. <br> — Ryan Florence </i> </div>
-<p>So far, our pages are functional, but they're not pretty to look at.</p>
-<p>CSS (short for Cascading Style Sheets) is a special language that is used for specifying the styling of an HTML document.
-We won't use CSS directly, but rather Tailwind CSS—a utility-first CSS framework that greatly simplifies the styling process.</p>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="setup-3"><a class="header" href="#setup-3">Setup</a></h2>
-<div style="text-align: right"> <i> Skip to the end. Use @tailwindcss. <br> — Kent C. Dodds </i> </div>
-<h3 id="tailwind-css-and-postcss"><a class="header" href="#tailwind-css-and-postcss">Tailwind CSS and PostCSS</a></h3>
-<p>Once you've created an app with <code>pnpm create next-app</code>, you're already using Tailwind CSS by default.</p>
-<p>If you look at the <code>package.json</code> file, you will notice these dependencies:</p>
-<ul>
-<li><code>tailwindcss</code></li>
-<li><code>postcss</code></li>
-<li><code>autoprefixer</code></li>
-</ul>
-<p>PostCSS is a special tool for transforming CSS with JavaScript.
-Autoprefixer is a PostCSS plugin for parsing CSS and adding vendor prefixes to CSS rules.</p>
-<p>Both Tailwind CSS and PostCSS require some configuration.
-Luckily, <code>pnpm create next-app</code> has already supplied this configuration for us.</p>
-<p>You'll find the Tailwind CSS configuration in the <code>tailwind.config.ts</code> file:</p>
-<pre><code class="language-ts">import type { Config } from 'tailwindcss';
-
-const config: Config = {
-  content: [
-    './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/components/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/app/**/*.{js,ts,jsx,tsx,mdx}',
-  ],
-  theme: {
-    extend: {
-      backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
-      },
-    },
-  },
-  plugins: [],
-};
-export default config;
-</code></pre>
-<p>You'll find the PostCSS configuration in the <code>postcss.config.js</code> file:</p>
-<pre><code class="language-js">module.exports = {
-  plugins: {
-    tailwindcss: {},
-    autoprefixer: {},
-  },
-};
-</code></pre>
-<h3 id="tailwind-directives"><a class="header" href="#tailwind-directives">Tailwind Directives</a></h3>
-<p>The final important file is <code>globals.css</code>.
-If you've created your app with <code>pnpm create next-app</code>, this will contain a bunch of unneeded fluff, so let's replace the content of <code>globals.css</code> with these lines:</p>
-<pre><code class="language-css">@tailwind base;
-@tailwind components;
-@tailwind utilities;
-</code></pre>
-<p>These lines are so-called <strong>Tailwind directives</strong>.</p>
-<p>The <code>@tailwind base</code> directive injects Tailwind's base styles in your CSS.</p>
-<p>The <code>@tailwind components</code> injects Tailwind's component classes in your CSS.</p>
-<p>Finally, the <code>@tailwind utilities</code> injects Tailwind's utility classes in your CSS.</p>
-<h3 id="a-simple-example-3"><a class="header" href="#a-simple-example-3">A Simple Example</a></h3>
-<p>Let's try and use Tailwind CSS now.</p>
-<p>We'll add a component with a few Tailwind utility classes to <code>page.tsx</code>:</p>
-<pre><code class="language-jsx">export default function Home() {
-  return &lt;h1 className="text-3xl font-bold underline"&gt;Welcome&lt;/h1&gt;;
-}
-</code></pre>
-<p>Start the development server and open the homepage.
-You should see how the styles are applied to the text.</p>
-<p>This component highlights the <strong>utility-first</strong> approach to styling that is behind Tailwind CSS.
-Instead of writing lots of custom CSS, you style elements by applying pre-existing classes directly in your HTML.</p>
-<p>Next, we'll introduce some of the most important utility classes.</p>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="typography-utilities"><a class="header" href="#typography-utilities">Typography Utilities</a></h2>
-<div style="text-align: right"> <i> I don't use it but if I would use something I'd use Tailwind! <br> — Pieter Levels </i> </div>
-<h3 id="font-family"><a class="header" href="#font-family">Font Family</a></h3>
-<p>You can change the typeface of your text using the font-family utility classes which include <code>font-sans</code>, <code>font-serif</code> and <code>font-mono</code>.</p>
-<p>Consider the following example:</p>
-<pre><code class="language-jsx">export default function Home() {
-  return (
-    &lt;&gt;
-      &lt;p className="font-sans"&gt;This uses a sans-serif font&lt;/p&gt;
-      &lt;p className="font-serif"&gt;This uses a serif font&lt;/p&gt;
-      &lt;p className="font-mono"&gt;This uses a monospace font&lt;/p&gt;
-    &lt;/&gt;
-  );
-}
-</code></pre>
-<h3 id="font-size"><a class="header" href="#font-size">Font Size</a></h3>
-<p>You can change the font size using the <code>text-*</code> utility classes.</p>
-<p>Consider the following example:</p>
-<pre><code class="language-jsx">export default function Home() {
-  return (
-    &lt;&gt;
-      &lt;p className="text-sm"&gt;This is a small sentence&lt;/p&gt;
-      &lt;p className="text-base"&gt;This is a normal sentence&lt;/p&gt;
-      &lt;p className="text-lg"&gt;This is a large sentence&lt;/p&gt;
-      &lt;p className="text-xl"&gt;This is an extra large sentence&lt;/p&gt;
-    &lt;/&gt;
-  );
-}
-</code></pre>
-<p>You can make your sentences larger than <code>text-xl</code> by prefixing the <code>xl</code> with a number, e.g. <code>text-2xl</code>, <code>text-3xl</code> all the way up <code>text-9xl</code>.</p>
-<h3 id="font-weight"><a class="header" href="#font-weight">Font Weight</a></h3>
-<p>You can change the font weight using the <code>font-*</code> utility classes.</p>
-<p>Consider the following example:</p>
-<pre><code class="language-jsx">export default function Home() {
-  return (
-    &lt;&gt;
-      &lt;p className="font-light"&gt;This sentence is light&lt;/p&gt;
-      &lt;p className="font-normal"&gt;This sentence is normal&lt;/p&gt;
-      &lt;p className="font-medium"&gt;This sentence is medium&lt;/p&gt;
-      &lt;p className="font-semibold"&gt;This sentence is semibold&lt;/p&gt;
-      &lt;p className="font-bold"&gt;This sentence is bold&lt;/p&gt;
-    &lt;/&gt;
-  );
-}
-</code></pre>
-<h3 id="line-height"><a class="header" href="#line-height">Line Height</a></h3>
-<p>You can also set the line height which can be used to control the distance between text lines.
-This can be done using the <code>leading-*</code> utility classes.</p>
-<p>Consider the following example:</p>
-<pre><code class="language-jsx">export default function Home() {
-  return (
-    &lt;&gt;
-      &lt;p className="leading-normal"&gt;
-        This is a really, really long sentence that spans multiple lines if you make the window of
-        your browser small enough. Just keep resizing the browser window until this text spans
-        multiple lines. Then you will be able to see the effect of line height.
-      &lt;/p&gt;
-      &lt;p className="leading-relaxed"&gt;
-        This is a really, really long sentence that spans multiple lines if you make the window of
-        your browser small enough. Just keep resizing the browser window until this text spans
-        multiple lines. Then you will be able to see the effect of line height.
-      &lt;/p&gt;
-      &lt;p className="leading-loose"&gt;
-        This is a really, really long sentence that spans multiple lines if you make the window of
-        your browser small enough. Just keep resizing the browser window until this text spans
-        multiple lines. Then you will be able to see the effect of line height.
-      &lt;/p&gt;
-    &lt;/&gt;
-  );
-}
-</code></pre>
-<p>You can also control the line height via <code>leading-{num}</code> utility classes (from <code>leading-3</code> to <code>leading-10</code>).</p>
-<h3 id="alignment"><a class="header" href="#alignment">Alignment</a></h3>
-<p>You can also set the text alignment using the <code>text-*</code> utility classes, most notably <code>text-left</code>, <code>text-center</code> and <code>text-right</code>.</p>
-<p>Consider the following example:</p>
-<pre><code class="language-jsx">export default function Home() {
-  return (
-    &lt;&gt;
-      &lt;p className="text-left"&gt;This text is left-aligned&lt;/p&gt;
-      &lt;p className="text-center"&gt;This text is centered&lt;/p&gt;
-      &lt;p className="text-right"&gt;This text is right-aligned&lt;/p&gt;
-    &lt;/&gt;
-  );
-}
-</code></pre>
-<p>You can also justify text using the <code>text-justify</code> utility class.</p>
-<h3 id="text-color"><a class="header" href="#text-color">Text Color</a></h3>
-<p>You can also set the text color using Tailwind CSS utility classes.</p>
-<p>These utility classes usually have the form <code>text-{color}-{number}</code>.</p>
-<p>Here, <code>{color}</code> is a string indicating the color of the text (e.g. <code>blue</code> or <code>red</code>).</p>
-<p>Additionally, <code>{number}</code> indicates the darkness of the color.
-The higher the number, the darker the color will be.
-It can be one of the values <code>100</code>, <code>200</code>, <code>300</code> all the way up to <code>900</code>.</p>
-<p>Consider the following example:</p>
-<pre><code class="language-jsx">export default function Home() {
-  return (
-    &lt;&gt;
-      &lt;p className="text-blue-300"&gt;Light blue&lt;/p&gt;
-      &lt;p className="text-blue-800"&gt;Dark blue&lt;/p&gt;
-      &lt;p className="text-red-300"&gt;Light red&lt;/p&gt;
-      &lt;p className="text-red-800"&gt;Dark red&lt;/p&gt;
-      &lt;p className="text-green-300"&gt;Light green&lt;/p&gt;
-      &lt;p className="text-green-800"&gt;Dark green&lt;/p&gt;
-    &lt;/&gt;
-  );
-}
-</code></pre>
-<h3 id="font-style-and-decoration"><a class="header" href="#font-style-and-decoration">Font Style and Decoration</a></h3>
-<p>There are a few additional interesting utility classes for typography.</p>
-<p>For example, font style can be controlled with the <code>italic</code> utility:</p>
-<pre><code class="language-jsx">export default function Home() {
-  return &lt;p className="italic"&gt;This is an italic sentence&lt;/p&gt;;
-}
-</code></pre>
-<p>You can also control text decoration with utilities like <code>underline</code>:</p>
-<pre><code class="language-jsx">export default function Home() {
-  return &lt;p className="underline"&gt;This text is underlined&lt;/p&gt;;
-}
-</code></pre>
-<p>You can change the text decoration color by using the <code>decoration-{color}-{number}</code> utility classes:</p>
-<pre><code class="language-jsx">export default function Home() {
-  return &lt;p className="underline decoration-blue-500"&gt;This text has a blue underline&lt;/p&gt;;
-}
-</code></pre>
-<p>And you can even change the decoration style:</p>
-<pre><code class="language-jsx">export default function Home() {
-  return (
-    &lt;&gt;
-      &lt;p className="underline decoration-solid"&gt;This text has a solid underline&lt;/p&gt;
-      &lt;p className="underline decoration-double"&gt;This text has a double underline&lt;/p&gt;
-      &lt;p className="underline decoration-dotted"&gt;This text has a dotted underline&lt;/p&gt;
-      &lt;p className="underline decoration-dashed"&gt;This text has a dashed underline&lt;/p&gt;
-      &lt;p className="underline decoration-wavy"&gt;This text has a wavy underline&lt;/p&gt;
-    &lt;/&gt;
-  );
-}
-</code></pre>
-<p>You can also change the decoration thickness using one of the <code>decoration-1</code>, <code>decoration-2</code>, <code>decoration-4</code> or <code>decoration-8</code> attributes.</p>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="background-utilities"><a class="header" href="#background-utilities">Background Utilities</a></h2>
-<div style="text-align: right"> <i> If I had to recommend a way of getting into programming today, it would be HTML + CSS with Tailwind CSS. <br> — Guillermo Rauch </i> </div>
-<h3 id="background-color"><a class="header" href="#background-color">Background Color</a></h3>
-<p>You can change the background color of an element using the <code>bg-{color}-{number}</code> utilities.</p>
-<p>Consider the following example:</p>
-<pre><code class="language-jsx">export default function Home() {
-  return (
-    &lt;&gt;
-      &lt;div className="bg-blue-500"&gt;Blue background&lt;/div&gt;
-      &lt;button className="bg-blue-500"&gt;Blue button&lt;/button&gt;
-      &lt;p className="bg-blue-500"&gt;Blue paragraph&lt;/p&gt;
-    &lt;/&gt;
-  );
-}
-</code></pre>
-<h3 id="linear-gradients"><a class="header" href="#linear-gradients">Linear Gradients</a></h3>
-<p>You can give elements a linear gradient background using the <code>bg-gradient-{direction}</code> utilities.</p>
-<p>First, you need to specify the direction of the gradient.
-For example, you can specify <code>bg-gradient-to-r</code> for "right", <code>bg-gradient-to-t</code> for "top" and more.</p>
-<p>Second, you need to specify the starting color via <code>from-{color}-{number}</code> and the end color via <code>to-{color}-{number}</code>.
-You can additionally specify a middle color by using <code>via-{color}-{number}</code>.</p>
-<p>Here are a few examples on how to use these utilities:</p>
-<pre><code class="language-jsx">export default function Home() {
-  return (
-    &lt;&gt;
-      &lt;div className="bg-gradient-to-r from-blue-500 to-green-500"&gt;
-        Right direction, blue to green
-      &lt;/div&gt;
-      &lt;div className="bg-gradient-to-r from-blue-500 via-yellow-500 to-green-500"&gt;
-        Right direction, blue to green, via yellow
-      &lt;/div&gt;
-      &lt;div className="bg-gradient-to-t from-blue-500 to-green-500"&gt;
-        Top direction, blue to green
-      &lt;/div&gt;
-      &lt;div className="bg-gradient-to-t from-blue-500 to-green-500 via-yellow-500"&gt;
-        Top direction, blue to green, via yellow
-      &lt;/div&gt;
-    &lt;/&gt;
-  );
-}
-</code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="size-utilities"><a class="header" href="#size-utilities">Size Utilities</a></h2>
-<div style="text-align: right"> <i> Tailwind makes writing code feel like I'm using a design tool. <br> — Ryan Florence </i> </div>
-<h3 id="width"><a class="header" href="#width">Width</a></h3>
-<p>You can give an element a fixed width using the <code>w-{number}</code> utilities.</p>
-<p>Consider the following example:</p>
-<pre><code class="language-jsx">export default function Home() {
-  return (
-    &lt;&gt;
-      &lt;div className="bg-blue-500 w-24"&gt;Text&lt;/div&gt;
-      &lt;div className="bg-blue-500 w-64"&gt;Text&lt;/div&gt;
-      &lt;div className="bg-blue-500 w-96"&gt;Text&lt;/div&gt;
-    &lt;/&gt;
-  );
-}
-</code></pre>
-<blockquote>
-<p>To actually see that the size utilities work the way we expect, we give all our elements that are present in this section backgrounds.
-Don't be distracted by this.</p>
-</blockquote>
-<p>Of course, there are many more <code>w-{number}</code> utilities.</p>
-<p>You can also give an element a percentage-based width using the <code>w-{fraction}</code> utilities:</p>
-<pre><code class="language-jsx">export default function Home() {
-  return (
-    &lt;div className="flex"&gt;
-      &lt;div className="bg-blue-500 w-1/4"&gt;Text&lt;/div&gt;
-      &lt;div className="bg-yellow-500 w-1/4"&gt;Text&lt;/div&gt;
-      &lt;div className="bg-green-500 w-1/2"&gt;Text&lt;/div&gt;
-    &lt;/div&gt;
-  );
-}
-</code></pre>
-<p>You can use <code>w-screen</code> if you want an element to span the entire viewport width.</p>
-<p>You can also set the minimum and the maximum width of an element using the <code>min-w-{number}</code> and <code>max-w-{number}</code> attributes.</p>
-<h3 id="height"><a class="header" href="#height">Height</a></h3>
-<p>You can give an element a fixed height using the <code>h-{number}</code> utilities.</p>
-<p>Consider the following example:</p>
-<pre><code class="language-jsx">export default function Home() {
-  return (
-    &lt;&gt;
-      &lt;div className="bg-blue-500 h-24"&gt;Text&lt;/div&gt;
-      &lt;div className="bg-yellow-500 h-64"&gt;Text&lt;/div&gt;
-      &lt;div className="bg-green-500 h-96"&gt;Text&lt;/div&gt;
-    &lt;/&gt;
-  );
-}
-</code></pre>
-<p>Of course, there are many more <code>h-{number}</code> utilities.</p>
-<p>You can use <code>h-screen</code> if you want an element to span the entire viewport height.</p>
-<p>You can set the minimum and the maximum height of an element using the <code>min-h-{number}</code> and <code>max-h-{number}</code> attributes.</p>
-<h3 id="size"><a class="header" href="#size">Size</a></h3>
-<p>You can set the width and height of an element at the same time using the <code>size-{number}</code> utility classes.</p>
-<p>Consider the following example:</p>
-<pre><code class="language-jsx">export default function Home() {
-  return (
-    &lt;&gt;
-      &lt;div className="bg-blue-500 size-24"&gt;Text&lt;/div&gt;
-      &lt;div className="bg-yellow-500 size-64"&gt;Text&lt;/div&gt;
-      &lt;div className="bg-green-500 size-96"&gt;Text&lt;/div&gt;
-    &lt;/&gt;
-  );
-}
-</code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="border-utilities"><a class="header" href="#border-utilities">Border Utilities</a></h2>
-<div style="text-align: right"> <i> Tailwind CSS is the greatest framework on the planet. <br> — Bret Hart (wait what?) </i> </div>
-<h3 id="border-color"><a class="header" href="#border-color">Border Color</a></h3>
-<p>You can use the <code>border-{color}-{number}</code> to control the border element.</p>
-<p>Consider the following example:</p>
-<pre><code class="language-jsx">export default function Home() {
-  return (
-    &lt;&gt;
-      &lt;div className="border border-blue-500"&gt;Blue border&lt;/div&gt;
-      &lt;div className="border border-green-500"&gt;Green border&lt;/div&gt;
-    &lt;/&gt;
-  );
-}
-</code></pre>
-<h3 id="border-width"><a class="header" href="#border-width">Border Width</a></h3>
-<p>You can set the border width using the <code>border-{number}</code> utilities:</p>
-<p>Consider the following example:</p>
-<pre><code class="language-jsx">export default function Home() {
-  return (
-    &lt;&gt;
-      &lt;div className="border border-blue-500"&gt;Text&lt;/div&gt;
-      &lt;div className="border-2 border-blue-500"&gt;Text&lt;/div&gt;
-      &lt;div className="border-4 border-blue-500"&gt;Text&lt;/div&gt;
-      &lt;div className="border-8 border-blue-500"&gt;Text&lt;/div&gt;
-    &lt;/&gt;
-  );
-}
-</code></pre>
-<h3 id="border-style"><a class="header" href="#border-style">Border Style</a></h3>
-<p>You can use <code>border-{style}</code> utilities to control the border style of an element.</p>
-<p>Consider the following example:</p>
-<pre><code class="language-jsx">export default function Home() {
-  return (
-    &lt;&gt;
-      &lt;div className="border border-blue-500 border-solid"&gt;Text&lt;/div&gt;
-      &lt;div className="border border-blue-500 border-dashed"&gt;Text&lt;/div&gt;
-      &lt;div className="border border-blue-500 border-dotted"&gt;Text&lt;/div&gt;
-      &lt;div className="border border-blue-500 border-double"&gt;Text&lt;/div&gt;
-    &lt;/&gt;
-  );
-}
-</code></pre>
-<h3 id="border-radius"><a class="header" href="#border-radius">Border Radius</a></h3>
-<p>You can control the border radius by using utilities like <code>rounded</code>, <code>rounded-md</code>, <code>rounded-lg</code> and <code>rounded-full</code>.</p>
-<p>Consider the following example:</p>
-<pre><code class="language-jsx">export default function Home() {
-  return (
-    &lt;&gt;
-      &lt;div className="border border-blue-500 bg-blue-500 size-32 border-solid rounded"&gt;Text&lt;/div&gt;
-      &lt;div className="border border-blue-500 bg-blue-500 size-32 border-solid rounded-md"&gt;Text&lt;/div&gt;
-      &lt;div className="border border-blue-500 bg-blue-500 size-32 border-solid rounded-lg"&gt;Text&lt;/div&gt;
-      &lt;div className="border border-blue-500 bg-blue-500 size-32 border-solid rounded-full"&gt;
-        Text
-      &lt;/div&gt;
-    &lt;/&gt;
-  );
-}
-</code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="spacing-utilities"><a class="header" href="#spacing-utilities">Spacing Utilities</a></h2>
-<div style="text-align: right"> <i> Thanks to @tailwindcss, CSS started to make sense to me. <br> — Nuno Maduro </i> </div>
-<h3 id="padding"><a class="header" href="#padding">Padding</a></h3>
-<p>You can control the padding on all sides of an element using the <code>p-{size}</code> utilities.</p>
-<p>Consider the following example:</p>
-<pre><code class="language-jsx">export default function Home() {
-  return (
-    &lt;&gt;
-      &lt;div className="border border-blue-500 size-32 p-2"&gt;Text&lt;/div&gt;
-      &lt;div className="border border-blue-500 size-32 p-4"&gt;Text&lt;/div&gt;
-      &lt;div className="border border-blue-500 size-32 p-8"&gt;Text&lt;/div&gt;
-    &lt;/&gt;
-  );
-}
-</code></pre>
-<p>You can control the padding on one side of an element using the <code>p{t | r | b | l}-{size}</code> utilities.</p>
-<p>Consider the following example:</p>
-<pre><code class="language-jsx">export default function Home() {
-  return (
-    &lt;&gt;
-      &lt;div className="border border-blue-500 size-32 pl-4"&gt;Left-padded text&lt;/div&gt;
-      &lt;div className="border border-blue-500 size-32 pt-4"&gt;Top-padded text&lt;/div&gt;
-    &lt;/&gt;
-  );
-}
-</code></pre>
-<h3 id="margin"><a class="header" href="#margin">Margin</a></h3>
-<p>You can control the margin on all sides of an element using the <code>m-{size}</code> utilities.</p>
-<p>Consider the following example:</p>
-<pre><code class="language-jsx">export default function Home() {
-  return (
-    &lt;&gt;
-      &lt;div className="border border-blue-500 size-32 m-2"&gt;Text&lt;/div&gt;
-      &lt;div className="border border-blue-500 size-32 m-4"&gt;Text&lt;/div&gt;
-      &lt;div className="border border-blue-500 size-32 m-8"&gt;Text&lt;/div&gt;
-    &lt;/&gt;
-  );
-}
-</code></pre>
-<p>You can control the margin on one side of an element using the <code>m{t | r | b | l}-{size}</code> utilities.</p>
-<p>Consider the following example:</p>
-<pre><code class="language-jsx">export default function Home() {
-  return (
-    &lt;&gt;
-      &lt;div className="border border-blue-500 size-32 ml-4"&gt;Left margin&lt;/div&gt;
-      &lt;div className="border border-blue-500 size-32 mt-4"&gt;Top margin&lt;/div&gt;
-    &lt;/&gt;
-  );
-}
-</code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="flexbox"><a class="header" href="#flexbox">Flexbox</a></h2>
-<div style="text-align: right"> <i> I never want to write regular CSS again. Only @tailwindcss. <br> — Trey Piepmeier </i> </div>
-<h3 id="the-flex-utility-class"><a class="header" href="#the-flex-utility-class">The <code>flex</code> Utility Class</a></h3>
-<p>The "flex" feature enables you to control the layout of elements in a one-dimensional space.
-You can position the elements either as rows or columns.</p>
-<p>Here is a simple example of a flex container with 3 elements that are placed horizontally:</p>
-<pre><code class="language-jsx">export default function Home() {
-  return (
-    &lt;div className="flex"&gt;
-      &lt;div className="size-32 border border-blue-500"&gt;First element&lt;/div&gt;
-      &lt;div className="size-32 border border-blue-500"&gt;Second element&lt;/div&gt;
-      &lt;div className="size-32 border border-blue-500"&gt;Third element&lt;/div&gt;
-    &lt;/div&gt;
-  );
-}
-</code></pre>
-<p>You can use the <code>flex-col</code> utility class if you want a vertical layout.</p>
-<p>Consider the following example:</p>
-<pre><code class="language-jsx">export default function Home() {
-  return (
-    &lt;div className="flex flex-col"&gt;
-      &lt;div className="size-32 border border-blue-500"&gt;First element&lt;/div&gt;
-      &lt;div className="size-32 border border-blue-500"&gt;Second element&lt;/div&gt;
-      &lt;div className="size-32 border border-blue-500"&gt;Third element&lt;/div&gt;
-    &lt;/div&gt;
-  );
-}
-</code></pre>
-<h3 id="flex-basis"><a class="header" href="#flex-basis">Flex Basis</a></h3>
-<p>You can use the <code>basis-{size}</code> utilities to set the initial size of flex items.</p>
-<p>Consider the following example:</p>
-<pre><code class="language-jsx">export default function Home() {
-  return (
-    &lt;div className="flex"&gt;
-      &lt;div className="border border-blue-500 basis-32"&gt;First element&lt;/div&gt;
-      &lt;div className="border border-blue-500 basis-32"&gt;Second element&lt;/div&gt;
-      &lt;div className="border border-blue-500 basis-64"&gt;Third element&lt;/div&gt;
-    &lt;/div&gt;
-  );
-}
-</code></pre>
-<p>You can also specify a fraction like in this example:</p>
-<pre><code class="language-jsx">export default function Home() {
-  return (
-    &lt;div className="flex size-64"&gt;
-      &lt;div className="border border-blue-500 basis-1/4"&gt;First element&lt;/div&gt;
-      &lt;div className="border border-blue-500 basis-1/4"&gt;Second element&lt;/div&gt;
-      &lt;div className="border border-blue-500 basis-1/2"&gt;Third element&lt;/div&gt;
-    &lt;/div&gt;
-  );
-}
-</code></pre>
-<h3 id="flex-wrap"><a class="header" href="#flex-wrap">Flex Wrap</a></h3>
-<p>The <code>flex-wrap</code> utility class can be used to control how flex items wrap.</p>
-<p>Consider this example:</p>
-<pre><code class="language-jsx">export default function Home() {
-  return (
-    &lt;div className="flex w-64"&gt;
-      &lt;div className="border border-blue-500 w-32"&gt;First element&lt;/div&gt;
-      &lt;div className="border border-blue-500 w-32"&gt;Second element&lt;/div&gt;
-      &lt;div className="border border-blue-500 w-32"&gt;Third element&lt;/div&gt;
-    &lt;/div&gt;
-  );
-}
-</code></pre>
-<p>Note that the parent container is too large for the children.
-If you want to allow flex items to wrap, you can use <code>flex-wrap</code>:</p>
-<pre><code class="language-jsx">export default function Home() {
-  return (
-    &lt;div className="flex flex-wrap w-64"&gt;
-      &lt;div className="border border-blue-500 w-32"&gt;First element&lt;/div&gt;
-      &lt;div className="border border-blue-500 w-32"&gt;Second element&lt;/div&gt;
-      &lt;div className="border border-blue-500 w-32"&gt;Third element&lt;/div&gt;
-    &lt;/div&gt;
-  );
-}
-</code></pre>
-<p>Now the third child element will be placed on the next line.</p>
-<h3 id="grow"><a class="header" href="#grow">Grow</a></h3>
-<p>You can use the <code>grow</code> utility to tell a flex item to fill all of the available space:</p>
-<pre><code class="language-jsx">export default function Home() {
-  return (
-    &lt;div className="flex w-64"&gt;
-      &lt;div className="border border-blue-500 w-16"&gt;First&lt;/div&gt;
-      &lt;div className="border border-blue-500 grow"&gt;Second&lt;/div&gt;
-      &lt;div className="border border-blue-500 w-16"&gt;Third&lt;/div&gt;
-    &lt;/div&gt;
-  );
-}
-</code></pre>
-<h3 id="space-between"><a class="header" href="#space-between">Space Between</a></h3>
-<p>You can control horizontal space between elements using <code>space-x-{amount}</code> utilities.</p>
-<p>Consider the following example:</p>
-<pre><code class="language-jsx">export default function Home() {
-  return (
-    &lt;div className="flex space-x-8"&gt;
-      &lt;div className="size-32 bg-blue-500"&gt;First element&lt;/div&gt;
-      &lt;div className="size-32 bg-blue-500"&gt;Second element&lt;/div&gt;
-      &lt;div className="size-32 bg-blue-500"&gt;Third element&lt;/div&gt;
-    &lt;/div&gt;
-  );
-}
-</code></pre>
-<p>You can control vertical space between elements using <code>space-y-{amount}</code> utilities.</p>
-<p>Consider the following example:</p>
-<pre><code class="language-jsx">export default function Home() {
-  return (
-    &lt;div className="flex flex-col space-y-8"&gt;
-      &lt;div className="size-32 bg-blue-500"&gt;First element&lt;/div&gt;
-      &lt;div className="size-32 bg-blue-500"&gt;Second element&lt;/div&gt;
-      &lt;div className="size-32 bg-blue-500"&gt;Third element&lt;/div&gt;
-    &lt;/div&gt;
-  );
-}
-</code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="grid"><a class="header" href="#grid">Grid</a></h2>
-<div style="text-align: right"> <i> Loved it the very moment I used it. <br> — Gilbert Rabut Tsurwa </i> </div>
-<h3 id="template-columns"><a class="header" href="#template-columns">Template Columns</a></h3>
-<p>Grids allow you to specify two-dimensional layouts.</p>
-<p>You can use the <code>grid</code> and <code>grid-cols-{n}</code> utilities to create a simple grid with a certain number of columns.</p>
-<p>Consider the following example:</p>
-<pre><code class="language-jsx">export default function Home() {
-  return (
-    &lt;div className="grid grid-cols-2 size-64"&gt;
-      &lt;div className="border-2 border-blue-500"&gt;Row 1, Col 1&lt;/div&gt;
-      &lt;div className="border-2 border-blue-500"&gt;Row 1, Col 2&lt;/div&gt;
-      &lt;div className="border-2 border-blue-500"&gt;Row 2, Col 1&lt;/div&gt;
-      &lt;div className="border-2 border-blue-500"&gt;Row 2, Col 2&lt;/div&gt;
-      &lt;div className="border-2 border-blue-500"&gt;Row 3, Col 1&lt;/div&gt;
-      &lt;div className="border-2 border-blue-500"&gt;Row 3, Col 2&lt;/div&gt;
-    &lt;/div&gt;
-  );
-}
-</code></pre>
-<p>You can use the <code>col-span-{n}</code> utilities to make an element span multiple columns.</p>
-<p>Consider the following example:</p>
-<pre><code class="language-jsx">export default function Home() {
-  return (
-    &lt;div className="grid grid-cols-3 size-96"&gt;
-      &lt;div className="border-2 border-blue-500"&gt;Row 1, Col 1&lt;/div&gt;
-      &lt;div className="border-2 border-blue-500"&gt;Row 1, Col 2&lt;/div&gt;
-      &lt;div className="border-2 border-blue-500"&gt;Row 1, Col 3&lt;/div&gt;
-      &lt;div className="border-2 border-blue-500 col-span-2"&gt;Row 2, Col 1+2&lt;/div&gt;
-      &lt;div className="border-2 border-blue-500"&gt;Row 2, Col 3&lt;/div&gt;
-    &lt;/div&gt;
-  );
-}
-</code></pre>
-<p>You can use the <code>col-start-{n}</code> and <code>col-end-{n}</code> to start and end an element at the nth grid line, respectively.</p>
-<p>There are two important caveats here:
-First, grid lines start at <code>1</code>, not at <code>0</code>.
-Second, the numbers indicate grid <em>lines</em>.</p>
-<p>This means that if you want an element to span columns <code>2</code> and <code>3</code> in a grid, you need to start at grid line <code>2</code> and end at grid line <code>4</code>:</p>
-<pre><code class="language-jsx">export default function Home() {
-  return (
-    &lt;div className="grid grid-cols-3 size-96"&gt;
-      &lt;div className="border-2 border-blue-500"&gt;Row 1, Col 1&lt;/div&gt;
-      &lt;div className="border-2 border-blue-500"&gt;Row 1, Col 2&lt;/div&gt;
-      &lt;div className="border-2 border-blue-500"&gt;Row 1, Col 3&lt;/div&gt;
-      &lt;div className="border-2 border-blue-500 col-start-2 col-end-4"&gt;Row 2, Col 2+3&lt;/div&gt;
-    &lt;/div&gt;
-  );
-}
-</code></pre>
-<h3 id="template-rows"><a class="header" href="#template-rows">Template Rows</a></h3>
-<p>You can use the <code>grid</code>, <code>grid-flow-col</code> and <code>grid-rows-{n}</code> utilities to create a simple grid with a certain number of rows.</p>
-<p>Consider the following example:</p>
-<pre><code class="language-jsx">export default function Home() {
-  return (
-    &lt;div className="grid grid-flow-col grid-rows-2 size-64"&gt;
-      &lt;div className="border-2 border-blue-500"&gt;Row 1, Col 1&lt;/div&gt;
-      &lt;div className="border-2 border-blue-500"&gt;Row 2, Col 1&lt;/div&gt;
-      &lt;div className="border-2 border-blue-500"&gt;Row 1, Col 2&lt;/div&gt;
-      &lt;div className="border-2 border-blue-500"&gt;Row 2, Col 2&lt;/div&gt;
-      &lt;div className="border-2 border-blue-500"&gt;Row 1, Col 3&lt;/div&gt;
-      &lt;div className="border-2 border-blue-500"&gt;Row 2, Col 3&lt;/div&gt;
-    &lt;/div&gt;
-  );
-}
-</code></pre>
-<p>You can use the <code>row-span-{n}</code> utilities to make an element span multiple rows.</p>
-<p>Consider the following example:</p>
-<pre><code class="language-jsx">export default function Home() {
-  return (
-    &lt;div className="grid grid-flow-col grid-rows-3 size-64"&gt;
-      &lt;div className="border-2 border-blue-500"&gt;Row 1, Col 1&lt;/div&gt;
-      &lt;div className="border-2 border-blue-500"&gt;Row 2, Col 1&lt;/div&gt;
-      &lt;div className="border-2 border-blue-500"&gt;Row 3, Col 1&lt;/div&gt;
-      &lt;div className="border-2 border-blue-500 row-span-2"&gt;Row 1+2, Col 2&lt;/div&gt;
-      &lt;div className="border-2 border-blue-500"&gt;Row 3, Col 2&lt;/div&gt;
-    &lt;/div&gt;
-  );
-}
-</code></pre>
-<p>You can use the <code>row-start-{n}</code> and <code>row-end-{n}</code> to start and end an element at the nth grid line, respectively:</p>
-<pre><code class="language-jsx">export default function Home() {
-  return (
-    &lt;div className="grid grid-flow-col grid-rows-3 size-64"&gt;
-      &lt;div className="border-2 border-blue-500"&gt;Row 1, Col 1&lt;/div&gt;
-      &lt;div className="border-2 border-blue-500"&gt;Row 2, Col 1&lt;/div&gt;
-      &lt;div className="border-2 border-blue-500"&gt;Row 3, Col 1&lt;/div&gt;
-      &lt;div className="border-2 border-blue-500 row-start-2 row-end-4"&gt;Row 2+3, Col 2&lt;/div&gt;
-    &lt;/div&gt;
-  );
-}
-</code></pre>
-<h3 id="gaps"><a class="header" href="#gaps">Gaps</a></h3>
-<p>You can use <code>gap-{size}</code> utilities to control the gaps between rows and columns.</p>
-<p>Consider the following example:</p>
-<pre><code class="language-jsx">export default function Home() {
-  return (
-    &lt;div className="grid grid-cols-2 gap-4 size-64"&gt;
-      &lt;div className="border-2 border-blue-500"&gt;Row 1, Col 1&lt;/div&gt;
-      &lt;div className="border-2 border-blue-500"&gt;Row 1, Col 2&lt;/div&gt;
-      &lt;div className="border-2 border-blue-500"&gt;Row 2, Col 1&lt;/div&gt;
-      &lt;div className="border-2 border-blue-500"&gt;Row 2, Col 2&lt;/div&gt;
-      &lt;div className="border-2 border-blue-500"&gt;Row 3, Col 1&lt;/div&gt;
-      &lt;div className="border-2 border-blue-500"&gt;Row 3, Col 2&lt;/div&gt;
-    &lt;/div&gt;
-  );
-}
-</code></pre>
-<p>You can use the <code>gap-x-{size}</code> and <code>gap-y-{size}</code> utilities if you need to change the gaps between rows or columns.</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="chapter-10-the-project"><a class="header" href="#chapter-10-the-project">Chapter 10: The Project</a></h1>
-<p>Finally, the project is upon us.</p>
-<p>In this chapter we will create our long awaited <em>easy-opus</em> task management application.
-Every user will be able to create and manage projects which in turn will contain tasks.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="chapter-12-the-project-ssr"><a class="header" href="#chapter-12-the-project-ssr">Chapter 12: The Project (SSR)</a></h1>
+<p>Now that we have learned how to use Next.js, we will recreate the <em>easy-opus</em> task management application as a SSR (server-side rendered) application.</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="setup-4"><a class="header" href="#setup-4">Setup</a></h2>
 <h3 id="creating-a-nextjs-project-1"><a class="header" href="#creating-a-nextjs-project-1">Creating a Next.js Project</a></h3>
 <p>First, we need to create a new Next.js Project.
@@ -10220,6 +9567,7 @@ However, authentication is out of scope for this book.</p>
             window.setTimeout(window.print, 100);
         });
         </script>
+
 
     </div>
     </body>

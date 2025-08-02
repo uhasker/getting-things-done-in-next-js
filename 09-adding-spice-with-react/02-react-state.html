@@ -1,0 +1,652 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>React State</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title"></h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h2 id="react-state"><a class="header" href="#react-state">React State</a></h2>
+<div style="text-align: right"> <i> Why was the useState hook feeling nostalgic? <br>
+Because every time it was called, it brought back memories! <br> — From "1000 programming dad-jokes" </i> </div>
+<h3 id="why-state"><a class="header" href="#why-state">Why State?</a></h3>
+<p>In the previous section we've learned how to render components.</p>
+<p>However, these components were completely "static".
+But, in reality, you often need to have "dynamic" components that can change based on some action.</p>
+<p>For example, clicking a button might update a counter and typing into a form might update the input field.
+This means that components need to be able to "remember" things (like the current count or the current input field value).</p>
+<p>To "remember" something, you can use <strong>state</strong>, which serves as a sort of memory for your component.</p>
+<h3 id="a-simple-example"><a class="header" href="#a-simple-example">A Simple Example</a></h3>
+<p>Let's create a simple counter component.
+This component will have a button that increments a value:</p>
+<pre><code class="language-jsx">import * as React from 'react';
+
+export default function Counter() {
+  const [count, setCount] = React.useState(0);
+
+  return (
+    &lt;&gt;
+      &lt;p&gt;{count}&lt;/p&gt;
+      &lt;button
+        onClick={() =&gt; {
+          setCount(count + 1);
+        }}
+      &gt;
+        Increment
+      &lt;/button&gt;
+    &lt;/&gt;
+  );
+}
+</code></pre>
+<p>Try clicking the "Increment" button—it will increment the count by <code>1</code> each time you click it.</p>
+<p>This example is simple, but it still shows exactly how to use state in React.</p>
+<p>State is provided by the <code>useState</code> hook (a hook is basically just a special function).</p>
+<p>This hook returns an array with two elements—a <strong>state variable</strong> and a <strong>state setter function</strong>.
+The state variable (<code>count</code> in this case) will be the value that you want to remember.
+The state setter function (<code>setCount</code> in this case) can be used to update the state variable.
+The <code>useState</code> hook takes a single argument—the initial value of the state variable (which is <code>0</code> in this case).</p>
+<p>Note that we make use of array destructuring here (which you should remember from the JavaScript chapter):</p>
+<pre><code class="language-ts">const [count, setCount] = React.useState(0);
+</code></pre>
+<p>Alternatively we could have written:</p>
+<pre><code class="language-ts">const countState = React.useState(0);
+const count = countState[0];
+const setCount = countState[1];
+</code></pre>
+<p>Please don't do that though—it will result in confusion since it's very unconventional to manually destructure the value returned from a hook.</p>
+<h3 id="state-vs-regular-variables"><a class="header" href="#state-vs-regular-variables">State vs Regular Variables</a></h3>
+<p>Why do we need to go through all that pain instead of just using a regular variable?</p>
+<p>After all, this is how we've always remembered values before.
+We simply assigned them to variables.</p>
+<p>Let's have a look at why this doesn't work with React:</p>
+<pre><code class="language-jsx">export default function Counter() {
+  let count = 0;
+
+  return (
+    &lt;&gt;
+      &lt;p&gt;{count}&lt;/p&gt;
+      &lt;button
+        onClick={() =&gt; {
+          count += 1;
+        }}
+      &gt;
+        Increment
+      &lt;/button&gt;
+    &lt;/&gt;
+  );
+}
+</code></pre>
+<p>Try clicking the button now—nothing happens.
+But why?</p>
+<p>The problem lies in the fact that, while we do update the local variable, React doesn't actually rerender the component to show the change.
+You can verify this by adding a few <code>console.log</code>s:</p>
+<pre><code class="language-jsx">export default function Counter() {
+  let count = 0;
+
+  console.log('Rendered counter component');
+
+  return (
+    &lt;&gt;
+      &lt;p&gt;{count}&lt;/p&gt;
+      &lt;button
+        onClick={() =&gt; {
+          count += 1;
+          console.log(`New value of count is ${count}`);
+        }}
+      &gt;
+        Increment
+      &lt;/button&gt;
+    &lt;/&gt;
+  );
+}
+</code></pre>
+<p>If you open the component and click the button a few times, you will see the following logs:</p>
+<pre><code>Rendered counter component
+New value of count is 1
+New value of count is 2
+New value of count is 3
+</code></pre>
+<p>So the local variable is indeed updated—but this doesn't rerender the component.
+We begin to see the purpose of the <code>useState</code> hook—to define a state whose <em>updates will trigger a rerender</em>.</p>
+<p>This explanation should have immediately raised another question.
+What happens if we skip the state setter function and just set the state variable directly?</p>
+<pre><code class="language-jsx">export default function Counter() {
+  let [count, setCount] = React.useState(0);
+
+  console.log('Rendered counter component');
+
+  return (
+    &lt;&gt;
+      &lt;p&gt;{count}&lt;/p&gt;
+      &lt;button
+        onClick={() =&gt; {
+          count += 1;
+          console.log(`New value of count is ${count}`);
+        }}
+      &gt;
+        Increment
+      &lt;/button&gt;
+    &lt;/&gt;
+  );
+}
+</code></pre>
+<p>If you click the button a few times, you will see the exact same behaviour as with the previous example:</p>
+<pre><code>Rendered counter component
+New value of count is 1
+New value of count is 2
+New value of count is 3
+</code></pre>
+<p>Therefore, if you need to update the UI of your component, you can't use local variables and you can't update the state variables directly.
+You need to use the state setter function to not only update the state variable, but also to rerender the component.</p>
+<p>Let's verify that using the state setter function does what we expect:</p>
+<pre><code class="language-jsx">export default function Counter() {
+  let [count, setCount] = React.useState(0);
+
+  console.log(`Rendered counter component with count=${count}`);
+
+  return (
+    &lt;&gt;
+      &lt;p&gt;{count}&lt;/p&gt;
+      &lt;button
+        onClick={() =&gt; {
+          setCount(count + 1);
+          console.log(`New value of count is ${count}`);
+        }}
+      &gt;
+        Increment
+      &lt;/button&gt;
+    &lt;/&gt;
+  );
+}
+</code></pre>
+<p>We will now see that the component rerenders if we click the "Increment" button:</p>
+<pre><code>Rendered counter component with count=0
+New value of count is 0
+Rendered counter component with count=1
+</code></pre>
+<p>Note that the value of <code>count</code> only changes on the <em>next render</em>.
+Here is what happens:</p>
+<p>The component renders for the first time.
+Because the initial value of <code>count</code> is set to <code>0</code>, it will render with <code>count</code> being equal to <code>0</code>.</p>
+<p>You click the button and <code>setCount</code> is called with <code>count + 1</code> (which will be <code>0 + 1</code>, i.e. <code>1</code>).
+React rerenders the component while remembering that the new <code>count</code> should be <code>1</code>.</p>
+<p>The component renders for the second time.
+Because React remembered that <code>count</code> was set to <code>1</code>, the component will render with <code>count</code> set to <code>1</code>.</p>
+<h3 id="using-state-with-a-form"><a class="header" href="#using-state-with-a-form">Using State with a Form</a></h3>
+<p>Let's return to our example application and add the form for creating a new task.
+Enter the <code>task-list.tsx</code> file and import React at the top:</p>
+<pre><code class="language-js">import * as React from 'react';
+</code></pre>
+<p>Next, we add the form containing inputs for the ID and the title, as well as an "Add task" button below the task list:</p>
+<pre><code class="language-jsx">export function TaskList({ tasks }: TaskListProps) {
+  return (
+    &lt;&gt;
+      &lt;ul&gt;
+        {tasks.map((item) =&gt; (
+          &lt;li key={item.id}&gt;{item.title}&lt;/li&gt;
+        ))}
+      &lt;/ul&gt;
+      &lt;form&gt;
+        &lt;label htmlFor="taskId"&gt;Task ID:&lt;/label&gt;
+        &lt;input type="text" id="taskId" /&gt;
+        &lt;label htmlFor="title"&gt;Title:&lt;/label&gt;
+        &lt;input type="text" id="title" /&gt;
+        &lt;br /&gt;
+        &lt;button type="submit"&gt;Add task&lt;/button&gt;
+      &lt;/form&gt;
+    &lt;/&gt;
+  );
+}
+</code></pre>
+<p>Now, we need to create a <code>handleSubmit</code> function, which will just log something to the console for now.
+Remember from the HTML chapter that we need to call the <code>preventDefault</code> function to prevent the default behaviour of a form submission (which includes a page refresh):</p>
+<pre><code class="language-js">function handleSubmit(event) {
+  event.preventDefault();
+  const taskId = event.currentTarget.taskId.value.trim();
+  const title = event.currentTarget.title.value.trim();
+  console.log(`Submitted ${taskId}, ${title}`);
+}
+</code></pre>
+<p>Next, we need to make sure that the <code>handleSubmit</code> function is called when the button is clicked.
+To accomplish that, we set the <code>onSubmit</code> property of the form to the <code>handleSubmit</code> function:</p>
+<pre><code class="language-jsx">&lt;form onSubmit={handleSubmit}&gt;{/*Additional JSX here*/}&lt;/form&gt;
+</code></pre>
+<p>If you click the button, you should now see the title logged to the console.</p>
+<p>Again, we use the <code>useState</code> hook:</p>
+<pre><code class="language-js">const [tasks, setTasks] = React.useState&lt;Task[]&gt;([]);
+</code></pre>
+<p>We now want to add the task to the end when the form is submitted:</p>
+<pre><code class="language-js">function handleSubmit(event) {
+  event.preventDefault();
+  const taskId = event.currentTarget.taskId.value.trim();
+  const title = event.currentTarget.title.value.trim();
+  setTasks([
+    ...previousTasks,
+    {
+      id: taskId,
+      title,
+    },
+  ]);
+}
+</code></pre>
+<p>This is how the full code looks like:</p>
+<pre><code class="language-jsx">import * as React from "react";
+
+type Task = {
+  id: string;
+  title: string;
+};
+
+export default function TaskList() {
+  const [tasks, setTasks] = React.useState&lt;Task[]&gt;([]);
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    const taskId = event.currentTarget.taskId.value.trim();
+    const title = event.currentTarget.title.value.trim();
+    setTasks([
+      ...tasks,
+      {
+        id: taskId,
+        title,
+      },
+    ]);
+  }
+
+  return (
+    &lt;&gt;
+      &lt;ul&gt;
+        {tasks.map((item) =&gt; (
+          &lt;li key={item.id}&gt;{item.title}&lt;/li&gt;
+        ))}
+      &lt;/ul&gt;
+      &lt;form onSubmit={handleSubmit}&gt;
+        &lt;label htmlFor="taskId"&gt;Task ID:&lt;/label&gt;
+        &lt;input type="text" id="taskId" /&gt;
+        &lt;label htmlFor="title"&gt;Title:&lt;/label&gt;
+        &lt;input type="text" id="title" /&gt;
+        &lt;br /&gt;
+        &lt;button type="submit"&gt;Add task&lt;/button&gt;
+      &lt;/form&gt;
+    &lt;/&gt;
+  );
+}
+
+</code></pre>
+<p>Try clicking the button—a new task should appear.</p>
+<blockquote>
+<p>Just like with the HTML client the changes will go away if you refresh the page or close the browser.
+We will talk about how to persist data later.</p>
+</blockquote>
+<h3 id="when-to-use-state"><a class="header" href="#when-to-use-state">When to Use State</a></h3>
+<p>There is a common theme regarding state in React—a lot of beginners <em>heavily overuse</em> it.
+This is usually because they misunderstand the purpose of state and what it actually does.</p>
+<p>Before we give specific examples of when to and when not to use state, we want to reiterate two things we already discussed:</p>
+<p>First, state should only be used if your component needs to remember something.</p>
+<p>Second, state updates are expensive, because a state update will rerender your component.</p>
+<p>The corollary to these two things is that <strong>you should only use state when you absolutely need it</strong>, i.e. <strong>you should keep state to a minimum</strong>.</p>
+<p>First, you should never ever store static data in state.
+For example, this is completely unnecessary:</p>
+<pre><code class="language-jsx">export default function BadTaskList() {
+  const tasks = React.useState([
+    {
+      id: 'TSK-1',
+      title: 'Read the Next.js book',
+    },
+    {
+      id: 'TSK-2',
+      title: 'Write a website',
+    },
+  ]);
+
+  return (
+    &lt;ul&gt;
+      {tasks.map((task) =&gt; (
+        &lt;li key={task.id}&gt;{task.summary}&lt;/li&gt;
+      ))}
+    &lt;/ul&gt;
+  );
+}
+</code></pre>
+<p>Just use a local variable instead:</p>
+<pre><code class="language-jsx">export default function GoodTaskList() {
+  const tasks = [
+    {
+      id: 'TSK-1',
+      title: 'Read the Next.js book',
+    },
+    {
+      id: 'TSK-2',
+      title: 'Write a website',
+    },
+  ];
+
+  return (
+    &lt;ul&gt;
+      {tasks.map((task) =&gt; (
+        &lt;li key={task.id}&gt;{task.summary}&lt;/li&gt;
+      ))}
+    &lt;/ul&gt;
+  );
+}
+</code></pre>
+<blockquote>
+<p>Of course, in this particular example, the <code>tasks</code> variable should really be passed as a prop to the component.
+We just want to show you when to and when not to use state here.</p>
+</blockquote>
+<p>Second, you should never store data in state that you can derive from other state (or props).
+For example, this is a bad idea:</p>
+<pre><code class="language-jsx">import * as React from 'react';
+
+type Task = {
+  id: string;
+  title: string;
+};
+
+export default function TaskList() {
+  const [tasks, setTasks] = React.useState&lt;Task[]&gt;([]);
+  const [numTasks, setNumTasks] = React.useState(0);
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    const taskId = event.currentTarget.taskId.value.trim();
+    const title = event.currentTarget.title.value.trim();
+    setTasks([
+      ...tasks,
+      {
+        id: taskId,
+        title,
+      },
+    ]);
+    setNumTasks(numTasks + 1);
+  }
+
+  return (
+    &lt;&gt;
+      &lt;ul&gt;
+        {tasks.map((item) =&gt; (
+          &lt;li key={item.id}&gt;{item.title}&lt;/li&gt;
+        ))}
+      &lt;/ul&gt;
+      &lt;p&gt;You have {numTasks} tasks&lt;/p&gt;
+      &lt;form onSubmit={handleSubmit}&gt;
+        &lt;label htmlFor="taskId"&gt;Task ID:&lt;/label&gt;
+        &lt;input type="text" id="taskId" /&gt;
+        &lt;label htmlFor="title"&gt;Title:&lt;/label&gt;
+        &lt;input type="text" id="title" /&gt;
+        &lt;br /&gt;
+        &lt;button type="submit"&gt;Add task&lt;/button&gt;
+      &lt;/form&gt;
+    &lt;/&gt;
+  );
+}
+</code></pre>
+<p>In this example, you really do need the <code>tasks</code> state (since you need to remember the tasks that have been added so far).
+However, you really don't need the <code>numTasks</code> state, because you can derive it from the value of the <code>tasks</code> state.</p>
+<p>After all, <code>numTasks</code> is simply equal to <code>tasks.length</code>.</p>
+<p>Here is how we can fix the component:</p>
+<pre><code class="language-jsx">import * as React from "react";
+
+type Task = {
+  id: string;
+  title: string;
+};
+
+export default function TaskList() {
+  const [tasks, setTasks] = React.useState&lt;Task[]&gt;([]);
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    const taskId = event.currentTarget.taskId.value.trim();
+    const title = event.currentTarget.title.value.trim();
+    setTasks([
+      ...tasks,
+      {
+        id: taskId,
+        title,
+      },
+    ]);
+  }
+
+  return (
+    &lt;&gt;
+      &lt;ul&gt;
+        {tasks.map((item) =&gt; (
+          &lt;li key={item.id}&gt;{item.title}&lt;/li&gt;
+        ))}
+      &lt;/ul&gt;
+      &lt;p&gt;You have {tasks.length} tasks&lt;/p&gt;
+      &lt;form onSubmit={handleSubmit}&gt;
+        &lt;label htmlFor="taskId"&gt;Task ID:&lt;/label&gt;
+        &lt;input type="text" id="taskId" /&gt;
+        &lt;label htmlFor="title"&gt;Title:&lt;/label&gt;
+        &lt;input type="text" id="title" /&gt;
+        &lt;br /&gt;
+        &lt;button type="submit"&gt;Add task&lt;/button&gt;
+      &lt;/form&gt;
+    &lt;/&gt;
+  );
+}
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../09-adding-spice-with-react/01-react-components.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../09-adding-spice-with-react/03-react-effects.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../09-adding-spice-with-react/01-react-components.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../09-adding-spice-with-react/03-react-effects.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

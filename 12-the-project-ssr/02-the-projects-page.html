@@ -1,0 +1,409 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>The Projects Page</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title"></h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h2 id="the-projects-page"><a class="header" href="#the-projects-page">The Projects Page</a></h2>
+<h3 id="project-list"><a class="header" href="#project-list">Project List</a></h3>
+<p>Let's create a component <code>ProjectList</code> in <code>project-list.tsx</code> that will show a nicely styled list of projects:</p>
+<pre><code class="language-jsx">export function ProjectList({ projects }: { projects: { id: number, name: string }[] }) {
+  return (
+    &lt;div className="my-8 mx-auto max-w-2xl"&gt;
+      {projects.map((project) =&gt; (
+        &lt;div className="flex items-center justify-between bg-white p-4 rounded shadow mb-4 hover:shadow transition"&gt;
+          &lt;span className="text-lg font-semibold text-gray-800 hover:text-blue-500 transition"&gt;
+            {project.name}
+          &lt;/span&gt;
+        &lt;/div&gt;
+      ))}
+    &lt;/div&gt;
+  );
+}
+</code></pre>
+<p>Next, we will update the <code>page.tsx</code> file to show the project list.</p>
+<pre><code class="language-jsx">import { db } from './db';
+import { projectTable } from './db/schema';
+import { ProjectList } from './project-list';
+
+export default async function Home() {
+  const projects = await db.select().from(projectTable);
+
+  return &lt;ProjectList projects={projects} /&gt;;
+}
+</code></pre>
+<p>Add a few projects to the database and go to <code>http://localhost:3000</code>.
+You should see a project list containing the added projects.</p>
+<h3 id="fixing-a-lint"><a class="header" href="#fixing-a-lint">Fixing a Lint</a></h3>
+<p>While our project has no syntax errors, no type errors and generally works correctly, there is one issue.</p>
+<p>If you read this book carefully so far, you should theoretically be able to figure it out, but it might take a while.
+Let's use our awesome ESLint tool instead:</p>
+<pre><code class="language-sh">pnpm lint
+</code></pre>
+<p>You should see:</p>
+<pre><code>./src/app/project-list.tsx
+9:9  Error: Missing "key" prop for element in iterator  react/jsx-key
+</code></pre>
+<p>Remember that if you want to render a list in React, you should give the individual elements a <code>key</code> prop.
+In this case, a good key prop would be the primary key from the database, so let's use that.</p>
+<p>Add the <code>key</code> property to the project <code>div</code> in <code>project-list.tsx</code> like this:</p>
+<pre><code class="language-jsx">&lt;div
+  key={project.id}
+  className="flex items-center justify-between bg-white p-4 rounded shadow mb-4 hover:shadow transition"
+&gt;
+  &lt;span className="text-lg font-semibold text-gray-800 hover:text-blue-500 transition"&gt;
+    {project.name}
+  &lt;/span&gt;
+&lt;/div&gt;
+</code></pre>
+<p>If you rerun <code>pnpm lint</code>, you should see no more errors.</p>
+<h3 id="new-project-modal"><a class="header" href="#new-project-modal">New Project Modal</a></h3>
+<p>Let's create a modal that will allow us to add new projects at <code>project-modal.tsx</code>:</p>
+<pre><code class="language-jsx">"use client";
+
+import * as React from "react";
+
+interface FormElements extends HTMLFormControlsCollection {
+  name: HTMLInputElement;
+}
+
+interface ProjectFormElement extends HTMLFormElement {
+  readonly elements: FormElements;
+}
+
+export function NewProjectModal({
+  onClose,
+  onSubmit,
+}: {
+  onClose: () =&gt; void;
+  onSubmit: (name: string) =&gt; Promise&lt;void&gt;;
+}) {
+  async function handleSubmit(event: React.FormEvent&lt;ProjectFormElement&gt;) {
+    event.preventDefault();
+    const name = event.currentTarget.elements.name.value.trim();
+    await onSubmit(name);
+  }
+
+  return (
+    &lt;div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center p-4"&gt;
+      &lt;div className="relative w-full max-w-md bg-white p-6 rounded shadow"&gt;
+        &lt;button
+          onClick={onClose}
+          className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
+        &gt;
+          &amp;times;
+        &lt;/button&gt;
+        &lt;form onSubmit={handleSubmit} className="space-y-4"&gt;
+          &lt;h2 className="text-lg font-semibold text-gray-800"&gt;Add Project&lt;/h2&gt;
+          &lt;div&gt;
+            &lt;label htmlFor="name" className="text-sm font-medium text-gray-600"&gt;
+              Project Name
+            &lt;/label&gt;
+            &lt;input
+              type="text"
+              id="name"
+              name="name"
+              className="mt-1 block w-full px-3 py-2 border rounded focus:border-blue-500 focus:ring focus:ring-blue-200"
+            /&gt;
+          &lt;/div&gt;
+          &lt;button
+            type="submit"
+            className="w-full py-2 px-4 text-sm font-medium text-white bg-blue-500 rounded hover:bg-blue-600 focus:ring-2 focus:ring-blue-400"
+          &gt;
+            Add Project
+          &lt;/button&gt;
+        &lt;/form&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  );
+}
+</code></pre>
+<p>Let's create a file <code>api/project/route.ts</code> with a <code>POST</code> endpoint that allows us to add a new project:</p>
+<pre><code class="language-ts">import { db } from '@/app/db';
+import { projectTable } from '@/app/db/schema';
+import { NextRequest, NextResponse } from 'next/server';
+
+export async function POST(request: NextRequest) {
+  const { name } = await request.json();
+
+  if (!name) {
+    return NextResponse.json({ error: 'Project name is required' }, { status: 400 });
+  }
+
+  await db.insert(projectTable).values({ name });
+
+  return NextResponse.json({ message: 'Project inserted successfully' }, { status: 200 });
+}
+</code></pre>
+<p>We need to show the modal in the project list by modifying the <code>project-list.tsx</code> file:</p>
+<pre><code class="language-jsx">'use client';
+
+import { NewProjectModal } from './project-modal';
+
+import * as React from 'react';
+import { useRouter } from 'next/navigation';
+
+export function ProjectList({ projects }: { projects: { id: number, name: string }[] }) {
+  const router = useRouter();
+
+  const [showModal, setShowModal] = React.useState(false);
+
+  async function handleNewProject(name: string) {
+    const response = await fetch('/api/project', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ name }),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to create project');
+    }
+    setShowModal(false);
+    router.refresh();
+  }
+
+  return (
+    &lt;div className="my-8 mx-auto w-full max-w-2xl"&gt;
+      &lt;button
+        onClick={() =&gt; setShowModal(true)}
+        className="mb-6 bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-600 shadow transition"
+      &gt;
+        Add New Project
+      &lt;/button&gt;
+
+      {/* Project list here */}
+
+      {showModal &amp;&amp; (
+        &lt;NewProjectModal onSubmit={handleNewProject} onClose={() =&gt; setShowModal(false)} /&gt;
+      )}
+    &lt;/div&gt;
+  );
+}
+</code></pre>
+<p>Go to <code>http://localhost:3000</code> and try adding a few projects.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../12-the-project-ssr/01-setup.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../12-the-project-ssr/03-task-page.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../12-the-project-ssr/01-setup.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../12-the-project-ssr/03-task-page.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

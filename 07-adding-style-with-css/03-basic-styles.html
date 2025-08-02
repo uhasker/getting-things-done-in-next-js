@@ -1,0 +1,313 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Basic Styles</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title"></h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h2 id="basic-styles"><a class="header" href="#basic-styles">Basic Styles</a></h2>
+<h3 id="typography"><a class="header" href="#typography">Typography</a></h3>
+<p>You can change the typeface of your text using the <code>font-family</code> CSS property.</p>
+<p>For example, the following CSS will change the typeface of the text to sans-serif:</p>
+<pre><code class="language-css">font-family: sans-serif;
+</code></pre>
+<p>Here is how you could use this CSS in your HTML document:</p>
+<pre><code class="language-html">&lt;p style="font-family: sans-serif;"&gt;This uses a sans-serif font&lt;/p&gt;
+&lt;p style="font-family: serif;"&gt;This uses a serif font&lt;/p&gt;
+&lt;p style="font-family: monospace;"&gt;This uses a monospace font&lt;/p&gt;
+</code></pre>
+<p>You can change the size of your text using the <code>font-size</code> CSS property.</p>
+<p>You can set sizes either in absolute units (pixels) or in relative units (em, rem).</p>
+<p>Pixels are absolute units, meaning that the styling of the element will be independent of other elements on the page.
+For example, the following CSS will change the size of the text to 16px:</p>
+<pre><code class="language-css">font-size: 16px;
+</code></pre>
+<p>Here is how you could use this CSS in your HTML document:</p>
+<pre><code class="language-html">&lt;p style="font-size: 16px;"&gt;This uses a 16px font&lt;/p&gt;
+</code></pre>
+<p>Unlike the absolute pixel unit, relative units are relative to something.
+The <code>em</code> unit is relative to the font size of the element and the <code>rem</code> unit is relative to the font size of the root element.</p>
+<p>For example, the following CSS will change the size of the text to 1em:</p>
+<pre><code class="language-css">font-size: 1em;
+</code></pre>
+<p>Here is how you could use this CSS in your HTML document:</p>
+<pre><code class="language-html">&lt;p style="font-size: 1em;"&gt;This uses a 1em font&lt;/p&gt;
+</code></pre>
+<p>Similarly, the following CSS will change the size of the text to 1rem:</p>
+<pre><code class="language-css">font-size: 1rem;
+</code></pre>
+<p>Here is how you could use this CSS in your HTML document:</p>
+<pre><code class="language-html">&lt;p style="font-size: 1rem;"&gt;This uses a 1rem font&lt;/p&gt;
+</code></pre>
+<p>You can change the weight of your text using the <code>font-weight</code> CSS property.</p>
+<p>For example, the following CSS will change the weight of the text to bold:</p>
+<pre><code class="language-css">font-weight: bold;
+</code></pre>
+<p>Here is how you could use this CSS in your HTML document:</p>
+<pre><code class="language-html">&lt;p style="font-weight: bold;"&gt;This uses a bold font&lt;/p&gt;
+</code></pre>
+<p>You can change the height of the line of text using the <code>line-height</code> CSS property.</p>
+<p>For example, the following CSS will change the height of the line of text to 1.5:</p>
+<pre><code class="language-css">line-height: 1.5;
+</code></pre>
+<p>Here is how you could use this CSS in your HTML document:</p>
+<pre><code class="language-html">&lt;p style="line-height: 1.5;"&gt;This uses a 1.5 line height&lt;/p&gt;
+</code></pre>
+<p>You can change the alignment of your text using the <code>text-align</code> CSS property.</p>
+<p>For example, the following CSS will change the alignment of the text to center:</p>
+<pre><code class="language-css">text-align: center;
+</code></pre>
+<p>Here is how you could use this CSS in your HTML document:</p>
+<pre><code class="language-html">&lt;p style="text-align: left;"&gt;This text is left-aligned&lt;/p&gt;
+&lt;p style="text-align: center;"&gt;This text is centered&lt;/p&gt;
+&lt;p style="text-align: right;"&gt;This text is right-aligned&lt;/p&gt;
+&lt;p style="text-align: justify;"&gt;This text is justified&lt;/p&gt;
+</code></pre>
+<p>You can change the color of your text using the <code>color</code> CSS property.</p>
+<p>For example, the following CSS will change the color of the text to red:</p>
+<pre><code class="language-css">color: red;
+</code></pre>
+<p>Here is how you could use this CSS in your HTML document:</p>
+<pre><code class="language-html">&lt;p style="color: red;"&gt;This text is red&lt;/p&gt;
+&lt;p style="color: blue;"&gt;This text is blue&lt;/p&gt;
+&lt;p style="color: green;"&gt;This text is green&lt;/p&gt;
+</code></pre>
+<p>You can change the decoration of your text using the <code>text-decoration</code> CSS property.</p>
+<p>For example, the following CSS will change the decoration of the text to underline:</p>
+<pre><code class="language-css">text-decoration: underline;
+</code></pre>
+<p>Here is how you could use this CSS in your HTML document:</p>
+<pre><code class="language-html">&lt;p style="text-decoration: underline;"&gt;This text is underlined&lt;/p&gt;
+&lt;p style="text-decoration: none;"&gt;This text is not underlined&lt;/p&gt;
+</code></pre>
+<h3 id="background"><a class="header" href="#background">Background</a></h3>
+<p>You can change the background of an element using the <code>background</code> CSS property.</p>
+<p>For example, the following CSS will change the background of the element to red:</p>
+<pre><code class="language-css">background: red;
+</code></pre>
+<p>Here is how you could use this CSS in your HTML document:</p>
+<pre><code class="language-html">&lt;div style="background: red; color: white;"&gt;This is a red background&lt;/div&gt;
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../07-adding-style-with-css/02-css-selectors.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../07-adding-style-with-css/04-the-box-model.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../07-adding-style-with-css/02-css-selectors.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../07-adding-style-with-css/04-the-box-model.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

@@ -1,0 +1,382 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>The Flexbox</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title"></h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h2 id="the-flexbox"><a class="header" href="#the-flexbox">The Flexbox</a></h2>
+<h3 id="basics"><a class="header" href="#basics">Basics</a></h3>
+<p>A <strong>flexbox</strong> is a one-dimensional layout for arranging items in rows or columns.
+Items expand to fill additional space or shrink to fit into smaller spaces.</p>
+<p>To create a flexbox, you need to set the <code>display</code> property of the parent of the elements you want to include in the flexbox to <code>flex</code>:</p>
+<pre><code class="language-html">&lt;div class="parent"&gt;
+  &lt;div class="child"&gt;1&lt;/div&gt;
+  &lt;div class="child"&gt;2&lt;/div&gt;
+  &lt;div class="child"&gt;3&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<p>This causes the parent element to become a <strong>flex container</strong> and the direct children to become <strong>flex items</strong>.</p>
+<pre><code class="language-css">.parent {
+  display: flex;
+}
+</code></pre>
+<p>You should also give the elements a border and the children a background color to make it easier to see the layout:</p>
+<pre><code class="language-css">.parent {
+  border: 1px solid red;
+}
+
+.child {
+  border: 1px solid black;
+}
+
+#child-one {
+  background-color: lightblue;
+}
+
+#child-two {
+  background-color: lightgreen;
+}
+
+#child-three {
+  background-color: lightcoral;
+}
+</code></pre>
+<h3 id="the-flex-model"><a class="header" href="#the-flex-model">The Flex Model</a></h3>
+<p>You can influence the direction of the flex items by setting the <code>flex-direction</code> property.
+By default, this is set to <code>row</code>, which means the items are laid out horizontally in a row.
+You can also set it to <code>column</code> which lays out the items vertically in a column.</p>
+<blockquote>
+<p>Additionally, there are the <code>row-reverse</code> and <code>column-reverse</code> values which reverse the order of the items.</p>
+</blockquote>
+<p>To understand what this does, let's first look at the flex model:</p>
+<p><img src="https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/CSS_layout/Flexbox/flex_terms.png" alt="Flex Model" /></p>
+<p>The flex model has two axes.</p>
+<p>The <strong>main axis</strong> is the axis running in the direction the flex items are laid out in.</p>
+<p>In our current example, the items are laid out horizontally and so the main axis is horizontal.
+The start and end of the main axis are called the <strong>main start</strong> and <strong>main end</strong>.
+The length from the main-start edge of each item to the main-end edge of each item is the <strong>main size</strong>.</p>
+<p>The <strong>cross axis</strong> is the axis running perpendicular to the main axis.
+In our example, the cross axis is vertical.
+The start and end of the cross axis are called the <strong>cross start</strong> and <strong>cross end</strong>.
+The length from the cross-start edge of each item to the cross-end edge of each item is the <strong>cross size</strong>.</p>
+<p>If we set the <code>flex-direction</code> property to <code>column</code> instead of <code>row</code>, then the main axis will be the vertical axis and the cross axis will be the horizontal axis.
+This means that all of the concepts that we will discuss in this section will apply to a <code>column</code> layout as well except with the axes swapped.</p>
+<h3 id="wrapping"><a class="header" href="#wrapping">Wrapping</a></h3>
+<p>If your children are overflowing the container, then you can use the <code>flex-wrap</code> property to wrap the children.</p>
+<p>Consider our running example:</p>
+<pre><code class="language-html">&lt;div class="parent"&gt;
+  &lt;div class="child"&gt;1&lt;/div&gt;
+  &lt;div class="child"&gt;2&lt;/div&gt;
+  &lt;div class="child"&gt;3&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<pre><code class="language-css">.parent {
+  display: flex;
+  border: 1px solid red;
+}
+
+.child {
+  border: 1px solid black;
+}
+
+#child-one {
+  background-color: lightblue;
+}
+
+#child-two {
+  background-color: lightgreen;
+}
+
+#child-three {
+  background-color: lightcoral;
+}
+</code></pre>
+<p>Let's add a width to the parent and the children:</p>
+<pre><code class="language-css">.parent {
+  width: 200px;
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+
+.child {
+  background-color: gray;
+  width: 100px;
+}
+</code></pre>
+<p>We need to set <code>flex-grow</code> and <code>flex-shrink</code> to <code>0</code> to prevent the flexbox from trying to intelligently fit the children into the container (more on this later).</p>
+<p>Since we have three children with a width of <code>100px</code> and the container has a width of <code>200px</code>, the children are overflowing the container.</p>
+<p>You can fix this using the <code>flex-wrap</code> property which basically tells the flexbox to wrap the children to the next line if they don't fit in the current line.</p>
+<pre><code class="language-css">.parent {
+  flex-wrap: wrap;
+}
+</code></pre>
+<p>The wrapping behaviour means that even though the flexbox is technically a one-dimensional layout, you can actually use it to implement two-dimensional layouts as well.</p>
+<h3 id="aligning-items"><a class="header" href="#aligning-items">Aligning Items</a></h3>
+<p>You can use the <code>justify-content</code> property to control how the positive free space is distributed around your flex items.</p>
+<pre><code class="language-css">.parent {
+  justify-content: flex-start;
+}
+</code></pre>
+<p>This is one of:</p>
+<ul>
+<li><code>flex-start</code>: Items are packed toward the start of the flex container</li>
+<li><code>flex-end</code>: Items are packed toward the end of the flex container</li>
+<li><code>center</code>: Items are centered in the flex container</li>
+<li><code>space-between</code>: Items are spread out evenly in the flex container with equal gaps between each pair</li>
+<li><code>space-around</code>: Items are spread out with equal space around each item (i.e. gaps between items are twice the gaps at the ends)</li>
+<li><code>space-evenly</code>: Items are spread out with equal space between items and at the ends</li>
+</ul>
+<p>You can use the <code>align-items</code> property to control how the items are aligned along the cross axis.</p>
+<p>To see what this does, let's add a height to the parent:</p>
+<pre><code class="language-css">.parent {
+  height: 200px;
+}
+</code></pre>
+<p>Now, you can set the <code>align-items</code> property to one of the following values:</p>
+<ul>
+<li><code>stretch</code>: Items are stretched to fill the flex container</li>
+<li><code>flex-start</code>: Items are packed toward the start of the flex container</li>
+<li><code>flex-end</code>: Items are packed toward the end of the flex container</li>
+<li><code>center</code>: Items are centered in the flex container</li>
+<li><code>baseline</code>: Items are aligned based on their baselines</li>
+</ul>
+<p>If you only want to align a single item, you can use the <code>align-self</code> property, e.g.:</p>
+<pre><code class="language-css">#child-one {
+  align-self: flex-start;
+}
+</code></pre>
+<p>You can also distribute the items along the cross axis using the <code>align-content</code> property.
+This will only have an effect if you have <code>flex-wrap: wrap</code> (or <code>wrap-reverse</code>) in your flex container and enough items so that they wrap.</p>
+<p>The <code>align-content</code> property takes similar values as the <code>justify-content</code> property.</p>
+<h3 id="gaps"><a class="header" href="#gaps">Gaps</a></h3>
+<p>You can set gaps between rows and columns using the <code>gap</code>, <code>column-gap</code>, and <code>row-gap</code> properties:</p>
+<pre><code class="language-css">.parent {
+  column-gap: 20px;
+  row-gap: 30px;
+}
+</code></pre>
+<p>This allows more granular control over the gaps between rows and columns than the other alignment properties.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../07-adding-style-with-css/04-the-box-model.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../08-adding-even-more-style-with-tailwind-css/index.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../07-adding-style-with-css/04-the-box-model.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../08-adding-even-more-style-with-tailwind-css/index.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

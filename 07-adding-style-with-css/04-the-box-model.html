@@ -1,0 +1,305 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>The Box Model</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title"></h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h2 id="the-box-model"><a class="header" href="#the-box-model">The Box Model</a></h2>
+<h3 id="the-basics-of-the-box-model"><a class="header" href="#the-basics-of-the-box-model">The Basics of the Box Model</a></h3>
+<p>Every element in HTML is a rectangular "box" made up of four nested areas:</p>
+<p><img src="https://developer.mozilla.org/de/docs/Web/CSS/CSS_box_model/boxmodel.png" alt="The Box Model" />
+<em>Credit: MDN</em></p>
+<p>The <strong>content area</strong> (bounded by the content edge) contains the actual content of the element, such as text, images, or other media.
+The content area has a width (the content width) and a height (the content height).</p>
+<p>The content area can be controlled using the <code>width</code> and <code>height</code> CSS properties.</p>
+<p>The <strong>padding area</strong> extends the content area by a certain distance.
+The padding area can be controlled using the <code>padding</code> CSS property as well as the <code>padding-top</code>, <code>padding-right</code>, <code>padding-bottom</code>, and <code>padding-left</code> CSS properties.</p>
+<p>The <strong>border area</strong> extends the padding area by a certain distance.
+The border area can be controlled using the <code>border</code> and <code>border-width</code> CSS properties.</p>
+<p>The <strong>margin area</strong> (bounded by the margin edge) extends the border area by a certain distance.
+This is useful if you want to separate an element from its neighbors.
+The margin area can be controlled using the <code>margin</code> CSS property as well as the <code>margin-top</code>, <code>margin-right</code>, <code>margin-bottom</code>, and <code>margin-left</code> CSS properties.</p>
+<h3 id="the-content-area"><a class="header" href="#the-content-area">The Content Area</a></h3>
+<p>To control the content area, you can use the <code>width</code> and <code>height</code> CSS properties.</p>
+<p>For example, the following CSS will set the width of the content area to 100 pixels and the height to 50 pixels:</p>
+<pre><code class="language-css">width: 100px;
+height: 50px;
+</code></pre>
+<p>Here is how you could use this CSS in your HTML document:</p>
+<pre><code class="language-html">&lt;div style="width: 100px; height: 50px; background: red; color: white;"&gt;This is a content area&lt;/div&gt;
+</code></pre>
+<h3 id="the-padding-area"><a class="header" href="#the-padding-area">The Padding Area</a></h3>
+<p>To control the padding area, you can use the <code>padding</code> CSS property.</p>
+<p>For example, the following CSS will set the padding of the element to 10 pixels:</p>
+<pre><code class="language-css">padding: 10px;
+</code></pre>
+<p>You can also use the <code>padding-top</code>, <code>padding-right</code>, <code>padding-bottom</code>, and <code>padding-left</code> CSS properties to control the padding of the element.</p>
+<p>For example, the following CSS will set the padding of the element to 10 pixels on the top, right, bottom, and left:</p>
+<pre><code class="language-css">padding-top: 10px;
+padding-right: 20px;
+padding-bottom: 30px;
+padding-left: 40px;
+</code></pre>
+<p>Alternatively, you can use the <code>padding</code> CSS property to set the padding of the element to 10 pixels on the top, right, bottom, and left:</p>
+<pre><code class="language-css">padding: 10px 20px 30px 40px;
+</code></pre>
+<p>Here is how you could use this CSS in your HTML document:</p>
+<pre><code class="language-html">&lt;div style="padding: 10px 20px 30px 40px; background: red; color: white;"
+  &gt;This is a padding area&lt;/div
+&gt;
+</code></pre>
+<h3 id="the-border-area"><a class="header" href="#the-border-area">The Border Area</a></h3>
+<p>To control the border area, you can use the <code>border</code> CSS property.</p>
+<p>For example, the following CSS will set the border of the element to 10 pixels wide and red:</p>
+<pre><code class="language-css">border: 10px solid red;
+</code></pre>
+<p>You can also use the <code>border-width</code> CSS property to control the width of the border.</p>
+<p>For example, the following CSS will set the width of the border to 10 pixels:</p>
+<pre><code class="language-css">border-width: 10px;
+</code></pre>
+<p>You can also use the <code>border-style</code> CSS property to control the style of the border.</p>
+<p>For example, the following CSS will set the style of the border to solid:</p>
+<pre><code class="language-css">border-style: solid;
+</code></pre>
+<p>Here is how you could use this CSS in your HTML document:</p>
+<pre><code class="language-html">&lt;div style="border-width: 10px; border-style: solid; border-color: red;"&gt;This is a border area&lt;/div&gt;
+</code></pre>
+<h3 id="the-margin-area"><a class="header" href="#the-margin-area">The Margin Area</a></h3>
+<p>To control the margin area, you can use the <code>margin</code> CSS property.</p>
+<p>For example, the following CSS will set the margin of the element to 10 pixels:</p>
+<pre><code class="language-css">margin: 10px;
+</code></pre>
+<p>You can also use the <code>margin-top</code>, <code>margin-right</code>, <code>margin-bottom</code>, and <code>margin-left</code> CSS properties to control the margin of the element.</p>
+<p>For example, the following CSS will set the margin of the element to 10 pixels on the top, right, bottom, and left:</p>
+<pre><code class="language-css">margin-top: 10px;
+margin-right: 20px;
+margin-bottom: 30px;
+margin-left: 40px;
+</code></pre>
+<p>Here is how you could use this CSS in your HTML document:</p>
+<pre><code class="language-html">&lt;div style="margin: 10px 20px 30px 40px; background: red; color: white;"&gt;This is a margin area&lt;/div&gt;
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../07-adding-style-with-css/03-basic-styles.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../07-adding-style-with-css/05-the-flexbox.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../07-adding-style-with-css/03-basic-styles.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../07-adding-style-with-css/05-the-flexbox.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>
