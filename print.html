@@ -3404,13 +3404,1102 @@ Unfortunately, the answer is a hard <strong>no</strong>.</p>
 <p>There is no way around it and in the end, experience is king.</p>
 <p>But there is one important caveat—you have to actually <em>learn</em> from that experience and reflect on your mistakes.</p>
 <p>So go out there, write features, make mistakes and learn something!</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="leveling-up-with-typescript"><a class="header" href="#leveling-up-with-typescript">Leveling Up with TypeScript</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="why-typescript"><a class="header" href="#why-typescript">Why TypeScript?</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="basic-types"><a class="header" href="#basic-types">Basic Types</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="annotating-functions"><a class="header" href="#annotating-functions">Annotating Functions</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="union-types"><a class="header" href="#union-types">Union Types</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="generics"><a class="header" href="#generics">Generics</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="configuring-typescript"><a class="header" href="#configuring-typescript">Configuring TypeScript</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="chapter-2-leveling-up-with-typescript"><a class="header" href="#chapter-2-leveling-up-with-typescript">Chapter 2: Leveling Up with TypeScript</a></h1>
+<div style="text-align: right"> <i> To employ TypeScript is to light a lantern on the dim path of JavaScript, revealing the stones upon which one may trip. <br> — Ancient Chinese proverb </i> </div>
+<p>Now that we learned the basics of JavaScript, we could theoretically dive right into writing our application.
+However, JavaScript as a language has a central problem—it does not come with type checking.
+For example, there is nothing preventing you from trying to add two objects except the fact that—well—your application will crash and burn.</p>
+<p>In general, one of the most common error sources are what can be described as type errors: a certain kind of value was used where a different kind of value was expected.
+This could be due to simple typos, a failure to understand how to use a library correctly, incorrect assumptions about runtime behavior and more.</p>
+<p>The goal of TypeScript is to provide static type checking for JavaScript programs—in other words, TypeScript provides you with tooling that runs before your code is executed (static) and ensures that the types of the program are correct (type checking).</p>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="why-typescript"><a class="header" href="#why-typescript">Why TypeScript?</a></h2>
+<div style="text-align: right"> <i> Better to wrangle with TypeScript's compiler today, than to wrestle with JavaScript bugs tomorrow. <br> — Ancient Chinese proverb </i> </div>
+<h3 id="a-little-story"><a class="header" href="#a-little-story">A Little Story</a></h3>
+<p>Consider the following scenario.
+You have a JavaScript function <code>showTask(task)</code> which takes a <code>task</code> object and displays the task in a UI (or in the console).</p>
+<p>For example, let's say you have a <code>task</code> object looks like this:</p>
+<pre><code class="language-js">const task = {
+  id: 1,
+  title: 'Read the Next.js book',
+  description: 'Read and understand the Next.js book.',
+};
+</code></pre>
+<p>Can you pass this object to <code>showTask</code>?
+Well, it's hard to tell.</p>
+<p><em>Maybe</em> the <code>showTask</code> function expects an object that has <code>id</code>, <code>title</code>, <code>description</code> <em>and</em> <code>status</code> fields.
+The only way to find out if your <code>task</code> object is a valid input for <code>showTask</code> is to—well—actually pass it and find out.
+This is obviously not the ideal workflow, especially if you happen to find out that your object lacked some important properties <em>in production</em>.</p>
+<p>Additionally, if the author of the <code>showTask</code> function changes their function to expect additional properties on the <code>task</code> object, they would now have to check all the invocations of <code>showTask</code> to verify that they didn't accidentally break something.</p>
+<p>This is where TypeScript comes in.
+With TypeScript we would be able to <em>statically type</em> the function by adding <em>type annotations</em> like this:</p>
+<pre><code class="language-ts">type Task = {
+  id: number;
+  title: string;
+  description: string;
+};
+
+function showTask(task: Task) {
+  // Implementation here
+}
+</code></pre>
+<p>Now we know <em>exactly</em> what kind of object <code>showTask</code> expects.
+Namely, it needs an <code>id</code> property which is a <code>number</code>, a <code>title</code> property which is a <code>string</code> and a <code>description</code> property which is also a <code>string</code>.</p>
+<p>Here is how we could call this function:</p>
+<pre><code class="language-ts">showTask({
+  id: 1,
+  title: 'Read the Next.js book',
+  description: 'Read and understand the Next.js book.',
+});
+</code></pre>
+<p>If we would pass an object that lacks some of the expected properties and run <em>type checks</em> (more on that later) we would get an error long before the bad code could make it anywhere near production.
+Even better—your editor would now be able to show you that you might have a problem during development:</p>
+<pre><code class="language-ts">showTask({
+  id: 1,
+  title: 'Read the Next.js book',
+});
+// Most editors will now show a squiggly red line somewhere around here and
+// politely scream at you that the object is missing the description property.
+</code></pre>
+<p>Better still (TypeScript just keeps giving), you now get <em>autocompletion</em>—editors will show possible suggestions for the property names your object should have <em>while you are typing</em>.
+This saves an enormous amount of time and effort when writing code.</p>
+<p>To summarize, using TypeScript massively enhances your developer workflow.
+This is why most large projects use TypeScript instead of vanilla JavaScript these days.</p>
+<h3 id="the-typescript-compiler"><a class="header" href="#the-typescript-compiler">The TypeScript Compiler</a></h3>
+<p>You can install the TypeScript compiler globally by running the following command:</p>
+<pre><code class="language-sh">pnpm add -g typescript
+</code></pre>
+<p>Let's see how we can use the TypeScript compiler.
+First, create a file <code>index.ts</code>:</p>
+<pre><code class="language-ts">type Task = {
+  id: number;
+  title: string;
+  description: string;
+};
+
+function showTask(task: Task) {
+  console.log(
+    `Task with ID=${task.id} has the title ${task.title} and description ${task.description}`,
+  );
+}
+
+showTask({
+  id: 1,
+  title: 'Read the Next.js book',
+  description: 'Read and understand the Next.js book.',
+});
+</code></pre>
+<p>We can't execute TypeScript files in the browser or in Node.js directly.
+Instead we need to first <em>compile</em> the TypeScript code to JavaScript—which is why we installed the compiler.</p>
+<p>Here is how we can compile the <code>index.ts</code> file:</p>
+<pre><code class="language-sh">tsc --strict index.ts
+</code></pre>
+<blockquote>
+<p>Note that the <code>--strict</code> turns on certain "strict" type checks.
+We will basically always use this flag.</p>
+</blockquote>
+<p>Since there were no type errors, nothing is logged in the console and we get a file <code>index.js</code> which looks (approximately) as follows:</p>
+<pre><code class="language-js">function showTask(task) {
+  console.log(
+    'Task with ID='
+      .concat(task.id, ' has the title ')
+      .concat(task.title, ' and description ')
+      .concat(task.description),
+  );
+}
+showTask({
+  id: 1,
+  title: 'Read the Next.js book',
+  description: 'Read and understand the Next.js book.',
+});
+</code></pre>
+<p>Note that all the type annotations are gone and all we get is vanilla JavaScript that we can execute.
+Additionally, the TypeScript compiler <em>downleveled</em> our code so that it can be executed by older platforms.
+Here the template string syntax (which is not supported by very old browsers) was replaced by a series of <code>concat</code> calls.</p>
+<blockquote>
+<p>Note that by the time you're reading this the default target settings might be different and you might not see this particular downleveling anymore.</p>
+</blockquote>
+<p>What if there is an error in <code>index.ts</code>?
+Consider the following TypeScript code:</p>
+<pre><code class="language-ts">type Task = {
+  id: number;
+  title: string;
+  description: string;
+};
+
+function showTask(task: Task) {
+  console.log(
+    `Task with ID=${task.id} has the title ${task.title} and description ${task.description}`,
+  );
+}
+
+showTask({
+  id: 1,
+  title: 'Read the Next.js book',
+});
+</code></pre>
+<p>If you would compile this code using <code>tsc --strict index.ts</code>, you would get the following error:</p>
+<pre><code>index.ts:13:10 - error TS2345: Argument of type '{ id: number; title: string; }' is not assignable to parameter of type 'Task'.
+  Property 'description' is missing in type '{ id: number; title: string; }' but required in type 'Task'.
+13 showTask({
+            ~
+14   id: 1,
+   ~~~~~~~~
+15   title: 'Read the Next.js book',
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+16 });
+   ~
+  index.ts:4:3
+    4   description: string;
+        ~~~~~~~~~~~
+    'description' is declared here.
+Found 1 error in index.ts:13
+</code></pre>
+<p>The compiler correctly informed us that if we were to run this code it would probably result in bad things happening due to the missing <code>description</code> property.
+We now know that the code is probably wrong long before it made to production and can fix it accordingly.</p>
+<h3 id="executing-typescript-directly-with-tsx"><a class="header" href="#executing-typescript-directly-with-tsx">Executing TypeScript Directly with <code>tsx</code></a></h3>
+<p>Sometimes you want to execute a TypeScript file directly (especially during development) and not go through the "compile and run" cycle manually.
+There are a couple of tools that allow you to do that—here we will introduce <code>tsx</code> (short for "TypeScript Execute").</p>
+<p>Install <code>tsx</code> using the package manager:</p>
+<pre><code class="language-sh">pnpm add -g tsx
+</code></pre>
+<p>You can now execute a TypeScript file <code>index.ts</code> directly by running:</p>
+<pre><code class="language-sh">tsx index.ts
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="basic-types"><a class="header" href="#basic-types">Basic Types</a></h2>
+<div style="text-align: right"> <i> Use TypeScript, find enlightenment. Ignore TypeScript, trip over undefined. <br> — Ancient Chinese proverb </i> </div>
+<h3 id="annotating-variables"><a class="header" href="#annotating-variables">Annotating Variables</a></h3>
+<p>You can annotate variables by adding a <strong>type annotation</strong>:</p>
+<pre><code class="language-ts">let task: string = 'Read the Next.js book';
+</code></pre>
+<p>You can annotate constants in a similar fashion:</p>
+<pre><code class="language-ts">const name: string = 'Read the Next.js book';
+</code></pre>
+<p>Note that explicit type annotations are usually not needed, since TypeScript can perform <strong>type inference</strong> to <em>automatically</em> infer the type of a variable or a constant.</p>
+<p>In this example, the variable <code>name</code> will <em>automatically</em> be inferred to have the type <code>string</code>:</p>
+<pre><code class="language-ts">let name = 'Read the Next.js book';
+</code></pre>
+<p>We will very rarely write explicit type annotations (only if we really need them) and instead let TypeScript infer as much as it can.
+You will be surprised by how few type annotations you need to get completely type checked code!</p>
+<h3 id="primitive-types"><a class="header" href="#primitive-types">Primitive Types</a></h3>
+<p>The primitive types that are present in TypeScript should already be familiar to you from the chapter on JavaScript.
+TypeScript has the <code>number</code> type:</p>
+<pre><code class="language-ts">const id: number = 1;
+</code></pre>
+<p>TypeScript also has the <code>string</code> type:</p>
+<pre><code class="language-ts">const task: string = 'Read the Next.js book';
+</code></pre>
+<p>It also has the <code>boolean</code> type:</p>
+<pre><code class="language-ts">const inProgress: boolean = true;
+</code></pre>
+<p>Additionally, TypeScript has the <code>null</code> and <code>undefined</code> types:</p>
+<pre><code class="language-ts">const undefinedTask: undefined = undefined;
+const nullTask: null = null;
+</code></pre>
+<p>Remember, in a real codebase we would let TypeScript infer the variables:</p>
+<pre><code class="language-ts">const id = 1;
+const task = 'Read the Next.js book';
+const inProgress = true;
+const undefinedTask = undefined;
+const nullTask = null;
+</code></pre>
+<p>In this example, TypeScript will infer that <code>id</code> has the type <code>number</code>, <code>task</code> has the type <code>string</code>, <code>inProgress</code> has the type <code>boolean</code>, <code>undefinedTask</code> has the type <code>undefined</code> and <code>nullTask</code> has the type <code>null</code>.</p>
+<h3 id="the-any-and-unknown-types"><a class="header" href="#the-any-and-unknown-types">The <code>any</code> and <code>unknown</code> Types</a></h3>
+<p>TypeScript also has the <code>any</code> type.
+When a value is of the type <code>any</code>, you can access its properties, call it, or assign it freely, and basically do <em>any</em>thing (get it?) that's syntactically correct.
+Also note that any property that you access will in turn have the type <code>any</code>.</p>
+<p>Let's say you have a <code>task</code> variable of type <code>any</code>—then these are all legal:</p>
+<pre><code class="language-ts">let task: any;
+
+console.log(task.title);
+task();
+task.thingy();
+</code></pre>
+<p>Basically using <code>any</code> is a way to tell the compiler to "shut up" and skip type checking altogether.
+This is also the reason why using <code>any</code> is generally a bad idea since it defeats the purpose of using TypeScript in the first place!</p>
+<p>However, sometimes you do find yourself in a situation where you really don't know much or don't particularly care about a variable type.
+In this case it's better to use the <code>unknown</code> type.</p>
+<p>Anything is assignable to <code>unknown</code> (just as with <code>any</code>).
+However, no operations are allowed on an <code>unknown</code> variable without further assurances about the type of the variable.</p>
+<p>For example, if you have a <code>task</code> variable of type <code>unknown</code>, then these are all no longer legal:</p>
+<pre><code class="language-ts">let task: unknown;
+
+console.log(task.title);
+task();
+task.thingy();
+</code></pre>
+<h3 id="typing-arrays"><a class="header" href="#typing-arrays">Typing Arrays</a></h3>
+<p>You can type arrays as <code>T[]</code> where <code>T</code> is the type of the elements of the array.
+For example, here is how you would type an array of numbers:</p>
+<pre><code class="language-ts">const evenNumbers: number[] = [2, 4, 6, 8];
+</code></pre>
+<p>Here is how you would type an array of strings:</p>
+<pre><code class="language-ts">const tasks: string[] = ['First task', 'Second task', 'Third task'];
+</code></pre>
+<p>Note that for these simple examples we could again have TypeScript infer the types.
+In this example <code>evenNumbers</code> would have the type <code>number[]</code> and <code>tasks</code> would have the type <code>string[]</code>:</p>
+<pre><code class="language-ts">const evenNumbers = [2, 4, 6, 8];
+const tasks = ['First task', 'Second task', 'Third task'];
+</code></pre>
+<h3 id="typing-objects"><a class="header" href="#typing-objects">Typing Objects</a></h3>
+<p>You can type an object by writing the property keys and types inside curly braces <code>{}</code>.</p>
+<p>For example, here is how you could declare an object that has the properties <code>id</code> of type <code>number</code>, <code>title</code> of type <code>string</code> and <code>description</code> of type <code>string</code>:</p>
+<pre><code class="language-ts">const task: { id: number; title: string; description: string } = {
+  id: 1,
+  title: 'Read the Next.js book',
+  description: 'Read and understand the Next.js book.',
+};
+</code></pre>
+<p>Here too, you don't need to manually specify object types.
+In this example, <code>task</code> will be inferred to have the type <code>{ id: number; title: string; description: string }</code>:</p>
+<pre><code class="language-ts">const task = {
+  id: 1,
+  title: 'Read the Next.js book',
+  description: 'Read and understand the Next.js book.',
+};
+</code></pre>
+<p>You can mark properties as <em>optional</em> by using the question mark <code>?</code>.
+If a property is marked as optional, you can assign <code>undefined</code> to it or even not specify it altogether.
+For example, this is valid:</p>
+<pre><code class="language-ts">const task: { id: number; title: string; description?: string } = {
+  id: 1,
+  title: 'Read the Next.js book',
+};
+
+const task2: { id: number; title: string; description?: string } = {
+  id: 1,
+  title: 'Read the Next.js book',
+  description: undefined,
+};
+</code></pre>
+<h3 id="type-aliases"><a class="header" href="#type-aliases">Type Aliases</a></h3>
+<p>The object type syntax we just introduced is often quite verbose.
+This is why TypeScript gives you the possibility to specify a <strong>type alias</strong> (i.e. another name) for an object type:</p>
+<pre><code class="language-ts">type Task = {
+  id: number;
+  title: string;
+  description: string;
+};
+</code></pre>
+<p>Note that you can specify type aliases for more than just object types since type aliases are basically just different names for types.
+For example, we could specify a type alias for the primitive type <code>string</code>:</p>
+<pre><code class="language-ts">type ID = string;
+</code></pre>
+<p>Another important point to make about type aliases is that two type aliases are exactly the same as long as the underlying types are the same.
+For example, this is valid even though it doesn't look like it at first glance:</p>
+<pre><code class="language-ts">type MyString = string;
+const s1: MyString = 'My string';
+const s2: string = s1;
+</code></pre>
+<p>This is because TypeScript uses a <em>structural type system</em>—it doesn't matter what the types are named (except for the primitive types of course), it only matters what their <em>structure</em> looks like.</p>
+<p>Note that you can also use the <code>interface</code> keyword to achieve a similar effect:</p>
+<pre><code class="language-ts">interface Task {
+  id: number;
+  title: string;
+  description: string;
+}
+</code></pre>
+<p>We will stick to always using <code>type</code>.
+The <code>interface</code> keyword is out of scope for this book and will not be discussed further.</p>
+<blockquote>
+<p>We briefly note that <code>type</code> and <code>interface</code> are not exactly the same and have a few subtle, but important differences.
+Again, we will not discuss this further.</p>
+</blockquote>
+<h3 id="type-assertions"><a class="header" href="#type-assertions">Type Assertions</a></h3>
+<p>Sometimes, you know more about the type of a variable than TypeScript.
+For example, let's say that you have a function that returns an <code>any</code> value, but for some reason you know that in fact that value is definitely going to be a <code>string</code> in your case.
+Then you can use a <strong>type assertion</strong> (also called a type cast) to force TypeScript to treat that value as a <code>string</code>.</p>
+<p>Here is a (slightly contrived) example:</p>
+<pre><code class="language-ts">const str: any = 'This is a string';
+const strLength = (str as string).length;
+</code></pre>
+<p>You should use type assertions sparingly since you give up some of the benefits of using TypeScript.
+Usually there are better ways.</p>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="annotating-functions"><a class="header" href="#annotating-functions">Annotating Functions</a></h2>
+<div style="text-align: right"> <i> The function without types is like a river without banks: boundless, yet directionless. <br> — Ancient Chinese proverb </i> </div>
+<h3 id="annotating-parameters"><a class="header" href="#annotating-parameters">Annotating Parameters</a></h3>
+<p>We can annotate functions in TypeScript by annotating their parameters.
+Consider a function <code>greet</code> that takes a parameter <code>name</code> of type <code>string</code> and simply outputs a greeting to the console.
+Here is how we would annotate the function:</p>
+<pre><code class="language-ts">function greet(name: string) {
+  console.log(`Hello, ${name}`);
+}
+</code></pre>
+<p>Now arguments to the function will be checked against our annotation:</p>
+<pre><code class="language-ts">greet(false);
+// This will result in a type error
+</code></pre>
+<p>You can annotate functions that expect arrays or objects by simply using the syntax you learned in the previous section:</p>
+<pre><code class="language-ts">function showTask(task: { id: number; summary: string; description: string }) {
+  console.log(
+    `Task with ID=${task.id} has the summary ${task.summary} and description ${task.description}`,
+  );
+}
+</code></pre>
+<p>This is not particularly readable.
+Here, type aliases come in handy:</p>
+<pre><code class="language-ts">type Task = {
+  id: number;
+  summary: string;
+  description: string;
+};
+
+function showTask(task: Task) {
+  console.log(
+    `Task with ID=${task.id} has the summary ${task.summary} and description ${task.description}`,
+  );
+}
+</code></pre>
+<p>Note that TypeScript will not just check that the passed arguments have the correct types, but also check that the correct number of arguments was passed.
+This has an interesting side effect—introducing the TypeScript compiler in a JavaScript codebase can reveal bugs <em>without any further work</em>:</p>
+<pre><code class="language-js">function showTask(task) {
+  console.log(
+    `Task with ID=${task.id} has the summary ${task.summary} and description ${task.description}`,
+  );
+}
+
+// Uh-oh, we are passing multiple variables instead of a single object!
+showTask(1, 'Read the Next.js book', 'Read and understand the Next.js book.');
+</code></pre>
+<p>If we run <code>tsc --strict</code> on this code, we will get the following error:</p>
+<pre><code>index.ts:8:13 - error TS2554: Expected 1 arguments, but got 3.
+
+8 showTask(1, 'Read the Next.js book', 'Read and understand the Next.js book.');
+</code></pre>
+<p>Quite nifty indeed!</p>
+<h3 id="return-type-annotations"><a class="header" href="#return-type-annotations">Return Type Annotations</a></h3>
+<p>We can also annotate the return types of our functions:</p>
+<pre><code class="language-ts">function getGreeting(name: string): string {
+  return `Hello, ${name}`;
+}
+</code></pre>
+<p>Note that you usually don't need a return type annotation because TypeScript can do type inference for return types:</p>
+<pre><code class="language-ts">function getGreeting(name: string) {
+  return `Hello, ${name}`;
+}
+</code></pre>
+<p>Nevertheless, return types are often typed explicitly to avoid accidentally returning a type you didn't want to return or to prevent accidental changes to the return type.</p>
+<h3 id="optional-parameters"><a class="header" href="#optional-parameters">Optional Parameters</a></h3>
+<p>Similar to object properties, function parameters can be marked as <em>optional</em>.
+In this case we can, but don't need to pass the corresponding argument to the function.
+If a parameter is marked as optional, the corresponding argument might also be <code>undefined</code>:</p>
+<pre><code class="language-ts">function getGreeting(name: string, message?: string): string {
+  return `${message !== undefined ? message : 'Hello'}, ${name}`;
+}
+
+// These are all valid
+getGreeting('John Doe');
+getGreeting('John Doe', undefined);
+getGreeting('John Doe', 'Welcome');
+</code></pre>
+<h3 id="function-type-expressions"><a class="header" href="#function-type-expressions">Function Type Expressions</a></h3>
+<p>Sometimes, you need to create a type that specifies a function itself, instead of just its parameters or its return type.
+For example, you might want to say that <code>f</code> is a function that takes two strings and returns a string.</p>
+<p>You can achieve this with a <strong>function type expression</strong>:</p>
+<pre><code class="language-ts">let f: (x: string, y: string) =&gt; string;
+</code></pre>
+<p>The parameter names are required here, if you write <code>(string, string) =&gt; string</code> then TypeScript will think that you have a function with two parameters named <code>string</code> of type <code>any</code>.</p>
+<p>This syntax is very useful for typing higher-order functions:</p>
+<pre><code class="language-ts">function getGreeting(name: string, greeter: (name: string) =&gt; string) {
+  return greeter(name);
+}
+
+const myName = 'John Doe';
+const greeter = (name: string) =&gt; `Hello ${name}`;
+
+console.log(getGreeting(myName, greeter));
+</code></pre>
+<p>One interesting consequence of the way TypeScript inference works, is that parameters of functions can often be inferred.
+Let's change this example and make an anonymous function out of <code>greeter</code>:</p>
+<pre><code class="language-ts">function getGreeting(name: string, greeter: (name: string) =&gt; string) {
+  return greeter(name);
+}
+
+const myName = 'John Doe';
+
+console.log(getGreeting(myName, (name) =&gt; `Hello ${name}`));
+</code></pre>
+<p>Note how we no longer need to explicitly specify the type of <code>name</code> in the anonymous function—TypeScript has automatically inferred it to be of type <code>string</code>.</p>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="union-types"><a class="header" href="#union-types">Union Types</a></h2>
+<div style="text-align: right"> <i> To ignore a union is to marry a string and wake up with a number. <br> — Ancient Chinese proverb </i> </div>
+<h3 id="literal-types"><a class="header" href="#literal-types">Literal Types</a></h3>
+<p>A <strong>literal type</strong> is a type whose only value is a literal.
+Here is how we could define a literal type <code>'Todo'</code>:</p>
+<pre><code class="language-ts">type TodoType = 'Todo';
+</code></pre>
+<p>Here is how we can use it:</p>
+<pre><code class="language-ts">let todo: TodoType = 'Todo';
+</code></pre>
+<p>Note that we can't assign any other value to <code>todo</code> including other strings.
+For example, this isn't possible:</p>
+<pre><code class="language-ts">let todo: TodoType = 'Done';
+// This will result in a type error
+</code></pre>
+<p>We could also skip declaring the type alias and just use the literal type directly:</p>
+<pre><code class="language-ts">let todo: 'Todo' = 'Todo';
+</code></pre>
+<p>It should be noted that if we declare a variable, then by default TypeScript will infer it as a <code>string</code>.
+This makes sense since we could change the variable later:</p>
+<pre><code class="language-ts">let todo = 'Todo';
+// Without the explicit type annotation, todo is a string
+</code></pre>
+<p>However, if we declare a constant, then by default TypeScript will infer a literal type.
+This also makes sense since we can't change the constant later:</p>
+<pre><code class="language-ts">const todo = 'Todo';
+// Even without the explicit type annotation,
+// todo now has the literal type 'Todo'
+</code></pre>
+<p>While literal types by themselves are not very helpful, they become extremely useful in the context of union types.</p>
+<h3 id="unions-of-literal-types"><a class="header" href="#unions-of-literal-types">Unions of Literal Types</a></h3>
+<p>A <strong>union type</strong> is a type that represents a value which may be one of multiple types.
+Consider a type <code>TaskState</code> which represents one of the following states:</p>
+<ul>
+<li>Todo</li>
+<li>InProgress</li>
+<li>Done</li>
+</ul>
+<p>Here is how we would define the <code>TaskState</code> type:</p>
+<pre><code class="language-ts">type TaskState = 'Todo' | 'InProgress' | 'Done';
+</code></pre>
+<p>The <code>TaskState</code> type is a union type and each of the literal types <code>'Todo'</code>, <code>'InProgress'</code> and <code>'Done'</code> is a member of the union.
+A variable of type <code>TaskState</code> can only be of one of these literal types, i.e. it can only have one of the respective values.
+For example these assignments are all valid:</p>
+<pre><code class="language-ts">const state: TaskState = 'Todo';
+const state2: TaskState = 'InProgress';
+const state3: TaskState = 'Done';
+</code></pre>
+<p>On the other hand, this assignment isn't valid:</p>
+<pre><code class="language-ts">const invalidState: TaskState = 'Dropped';
+</code></pre>
+<h3 id="other-union-types"><a class="header" href="#other-union-types">Other Union Types</a></h3>
+<p>We can also declare unions of arbitrary types.
+The general syntax for declaring a union type is <code>Type1 | Type2 | Type3 | ...</code> and a value of this union type can have the type <code>Type1</code> or <code>Type2</code> or <code>Type3</code> etc.</p>
+<p>The various types <code>Type1</code>, <code>Type2</code>, <code>Type3</code> etc are called <strong>members</strong> of the union.</p>
+<p>One particularly common union type is <code>T | undefined</code>.
+Consider this example:</p>
+<pre><code class="language-ts">function getTaskId(taskName: string): string | undefined {
+  // Implementation here
+}
+</code></pre>
+<p>This function takes a <code>taskName</code> and returns the corresponding ID.
+Because we might discover that no task with the given name is present, we return either a <code>string</code> or <code>undefined</code>.</p>
+<h3 id="working-with-a-union-type"><a class="header" href="#working-with-a-union-type">Working with a Union Type</a></h3>
+<p>It should be clear by now how we can define a union type, but how can we work with a union type?
+Consider the following function:</p>
+<pre><code class="language-ts">function logTaskName(taskName: string | undefined) {
+  console.log({
+    taskName,
+    taskNameLength: taskName.length,
+  });
+}
+</code></pre>
+<p>Compiling this example will result in the following error:</p>
+<pre><code>index.ts:4:21 - error TS18048: 'taskName' is possibly 'undefined'.
+4     taskNameLength: taskName.length,
+                      ~~~~~~~~
+Found 1 error in index.ts:4
+</code></pre>
+<p>TypeScript will only allow to do an operation with the value of a union type if that operation is valid <em>for every member of the union</em>.
+Since <code>taskName</code> can be either a <code>string</code> or <code>undefined</code>, we can't access <code>.length</code> on it, because <code>.length</code> is not a valid property of <code>undefined</code>!</p>
+<p>Instead we need to perform <strong>type narrowing</strong> where we <em>narrow</em> the type of a variable with code.</p>
+<p>Basically, TypeScript can look at our code and understand that in certain code parts a value of a union type can only have the type of a particular member of the union.</p>
+<p>The simplest way of narrowing a type is <strong>equality narrowing</strong>.
+Here we use the <code>===</code> or <code>!==</code> operators to narrow a type.</p>
+<p>Consider this example:</p>
+<pre><code class="language-ts">function logTaskName(taskName: string | undefined) {
+  if (taskName !== undefined) {
+    console.log({
+      taskName,
+      taskNameLength: taskName.length,
+    });
+  } else {
+    console.log('The task is not defined');
+  }
+}
+</code></pre>
+<p>We narrow the type of <code>taskName</code> in the <code>taskName !== undefined</code> branch.
+TypeScript will inspect our code and realize that since <code>taskName</code> had the <code>string | undefined</code> type and <code>taskName !== undefined</code> in the truthy branch of the if statement, <code>taskName</code> must be of type <code>string</code> inside that branch (there is simply no other way).
+Similarly, in the falsy branch of the if statement (i.e. the <code>else</code> branch), TypeScript will know that <code>taskName</code> must be <code>undefined</code>.</p>
+<p>This example also showcases a very important concept: The same variable can have a different type depending on the part of the code we are in.
+This is not the case in many other programming languages, where a variable will always have the same type once it has been initialized.</p>
+<p>Another (similar) way of narrowing a type is <strong>truthiness narrowing</strong>.
+Here we use the fact that certain values are truthy or falsy to narrow a type.</p>
+<p>Consider this example:</p>
+<pre><code class="language-ts">function logTaskName(taskName: string | undefined | null) {
+  if (taskName) {
+    console.log({
+      taskName,
+      taskNameLength: taskName.length,
+    });
+  } else {
+    console.log('The task is not defined');
+  }
+}
+</code></pre>
+<p>Since <code>undefined</code> and <code>null</code> are both falsy, the <code>taskName</code> in the truthy branch of the <code>if</code> statement can only have the type <code>string</code> and we can use the <code>.length</code> property.</p>
+<p>However, truthiness narrowing can lead to subtle bugs due to the way truthy and falsy values work (we covered this in the JavaScript chapter).
+Indeed, the function <code>logTaskName</code> has a hard-to-spot error.
+Can you see it?</p>
+<p>That's right—it doesn't correctly handle the case of the empty string.
+After all, the empty string <code>''</code> is also falsy, therefore <code>logTaskName("")</code> would print that the task is not defined, which is probably not what we were going for.</p>
+<p>We could fix the function like this:</p>
+<pre><code class="language-ts">function logTaskName(taskName: string | undefined | null) {
+  if (taskName === '') {
+    console.log('The task is empty');
+  } else if (taskName) {
+    console.log({
+      taskName,
+      taskNameLength: taskName.length,
+    });
+  } else {
+    console.log('The task is not defined');
+  }
+}
+</code></pre>
+<p>You should generally be careful when relying on truthiness or falsiness.
+The way these concepts work in JavaScript can be a bit confusing and it's easy to miss edge cases.</p>
+<p>Some people prefer to avoid these concepts altogether and instead provide explicit checks, for example:</p>
+<pre><code class="language-ts">function logTaskName(taskName: string | undefined | null) {
+  if (taskName !== undefined &amp;&amp; taskName !== null) {
+    console.log({
+      taskName,
+      taskNameLength: taskName.length,
+    });
+  } else {
+    console.log('The task is not defined');
+  }
+}
+</code></pre>
+<p>The last way of narrowing a type is <code>typeof</code> narrowing.
+TypeScript knows how the <code>typeof</code> operator works and you can use it to narrow a type as you would expect:</p>
+<pre><code class="language-ts">function processInput(value: string | number): number {
+  if (typeof value === 'string') {
+    // Here, value must be a string
+    return value.length;
+  } else {
+    // Here, value must be a number
+    return value;
+  }
+}
+</code></pre>
+<h3 id="the-non-null-assertion-operator"><a class="header" href="#the-non-null-assertion-operator">The Non-Null Assertion Operator</a></h3>
+<p>You can use the non-null assertion operator to tell TypeScript that a value is definitely not <code>undefined</code> or <code>null</code>:</p>
+<pre><code class="language-ts">let input: string | undefined = 'Some string';
+let trimmedInput: string = input!.trim();
+</code></pre>
+<p>Just as with type assertions, you should use this <em>sparingly</em> and usually there is a better way.</p>
+<h3 id="type-predicates"><a class="header" href="#type-predicates">Type Predicates</a></h3>
+<p>We can write user-defined <strong>type guards</strong> by utilizing <strong>type predicates</strong>.
+Consider the following example:</p>
+<pre><code class="language-ts">const array = ['Hello', undefined, 'World', undefined];
+const filteredArray = array.filter((val) =&gt; val !== undefined);
+</code></pre>
+<p>Here <code>array</code> is a <code>(string | undefined)[]</code> and <code>filteredArray</code> removes the <code>undefined</code> elements.
+However, the inferred type of <code>filteredArray</code> would still be <code>(string | undefined)[]</code> because TypeScript can't easily inspect the contents of the filter function to realize that we remove the <code>undefined</code> elements.</p>
+<p>We could theoretically use a type assertion here:</p>
+<pre><code class="language-ts">const array = ['Hello', undefined, 'World', undefined];
+const filteredArray = array.filter((val) =&gt; val !== undefined) as string[];
+</code></pre>
+<p>However, instead of yelling at the TypeScript compiler that we know better, it's more productive to write a user-defined type guard:</p>
+<pre><code class="language-ts">function isString(val: string | undefined): val is string {
+  return typeof val === 'string';
+}
+</code></pre>
+<p>The <code>isString</code> function is a type guard, because it's return type is the type predicate <code>val is string</code>.
+Generally, a type predicate must have the form <code>parameter is Type</code> where <code>parameter</code> is the name of a parameter from the function signature.</p>
+<p>We can use the type guard like this:</p>
+<pre><code class="language-ts">const array = ['Hello', undefined, 'World', undefined];
+const filteredArray = array.filter(isString);
+</code></pre>
+<p>Now the inferred type of <code>filteredArray</code> will be <code>string[]</code>—and all that without using a single type assertion.</p>
+<h3 id="discriminated-unions"><a class="header" href="#discriminated-unions">Discriminated Unions</a></h3>
+<p>A particularly important union type is the <strong>discriminated union</strong>.
+This is a union where a property is used to discriminate between union members.
+Consider the following example:</p>
+<pre><code class="language-ts">type Square = {
+  kind: 'square';
+  size: number;
+};
+
+type Rectangle = {
+  kind: 'rectangle';
+  width: number;
+  height: number;
+};
+
+type Shape = Square | Rectangle;
+</code></pre>
+<p>We can now narrow values of the discriminated union based on the <strong>discriminant property</strong> (which in this case is <code>kind</code>):</p>
+<pre><code class="language-ts">function getArea(shape: Shape) {
+  if (shape.kind === 'square') {
+    // Here, shape must be of type Square
+    return shape.size * shape.size;
+  } else {
+    // Here, shape must be of type Rectangle
+    return shape.width * shape.height;
+  }
+}
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="generics"><a class="header" href="#generics">Generics</a></h2>
+<div style="text-align: right"> <i> Generics are the invisible hat of the TypeScript sage, fitting the heads of both the giant and the dwarf. <br> — Ancient Chinese proverb </i> </div>
+<h3 id="why-generics"><a class="header" href="#why-generics">Why Generics?</a></h3>
+<p>Generics allow us to write code that is type-safe, yet independent of specific types.</p>
+<p>Consider the example of retrieving the first element of an array:</p>
+<pre><code class="language-js">function getFirstElement(arr) {
+  return arr[0];
+}
+</code></pre>
+<p>How would we type this?
+We could use <code>any</code>:</p>
+<pre><code class="language-ts">function getFirstElement(arr: any): any {
+  return arr[0];
+}
+</code></pre>
+<p>However using <code>any</code> is—as we already mentioned—a bad idea since we lose all the type information even if we pass in an array of a known type.
+For example, all these constants would be inferred to have type <code>any</code>:</p>
+<pre><code class="language-ts">const num = getFirstElement([1, 2, 3]);
+const str = getFirstElement(['a', 'b', 'c']);
+</code></pre>
+<p>We also can't use the <code>unknown</code> type since it doesn't permit any operations:</p>
+<pre><code class="language-ts">function getFirstElement(arr: unknown) {
+  // This will result in a type error
+  return arr[0];
+}
+</code></pre>
+<p>We could also make use of <em>function overloads</em> and write something like this:</p>
+<pre><code class="language-ts">function getFirstElement(arr: number[]): number;
+function getFirstElement(arr: string[]): string;
+function getFirstElement(arr: undefined[]): undefined;
+// More overloads and implementation here
+</code></pre>
+<blockquote>
+<p>We will not discuss function overloads in more detail as it's out of scope for this book.</p>
+</blockquote>
+<p>But this obviously gets very tedious and error-prone for most cases.
+Instead, TypeScript allows us to use <strong>generics</strong> to specify that some code doesn't depend on the concrete types and only cares about the relation between certain types.</p>
+<h3 id="generic-functions"><a class="header" href="#generic-functions">Generic Functions</a></h3>
+<p>Consider the identity function that simply takes an argument <code>arg</code> and returns it unchanged.
+We can use a <strong>type variable</strong> <code>Type</code> and type it like this:</p>
+<pre><code class="language-ts">function identity&lt;Type&gt;(arg: Type): Type {
+  return arg;
+}
+</code></pre>
+<p>This basically says that the <code>identity</code> function takes an argument of type <code>Type</code> and that its return type is of the same type as the argument.
+Now we get proper type inference:</p>
+<pre><code class="language-ts">let val = 'Hello, World!';
+let val2 = identity&lt;string&gt;(val); // val2 is of type string
+</code></pre>
+<p>We don't actually have to manually specify the type <code>string</code> when calling the function and can instead rely on the inference capabilities of TypeScript once again:</p>
+<pre><code class="language-ts">let val = 'Hello, World!';
+let val2 = identity(val); // val2 is of type string
+</code></pre>
+<blockquote>
+<p>There is no single convention for naming type parameters.
+Common names include <code>T</code>, <code>Type</code> and <code>TType</code>.
+We will stick to the <code>Type</code> convention throughout this book.</p>
+</blockquote>
+<p>Similarly, we can type the <code>getFirstElement</code> function using type parameters:</p>
+<pre><code class="language-ts">function getFirstElement&lt;Type&gt;(arr: Type[]): Type {
+  return arr[0];
+}
+
+const num = getFirstElement([1, 2, 3]);
+const str = getFirstElement(['a', 'b', 'c']);
+</code></pre>
+<p>Unlike in the <code>getFirstElement</code> example that was typed using <code>any</code>, we now get meaningful type inference.
+For example, <code>num</code> will have the type <code>number</code> (instead of <code>any</code>) and <code>str</code> will have the type <code>string</code>.</p>
+<p>You can use any number of type parameters you want.
+Here is how we could write a correctly annotated <code>map</code> function:</p>
+<pre><code class="language-ts">function map&lt;In, Out&gt;(array: In[], f: (value: In) =&gt; Out): Out[] {
+  return array.map(f);
+}
+</code></pre>
+<p>Here, we have two type parameters <code>In</code> and <code>Out</code>.
+The type parameter <code>In</code> indicates the types of the elements of the original array.
+The type parameter <code>Out</code> indicates the types of the elements of the result array.</p>
+<p>Note how the type of the parameter <code>f</code> makes uses of both the <code>In</code> and <code>Out</code> parameter types.
+This makes sense since <code>f</code> transforms an element of the original array (<code>In</code>) into an element of the result array (<code>Out</code>).</p>
+<p>Again, we will get proper type inference:</p>
+<pre><code class="language-ts">const arr = map([1, 2, 3, 4], (x) =&gt; x % 2 === 0);
+</code></pre>
+<p>Here <code>arr</code> will have the type <code>boolean[]</code>.</p>
+<h3 id="generic-object-types"><a class="header" href="#generic-object-types">Generic Object Types</a></h3>
+<p>Just as with functions, we can use type parameters with objects:</p>
+<pre><code class="language-ts">type Box&lt;Type&gt; = {
+  content: Type;
+};
+</code></pre>
+<p>Now we can use the <code>Box</code> type with any type:</p>
+<pre><code class="language-ts">// Here, box has the type Box&lt;number&gt;
+const box = {
+  content: 0,
+};
+
+// Here, box2 has the type Box&lt;string&gt;
+const box2 = {
+  content: 'Hello, world!',
+};
+</code></pre>
+<p>We can also use generic functions and objects together:</p>
+<pre><code class="language-ts">function extractContent&lt;Type&gt;(box: Box&lt;Type&gt;): Type {
+  return box.content;
+}
+</code></pre>
+<h3 id="important-builtin-generics"><a class="header" href="#important-builtin-generics">Important Builtin Generics</a></h3>
+<p>Generic object types are often useful for collections (and containers), since collection logic is often independent of the specific item types.
+For example, retrieving the first element of an array or finding an element of a set by value using the <code>===</code> operator will work the same way regardless of the types of the array or set elements.</p>
+<p>You already learned about generic arrays (note that you can use <code>Array&lt;T&gt;</code> in place of <code>T[]</code>).</p>
+<p>If you have an object type where the property keys have a certain known type and the property values have a certain known type, you can use the generic type <code>Record&lt;Key, Value&gt;</code></p>
+<pre><code class="language-ts">const ScoreRecord: Record&lt;string, number&gt; = {
+  Alice: 50,
+  Bob: 60,
+  Charlie: 70,
+};
+</code></pre>
+<p>Two other generic data structures that you already know about are sets and maps:</p>
+<pre><code class="language-ts">const mySet: Set&lt;number&gt; = new Set([1, 2, 3]);
+const myMap: Map&lt;string, number&gt; = new Map([
+  ['Item 1', 1],
+  ['Item 2', 2],
+]);
+</code></pre>
+<p>This example can also be written like this:</p>
+<pre><code class="language-ts">const mySet = new Set&lt;number&gt;([1, 2, 3]);
+const myMap = new Map&lt;string, number&gt;([
+  ['Item 1', 1],
+  ['Item 2', 2],
+]);
+</code></pre>
+<p>One other very important generic type is the <code>Promise&lt;Type&gt;</code> type which is most commonly used to annotate asynchronous functions.
+For example, if we have an asynchronous function <code>f</code> that returns a promise that will eventually fulfill with a <code>string</code>, we would annotate it like this:</p>
+<pre><code class="language-ts">async function f(): Promise&lt;string&gt; {
+  // Implementation here
+}
+</code></pre>
+<h3 id="generic-constraints"><a class="header" href="#generic-constraints">Generic Constraints</a></h3>
+<p>Often, we don't want to pass <em>completely arbitrary</em> type parameters.</p>
+<p>Consider this example:</p>
+<pre><code class="language-ts">function getLength&lt;Type&gt;(arg: Type): number {
+  return arg.length;
+}
+</code></pre>
+<p>This will throw the following error:</p>
+<pre><code>index.ts:2:14 - error TS2339: Property 'length' does not exist on type 'Type'.
+2   return arg.length;
+               ~~~~~~
+Found 1 error in index.ts:2
+</code></pre>
+<p>This makes sense since <code>arg</code> can be of literally any type and there is no guarantee that <code>arg</code> will actually have the property <code>length</code>.
+To change this, we need to constrain the type <code>Type</code> and make sure that <code>arg</code> must have the <code>length</code> property:</p>
+<pre><code class="language-ts">function getLength&lt;Type extends { length: number }&gt;(arg: Type): number {
+  return arg.length;
+}
+</code></pre>
+<p>As usual, we can use a type alias here:</p>
+<pre><code class="language-ts">type HasLength = {
+  length: number;
+};
+
+function printLength&lt;Type extends HasLength&gt;(arg: Type): number {
+  return arg.length;
+}
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="configuring-typescript"><a class="header" href="#configuring-typescript">Configuring TypeScript</a></h2>
+<div style="text-align: right"> <i> Like the ancient master who chooses his brush, the wise coder sets 'strict' with care, for clarity is the first step to wisdom. <br> — Ancient Chinese proverb </i> </div>
+<h3 id="creating-a-typescript-project"><a class="header" href="#creating-a-typescript-project">Creating a TypeScript Project</a></h3>
+<p>We already learned how to create and run individual TypeScript files.
+However, as with JavaScript, we will usually be working with larger projects.</p>
+<p>Let's create a JavaScript project and add TypeScript support to it.</p>
+<p>First, we create a directory where our project will reside:</p>
+<pre><code class="language-sh">mkdir example
+cd example
+</code></pre>
+<p>Next, we need to create the <code>package.json</code> file to indicate that this directory should be a JavaScript project:</p>
+<pre><code class="language-sh">pnpm init
+</code></pre>
+<p>This will create a <code>package.json</code> file containing the project settings:</p>
+<pre><code class="language-json">{
+  "name": "example",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" &amp;&amp; exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
+</code></pre>
+<p>Next, let's create a <code>tsconfig.json</code> to indicate that this particular project will use TypeScript:</p>
+<pre><code class="language-json">{
+  "compilerOptions": {
+    "strict": true
+  }
+}
+</code></pre>
+<p>Setting the <code>strict</code> option in <code>compilerOptions</code> is equivalent to running <code>tsc</code> with the <code>--strict</code> flag.
+We will talk about this option in some more detail later.</p>
+<blockquote>
+<p>We could have also created the <code>tsconfig.json</code> file by running <code>tsc --init</code>, however this will add a lot of options that we really don't care about at the moment.</p>
+</blockquote>
+<p>Now, let's create an <code>index.ts</code> file:</p>
+<pre><code class="language-ts">function getGreeting(name: string): string {
+  return `Hello, ${name}!`;
+}
+
+console.log(getGreeting('World'));
+</code></pre>
+<p>Finally, we can compile the code:</p>
+<pre><code class="language-sh">tsc
+</code></pre>
+<p>This will create approximately the following <code>index.js</code> file:</p>
+<pre><code class="language-js">'use strict';
+function getGreeting(name) {
+  return 'Hello, '.concat(name, '!');
+}
+console.log(getGreeting('World'));
+</code></pre>
+<p>We can execute this file the same way we would execute any other JavaScript file:</p>
+<pre><code class="language-sh">node index.js
+</code></pre>
+<p>There is one small modification we need to make to this process.
+While using the globally installed TypeScript compiler is fine if you have a single project, you often might need to work on multiple projects at the same time.
+Since these projects might use different TypeScript versions, we usually want to install <code>tsc</code> on a per-project basis.</p>
+<p>Let's therefore install <code>tsc</code> as a dev (development) dependency (since we will not need it in the final code output):</p>
+<pre><code class="language-sh">pnpm add --save-dev typescript
+</code></pre>
+<p>This will install TypeScript only for this particular project.
+We can now run the <code>tsc</code> that was installed for this project using the following command:</p>
+<pre><code class="language-sh">pnpm tsc
+</code></pre>
+<h3 id="using-modules-in-a-typescript-project"><a class="header" href="#using-modules-in-a-typescript-project">Using Modules in a TypeScript Project</a></h3>
+<p>Now that we know how to create TypeScript projects in general, let's quickly talk about how we can use modules in TypeScript projects.
+This process will be very similar to what we learned about JavaScript modules, except that we may need to make minor modifications to the <code>tsconfig.json</code> file.</p>
+<p>Create a <code>src</code> directory containing the files <code>greet.ts</code> and <code>index.ts</code>.
+You overall project structure should now look as follows:</p>
+<pre><code>.
+├── package.json
+├── pnpm-lock.yaml
+├── tsconfig.json
+├── node_modules/
+└── src/
+    ├── index.ts
+    └── greet.ts
+</code></pre>
+<p>Add the following exported function to <code>greet.ts</code>:</p>
+<pre><code class="language-ts">export function getGreeting(name: string): string {
+  return `Hello, ${name}!`;
+}
+</code></pre>
+<p>Now, let's use <code>getGreeting</code> in <code>index.ts</code>:</p>
+<pre><code class="language-ts">import { getGreeting } from './greet';
+
+console.log(getGreeting('World'));
+</code></pre>
+<p>We could theoretically compile our project using this setup already.
+However we will make a small modification to our <code>tsconfig.json</code> to avoid polluting the <code>src</code> directory with our compilation outputs.
+To this end, we utilize the <code>outDir</code> option, which specifies the output directory, where TypeScript will put the compilation result.</p>
+<p>Change your <code>tsconfig.json</code> file to be as follows:</p>
+<pre><code class="language-ts">{
+  "compilerOptions": {
+    "strict": true,
+    "outDir": "./dist"
+  }
+}
+</code></pre>
+<p>We can now compile again:</p>
+<pre><code class="language-sh">pnpm tsc
+</code></pre>
+<p>The project structure looks like this now:</p>
+<pre><code>.
+├── package.json
+├── pnpm-lock.yaml
+├── tsconfig.json
+├── node_modules/
+├── src/
+│   ├── index.ts
+│   └── greet.ts
+└── dist/
+    ├── index.js
+    └── greet.js
+</code></pre>
+<p>The files from <code>src</code> were successfully compiled and the compilation output is in <code>dist</code>.
+We can now execute <code>index.js</code> by running:</p>
+<pre><code class="language-sh">node ./dist/index.js
+</code></pre>
+<p>You should see <code>"Hello, World!"</code> logged to the console.</p>
+<h3 id="including-and-excluding-files"><a class="header" href="#including-and-excluding-files">Including and Excluding Files</a></h3>
+<p>Sometimes you want to include or exclude certain files from being processed by the TypeScript compiler.
+To accomplish this, you can specify the <code>include</code> or <code>exclude</code> parameters in the <code>tsconfig.json</code>.</p>
+<p>The <code>include</code> option takes an array of filenames or patterns to include in the program (relative to the directory containing the <code>tsconfig.json</code> file).
+For example, we could include all files in <code>src</code> directory by setting <code>include</code> to <code>["src/**/*"]</code>.</p>
+<p>The <code>src/**/*</code> notation is a so called glob pattern.
+Here, <code>*</code> matches zero or more characters (excluding directory separators) and <code>**/</code> matches any directory (with arbitrary nesting).
+Therefore, <code>src/**/*</code> means "match any file in the directory <code>src</code> and all its subdirectories (no matter how deeply nested)".</p>
+<blockquote>
+<p>Note that by default <code>include</code> is set to <code>["**/*"]</code> (i.e. it's set to match all files including arbitrarily nested subdirectories).</p>
+</blockquote>
+<p>The <code>exclude</code> parameter specifies an array of filenames or patterns that should be skipped when resolving <code>include</code>.
+It is important to note that the <code>exclude</code> parameter does not necessarily exclude the file from your codebase—a file specified by <code>exclude</code> can still become part of your codebase if you import it somewhere.
+The <code>exclude</code> parameter only changes which files are found by the <code>include</code> option.</p>
+<p>Consider the following example.
+Let's say that you have a bunch of <code>*.test.ts</code> files containing tests, like the following <code>greet.test.ts</code>:</p>
+<pre><code class="language-ts">import { getGreeting } from './greet';
+
+function testGreeting() {
+  if (getGreeting('World') !== 'Hello, World!') {
+    throw new Error('Test failed');
+  }
+}
+</code></pre>
+<blockquote>
+<p>This is not how we would really write a test, but that's irrelevant for now.</p>
+</blockquote>
+<p>If we would run <code>pnpm tsc</code> right now, we would see the we have <code>greet.test.js</code> in the output which is probably not desirable, since the tests probably shouldn't be part of the final compilation output.</p>
+<p>Therefore we could write the following <code>tsconfig.json</code>:</p>
+<pre><code class="language-json">{
+  "include": ["src/**/*"],
+  "exclude": ["src/**/*.test.ts"],
+  "compilerOptions": {
+    "strict": true,
+    "outDir": "./dist"
+  }
+}
+</code></pre>
+<p>If we delete the <code>dist</code> directory and run <code>pnpm tsc</code> again, we will see that <code>greet.test.js</code> is no longer present.</p>
+<h3 id="compiler-options"><a class="header" href="#compiler-options">Compiler Options</a></h3>
+<p>There a lot of compiler options that we can set in the <code>compilerOptions</code> section of <code>tsconfig.json</code> besides <code>strict</code> and <code>outDir</code>.
+Let's discuss some of them.</p>
+<h4 id="the-strict-option"><a class="header" href="#the-strict-option">The <code>strict</code> Option</a></h4>
+<p>The <code>strict</code> option enables a wide range of—well—strict type checking.</p>
+<p>Here is some example code that contains a few type issues:</p>
+<pre><code class="language-ts">function getNumber(): number | undefined {
+  return Math.random() &gt; 0.5 ? 0 : undefined;
+}
+
+function logNumber(n: number) {
+  console.log(n);
+}
+
+function logAny(x) {
+  console.log(x);
+}
+
+const number = getNumber();
+logNumber(number);
+logAny(number);
+</code></pre>
+<p>If we set <code>strict</code> to <code>false</code> (which it is by default), this code will (surprisingly) compile.</p>
+<p>However, if we turn <code>strict</code> on, we get the errors that you would expect if you remember what you've learned in the previous sections of the TypeScript chapter:</p>
+<pre><code class="language-ts">src/index.ts:9:17 - error TS7006: Parameter 'x' implicitly has an 'any' type.
+
+9 function logAny(x) {
+                  ~
+
+src/index.ts:14:11 - error TS2345: Argument of type 'number | undefined' is not assignable to parameter of type 'number'.
+  Type 'undefined' is not assignable to type 'number'.
+
+14 logNumber(number);
+             ~~~~~~
+
+
+Found 2 errors in the same file, starting at: src/index.ts:9
+</code></pre>
+<p>You should <em>always</em> turn <code>strict</code> on, unless you have a really good reason not to (for example because you are migrating from a JavaScript or a very old TypeScript codebase).</p>
+<h4 id="the-target-option"><a class="header" href="#the-target-option">The <code>target</code> Option</a></h4>
+<p>Remember, how we talked about downleveling in the first section of this chapter?
+The <code>target</code> option changes which JS features are downleveled and which are left as is.
+For example, if <code>target</code> is <code>es5</code> template strings will be downleveled, but if it's <code>es2015</code> (equivalent to <code>es6</code>) they won't be, because template strings were introduced in ES2015.</p>
+<p>Take this code:</p>
+<pre><code class="language-ts">const world = 'World';
+console.log(`Hello ${world}`);
+</code></pre>
+<p>If <code>target</code> is set to <code>es5</code>, it would compile to this:</p>
+<pre><code class="language-js">'use strict';
+var world = 'World';
+console.log('Hello '.concat(world));
+</code></pre>
+<p>If <code>target</code> is set to <code>es2015</code>, the compilation output would look like this:</p>
+<pre><code class="language-js">'use strict';
+const world = 'World';
+console.log(`Hello ${world}`);
+</code></pre>
+<p>This is because with <code>target</code> set to <code>es5</code> the template string had to be downleveled.</p>
+<p>Some valid targets are:</p>
+<ul>
+<li><code>es5</code></li>
+<li><code>es2015</code> (equivalent to <code>es6</code>)</li>
+<li><code>es2016</code> up to <code>es2022</code></li>
+</ul>
+<p>There is also the <code>esnext</code> target which refers to the highest version of TypeScript.
+This target should be used with caution since it means different things between different TypeScript versions.</p>
+<p>Modern browsers support all <code>es6</code> features, so <code>es6</code> is often a good choice.
+You might choose to set a lower target though if your code is deployed to older environments.
+Alternatively, you might choose a higher target if your code is guaranteed to run in newer environments.</p>
+<h4 id="the-lib-option"><a class="header" href="#the-lib-option">The <code>lib</code> Option</a></h4>
+<p>The <code>lib</code> option allows you to specify libraries to be included in the compilation.
+Basically, you can use this to let TypeScript know which APIs will be available in the runtime environment.</p>
+<p>Let's say we have this code which would only work in the browser since it attaches an event listener to the browser <code>document</code>:</p>
+<pre><code class="language-ts">document.addEventListener('DOMContentLoaded', () =&gt; {
+  console.log('DOM has loaded');
+});
+</code></pre>
+<p>If we set <code>lib</code> to <code>["es2015"]</code>, we will get a bunch of compilation errors:</p>
+<pre><code>src/index.ts:1:1 - error TS2584: Cannot find name 'document'. Do you need to change your target library? Try changing the 'lib' compiler option to include 'dom'.
+
+1 document.addEventListener('DOMContentLoaded', () =&gt; {
+  ~~~~~~~~
+
+src/index.ts:2:5 - error TS2584: Cannot find name 'console'. Do you need to change your target library? Try changing the 'lib' compiler option to include 'dom'.
+
+2     console.log("DOM has loaded");
+      ~~~~~~~
+
+
+Found 2 errors in the same file, starting at: src/index.ts:1
+</code></pre>
+<p>But if we set <code>lib</code> to <code>["es2015", "dom"]</code> the compilation errors go away since TypeScript now introduces the DOM types into the compilation process.</p>
+<h4 id="the-noemit-option"><a class="header" href="#the-noemit-option">The <code>noEmit</code> Option</a></h4>
+<p>The <code>noEmit</code> option can be set to <code>true</code> to not produce JavaScript output.
+This makes room for another tool to convert the TypeScript files to something that can be run inside a JavaScript environment.</p>
+<p>This is often done when we only want to use TypeScript as a type checker (as is common in many projects) or to provide suggestions in your coding editor.</p>
+<h3 id="an-example-tsconfigjson"><a class="header" href="#an-example-tsconfigjson">An Example <code>tsconfig.json</code></a></h3>
+<p>You now learned about some of the most important <code>tsconfig.json</code> settings!
+Here is an example <code>tsconfig.json</code> to summarize your newfound knowledge:</p>
+<pre><code class="language-json">{
+  "include": ["src/**/*"],
+  "exclude": ["src/**/*.test.ts"],
+  "compilerOptions": {
+    "strict": true,
+    "noEmit": true,
+    "target": "es2015",
+    "lib": ["es2015", "dom"]
+  }
+}
+</code></pre>
+<p>In this case, we don't produce compilation output, but only type check the code (due to <code>noEmit</code> being <code>true</code>).
+We only look at the files in <code>src</code> and its subdirectories, ignoring the <code>*.test.ts</code> file (because of the <code>include</code> and <code>exclude</code> setting).</p>
+<p>Finally, the type checking process is strict (due to <code>noEmit</code> being <code>true</code>), all features that are not available before ES2015 will be downleveled (since <code>target</code> is <code>es2015</code>) and we can use the DOM API types.</p>
+<h3 id="reusing-a-tsconfigjson"><a class="header" href="#reusing-a-tsconfigjson">Reusing a <code>tsconfig.json</code></a></h3>
+<p>The <code>extends</code> option can be used to inherit from another configuration file.</p>
+<p>For example, we might have a <code>base.json</code> configuration file like this:</p>
+<pre><code class="language-json">{
+  "compilerOptions": {
+    "strict": true
+  }
+}
+</code></pre>
+<p>Now, the <code>tsconfig.json</code> could extend this file:</p>
+<pre><code class="language-json">{
+  "extends": "base.json",
+  "include": ["src/**/*.ts"],
+  "compilerOptions": {
+    "noEmit": true
+  }
+}
+</code></pre>
+<p>The resulting configuration would be strict and not emit JavaScript files.</p>
+<p>This feature is particularly useful because it allows someone to write a TypeScript configuration file that specifies the settings that should be applied to TypeScript codebases in a company or a project and then everyone can simply extend this configuration file.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="chapter-3-networking-fundamentals"><a class="header" href="#chapter-3-networking-fundamentals">Chapter 3: Networking Fundamentals</a></h1>
 <div style="text-align: right"> <i> I don't need to know how networks operate. <br> — Seconds before disaster </i> </div>
 <p>Now that you've learned a bit of programming, we're almost ready to start diving into writing web applications.

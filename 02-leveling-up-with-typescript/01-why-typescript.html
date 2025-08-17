@@ -175,7 +175,159 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="why-typescript"><a class="header" href="#why-typescript">Why TypeScript?</a></h1>
+                        <h2 id="why-typescript"><a class="header" href="#why-typescript">Why TypeScript?</a></h2>
+<div style="text-align: right"> <i> Better to wrangle with TypeScript's compiler today, than to wrestle with JavaScript bugs tomorrow. <br> — Ancient Chinese proverb </i> </div>
+<h3 id="a-little-story"><a class="header" href="#a-little-story">A Little Story</a></h3>
+<p>Consider the following scenario.
+You have a JavaScript function <code>showTask(task)</code> which takes a <code>task</code> object and displays the task in a UI (or in the console).</p>
+<p>For example, let's say you have a <code>task</code> object looks like this:</p>
+<pre><code class="language-js">const task = {
+  id: 1,
+  title: 'Read the Next.js book',
+  description: 'Read and understand the Next.js book.',
+};
+</code></pre>
+<p>Can you pass this object to <code>showTask</code>?
+Well, it's hard to tell.</p>
+<p><em>Maybe</em> the <code>showTask</code> function expects an object that has <code>id</code>, <code>title</code>, <code>description</code> <em>and</em> <code>status</code> fields.
+The only way to find out if your <code>task</code> object is a valid input for <code>showTask</code> is to—well—actually pass it and find out.
+This is obviously not the ideal workflow, especially if you happen to find out that your object lacked some important properties <em>in production</em>.</p>
+<p>Additionally, if the author of the <code>showTask</code> function changes their function to expect additional properties on the <code>task</code> object, they would now have to check all the invocations of <code>showTask</code> to verify that they didn't accidentally break something.</p>
+<p>This is where TypeScript comes in.
+With TypeScript we would be able to <em>statically type</em> the function by adding <em>type annotations</em> like this:</p>
+<pre><code class="language-ts">type Task = {
+  id: number;
+  title: string;
+  description: string;
+};
+
+function showTask(task: Task) {
+  // Implementation here
+}
+</code></pre>
+<p>Now we know <em>exactly</em> what kind of object <code>showTask</code> expects.
+Namely, it needs an <code>id</code> property which is a <code>number</code>, a <code>title</code> property which is a <code>string</code> and a <code>description</code> property which is also a <code>string</code>.</p>
+<p>Here is how we could call this function:</p>
+<pre><code class="language-ts">showTask({
+  id: 1,
+  title: 'Read the Next.js book',
+  description: 'Read and understand the Next.js book.',
+});
+</code></pre>
+<p>If we would pass an object that lacks some of the expected properties and run <em>type checks</em> (more on that later) we would get an error long before the bad code could make it anywhere near production.
+Even better—your editor would now be able to show you that you might have a problem during development:</p>
+<pre><code class="language-ts">showTask({
+  id: 1,
+  title: 'Read the Next.js book',
+});
+// Most editors will now show a squiggly red line somewhere around here and
+// politely scream at you that the object is missing the description property.
+</code></pre>
+<p>Better still (TypeScript just keeps giving), you now get <em>autocompletion</em>—editors will show possible suggestions for the property names your object should have <em>while you are typing</em>.
+This saves an enormous amount of time and effort when writing code.</p>
+<p>To summarize, using TypeScript massively enhances your developer workflow.
+This is why most large projects use TypeScript instead of vanilla JavaScript these days.</p>
+<h3 id="the-typescript-compiler"><a class="header" href="#the-typescript-compiler">The TypeScript Compiler</a></h3>
+<p>You can install the TypeScript compiler globally by running the following command:</p>
+<pre><code class="language-sh">pnpm add -g typescript
+</code></pre>
+<p>Let's see how we can use the TypeScript compiler.
+First, create a file <code>index.ts</code>:</p>
+<pre><code class="language-ts">type Task = {
+  id: number;
+  title: string;
+  description: string;
+};
+
+function showTask(task: Task) {
+  console.log(
+    `Task with ID=${task.id} has the title ${task.title} and description ${task.description}`,
+  );
+}
+
+showTask({
+  id: 1,
+  title: 'Read the Next.js book',
+  description: 'Read and understand the Next.js book.',
+});
+</code></pre>
+<p>We can't execute TypeScript files in the browser or in Node.js directly.
+Instead we need to first <em>compile</em> the TypeScript code to JavaScript—which is why we installed the compiler.</p>
+<p>Here is how we can compile the <code>index.ts</code> file:</p>
+<pre><code class="language-sh">tsc --strict index.ts
+</code></pre>
+<blockquote>
+<p>Note that the <code>--strict</code> turns on certain "strict" type checks.
+We will basically always use this flag.</p>
+</blockquote>
+<p>Since there were no type errors, nothing is logged in the console and we get a file <code>index.js</code> which looks (approximately) as follows:</p>
+<pre><code class="language-js">function showTask(task) {
+  console.log(
+    'Task with ID='
+      .concat(task.id, ' has the title ')
+      .concat(task.title, ' and description ')
+      .concat(task.description),
+  );
+}
+showTask({
+  id: 1,
+  title: 'Read the Next.js book',
+  description: 'Read and understand the Next.js book.',
+});
+</code></pre>
+<p>Note that all the type annotations are gone and all we get is vanilla JavaScript that we can execute.
+Additionally, the TypeScript compiler <em>downleveled</em> our code so that it can be executed by older platforms.
+Here the template string syntax (which is not supported by very old browsers) was replaced by a series of <code>concat</code> calls.</p>
+<blockquote>
+<p>Note that by the time you're reading this the default target settings might be different and you might not see this particular downleveling anymore.</p>
+</blockquote>
+<p>What if there is an error in <code>index.ts</code>?
+Consider the following TypeScript code:</p>
+<pre><code class="language-ts">type Task = {
+  id: number;
+  title: string;
+  description: string;
+};
+
+function showTask(task: Task) {
+  console.log(
+    `Task with ID=${task.id} has the title ${task.title} and description ${task.description}`,
+  );
+}
+
+showTask({
+  id: 1,
+  title: 'Read the Next.js book',
+});
+</code></pre>
+<p>If you would compile this code using <code>tsc --strict index.ts</code>, you would get the following error:</p>
+<pre><code>index.ts:13:10 - error TS2345: Argument of type '{ id: number; title: string; }' is not assignable to parameter of type 'Task'.
+  Property 'description' is missing in type '{ id: number; title: string; }' but required in type 'Task'.
+13 showTask({
+            ~
+14   id: 1,
+   ~~~~~~~~
+15   title: 'Read the Next.js book',
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+16 });
+   ~
+  index.ts:4:3
+    4   description: string;
+        ~~~~~~~~~~~
+    'description' is declared here.
+Found 1 error in index.ts:13
+</code></pre>
+<p>The compiler correctly informed us that if we were to run this code it would probably result in bad things happening due to the missing <code>description</code> property.
+We now know that the code is probably wrong long before it made to production and can fix it accordingly.</p>
+<h3 id="executing-typescript-directly-with-tsx"><a class="header" href="#executing-typescript-directly-with-tsx">Executing TypeScript Directly with <code>tsx</code></a></h3>
+<p>Sometimes you want to execute a TypeScript file directly (especially during development) and not go through the "compile and run" cycle manually.
+There are a couple of tools that allow you to do that—here we will introduce <code>tsx</code> (short for "TypeScript Execute").</p>
+<p>Install <code>tsx</code> using the package manager:</p>
+<pre><code class="language-sh">pnpm add -g tsx
+</code></pre>
+<p>You can now execute a TypeScript file <code>index.ts</code> directly by running:</p>
+<pre><code class="language-sh">tsx index.ts
+</code></pre>
 
                     </main>
 
