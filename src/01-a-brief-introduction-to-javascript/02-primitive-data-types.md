@@ -17,7 +17,7 @@ In programming, that "somewhere" is called storage and the predictable name is c
 A **variable** is simply a storage location that contains a value and is referred to by a symbolic name.
 This sounds very fancy, but it just means that there is a value stored somewhere, and we can refer to it using a symbolic name that does not change—even when the value itself does.
 
-For example, you could have a variable `age` which has the value `20`.
+For example, we could have a variable `age` which has the value `20`.
 In this case, we say that `age` is equal to `20`:
 
 ![](images/variable.png)
@@ -26,8 +26,8 @@ Now, even if the value of `age` changes—for example, to `21` after a birthday�
 
 ![](images/variable-changed.png)
 
-JavaScript lets you declare variables using the `let` keyword.
-You can assign values to variables with the **assignment operator** (`=`):
+JavaScript lets us declare variables using the `let` keyword.
+We can assign values to variables with the **assignment operator** (`=`):
 
 ```js
 // Declare a variable
@@ -37,7 +37,7 @@ let x;
 x = 10;
 ```
 
-You can print the value of the variable using the `console.log` method:
+We can print the value of the variable using the `console.log` method:
 
 ```js
 console.log(x); // 10
@@ -47,7 +47,7 @@ console.log(x); // 10
 > Instead, we can simply type the variable—or any other expression—and the console will display its value.
 > For example, we can simply type `x` instead of `console.log(x)` and we will see the value of `x`.
 
-You can also have a declaration and an assignment on a single line.
+We can also have a declaration and an assignment on a single line.
 In fact, this is usually the way to go:
 
 ```js
@@ -69,14 +69,14 @@ This code will first output `10` and then `20`.
 
 > Remember that according to our book conventions, a comment after a `console.log` indicates the value that will be logged.
 
-If you want to declare a predictable name for a value that never changes, you can declare a **constant**.
+If we want to declare a predictable name for a value that never changes, we can declare a **constant**.
 This is done using the `const` keyword:
 
 ```js
 const ten = 10;
 ```
 
-If you try to reassign a value to a constant, you will get an error.
+If we try to reassign a value to a constant, we will get an error.
 For example, let's declare a constant and try to assign a new value to it:
 
 ```js
@@ -90,13 +90,13 @@ This will result in the following error:
 Uncaught TypeError: Assignment to constant variable.
 ```
 
-You will almost exclusively see us using `const` instead of `let` from now on.
+We will almost exclusively see us using `const` instead of `let` from now on.
 Reassignment is not nearly as necessary as you might expect at this stage.
 
 > We can also declare variables using the `var` keyword.
 > This will not be covered here and the only real thing you need to know about `var` is that you should basically never use it.
 > That's because `var` has unusual behavior around scopes, a topic that we will cover later.
-> For all practical purposes, you can treat `var` as a historical artifact of JavaScript.
+> For all practical purposes, we treat `var` as a historical artifact of JavaScript.
 
 Any variable has a **data type** which denotes the range of values it can take and which operations can be performed on the variable.
 You can use the `typeof` operator to obtain the data type of a variable.
@@ -203,8 +203,8 @@ Don't let that confuse you.
 > If you wish to do so, you can go on any programming forum of your choice and start a holy war by making fun of the way JavaScript's primitive data types work.
 > Deciding whether that's a good use of time is up to you.
 
-Another important thing about numbers is that you need to be careful when you are trying to perform operations with real numbers.
-For example, if you add `0.1` and `0.2` you will get a weird result:
+Another important thing about numbers is that we need to be careful when we are trying to perform operations with real numbers.
+For example, if we add `0.1` and `0.2` we will get a weird result:
 
 ```js
 console.log(0.1 + 0.2); // 0.30000000000000004
@@ -291,7 +291,7 @@ console.log(x1 === x3); // true
 > This operator can be best described as an April Fools' joke that accidentally made it into the language.
 > We strongly recommend that you never use it.
 
-If you want to write _not equals_, you can use `!==`:
+If we want to write _not equals_, we can use `!==`:
 
 ```js
 console.log(5 !== 10); // true
@@ -394,7 +394,7 @@ console.log(someVariable); // undefined
 console.log(typeof someVariable); // undefined
 ```
 
-An important operator to know if you plan to work with `undefined` is the nullish coalescing operator `??`.
+An important operator to know if we plan to work with `undefined` is the nullish coalescing operator `??`.
 This operator takes two values and checks whether the left-hand side is `undefined` or `null`.
 We will not focus much on `null` in this book.
 If the left-hand side is `undefined` or `null`, the operator evaluates to the right-hand side.

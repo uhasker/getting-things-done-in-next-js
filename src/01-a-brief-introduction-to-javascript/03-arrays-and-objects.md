@@ -4,8 +4,8 @@
 
 ### Arrays
 
-Let's say you're writing a task application and you need to store a bunch of tasks.
-You could declare a separate variable for every task like this:
+Let's say we are writing a task application and we need to store a collection of tasks.
+We could declare a separate variable for every task like this:
 
 ```js
 const task1 = 'First task';
@@ -13,17 +13,15 @@ const task2 = 'Second task';
 const task3 = 'Third task';
 ```
 
-However, this would quickly become very _tedious_.
-Additionally, you probably want to be able to add or delete tasks in your application.
-Adding and deleting variables will become even more _tedious_.
-It would become almost as _tedious_ as repeating the word _tedious_ over and over.
-Did we mention that this is really _tedious_?
+However, this would quickly become very tedious.
+Additionally, we likely want to add or remove tasks in our application, which makes managing separate variables even more cumbersome.
+In other words, this approach is highly inefficient.
 
-As you can see, we need a way to store multiple values in a single variable.
-We can do this with arrays.
+Therefore, we need a way to store multiple values in a single variable.
+We can accomplish this with arrays.
 
 A JavaScript **array** is an ordered collection of multiple values.
-You can declare an array using an **array literal** (also called an _array initializer_ in this context):
+You can declare an array using an **array literal** which in this context is also called an **array initializer**:
 
 ```js
 const tasks = ['First task', 'Second task', 'Third task'];
@@ -38,7 +36,7 @@ console.log(typeof tasks); // object
 
 You can access individual elements of an array using the index notation.
 This works by writing the name of the array, followed by the position of the element you want to retrieve inside square brackets `[]`.
-Note that when we count the indices (positions), we start at `0`, _not_ at `1`:
+Note that when we count array indices—meaning the positions of elements—we start at 0, not at 1:
 
 ```js
 console.log(tasks[0]); // First task
@@ -51,14 +49,14 @@ If the array index is too big, trying to access the element at that index will r
 console.log(tasks[3]); // undefined
 ```
 
-You can get the length of an array using `.length`:
+We can get the length of an array using `.length`:
 
 ```js
 console.log(tasks.length); // 3
 ```
 
 JavaScript has elegant syntax for working with arrays.
-For example, if you want to assign variables based on values of an array, you would normally have to do something like this:
+For example, if we want to assign variables based on values of an array, we would normally have to do something like this:
 
 ```js
 const firstTask = tasks[0];
@@ -66,32 +64,32 @@ const secondTask = tasks[1];
 const thirdTask = tasks[2];
 ```
 
-This is (you guessed it) _tedious_.
+This approach is, once again, quite tedious.
 
-Instead, you can use the **array destructuring assignment**:
+Instead, we can use the **array destructuring assignment**:
 
 ```js
 const [firstTask, secondTask, thirdTask] = tasks;
 console.log(secondTask); // Second task
 ```
 
-If you only care about some of the elements, you can use the **spread** (`...`) syntax:
+If we only need some of the elements, we can use the **spread** (`...`) syntax:
 
 ```js
 const [firstTask, ...otherTasks] = tasks;
 ```
 
-Something that commonly trips up beginners is trying to _copy_ an array.
-Let's say you have an array of numbers called `arr` and you want to create a copy called `arr2`.
-You would probably try something like this:
+A common pitfall occurs when attempting to copy an array.
+For example, suppose we have an array of numbers called `arr` and we want to create a copy called `arr2`.
+We could try something like this:
 
 ```js
 const arr = [1, 2, 3, 4];
 const arr2 = arr;
 ```
 
-This is _wrong_.
-We can see that this is wrong if we try to change the first element of `arr` and then have a look at `arr[0]` and `arr2[0]`:
+Unfortunately, this does not work as expected.
+We can see that if we try to change the first element of `arr` and then have a look at `arr[0]` and `arr2[0]`:
 
 ```js
 arr[0] = 5;
@@ -101,18 +99,17 @@ console.log(arr2[0]); // 5
 
 Uh-oh!
 That's probably not what we want.
-The reason for this behaviour is that `arr` and `arr2` both point to the same array.
-Remember how we were careful to introduce a variable _as a storage location together with a symbolic name_?
-Well, it turns out that _different symbolic names_ may refer to the _exact same storage location_.
+The reason for this behavior is that `arr` and `arr2` both point to the same array.
+Remember how we were careful to introduce a variable as a storage location together with a symbolic name?
+Well, it turns out that different symbolic names may refer to the exact same storage location.
 
-You can visualize it like this:
+We can visualize it like this:
 
 ![](images/array-copy-incorrect.png)
 
-Here we have a storage location containing the values `1`, `2`, `3` and `4` somewhere.
-We also have two symbolic names `arr` and `arr2`.
-While the symbolic names are different, they point to the same storage location.
-Therefore, if we change the storage location, we will observe a change via _both_ symbolic names.
+Here we have a storage location containing the values `1`, `2`, `3` and `4`.
+Two symbolic names, `arr` and `arr2`, both point to this same location.
+Therefore, if we change the storage location, we will observe a change via both symbolic names.
 
 In order to actually copy the values, we can use the spread syntax again:
 
@@ -128,17 +125,18 @@ console.log(arr[0]); // 5
 console.log(copied[0]); // 1
 ```
 
-This looks good.
+This looks much better.
 Here is the mental picture you should have in your head for copying an array:
 
 ![](images/array-copy-correct.png)
 
 > If you only briefly skimmed the section on array destructuring and the spread syntax, go back again and read it carefully.
-> These two concepts will come up _a lot_ in the following chapters (much more often than you think right now).
+> These two concepts will come up a lot in the following chapters (much more often than you think right now).
 
 ### Objects
 
-Let's return to our imaginary (as of now) task application.
+Let's return to our imaginary task application, which for now exists only in theory.
+
 A task will probably be something more than just a string.
 For example, it might contain an ID, a title and a description.
 We could, again, try to store these values in separate constants:
@@ -149,10 +147,10 @@ const taskTitle = 'Read the Next.js book';
 const taskDescription = 'Read and understand the Next.js book.';
 ```
 
-As you can probably guess, this will quickly become _tedious_ (oh no, not this again).
+As you can probably guess, this approach will quickly become tedious—and yes, we've seen this problem before.
 
 **Objects** to the rescue!
-These allow us to store name-value pairs inside a single variable.
+They allow us to store name–value pairs inside a single variable.
 Here is how we might create a `task` object that contains all the information we want to know about a task:
 
 ```js
@@ -164,7 +162,7 @@ const task = {
 ```
 
 Every such name-value pair is called a **property**.
-We can access properties using the dot notation `.` or the square bracket notation `[]`.
+We can access properties either with dot notation `.` or with square bracket notation `[]`.
 For example, we can access the `title` property of the `task` object by writing `task.title` or `task['title']`.
 Try it out:
 
@@ -177,16 +175,16 @@ console.log(task['title']); // Read the Next.js book
 console.log(task['description']); // Read and understand the Next.js book.
 ```
 
-> Note that we will practically always use the dot notation.
+> In practice, we will almost always use the dot notation.
 
-Remember how you accessed the length of an array using `arr.length`?
-You can do that because every array has a property called `length` that indicates the length of that array.
+Remember how we accessed the length of an array using `arr.length`?
+We can do that because every array has a property called `length` that indicates the length of that array.
 
 Properties don't have to be primitive values.
 They can also be other objects.
 
-Generally speaking, you can arbitrarily nest objects and arrays.
-For example, here is how you can nest an object inside an object:
+Generally speaking, we can arbitrarily nest objects and arrays.
+For example, here is how we can nest an object inside an object:
 
 ```js
 const user = {
@@ -199,21 +197,21 @@ const user = {
 };
 ```
 
-You can access the `title` property of the `user.task` object like this:
+We can access the `title` property of the `user.task` object like this:
 
 ```js
 console.log(user.task.title); // Read the Next.js book
 ```
 
-If you try to access a property that doesn't exist, the result will be `undefined`:
+If we try to access a property that doesn't exist, the result will be `undefined`:
 
 ```js
 console.log(task.date); // undefined
 ```
 
-Sometimes you want to explicitly indicate that a property may be absent.
+Sometimes we want to explicitly indicate that a property may be absent.
 For example, a person may not have a task assigned to them.
-You can write something like this:
+We can write something like this:
 
 ```js
 const person = {
@@ -222,15 +220,14 @@ const person = {
 };
 ```
 
-Instead of `undefined` you can also `null` which represents the absence of an object value.
-Note that there is no separate `null` data type.
-Instead, `null` is just a special object:
+Instead of `undefined` we can also use `null` which represents the absence of an object value.
+There is no separate `null` data type—`null` is simply a special object:
 
 ```js
 console.log(typeof null); // object
 ```
 
-Here is how you can use `null` to represent the absence of a property:
+Here is how we can use `null` to represent the absence of a property:
 
 ```js
 const person = {
@@ -239,13 +236,12 @@ const person = {
 };
 ```
 
-Whether to use `undefined` or `null` in this situation is largely convention.
+Whether to use `undefined` or `null` in this situation is largely a matter of convention.
 Throughout this book we will always use `undefined`.
-Nevertheless, we want to emphasize that it's totally fine to use `null` instead of `undefined` in this situation.
-Just pick a style and be consistent.
+Nevertheless, we want to emphasize that it's perfectly fine to use `null` instead of `undefined` in this situation.
+The important thing is to choose one style and apply it consistently.
 
-You can use the **destructuring assignment** when working with objects.
-This is similar to arrays:
+We can use **destructuring assignment** when working with objects, just as we did with arrays:
 
 ```js
 const task = {
@@ -256,7 +252,7 @@ const task = {
 const { id, title, description } = task;
 ```
 
-And just as with arrays, you can use the spread syntax with objects:
+And just as with arrays, we can also use the spread syntax with objects:
 
 ```js
 const taskWithAssignee = {
@@ -277,14 +273,14 @@ This will output:
 }
 ```
 
-> Note that objects are more than just containers for values.
-> We will return to this later.
+> Keep in mind that objects are more than just containers for values.
+> We will return to this idea later.
 
 ### Using `const` with Arrays and Objects
 
-There is often some confusion regarding the use of `const` with arrays and objects.
+There is often confusion about the use of `const` with arrays and objects.
 
-For example, it seems strange that you can change the elements of a `const` array:
+For example, it may seem strange that we can change the elements of a `const` array:
 
 ```js
 const arr = [1];
@@ -292,32 +288,32 @@ arr[0] = 2; // Totally valid
 arr.push(3); // Totally valid
 ```
 
-It seems equally strange that you can change the properties of a `const` object:
+It may also seem strange that we can change the properties of a `const` object:
 
 ```js
 const obj = { prop: 1 };
 obj.prop = 2; // Totally valid
 ```
 
-Such assignments are possible because `const` only applies to the constant itself, not to the contents of the constant.
-This means that the only thing you _can't_ do is to change what the constant is pointing to altogether.
+These assignments are possible because `const` applies only to the variable binding itself, not to the contents of the array or object.
+This means that the only thing we can't do is to change what the constant points to altogether.
 
-For instance, this is not possible:
+For example, the following re-assignment is not allowed:
 
 ```js
 const arr = [1];
 arr = [2, 3]; // Not valid
 ```
 
-Similarly, this is also not possible:
+Similarly, this re-assignment is also not allowed:
 
 ```js
 const obj = { prop: 1 };
 obj = { prop: 2 }; // Not valid
 ```
 
-This means that `const` is a pretty weak guarantee when working with arrays and objects.
-After all, you often change elements of arrays and objects, but rarely change what the array and/or object is pointing to in its entirety.
+This means that `const` provides only a weak guarantee when working with arrays and objects.
+In practice, we often modify the elements of arrays and objects but rarely reassign the entire array or object to something new.
 
-Nevertheless, you should use `const` even when working with arrays and objects.
+Nevertheless, we recommend using `const` even when working with arrays and objects.
 A weak guarantee is better than no guarantee at all.
