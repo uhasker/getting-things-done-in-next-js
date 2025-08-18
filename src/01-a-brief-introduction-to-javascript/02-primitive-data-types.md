@@ -5,25 +5,24 @@
 ### Variables
 
 Whenever we write programs, we need to manipulate data.
-This data needs to be stored somewhere and we need to be able to access it somehow.
+This data needs to be stored in a location that we can access later.
 
-We also need to deal with the fact that when we execute a program, the values we deal with are _not predictable_ in advance.
-For example, we don't know which tasks a user might create (that's kind of the point of writing our application after all).
-Nevertheless, we must be able to access created tasks through a _predictable_ name like `tasks` or `createdTasks`.
+We also need to deal with the fact that when we execute a program, the values we deal with are not predictable in advance.
+For example, we don't know which tasks a user might create—allowing arbitrary tasks is, after all, the point of our application.
+Nevertheless, we must be able to access created tasks through a predictable name like `tasks` or `createdTasks`.
 
-Therefore, we need a way to put an _unpredictable_ value somewhere and refer to it using a _predictable_ name.
-In programming, that "somewhere" is referred to as _storage_ and the predictable name as a _symbolic name_.
+Therefore, we need a way to put an unpredictable value somewhere and refer to it using a predictable name.
+In programming, that "somewhere" is called storage and the predictable name is called a symbolic name.
 
-A **variable** is just that—a storage location containing a value which is referred to by a symbolic name.
-This _sounds_ really fancy, but it just means that there is a value somewhere in your storage and you can refer to that value using a symbolic name that doesn't change (even if the value itself changes).
+A **variable** is simply a storage location that contains a value and is referred to by a symbolic name.
+This sounds very fancy, but it just means that there is a value stored somewhere, and we can refer to it using a symbolic name that does not change—even when the value itself does.
 
-For example, you could have a variable `age` which has the value `20` (we say that `age` is equal to `20`):
+For example, you could have a variable `age` which has the value `20`.
+In this case, we say that `age` is equal to `20`:
 
 ![](images/variable.png)
 
-Now even if the value of `age` changes (e.g. to `21` because a birthday happened), the variable name doesn't change, only the value does.
-The variable name will still be `age`.
-However, `age` will now have the value `21` (i.e. `age` will be equal to `21`):
+Now, even if the value of `age` changes—for example, to `21` after a birthday—the variable name itself does not change, only the value does:
 
 ![](images/variable-changed.png)
 
@@ -44,9 +43,9 @@ You can print the value of the variable using the `console.log` method:
 console.log(x); // 10
 ```
 
-> If you follow along in the Node.js (or browser) console, you don't actually need to use the `console.log` method to print the value of a variable.
-> Instead, you can simply type the variable (or any expression for that matter) and the console will display its value.
-> For example, you can simply type `x` instead of `console.log(x)` and you will see the value of `x`.
+> If we follow along in the Node.js or browser console, we don't actually need to use the `console.log` method to print the value of a variable.
+> Instead, we can simply type the variable—or any other expression—and the console will display its value.
+> For example, we can simply type `x` instead of `console.log(x)` and we will see the value of `x`.
 
 You can also have a declaration and an assignment on a single line.
 In fact, this is usually the way to go:
@@ -66,9 +65,9 @@ y = 20;
 console.log(y); // 20
 ```
 
-This will output `10`, followed by a `20`.
+This code will first output `10` and then `20`.
 
-> Remember that, according to our book conventions, a comment after a `console.log` indicates the value that will be logged.
+> Remember that according to our book conventions, a comment after a `console.log` indicates the value that will be logged.
 
 If you want to declare a predictable name for a value that never changes, you can declare a **constant**.
 This is done using the `const` keyword:
@@ -85,18 +84,18 @@ const ten = 10;
 ten = 20;
 ```
 
-You will get the following error:
+This will result in the following error:
 
 ```
 Uncaught TypeError: Assignment to constant variable.
 ```
 
 You will almost exclusively see us using `const` instead of `let` from now on.
-Reassignment is not nearly as necessary as you might think right now.
+Reassignment is not nearly as necessary as you might expect at this stage.
 
-> You can also declare variables using the `var` keyword.
-> We will not cover it here and you essentially only need to know one thing about `var`—you should _basically never use it_.
-> That's because `var` has really weird behaviour around scopes (we will talk about scopes later).
+> We can also declare variables using the `var` keyword.
+> This will not be covered here and the only real thing you need to know about `var` is that you should basically never use it.
+> That's because `var` has unusual behavior around scopes, a topic that we will cover later.
 > For all practical purposes, you can treat `var` as a historical artifact of JavaScript.
 
 Any variable has a **data type** which denotes the range of values it can take and which operations can be performed on the variable.
@@ -107,7 +106,7 @@ These are numbers, booleans, strings and `undefined`.
 
 ### Numbers
 
-You've already encountered the `number` data type:
+We've already encountered the `number` data type:
 
 ```js
 const age = 20;
@@ -123,7 +122,7 @@ console.log(typeof 3.4); // number
 console.log(typeof -1.7); // number
 ```
 
-You can perform arithmetic on numbers using the usual arithmetic operators `+`, `-`, `*` and `/`.
+We can perform arithmetic on numbers using the usual arithmetic operators `+`, `-`, `*` and `/`.
 There is also the `%` (modulo) operator which returns the remainder of a division.
 Finally, there is the `**` operator which does exponentiation:
 
@@ -138,7 +137,7 @@ console.log(a % b); // 3
 console.log(a ** b); // 81
 ```
 
-You can also use the **shorthand assignment operators** to combine assignment and arithmetic operators:
+We can also use the **shorthand assignment operators** to combine assignment and arithmetic operators:
 
 ```js
 let a = 3;
@@ -156,7 +155,7 @@ a **= 5;
 console.log(a); // 32
 ```
 
-You also use the **postfix increment** and the **postfix decrement** operators to increment or decrement a value by 1:
+We also use the **postfix increment** and the **postfix decrement** operators to increment or decrement a value by 1:
 
 ```js
 let a = 4;
@@ -166,13 +165,13 @@ a--;
 console.log(a); // 4
 ```
 
-So far, so obvious.
-However, there are also some other things which have the `number` type.
+So far, everything is straightforward.
+However, there are also some special values that belong to the `number` type.
 
-One of them is `Infinity`.
-`Infinity` is a special value that represents—well—mathematical infinity:
+One of these special values is `Infinity` which represents—well—mathematical infinity:
 
 ```js
+console.log(Infinity); // Infinity
 console.log(typeof Infinity); // number
 ```
 
@@ -182,14 +181,15 @@ One way to arrive at `Infinity` in JavaScript is to divide something positive by
 console.log(1 / 0); // Infinity
 ```
 
-Additionally, there is a special value called `NaN` (short for "not a number").
+Another special value is `NaN` which stands for "not a number".
 For example, the result of `0 / 0` is `NaN`:
 
 ```js
+console.log(NaN); // NaN
 console.log(0 / 0); // NaN
 ```
 
-Hilariously, `NaN` itself is a number (despite its name explicitly stating that it's _not_ a number):
+Even though its name explicitly suggests otherwise, `NaN` is indeed considered a number:
 
 ```js
 console.log(typeof NaN); // number
@@ -197,28 +197,30 @@ console.log(typeof NaN); // number
 
 Don't let that confuse you.
 
-> We will not debate whether decisions like `1/0` being equal to `Infinity`, `0/0` being equal to `NaN` or `NaN` having type `number` are good decisions.
-> We simply note that this is the way JavaScript works and move on.
-> Don't worry, there is in fact a lot of hot debate around some of JavaScripts more—shall we say—controversial features.
-> If you wish to do so, you can go on any programming forum of your choice and start a local holy war by making fun of the way JavaScript's primitive data types work.
+> We will not debate whether choices such as `1/0` being equal to `Infinity`, `0/0` being equal to `NaN` or `NaN` having type `number` are good decisions.
+> For our purposes, it is enough to note that this is simply how JavaScript behaves.
+> There has been plenty of discussion in the programming community around some of JavaScript's more—shall we say—controversial features.
+> If you wish to do so, you can go on any programming forum of your choice and start a holy war by making fun of the way JavaScript's primitive data types work.
 > Deciding whether that's a good use of time is up to you.
 
 Another important thing about numbers is that you need to be careful when you are trying to perform operations with real numbers.
-For example, if you add `0.1` and `0.2` you get a weird result:
+For example, if you add `0.1` and `0.2` you will get a weird result:
 
 ```js
 console.log(0.1 + 0.2); // 0.30000000000000004
 ```
 
-This is not the fault of JavaScript, but instead has to do with the limitations of trying to represent numbers with a potentially infinite amount of digits on a finite hardware.
+This is not a flaw specific to JavaScript.
+It arises from the limitations of representing numbers with potentially infinite digits using finite computer hardware.
 
-> We will not go into great detail in this book about this problem.
-> If you're interested in more details we encourage you to have a look at the IEEE754 standard.
+> We will not explore this problem in detail in this book.
+> If you're interested in more details, we encourage you to have a look at the [IEEE754 standard](https://en.wikipedia.org/wiki/IEEE_754).
+> Nevertheless, you should be aware of this behaviour and be careful when you are performing arithmetic operations with floating point numbers.
 
 ### Booleans
 
-Another primitive type is the `boolean` type.
-This allows you to represent values which are either `true` or `false`:
+Another primitive data type is the `boolean`.
+It allows us to represent values which are either `true` or `false`:
 
 ```js
 const thisBookIsAwesome = true;
@@ -227,9 +229,13 @@ console.log(typeof thisBookIsAwesome); // boolean
 console.log(typeof thisBookSucks); // boolean
 ```
 
-You can do simple logic using the logical operators `&&` (which denotes **and**), `||` (which denotes **or**) and `!` (which denotes **not**).
+We can perform simple logic using the logical operators:
 
-The `&&` (_and_) operator takes two values and evaluates to `true` only if both values are `true`.
+- `&&` which denotes **and**,
+- `||` which denotes **or**,
+- `!` which denotes **not**.
+
+The `&&` operator takes two values and evaluates to `true` only if both values are `true`.
 Otherwise, it evaluates to `false`:
 
 ```js
@@ -239,7 +245,7 @@ console.log(true && false); // false
 console.log(false && false); // false
 ```
 
-The `||` (_or_) operator takes two values and evaluates to `true` if _at least one_ of the values is `true`.
+The `||` operator takes two values and evaluates to `true` if _at least one_ of the values is `true`.
 Otherwise, it evaluates to `false`:
 
 ```js
@@ -249,7 +255,7 @@ console.log(true || false); // true
 console.log(false || false); // false
 ```
 
-The `!` (_not_) operator takes a single value and simply negates it, i.e. "switches" a value to its opposite:
+The `!` operator takes a single value and simply negates it, i.e. "switches" a value to its opposite:
 
 ```js
 console.log(!true); // false
@@ -266,12 +272,11 @@ console.log(b1 || b2); // true
 console.log(!b1); // false
 ```
 
-> Note that, technically, the logical operators can work with _any_ values (not just boolean values).
-> The result of the logical operator application is then dependent on whether the values are _truthy_ or _falsy_.
+> Note that, technically, the logical operators can work with any values, not only boolean values.
+> The result of the logical operator application is then dependent on whether the values are truthy or falsy.
 > We will discuss this later.
 
-A boolean variable usually occurs as the result of an expression.
-Often it's the result of an expression containing the **strict equality operator** (`===`) which allows us to compare the values of variables:
+A boolean value often results from an expression, most commonly one that uses the **strict equality operator** (`===`) to compare variable values:
 
 ```js
 const x1 = 5;
@@ -283,8 +288,8 @@ console.log(x1 === x3); // true
 ```
 
 > There is also another equality operator (`==`) which performs various type coercions before doing the equality comparison (for example, `0 == "0"` will be `true`).
-> This operator can be best described as an April Fools' joke that somehow made it into the language.
-> _Never use it_.
+> This operator can be best described as an April Fools' joke that accidentally made it into the language.
+> We strongly recommend that you never use it.
 
 If you want to write _not equals_, you can use `!==`:
 
@@ -293,8 +298,8 @@ console.log(5 !== 10); // true
 console.log(5 !== 5); // false
 ```
 
-Additionally, you can check if one value is less than or greater than another value using `<`, `<=`, `>` and `>=`.
-These operators are most commonly used with numbers:
+Additionally, we can check if one value is less than or greater than another value using the `<`, `<=`, `>` and `>=` operators.
+These are most commonly applied to numbers:
 
 ```js
 console.log(2 < 3); // true
@@ -305,7 +310,7 @@ console.log(2 >= 3); // false
 
 ### Strings
 
-Another primitive data type is the `string` type.
+Another primitive data type is the `string`.
 A string is simply a sequence of characters and is used to represent text.
 Strings are usually written using single quotes in JavaScript:
 
@@ -314,9 +319,10 @@ const s = 'Some text';
 console.log(typeof s); // string
 ```
 
-> Note that it's also possible to write strings using double quotes, however in most projects strings are written using single quotes and we will stick to this convention.
-> Nevertheless, we want to stress that there is absolutely nothing wrong to use double quotes.
-> However, you should be consistent throughout your project—pick one style and stick to it.
+> Note that it's also possible to write strings using double quotes, i.e. `"Some text"`.
+> However, in most projects, strings are written using single quotes, and we will follow this convention.
+> Nevertheless, we want to stress that there is absolutely nothing wrong with using double quotes.
+> The important thing is to remain consistent throughout a project—choose one style and stick with it.
 
 The `+` operator works on strings and does concatenation:
 
@@ -326,8 +332,8 @@ const s2 = 'book';
 console.log(s1 + s2); // Next.js book
 ```
 
-Note that instead of doing concatenation all the time you can also use **template strings** (also called template literals).
-This allows writing JavaScript expressions directly inside strings.
+Instead of concatenating strings repeatedly, we can use **template strings**, also called **template literals**.
+These allow us to embed JavaScript expressions directly inside strings.
 Consider the following example:
 
 ```js
@@ -336,25 +342,25 @@ const greeting = `Hello, ${s}!`;
 console.log(greeting); // Hello, World!
 ```
 
-Template strings are written using backticks (_not_ single quotes).
-They may contain so-called _placeholders_ which are expressions embedded inside `${...}`:
+Template strings are written using backticks rather than single quotes.
+They may contain **placeholders** which are expressions embedded inside `${...}`:
 
 ```js
 console.log(`2 + 2 = ${2 + 2}`); // 2 + 2 = 4
 ```
 
 > Technically, expressions inside template literals have to be "implicitly convertible to a string" because JavaScript has to convert any placeholder value to a string first.
-> However, you will find that expressions not "implicitly convertible to a string" are rare indeed.
+> However, you will find that expressions not "implicitly convertible to a string" are pretty rare.
 
-You can get the length (i.e. the number of characters) of a string like this:
+We can obtain the length of a string—that is, the number of characters it contains—like this:
 
 ```js
-const s = 'MERN book';
-console.log(s.length); // 9
+const s = 'Next.js book';
+console.log(s.length); // 12
 ```
 
-Note that JavaScript does not have a special "character" data type (unlike Java for example).
-Instead, characters are simply strings of length 1:
+JavaScript does not have a special 'character' data type, unlike other languages like Java.
+Instead, individual characters are simply strings of length one:
 
 ```js
 const c = 'm';
@@ -363,17 +369,16 @@ console.log(typeof c); // string
 
 There is much more to strings and we will return to them later.
 
-> In fact, strings are a really complicated data type.
-> We will omit most of these complications since they are not relevant to simple web applications.
-> Nevertheless, you should keep in mind that you will not have a perfectly accurate understanding of strings by the end of this book.
+> Strings are a complex data type, but we will omit many of the details since they are not relevant to simple web applications.
+> Nevertheless, we should keep in mind that by the end of this book our understanding of strings will not be perfectly complete.
 
 ### Undefined
 
-Finally, there is one more primitive type that's of interest to us, namely `undefined`.
-There is only one value of this type: `undefined`.
+Finally, there is one more primitive type of interest to us: `undefined`.
+This type has only a single value, also called `undefined`.
 
-If a variable has the value `undefined`, this (quite logically) means that it hasn't been defined.
-For example, whenever you have a variable that has been initialized, but not assigned to, it will automatically have the value and therefore the type `undefined`.
+If a variable has the value `undefined`, this simply means that it hasn't been defined.
+For example, a variable that has been declared but not assigned will automatically have the value, and therefore the type, `undefined`.
 
 ```js
 let someVariable;
@@ -381,7 +386,7 @@ console.log(someVariable); // undefined
 console.log(typeof someVariable); // undefined
 ```
 
-You can also manually assign the `undefined` value to a variable:
+We can also manually assign the `undefined` value to a variable:
 
 ```js
 let someVariable = undefined;
@@ -390,8 +395,10 @@ console.log(typeof someVariable); // undefined
 ```
 
 An important operator to know if you plan to work with `undefined` is the nullish coalescing operator `??`.
-This operator takes two values and checks if the left-hand side is `undefined` (or `null`—a value that we will not pay much attention to).
-If the left value is `undefined` (or `null`), the nullish coalescing operator evaluates the expression to the right-hand side, otherwise it returns the left-hand side:
+This operator takes two values and checks whether the left-hand side is `undefined` or `null`.
+We will not focus much on `null` in this book.
+If the left-hand side is `undefined` or `null`, the operator evaluates to the right-hand side.
+Otherwise, it returns the left-hand side:
 
 ```js
 console.log(undefined ?? 1); // 1
@@ -400,5 +407,5 @@ console.log(0 ?? 1); // 0
 
 The `??` operator is commonly used to provide useful default values.
 
-> Note that `string`, `number`, `boolean` and `undefined` are not the only primitive data types.
-> However, the other primitive data types will not be relevant for this book.
+> Note that `string`, `number`, `boolean`, and `undefined` are not the only primitive data types.
+> However, the others are beyond the scope of this book and will not be covered here.
