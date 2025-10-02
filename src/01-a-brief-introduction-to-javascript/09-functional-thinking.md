@@ -261,7 +261,7 @@ Here is the non-functional way:
 const result = [];
 for (const number of numbers) {
   if (number % 2 === 0) {
-    result.push(number ** 2);
+    result.push(number);
   }
 }
 ```
